@@ -840,42 +840,51 @@
   <script>
     // --- KONFIGURACJA ---
     const config = {
-      // --- KONFIGURACJA STAŁA ---
-      version: 'v1.0.1',
+      // --- POCZĄTEK PLIKU <-> konfiguracja.txt
       pageTitle: "▪ START ▪ MENU ▪",
-      // --- KONIEC KONFIGURACJI STAŁEJ ---
-      // --- KONFIGURACJIa ZMIENNA ---
-      defaultBgv: false,
-      showBackButton: true,
-      showVisuDirButton: true,
+      version: 'v1.0.1',
       showMiniLogo: true,
-      dataFolderName: "base-system/files",
-      // --- KONIEC - KONFIGURACJA ZMIENNA ---
-      // --- 
-      // --- KONIEC ---
-      coversFolderName: "base-system/preview",
-      coversHDFolderName: "base-system/preview-HD",
-      databaseFileName: "base-system/db.txt",
-      faviconsFolderUrl: "base-system/.gfx/favicons",
-      miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
-      miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
-      videoBgLightUrl: "base-system/.video/bg_light.mp4",
-      videoBgDarkUrl: "base-system/.video/bg_dark.mp4",
-      url404: "base-system/404.html",
-      urlAbout: "base-system/about.html",
-      defaultFormat: "",
+      showVisuDirButton: true,
+      showBackButton: true,
+            
+      // --- Pamięć przeglądarki ma pierwszeństwo przed konfiguracją poniżej ---
+      // --- KONFIGURACJA W PAMIĘCI PRZEGLĄDARKI ---
+      defaultFormat: "LINK",
       defaultSort: "nameAsc",
-      defaultRows: 4,
+      defaultRows: 3,
       predefinedFilters: [
-        { label: "Gliwice", search: "gliwice" },
-        { label: "Warszawa", search: "warszawa" },
-        { label: "Morze Bałtyckie", search: "morze" },
+        { label: "ADE", search: "ade" },
+        { label: "Galerie zdjęć", search: "galeria" },
+        { label: "Poradniki", search: "poradniki" },
         { label: "", search: "" },
         { label: "", search: "" },
       ],
-    };
-    // --- KONIEC KODU ---
+      defaultBgv: true, // Dostosowujemy kod do dwóch nowych linijek, a później usuwamy tę linijkę
+      defaultAnimation: 2, // 0 - Statycznie, 1 - Animacje, 2 - Video
+      filesVideo: 5, // maksymalny numer pliku video do wylosowania, czyli nazwa + liczba w tym przypadku od 1 do 5, albo ilość plików video
+      defaultVideo: 1, // numer domyślnego pliku wideo, doklejamy liczbę od 0 do n do nazwy pliku. N - ilość plików video, jeśli 0, to losujemy tło
+      defaultView: 1, // 0 - Tekst, 1 - Grafika, 2 - Wszystko
+      // --- KONIEC - KONFIGURACJAW PAMIĘCI PRZEGLĄDARKI ---
 
+      // --- Ścieżki dostępu ---
+      url404: "base-system/404.html", // adresy plików podstron
+      urlAbout: "base-system/about.html",
+
+      databaseFileName: "base-system/db.txt", // plikowa baza danych
+
+      dataFolderName: "base-system/files", // Konfiguracja folderów głównych
+      coversHDFolderName: "base-system/preview-HD",
+      coversFolderName: "base-system/preview",
+
+      faviconsFolderUrl: "base-system/.gfx/favicons", // Konfiguracja interfejsu
+      miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
+      miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
+      videoBgLightUrl: "base-system/.video/bg_light.mp4",
+      videoBgDarkUrl: "base-system/.video/bg_dark.mp4",      
+      // --- KONIEC PLIKU <-> konfiguracja.txt
+    };
+    
+    // --- POCZĄTEK PLIKOWEJ BAZY DANYCH - WKLEIĆ ZAWARTOŚĆ PLIKU .db.txt W RAZIE POTRZEBY ---
     const dataFromFile = ` Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
@@ -901,6 +910,7 @@
                2 Dir(s)     95305310208 bytes free
 
       `;
+    // --- KONIEC PLIKOWEJ BAZY DANYCH ---
 
     let guides = [],
       filteredGuides = [],
