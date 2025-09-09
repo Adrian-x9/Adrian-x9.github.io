@@ -224,12 +224,16 @@
     }
 
     .dark-mode .privacy-notice {
-      color: #777;
+      color: #666;
     }
 
     button.inactive {
       font-weight: normal;
       opacity: 0.6;
+    }
+    
+    button.highlighted-state {
+        font-weight: bold;
     }
 
     .top-header {
@@ -249,7 +253,6 @@
       gap: 5px;
     }
 
-    /* ZMIANA 3: Dodano grupę dla logo i licznika */
     .header-logo-group {
       display: flex;
       align-items: center;
@@ -416,24 +419,22 @@
 
     .pagination {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 40px;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       align-items: center;
       gap: 10px;
-      /* ZMIANA 4: Ujednolicony odstęp */
       opacity: 0;
       transform: translateY(20px);
     }
 
-    /* ZMIANA 4: Ujednolicono wygląd przycisków i pól w paginacji */
     .pagination button,
     .pagination input,
     .pagination select {
       padding: 10px;
       margin: 0;
-      font-size: 1em;
+      font-size: 0.9em;
       cursor: pointer;
       border-radius: 5px;
       width: auto;
@@ -798,15 +799,9 @@
       <option value="9">9 pozycji</option>
       <option value="10">10 pozycji</option>
     </select>
-    <button id="animationBtn" onclick="toggleAnimations()">
-      <i class="fas fa-play-circle"></i> <b>Animacje</b>
-    </button>
-    <button id="previewBtn" onclick="togglePreview()">
-      <i class="fas fa-eye"></i> <b>Wszystko</b>
-    </button>
-    <button id="darkModeBtn" onclick="toggleDarkMode()">
-      <i class="fas fa-sun"></i> Tryb jasny
-    </button>
+    <button id="animationBtn" onclick="toggleAnimations()"></button>
+    <button id="previewBtn" onclick="togglePreview()"></button>
+    <button id="darkModeBtn" onclick="toggleDarkMode()"></button>
   </div>
 
   <div class="guide-list" id="guideList"></div>
@@ -842,13 +837,12 @@
     const config = {
       // --- POCZĄTEK PLIKU <-> konfiguracja.txt
       pageTitle: "▪ START ▪ MENU ▪",
-      version: 'v1.0.1',
+      version: 'v1.0.2',
       showMiniLogo: true,
       showVisuDirButton: true,
       showBackButton: true,
             
       // --- Pamięć przeglądarki ma pierwszeństwo przed konfiguracją poniżej ---
-      // --- KONFIGURACJA W PAMIĘCI PRZEGLĄDARKI ---
       defaultFormat: "LINK",
       defaultSort: "nameAsc",
       defaultRows: 3,
@@ -859,37 +853,28 @@
         { label: "", search: "" },
         { label: "", search: "" },
       ],
-      defaultBgv: true, // Dostosowujemy kod do dwóch nowych linijek, a później usuwamy tę linijkę
       defaultAnimation: 2, // 0 - Statycznie, 1 - Animacje, 2 - Video
-      filesVideo: 5, // maksymalny numer pliku video do wylosowania, czyli nazwa + liczba w tym przypadku od 1 do 5, albo ilość plików video
-      defaultVideo: 1, // numer domyślnego pliku wideo, doklejamy liczbę od 0 do n do nazwy pliku. N - ilość plików video, jeśli 0, to losujemy tło
-      defaultView: 1, // 0 - Tekst, 1 - Grafika, 2 - Wszystko
+      filesVideo: 5, 
+      defaultVideo: 0, 
+      defaultView: 1, // 0 - Tekst, 1 - Wszystko, 2 - Grafika
       // --- KONIEC - KONFIGURACJAW PAMIĘCI PRZEGLĄDARKI ---
 
       // --- Ścieżki dostępu ---
-      url404: "base-system/404.html", // adresy plików podstron
+      url404: "base-system/404.html",
       urlAbout: "base-system/about.html",
-
-      databaseFileName: "base-system/db.txt", // plikowa baza danych
-
-      dataFolderName: "base-system/files", // Konfiguracja folderów głównych
-      coversHDFolderName: "base-system/preview-HD",
+      databaseFileName: "base-system/db.txt",
+      dataFolderName: "base-system/files",
       coversFolderName: "base-system/preview",
-
-      faviconsFolderUrl: "base-system/.gfx/favicons", // Konfiguracja interfejsu
       miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
       miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
-      videoBgLightUrl: "base-system/.video/bg_light.mp4",
-      videoBgDarkUrl: "base-system/.video/bg_dark.mp4",      
-      // --- KONIEC PLIKU <-> konfiguracja.txt
+      videoBgLightUrlBase: "base-system/.video/bg_light",
+      videoBgDarkUrlBase: "base-system/.video/bg_dark",      
     };
     
-    // --- POCZĄTEK PLIKOWEJ BAZY DANYCH - WKLEIĆ ZAWARTOŚĆ PLIKU .db.txt W RAZIE POTRZEBY ---
+    // --- PLIKOWA BAZA DANYCH ---
     const dataFromFile = ` Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
-
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
-
 07.09.2025  07:59    <DIR>          .
 08.09.2025  22:53    <DIR>          ..
 06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
@@ -901,29 +886,26 @@
 06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
 06.09.2025  20:33                 0 .#Poradniki#index-gryonline.html$$72 Poradniki Gry-Online$$Poradniki Gry-Online.link
 06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
-06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
+06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki Przygodomania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
 06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
 06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
 06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
 06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
               14 File(s)              0 bytes
                2 Dir(s)     95305310208 bytes free
-
       `;
-    // --- KONIEC PLIKOWEJ BAZY DANYCH ---
 
     let guides = [],
       filteredGuides = [],
       playGuidesQueue = [];
     let currentPage = 1,
-      itemsPerPage,
-      selectedRowCount = config.defaultRows;
+      itemsPerPage;
     let playAnimationInterval = null,
-      currentSort = config.defaultSort;
+      currentSort,
+      selectedRowCount;
     let playCurrentIndex = 0,
       itemsPerRow = 0;
-    let animationState = 1;
-    let previewState = 1;
+    let animationState, previewState;
 
     const fileInput = document.getElementById("fileInput"),
       fileInputLabel = document.getElementById("fileInputLabel"),
@@ -945,6 +927,31 @@
       headerLogo = document.getElementById("header-logo"),
       bgVideo = document.getElementById("bg-video"),
       bgVideoSource = document.getElementById("bg-video-source");
+
+    function saveToLocalStorage(key, value) {
+        try {
+            localStorage.setItem(`visuDir_${key}`, value);
+        } catch (e) {
+            console.error("Error saving to localStorage", e);
+        }
+    }
+
+    function getFromLocalStorage(key) {
+        try {
+            return localStorage.getItem(`visuDir_${key}`);
+        } catch (e) {
+            console.error("Error reading from localStorage", e);
+            return null;
+        }
+    }
+
+    function loadConfig() {
+        currentSort = getFromLocalStorage('sort') || config.defaultSort;
+        selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.defaultRows;
+        config.defaultFormat = getFromLocalStorage('format') || config.defaultFormat;
+        animationState = parseInt(getFromLocalStorage('animation')) ?? config.defaultAnimation;
+        previewState = parseInt(getFromLocalStorage('view')) ?? config.defaultView;
+    }
 
     function getFileExtension(filename) {
       return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
@@ -1063,7 +1070,7 @@
         }
       }
     }
-    // NAPRAWIONO: Przywrócono pełną logikę budowania filtra z obsługą customowych wpisów
+
     function updateFormatFilter(formats) {
       formatFilter.innerHTML = '<option value="">Wszystko</option>';
       [...formats].sort().forEach((t) => {
@@ -1087,6 +1094,7 @@
         }
       });
     }
+
     function updatePaginationOptions() {
       const oldItemsPerPage = itemsPerPage;
       const guideWidth = 250,
@@ -1133,45 +1141,19 @@
         renderGuides();
       }
     }
+
     function loadAndParseFile(file) {
       const r = new FileReader();
-      r.onload = (e) => processData(e.target.result);
+      r.onload = (e) => init(e.target.result);
       r.readAsText(file, "utf-8");
       fileInput.value = null;
     }
-    window.onload = function () {
-      document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
-      document.getElementById("pageTitle").textContent = config.pageTitle;
-      document.title = config.pageTitle;
-      document.getElementById("aboutLinkFooter").href = config.urlAbout;
-      document.getElementById("visuDirBtn").href = config.urlAbout;
-      if (!localStorage.getItem("darkMode"))
-        localStorage.setItem("darkMode", "disabled");
-      const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-      if (isDarkMode) document.body.classList.add("dark-mode");
-      darkModeBtn.innerHTML = isDarkMode
-        ? `<i class="fas fa-sun"></i> Tryb jasny`
-        : `<i class="fas fa-moon"></i> Tryb ciemny`;
-      if (config.showMiniLogo)
-        headerLogo.src = isDarkMode
-          ? config.miniLogoDarkUrl
-          : config.miniLogoLightUrl;
-      else document.getElementById("logoLink").style.display = "none";
-      if (!config.showVisuDirButton)
-        document.getElementById("visuDirBtn").style.display = "none";
-      if (config.showBackButton)
-        document.getElementById("backButton").style.display = "flex";
-      else document.getElementById("backButton").style.display = "none";
-      toggleAnimations(true);
-      togglePreview(true);
 
-      // NAPRAWIONO: Poprawiono kolejność wywoływania funkcji, aby strona renderowała się na starcie
-      const init = (data) => {
-        processData(data); // 1. Tylko parsuj dane i wypełnij tablicę 'guides'
-
-        // 2. Ustaw wszystkie domyślne wartości i opcje menu
+    function init(data) {
+        processData(data);
         updateFormatFilter(new Set(guides.map(g => g.format.toUpperCase())));
-        applySort(config.defaultSort, guides);
+        applySort(currentSort, guides);
+
         const urlParams = new URLSearchParams(window.location.search);
         const searchQuery = urlParams.get('search');
         if (searchQuery) {
@@ -1181,12 +1163,36 @@
           formatFilter.value = config.defaultFormat;
         }
 
-        // 3. Oblicz opcje paginacji na podstawie już przefiltrowanych danych
         updatePaginationOptions();
-
-        // 4. Dopiero teraz wyrenderuj widok
         renderGuides();
-      };
+    }
+
+    window.onload = function () {
+      document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
+      document.getElementById("pageTitle").textContent = config.pageTitle;
+      document.title = config.pageTitle;
+      document.getElementById("aboutLinkFooter").href = config.urlAbout;
+      document.getElementById("visuDirBtn").href = config.urlAbout;
+      
+      const isDarkMode = getFromLocalStorage("darkMode") === "enabled";
+      if (isDarkMode) document.body.classList.add("dark-mode");
+      darkModeBtn.innerHTML = isDarkMode
+        ? `<i class="fas fa-sun"></i> Tryb jasny`
+        : `<i class="fas fa-moon"></i> Tryb ciemny`;
+      
+      if (config.showMiniLogo)
+        headerLogo.src = isDarkMode
+          ? config.miniLogoDarkUrl
+          : config.miniLogoLightUrl;
+      else document.getElementById("logoLink").style.display = "none";
+      
+      if (!config.showVisuDirButton) document.getElementById("visuDirBtn").style.display = "none";
+      document.getElementById("backButton").style.display = config.showBackButton ? "flex" : "none";
+
+      loadConfig();
+      updateAnimationButtonUI();
+      updatePreviewButtonUI();
+      manageBgVideo();
 
       if (dataFromFile && dataFromFile.trim().length > 0) {
         fileInputLabel.style.display = 'none';
@@ -1280,12 +1286,15 @@
         currentPage * itemsPerPage
       );
       guideList.innerHTML = "";
+      const animationsOn = animationState !== 0;
+
       pageItems.forEach((guide, index) => {
         const div = document.createElement("div");
         div.className = "guide";
-        const animationsOn = animationState !== 0;
-        if (animationsOn) {
-          div.style.opacity = 0;
+        if (!animationsOn) {
+            div.style.opacity = 1; 
+        } else {
+            div.style.opacity = 0;
         }
         guideList.appendChild(div);
         div.innerHTML = createGuideHtml(guide);
@@ -1332,8 +1341,6 @@
           () => currentPage--
         )
       );
-
-      // ZMIANA 5: Dodano przycisk losowania strony
       const randomBtn = document.createElement("button");
       randomBtn.innerHTML = `<i class="fas fa-random"></i> Losuj`;
       randomBtn.title = "Losuj stronę";
@@ -1346,7 +1353,6 @@
         }
       };
       container.appendChild(randomBtn);
-
 
       const pageInput = document.createElement("input");
       pageInput.type = "number";
@@ -1409,71 +1415,96 @@
       });
       randomSelector.value = "";
     }
-    function togglePreview(isInitial = false) {
-      if (!isInitial) previewState = (previewState + 1) % 3;
-      guideList.classList.remove("hide-covers", "only-covers");
-      previewBtn.classList.remove("inactive", "highlighted-state");
-      switch (previewState) {
-        case 0:
-          previewBtn.innerHTML = `<i class="fas fa-font"></i> <b>Tekst</b>`;
-          previewBtn.classList.add("inactive");
-          guideList.classList.add("hide-covers");
-          break;
-        case 1:
-          previewBtn.innerHTML = `<i class="fas fa-eye"></i> <b>Wszystko</b>`;
-          break;
-        case 2:
-          previewBtn.innerHTML = `<i class="fas fa-image"></i> <b>Grafika</b>`;
-          previewBtn.classList.add("highlighted-state");
-          guideList.classList.add("only-covers");
-          break;
-      }
+
+    function updatePreviewButtonUI() {
+        previewBtn.classList.remove("inactive", "highlighted-state");
+        guideList.classList.remove("hide-covers", "only-covers");
+        
+        switch (previewState) {
+            case 0: // currently Text, next is All
+                previewBtn.innerHTML = `<i class="fas fa-object-group"></i> Grafika i tekst`;
+                guideList.classList.add("hide-covers");
+                break;
+            case 1: // currently All, next is Graphics
+                previewBtn.innerHTML = `<i class="fas fa-font"></i> Tekst`;
+                previewBtn.classList.add("highlighted-state");
+                break;
+            case 2: // currently Graphics, next is Text
+                previewBtn.innerHTML = `<i class="fas fa-image"></i> Grafika`;
+                previewBtn.classList.add("inactive");
+                guideList.classList.add("only-covers");
+                break;
+        }
     }
+
+    function togglePreview() {
+      previewState = (previewState + 1) % 3;
+      saveToLocalStorage('view', previewState);
+      updatePreviewButtonUI();
+    }
+    
     function manageBgVideo() {
-      const u = new URLSearchParams(window.location.search),
-        p = u.get("bgv"),
-        s = p !== null ? p === "true" : config.defaultBgv,
-        v = animationState === 2 || (s && animationState !== 0);
-      if (v) {
-        bgVideoSource.src = document.body.classList.contains("dark-mode")
-          ? config.videoBgDarkUrl
-          : config.videoBgLightUrl;
-        bgVideo.load();
-        bgVideo.style.display = "block";
-        bgVideo.addEventListener(
-          "canplay",
-          () => document.body.classList.add("video-ready"),
-          { once: true }
-        );
-      } else {
-        bgVideo.style.display = "none";
-        document.body.classList.remove("video-ready");
-      }
+        const urlParams = new URLSearchParams(window.location.search);
+        const bgvParam = urlParams.get("bgv");
+        const showVideoParam = bgvParam !== null ? bgvParam === "true" : null;
+
+        const shouldShowVideo = showVideoParam ?? animationState === 2;
+
+        if (shouldShowVideo) {
+            const videoNumber = config.defaultVideo === 0 
+                ? Math.floor(Math.random() * config.filesVideo) + 1 
+                : config.defaultVideo;
+            
+            const videoBaseUrl = document.body.classList.contains("dark-mode")
+                ? config.videoBgDarkUrlBase
+                : config.videoBgLightUrlBase;
+            
+            bgVideoSource.src = `${videoBaseUrl}_${videoNumber}.mp4`;
+            bgVideo.load();
+            bgVideo.style.display = "block";
+            bgVideo.addEventListener(
+                "canplay",
+                () => document.body.classList.add("video-ready"),
+                { once: true }
+            );
+        } else {
+            bgVideo.style.display = "none";
+            document.body.classList.remove("video-ready");
+        }
     }
-    function toggleAnimations(isInitial = false) {
-      if (!isInitial) animationState = (animationState + 1) % 3;
-      animationBtn.classList.remove("inactive", "highlighted-state");
-      document.body.classList.remove("no-animation");
-      switch (animationState) {
-        case 0:
-          animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> <b>Animacje</b>`;
-          animationBtn.classList.add("inactive");
-          document.body.classList.add("no-animation");
-          break;
-        case 1:
-          animationBtn.innerHTML = `<i class="fas fa-play-circle"></i> <b>Animacje</b>`;
-          break;
-        case 2:
-          animationBtn.innerHTML = `<i class="fas fa-video"></i> <b>Video</b>`;
-          animationBtn.classList.add("highlighted-state");
-          break;
-      }
+
+    function updateAnimationButtonUI() {
+        animationBtn.classList.remove("inactive", "highlighted-state");
+        document.body.classList.remove("no-animation");
+
+        switch (animationState) {
+            case 0: // currently Static, next is Animations
+                animationBtn.innerHTML = `<i class="fas fa-video"></i> Video`;
+                document.body.classList.add("no-animation");
+                break;
+            case 1: // currently Animations, next is Video
+                animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
+                animationBtn.classList.add("highlighted-state");
+                break;
+            case 2: // currently Video, next is Static
+                animationBtn.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
+                animationBtn.classList.add("inactive");
+                break;
+        }
+    }
+    
+    function toggleAnimations() {
+      animationState = (animationState + 1) % 3;
+      saveToLocalStorage('animation', animationState);
+      updateAnimationButtonUI();
       manageBgVideo();
+      renderGuides(); // Re-render to apply/remove animation classes
     }
+
     function toggleDarkMode() {
       document.body.classList.toggle("dark-mode");
       const i = document.body.classList.contains("dark-mode");
-      localStorage.setItem("darkMode", i ? "enabled" : "disabled");
+      saveToLocalStorage("darkMode", i ? "enabled" : "disabled");
       darkModeBtn.innerHTML = i
         ? `<i class="fas fa-sun"></i> Tryb jasny`
         : `<i class="fas fa-moon"></i> Tryb ciemny`;
@@ -1624,8 +1655,11 @@
     });
     formatFilter.addEventListener("change", () => {
       currentPage = 1;
-      if (formatFilter.value.startsWith("search:")) {
-        searchInput.value = formatFilter.value.substring(7);
+      const value = formatFilter.value;
+      if (value.startsWith("search:")) {
+        searchInput.value = value.substring(7);
+      } else {
+         saveToLocalStorage('format', value);
       }
       renderGuides();
       stopPlayAnimation();
@@ -1633,6 +1667,7 @@
     sortSelector.addEventListener("change", () => {
       if (sortSelector.value) {
         applySort(sortSelector.value, guides);
+        saveToLocalStorage('sort', sortSelector.value);
         currentPage = 1;
         renderGuides();
       }
@@ -1640,6 +1675,7 @@
     });
     itemsPerPageSelector.addEventListener("change", (e) => {
       selectedRowCount = parseInt(e.target.value);
+      saveToLocalStorage('rows', selectedRowCount);
       itemsPerPage = selectedRowCount * itemsPerRow;
       currentPage = 1;
       renderGuides();
