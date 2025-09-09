@@ -267,7 +267,6 @@
             background: #fdfdfd;
         }
 
-        body:not(.dark-mode) #about-image-container,
         body:not(.dark-mode) .content-box,
         body:not(.dark-mode) #video-box-container {
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
@@ -299,7 +298,6 @@
             border: none;
         }
 
-        .dark-mode #about-image-container,
         .dark-mode .dir-db-btn,
         .dark-mode .content-box,
         .dark-mode #video-box-container {
@@ -309,6 +307,16 @@
         .dark-mode .dir-db-btn:hover {
             background: #111111;
             box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        body:not(.dark-mode) #about-image-container {
+            background-color: rgba(255, 255, 255, 0.33);
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .dark-mode #about-image-container {
+            background-color: rgba(0, 0, 0, 0.33);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
         }
 
         .dark-mode .inner-content {
@@ -379,13 +387,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             display: none;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             animation: fadeIn 0.3s ease;
+        }
+
+        body:not(.dark-mode) #lightbox {
+            background-color: rgba(255, 255, 255, 0.33);
+        }
+
+        .dark-mode #lightbox {
+            background-color: rgba(0, 0, 0, 0.33);
         }
 
         @keyframes fadeIn {
@@ -432,7 +447,14 @@
             color: #e53935;
         }
 
-        /* ZMIANA: Zaktualizowano styl napisu na wzór slideshow.html */
+        body:not(.dark-mode) #lightbox-close {
+            color: #000;
+        }
+        
+        body:not(.dark-mode) #lightbox-close:hover {
+            color: #cc0000;
+        }
+
         #lightbox-caption {
             position: absolute;
             bottom: 20px;
@@ -440,14 +462,18 @@
             padding: 10px 15px;
             border-radius: 5px;
             font-size: 1.2em;
-            font-weight: bold;
-            transform: translate(-50%, 120%); /* Ukryty pod ekranem + margines */
+            transform: translate(-50%, 120%);
             transition: transform 0.5s ease-in-out;
+            font-weight: bold;
         }
         
         body:not(.dark-mode) #lightbox-caption {
             background-color: rgba(255, 255, 255, 0.8);
             color: #333;
+        }
+        
+        body:not(.dark-mode) #lightbox-caption .caption-name {
+            color: #d32f2f;
         }
 
         .dark-mode #lightbox-caption {
@@ -455,8 +481,21 @@
             color: #fff;
         }
 
+        .dark-mode #lightbox-caption .caption-name {
+            color: #b71c1c;
+        }
+
         #lightbox-caption.visible {
             transform: translate(-50%, 0);
+        }
+
+        body.lightbox-active > .top-header,
+        body.lightbox-active > .container,
+        body.lightbox-active > .footer {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
         }
     </style>
 </head>
@@ -520,6 +559,8 @@
                                     target="_blank" rel="noopener noreferrer">ade.pl</a>, <a href="https://ade24.pl"
                                     target="_blank" rel="noopener noreferrer">ade24.pl</a></span>
                         </div>
+                        <div class="contact-line"><i class="fas fa-money-check-alt"></i><a href="https://start.ade.pl/dane-do-wplat-i-przelew/"
+                                target="_blank" rel="noopener noreferrer">Dane do wpłat i przelewów</a></div>
                         <div class="contact-line"><i class="fas fa-globe"></i><a href="https://www.ade24.pl/contact/"
                                 target="_blank" rel="noopener noreferrer">Formularz kontaktowy</a></div>
                         <div class="contact-line"><i class="fas fa-phone"></i><a href="tel:601190330">601 190 330</a>
@@ -538,8 +579,15 @@
         <div class="content-box">
             <div class="inner-content">
                 <h2>Historia wersji</h2>
-                <p><strong>v1.0.1 (2025-09-08)</strong> Poprawki błędów, rozbudowa systemu, generacja grafik.</p>
-                <p><strong>v1.0.0 (2025-09-07)</strong> Pierwsza pełna wersja systemu.</p>
+                <p><strong>v1.0.8 (2025-09-09)</strong> Przywrócenie wyszarzenia tła w trybie podglądu zdjęcia.</p>
+                <p><strong>v1.0.7 (2025-09-09)</strong> Zmiana stylizacji napisu w lightboxie.</p>
+                <p><strong>v1.0.6 (2025-09-09)</strong> Korekta przezroczystości kontenera zdjęcia.</p>
+                <p><strong>v1.0.5 (2025-09-09)</strong> Korekta opisu zdjęcia i przezroczystość kontenera.</p>
+                <p><strong>v1.0.4 (2025-09-09)</strong> Poprawki wizualne w lightboxie i dodanie danych do przelewów.</p>
+                <p><strong>v1.0.3 (2025-09-09)</strong> Poprawki nakładki i widoczności lightboxa.</p>
+                <p><strong>v1.0.2 (2025-09-09)</strong> Error corrections, functions update.</p>
+                <p><strong>v1.0.1 (2025-09-08)</strong> Errors fixing, media generation.</p>
+                <p><strong>v1.0.0 (2025-09-07)</strong> First version.</p>
             </div>
         </div>
 
@@ -566,7 +614,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.0.1', // ZMIANA: Dodano wersję
+            version: 'v1.0.8',
             defaultBgv: true,
             videos: {
                 about_dark: '.video/about_dark.mp4',
@@ -702,12 +750,13 @@
 
             if (imageForLightbox && lightbox && lightboxContent && lightboxClose && lightboxCaption) {
                 imageForLightbox.addEventListener('click', () => {
+                    document.body.classList.add('lightbox-active');
                     const currentImgSrc = aboutImage.src;
                     lightboxContent.src = currentImgSrc;
                     lightbox.style.display = 'flex';
 
                     if (currentImgSrc.includes('Adrian-')) {
-                        lightboxCaption.innerText = 'Adrian Ulbrych, wyretuszowano z użyciem AI, zdjęcie archiwalne';
+                        lightboxCaption.innerHTML = '<span class="caption-name">Adrian Ulbrych</span> Zdjęcie archiwalne. Wyretuszowano z AI';
                         setTimeout(() => {
                             lightboxCaption.classList.add('visible');
                         }, 500);
@@ -715,9 +764,11 @@
                 });
 
                 const closeLightbox = () => {
+                    document.body.classList.remove('lightbox-active');
                     lightbox.style.display = 'none';
                     lightboxCaption.classList.remove('visible');
                     lightboxContent.src = '';
+                    lightboxCaption.innerHTML = '';
                 };
 
                 lightboxClose.addEventListener('click', closeLightbox);
@@ -732,3 +783,4 @@
 </body>
 
 </html>
+
