@@ -11,6 +11,8 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <!-- Dodaj lz-string do kompresji -->
+    <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', sans-serif;
@@ -527,17 +529,20 @@
             }
         };
 
+        // ZAMIANA: Funkcje kodujące z kompresją lz-string
         const encodeLink = (link, title, description) => {
             const dataString = `URL:${link}::Title:${title}::Description:${description}`;
-            const encodedBase64 = btoa(unescape(encodeURIComponent(dataString)));
-            const filename = `.${encodedBase64}.link`;
+            // Kompresja i kodowanie do Base64
+            const compressed = LZString.compressToBase64(dataString);
+            const filename = `.${compressed}.link`;
             return filename;
         };
 
         const decodeLink = (filename) => {
             try {
-                const encodedBase64 = filename.substring(1, filename.length - 5);
-                const decodedString = decodeURIComponent(escape(atob(encodedBase64)));
+                const compressed = filename.substring(1, filename.length - 5);
+                // Dekompresja z Base64
+                const decodedString = LZString.decompressFromBase64(compressed);
                 const urlMatch = decodedString.match(/URL:(.*?)::/);
                 const titleMatch = decodedString.match(/Title:(.*?)::/);
                 const descriptionMatch = decodedString.match(/Description:(.*)/);
