@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Moja Biblioteka Poradników</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16" href="gfx/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="gfx/favicons/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="gfx/favicons/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="gfx/favicons/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="gfx/favicons/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="gfx/favicons/apple-touch-icon-76x76.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="gfx/favicons/apple-touch-icon-96x96.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="gfx/favicons/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="gfx/favicons/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="gfx/favicons/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="gfx/favicons/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="gfx/favicons/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="gfx/favicons/android-icon-192x192.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        body.no-animation .guide.animate-in,
+        body.no-animation .guide.flip-animate {
+            animation: none !important;
+            transform: none !important;
+        }
+
+        body.no-animation .guide-cover {
+            transition: none !important;
+        }
+
+        .dark-mode {
+            background-color: #181818;
+            color: #eee;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        button.inactive {
+            opacity: 0.5;
+            font-weight: normal;
+        }
+
+        .dark-mode button.inactive {
+            opacity: 0.4;
+            color: #aaa;
+        }
+
+        body:not(.dark-mode) button.inactive {
+            opacity: 0.5;
+            color: #666;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .header-group {
+            display: flex;
+            gap: 5px;
+            /* Mniejszy odstęp dla przycisków w grupie */
+        }
+
+        .header-group .dir-db-btn i {
+            margin-right: 5px;
+        }
+
+        .top-header button {
+            padding: 10px 20px;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .top-header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .top-header .counter {
+            font-size: 0.9em;
+            color: #aaa;
+        }
+
+        .top-header .counter b {
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        input,
+        select,
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            white-space: nowrap;
+        }
+
+        .dark-mode input,
+        .dark-mode select {
+            background-color: #000000;
+            color: #eee;
+            border-color: #555;
+        }
+
+        .dark-mode button {
+            background-color: #000000;
+            color: #eee;
+            border-color: #555;
+        }
+
+        .dark-mode button:hover:not(:disabled) {
+            background-color: #222;
+        }
+
+        body:not(.dark-mode) input,
+        body:not(.dark-mode) select {
+            background-color: #fff;
+            color: #333;
+            border-color: #ddd;
+        }
+
+        body:not(.dark-mode) button {
+            background-color: #fff;
+            color: #333;
+            border-color: #ccc;
+        }
+
+        body:not(.dark-mode) button:hover {
+            background-color: #f0f0f0;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .dark-mode input::placeholder {
+            color: #666;
+        }
+
+        .dir-db-btn {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: row;
+            /* Zmiana na row dla przycisku Wstecz */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        body:not(.dark-mode) .dir-db-btn {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+            color: #cc0000;
+        }
+
+        .dark-mode .dir-db-btn {
+            background: #000000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            color: #e53935;
+            border: none;
+        }
+
+        .dir-db-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        body:not(.dark-mode) .dir-db-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .dir-db-btn:hover {
+            background: #111111;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .guide-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 300px));
+            justify-content: start;
+            gap: 20px;
+            width: 90%;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .guide-list.hide-covers .guide-cover {
+            visibility: hidden;
+            opacity: 0;
+            max-height: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            border-width: 0;
+            padding: 0;
+        }
+
+        .guide {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            position: relative;
+            transform-style: preserve-3d;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        body:not(.dark-mode) .guide {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        .guide:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .guide {
+            background: #000000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .dark-mode .guide:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .guide a {
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .guide a.cover-link {
+            margin-top: 0;
+        }
+
+        .dark-mode .guide a {
+            color: #e53935;
+        }
+
+        body:not(.dark-mode) .guide a {
+            color: #cc0000;
+        }
+
+        .guide-info {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .dark-mode .guide-info {
+            color: #bbb;
+        }
+
+        .guide-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 5px;
+            overflow-wrap: break-word;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pagination button,
+        .pagination input,
+        .pagination select {
+            padding: 8px 16px;
+            margin: 0 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #333;
+            transition: background-color 0.2s;
+            width: auto;
+        }
+
+        .pagination button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .dark-mode .pagination button,
+        .dark-mode .pagination input,
+        .dark-mode .pagination select {
+            background-color: #000000;
+            color: #eee;
+            border-color: #555;
+        }
+
+        .dark-mode .pagination button:hover:not(:disabled) {
+            background-color: #222;
+        }
+
+        .pagination-info {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 0 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: #f0f0f0;
+            color: #555;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .pagination-info {
+            background-color: #222;
+            border-color: #444;
+            color: #ccc;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
+        }
+
+        .guide-cover {
+            max-width: 181px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            margin: 10px auto 0 auto;
+            display: block;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: opacity 0.4s, max-height 0.4s, margin 0.4s, padding 0.4s, border-width 0.4s, visibility 0.4s, transform 0.4s ease-out;
+            border: 2px solid #ccc;
+            opacity: 0;
+            transform: scale(0.7);
+        }
+
+        body:not(.dark-mode) .guide-cover {
+            border-color: #cc0000;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+        }
+
+        .dark-mode .guide-cover {
+            border-color: #e53935;
+            box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
+        }
+
+        @keyframes fadeInSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomInThenOut {
+            0% {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+
+            10% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            90% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+        }
+
+        .guide.animate-in {
+            animation: fadeInSlideIn 0.5s ease-out forwards;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.8em;
+        }
+
+        .dark-mode .footer {
+            color: #bbb;
+        }
+
+        .dark-mode .privacy-notice {
+            color: #777;
+        }
+
+        .footer a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #cc0000;
+        }
+
+        .dark-mode .footer a {
+            color: #e53935;
+        }
+
+        .dark-mode .footer .footer-special-text {
+            color: #eee;
+        }
+
+        .footer .footer-special-text {
+            font-weight: normal;
+            color: #555;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .file-input-label {
+            cursor: pointer;
+        }
+
+        /* --- Style dla trybu Play i podglądu --- */
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, background-color 0.3s;
+        }
+
+        .dark-mode .backdrop {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .dark-mode .backdrop.image-mode-active,
+        .dark-mode .backdrop.preview-active {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .backdrop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .play-guide-container {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 400px;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .play-guide-container .guide,
+        .play-guide-container .play-image-view {
+            animation: zoomInThenOut 4s linear infinite;
+        }
+
+        .play-guide-container.image-mode {
+            width: 95vw;
+            height: 95vh;
+            max-width: initial;
+            max-height: initial;
+        }
+
+        .preview-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .play-image-view {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .play-image-view img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+
+        .play-image-view .guide-title {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        body:not(.dark-mode) .play-image-view .guide-title {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        .dark-mode .play-image-view .guide-title {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+        }
+
+        .play-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s, background-color 0.3s, color 0.3s;
+        }
+
+        body:not(.dark-mode) .play-counter {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        .play-counter.visible {
+            opacity: 1;
+        }
+
+        .play-close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.2s ease, color 0.2s;
+        }
+
+        .dark-mode .play-close-btn {
+            color: white;
+        }
+
+        .play-close-btn:hover {
+            transform: scale(1.2);
+            color: #e53935;
+        }
+
+        @media (min-width: 1200px) {
+            .play-guide-container {
+                width: 90vw;
+                height: 90vh;
+                max-width: 450px;
+                max-height: 700px;
+            }
+
+            .play-guide-container.image-mode {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+
+            .play-guide-container .guide {
+                width: 100%;
+                height: 100%;
+                padding: 20px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .play-guide-container .guide .guide-cover {
+                height: 70%;
+                width: auto;
+                max-height: none;
+                max-width: 100%;
+            }
+        }
+
+        body:not(.dark-mode) .play-guide-container .guide {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .play-guide-container .guide {
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        }
+
+        /* --- Koniec styli dla trybu Play --- */
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-header,
+        .animated-controls,
+        .animated-footer {
+            animation-fill-mode: forwards;
+        }
+
+        .animated-header {
+            animation-name: fadeInDown;
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+        }
+
+        .animated-controls {
+            animation-name: fadeInDown;
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+        }
+
+        .animated-footer {
+            animation-name: fadeInUp;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-out;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div class="top-header">
+        <div class="header-group">
+            <a id="backButton" class="dir-db-btn" href="../index.html" title="Wróć"><i class="fas fa-chevron-left"></i>
+                Wstecz</a>
+            <a class="dir-db-btn" href="base-system/about.html">VisuDir v1.0.0</a>
+        </div>
+        <div class="title"><i class="fas fa-book-open"></i> Poradniki do Gier</div>
+        <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
+    </div>
+    <div class="controls">
+        <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
+            Załaduj...</label>
+        <input type="file" id="fileInput" accept=".txt">
+        <button id="playButton" title="Losuj animacją" class="dir-db-btn"><i class="fas fa-play"></i>&nbsp;Play</button>
+        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn"><i
+                class="fas fa-sync"></i>&nbsp;Reset</button>
+        <input type="text" id="search" placeholder="Szukaj pozycji...">
+        <select id="formatFilter">
+            <option value="">Wszystkie formaty</option>
+        </select>
+        <select id="sortSelector">
+            <option value="">Sortuj...</option>
+            <option value="shuffle">Wymieszaj</option>
+            <option value="nameAsc">Nazwa A–Z</option>
+            <option value="nameDesc">Nazwa Z–A</option>
+            <option value="dateAsc">Data ↑</option>
+            <option value="dateDesc">Data ↓</option>
+            <option value="sizeAsc">Rozmiar ↑</option>
+            <option value="sizeDesc">Rozmiar ↓</option>
+        </select>
+        <select id="itemsPerPageSelector">
+            <option value="6">6 / stronę</option>
+            <option value="12" selected>12 / stronę</option>
+            <option value="24">24 / stronę</option>
+            <option value="48">48 / stronę</option>
+            <option value="96">96 / stronę</option>
+        </select>
+        <select id="randomSelector" onchange="drawRandomGuides()">
+            <option value="" disabled selected>Losuj...</option>
+            <option value="1">1 pozycja</option>
+            <option value="2">2 pozycje</option>
+            <option value="3">3 pozycje</option>
+            <option value="4">4 pozycje</option>
+            <option value="5">5 pozycji</option>
+            <option value="6">6 pozycji</option>
+        </select>
+        <button id="animationBtn" onclick="toggleAnimations()"><i class="fas fa-pause-circle"></i> Animacje</button>
+        <button id="coversBtn" onclick="toggleCovers()"><i class="fas fa-eye-slash"></i> Okładki</button>
+        <button id="darkModeBtn" onclick="toggleDarkMode()"><i class="fas fa-sun"></i> Tryb jasny</button>
+    </div>
+
+    <div class="guide-list" id="guideList"></div>
+    <div class="pagination" id="pagination"></div>
+
+    <div class="footer">
+        <div>System <a href="base-system/about.html">dir-db</a> do katalogowania, zarządzania i prezentacji plików i folderów |
+            <strong>© 2025-09-07</strong> by <a href="https://www.ade.pl" target="_blank"
+                rel="noopener noreferrer">Adrian Ulbrych</a> | <span class="footer-special-text">tel.</span> <a
+                href="tel:601190330">601 190 330</a></div>
+        <div class="privacy-notice"><strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani śledzenia.
+            <strong>Czysty i bezpieczny kod!</strong></div>
+    </div>
+    <div id="backdrop" class="backdrop">
+        <button id="playCloseBtn" class="play-close-btn"><i class="fas fa-times"></i></button>
+        <div id="play-guide-container" class="play-guide-container"></div>
+        <div id="play-counter" class="play-counter"></div>
+    </div>
+
+
+    <script>
+        // --- KONFIGURACJA ---
+        const config = {
+            dataFolderName: 'base-system/files',
+            coversFolderName: 'base-system/mini',
+            convesHDFolderName: '',
+            databaseFileName: 'base-system/db.txt',
+            url404: "base-system/404.html",
+            urlAbout: "base-system/about.html",
+            pageTitle: 'Menu Główne',
+            defaultFormat: 'link',
+            defaultSort: 'nameAsc',
+            showBackButton: false,
+            predefinedFilters: [
+                { label: "", search: "" },
+                { label: "", search: "" },
+                { label: "", search: "" }
+            ]
+        };
+
+        // STAŁA Z DANYMI PLIKU
+        const dataFromFile = `
+ Volume in drive C has no label.
+ Volume Serial Number is 64E4-665E
+
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
+
+07.09.2025  07:59    <DIR>          .
+07.09.2025  07:33    <DIR>          ..
+06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
+06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
+06.09.2025  19:59                 0 .#certyfikaty#index.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
+06.09.2025  20:33                 0 .#index-mini.html$$01 MENU mini$$01 Mini menu.link
+06.09.2025  20:32                 0 .#index.html$$01 MENU pelne$$Pelne menu.link
+06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
+06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
+06.09.2025  20:33                 0 .#Poradniki#index-gryonline.html$$72 Poradniki Gry-Online$$Poradniki Gry-Online.link
+06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
+06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
+06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
+06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
+06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
+06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
+              14 File(s)              0 bytes
+               2 Dir(s)     98732941312 bytes free
+        `;
+        // --- KONIEC KONFIGURACJI ---
+
+        let guides = [];
+        let filteredGuides = [];
+        let currentPage = 1;
+        let itemsPerPage = 12;
+        let showCovers = true;
+        let animationsEnabled = true;
+        let playAnimationInterval = null;
+        let currentSort = config.defaultSort;
+        let playCounterElement;
+        let playGuidesQueue = [];
+        let playCurrentIndex = 0;
+
+        const fileInput = document.getElementById('fileInput');
+        const fileInputLabel = document.getElementById('fileInputLabel');
+        const searchInput = document.getElementById('search');
+        const formatFilter = document.getElementById('formatFilter');
+        const guideList = document.getElementById('guideList');
+        const pagination = document.getElementById('pagination');
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const coversBtn = document.getElementById('coversBtn');
+        const animationBtn = document.getElementById('animationBtn');
+        const sortSelector = document.getElementById("sortSelector");
+        const itemsPerPageSelector = document.getElementById("itemsPerPageSelector");
+        const randomSelector = document.getElementById("randomSelector");
+        const playButton = document.getElementById("playButton");
+        const backdrop = document.getElementById("backdrop");
+        const playGuideContainer = document.getElementById("play-guide-container");
+        playCounterElement = document.getElementById('play-counter');
+        const playCloseBtn = document.getElementById('playCloseBtn');
+
+        document.querySelector('.top-header .title').innerHTML = `<i class="fas fa-book-open"></i>&nbsp;${config.pageTitle}`;
+        document.title = config.pageTitle;
+
+        function getFileExtension(filename) {
+            return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2).toLowerCase();
+        }
+
+        function normalizeUrl(url) {
+            const trimmedUrl = url.trim();
+            if (trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://') || trimmedUrl.startsWith('./') || trimmedUrl.startsWith('../') || trimmedUrl.startsWith('/')) {
+                return trimmedUrl;
+            }
+            return `https://${trimmedUrl}`;
+        }
+
+        function decodeUrlFromFilename(filename) {
+            let urlPart = filename.split('$$')[0];
+            urlPart = urlPart.replace(/\.link$/i, '');
+            urlPart = urlPart.replace(/#/g, '/');
+            return normalizeUrl(urlPart);
+        }
+
+        function parseGuideTitle(filename) {
+            const baseName = filename.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, '').trim();
+            const parts = baseName.split('$$');
+
+            if (getFileExtension(filename) === 'link' && parts.length > 1) {
+                // Nowy format dla .link: URL$$Tytuł$$Opis
+                return {
+                    title: decodeURIComponent(parts[1] || ''),
+                    offlineDesc: decodeURIComponent(parts[2] || null)
+                };
+            }
+
+            // Stary format dla innych plików
+            const title = decodeURIComponent(parts[0].replace(/_/g, ' ').replace(/-/g, ' ')).replace(/\s*-\s*Poradnik(?:_do_gry)?\s*(?:GRY-OnLine|Gry-OnLine)?\s*/i, '').trim();
+            return { title: title, offlineDesc: null };
+        }
+
+
+        function createDateFromStrings(dateStr, timeStr) {
+            const [day, month, year] = dateStr.split('.').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return new Date(year, month - 1, day, hours, minutes);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function applySort(sortType, array) {
+            currentSort = sortType;
+            switch (sortType) {
+                case "shuffle":
+                    shuffleArray(array);
+                    break;
+                case "nameAsc":
+                    array.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case "nameDesc":
+                    array.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                case "dateAsc":
+                    array.sort((a, b) => a.timestamp - b.timestamp);
+                    break;
+                case "dateDesc":
+                    array.sort((a, b) => b.timestamp - a.timestamp);
+                    break;
+                case "sizeAsc":
+                    array.sort((a, b) => parseFloat(a.sizeMB) - parseFloat(b.sizeMB));
+                    break;
+                case "sizeDesc":
+                    array.sort((a, b) => parseFloat(b.sizeMB) - parseFloat(a.sizeMB));
+                    break;
+            }
+        }
+
+        async function processData(text) {
+            const lines = text.split(/\r?\n/);
+            guides = [];
+            const formats = new Set();
+
+            for (const line of lines) {
+                const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+(\d+)\s+(.+)$/i);
+                if (match) {
+                    const date = match[1];
+                    const time = match[2];
+                    const sizeBytes = parseInt(match[3]);
+                    const sizeMB = (sizeBytes / (1024 * 1024)).toFixed(2);
+                    const filename = match[4].trim();
+                    const format = getFileExtension(filename);
+                    const { title, offlineDesc } = parseGuideTitle(filename);
+                    let linkData = { description: offlineDesc };
+
+                    if (format === 'link') {
+                        if (location.protocol !== 'file:') {
+                            try {
+                                const response = await fetch(`${config.dataFolderName}/${filename}`);
+                                if (response.ok) {
+                                    linkData.description = await response.text();
+                                } else if (!offlineDesc) { // Jeśli jest opis offline, użyj go zamiast błędu
+                                    linkData.description = 'Błąd wczytywania opisu.';
+                                }
+                            } catch (e) {
+                                console.error(`Nie udało się wczytać pliku .link: ${filename}`, e);
+                                if (!offlineDesc) {
+                                    linkData.description = 'Błąd wczytywania opisu.';
+                                }
+                            }
+                        }
+                    }
+
+                    guides.push({
+                        title,
+                        format,
+                        file: filename,
+                        sizeMB,
+                        date,
+                        time,
+                        timestamp: createDateFromStrings(date, time).getTime(),
+                        linkData
+                    });
+                    if (['pdf', 'epub', 'mobi', 'link', 'jpg', 'png'].includes(format)) {
+                        formats.add(format.toUpperCase());
+                    }
+                }
+            }
+
+            updateFormatFilter(formats);
+            fileInputLabel.style.display = 'none';
+            applySort(config.defaultSort, guides);
+            renderGuides();
+        }
+
+        function updateFormatFilter(formats) {
+            formatFilter.innerHTML = '<option value="">Wszystkie formaty</option>';
+            const sortedFormats = [...formats].sort();
+
+            sortedFormats.forEach(format => {
+                const option = document.createElement('option');
+                option.value = format.toLowerCase();
+                option.textContent = format;
+                formatFilter.appendChild(option);
+            });
+
+            if (config.predefinedFilters.some(f => f.label && f.search)) {
+                const separator = document.createElement('option');
+                separator.disabled = true;
+                separator.textContent = '──────────';
+                formatFilter.appendChild(separator);
+            }
+
+            config.predefinedFilters.forEach(filter => {
+                if (filter.label && filter.search) {
+                    const option = document.createElement('option');
+                    option.value = `search:${filter.search}`;
+                    option.textContent = filter.label;
+                    formatFilter.appendChild(option);
+                }
+            });
+
+            const defaultOption = Array.from(formatFilter.options).find(opt => opt.value === config.defaultFormat);
+            if (defaultOption) {
+                formatFilter.value = config.defaultFormat;
+            }
+        }
+
+        function loadAndParseFile(file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                processData(e.target.result);
+            };
+            reader.readAsText(file, 'utf-8');
+            fileInput.value = null;
+        }
+
+        window.onload = function () {
+            if (!localStorage.getItem('darkMode')) {
+                localStorage.setItem('darkMode', 'disabled');
+            }
+
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeBtn.innerHTML = `<i class="fas fa-sun"></i> Tryb jasny`;
+            } else {
+                document.body.classList.remove('dark-mode');
+                darkModeBtn.innerHTML = `<i class="fas fa-moon"></i> Tryb ciemny`;
+            }
+
+            if (config.showBackButton) {
+                document.getElementById('backButton').style.display = 'flex';
+            } else {
+                document.getElementById('backButton').style.display = 'none';
+            }
+
+            coversBtn.innerHTML = `<i class="fas fa-eye-slash"></i> Okładki`;
+            animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> Animacje`;
+
+            if (dataFromFile && dataFromFile.trim().length > 0) {
+                fileInputLabel.style.display = 'none';
+                processData(dataFromFile);
+            } else {
+                fetch(config.databaseFileName)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Plik nie znaleziony');
+                        }
+                        return response.text();
+                    })
+                    .then(text => {
+                        processData(text);
+                    })
+                    .catch(error => {
+                        console.error(`Automatyczne ładowanie pliku '${config.databaseFileName}' nie powiodło się.`, error);
+                        fileInputLabel.style.display = 'flex';
+                    });
+            }
+        };
+
+        searchInput.addEventListener("input", () => {
+            currentPage = 1;
+            renderGuides();
+            stopPlayAnimation();
+        });
+
+        formatFilter.addEventListener("change", () => {
+            currentPage = 1;
+            const selectedValue = formatFilter.value;
+
+            if (selectedValue.startsWith('search:')) {
+                const searchTerm = selectedValue.substring(7);
+                searchInput.value = searchTerm;
+            }
+            renderGuides();
+            stopPlayAnimation();
+        });
+
+        sortSelector.addEventListener("change", () => {
+            const sortType = sortSelector.value;
+            if (sortType) {
+                applySort(sortType, guides);
+                currentPage = 1;
+                renderGuides();
+            }
+            sortSelector.value = '';
+        });
+
+        itemsPerPageSelector.addEventListener("change", (event) => {
+            itemsPerPage = parseInt(event.target.value);
+            currentPage = 1;
+            renderGuides();
+            stopPlayAnimation();
+        });
+
+        fileInput.addEventListener('change', function () {
+            const file = this.files[0];
+            if (!file) return;
+            loadAndParseFile(file);
+            stopPlayAnimation();
+        });
+
+        function resetView() {
+            stopPlayAnimation();
+            searchInput.value = '';
+
+            const defaultOption = Array.from(formatFilter.options).find(opt => opt.value === config.defaultFormat);
+            formatFilter.value = defaultOption ? config.defaultFormat : '';
+
+            sortSelector.value = '';
+            applySort(config.defaultSort, guides);
+
+            currentPage = 1;
+            renderGuides();
+        }
+
+        function createGuideHtml(guide) {
+            const filenameWithoutExt = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, '').split('$$')[0];
+            const fileUrl = `${config.dataFolderName}/${encodeURIComponent(guide.file)}`;
+            const coverUrl = `${config.coversFolderName}/${encodeURIComponent(filenameWithoutExt)}.jpg`;
+            const isLocal = location.protocol === 'file:';
+
+            let titleHtml = '', infoHtml = '', actionHtml = '', coverActionWrapper = '';
+
+            if (guide.format === 'link') {
+                const decodedUrl = decodeUrlFromFilename(guide.file);
+                titleHtml = `<div class="guide-title"><a href="${decodedUrl}" target="_blank" rel="noopener noreferrer">${guide.title}</a></div>`;
+                infoHtml = `<div class="guide-info">${guide.linkData.description || ''}</div>`;
+                actionHtml = `<a href="${decodedUrl}" target="_blank" rel="noopener noreferrer"><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
+                coverActionWrapper = `<a href="${decodedUrl}" target="_blank" rel="noopener noreferrer" class="cover-link">`;
+            } else if (guide.format === 'jpg' || guide.format === 'png') {
+                titleHtml = `<div class="guide-title">${guide.title}</div>`;
+                infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
+                actionHtml = `<a href="#" onclick="showImagePreview('${fileUrl}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
+                coverActionWrapper = `<a href="#" onclick="showImagePreview('${fileUrl}'); return false;" class="cover-link">`;
+            } else {
+                titleHtml = `<div class="guide-title">${guide.title}</div>`;
+                infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
+                if (isLocal) {
+                    if (guide.format === 'pdf') {
+                        actionHtml = `<a href="${fileUrl}" target="_blank" rel="noopener noreferrer"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
+                        coverActionWrapper = `<a href="${fileUrl}" target="_blank" rel="noopener noreferrer" class="cover-link">`;
+                    } else {
+                        actionHtml = `<a href="${fileUrl}" download><i class="fas fa-download"></i> Pobierz</a>`;
+                        coverActionWrapper = `<a href="${fileUrl}" download class="cover-link">`;
+                    }
+                } else {
+                    actionHtml = `<a href="base-system/404.html" target="_blank" rel="noopener noreferrer"><i class="fas fa-exclamation-triangle"></i> Brak pliku</a>`;
+                    coverActionWrapper = `<a href="base-system/404.html" target="_blank" rel="noopener noreferrer" class="cover-link">`;
+                }
+            }
+
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            const fallbackCover = isDarkMode ? 'gfx/no_cover_dark.png' : 'gfx/no_cover_light.png';
+
+            return `
+                ${titleHtml}
+                ${infoHtml}
+                ${coverActionWrapper}
+                    <img src="${coverUrl}" alt="Okładka: ${guide.title}" class="guide-cover"
+                         onload="this.style.opacity=1; this.style.transform='scale(1)';"
+                         onerror="this.onerror=null; this.src='${fallbackCover}'; this.classList.add('placeholder-cover'); this.style.opacity=1; this.style.transform='scale(1)';">
+                </a>
+                ${actionHtml}
+            `;
+        }
+
+        function renderGuides() {
+            const search = searchInput.value.toLowerCase();
+            let format = formatFilter.value;
+
+            if (format.startsWith('search:')) {
+                format = '';
+            }
+
+            filteredGuides = guides.filter(guide =>
+                (guide.title.toLowerCase().includes(search)) &&
+                (!format || guide.format === format)
+            );
+
+            applySort(currentSort, filteredGuides); // Ponowne sortowanie po filtrowaniu
+
+            const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
+            currentPage = Math.min(currentPage, totalPages || 1);
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = filteredGuides.slice(start, end);
+
+            guideList.innerHTML = "";
+            pageItems.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide animate-in";
+                if (!animationsEnabled) {
+                    div.style.animation = 'none';
+                    div.style.transform = 'none';
+                }
+                div.style.animationDelay = `${index * 0.05}s`;
+                div.innerHTML = createGuideHtml(guide);
+                guideList.appendChild(div);
+            });
+
+            renderPagination(totalPages, filteredGuides.length);
+            document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+        }
+
+        function renderPagination(totalPages, totalGuides) {
+            pagination.innerHTML = "";
+            if (totalGuides === 0) return;
+
+            const paginationContainer = document.createElement("div");
+            paginationContainer.style.display = "flex";
+            paginationContainer.style.flexWrap = "wrap";
+            paginationContainer.style.justifyContent = "center";
+            paginationContainer.style.alignItems = "center";
+            paginationContainer.style.gap = "10px";
+
+            const firstBtn = document.createElement("button");
+            firstBtn.innerHTML = `<i class="fas fa-angle-double-left"></i> Pierwsza`;
+            firstBtn.disabled = currentPage === 1;
+            firstBtn.onclick = () => { currentPage = 1; renderGuides(); stopPlayAnimation(); };
+            paginationContainer.appendChild(firstBtn);
+
+            const prevBtn = document.createElement("button");
+            prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i> Poprzednia`;
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.onclick = () => { currentPage--; renderGuides(); stopPlayAnimation(); };
+            paginationContainer.appendChild(prevBtn);
+
+            const pageInput = document.createElement("input");
+            pageInput.type = "number";
+            pageInput.min = 1;
+            pageInput.max = totalPages;
+            pageInput.value = currentPage;
+            pageInput.style.width = "60px";
+            pageInput.addEventListener("change", (event) => {
+                const newPage = parseInt(event.target.value);
+                if (!isNaN(newPage) && newPage >= 1 && newPage <= totalPages) {
+                    currentPage = newPage;
+                    renderGuides();
+                    stopPlayAnimation();
+                } else {
+                    event.target.value = currentPage;
+                }
+            });
+            paginationContainer.appendChild(pageInput);
+
+            const info = document.createElement("span");
+            info.className = "pagination-info";
+            info.innerHTML = `/ ${totalPages}`;
+            paginationContainer.appendChild(info);
+
+            const nextBtn = document.createElement("button");
+            nextBtn.innerHTML = `Następna <i class="fas fa-chevron-right"></i>`;
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.onclick = () => { currentPage++; renderGuides(); stopPlayAnimation(); };
+            paginationContainer.appendChild(nextBtn);
+
+            const lastBtn = document.createElement("button");
+            lastBtn.innerHTML = `Ostatnia <i class="fas fa-angle-double-right"></i>`;
+            lastBtn.disabled = currentPage === totalPages;
+            lastBtn.onclick = () => { currentPage = totalPages; renderGuides(); stopPlayAnimation(); };
+            paginationContainer.appendChild(lastBtn);
+
+            pagination.appendChild(paginationContainer);
+        }
+
+        function drawRandomGuides() {
+            stopPlayAnimation();
+            const guidesToDrawCount = parseInt(randomSelector.value);
+            const guidesToDrawFrom = filteredGuides.length > 0 ? filteredGuides : guides;
+
+            if (guidesToDrawFrom.length === 0) {
+                alert("Wczytaj plik, aby wylosować pozycje!");
+                randomSelector.value = '';
+                return;
+            }
+
+            guideList.innerHTML = "";
+            pagination.innerHTML = "";
+
+            const randomGuides = [];
+            const guidesCopy = [...guidesToDrawFrom];
+
+            for (let i = 0; i < guidesToDrawCount && guidesCopy.length > 0; i++) {
+                const randomIndex = Math.floor(Math.random() * guidesCopy.length);
+                randomGuides.push(guidesCopy.splice(randomIndex, 1)[0]);
+            }
+
+            renderRandomGuides(randomGuides);
+        }
+
+        function renderRandomGuides(randomGuides) {
+            guideList.innerHTML = "";
+            randomGuides.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide animate-in";
+                if (!animationsEnabled) {
+                    div.style.animation = 'none';
+                    div.style.transform = 'none';
+                }
+                div.style.animationDelay = `${index * 0.05}s`;
+                div.innerHTML = createGuideHtml(guide);
+                guideList.appendChild(div);
+            });
+            randomSelector.value = '';
+        }
+
+        function toggleCovers() {
+            showCovers = !showCovers;
+            guideList.classList.toggle('hide-covers', !showCovers);
+            coversBtn.innerHTML = showCovers ? `<i class="fas fa-eye-slash"></i> Okładki` : `<i class="fas fa-eye"></i> Okładki`;
+            coversBtn.classList.toggle("inactive", !showCovers);
+        }
+
+        function toggleAnimations() {
+            animationsEnabled = !animationsEnabled;
+            document.body.classList.toggle('no-animation', !animationsEnabled);
+            animationBtn.innerHTML = animationsEnabled ? `<i class="fas fa-pause-circle"></i> Animacje` : `<i class="fas fa-play-circle"></i> Animacje`;
+            animationBtn.classList.toggle("inactive", !animationsEnabled);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark-mode");
+            const isDarkMode = document.body.classList.contains("dark-mode");
+            localStorage.setItem('darkMode', isDarkMode ? 'enabled' : 'disabled');
+            darkModeBtn.innerHTML = isDarkMode ? `<i class="fas fa-sun"></i> Tryb jasny` : `<i class="fas fa-moon"></i> Tryb ciemny`;
+
+            document.querySelectorAll('.placeholder-cover').forEach(img => {
+                img.src = isDarkMode ? 'gfx/no_cover_dark.png' : 'gfx/no_cover_light.png';
+            });
+        }
+
+        playButton.addEventListener('click', togglePlayAnimation);
+        playCloseBtn.addEventListener('click', stopPlayAnimation);
+
+        function togglePlayAnimation() {
+            if (playAnimationInterval) stopPlayAnimation();
+            else startPlayAnimation();
+        }
+
+        function startPlayAnimation() {
+            const guidesToDrawFrom = filteredGuides.length > 0 ? filteredGuides : guides;
+            if (guidesToDrawFrom.length === 0) {
+                alert("Brak pozycji do wyświetlenia!");
+                return;
+            }
+
+            playGuidesQueue = [...guidesToDrawFrom];
+            if (currentSort !== 'shuffle') {
+                playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
+            }
+
+            backdrop.classList.add('visible');
+            playButton.innerHTML = `<i class="fas fa-stop"></i>&nbsp;Stop`;
+            playButton.classList.add('inactive');
+            playCounterElement.classList.add('visible');
+
+            scheduleNext();
+            playAnimationInterval = setInterval(scheduleNext, 4000);
+        }
+
+        function scheduleNext() {
+            let guide;
+            if (currentSort === 'shuffle') {
+                const randomIndex = Math.floor(Math.random() * playGuidesQueue.length);
+                guide = playGuidesQueue[randomIndex];
+            } else {
+                guide = playGuidesQueue[playCurrentIndex];
+                playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+            }
+
+            if (!guide) return;
+
+            const totalGuidesInPlay = playGuidesQueue.length;
+            const currentIndexForDisplay = (playGuidesQueue.indexOf(guide) + 1);
+            playCounterElement.textContent = `${currentIndexForDisplay} / ${totalGuidesInPlay}`;
+
+            displayRandomGuide(guide);
+        }
+
+        function stopPlayAnimation() {
+            if (playAnimationInterval) {
+                clearInterval(playAnimationInterval);
+                playAnimationInterval = null;
+                backdrop.classList.remove('visible');
+                playGuideContainer.innerHTML = '';
+                playButton.classList.remove('inactive');
+                playButton.innerHTML = `<i class="fas fa-play"></i>&nbsp;Play`;
+                playCounterElement.classList.remove('visible');
+            }
+        }
+
+        function displayRandomGuide(guide) {
+            const displayContent = () => {
+                let contentHtml = '';
+                const fileUrl = `${config.dataFolderName}/${encodeURIComponent(guide.file)}`;
+
+                backdrop.classList.toggle('image-mode-active', guide.format === 'jpg' || guide.format === 'png');
+                playGuideContainer.classList.toggle('image-mode', guide.format === 'jpg' || guide.format === 'png');
+
+                if (guide.format === 'jpg' || guide.format === 'png') {
+                    contentHtml = `<div class="play-image-view"><img src="${fileUrl}" alt="${guide.title}"><div class="guide-title">${guide.title}</div></div>`;
+                } else {
+                    const guideDiv = document.createElement('div');
+                    guideDiv.className = 'guide';
+                    guideDiv.innerHTML = createGuideHtml(guide);
+                    contentHtml = guideDiv.outerHTML;
+                }
+
+                playGuideContainer.innerHTML = contentHtml;
+
+                if (animationsEnabled) {
+                    const animatedElement = playGuideContainer.children[0];
+                    if (animatedElement) {
+                        void animatedElement.offsetWidth;
+                        animatedElement.style.animation = 'zoomInThenOut 4s linear infinite';
+                    }
+                }
+            };
+
+            if (animationsEnabled) {
+                playGuideContainer.style.opacity = '0';
+                setTimeout(() => {
+                    displayContent();
+                    playGuideContainer.style.opacity = '1';
+                }, 200);
+            } else {
+                displayContent();
+            }
+        }
+
+        function showImagePreview(imageUrl) {
+            stopPlayAnimation();
+            backdrop.classList.add('visible', 'preview-active');
+            playCounterElement.style.display = 'none';
+            playGuideContainer.innerHTML = `<img src="${imageUrl}" class="preview-image" alt="Podgląd obrazu">`;
+
+            const closePreview = () => {
+                backdrop.classList.remove('visible', 'preview-active');
+                playGuideContainer.innerHTML = '';
+                playCloseBtn.removeEventListener('click', closePreview);
+                backdrop.removeEventListener('click', backdropClosePreview);
+            };
+
+            const backdropClosePreview = (event) => {
+                if (event.target === backdrop) closePreview();
+            };
+
+            playCloseBtn.addEventListener('click', closePreview, { once: true });
+            backdrop.addEventListener('click', backdropClosePreview, { once: true });
+        }
+
+        backdrop.addEventListener('click', (event) => {
+            if (event.target === backdrop && playAnimationInterval) {
+                stopPlayAnimation();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('.top-header');
+            const controls = document.querySelector('.controls');
+            const footer = document.querySelector('.footer');
+
+            header.style.animationDelay = '0.2s';
+            header.classList.add('animated-header');
+
+            controls.style.animationDelay = '0.4s';
+            controls.classList.add('animated-controls');
+
+            footer.style.animationDelay = '0.6s';
+            footer.classList.add('animated-footer');
+        });
+    </script>
+</body>
+
+</html>

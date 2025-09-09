@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Plik nie znaleziony</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* CSS unchanged except for new footer style */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .top-header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .dir-db-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dir-db-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-box {
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+
+        .content-box h2 {
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .content-box p,
+        .content-box li {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .content-box ul {
+            padding-left: 20px;
+            list-style: none;
+        }
+
+        .content-box li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        .contact-details .contact-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .contact-details .contact-line i {
+            width: 25px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .contact-details .ade-brand {
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 20px;
+            font-size: 0.9em;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .dark-mode .privacy-notice {
+            color: #777;
+        }
+
+        .footer {
+            font-weight: normal;
+        }
+
+        a {
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .top-header a.dir-db-btn:hover {
+            text-decoration: none;
+        }
+
+        body:not(.dark-mode) {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        body:not(.dark-mode) .dir-db-btn,
+        body:not(.dark-mode) .content-box h2,
+        body:not(.dark-mode) a,
+        body:not(.dark-mode) .content-box li::before,
+        body:not(.dark-mode) .ade-brand {
+            color: #cc0000;
+        }
+
+        body:not(.dark-mode) .dir-db-btn {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        body:not(.dark-mode) .dir-db-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        body:not(.dark-mode) .content-box {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        body:not(.dark-mode) .footer {
+            color: #666;
+        }
+
+        body:not(.dark-mode) .footer .footer-special-text {
+            color: #555;
+        }
+
+        .dark-mode {
+            background-color: #181818;
+            color: #eee;
+        }
+
+        .dark-mode .dir-db-btn,
+        .dark-mode .content-box h2,
+        .dark-mode a,
+        .dark-mode .content-box li::before,
+        .dark-mode .ade-brand {
+            color: #e53935;
+        }
+
+        .dark-mode .dir-db-btn {
+            background: #000000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            border: none;
+        }
+
+        .dark-mode .dir-db-btn:hover {
+            background: #111111;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .content-box {
+            background: #000000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .dark-mode .footer {
+            color: #bbb;
+        }
+
+        .dark-mode .footer .footer-special-text {
+            color: #eee;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animated-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .animated-header {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+
+        .animated-footer {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+    <div class="top-header">
+        <a class="dir-db-btn" href="index.html"><i class="fas fa-arrow-left"></i> Wróć do Biblioteki</a>
+        <div class="title"><i class="fas fa-exclamation-triangle"></i> Błąd 404. Plik nie znaleziony!</div>
+    </div>
+    <div class="container">
+        <div class="content-box">
+            <h2>Pliki są niedostępne</h2>
+            <p>Pliki są niedostępne, gdyż chronione są prawami autorskimi. Poniżej znajdują się linki do oryginalnych
+                źródeł:</p>
+            <ul>
+                <li>Poradniki z serwisu gry-online, zachęcam do wizyty: <a
+                        href="https://www.gry-online.pl/poradniki-do-gier.asp" target="_blank"
+                        rel="noopener noreferrer">Poradniki do gier - nowe i zaktualizowane</a></li>
+                <li>Darmowe poradniki z serwisu PrzygodoMania.pl: <a
+                        href="https://www.przygodomania.pl/forum/viewtopic.php?t=1533" target="_blank"
+                        rel="noopener noreferrer">Spis poradników w formacie pdf</a></li>
+                <li>Instrukcje pochodzą z oryginalnych gier oraz z platform takich jak <a
+                        href="https://store.steampowered.com/" target="_blank" rel="noopener noreferrer">Steam</a>, <a
+                        href="https://store.epicgames.com/" target="_blank" rel="noopener noreferrer">Epic</a>, <a
+                        href="https://www.gog.com/" target="_blank" rel="noopener noreferrer">GOG</a>.</li>
+            </ul>
+        </div>
+        <div class="content-box">
+            <h2>Kontakt</h2>
+            <div class="contact-details">
+                <div class="contact-line">
+                    <i class="fas fa-user"></i>
+                    <span><span class="ade-brand">ADE</span> Adrian Ulbrych, <a href="https://start.ade.pl"
+                            target="_blank" rel="noopener noreferrer">start.ade.pl</a>, <a href="https://ade.pl"
+                            target="_blank" rel="noopener noreferrer">ade.pl</a>, <a href="https://ade24.pl"
+                            target="_blank" rel="noopener noreferrer">ade24.pl</a></span>
+                </div>
+                <div class="contact-line"><i class="fas fa-globe"></i><a href="https://www.ade24.pl/contact/"
+                        target="_blank" rel="noopener noreferrer">Formularz kontaktowy</a></div>
+                <div class="contact-line"><i class="fas fa-phone"></i><a href="tel:601190330">601 190 330</a></div>
+                <div class="contact-line"><i class="fas fa-map-marker-alt"></i><span><a
+                            href="https://www.google.com/maps/place/Gliwice" target="_blank"
+                            rel="noopener noreferrer">Gliwice</a>, woj. śląskie, Polska</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>System <a href="about.html">dir-db</a> do katalogowania, zarządzania i prezentacji plików i folderów |
+            <strong>© 2025-09-06</strong> by <a href="https://www.ade.pl" target="_blank"
+                rel="noopener noreferrer">Adrian Ulbrych</a> | <span class="footer-special-text">tel.</span> <a
+                href="tel:601190330">601 190 330</a></div>
+        <div class="privacy-notice"><strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani śledzenia.
+            <strong>Czysty i bezpieczny kod!</strong></div>
+    </div>
+    <script>
+        if (localStorage.getItem('darkMode') === 'disabled') { document.body.classList.remove('dark-mode'); } else { document.body.classList.add('dark-mode'); }
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.querySelector('.top-header');
+            const contentBoxes = document.querySelectorAll('.content-box');
+            const footer = document.querySelector('.footer');
+            header.style.animationDelay = '0.2s';
+            header.classList.add('animated-header');
+            contentBoxes.forEach((box, index) => {
+                box.style.animationDelay = `${0.5 + index * 0.3}s`;
+                if (index % 2 === 0) { box.classList.add('animated-left'); } else { box.classList.add('animated-right'); }
+            });
+            footer.style.animationDelay = `${0.5 + contentBoxes.length * 0.3 + 0.2}s`;
+            footer.classList.add('animated-footer');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,14 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 64E4-665E
+
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\ade.pl - pdg\Poradniki Gry-Online\gfx
+
+05.09.2025  19:38    <DIR>          .
+05.09.2025  19:29    <DIR>          ..
+05.09.2025  19:38                 0 .dir.txt
+05.09.2025  11:39             1ÿ070 about-dark.svg
+05.09.2025  11:44             1ÿ065 about-light.svg
+05.09.2025  19:09           220ÿ284 no_cover_dark.png
+05.09.2025  19:10           196ÿ366 no_cover_light.png
+               5 File(s)        418ÿ785 bytes
+               2 Dir(s)  27ÿ250ÿ761ÿ728 bytes free

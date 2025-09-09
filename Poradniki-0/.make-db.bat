@@ -1,0 +1,1 @@
+dir poradniki /-C > ./poradniki.txt
