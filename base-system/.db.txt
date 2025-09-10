@@ -4,7 +4,7 @@
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
 
 07.09.2025  07:59    <DIR>          .
-08.09.2025  22:53    <DIR>          ..
+10.09.2025  18:32    <DIR>          ..
 06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
 06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
 06.09.2025  19:59                 0 .#certyfikaty#index.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
@@ -20,4 +20,4 @@
 06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
 06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
               14 File(s)              0 bytes
-               2 Dir(s)     95305310208 bytes free
+               2 Dir(s)     88415981568 bytes free
