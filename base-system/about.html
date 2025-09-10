@@ -374,7 +374,7 @@
 
         .dark-mode .dir-db-btn.highlighted-state {
              color: #fff;
-             background: #b71c1c;
+             background: #a01515;
         }
 
         .dark-mode .dir-db-btn:hover {
@@ -706,7 +706,7 @@
             </button>
             <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i></button>
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()">
-                &lt;&nbsp;Wstecz
+                < Wstecz
             </a>
         </div>
     </div>
@@ -825,9 +825,9 @@
                 // Klucz strony (musi być unikalny, np. 'about', 'index')
                 pageKey: 'about',
                 // Domyślny numer wideo tła dla tej strony
-                defaultBgVideo: 2,
+                defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 9,
+                bgVideoEndNum: 6,
                 defaultAnimation: 2, // 0: Statycznie, 2: Video
                 showMiniLogo: true,
                 showBackButton: true,
@@ -846,8 +846,8 @@
                     logo_small_light: '.gfx/interface/VisuDir_small_light.png',
                     logo_ade_small_dark: '.gfx/interface/ADE_small_dark.png',
                     logo_ade_small_light: '.gfx/interface/ADE_small_light.png',
-                    logo3_small_light: '',
-                    logo3_small_dark: '',
+                    logo3_small_light: '.gfx/interface/Building_small_light.png6',
+                    logo3_small_dark: '.gfx/interface/Building_small_dark.png',
                     about_dark: '.gfx/interface/VisuDir_dark.png',
                     about_light: '.gfx/interface/VisuDir_light.png',
                     about_ade_dark: '.gfx/interface/Adrian-dark.png',
@@ -1131,15 +1131,39 @@
                 }, flipAnimationDuration);
             };
 
-            let isVisuDirLogo = true;
+            const useThreeLogos = config.paths.graphics.logo3_small_light && config.paths.graphics.logo3_small_dark;
+            let isVisuDirLogo = true; // State for 2-logo animation
+            let logoState = 0; // State for 3-logo animation
+
             setInterval(() => {
                 runFlip(headerLogo, () => {
                     const currentModeIsDark = document.body.classList.contains('dark-mode');
-                    isVisuDirLogo = !isVisuDirLogo;
-                    if (isVisuDirLogo) {
-                        headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_small_dark : config.paths.graphics.logo_small_light;
+
+                    if (useThreeLogos) {
+                        // 3-logo animation sequence: 1 -> 3 -> 2 -> 3 -> 1 ...
+                        logoState = (logoState + 1) % 4;
+                        switch (logoState) {
+                            case 0: // Icon 1 (VisuDir)
+                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_small_dark : config.paths.graphics.logo_small_light;
+                                break;
+                            case 1: // Icon 3
+                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo3_small_dark : config.paths.graphics.logo3_small_light;
+                                break;
+                            case 2: // Icon 2 (ADE)
+                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_ade_small_dark : config.paths.graphics.logo_ade_small_light;
+                                break;
+                            case 3: // Icon 3
+                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo3_small_dark : config.paths.graphics.logo3_small_light;
+                                break;
+                        }
                     } else {
-                        headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_ade_small_dark : config.paths.graphics.logo_ade_small_light;
+                        // Original 2-logo animation
+                        isVisuDirLogo = !isVisuDirLogo;
+                        if (isVisuDirLogo) {
+                            headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_small_dark : config.paths.graphics.logo_small_light;
+                        } else {
+                            headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_ade_small_dark : config.paths.graphics.logo_ade_small_light;
+                        }
                     }
                 });
             }, 4000);
