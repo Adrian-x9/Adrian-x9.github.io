@@ -257,6 +257,17 @@
             text-align: center;
             opacity: 0;
             transform: translateY(-20px);
+            max-height: 200px;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
+        }
+
+        .top-header.minimized-header {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            opacity: 0;
         }
 
         .header-group {
@@ -414,6 +425,14 @@
         
         #animationBtn.highlighted-state > #animationBtn-main {
             position: relative;
+        }
+
+        #animationBtn-play.active-play i {
+             color: #fff;
+             text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+        .dark-mode #animationBtn-play.active-play i {
+             text-shadow: 0 0 10px #ff8a80;
         }
 
         .guide-list {
@@ -823,15 +842,10 @@
         }
 
         /* --- Style dla minimalizacji --- */
-        @keyframes slideOutUp {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(-100%); opacity: 0; visibility: hidden; }
-        }
         @keyframes slideOutDown {
             from { transform: translateY(0); opacity: 1; }
             to { transform: translateY(100%); opacity: 0; visibility: hidden; }
         }
-        .animate-slide-out-up { animation: slideOutUp 0.5s ease-out forwards; }
         .animate-slide-out-down { animation: slideOutDown 0.5s ease-out forwards; }
 
         .hidden-no-anim {
@@ -1356,7 +1370,6 @@
                 searchInput.value = decodeURIComponent(searchQuery);
             }
             
-            // Ustawia filtr formatu na podstawie localStorage lub konfiguracji (domyślnie "Wszystko")
             const defaultFormat = config.pageSettings.defaultFormat || "";
             formatFilter.value = getFromLocalStorage('format') || defaultFormat;
 
@@ -1401,7 +1414,6 @@
 
             currentTheme = initializeTheme();
             
-            // Aktualizacja tekstu przycisku trybu ciemnego
             const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
             if(darkModeBtnText) {
                 darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny';
@@ -1462,44 +1474,36 @@
             const minimizeIcon = minimizeBtn.querySelector('i');
             const animationsOn = animationState !== 0;
 
-            isMinimized = !isMinimized; // Zmiana stanu (true -> false, false -> true)
+            isMinimized = !isMinimized;
 
             controls.classList.toggle('minimized-view', isMinimized);
             
-            const elementsToToggle = [topHeader, pagination, footer];
-
             if (isMinimized) {
-                // MINIMALIZUJ
                 minimizeBtn.title = "Maksymalizuj interfejs";
                 minimizeIcon.className = 'fas fa-window-maximize';
+            } else {
+                minimizeBtn.title = "Minimalizuj interfejs";
+                minimizeIcon.className = 'fas fa-window-minimize';
+            }
 
-                if (animationsOn) {
-                    topHeader.classList.add('animate-slide-out-up');
+            if (animationsOn) {
+                topHeader.classList.toggle('minimized-header', isMinimized);
+
+                if (isMinimized) {
                     pagination.classList.add('animate-slide-out-down');
                     footer.classList.add('animate-slide-out-down');
-                    // Usuń animacje pojawiania się, jeśli były
-                    topHeader.classList.remove('animated-header');
                     pagination.classList.remove('animated-pagination');
                     footer.classList.remove('animated-footer');
                 } else {
-                    elementsToToggle.forEach(el => el.classList.add('hidden-no-anim'));
-                }
-            } else {
-                // MAKSYMALIZUJ
-                minimizeBtn.title = "Minimalizuj interfejs";
-                minimizeIcon.className = 'fas fa-window-minimize';
-
-                if (animationsOn) {
-                    topHeader.classList.remove('animate-slide-out-up');
                     pagination.classList.remove('animate-slide-out-down');
                     footer.classList.remove('animate-slide-out-down');
-                    // Dodaj animacje pojawiania się
-                    topHeader.classList.add('animated-header');
                     pagination.classList.add('animated-pagination');
                     footer.classList.add('animated-footer');
-                } else {
-                    elementsToToggle.forEach(el => el.classList.remove('hidden-no-anim'));
                 }
+            } else {
+                topHeader.classList.toggle('hidden-no-anim', isMinimized);
+                pagination.classList.toggle('hidden-no-anim', isMinimized);
+                footer.classList.toggle('hidden-no-anim', isMinimized);
             }
         }
 
@@ -1808,12 +1812,12 @@
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                playBtn.classList.remove('highlighted-state'); 
+                playBtn.classList.remove('active-play'); 
             } else {
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('highlighted-state'); 
+                playBtn.classList.add('active-play'); 
             }
         }
         
