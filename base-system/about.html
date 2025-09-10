@@ -54,12 +54,12 @@
         .header-logo-group {
             display: flex;
             align-items: center;
-            gap: 0;
         }
         
         .header-logo-group > span {
             font-size: 1.6em;
             font-weight: normal;
+            margin-right: 10px;
         }
 
         .header-logo-group > span > strong {
@@ -374,7 +374,7 @@
 
         .dark-mode .dir-db-btn.highlighted-state {
              color: #fff;
-             background: #c62828;
+             background: #b71c1c;
         }
 
         .dark-mode .dir-db-btn:hover {
@@ -696,17 +696,17 @@
             </a>
         </div>
         <div class="header-controls-group">
-             <button id="resetSettingsBtn" class="dir-db-btn highlighted-state">
-                <i class="fas fa-undo"></i>
-            </button>
             <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
                 <span id="animationBtn-main"><i class="fas fa-video"></i></span>
                 <span id="animationBtn-play"><i class="fas fa-play"></i></span>
                 <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
             </button>
+            <button id="resetSettingsBtn" class="dir-db-btn">
+                <i class="fas fa-undo"></i>
+            </button>
             <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i></button>
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()">
-                Wstecz&nbsp;<i class="fas fa-chevron-right"></i>
+                &lt;&nbsp;Wstecz
             </a>
         </div>
     </div>
