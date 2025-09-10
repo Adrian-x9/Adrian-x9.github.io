@@ -80,13 +80,13 @@
             color: #333;
         }
         
-        /* Zmiana #1: Kolor licznika */
         body:not(.dark-mode) .top-header .counter {
             color: #555;
         }
         
+        /* Poprawka: Przywrócenie poprzedniego koloru licznika w trybie ciemnym */
         .dark-mode .top-header .counter {
-            color: #ccc;
+            color: #aaa;
         }
 
         .footer .version-suffix {
@@ -110,7 +110,6 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
         
-        /* Zmiana #3: Poprawiony styl aktywnego przycisku */
         body:not(.dark-mode) .dir-db-btn.highlighted-state {
              color: #fff;
              background: #cc0000;
@@ -184,7 +183,6 @@
             border: 1px solid #555;
         }
 
-        /* Zmiana #3: Poprawiony styl aktywnego przycisku */
         .dark-mode .dir-db-btn.highlighted-state {
              color: #fff;
              background: #e53935;
@@ -281,14 +279,12 @@
         .header-logo-link {
             display: flex;
             align-items: center;
-            /* Zmiana #2: Dodane style dla animacji logo */
             perspective: 1000px;
         }
 
         .header-logo {
             max-height: 42px;
             width: auto;
-            /* Zmiana #2: Dodane style dla animacji logo */
             transition: transform 0.6s;
             transform-style: preserve-3d;
         }
@@ -300,7 +296,6 @@
 
         .top-header .counter {
             font-size: 0.9em;
-            /* Usunięto stary kolor, teraz jest definiowany wyżej */
         }
 
         .top-header .counter b {
@@ -394,13 +389,13 @@
             border-left-color: rgba(255, 255, 255, 0.5);
         }
         
-        /* Zmiana #4: Dodanie ikony play na przycisku Video */
+        /* Poprawka: Ulepszony wygląd przycisku Video */
         #animationBtn.highlighted-state > #animationBtn-main {
             position: relative;
-            color: rgba(255, 255, 255, 0.7) !important;
+            color: rgba(255, 255, 255, 0.5) !important;
         }
         #animationBtn.highlighted-state > #animationBtn-main > .fas {
-            opacity: 0.7;
+            opacity: 0.5;
         }
         #animationBtn.highlighted-state > #animationBtn-main::after {
             font-family: "Font Awesome 6 Free";
@@ -410,9 +405,9 @@
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
-            font-size: 1.6em;
-            color: rgba(255, 255, 255, 0.85);
-            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            font-size: 1.8em;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 5px rgba(0,0,0,0.6);
             transition: all 0.3s;
             pointer-events: none;
             opacity: 1;
@@ -890,7 +885,6 @@
             <option value="9">9 pozycji</option>
             <option value="10">10 pozycji</option>
         </select>
-        <!-- Zmiana #5: Zamiana przycisków miejscami -->
         <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i> Tryb ciemny</button>
         <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
         <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
@@ -904,8 +898,9 @@
 
     <div class="footer">
         <div>
-            System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
-                    <span class="version-display"></span></span></a>
+            <!-- Poprawka: Pogrubienie w stopce -->
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
+                    <span class="version-display"></span></span></a></strong>
             <strong>© 2025-09-07</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
             <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
@@ -935,7 +930,6 @@
             global: {
                 defaultTheme: 'dark', // 'light' lub 'dark'
             },
-            // Zmiana #2: Dodana konfiguracja rotatora logo
             logoRotator: {
                 enabled: true,
                 interval: 5000, // czas w ms
@@ -1029,7 +1023,6 @@
             itemsPerRow = 0;
         let animationState, previewState, currentTheme;
         let lastPlayedGuide = null, lastRandomPage = -1;
-        // Zmiana #2: Zmienne dla rotatora logo
         let currentLogoIndex = 0;
         let logoInterval;
 
@@ -1052,7 +1045,7 @@
             playCounterElement = document.getElementById("play-counter"),
             playCloseBtn = document.getElementById("playCloseBtn"),
             headerLogo = document.getElementById("header-logo"),
-            logoLink = document.getElementById("logoLink"), // Zmiana #2
+            logoLink = document.getElementById("logoLink"), 
             bgVideo = document.getElementById("bg-video"),
             bgVideoSource = document.getElementById("bg-video-source");
 
@@ -1341,10 +1334,8 @@
             renderGuides();
         }
 
-        // Zmiana #2: Funkcja do rotacji logo
         function startLogoRotator() {
             if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
-                 // Ustawienie domyślnego logo jeśli rotator jest wyłączony
                 const defaultLogo = config.logoRotator.logos[0];
                 const isDark = document.body.classList.contains('dark-mode');
                 headerLogo.src = isDark ? defaultLogo.srcDark : defaultLogo.srcLight;
@@ -1383,7 +1374,6 @@
                 ? `<i class="fas fa-moon"></i> Tryb ciemny`
                 : `<i class="fas fa-sun"></i> Tryb jasny`;
             
-            // Zmiana #2: Inicjalizacja rotatora logo
             if (config.pageSettings.showMiniLogo) {
                 startLogoRotator();
             } else {
@@ -1493,7 +1483,10 @@
                     g.title.toLowerCase().includes(search) &&
                     (!format || g.format === format)
             );
-            applySort(currentSort, filteredGuides);
+
+            // Poprawka: Usunięto zbędne sortowanie, które powodowało błąd przy resecie.
+            // Główne sortowanie odbywa się teraz tylko w funkcjach `applySort`, `init` i `resetView`.
+            
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
             currentPage = Math.min(currentPage, totalPages || 1);
             const pageItems = filteredGuides.slice(
@@ -1731,7 +1724,6 @@
                 ? `<i class="fas fa-moon"></i> Tryb ciemny`
                 : `<i class="fas fa-sun"></i> Tryb jasny`;
             
-            // Zmiana #2: Zaktualizuj logo przy zmianie motywu
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
                 const currentLogoData = config.logoRotator.logos[currentLogoIndex];
                 headerLogo.src = currentTheme === 'dark' ? currentLogoData.srcDark : currentLogoData.srcLight;
@@ -1927,3 +1919,4 @@
 </body>
 
 </html>
+
