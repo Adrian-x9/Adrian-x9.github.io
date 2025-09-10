@@ -129,7 +129,7 @@
         }
 
         body.video-ready:not(.dark-mode) .guide {
-            background: rgba(253, 253, 253, 0.85);
+            background: rgba(253, 253, 253, 0.5);
         }
 
         body:not(.dark-mode) .guide-cover {
@@ -202,7 +202,7 @@
         }
 
         body.video-ready.dark-mode .guide {
-            background: rgba(0, 0, 0, 0.75);
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .dark-mode .guide:hover {
@@ -246,7 +246,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
             text-align: center;
@@ -256,7 +256,7 @@
 
         .header-group {
             display: flex;
-            gap: 5px;
+            gap: 10px;
         }
 
         .header-logo-group {
@@ -351,11 +351,11 @@
 
         #animationBtn-main {
             flex-grow: 1;
-            padding-right: 15px;
+            padding-right: 12px;
         }
 
         #animationBtn-shuffle {
-            padding-left: 15px;
+            padding-left: 12px;
             border-left: 1px solid rgba(0, 0, 0, 0.1);
         }
         
@@ -922,8 +922,8 @@
                 databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
-                miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
-                miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
+                miniLogoLightUrl: "base-system/.gfx/interface/VisuDir_small_light.png",
+                miniLogoDarkUrl: "base-system/.gfx/interface/VisuDir_small_dark.png",
                 videoBgLightUrlBase: "base-system/.video/bg_light",
                 videoBgDarkUrlBase: "base-system/.video/bg_dark",
             }
@@ -1221,12 +1221,7 @@
                 totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
             const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100, 1000];
             rowOptions.forEach((rows) => {
-                if (
-                    totalRowsAvailable > 0 &&
-                    rows > totalRowsAvailable &&
-                    rows > config.pageSettings.defaultRows
-                )
-                    return;
+                if (totalRowsAvailable > 0 && rows > totalRowsAvailable) return;
                 const option = document.createElement("option");
                 option.value = rows;
                 const p = rows * itemsPerRow;
@@ -1289,8 +1284,8 @@
             currentTheme = initializeTheme();
             
             darkModeBtn.innerHTML = currentTheme === 'dark'
-                ? `<i class="fas fa-sun"></i> Tryb jasny`
-                : `<i class="fas fa-moon"></i> Tryb ciemny`;
+                ? `<i class="fas fa-moon"></i> Tryb ciemny`
+                : `<i class="fas fa-sun"></i> Tryb jasny`;
 
             if (config.pageSettings.showMiniLogo)
                 headerLogo.src = currentTheme === 'dark'
@@ -1570,6 +1565,9 @@
         }
 
         function updateAnimationButtonUI() {
+            const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
+            const hasMultipleVideos = hasAnyVideo && (config.pageSettings.bgVideoEndNum - config.pageSettings.bgVideoStartNum > 0);
+            
             const animationBtnMain = document.getElementById('animationBtn-main');
             const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
 
@@ -1577,8 +1575,9 @@
             document.body.classList.remove("no-animation");
             animationBtnShuffle.style.display = 'none';
 
-            // Stany: 0: Statycznie, 1: Animacje, 2: Video
-            switch (animationState) {
+            const numStates = hasAnyVideo ? 3 : 2;
+
+            switch (animationState % numStates) {
                 case 0: // Tryb: Statycznie (wyszarzony)
                     animationBtnMain.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
                     animationBtn.classList.add("inactive");
@@ -1587,10 +1586,10 @@
                 case 1: // Tryb: Animacje (normalny)
                     animationBtnMain.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
                     break;
-                case 2: // Tryb: Video (wyróżniony)
+                case 2: // Tryb: Video (wyróżniony) - tylko jeśli są wideo
                     animationBtnMain.innerHTML = `<i class="fas fa-video"></i> Video`;
                     animationBtn.classList.add("highlighted-state");
-                    if (config.pageSettings.bgVideoEndNum - config.pageSettings.bgVideoStartNum > 0) {
+                    if (hasMultipleVideos) {
                         animationBtnShuffle.style.display = 'inline-flex';
                     }
                     break;
@@ -1616,7 +1615,10 @@
         }
 
         function toggleAnimations() {
-            animationState = (animationState + 1) % 3;
+            const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
+            const numStates = hasAnyVideo ? 3 : 2;
+            animationState = (animationState + 1) % numStates;
+
             saveToLocalStorage('animation', animationState);
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
@@ -1629,8 +1631,8 @@
             currentTheme = initializeTheme();
             
             darkModeBtn.innerHTML = currentTheme === 'dark'
-                ? `<i class="fas fa-sun"></i> Tryb jasny`
-                : `<i class="fas fa-moon"></i> Tryb ciemny`;
+                ? `<i class="fas fa-moon"></i> Tryb ciemny`
+                : `<i class="fas fa-sun"></i> Tryb jasny`;
             
             if (config.pageSettings.showMiniLogo)
                 headerLogo.src = currentTheme === 'dark' ? config.paths.miniLogoDarkUrl : config.paths.miniLogoLightUrl;
@@ -1825,6 +1827,3 @@
 </body>
 
 </html>
-
-Most up-to-date file for "about.html" is:
-
