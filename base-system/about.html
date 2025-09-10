@@ -692,7 +692,10 @@
                 // Klucz strony (musi być unikalny, np. 'about', 'index')
                 pageKey: 'about',
                 // Domyślny numer wideo tła dla tej strony
-                defaultBgVideo: 1,
+                defaultBgVideo: 3,
+                // Definicja zakresu dostępnych numerów wideo tła
+                bgVideoStartNum: 1, // Początkowy numer pliku wideo
+                bgVideoEndNum: 3,   // Końcowy numer pliku wideo (wartość "n")
             },
             // Ścieżki do zasobów
             paths: {
@@ -738,7 +741,13 @@
             const pageKey = config.pageSettings.pageKey;
             const storageKey = `visudir_bg_video_${pageKey}`;
             const storedVideoNum = localStorage.getItem(storageKey);
-            const videoNum = storedVideoNum || config.pageSettings.defaultBgVideo;
+            
+            let videoNum = parseInt(storedVideoNum) || config.pageSettings.defaultBgVideo;
+
+            // Walidacja numeru wideo - czy mieści się w zdefiniowanym zakresie
+            if (videoNum < config.pageSettings.bgVideoStartNum || videoNum > config.pageSettings.bgVideoEndNum) {
+                videoNum = config.pageSettings.defaultBgVideo;
+            }
 
             const bgVideo = document.getElementById('bg-video');
             const bgVideoSource = document.getElementById('bg-video-source');
@@ -756,7 +765,7 @@
                 console.error("Nie znaleziono elementów wideo tła (#bg-video, #bg-video-source)");
             }
 
-            if (!storedVideoNum) {
+            if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
                 localStorage.setItem(storageKey, videoNum);
             }
         }
@@ -890,3 +899,4 @@
 </body>
 
 </html>
+
