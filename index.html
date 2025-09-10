@@ -347,7 +347,7 @@
             margin-right: 5px;
         }
         
-        #scrollTopBtn i {
+        #minimizeBtn i {
              margin-right: 0;
         }
 
@@ -821,6 +821,29 @@
             animation-duration: 0.8s;
             animation-timing-function: ease-out;
         }
+
+        /* --- Style dla minimalizacji --- */
+        @keyframes slideOutUp {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-100%); opacity: 0; visibility: hidden; }
+        }
+        @keyframes slideOutDown {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(100%); opacity: 0; visibility: hidden; }
+        }
+        .animate-slide-out-up { animation: slideOutUp 0.5s ease-out forwards; }
+        .animate-slide-out-down { animation: slideOutDown 0.5s ease-out forwards; }
+
+        .hidden-no-anim {
+            display: none !important;
+        }
+        
+        .controls.minimized-view .btn-text {
+            display: none;
+        }
+        .controls.minimized-view .dir-db-btn i {
+            margin-right: 0;
+        }
     </style>
 </head>
 
@@ -845,19 +868,19 @@
                         class="version-display"></span></span>
             </a>
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
-                Wstecz</a>
+                <span class="btn-text">Wstecz</span></a>
         </div>
     </div>
 
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
-            Załaduj...</label>
+            <span class="btn-text">Załaduj...</span></label>
         <input type="file" id="fileInput" accept=".txt" />
         <button id="playButton" title="Losuj animacją" class="dir-db-btn">
-            <i class="fas fa-play"></i> Play
+            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
         </button>
         <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
-            <i class="fas fa-sync"></i> Reset
+            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
         </button>
         <input type="text" id="search" placeholder="Szukaj pozycji..." />
         <select id="formatFilter">
@@ -887,16 +910,16 @@
             <option value="9">9 pozycji</option>
             <option value="10">10 pozycji</option>
         </select>
-        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i> Tryb ciemny</button>
-        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
+        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Tryb ciemny</span></button>
+        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></button>
         <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
-            <span id="animationBtn-main"><i class="fas fa-video"></i> Video</span>
+            <span id="animationBtn-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
             <span id="animationBtn-play"><i class="fas fa-play"></i></span>
             <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
             <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
         </button>
-        <button id="scrollTopBtn" class="dir-db-btn" title="Przewiń do góry" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">
-            <i class="fas fa-chevron-up"></i>
+        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
+            <i class="fas fa-window-minimize"></i>
         </button>
     </div>
 
@@ -962,7 +985,7 @@
                 bgVideoEndNum: 6,
                 defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
                 defaultView: 2, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
-                defaultFormat: "LINK",
+                defaultFormat: "", // Puste oznacza "Wszystko"
                 defaultSort: "nameAsc",
                 defaultRows: 3,
                 predefinedFilters: [
@@ -1029,6 +1052,7 @@
         let lastPlayedGuide = null, lastRandomPage = -1;
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null;
+        let isMinimized = false;
 
 
         const fileInput = document.getElementById("fileInput"),
@@ -1331,7 +1355,10 @@
             if (searchQuery) {
                 searchInput.value = decodeURIComponent(searchQuery);
             }
-            formatFilter.value = getFromLocalStorage('format') || config.pageSettings.defaultFormat || "";
+            
+            // Ustawia filtr formatu na podstawie localStorage lub konfiguracji (domyślnie "Wszystko")
+            const defaultFormat = config.pageSettings.defaultFormat || "";
+            formatFilter.value = getFromLocalStorage('format') || defaultFormat;
 
             updatePaginationOptions();
             renderGuides();
@@ -1374,9 +1401,11 @@
 
             currentTheme = initializeTheme();
             
-            darkModeBtn.innerHTML = currentTheme === 'dark'
-                ? `<i class="fas fa-moon"></i> Tryb ciemny`
-                : `<i class="fas fa-sun"></i> Tryb jasny`;
+            // Aktualizacja tekstu przycisku trybu ciemnego
+            const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
+            if(darkModeBtnText) {
+                darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny';
+            }
             
             if (config.pageSettings.showMiniLogo) {
                 startLogoRotator();
@@ -1392,6 +1421,8 @@
             updatePreviewButtonUI();
             updateBackgroundVideoVisibility();
 
+            document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
+            
             animationBtn.addEventListener('click', (event) => {
                 const shuffleBtn = document.getElementById('animationBtn-shuffle');
                 const playBtn = document.getElementById('animationBtn-play');
@@ -1421,6 +1452,57 @@
                     });
             }
         };
+        
+        function toggleMinimizeView() {
+            const topHeader = document.querySelector('.top-header');
+            const pagination = document.querySelector('.pagination');
+            const footer = document.querySelector('.footer');
+            const controls = document.querySelector('.controls');
+            const minimizeBtn = document.getElementById('minimizeBtn');
+            const minimizeIcon = minimizeBtn.querySelector('i');
+            const animationsOn = animationState !== 0;
+
+            isMinimized = !isMinimized; // Zmiana stanu (true -> false, false -> true)
+
+            controls.classList.toggle('minimized-view', isMinimized);
+            
+            const elementsToToggle = [topHeader, pagination, footer];
+
+            if (isMinimized) {
+                // MINIMALIZUJ
+                minimizeBtn.title = "Maksymalizuj interfejs";
+                minimizeIcon.className = 'fas fa-window-maximize';
+
+                if (animationsOn) {
+                    topHeader.classList.add('animate-slide-out-up');
+                    pagination.classList.add('animate-slide-out-down');
+                    footer.classList.add('animate-slide-out-down');
+                    // Usuń animacje pojawiania się, jeśli były
+                    topHeader.classList.remove('animated-header');
+                    pagination.classList.remove('animated-pagination');
+                    footer.classList.remove('animated-footer');
+                } else {
+                    elementsToToggle.forEach(el => el.classList.add('hidden-no-anim'));
+                }
+            } else {
+                // MAKSYMALIZUJ
+                minimizeBtn.title = "Minimalizuj interfejs";
+                minimizeIcon.className = 'fas fa-window-minimize';
+
+                if (animationsOn) {
+                    topHeader.classList.remove('animate-slide-out-up');
+                    pagination.classList.remove('animate-slide-out-down');
+                    footer.classList.remove('animate-slide-out-down');
+                    // Dodaj animacje pojawiania się
+                    topHeader.classList.add('animated-header');
+                    pagination.classList.add('animated-pagination');
+                    footer.classList.add('animated-footer');
+                } else {
+                    elementsToToggle.forEach(el => el.classList.remove('hidden-no-anim'));
+                }
+            }
+        }
+
         function resetView() {
             stopPlayAnimation();
             searchInput.value = "";
@@ -1636,18 +1718,20 @@
         function updatePreviewButtonUI() {
             previewBtn.classList.remove("inactive", "highlighted-state");
             guideList.classList.remove("hide-covers", "only-covers");
+            const previewBtnText = previewBtn.querySelector('.btn-text');
+            
             switch (previewState) {
                 case 0: // Widok: Tekst (wyszarzony)
-                    previewBtn.innerHTML = `<i class="fas fa-font"></i> Tekst`;
+                    if(previewBtnText) previewBtnText.textContent = ` Tekst`;
                     previewBtn.classList.add("inactive");
                     guideList.classList.add("hide-covers");
                     break;
                 case 1: // Widok: Grafika (normalny)
-                    previewBtn.innerHTML = `<i class="fas fa-image"></i> Grafika`;
+                    if(previewBtnText) previewBtnText.textContent = ` Grafika`;
                     guideList.classList.add("only-covers");
                     break;
                 case 2: // Widok: Wszystko (wyróżniony)
-                    previewBtn.innerHTML = `<i class="fas fa-object-group"></i> Wszystko`;
+                    if(previewBtnText) previewBtnText.textContent = ` Wszystko`;
                     previewBtn.classList.add("highlighted-state");
                     break;
             }
@@ -1667,6 +1751,7 @@
             const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
             const animationBtnPlay = document.getElementById('animationBtn-play');
             const animationBtnReset = document.getElementById('animationBtn-reset');
+            const animationBtnText = animationBtnMain.querySelector('.btn-text');
 
             animationBtn.classList.remove("inactive", "highlighted-state");
             document.body.classList.remove("no-animation");
@@ -1678,15 +1763,15 @@
 
             switch (animationState % numStates) {
                 case 0: // Tryb: Statycznie (wyszarzony)
-                    animationBtnMain.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
+                    if(animationBtnText) animationBtnText.textContent = ` Statycznie`;
                     animationBtn.classList.add("inactive");
                     document.body.classList.add("no-animation");
                     break;
                 case 1: // Tryb: Animacje (normalny)
-                    animationBtnMain.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
+                    if(animationBtnText) animationBtnText.textContent = ` Animacje`;
                     break;
                 case 2: // Tryb: Video (wyróżniony) - tylko jeśli są wideo
-                    animationBtnMain.innerHTML = `<i class="fas fa-video"></i> Video`;
+                    if(animationBtnText) animationBtnText.textContent = ` Video`;
                     animationBtn.classList.add("highlighted-state");
                     if (hasMultipleVideos) {
                         animationBtnShuffle.style.display = 'inline-flex';
@@ -1766,9 +1851,10 @@
             localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
             currentTheme = initializeTheme();
             
-            darkModeBtn.innerHTML = currentTheme === 'dark'
-                ? `<i class="fas fa-moon"></i> Tryb ciemny`
-                : `<i class="fas fa-sun"></i> Tryb jasny`;
+            const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
+            if(darkModeBtnText) {
+                 darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny';
+            }
             
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
                 const currentLogoData = config.logoRotator.logos[currentLogoIndex];
@@ -1797,7 +1883,7 @@
             if (currentSort !== "shuffle")
                 playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
             backdrop.classList.add("visible");
-            playButton.innerHTML = `<i class="fas fa-stop"></i> Stop`;
+            playButton.querySelector('.btn-text').textContent = ' Stop';
             playButton.classList.add("inactive");
             playCounterElement.classList.add("visible");
             scheduleNext();
@@ -1811,7 +1897,7 @@
                 backdrop.classList.remove("visible");
                 playGuideContainer.innerHTML = "";
                 playButton.classList.remove("inactive");
-                playButton.innerHTML = `<i class="fas fa-play"></i> Play`;
+                playButton.querySelector('.btn-text').textContent = ' Play';
                 playCounterElement.classList.remove("visible");
             }
         }
