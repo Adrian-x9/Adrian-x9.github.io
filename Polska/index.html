@@ -1,1620 +1,2038 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <title>Moja Biblioteka Poradników</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="gfx/favicons/favicon-16x16.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="32x32"
-      href="gfx/favicons/favicon-32x32.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="gfx/favicons/apple-touch-icon-180x180.png"
-    />
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="192x192"
-      href="gfx/favicons/android-icon-192x192.png"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="../base-system/.gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../base-system/.gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../base-system/.gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-      #bg-video {
-        position: fixed;
-        right: 0;
-        bottom: 0;
-        min-width: 100%;
-        min-height: 100%;
-        width: 100vw;
-        height: 100vh;
-        object-fit: cover;
-        z-index: -1;
-        display: none;
-      }
-
-      body.video-ready {
-        background-color: transparent !important;
-      }
-
-      body {
-        font-family: "Segoe UI", sans-serif;
-        margin: 0;
-        padding: 20px;
-        transition: background-color 0.5s ease, color 0.3s ease;
-      }
-
-      body.no-animation .guide.animate-in,
-      body.no-animation .guide.flip-animate {
-        animation: none !important;
-        transform: none !important;
-      }
-
-      body.no-animation .guide-cover {
-        transition: none !important;
-      }
-
-      #fileInput {
-        display: none;
-      }
-
-      a {
-        font-weight: bold;
-        text-decoration: none;
-      }
-
-      a:hover {
-        text-decoration: underline;
-      }
-      
-      .top-header a.dir-db-btn:hover {
-        text-decoration: none;
-      }
-
-      .title-red {
-        color: #cc0000;
-      }
-      .dark-mode .title-red {
-          color: #e53935;
-      }
-
-      .dark-mode .version-suffix {
-        color: #eee;
-      }
-      body:not(.dark-mode) .version-suffix {
-          color: #333;
-      }
-      .footer .version-suffix {
-        font-weight: normal;
-      }
-
-
-      body:not(.dark-mode) {
-        background-color: #f4f4f4;
-        color: #333;
-      }
-
-      body:not(.dark-mode) a {
-        color: #cc0000;
-      }
-
-      body:not(.dark-mode) .dir-db-btn,
-      body:not(.dark-mode) .highlighted-state {
-        color: #cc0000;
-        background: #fdfdfd;
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-      }
-
-      body:not(.dark-mode) input,
-      body:not(.dark-mode) select,
-      body:not(.dark-mode) button {
-        background-color: #fff;
-        color: #333;
-        border-color: #ccc;
-      }
-
-      body:not(.dark-mode) button:hover {
-        background-color: #f0f0f0;
-      }
-
-      body:not(.dark-mode) .dir-db-btn:hover,
-      body:not(.dark-mode) .highlighted-state:hover {
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-      }
-
-      body:not(.dark-mode) .guide {
-        background: #fdfdfd;
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-      }
-
-      body.video-ready:not(.dark-mode) .guide {
-        background: rgba(253, 253, 253, 0.85);
-      }
-
-      body:not(.dark-mode) .guide-cover {
-        border: 2px solid #cc0000;
-        box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
-      }
-
-      body:not(.dark-mode) .pagination-info {
-        background-color: #f0f0f0;
-        border-color: #ddd;
-        color: #555;
-        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-      }
-
-      body:not(.dark-mode) .footer {
-        color: #666;
-      }
-
-      body:not(.dark-mode) .footer .footer-special-text {
-        color: #555;
-      }
-
-      body:not(.dark-mode) .privacy-notice {
-        color: #bbb;
-      }
-
-      .dark-mode {
-        background-color: #181818;
-        color: #eee;
-      }
-
-      .dark-mode a {
-        color: #e53935;
-      }
-
-      .dark-mode .dir-db-btn,
-      .dark-mode .highlighted-state {
-        color: #e53935;
-        background: #000;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-        border: 1px solid #555;
-      }
-
-      .dark-mode input,
-      .dark-mode select,
-      .dark-mode button {
-        background-color: #000;
-        color: #eee;
-        border-color: #555;
-      }
-
-      .dark-mode button:hover:not(:disabled) {
-        background-color: #222;
-      }
-
-      .dark-mode .dir-db-btn:hover,
-      .dark-mode .highlighted-state:hover {
-        background: #111;
-        box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-      }
-
-      .dark-mode .guide {
-        background: #000;
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-      }
-
-      body.video-ready.dark-mode .guide {
-        background: rgba(0, 0, 0, 0.75);
-      }
-
-      .dark-mode .guide:hover {
-        box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-      }
-
-      .dark-mode .guide-info {
-        color: #bbb;
-      }
-
-      .dark-mode .guide-cover {
-        border: 2px solid #e53935;
-        box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
-      }
-
-      .dark-mode .pagination-info {
-        background-color: #222;
-        border-color: #444;
-        color: #ccc;
-        box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
-      }
-
-      .dark-mode .footer {
-        color: #bbb;
-      }
-
-      .dark-mode .footer .footer-special-text {
-        color: #eee;
-      }
-
-      .dark-mode .privacy-notice {
-        color: #777;
-      }
-
-      button.inactive {
-        font-weight: normal;
-        opacity: 0.6;
-      }
-
-      .top-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 20px;
-        flex-wrap: wrap;
-        text-align: center;
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-
-      .header-group {
-        display: flex;
-        gap: 5px;
-      }
-      
-      /* ZMIANA 3: Dodano grupę dla logo i licznika */
-      .header-logo-group {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-      }
-
-      .header-logo-link {
-        display: flex;
-        align-items: center;
-      }
-
-      .header-logo {
-        max-height: 42px;
-        width: auto;
-      }
-
-      .top-header .title {
-        font-size: 1.6em;
-        font-weight: bold;
-      }
-
-      .top-header .counter {
-        font-size: 0.9em;
-        color: #aaa;
-      }
-
-      .top-header .counter b {
-        font-weight: bold;
-      }
-
-      .controls {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 20px;
-        opacity: 0;
-        transform: translateY(-20px);
-      }
-
-      input,
-      select,
-      button {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid;
-        white-space: nowrap;
-      }
-
-      input::placeholder {
-        color: #aaa;
-      }
-
-      .dark-mode input::placeholder {
-        color: #666;
-      }
-
-      .dir-db-btn {
-        padding: 10px 20px;
-        border-radius: 10px;
-        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-        display: flex;
-        align-items: center;
-        font-weight: bold;
-        font-size: 1em;
-        cursor: pointer;
-      }
-
-      .dir-db-btn:hover {
-        transform: translateY(-5px);
-      }
-
-      .dir-db-btn i {
-        margin-right: 5px;
-      }
-
-      .guide-list {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, 250px);
-        justify-content: center;
-        gap: 20px;
-        width: 90%;
-        max-width: 1920px;
-        margin: 0 auto;
-      }
-
-      .guide-list.hide-covers .guide-cover {
-        visibility: hidden;
-        opacity: 0;
-        max-height: 0;
-        margin: 0;
-        padding: 0;
-        border-width: 0;
-        transform: scale(0.7);
-      }
-
-      .guide-list.only-covers .guide-title,
-      .guide-list.only-covers .guide-info,
-      .guide-list.only-covers .guide-content-bottom > a:not(.cover-link),
-      .guide-list.only-covers .guide-info-container {
-        display: none;
-      }
-
-      .guide-list.only-covers .guide {
-        padding: 10px;
-      }
-
-      .guide-list.only-covers .guide-cover {
-        margin: 0;
-        border: none !important;
-      }
-
-      .guide {
-        padding: 0 20px 10px;
-        border-radius: 10px;
-        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        text-align: center;
-        width: 250px;
-        box-sizing: border-box;
-      }
-
-      .guide:hover {
-        transform: translateY(-5px);
-      }
-
-      .guide-content-bottom {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-      }
-
-      .guide-info-container {
-        flex-grow: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .guide a {
-        margin-top: 10px;
-        display: inline-block;
-      }
-
-      .guide a.cover-link {
-        margin-top: 0;
-        display: block;
-      }
-
-      .guide-info {
-        font-size: 0.9em;
-      }
-
-      .guide-title {
-        font-size: 1.2em;
-        font-weight: bold;
-        margin-bottom: 10px;
-        overflow-wrap: break-word;
-      }
-
-      .pagination {
-        text-align: center;
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-        gap: 10px; /* ZMIANA 4: Ujednolicony odstęp */
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      /* ZMIANA 4: Ujednolicono wygląd przycisków i pól w paginacji */
-      .pagination button,
-      .pagination input,
-      .pagination select {
-        padding: 10px;
-        margin: 0;
-        font-size: 1em;
-        cursor: pointer;
-        border-radius: 5px;
-        width: auto;
-      }
-
-      .pagination button:disabled {
-        cursor: not-allowed;
-        opacity: 0.5;
-      }
-
-      .guide-cover {
-        max-width: 100%;
-        height: auto;
-        margin: 10px auto 0;
-        display: block;
-        border-radius: 5px;
-        transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s,
-          border-width 0.7s, visibility 0.7s, transform 0.7s ease-in-out;
-        opacity: 0;
-        transform: scale(0.7);
-      }
-
-      .guide.animate-in {
-        animation: fadeInSlideIn 0.5s ease-out forwards;
-      }
-
-      @keyframes fadeInSlideIn {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            display: none;
         }
 
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes zoomInThenOut {
-        0% {
-          transform: scale(0.95);
-          opacity: 0;
+        body.video-ready {
+            background-color: transparent !important;
         }
 
-        10% {
-          transform: scale(1);
-          opacity: 1;
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.5s ease, color 0.3s ease;
         }
 
-        90% {
-          transform: scale(1);
-          opacity: 1;
+        body.no-animation .guide.animate-in,
+        body.no-animation .guide.flip-animate {
+            animation: none !important;
+            transform: none !important;
         }
 
-        100% {
-          transform: scale(0.95);
-          opacity: 0;
+        body.no-animation .guide-cover,
+        body.no-animation .top-header,
+        body.no-animation .footer {
+            transition: none !important;
         }
-      }
 
-      .footer {
-        text-align: center;
-        padding: 20px;
-        padding-top: 10px;
-        font-size: 0.9em;
-        opacity: 0;
-        transform: translateY(20px);
-      }
+        #fileInput {
+            display: none;
+        }
 
-      .nobr {
-        white-space: nowrap;
-      }
+        a {
+            font-weight: bold;
+            text-decoration: none;
+        }
 
-      .privacy-notice {
-        margin-top: 10px;
-        font-size: 0.9em;
-      }
+        a:hover {
+            text-decoration: underline;
+        }
 
-      .footer .footer-special-text {
-        font-weight: normal;
-      }
-      
-      .backdrop {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.5s ease, background-color 0.3s;
-      }
+        .top-header a.dir-db-btn:hover {
+            text-decoration: none;
+        }
 
-      .dark-mode .backdrop {
-        background-color: rgba(255, 255, 255, 0.6);
-      }
+        .title-red {
+            color: #cc0000;
+        }
 
-      .dark-mode .backdrop.image-mode-active,
-      .dark-mode .backdrop.preview-active {
-        background-color: rgba(0, 0, 0, 0.8);
-      }
+        .dark-mode .title-red {
+            color: #e53935;
+        }
 
-      .backdrop.visible {
-        opacity: 1;
-        visibility: visible;
-      }
+        .dark-mode .version-suffix {
+            color: #eee;
+        }
 
-      .play-guide-container {
-        transform-style: preserve-3d;
-        perspective: 1000px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 300px;
-        height: 400px;
-        transition: opacity 0.2s ease-in-out;
-      }
+        body:not(.dark-mode) .version-suffix {
+            color: #333;
+        }
+        
+        body:not(.dark-mode) .top-header .counter {
+            color: #555;
+        }
+        
+        .dark-mode .top-header .counter {
+            color: #aaa;
+        }
 
-      .play-guide-container .guide,
-      .play-guide-container .play-image-view {
-        animation: zoomInThenOut 4s linear infinite;
-      }
+        body:not(.dark-mode) {
+            background-color: #f4f4f4;
+            color: #333;
+        }
 
-      .play-guide-container.image-mode {
-        width: 95vw;
-        height: 95vh;
-        max-width: initial;
-        max-height: initial;
-      }
+        body:not(.dark-mode) a {
+            color: #cc0000;
+        }
 
-      .preview-image {
-        max-width: 90vw;
-        max-height: 90vh;
-        border-radius: 5px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-      }
+        body:not(.dark-mode) .dir-db-btn,
+        body:not(.dark-mode) .highlighted-state {
+            color: #cc0000;
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+        
+        body:not(.dark-mode) .dir-db-btn.highlighted-state {
+             color: #fff;
+             background: #cc0000;
+             box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        body:not(.dark-mode) input,
+        body:not(.dark-mode) select,
+        body:not(.dark-mode) button {
+            background-color: #fff;
+            color: #333;
+            border-color: #ccc;
+        }
 
-      .play-image-view {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: 100%;
-        position: relative;
-      }
+        body:not(.dark-mode) button:hover {
+            background-color: #f0f0f0;
+        }
 
-      .play-image-view img {
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        border-radius: 5px;
-      }
+        body:not(.dark-mode) .dir-db-btn:hover,
+        body:not(.dark-mode) .highlighted-state:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
 
-      .play-image-view .guide-title {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px 15px;
-        border-radius: 5px;
-        font-size: 1.2em;
-        font-weight: bold;
-        z-index: 1000;
-      }
+        body:not(.dark-mode) .guide {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
 
-      .dark-mode .play-image-view .guide-title {
-        background-color: rgba(0, 0, 0, 0.7);
-        color: #fff;
-      }
+        body.video-ready:not(.dark-mode) .guide {
+            background: rgba(253, 253, 253, 0.5);
+        }
 
-      body:not(.dark-mode) .play-image-view .guide-title {
-        background-color: rgba(255, 255, 255, 0.8);
-        color: #333;
-      }
+        body:not(.dark-mode) .guide-cover {
+            border: 2px solid #cc0000;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+        }
 
-      .play-counter {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        background-color: rgba(0, 0, 0, 0.7);
-        color: #fff;
-        padding: 10px 15px;
-        border-radius: 5px;
-        font-size: 1.2em;
-        font-weight: bold;
-        z-index: 1000;
-        opacity: 0;
-        transition: opacity 0.5s, background-color 0.3s, color 0.3s;
-      }
+        body:not(.dark-mode) .pagination-info {
+            background-color: #f0f0f0;
+            border-color: #ddd;
+            color: #555;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
-      body:not(.dark-mode) .play-counter {
-        background-color: rgba(255, 255, 255, 0.8);
-        color: #333;
-      }
+        body:not(.dark-mode) .footer {
+            color: #666;
+        }
 
-      .play-counter.visible {
-        opacity: 1;
-      }
+        body:not(.dark-mode) .footer .footer-special-text {
+            color: #555;
+        }
 
-      .play-close-btn {
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: 0 0;
-        border: none;
-        color: #333;
-        font-size: 2em;
-        cursor: pointer;
-        z-index: 1001;
-        transition: transform 0.2s ease, color 0.2s;
-      }
+        body:not(.dark-mode) .privacy-notice {
+            color: #bbb;
+        }
 
-      .dark-mode .play-close-btn {
-        color: #fff;
-      }
+        .dark-mode {
+            background-color: #181818;
+            color: #eee;
+        }
 
-      .play-close-btn:hover {
-        transform: scale(1.2);
-        color: #e53935;
-      }
+        .dark-mode a {
+            color: #e53935;
+        }
 
-      @media (min-width: 1200px) {
+        .dark-mode .dir-db-btn,
+        .dark-mode .highlighted-state {
+            color: #e53935;
+            background: #000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            border: 1px solid #555;
+        }
+
+        .dark-mode .dir-db-btn.highlighted-state {
+             color: #fff;
+             background: #a01515;
+             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .dark-mode input,
+        .dark-mode select,
+        .dark-mode button {
+            background-color: #000;
+            color: #eee;
+            border-color: #555;
+        }
+
+        .dark-mode button:hover:not(:disabled) {
+            background-color: #222;
+        }
+
+        .dark-mode .dir-db-btn:hover,
+        .dark-mode .highlighted-state:hover {
+            background: #111;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .guide {
+            background: #000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        body.video-ready.dark-mode .guide {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-mode .guide:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .guide-info {
+            color: #bbb;
+        }
+
+        .dark-mode .guide-cover {
+            border: 2px solid #e53935;
+            box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
+        }
+
+        .dark-mode .pagination-info {
+            background-color: #222;
+            border-color: #444;
+            color: #ccc;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
+        }
+
+        .dark-mode .footer {
+            color: #bbb;
+        }
+
+        .dark-mode .footer .footer-special-text {
+            color: #eee;
+        }
+
+        .dark-mode .privacy-notice {
+            color: #666;
+        }
+
+        button.inactive {
+            font-weight: normal;
+            opacity: 0.6;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            max-height: 200px; /* Wysokość do animacji */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
+            padding-top: 5px;
+        }
+
+        .top-header.minimized-header {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            opacity: 0;
+        }
+
+        .header-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo-link {
+            display: flex;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .header-logo {
+            max-height: 42px;
+            width: auto;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .top-header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .top-header .counter {
+            font-size: 0.9em;
+        }
+
+        .top-header .counter b {
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        input,
+        select,
+        button {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid;
+            white-space: nowrap;
+        }
+
+        #search {
+            width: 160px;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .dark-mode input::placeholder {
+            color: #666;
+        }
+
+        .dir-db-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s;
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .dir-db-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .dir-db-btn i {
+            margin-right: 5px;
+        }
+        
+        #minimizeBtn i {
+             margin-right: 0;
+        }
+
+        .video-shuffle-btn {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .video-shuffle-btn > span {
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        #animationBtn-main {
+            flex-grow: 1;
+            padding-right: 12px;
+        }
+
+        #animationBtn-play, #animationBtn-reset {
+            padding: 0 12px;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #animationBtn-play:hover, #animationBtn-reset:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .dark-mode #animationBtn-play, .dark-mode #animationBtn-reset {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode #animationBtn-play:hover, .dark-mode #animationBtn-reset:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+        
+        #animationBtn-shuffle {
+            padding-left: 12px;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #animationBtn-shuffle:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        .dark-mode #animationBtn-shuffle {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+        .dark-mode #animationBtn-shuffle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        #animationBtn.highlighted-state #animationBtn-shuffle,
+        #animationBtn.highlighted-state #animationBtn-play,
+        #animationBtn.highlighted-state #animationBtn-reset {
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle,
+         .dark-mode #animationBtn.highlighted-state #animationBtn-play,
+         .dark-mode #animationBtn.highlighted-state #animationBtn-reset {
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        #animationBtn.highlighted-state > #animationBtn-main {
+            position: relative;
+        }
+
+        #animationBtn-play.active-play i {
+             color: #fff;
+             text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+        }
+        .dark-mode #animationBtn-play.active-play i {
+             text-shadow: 0 0 10px #ff8a80;
+        }
+
+        .guide-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 250px);
+            justify-content: center;
+            gap: 20px;
+            width: 90%;
+            max-width: 1920px;
+            margin: 0 auto;
+        }
+
+        .guide-list.hide-covers .guide-cover {
+            visibility: hidden;
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            border-width: 0;
+            transform: scale(0.7);
+        }
+
+        .guide-list.only-covers .guide-title,
+        .guide-list.only-covers .guide-info,
+        .guide-list.only-covers .guide-content-bottom>a:not(.cover-link),
+        .guide-list.only-covers .guide-info-container {
+            display: none;
+        }
+
+        .guide-list.only-covers .guide {
+            padding: 10px;
+        }
+
+        .guide-list.only-covers .guide-cover {
+            margin: 0;
+            border: none !important;
+        }
+
+        .guide {
+            padding: 0 20px 10px;
+            border-radius: 10px;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            width: 250px;
+            box-sizing: border-box;
+        }
+
+        .guide:hover {
+            transform: translateY(-5px);
+        }
+
+        .guide-content-bottom {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .guide-info-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide a {
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .guide a.cover-link {
+            margin-top: 0;
+            display: block;
+        }
+
+        .guide-info {
+            font-size: 0.9em;
+        }
+
+        .guide-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            overflow-wrap: break-word;
+        }
+
+        .pagination {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 15px; /* Dodatkowy odstęp */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .pagination button,
+        .pagination input,
+        .pagination select {
+            padding: 10px;
+            margin: 0;
+            font-size: 0.9em;
+            cursor: pointer;
+            border-radius: 5px;
+            width: auto;
+        }
+
+        .pagination button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .guide-cover {
+            max-width: 100%;
+            height: auto;
+            margin: 10px auto 0;
+            display: block;
+            border-radius: 5px;
+            transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s,
+                border-width 0.7s, visibility 0.7s, transform 0.7s ease-in-out;
+            opacity: 0;
+            transform: scale(0.7);
+        }
+
+        .guide.animate-in {
+            animation: fadeInSlideIn 0.5s ease-out forwards;
+        }
+
+        @keyframes fadeInSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes zoomInThenOut {
+            0% {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+
+            10% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            90% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            padding-top: 10px;
+            font-size: 0.9em;
+            opacity: 0;
+            transform: translateY(20px);
+            max-height: 200px; /* Wysokość do animacji */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
+        }
+        
+        .footer.minimized-footer {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+            opacity: 0;
+        }
+
+        .nobr {
+            white-space: nowrap;
+        }
+
+        .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .footer .footer-special-text {
+            font-weight: normal;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, background-color 0.3s;
+        }
+
+        .dark-mode .backdrop {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .dark-mode .backdrop.image-mode-active,
+        .dark-mode .backdrop.preview-active {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+        .backdrop.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
         .play-guide-container {
-          width: 90vw;
-          height: 90vh;
-          max-width: 450px;
-          max-height: 700px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 300px;
+            height: 400px;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .play-guide-container .guide,
+        .play-guide-container .play-image-view {
+            animation: zoomInThenOut 4s linear infinite;
         }
 
         .play-guide-container.image-mode {
-          max-width: 95vw;
-          max-height: 95vh;
+            width: 95vw;
+            height: 95vh;
+            max-width: initial;
+            max-height: initial;
         }
 
-        .play-guide-container .guide {
-          width: 100%;
-          height: 100%;
-          padding: 20px;
+        .preview-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
 
-        .play-guide-container .guide .guide-cover {
-          width: 100%;
-          height: 70%;
-          object-fit: contain;
-          max-width: 100%;
-          max-height: 100%;
-        }
-      }
-
-      @keyframes fadeInDown {
-        from {
-          opacity: 0;
-          transform: translateY(-20px);
+        .play-image-view {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            position: relative;
         }
 
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(20px);
+        .play-image-view img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
         }
 
-        to {
-          opacity: 1;
-          transform: translateY(0);
+        .play-image-view .guide-title {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1000;
         }
-      }
 
-      .animated-header,
-      .animated-controls,
-      .animated-footer,
-      .animated-pagination {
-        animation-fill-mode: forwards;
-      }
+        .dark-mode .play-image-view .guide-title {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+        }
 
-      .animated-header,
-      .animated-controls {
-        animation-name: fadeInDown;
-        animation-duration: 0.6s;
-        animation-timing-function: ease-out;
-      }
+        body:not(.dark-mode) .play-image-view .guide-title {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
 
-      .animated-footer,
-      .animated-pagination {
-        animation-name: fadeInUp;
-        animation-duration: 0.8s;
-        animation-timing-function: ease-out;
-      }
+        .play-counter {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s, background-color 0.3s, color 0.3s;
+        }
+
+        body:not(.dark-mode) .play-counter {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        .play-counter.visible {
+            opacity: 1;
+        }
+
+        .play-close-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: 0 0;
+            border: none;
+            color: #333;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.2s ease, color 0.2s;
+        }
+
+        .dark-mode .play-close-btn {
+            color: #fff;
+        }
+
+        .play-close-btn:hover {
+            transform: scale(1.2);
+            color: #e53935;
+        }
+
+        @media (min-width: 1200px) {
+            .play-guide-container {
+                width: 90vw;
+                height: 90vh;
+                max-width: 450px;
+                max-height: 700px;
+            }
+
+            .play-guide-container.image-mode {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+
+            .play-guide-container .guide {
+                width: 100%;
+                height: 100%;
+                padding: 20px;
+            }
+
+            .play-guide-container .guide .guide-cover {
+                width: 100%;
+                height: 70%;
+                object-fit: contain;
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-header,
+        .animated-controls,
+        .animated-footer,
+        .animated-pagination {
+            animation-fill-mode: forwards;
+        }
+
+        .animated-header,
+        .animated-controls {
+            animation-name: fadeInDown;
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+        }
+
+        .animated-footer,
+        .animated-pagination {
+            animation-name: fadeInUp;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-out;
+        }
+        
+        .hidden-no-anim {
+            display: none !important;
+        }
+        
+        .controls.minimized-view .btn-text {
+            display: none;
+        }
+        .controls.minimized-view .dir-db-btn i {
+            margin-right: 0;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <video id="bg-video" autoplay loop muted playsinline>
-      <source id="bg-video-source" src="" type="video/mp4" />
+        <source id="bg-video-source" src="" type="video/mp4" />
     </video>
 
     <div class="top-header">
         <div class="header-logo-group">
-            <a id="logoLink" href="https://www.ade.pl" target="_blank" rel="noopener noreferrer" class="header-logo-link">
+            <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
+            <a id="logoLink" href="https://www.ade.pl" target="_blank" rel="noopener noreferrer"
+                class="header-logo-link">
                 <img id="header-logo" src="" alt="Logo" class="header-logo" />
             </a>
-            <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
+
         </div>
-      <div id="pageTitle" class="title">Poradniki do Gier</div>
-      <div class="header-group">
-        <a id="visuDirBtn" class="dir-db-btn" href="#">
-          <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
-        </a>
-        <a id="backButton" class="dir-db-btn" href="javascript:history.back()"
-          ><i class="fas fa-chevron-left"></i> Wstecz</a
-        >
-      </div>
+        <div id="pageTitle" class="title">Poradniki do Gier</div>
+        <div class="header-group">
+            <a id="visuDirBtn" class="dir-db-btn" href="#">
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
+                        class="version-display"></span></span>
+            </a>
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
+                <span class="btn-text">Wstecz</span></a>
+        </div>
     </div>
 
     <div class="controls">
-      <label
-        for="fileInput"
-        id="fileInputLabel"
-        class="dir-db-btn file-input-label"
-        ><i class="fas fa-upload"></i> Załaduj...</label
-      >
-      <input type="file" id="fileInput" accept=".txt" />
-      <button id="playButton" title="Losuj animacją" class="dir-db-btn">
-        <i class="fas fa-play"></i> Play
-      </button>
-      <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
-        <i class="fas fa-sync"></i> Reset
-      </button>
-      <input type="text" id="search" placeholder="Szukaj pozycji..." />
-      <select id="formatFilter">
-        <option value="">Wszystko</option>
-      </select>
-      <select id="sortSelector">
-        <option value="">Sortuj...</option>
-        <option value="shuffle">Wymieszaj</option>
-        <option value="nameAsc">Nazwa A–Z</option>
-        <option value="nameDesc">Nazwa Z–A</option>
-        <option value="dateAsc">Data ↑</option>
-        <option value="dateDesc">Data ↓</option>
-        <option value="sizeAsc">Rozmiar ↑</option>
-        <option value="sizeDesc">Rozmiar ↓</option>
-      </select>
-      <select id="itemsPerPageSelector" title="Wierszy..."></select>
-      <select id="randomSelector" onchange="drawRandomGuides()">
-        <option value="" disabled selected>Losuj...</option>
-        <option value="1">1 pozycja</option>
-        <option value="2">2 pozycje</option>
-        <option value="3">3 pozycje</option>
-        <option value="4">4 pozycje</option>
-        <option value="5">5 pozycji</option>
-        <option value="6">6 pozycji</option>
-        <option value="7">7 pozycji</option>
-        <option value="8">8 pozycji</option>
-        <option value="9">9 pozycji</option>
-        <option value="10">10 pozycji</option>
-      </select>
-      <button id="animationBtn" onclick="toggleAnimations()">
-        <i class="fas fa-play-circle"></i> <b>Animacje</b>
-      </button>
-      <button id="previewBtn" onclick="togglePreview()">
-        <i class="fas fa-eye"></i> <b>Wszystko</b>
-      </button>
-      <button id="darkModeBtn" onclick="toggleDarkMode()">
-        <i class="fas fa-sun"></i> Tryb jasny
-      </button>
+        <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
+            <span class="btn-text">Załaduj...</span></label>
+        <input type="file" id="fileInput" accept=".txt" />
+        <button id="playButton" title="Losuj animacją" class="dir-db-btn">
+            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
+        </button>
+        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
+            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
+        </button>
+        <input type="text" id="search" placeholder="Szukaj pozycji..." />
+        <select id="formatFilter">
+            <option value="">Wszystko</option>
+        </select>
+        <select id="sortSelector">
+            <option value="">Sortuj...</option>
+            <option value="shuffle">Wymieszaj</option>
+            <option value="nameAsc">Nazwa A–Z</option>
+            <option value="nameDesc">Nazwa Z–A</option>
+            <option value="dateAsc">Data ↑</option>
+            <option value="dateDesc">Data ↓</option>
+            <option value="sizeAsc">Rozmiar ↑</option>
+            <option value="sizeDesc">Rozmiar ↓</option>
+        </select>
+        <select id="itemsPerPageSelector" title="Wierszy..."></select>
+        <select id="randomSelector" onchange="drawRandomGuides()">
+            <option value="" disabled selected>Losuj...</option>
+            <option value="1">1 pozycja</option>
+            <option value="2">2 pozycje</option>
+            <option value="3">3 pozycje</option>
+            <option value="4">4 pozycje</option>
+            <option value="5">5 pozycji</option>
+            <option value="6">6 pozycji</option>
+            <option value="7">7 pozycji</option>
+            <option value="8">8 pozycje</option>
+            <option value="9">9 pozycji</option>
+            <option value="10">10 pozycji</option>
+        </select>
+        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Tryb ciemny</span></button>
+        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></button>
+        <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
+            <span id="animationBtn-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
+            <span id="animationBtn-play"><i class="fas fa-play"></i></span>
+            <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+            <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
+        </button>
+        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
+            <i class="fas fa-window-minimize"></i>
+        </button>
     </div>
 
     <div class="guide-list" id="guideList"></div>
     <div class="pagination" id="pagination"></div>
 
     <div class="footer">
-      <div>
-        System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span></a>
-        <strong>© 2025-09-07</strong> do katalogowania, zarządzania i
-        prezentacji plików i folderów |
-        <span class="nobr"
-          ><a
-            href="https://www.ade.pl"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Adrian Ulbrych
-          </a></span
-        >
-        <span class="nobr"
-          ><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span
-        >
-      </div>
-      <div class="privacy-notice">
-        <strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani
-        śledzenia.
-        <strong>Czysty i bezpieczny kod!</strong>
-      </div>
+        <div>
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
+                    <span class="version-display"></span></span></a></strong>
+            <strong>© 2025-09-07</strong> do katalogowania, zarządzania i
+            prezentacji plików i folderów |
+            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
+                </a></span>
+            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+        </div>
+        <div class="privacy-notice">
+            <strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani
+            śledzenia.
+            <strong>Czysty i bezpieczny kod!</strong>
+        </div>
     </div>
 
     <div id="backdrop" class="backdrop">
-      <button id="playCloseBtn" class="play-close-btn">
-        <i class="fas fa-times"></i>
-      </button>
-      <div id="play-guide-container" class="play-guide-container"></div>
-      <div id="play-counter" class="play-counter"></div>
+        <button id="playCloseBtn" class="play-close-btn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div id="play-guide-container" class="play-guide-container"></div>
+        <div id="play-counter" class="play-counter"></div>
     </div>
 
     <script>
-      // --- KONFIGURACJA ---
-      const config = {
-        version: 'v1.0.1',
-        defaultBgv: false,
-        showBackButton: true,
-        showVisuDirButton: true,
-        showMiniLogo: true,
-        dataFolderName: "base-system/files",
-        coversFolderName: "base-system/preview",
-        coversHDFolderName: "base-system/preview-HD",
-        databaseFileName: "base-system/db.txt",
-        faviconsFolderUrl: "base-system/.gfx/favicons",
-        miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
-        miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
-        videoBgLightUrl: "base-system/.video/bg_light.mp4",
-        videoBgDarkUrl: "base-system/.video/bg_dark.mp4",
-        url404: "base-system/404.html",
-        urlAbout: "base-system/about.html",
-        pageTitle: "Poradniki do Gier",
-        defaultFormat: "",
-        defaultSort: "nameAsc",
-        defaultRows: 4,
-        predefinedFilters: [
-          { label: "Gliwice", search: "gliwice" },
-          { label: "Warszawa", search: "warszawa" },
-          { label: "Morze Bałtyckie", search: "morze" },
-          { label: "", search: "" },
-          { label: "", search: "" },
-        ],
-      };
-      // --- KONIEC KODU ---
-      
-      const dataFromFile = `
-      `;
-
-      let guides = [],
-        filteredGuides = [],
-        playGuidesQueue = [];
-      let currentPage = 1,
-        itemsPerPage,
-        selectedRowCount = config.defaultRows;
-      let playAnimationInterval = null,
-        currentSort = config.defaultSort;
-      let playCurrentIndex = 0,
-        itemsPerRow = 0;
-      let animationState = 1; 
-      let previewState = 1;
-
-      const fileInput = document.getElementById("fileInput"),
-        fileInputLabel = document.getElementById("fileInputLabel"),
-        searchInput = document.getElementById("search"),
-        formatFilter = document.getElementById("formatFilter"),
-        guideList = document.getElementById("guideList"),
-        pagination = document.getElementById("pagination"),
-        darkModeBtn = document.getElementById("darkModeBtn"),
-        previewBtn = document.getElementById("previewBtn"),
-        animationBtn = document.getElementById("animationBtn"),
-        sortSelector = document.getElementById("sortSelector"),
-        itemsPerPageSelector = document.getElementById("itemsPerPageSelector"),
-        randomSelector = document.getElementById("randomSelector"),
-        playButton = document.getElementById("playButton"),
-        backdrop = document.getElementById("backdrop"),
-        playGuideContainer = document.getElementById("play-guide-container"),
-        playCounterElement = document.getElementById("play-counter"),
-        playCloseBtn = document.getElementById("playCloseBtn"),
-        headerLogo = document.getElementById("header-logo"),
-        bgVideo = document.getElementById("bg-video"),
-        bgVideoSource = document.getElementById("bg-video-source");
-
-      function getFileExtension(filename) {
-        return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
-      }
-      function normalizeUrl(url) {
-        const trimmedUrl = url.trim();
-        if (trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://') || trimmedUrl.startsWith('./') || trimmedUrl.startsWith('../') || trimmedUrl.startsWith('/')) {
-            return trimmedUrl;
-        }
-        return `https://${trimmedUrl}`;
-      }
-      function decodeUrlFromFilename(filename) {
-        let urlPart = filename.split('$$')[0];
-        urlPart = urlPart.replace(/\.link$/i, '');
-        urlPart = urlPart.replace(/#/g, '/');
-        urlPart = urlPart.replace(/&&/g, '?');
-        return normalizeUrl(urlPart);
-      }
-      function parseGuideTitle(filename) {
-        const baseName = filename.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, '').trim();
-        const parts = baseName.split('$$');
-
-        if (getFileExtension(filename) === 'link' && parts.length > 1) {
-            return {
-                title: decodeURIComponent(parts[1] || ''),
-                offlineDesc: decodeURIComponent(parts[2] || null)
-            };
-        }
-
-        const title = decodeURIComponent(parts[0].replace(/_/g, ' ').replace(/-/g, ' ')).replace(/\s*-\s*Poradnik(?:_do_gry)?\s*(?:GRY-OnLine|Gry-OnLine)?\s*/i, '').trim();
-        return { title: title, offlineDesc: null };
-      }
-      function createDateFromStrings(dateStr, timeStr) {
-        const [day, month, year] = dateStr.split('.').map(Number);
-        const [hours, minutes] = timeStr.split(':').map(Number);
-        return new Date(year, month - 1, day, hours, minutes);
-      }
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-      }
-       function applySort(sortType, array) {
-        currentSort = sortType;
-        switch (sortType) {
-            case "shuffle":
-                shuffleArray(array);
-                break;
-            case "nameAsc":
-                array.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-            case "nameDesc":
-                array.sort((a, b) => b.title.localeCompare(a.title));
-                break;
-            case "dateAsc":
-                array.sort((a, b) => a.timestamp - b.timestamp);
-                break;
-            case "dateDesc":
-                array.sort((a, b) => b.timestamp - a.timestamp);
-                break;
-            case "sizeAsc":
-                array.sort((a, b) => parseFloat(a.sizeMB) - parseFloat(b.sizeMB));
-                break;
-            case "sizeDesc":
-                array.sort((a, b) => parseFloat(b.sizeMB) - parseFloat(a.sizeMB));
-                break;
-        }
-    }
-    
-    async function processData(text) {
-        const lines = text.split(/\r?\n/);
-        guides = [];
-        for (const line of lines) {
-            const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i);
-            if (match) {
-                const date = match[1];
-                const time = match[2];
-                const sizeOrDir = match[3];
-                const filename = match[4].trim();
-                const format = getFileExtension(filename);
-
-                let sizeBytes = 0;
-                if (sizeOrDir !== '<DIR>') {
-                    sizeBytes = parseInt(sizeOrDir);
-                }
-
-                if (sizeBytes === 0 && format !== 'link') continue;
-
-                const sizeMB = (sizeBytes / (1024 * 1024)).toFixed(2);
-                const { title, offlineDesc } = parseGuideTitle(filename);
-                let linkData = { description: offlineDesc };
-
-                if (format === 'link' && location.protocol !== 'file:') {
-                    try {
-                        const response = await fetch(`${config.dataFolderName}/${filename}`);
-                        if (response.ok) {
-                            linkData.description = await response.text();
-                        } else if (!offlineDesc) {
-                            linkData.description = 'Błąd wczytywania opisu.';
-                        }
-                    } catch (e) {
-                        if (!offlineDesc) linkData.description = 'Błąd wczytywania opisu.';
+        // --- KONFIGURACJA ---
+        const config = {
+            version: 'v1.0.9',
+            // --- Ustawienia globalne, wspólne dla wszystkich stron ---
+            global: {
+                defaultTheme: 'light', // 'light' lub 'dark'
+            },
+            logoRotator: {
+                enabled: true,
+                interval: 4500, // czas w ms
+                logos: [
+                    {
+                        srcLight: "../base-system/.gfx/interface/VisuDir_small_light.png",
+                        srcDark: "../base-system/.gfx/interface/VisuDir_small_dark.png",
+                        href: "base-sytem/about.html",
+                        alt: "Logo VisuDir"
+                    },
+                    {
+                        srcLight: "../base-system/.gfx/interface/ADE_small_light.png",
+                        srcDark: "../base-system/.gfx/interface/ADE_small_dark.png",
+                        href: "https://www.ade.pl",
+                        alt: "Logo ADE"
                     }
-                }
-                guides.push({
-                    title,
-                    format,
-                    file: filename,
-                    sizeMB,
-                    date,
-                    time,
-                    timestamp: createDateFromStrings(date, time).getTime(),
-                    linkData
-                });
+                ]
+            },
+            // --- Ustawienia specyficzne dla tej strony (index.html) ---
+            pageSettings: {
+                pageKey: 'polska',
+                defaultBgVideo: 3,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 10,
+                defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
+                defaultView: 2, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
+                defaultFormat: "JPG", // Puste oznacza "Wszystko"
+                defaultSort: "shuffle",
+                defaultRows: 4,
+                predefinedFilters: [
+                    { label: "Polska", search: "polska" },
+                    { label: "Gliwice", search: "gliwice" },
+                    { label: "Warszawa", search: "warszawa" },
+                    { label: "Morze Bałtyckie", search: "morze" },
+                    { label: "", search: "" },
+                ],
+                pageTitle: "▪ POLSKA ▪ foto galeria ▪",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: true,
+            },
+            // --- Ścieżki dostępu ---
+            paths: {
+                url404: "../base-system/404.html",
+                urlAbout: "../base-system/about.html",
+                databaseFileName: "./base-system/.db.txt",
+                dataFolderName: "./base-system/files",
+                coversFolderName: "./base-system/preview",
+                videoBgLightUrlBase: "../base-system/.video/bg_light",
+                videoBgDarkUrlBase: "../base-system/.video/bg_dark",
+            }
+        };
+        // --- KONIEC KONFIGURACJI ---
+
+        // --- PLIKOWA BAZA DANYCH ---
+        const dataFromFile = ` 
+  Volume in drive C has no label.
+ Volume Serial Number is 64E4-665E
+
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Polska\base-system\files
+
+08.09.2025  23:00    <DIR>          .
+08.09.2025  22:57    <DIR>          ..
+06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
+06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
+06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
+06.09.2025  07:07           1001189 Gliwice-Architektura_Polska_2461658_1920.jpg
+06.09.2025  07:11            579215 Gliwice-Autostrada-Noc_Polska_3248323_1920.jpg
+06.09.2025  07:15            960520 Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg
+06.09.2025  07:10            849329 Gliwice-Park-Jesien_Polska_4565816_1920.jpg
+06.09.2025  07:16            983087 Gliwice-Park-Jesien_Polska_4565817_1920.jpg
+06.09.2025  07:13            897171 Gliwice-Park-Jesien_Polska_4565819_1920.jpg
+06.09.2025  07:20            809564 Gliwice-Park-Natura_Polska_4565821_1920.jpg
+06.09.2025  07:20            670659 Gliwice-Radiostacja_Radio-Station_Polska_742266_1920.jpg
+06.09.2025  07:16            380364 Gliwice-Radiostacja_Radiotower_Polska_5046712_1920.jpg
+06.09.2025  07:09            665941 Gliwice-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:17            718118 Gliwice-Rynek-Lato_Polska_4022057_1920.jpg
+06.09.2025  07:10            540677 Gliwice-Rynek-Ratusz_Polska_4022055_1920.jpg
+06.09.2025  07:18            665941 Gliwice-Rynek-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:19            651140 Gliwice-Rzeka_River_Polska_6311462_1920.jpg
+06.09.2025  07:07            879613 Gliwice-Srodmiescie_Polska_2461654_1920.jpg
+06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
+06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
+06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
+06.09.2025  07:28           1284251 KoLobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
+06.09.2025  07:26            785680 KoLobrzeg_Polska_7562038_1920.jpg
+06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
+06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
+06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
+06.09.2025  07:30           1308124 Morskie-Oko_Mountains_Polska_4652861_1920.jpg
+06.09.2025  07:32            433921 Morze-Baltyckie_Baltic-Sea_Polska_7434540_1920.jpg
+06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
+06.09.2025  07:24            778656 Polska-Jura-Zamek_4717062_1920.jpg
+06.09.2025  07:24            897669 Polska-Wilamowice_Polska_5249675_1920.jpg
+06.09.2025  07:25            931818 Poznan-Rynek_Polska_983563_1920.jpg
+06.09.2025  07:03            648074 Standarcie-Kawiarnia-Krakow_Polska_street-cafe-4472312_1920.jpg
+06.09.2025  07:34            532992 Swinoujscie_Morze-Baltyckie_Baltic-Sea_Polska_2687131_1920.jpg
+06.09.2025  07:21            626930 Twierdza-Modlin-Narew_Fortress_Polska_7933060_1920.jpg
+06.09.2025  07:01            626930 Twierdza-modlin_modlin-fortress_Narew_Polska_7933060_1920.jpg
+06.09.2025  07:36            708799 Uznam-Morze-Baltyckie_Zachod-Slonca_Sunset_Polska_7147706_1920.jpg
+06.09.2025  07:35            579414 Uznam-Wolin_Usedom_Polska_3621894_1920.jpg
+06.09.2025  07:27            970499 Warszawa-Pomnik_Polska_2825709_1920.jpg
+06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
+06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
+06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
+              42 File(s)       32920780 bytes
+               2 Dir(s)     95289700352 bytes free
+
+      `;
+        // --- KONIEC BAZY DANYCH ---
+
+        let guides = [],
+            filteredGuides = [],
+            playGuidesQueue = [];
+        let currentPage = 1,
+            itemsPerPage;
+        let playAnimationInterval = null,
+            currentSort,
+            selectedRowCount;
+        let playCurrentIndex = 0,
+            itemsPerRow = 0;
+        let animationState, previewState, currentTheme;
+        let lastPlayedGuide = null, lastRandomPage = -1;
+        let currentLogoIndex = 0;
+        let logoInterval, autoShuffleInterval = null;
+        let isMinimized = false;
+
+
+        const fileInput = document.getElementById("fileInput"),
+            fileInputLabel = document.getElementById("fileInputLabel"),
+            searchInput = document.getElementById("search"),
+            formatFilter = document.getElementById("formatFilter"),
+            guideList = document.getElementById("guideList"),
+            pagination = document.getElementById("pagination"),
+            darkModeBtn = document.getElementById("darkModeBtn"),
+            previewBtn = document.getElementById("previewBtn"),
+            animationBtn = document.getElementById("animationBtn"),
+            sortSelector = document.getElementById("sortSelector"),
+            itemsPerPageSelector = document.getElementById("itemsPerPageSelector"),
+            randomSelector = document.getElementById("randomSelector"),
+            playButton = document.getElementById("playButton"),
+            backdrop = document.getElementById("backdrop"),
+            playGuideContainer = document.getElementById("play-guide-container"),
+            playCounterElement = document.getElementById("play-counter"),
+            playCloseBtn = document.getElementById("playCloseBtn"),
+            headerLogo = document.getElementById("header-logo"),
+            logoLink = document.getElementById("logoLink"), 
+            bgVideo = document.getElementById("bg-video"),
+            bgVideoSource = document.getElementById("bg-video-source");
+
+        function initializeTheme() {
+            const storedTheme = localStorage.getItem('visudir_theme');
+            const theme = storedTheme || config.global.defaultTheme;
+            if (theme === 'light') {
+                document.body.classList.remove('dark-mode');
+            } else {
+                document.body.classList.add('dark-mode');
+            }
+            if (!storedTheme) {
+                localStorage.setItem('visudir_theme', theme);
+            }
+            return theme;
+        }
+
+        function initializeBackgroundVideo(theme) {
+            const pageKey = config.pageSettings.pageKey;
+            const storageKey = `visudir_bg_video_${pageKey}`;
+            const storedVideoNum = localStorage.getItem(storageKey);
+            let videoNum = parseInt(storedVideoNum) || config.pageSettings.defaultBgVideo;
+
+            if (videoNum < config.pageSettings.bgVideoStartNum || videoNum > config.pageSettings.bgVideoEndNum) {
+                videoNum = config.pageSettings.defaultBgVideo;
+            }
+
+            if (bgVideo && bgVideoSource) {
+                const videoUrlBase = theme === 'light' ? config.paths.videoBgLightUrlBase : config.paths.videoBgDarkUrlBase;
+                const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
+                bgVideoSource.src = videoSrc;
+                bgVideo.load();
+                bgVideo.addEventListener("canplay", () => document.body.classList.add("video-ready"), { once: true });
+            }
+
+            if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
+                localStorage.setItem(storageKey, videoNum);
             }
         }
-    }
-    // NAPRAWIONO: Przywrócono pełną logikę budowania filtra z obsługą customowych wpisów
-      function updateFormatFilter(formats) {
-        formatFilter.innerHTML = '<option value="">Wszystko</option>';
-        [...formats].sort().forEach((t) => {
-          const o = document.createElement("option");
-          o.value = t.toLowerCase();
-          o.textContent = t;
-          formatFilter.appendChild(o);
-        });
-        if (config.predefinedFilters.some((p) => p.label && p.search)) {
-          const s = document.createElement("option");
-          s.disabled = !0;
-          s.textContent = "──────────";
-          formatFilter.appendChild(s);
-        }
-        config.predefinedFilters.forEach((p) => {
-          if (p.label && p.search) {
-            const o = document.createElement("option");
-            o.value = `search:${p.search}`;
-            o.textContent = p.label;
-            formatFilter.appendChild(o);
-          }
-        });
-      }
-      function updatePaginationOptions() {
-        const oldItemsPerPage = itemsPerPage;
-        const guideWidth = 250,
-          guideGap = 20;
-        itemsPerRow = Math.max(
-          1,
-          Math.floor(guideList.clientWidth / (guideWidth + guideGap))
-        );
-        itemsPerPageSelector.innerHTML = "";
-        const totalItems = filteredGuides.length;
-        const totalRowsAvailable =
-          totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
-        const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100, 1000];
-        rowOptions.forEach((rows) => {
-          if (
-            totalRowsAvailable > 0 &&
-            rows > totalRowsAvailable &&
-            rows > config.defaultRows
-          )
-            return;
-          const option = document.createElement("option");
-          option.value = rows;
-          const p = rows * itemsPerRow;
-          option.textContent = `${rows} ${
-            rows === 1 ? "wiersz" : rows > 1 && rows < 5 ? "wiersze" : "wierszy"
-          } / ${p} poz.`;
-          itemsPerPageSelector.appendChild(option);
-        });
-        if (
-          itemsPerPageSelector.querySelector(
-            `option[value="${selectedRowCount}"]`
-          )
-        )
-          itemsPerPageSelector.value = selectedRowCount;
-        else itemsPerPageSelector.value = config.defaultRows;
-        selectedRowCount = parseInt(itemsPerPageSelector.value);
-        itemsPerPage = selectedRowCount * itemsPerRow;
-        if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
-          const firstItemIndex =
-            (currentPage - 1) * (oldItemsPerPage || itemsPerPage);
-          currentPage = Math.max(
-            1,
-            Math.floor(firstItemIndex / itemsPerPage) + 1
-          );
-          renderGuides();
-        }
-      }
-      function loadAndParseFile(file) {
-        const r = new FileReader();
-        r.onload = (e) => processData(e.target.result);
-        r.readAsText(file, "utf-8");
-        fileInput.value = null;
-      }
-      window.onload = function () {
-        document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
-        document.getElementById("pageTitle").textContent = config.pageTitle;
-        document.title = config.pageTitle;
-        document.getElementById("aboutLinkFooter").href = config.urlAbout;
-        document.getElementById("visuDirBtn").href = config.urlAbout;
-        if (!localStorage.getItem("darkMode"))
-          localStorage.setItem("darkMode", "disabled");
-        const isDarkMode = localStorage.getItem("darkMode") === "enabled";
-        if (isDarkMode) document.body.classList.add("dark-mode");
-        darkModeBtn.innerHTML = isDarkMode
-          ? `<i class="fas fa-sun"></i> Tryb jasny`
-          : `<i class="fas fa-moon"></i> Tryb ciemny`;
-        if (config.showMiniLogo)
-          headerLogo.src = isDarkMode
-            ? config.miniLogoDarkUrl
-            : config.miniLogoLightUrl;
-        else document.getElementById("logoLink").style.display = "none";
-        if (!config.showVisuDirButton)
-          document.getElementById("visuDirBtn").style.display = "none";
-        if (config.showBackButton)
-          document.getElementById("backButton").style.display = "flex";
-        else document.getElementById("backButton").style.display = "none";
-        toggleAnimations(true);
-        togglePreview(true);
         
-        // NAPRAWIONO: Poprawiono kolejność wywoływania funkcji, aby strona renderowała się na starcie
-        const init = (data) => {
-            processData(data); // 1. Tylko parsuj dane i wypełnij tablicę 'guides'
+        function updateBackgroundVideoVisibility() {
+            if (animationState === 2) {
+                bgVideo.style.display = 'block';
+                initializeBackgroundVideo(currentTheme);
+            } else {
+                bgVideo.style.display = 'none';
+                document.body.classList.remove('video-ready');
+            }
+        }
+        
+        function saveToLocalStorage(key, value) {
+            try {
+                localStorage.setItem(`visudir_${key}`, value);
+            } catch (e) {
+                console.error("Error saving to localStorage", e);
+            }
+        }
+
+        function getFromLocalStorage(key) {
+            try {
+                return localStorage.getItem(`visudir_${key}`);
+            } catch (e) {
+                console.error("Error reading from localStorage", e);
+                return null;
+            }
+        }
+
+        function loadConfig() {
+            currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
+            selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
+            const storedAnimation = getFromLocalStorage(`animation_${config.pageSettings.pageKey}`);
+            animationState = storedAnimation !== null ? parseInt(storedAnimation, 10) : config.pageSettings.defaultAnimation;
+
+            const storedView = getFromLocalStorage('view');
+            previewState = storedView !== null ? parseInt(storedView, 10) : config.pageSettings.defaultView;
+        }
+
+        function getFileExtension(filename) {
+            return filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
+        }
+        function normalizeUrl(url) {
+            const trimmedUrl = url.trim();
+            if (trimmedUrl.startsWith('http://') || trimmedUrl.startsWith('https://') || trimmedUrl.startsWith('./') || trimmedUrl.startsWith('../') || trimmedUrl.startsWith('/')) {
+                return trimmedUrl;
+            }
+            return `https://${trimmedUrl}`;
+        }
+        function decodeUrlFromFilename(filename) {
+            let urlPart = filename.split('$$')[0];
+            urlPart = urlPart.replace(/\.link$/i, '');
+            urlPart = urlPart.replace(/#/g, '/');
+            urlPart = urlPart.replace(/&&/g, '?');
+            return normalizeUrl(urlPart);
+        }
+        function parseGuideTitle(filename) {
+            const baseName = filename.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, '').trim();
+            const parts = baseName.split('$$');
+
+            if (getFileExtension(filename) === 'link' && parts.length > 1) {
+                return {
+                    title: decodeURIComponent(parts[1] || ''),
+                    offlineDesc: decodeURIComponent(parts[2] || null)
+                };
+            }
+
+            const title = decodeURIComponent(parts[0].replace(/_/g, ' ').replace(/-/g, ' ')).replace(/\s*-\s*Poradnik(?:_do_gry)?\s*(?:GRY-OnLine|Gry-OnLine)?\s*/i, '').trim();
+            return { title: title, offlineDesc: null };
+        }
+        function createDateFromStrings(dateStr, timeStr) {
+            const [day, month, year] = dateStr.split('.').map(Number);
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return new Date(year, month - 1, day, hours, minutes);
+        }
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+        function applySort(sortType, array) {
+            currentSort = sortType;
+            switch (sortType) {
+                case "shuffle":
+                    shuffleArray(array);
+                    break;
+                case "nameAsc":
+                    array.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case "nameDesc":
+                    array.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                case "dateAsc":
+                    array.sort((a, b) => a.timestamp - b.timestamp);
+                    break;
+                case "dateDesc":
+                    array.sort((a, b) => b.timestamp - a.timestamp);
+                    break;
+                case "sizeAsc":
+                    array.sort((a, b) => parseFloat(a.sizeMB) - parseFloat(b.sizeMB));
+                    break;
+                case "sizeDesc":
+                    array.sort((a, b) => parseFloat(b.sizeMB) - parseFloat(a.sizeMB));
+                    break;
+            }
+        }
+
+        async function processData(text) {
+            const lines = text.split(/\r?\n/);
+            guides = [];
+            for (const line of lines) {
+                const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i);
+                if (match) {
+                    const date = match[1];
+                    const time = match[2];
+                    const sizeOrDir = match[3];
+                    const filename = match[4].trim();
+                    const format = getFileExtension(filename);
+
+                    let sizeBytes = 0;
+                    if (sizeOrDir !== '<DIR>') {
+                        sizeBytes = parseInt(sizeOrDir);
+                    }
+
+                    if (sizeBytes === 0 && format !== 'link') continue;
+
+                    const sizeMB = (sizeBytes / (1024 * 1024)).toFixed(2);
+                    const { title, offlineDesc } = parseGuideTitle(filename);
+                    let linkData = { description: offlineDesc };
+
+                    if (format === 'link' && location.protocol !== 'file:') {
+                        try {
+                            const response = await fetch(`${config.paths.dataFolderName}/${filename}`);
+                            if (response.ok) {
+                                linkData.description = await response.text();
+                            } else if (!offlineDesc) {
+                                linkData.description = 'Błąd wczytywania opisu.';
+                            }
+                        } catch (e) {
+                            if (!offlineDesc) linkData.description = 'Błąd wczytywania opisu.';
+                        }
+                    }
+                    guides.push({
+                        title,
+                        format,
+                        file: filename,
+                        sizeMB,
+                        date,
+                        time,
+                        timestamp: createDateFromStrings(date, time).getTime(),
+                        linkData
+                    });
+                }
+            }
+        }
+
+        function updateFormatFilter() {
+            const formats = [...new Set(guides.map(g => g.format.toUpperCase()))].sort();
+            formatFilter.innerHTML = '<option value="">Wszystko</option>';
+            formats.forEach(t => {
+                const o = document.createElement("option");
+                o.value = t.toLowerCase();
+                o.textContent = t;
+                formatFilter.appendChild(o);
+            });
+            if (config.pageSettings.predefinedFilters.some(p => p.label && p.search)) {
+                const s = document.createElement("option");
+                s.disabled = true;
+                s.textContent = "──────────";
+                formatFilter.appendChild(s);
+            }
+            config.pageSettings.predefinedFilters.forEach(p => {
+                if (p.label && p.search) {
+                    const o = document.createElement("option");
+                    o.value = `search:${p.search}`;
+                    o.textContent = p.label;
+                    formatFilter.appendChild(o);
+                }
+            });
+        }
+
+        function updatePaginationOptions() {
+            const oldItemsPerPage = itemsPerPage;
+            const guideWidth = 250,
+                guideGap = 20;
+            itemsPerRow = Math.max(
+                1,
+                Math.floor(guideList.clientWidth / (guideWidth + guideGap))
+            );
+            itemsPerPageSelector.innerHTML = "";
+            const totalItems = filteredGuides.length;
+            const totalRowsAvailable =
+                totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
+            const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100, 1000];
+            rowOptions.forEach((rows) => {
+                if (totalRowsAvailable > 0 && rows > totalRowsAvailable) return;
+                const option = document.createElement("option");
+                option.value = rows;
+                const p = rows * itemsPerRow;
+                option.textContent = `${rows} ${rows === 1 ? "wiersz" : rows > 1 && rows < 5 ? "wiersze" : "wierszy"
+                    } / ${p} poz.`;
+                itemsPerPageSelector.appendChild(option);
+            });
             
-            // 2. Ustaw wszystkie domyślne wartości i opcje menu
-            updateFormatFilter(new Set(guides.map(g => g.format.toUpperCase())));
-            applySort(config.defaultSort, guides);
+            const validOption = itemsPerPageSelector.querySelector(`option[value="${selectedRowCount}"]`);
+            if (validOption) {
+                itemsPerPageSelector.value = selectedRowCount;
+            } else if (itemsPerPageSelector.options.length > 0) {
+                itemsPerPageSelector.selectedIndex = itemsPerPageSelector.options.length - 1;
+            }
+
+            selectedRowCount = itemsPerPageSelector.value ? parseInt(itemsPerPageSelector.value) : config.pageSettings.defaultRows;
+            itemsPerPage = selectedRowCount * itemsPerRow;
+
+            if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
+                const firstItemIndex =
+                    (currentPage - 1) * (oldItemsPerPage || itemsPerPage);
+                currentPage = Math.max(
+                    1,
+                    Math.floor(firstItemIndex / itemsPerPage) + 1
+                );
+                renderGuides();
+            }
+        }
+
+        function loadAndParseFile(file) {
+            const r = new FileReader();
+            r.onload = (e) => init(e.target.result);
+            r.readAsText(file, "utf-8");
+            fileInput.value = null;
+        }
+
+        function init(data) {
+            processData(data);
+            updateFormatFilter();
+            applySort(currentSort, guides);
+
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
             if (searchQuery) {
                 searchInput.value = decodeURIComponent(searchQuery);
             }
-            if (formatFilter.querySelector(`option[value="${config.defaultFormat}"]`)) {
-                formatFilter.value = config.defaultFormat;
+            
+            const defaultFormat = config.pageSettings.defaultFormat || "";
+            formatFilter.value = getFromLocalStorage('format') || defaultFormat;
+
+            updatePaginationOptions();
+            renderGuides();
+        }
+
+        function startLogoRotator() {
+            if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
+                 const defaultLogo = config.logoRotator.logos[0];
+                 const isDark = document.body.classList.contains('dark-mode');
+                 headerLogo.src = isDark ? defaultLogo.srcDark : defaultLogo.srcLight;
+                 logoLink.href = defaultLogo.href;
+                 headerLogo.alt = defaultLogo.alt;
+                 return;
+            }
+
+            clearInterval(logoInterval);
+            logoInterval = setInterval(() => {
+                headerLogo.style.transform = 'rotateY(90deg)';
+                setTimeout(() => {
+                    currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
+                    const newLogo = config.logoRotator.logos[currentLogoIndex];
+                    const isDark = document.body.classList.contains('dark-mode');
+                    
+                    headerLogo.src = isDark ? newLogo.srcDark : newLogo.srcLight;
+                    headerLogo.alt = newLogo.alt;
+                    logoLink.href = newLogo.href;
+
+                    headerLogo.style.transform = 'rotateY(0deg)';
+                }, 300);
+            }, config.logoRotator.interval);
+        }
+
+        window.onload = function () {
+            fileInputLabel.style.display = "none";
+            document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
+            document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
+            document.title = config.pageSettings.pageTitle;
+            document.getElementById("aboutLinkFooter").href = config.paths.urlAbout;
+            document.getElementById("visuDirBtn").href = config.paths.urlAbout;
+
+            currentTheme = initializeTheme();
+            
+            const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
+            if(darkModeBtnText) {
+                darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny';
             }
             
-            // 3. Oblicz opcje paginacji na podstawie już przefiltrowanych danych
+            if (config.pageSettings.showMiniLogo) {
+                startLogoRotator();
+            } else {
+                 document.getElementById("logoLink").style.display = "none";
+            }
+            
+            if (!config.pageSettings.showVisuDirButton) document.getElementById("visuDirBtn").style.display = "none";
+            document.getElementById("backButton").style.display = config.pageSettings.showBackButton ? "flex" : "none";
+
+            loadConfig();
+            updateAnimationButtonUI();
+            updatePreviewButtonUI();
+            updateBackgroundVideoVisibility();
+
+            document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
+            
+            animationBtn.addEventListener('click', (event) => {
+                const shuffleBtn = document.getElementById('animationBtn-shuffle');
+                const playBtn = document.getElementById('animationBtn-play');
+                const resetBtn = document.getElementById('animationBtn-reset');
+                
+                if (shuffleBtn && shuffleBtn.contains(event.target)) {
+                    if (animationState === 2) shuffleBackgroundVideo();
+                } else if (playBtn && playBtn.contains(event.target)) {
+                    toggleAutoShuffle();
+                } else if (resetBtn && resetBtn.contains(event.target)) {
+                    resetVideoSettings();
+                }
+                else {
+                    toggleAnimations();
+                }
+            });
+
+            if (dataFromFile && dataFromFile.trim().length > 0) {
+                init(dataFromFile);
+            } else {
+                fetch(config.paths.databaseFileName)
+                    .then((r) => (r.ok ? r.text() : Promise.reject(r.statusText)))
+                    .then((t) => init(t))
+                    .catch((e) => {
+                        console.error(`Automatyczne ładowanie pliku '${config.paths.databaseFileName}' nie powiodło się. Błąd:`, e);
+                        fileInputLabel.style.display = "flex";
+                    });
+            }
+        };
+        
+        function toggleMinimizeView() {
+            const topHeader = document.querySelector('.top-header');
+            const footer = document.querySelector('.footer');
+            const controls = document.querySelector('.controls');
+            const minimizeBtn = document.getElementById('minimizeBtn');
+            const minimizeIcon = minimizeBtn.querySelector('i');
+
+            isMinimized = !isMinimized;
+
+            controls.classList.toggle('minimized-view', isMinimized);
+            
+            if (isMinimized) {
+                minimizeBtn.title = "Maksymalizuj interfejs";
+                minimizeIcon.className = 'fas fa-window-maximize';
+            } else {
+                minimizeBtn.title = "Minimalizuj interfejs";
+                minimizeIcon.className = 'fas fa-window-minimize';
+            }
+
+            topHeader.classList.toggle('minimized-header', isMinimized);
+            footer.classList.toggle('minimized-footer', isMinimized);
+        }
+
+        function resetView() {
+            stopPlayAnimation();
+            searchInput.value = "";
+            formatFilter.value = config.pageSettings.defaultFormat || "";
+            saveToLocalStorage('format', formatFilter.value);
+            sortSelector.value = "";
+            applySort(config.pageSettings.defaultSort, guides);
+            saveToLocalStorage('sort', config.pageSettings.defaultSort);
+            currentPage = 1;
+            selectedRowCount = config.pageSettings.defaultRows;
+            saveToLocalStorage('rows', selectedRowCount);
             updatePaginationOptions();
-
-            // 4. Dopiero teraz wyrenderuj widok
             renderGuides();
-        };
-
-        if (dataFromFile && dataFromFile.trim().length > 0) {
-            fileInputLabel.style.display = 'none';
-            init(dataFromFile);
-        } else {
-            fetch(config.databaseFileName)
-                .then((r) => (r.ok ? r.text() : Promise.reject(r.statusText)))
-                .then((t) => init(t))
-                .catch((e) => {
-                console.error( `Automatyczne ładowanie pliku '${config.databaseFileName}' nie powiodło się. Błąd:`, e);
-                fileInputLabel.style.display = "flex";
-                });
         }
-      };
-      function resetView() {
-        stopPlayAnimation();
-        searchInput.value = "";
-        formatFilter.value = config.defaultFormat || "";
-        sortSelector.value = "";
-        applySort(config.defaultSort, guides);
-        currentPage = 1;
-        selectedRowCount = config.defaultRows;
-        updatePaginationOptions();
-        renderGuides();
-      }
-      function createGuideHtml(guide) {
-        const f = guide.file
-            .replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "")
-            .split("$$")[0],
-          u = `${config.dataFolderName}/${encodeURIComponent(guide.file)}`,
-          c = `${config.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-        let h = "",
-          i = "",
-          a = "",
-          w = "";
-        let d = guide.title;
-        if (guide.format === "link" && /^\d{2}\s*/.test(d))
-          d = d.replace(/^\d{2}\s*/, "");
-        if (guide.format === "link") {
-          const t = decodeUrlFromFilename(guide.file),
-            g =
-              t.startsWith(".") || t.startsWith("/")
-                ? ""
-                : 'target="_blank" rel="noopener noreferrer"';
-          h = `<div class="guide-title"><a href="${t}" ${g}>${d}</a></div>`;
-          i = `<div class="guide-info">${
-            guide.linkData.description || ""
-          }</div>`;
-          a = `<a href="${t}" ${g}><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
-          w = `<a href="${t}" ${g} class="cover-link">`;
-        } else {
-          h = `<div class="guide-title">${d}</div>`;
-          i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
-            guide.date
-          } ${
-            guide.time
-          }<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${
-            guide.sizeMB
-          } MB</div>`;
-          if (guide.format === "jpg" || guide.format === "png") {
-            a = `<a href="#" onclick="showImagePreview('${u}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
-            w = `<a href="#" onclick="showImagePreview('${u}'); return false;" class="cover-link">`;
-          } else if (location.protocol === "file:") {
-            const p = guide.format === "pdf";
-            a = `<a href="${u}" ${
-              p ? 'target="_blank" rel="noopener noreferrer"' : "download"
-            }><i class="fas fa-${p ? "file-pdf" : "download"}"></i> ${
-              p ? "Otwórz" : "Pobierz"
-            }</a>`;
-            w = `<a href="${u}" ${
-              p ? 'target="_blank" rel="noopener noreferrer"' : "download"
-            } class="cover-link">`;
-          } else {
-            a = `<a href="${config.url404}" target="_blank" rel="noopener noreferrer"><i class="fas fa-exclamation-triangle"></i> Brak pliku</a>`;
-            w = `<a href="${config.url404}" target="_blank" rel="noopener noreferrer" class="cover-link">`;
-          }
-        }
-        const k = document.body.classList.contains("dark-mode")
-          ? "gfx/no_cover_dark.png"
-          : "gfx/no_cover_light.png";
-        return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onload="this.style.opacity=1;this.style.transform='scale(1)';" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
-      }
-      function renderGuides() {
-        const search = searchInput.value.toLowerCase(),
-          format = formatFilter.value.startsWith("search:")
-            ? ""
-            : formatFilter.value;
-        filteredGuides = guides.filter(
-          (g) =>
-            g.title.toLowerCase().includes(search) &&
-            (!format || g.format === format)
-        );
-        applySort(currentSort, filteredGuides);
-        const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
-        currentPage = Math.min(currentPage, totalPages || 1);
-        const pageItems = filteredGuides.slice(
-          (currentPage - 1) * itemsPerPage,
-          currentPage * itemsPerPage
-        );
-        guideList.innerHTML = "";
-        pageItems.forEach((guide, index) => {
-          const div = document.createElement("div");
-          div.className = "guide";
-          const animationsOn = animationState !== 0;
-          if (animationsOn) {
-            div.style.opacity = 0;
-          }
-          guideList.appendChild(div);
-          div.innerHTML = createGuideHtml(guide);
-          if (animationsOn) {
-            setTimeout(() => {
-              div.classList.add("animate-in");
-              div.style.animationDelay = `${index * 0.05}s`;
-            }, 20);
-          }
-        });
-        renderPagination(totalPages);
-        document.getElementById(
-          "guideCountDisplay"
-        ).innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
-      }
-      function renderPagination(totalPages) {
-        pagination.innerHTML = "";
-        if (totalPages <= 1) return;
-        const container = document.createElement("div");
-        container.style.cssText =
-          "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
-        const createBtn = (html, disabled, onClick) => {
-          const btn = document.createElement("button");
-          btn.innerHTML = html;
-          btn.disabled = disabled;
-          btn.onclick = () => {
-            onClick();
-            renderGuides();
-            stopPlayAnimation();
-          };
-          return btn;
-        };
-        container.appendChild(
-          createBtn(
-            `<i class="fas fa-angle-double-left"></i> Pierwsza`,
-            currentPage === 1,
-            () => (currentPage = 1)
-          )
-        );
-        container.appendChild(
-          createBtn(
-            `<i class="fas fa-chevron-left"></i> Poprzednia`,
-            currentPage === 1,
-            () => currentPage--
-          )
-        );
-
-        // ZMIANA 5: Dodano przycisk losowania strony
-        const randomBtn = document.createElement("button");
-        randomBtn.innerHTML = `<i class="fas fa-random"></i> Losuj`;
-        randomBtn.title = "Losuj stronę";
-        randomBtn.onclick = () => {
-            if (totalPages > 1) {
-                const newPage = Math.floor(Math.random() * totalPages) + 1;
-                currentPage = newPage;
-                renderGuides();
-                stopPlayAnimation();
+        function createGuideHtml(guide) {
+            const f = guide.file
+                .replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "")
+                .split("$$")[0],
+                u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
+                c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+            let h = "",
+                i = "",
+                a = "",
+                w = "";
+            let d = guide.title;
+            if (guide.format === "link" && /^\d{2}\s*/.test(d))
+                d = d.replace(/^\d{2}\s*/, "");
+            if (guide.format === "link") {
+                const t = decodeUrlFromFilename(guide.file),
+                    g =
+                        t.startsWith(".") || t.startsWith("/")
+                            ? ""
+                            : 'target="_blank" rel="noopener noreferrer"';
+                h = `<div class="guide-title"><a href="${t}" ${g}>${d}</a></div>`;
+                i = `<div class="guide-info">${guide.linkData.description || ""
+                    }</div>`;
+                a = `<a href="${t}" ${g}><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
+                w = `<a href="${t}" ${g} class="cover-link">`;
+            } else {
+                h = `<div class="guide-title">${d}</div>`;
+                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date
+                    } ${guide.time
+                    }<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB
+                    } MB</div>`;
+                if (guide.format === "jpg" || guide.format === "png") {
+                    a = `<a href="#" onclick="showImagePreview('${u}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
+                    w = `<a href="#" onclick="showImagePreview('${u}'); return false;" class="cover-link">`;
+                } else {
+                    const p = guide.format === "pdf";
+                    a = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
+                        }><i class="fas fa-${p ? "file-pdf" : "download"}"></i> ${p ? "Otwórz" : "Pobierz"
+                        }</a>`;
+                    w = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
+                        } class="cover-link">`;
+                }
             }
-        };
-        container.appendChild(randomBtn);
+            const k = document.body.classList.contains("dark-mode")
+                ? "gfx/no_cover_dark.png"
+                : "gfx/no_cover_light.png";
+            return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onload="this.style.opacity=1;this.style.transform='scale(1)';" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
+        }
+        function renderGuides() {
+            const search = searchInput.value.toLowerCase(),
+                format = formatFilter.value.startsWith("search:")
+                    ? ""
+                    : formatFilter.value;
+            filteredGuides = guides.filter(
+                (g) =>
+                    g.title.toLowerCase().includes(search) &&
+                    (!format || g.format === format)
+            );
+            
+            const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
+            currentPage = Math.min(currentPage, totalPages || 1);
+            const pageItems = filteredGuides.slice(
+                (currentPage - 1) * itemsPerPage,
+                currentPage * itemsPerPage
+            );
+            guideList.innerHTML = "";
+            const animationsOn = animationState !== 0;
 
+            pageItems.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide";
+                if (!animationsOn) {
+                    div.style.opacity = 1;
+                } else {
+                    div.style.opacity = 0;
+                }
+                guideList.appendChild(div);
+                div.innerHTML = createGuideHtml(guide);
+                if (animationsOn) {
+                    setTimeout(() => {
+                        div.classList.add("animate-in");
+                        div.style.animationDelay = `${index * 0.05}s`;
+                    }, 20);
+                }
+            });
+            renderPagination(totalPages);
+            document.getElementById(
+                "guideCountDisplay"
+            ).innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+        }
+        function renderPagination(totalPages) {
+            pagination.innerHTML = "";
+            if (totalPages <= 1) return;
+            const container = document.createElement("div");
+            container.style.cssText =
+                "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
+            const createBtn = (html, disabled, onClick) => {
+                const btn = document.createElement("button");
+                btn.innerHTML = html;
+                btn.disabled = disabled;
+                btn.onclick = () => {
+                    onClick();
+                    renderGuides();
+                    stopPlayAnimation();
+                };
+                return btn;
+            };
+            container.appendChild(
+                createBtn(
+                    `<i class="fas fa-angle-double-left"></i> Pierwsza`,
+                    currentPage === 1,
+                    () => (currentPage = 1)
+                )
+            );
+            container.appendChild(
+                createBtn(
+                    `<i class="fas fa-chevron-left"></i> Poprzednia`,
+                    currentPage === 1,
+                    () => currentPage--
+                )
+            );
+            const randomBtn = document.createElement("button");
+            randomBtn.innerHTML = `<i class="fas fa-random"></i> Losuj`;
+            randomBtn.title = "Losuj stronę";
+            randomBtn.onclick = () => {
+                if (totalPages > 1) {
+                    let newPage;
+                    do {
+                       newPage = Math.floor(Math.random() * totalPages) + 1;
+                    } while (totalPages > 1 && newPage === currentPage);
+                    currentPage = newPage;
+                    renderGuides();
+                    stopPlayAnimation();
+                }
+            };
+            container.appendChild(randomBtn);
 
-        const pageInput = document.createElement("input");
-        pageInput.type = "number";
-        pageInput.min = 1;
-        pageInput.max = totalPages;
-        pageInput.value = currentPage;
-        pageInput.style.width = "60px";
-        pageInput.onchange = (e) => {
-          const newPage = parseInt(e.target.value);
-          if (newPage >= 1 && newPage <= totalPages) {
-            currentPage = newPage;
-            renderGuides();
+            const pageInput = document.createElement("input");
+            pageInput.type = "number";
+            pageInput.min = 1;
+            pageInput.max = totalPages;
+            pageInput.value = currentPage;
+            pageInput.style.width = "60px";
+            pageInput.onchange = (e) => {
+                const newPage = parseInt(e.target.value);
+                if (newPage >= 1 && newPage <= totalPages) {
+                    currentPage = newPage;
+                    renderGuides();
+                    stopPlayAnimation();
+                } else {
+                    e.target.value = currentPage;
+                }
+            };
+            container.appendChild(pageInput);
+            const info = document.createElement("span");
+            info.className = "pagination-info";
+            info.innerHTML = `/ ${totalPages}`;
+            container.appendChild(info);
+            container.appendChild(
+                createBtn(
+                    `Następna <i class="fas fa-chevron-right"></i>`,
+                    currentPage === totalPages,
+                    () => currentPage++
+                )
+            );
+            container.appendChild(
+                createBtn(
+                    `Ostatnia <i class="fas fa-angle-double-right"></i>`,
+                    currentPage === totalPages,
+                    () => (currentPage = totalPages)
+                )
+            );
+            pagination.appendChild(container);
+        }
+        function drawRandomGuides() {
             stopPlayAnimation();
-          } else {
-            e.target.value = currentPage;
-          }
-        };
-        container.appendChild(pageInput);
-        const info = document.createElement("span");
-        info.className = "pagination-info";
-        info.innerHTML = `/ ${totalPages}`;
-        container.appendChild(info);
-        container.appendChild(
-          createBtn(
-            `Następna <i class="fas fa-chevron-right"></i>`,
-            currentPage === totalPages,
-            () => currentPage++
-          )
-        );
-        container.appendChild(
-          createBtn(
-            `Ostatnia <i class="fas fa-angle-double-right"></i>`,
-            currentPage === totalPages,
-            () => (currentPage = totalPages)
-          )
-        );
-        pagination.appendChild(container);
-      }
-      function drawRandomGuides() {
-        stopPlayAnimation();
-        const count = parseInt(randomSelector.value);
-        const source = filteredGuides.length > 0 ? filteredGuides : guides;
-        if (source.length === 0) {
-          alert("Wczytaj plik, aby wylosować pozycje!");
-          randomSelector.value = "";
-          return;
-        }
-        guideList.innerHTML = "";
-        pagination.innerHTML = "";
-        const randomGuides = [...source]
-          .sort(() => 0.5 - Math.random())
-          .slice(0, count);
-        const animationsOn = animationState !== 0;
-        randomGuides.forEach((guide, index) => {
-          const div = document.createElement("div");
-          div.className = "guide" + (animationsOn ? " animate-in" : "");
-          if (animationsOn) div.style.animationDelay = `${index * 0.05}s`;
-          div.innerHTML = createGuideHtml(guide);
-          guideList.appendChild(div);
-        });
-        randomSelector.value = "";
-      }
-      function togglePreview(isInitial = false) {
-        if (!isInitial) previewState = (previewState + 1) % 3;
-        guideList.classList.remove("hide-covers", "only-covers");
-        previewBtn.classList.remove("inactive", "highlighted-state");
-        switch (previewState) {
-          case 0:
-            previewBtn.innerHTML = `<i class="fas fa-font"></i> <b>Tekst</b>`;
-            previewBtn.classList.add("inactive");
-            guideList.classList.add("hide-covers");
-            break;
-          case 1:
-            previewBtn.innerHTML = `<i class="fas fa-eye"></i> <b>Wszystko</b>`;
-            break;
-          case 2:
-            previewBtn.innerHTML = `<i class="fas fa-image"></i> <b>Grafika</b>`;
-            previewBtn.classList.add("highlighted-state");
-            guideList.classList.add("only-covers");
-            break;
-        }
-      }
-      function manageBgVideo() {
-        const u = new URLSearchParams(window.location.search),
-          p = u.get("bgv"),
-          s = p !== null ? p === "true" : config.defaultBgv,
-          v = animationState === 2 || (s && animationState !== 0);
-        if (v) {
-          bgVideoSource.src = document.body.classList.contains("dark-mode")
-            ? config.videoBgDarkUrl
-            : config.videoBgLightUrl;
-          bgVideo.load();
-          bgVideo.style.display = "block";
-          bgVideo.addEventListener(
-            "canplay",
-            () => document.body.classList.add("video-ready"),
-            { once: true }
-          );
-        } else {
-          bgVideo.style.display = "none";
-          document.body.classList.remove("video-ready");
-        }
-      }
-      function toggleAnimations(isInitial = false) {
-        if (!isInitial) animationState = (animationState + 1) % 3;
-        animationBtn.classList.remove("inactive", "highlighted-state");
-        document.body.classList.remove("no-animation");
-        switch (animationState) {
-          case 0:
-            animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> <b>Animacje</b>`;
-            animationBtn.classList.add("inactive");
-            document.body.classList.add("no-animation");
-            break;
-          case 1:
-            animationBtn.innerHTML = `<i class="fas fa-play-circle"></i> <b>Animacje</b>`;
-            break;
-          case 2:
-            animationBtn.innerHTML = `<i class="fas fa-video"></i> <b>Video</b>`;
-            animationBtn.classList.add("highlighted-state");
-            break;
-        }
-        manageBgVideo();
-      }
-      function toggleDarkMode() {
-        document.body.classList.toggle("dark-mode");
-        const i = document.body.classList.contains("dark-mode");
-        localStorage.setItem("darkMode", i ? "enabled" : "disabled");
-        darkModeBtn.innerHTML = i
-          ? `<i class="fas fa-sun"></i> Tryb jasny`
-          : `<i class="fas fa-moon"></i> Tryb ciemny`;
-        if (config.showMiniLogo)
-          headerLogo.src = i ? config.miniLogoDarkUrl : config.miniLogoLightUrl;
-        document.querySelectorAll(".placeholder-cover").forEach((img) => {
-          img.src = i ? "gfx/no_cover_dark.png" : "gfx/no_cover_light.png";
-        });
-        manageBgVideo();
-      }
-      
-      playButton.addEventListener('click', togglePlayAnimation);
-      playCloseBtn.addEventListener('click', stopPlayAnimation);
-
-      function togglePlayAnimation() {
-          if (playAnimationInterval) stopPlayAnimation();
-          else startPlayAnimation();
-      }
-
-      function startPlayAnimation() {
-          const source = filteredGuides.length > 0 ? filteredGuides : guides;
-          if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
-          playGuidesQueue = [...source];
-          if (currentSort !== "shuffle")
-              playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
-          backdrop.classList.add("visible");
-          playButton.innerHTML = `<i class="fas fa-stop"></i> Stop`;
-          playButton.classList.add("inactive");
-          playCounterElement.classList.add("visible");
-          scheduleNext();
-          playAnimationInterval = setInterval(scheduleNext, 4000);
-      }
-
-      function stopPlayAnimation() {
-          if (playAnimationInterval) {
-              clearInterval(playAnimationInterval);
-              playAnimationInterval = null;
-              backdrop.classList.remove("visible");
-              playGuideContainer.innerHTML = "";
-              playButton.classList.remove("inactive");
-              playButton.innerHTML = `<i class="fas fa-play"></i> Play`;
-              playCounterElement.classList.remove("visible");
-          }
-      }
-
-      function scheduleNext() {
-          let guide;
-          if (currentSort === "shuffle") {
-              guide =
-                  playGuidesQueue[Math.floor(Math.random() * playGuidesQueue.length)];
-          } else {
-              guide = playGuidesQueue[playCurrentIndex];
-              playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
-          }
-          if (!guide) return;
-          playCounterElement.textContent = `${
-        playGuidesQueue.indexOf(guide) + 1
-      } / ${playGuidesQueue.length}`;
-          displayRandomGuide(guide);
-      }
-
-      function displayRandomGuide(guide) {
-          const animationsOn = animationState !== 0;
-          const display = () => {
-              const fileUrl = `${config.dataFolderName}/${encodeURIComponent(
-          guide.file
-        )}`;
-              let displayTitle = guide.title;
-              if (guide.format === "link" && /^\d{2}\s*/.test(displayTitle))
-                  displayTitle = displayTitle.replace(/^\d{2}\s*/, "");
-              const isImageView = ["jpg", "png"].includes(guide.format);
-              backdrop.classList.toggle("image-mode-active", isImageView);
-              playGuideContainer.classList.toggle("image-mode", isImageView);
-              if (isImageView) {
-                  playGuideContainer.innerHTML = `<div class="play-image-view"><img src="${fileUrl}" alt="${displayTitle}"><div class="guide-title">${displayTitle}</div></div>`;
-              } else {
-                  const guideDiv = document.createElement("div");
-                  guideDiv.className = "guide";
-                  guideDiv.innerHTML = createGuideHtml(guide);
-                  playGuideContainer.innerHTML = guideDiv.outerHTML;
-              }
-              if (animationsOn) {
-                  const el = playGuideContainer.children[0];
-                  if (el) el.style.animation = "zoomInThenOut 4s linear infinite";
-              }
-          };
-          if (animationsOn) {
-              playGuideContainer.style.opacity = "0";
-              setTimeout(() => {
-                  display();
-                  playGuideContainer.style.opacity = "1";
-              }, 200);
-          } else {
-              display();
-          }
-      }
-
-      function showImagePreview(imageUrl) {
-        stopPlayAnimation();
-        backdrop.classList.add("visible", "preview-active");
-        playCounterElement.style.display = "none";
-        playGuideContainer.innerHTML = `<img src="${imageUrl}" class="preview-image" alt="Podgląd obrazu">`;
-        const close = () => {
-          backdrop.classList.remove("visible", "preview-active");
-          playGuideContainer.innerHTML = "";
-          playCloseBtn.removeEventListener("click", close);
-          backdrop.removeEventListener("click", backdropClose);
-        };
-        const backdropClose = (e) => {
-          if (e.target === backdrop) close();
-        };
-        playCloseBtn.addEventListener("click", close, { once: true });
-        backdrop.addEventListener("click", backdropClose, { once: true });
-      }
-
-      backdrop.addEventListener("click", (e) => {
-        if (e.target === backdrop) stopPlayAnimation();
-      });
-      function debounce(func, wait) {
-        let timeout;
-        return function (...args) {
-          const later = () => {
-            clearTimeout(timeout);
-            func.apply(this, args);
-          };
-          clearTimeout(timeout);
-          timeout = setTimeout(later, wait);
-        };
-      }
-      const debouncedUpdatePagination = debounce(updatePaginationOptions, 250);
-      window.addEventListener("resize", debouncedUpdatePagination);
-      document.addEventListener("DOMContentLoaded", () => {
-        [".top-header", ".controls", ".pagination", ".footer"].forEach(
-          (sel, i) => {
-            const el = document.querySelector(sel);
-            if (el) {
-              el.style.animationDelay = `${0.2 + i * 0.2}s`;
-              el.classList.add(
-                i < 2 ? "animated-header" : "animated-pagination"
-              );
+            const count = parseInt(randomSelector.value);
+            const source = filteredGuides.length > 0 ? filteredGuides : guides;
+            if (source.length === 0) {
+                alert("Wczytaj plik, aby wylosować pozycje!");
+                randomSelector.value = "";
+                return;
             }
-          }
-        );
-      });
+            guideList.innerHTML = "";
+            pagination.innerHTML = "";
+            const randomGuides = [...source]
+                .sort(() => 0.5 - Math.random())
+                .slice(0, count);
+            const animationsOn = animationState !== 0;
+            randomGuides.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide" + (animationsOn ? " animate-in" : "");
+                if (animationsOn) div.style.animationDelay = `${index * 0.05}s`;
+                div.innerHTML = createGuideHtml(guide);
+                guideList.appendChild(div);
+            });
+            randomSelector.value = "";
+        }
+
+        function updatePreviewButtonUI() {
+            previewBtn.classList.remove("inactive", "highlighted-state");
+            guideList.classList.remove("hide-covers", "only-covers");
+            const previewBtnText = previewBtn.querySelector('.btn-text');
+            
+            switch (previewState) {
+                case 0: // Widok: Tekst (wyszarzony)
+                    if(previewBtnText) previewBtnText.textContent = ` Tekst`;
+                    previewBtn.classList.add("inactive");
+                    guideList.classList.add("hide-covers");
+                    break;
+                case 1: // Widok: Grafika (normalny)
+                    if(previewBtnText) previewBtnText.textContent = ` Grafika`;
+                    guideList.classList.add("only-covers");
+                    break;
+                case 2: // Widok: Wszystko (wyróżniony)
+                    if(previewBtnText) previewBtnText.textContent = ` Wszystko`;
+                    previewBtn.classList.add("highlighted-state");
+                    break;
+            }
+        }
+
+        function togglePreview() {
+            previewState = (previewState + 1) % 3;
+            saveToLocalStorage('view', previewState);
+            updatePreviewButtonUI();
+        }
+
+        function updateAnimationButtonUI() {
+            const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
+            const hasMultipleVideos = hasAnyVideo && (config.pageSettings.bgVideoEndNum - config.pageSettings.bgVideoStartNum > 0);
+            
+            const animationBtnMain = document.getElementById('animationBtn-main');
+            const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
+            const animationBtnPlay = document.getElementById('animationBtn-play');
+            const animationBtnReset = document.getElementById('animationBtn-reset');
+            const animationBtnText = animationBtnMain.querySelector('.btn-text');
+
+            animationBtn.classList.remove("inactive", "highlighted-state");
+            document.body.classList.remove("no-animation");
+            animationBtnShuffle.style.display = 'none';
+            animationBtnPlay.style.display = 'none';
+            animationBtnReset.style.display = 'none';
+
+            const numStates = hasAnyVideo ? 3 : 2;
+
+            switch (animationState % numStates) {
+                case 0: // Tryb: Statycznie (wyszarzony)
+                    if(animationBtnText) animationBtnText.textContent = ` Statycznie`;
+                    animationBtn.classList.add("inactive");
+                    document.body.classList.add("no-animation");
+                    break;
+                case 1: // Tryb: Animacje (normalny)
+                    if(animationBtnText) animationBtnText.textContent = ` Animacje`;
+                    break;
+                case 2: // Tryb: Video (wyróżniony) - tylko jeśli są wideo
+                    if(animationBtnText) animationBtnText.textContent = ` Video`;
+                    animationBtn.classList.add("highlighted-state");
+                    if (hasMultipleVideos) {
+                        animationBtnShuffle.style.display = 'inline-flex';
+                        animationBtnPlay.style.display = 'inline-flex';
+                        animationBtnReset.style.display = 'inline-flex';
+                    }
+                    break;
+            }
+        }
+        
+        function shuffleBackgroundVideo() {
+            const { pageKey, bgVideoStartNum, bgVideoEndNum, defaultBgVideo } = config.pageSettings;
+            const storageKey = `visudir_bg_video_${pageKey}`;
+            const range = bgVideoEndNum - bgVideoStartNum;
+
+            if (range < 1) return; 
+
+            const currentVideoNum = parseInt(localStorage.getItem(storageKey)) || defaultBgVideo;
+            
+            let newVideoNum;
+            do {
+                newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum;
+            } while (newVideoNum === currentVideoNum);
+
+            localStorage.setItem(storageKey, newVideoNum);
+            initializeBackgroundVideo(currentTheme);
+        }
+
+        function toggleAutoShuffle() {
+            const playBtn = document.getElementById('animationBtn-play');
+            if (animationState !== 2) return;
+
+            if (autoShuffleInterval) {
+                clearInterval(autoShuffleInterval);
+                autoShuffleInterval = null;
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.classList.remove('active-play'); 
+            } else {
+                shuffleBackgroundVideo();
+                autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('active-play'); 
+            }
+        }
+        
+        function resetVideoSettings() {
+            animationState = config.pageSettings.defaultAnimation;
+            saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
+            
+            const { pageKey, defaultBgVideo } = config.pageSettings;
+            localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
+
+            if (autoShuffleInterval) {
+                toggleAutoShuffle(); 
+            }
+
+            updateAnimationButtonUI();
+            updateBackgroundVideoVisibility();
+        }
+
+        function toggleAnimations() {
+            if (animationState === 2 && autoShuffleInterval) {
+                toggleAutoShuffle();
+            }
+            const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
+            const numStates = hasAnyVideo ? 3 : 2;
+            animationState = (animationState + 1) % numStates;
+
+            saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
+            updateAnimationButtonUI();
+            updateBackgroundVideoVisibility();
+            renderGuides();
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.contains("dark-mode");
+            localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
+            currentTheme = initializeTheme();
+            
+            const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
+            if(darkModeBtnText) {
+                 darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny';
+            }
+            
+            if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
+                const currentLogoData = config.logoRotator.logos[currentLogoIndex];
+                headerLogo.src = currentTheme === 'dark' ? currentLogoData.srcDark : currentLogoData.srcLight;
+            }
+            
+            document.querySelectorAll(".placeholder-cover").forEach((img) => {
+                img.src = currentTheme === 'dark' ? "gfx/no_cover_dark.png" : "gfx/no_cover_light.png";
+            });
+            updateBackgroundVideoVisibility();
+        }
+
+        playButton.addEventListener('click', togglePlayAnimation);
+        playCloseBtn.addEventListener('click', stopPlayAnimation);
+
+        function togglePlayAnimation() {
+            if (playAnimationInterval) stopPlayAnimation();
+            else startPlayAnimation();
+        }
+
+        function startPlayAnimation() {
+            const source = filteredGuides.length > 0 ? filteredGuides : guides;
+            if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
+            playGuidesQueue = [...source];
+            lastPlayedGuide = null; // Reset
+            if (currentSort !== "shuffle")
+                playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
+            backdrop.classList.add("visible");
+            playButton.querySelector('.btn-text').textContent = ' Stop';
+            playButton.classList.add("inactive");
+            playCounterElement.classList.add("visible");
+            scheduleNext();
+            playAnimationInterval = setInterval(scheduleNext, 4000);
+        }
+
+        function stopPlayAnimation() {
+            if (playAnimationInterval) {
+                clearInterval(playAnimationInterval);
+                playAnimationInterval = null;
+                backdrop.classList.remove("visible");
+                playGuideContainer.innerHTML = "";
+                playButton.classList.remove("inactive");
+                playButton.querySelector('.btn-text').textContent = ' Play';
+                playCounterElement.classList.remove("visible");
+            }
+        }
+
+        function scheduleNext() {
+            let guide;
+             if (playGuidesQueue.length < 2) {
+                guide = playGuidesQueue[0];
+            } else {
+                do {
+                    if (currentSort === "shuffle") {
+                        guide = playGuidesQueue[Math.floor(Math.random() * playGuidesQueue.length)];
+                    } else {
+                        guide = playGuidesQueue[playCurrentIndex];
+                        playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+                    }
+                } while (guide === lastPlayedGuide);
+            }
+
+            if (!guide) return;
+
+            lastPlayedGuide = guide;
+            playCounterElement.textContent = `${playGuidesQueue.indexOf(guide) + 1
+                } / ${playGuidesQueue.length}`;
+            displayRandomGuide(guide);
+        }
+
+        function displayRandomGuide(guide) {
+            const animationsOn = animationState !== 0;
+            const display = () => {
+                const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(
+                    guide.file
+                )}`;
+                let displayTitle = guide.title;
+                if (guide.format === "link" && /^\d{2}\s*/.test(displayTitle))
+                    displayTitle = displayTitle.replace(/^\d{2}\s*/, "");
+                const isImageView = ["jpg", "png"].includes(guide.format);
+                backdrop.classList.toggle("image-mode-active", isImageView);
+                playGuideContainer.classList.toggle("image-mode", isImageView);
+                if (isImageView) {
+                    playGuideContainer.innerHTML = `<div class="play-image-view"><img src="${fileUrl}" alt="${displayTitle}"><div class="guide-title">${displayTitle}</div></div>`;
+                } else {
+                    const guideDiv = document.createElement("div");
+                    guideDiv.className = "guide";
+                    guideDiv.innerHTML = createGuideHtml(guide);
+                    playGuideContainer.innerHTML = guideDiv.outerHTML;
+                }
+                if (animationsOn) {
+                    const el = playGuideContainer.children[0];
+                    if (el) el.style.animation = "zoomInThenOut 4s linear infinite";
+                }
+            };
+            if (animationsOn) {
+                playGuideContainer.style.opacity = "0";
+                setTimeout(() => {
+                    display();
+                    playGuideContainer.style.opacity = "1";
+                }, 200);
+            } else {
+                display();
+            }
+        }
+
+        function showImagePreview(imageUrl) {
+            stopPlayAnimation();
+            backdrop.classList.add("visible", "preview-active");
+            playCounterElement.style.display = "none";
+            playGuideContainer.innerHTML = `<img src="${imageUrl}" class="preview-image" alt="Podgląd obrazu">`;
+            const close = () => {
+                backdrop.classList.remove("visible", "preview-active");
+                playGuideContainer.innerHTML = "";
+                playCloseBtn.removeEventListener("click", close);
+                backdrop.removeEventListener("click", backdropClose);
+            };
+            const backdropClose = (e) => {
+                if (e.target === backdrop) close();
+            };
+            playCloseBtn.addEventListener("click", close, { once: true });
+            backdrop.addEventListener("click", backdropClose, { once: true });
+        }
+
+        backdrop.addEventListener("click", (e) => {
+            if (e.target === backdrop) stopPlayAnimation();
+        });
+        function debounce(func, wait) {
+            let timeout;
+            return function (...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func.apply(this, args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+        const debouncedUpdatePagination = debounce(updatePaginationOptions, 250);
+        window.addEventListener("resize", debouncedUpdatePagination);
+        document.addEventListener("DOMContentLoaded", () => {
+            [".top-header", ".controls", ".pagination", ".footer"].forEach(
+                (sel, i) => {
+                    const el = document.querySelector(sel);
+                    if (el) {
+                        el.style.animationDelay = `${0.2 + i * 0.2}s`;
+                        el.classList.add(
+                            i < 2 ? "animated-header" : "animated-pagination"
+                        );
+                    }
+                }
+            );
+        });
         searchInput.addEventListener("input", () => {
             currentPage = 1;
             renderGuides();
@@ -1622,8 +2040,11 @@
         });
         formatFilter.addEventListener("change", () => {
             currentPage = 1;
-            if (formatFilter.value.startsWith("search:")) {
-                searchInput.value = formatFilter.value.substring(7);
+            const value = formatFilter.value;
+            if (value.startsWith("search:")) {
+                searchInput.value = value.substring(7);
+            } else {
+                saveToLocalStorage('format', value);
             }
             renderGuides();
             stopPlayAnimation();
@@ -1631,6 +2052,7 @@
         sortSelector.addEventListener("change", () => {
             if (sortSelector.value) {
                 applySort(sortSelector.value, guides);
+                saveToLocalStorage('sort', sortSelector.value);
                 currentPage = 1;
                 renderGuides();
             }
@@ -1638,6 +2060,7 @@
         });
         itemsPerPageSelector.addEventListener("change", (e) => {
             selectedRowCount = parseInt(e.target.value);
+            saveToLocalStorage('rows', selectedRowCount);
             itemsPerPage = selectedRowCount * itemsPerRow;
             currentPage = 1;
             renderGuides();
@@ -1645,10 +2068,11 @@
         });
         fileInput.addEventListener("change", function () {
             if (this.files[0]) {
-            loadAndParseFile(this.files[0]);
-            stopPlayAnimation();
+                loadAndParseFile(this.files[0]);
+                stopPlayAnimation();
             }
         });
     </script>
-  </body>
+</body>
+
 </html>
