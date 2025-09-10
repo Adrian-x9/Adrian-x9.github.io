@@ -84,7 +84,6 @@
             color: #555;
         }
         
-        /* Poprawka: Przywrócenie poprzedniego koloru licznika w trybie ciemnym */
         .dark-mode .top-header .counter {
             color: #aaa;
         }
@@ -185,7 +184,7 @@
 
         .dark-mode .dir-db-btn.highlighted-state {
              color: #fff;
-             background: #e53935;
+             background: #a01515;
              box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 1px 3px rgba(0,0,0,0.3);
         }
 
@@ -367,6 +366,23 @@
             padding-right: 12px;
         }
 
+        #animationBtn-play {
+            padding: 0 12px;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        #animationBtn-play:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .dark-mode #animationBtn-play {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .dark-mode #animationBtn-play:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
         #animationBtn-shuffle {
             padding-left: 12px;
             border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -382,37 +398,18 @@
             background-color: rgba(255,255,255,0.1);
         }
 
-        #animationBtn.highlighted-state #animationBtn-shuffle {
+        #animationBtn.highlighted-state #animationBtn-shuffle,
+        #animationBtn.highlighted-state #animationBtn-play {
             border-left-color: rgba(255, 255, 255, 0.5);
         }
-         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle {
+         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle,
+         .dark-mode #animationBtn.highlighted-state #animationBtn-play {
             border-left-color: rgba(255, 255, 255, 0.5);
         }
         
-        /* Poprawka: Ulepszony wygląd przycisku Video */
         #animationBtn.highlighted-state > #animationBtn-main {
             position: relative;
-            color: rgba(255, 255, 255, 0.5) !important;
         }
-        #animationBtn.highlighted-state > #animationBtn-main > .fas {
-            opacity: 0.5;
-        }
-        #animationBtn.highlighted-state > #animationBtn-main::after {
-            font-family: "Font Awesome 6 Free";
-            content: "\f04b"; /* ikona fa-play */
-            font-weight: 900;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.8em;
-            color: rgba(255, 255, 255, 0.9);
-            text-shadow: 0 2px 5px rgba(0,0,0,0.6);
-            transition: all 0.3s;
-            pointer-events: none;
-            opacity: 1;
-        }
-
 
         .guide-list {
             display: grid;
@@ -889,6 +886,7 @@
         <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
         <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
             <span id="animationBtn-main"><i class="fas fa-video"></i> Video</span>
+            <span id="animationBtn-play"><i class="fas fa-play"></i></span>
             <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
         </button>
     </div>
@@ -898,7 +896,6 @@
 
     <div class="footer">
         <div>
-            <!-- Poprawka: Pogrubienie w stopce -->
             <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
                     <span class="version-display"></span></span></a></strong>
             <strong>© 2025-09-07</strong> do katalogowania, zarządzania i
@@ -975,14 +972,11 @@
             paths: {
                 url404: "base-system/404.html",
                 urlAbout: "base-system/about.html",
-                databaseFileName: "base-system/.db.txt",
+                databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
-                coversHDFolderName: "base-system/previewHD",
-                miniLogoLightUrl: "base-system/.gfx/.interface/VisuDir_small_light.png",
-                miniLogoDarkUrl: "base-system/.gfx/.interface/VisuDir_small_dark.png",
-                videoBgLightUrlBase: "base-system/.video/bg1_light",
-                videoBgDarkUrlBase: "base-system/.video/bg1_dark",
+                videoBgLightUrlBase: "base-system/.video/bg_light",
+                videoBgDarkUrlBase: "base-system/.video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
@@ -1079,7 +1073,6 @@
                 const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
                 bgVideoSource.src = videoSrc;
                 bgVideo.load();
-                bgVideo.style.display = "block";
                 bgVideo.addEventListener("canplay", () => document.body.classList.add("video-ready"), { once: true });
             }
 
@@ -1090,6 +1083,7 @@
         
         function updateBackgroundVideoVisibility() {
             if (animationState === 2) {
+                bgVideo.style.display = 'block';
                 initializeBackgroundVideo(currentTheme);
             } else {
                 bgVideo.style.display = 'none';
@@ -1117,8 +1111,6 @@
         function loadConfig() {
             currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
             selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
-            config.pageSettings.defaultFormat = getFromLocalStorage('format') || config.pageSettings.defaultFormat;
-
             const storedAnimation = getFromLocalStorage('animation');
             animationState = storedAnimation !== null ? parseInt(storedAnimation, 10) : config.pageSettings.defaultAnimation;
 
@@ -1244,21 +1236,22 @@
             }
         }
 
-        function updateFormatFilter(formats) {
+        function updateFormatFilter() {
+            const formats = [...new Set(guides.map(g => g.format.toUpperCase()))].sort();
             formatFilter.innerHTML = '<option value="">Wszystko</option>';
-            [...formats].sort().forEach((t) => {
+            formats.forEach(t => {
                 const o = document.createElement("option");
                 o.value = t.toLowerCase();
                 o.textContent = t;
                 formatFilter.appendChild(o);
             });
-            if (config.pageSettings.predefinedFilters.some((p) => p.label && p.search)) {
+            if (config.pageSettings.predefinedFilters.some(p => p.label && p.search)) {
                 const s = document.createElement("option");
-                s.disabled = !0;
+                s.disabled = true;
                 s.textContent = "──────────";
                 formatFilter.appendChild(s);
             }
-            config.pageSettings.predefinedFilters.forEach((p) => {
+            config.pageSettings.predefinedFilters.forEach(p => {
                 if (p.label && p.search) {
                     const o = document.createElement("option");
                     o.value = `search:${p.search}`;
@@ -1290,15 +1283,17 @@
                     } / ${p} poz.`;
                 itemsPerPageSelector.appendChild(option);
             });
-            if (
-                itemsPerPageSelector.querySelector(
-                    `option[value="${selectedRowCount}"]`
-                )
-            )
+            
+            const validOption = itemsPerPageSelector.querySelector(`option[value="${selectedRowCount}"]`);
+            if (validOption) {
                 itemsPerPageSelector.value = selectedRowCount;
-            else itemsPerPageSelector.value = config.pageSettings.defaultRows;
-            selectedRowCount = parseInt(itemsPerPageSelector.value);
+            } else if (itemsPerPageSelector.options.length > 0) {
+                itemsPerPageSelector.selectedIndex = itemsPerPageSelector.options.length - 1;
+            }
+
+            selectedRowCount = itemsPerPageSelector.value ? parseInt(itemsPerPageSelector.value) : config.pageSettings.defaultRows;
             itemsPerPage = selectedRowCount * itemsPerRow;
+
             if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
                 const firstItemIndex =
                     (currentPage - 1) * (oldItemsPerPage || itemsPerPage);
@@ -1319,7 +1314,7 @@
 
         function init(data) {
             processData(data);
-            updateFormatFilter(new Set(guides.map(g => g.format.toUpperCase())));
+            updateFormatFilter();
             applySort(currentSort, guides);
 
             const urlParams = new URLSearchParams(window.location.search);
@@ -1327,9 +1322,7 @@
             if (searchQuery) {
                 searchInput.value = decodeURIComponent(searchQuery);
             }
-            if (formatFilter.querySelector(`option[value="${config.pageSettings.defaultFormat}"]`)) {
-                formatFilter.value = config.pageSettings.defaultFormat;
-            }
+            formatFilter.value = getFromLocalStorage('format') || config.pageSettings.defaultFormat;
 
             updatePaginationOptions();
             renderGuides();
@@ -1337,12 +1330,12 @@
 
         function startLogoRotator() {
             if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
-                const defaultLogo = config.logoRotator.logos[0];
-                const isDark = document.body.classList.contains('dark-mode');
-                headerLogo.src = isDark ? defaultLogo.srcDark : defaultLogo.srcLight;
-                logoLink.href = defaultLogo.href;
-                headerLogo.alt = defaultLogo.alt;
-                return;
+                 const defaultLogo = config.logoRotator.logos[0];
+                 const isDark = document.body.classList.contains('dark-mode');
+                 headerLogo.src = isDark ? defaultLogo.srcDark : defaultLogo.srcLight;
+                 logoLink.href = defaultLogo.href;
+                 headerLogo.alt = defaultLogo.alt;
+                 return;
             }
 
             clearInterval(logoInterval);
@@ -1363,6 +1356,7 @@
         }
 
         window.onload = function () {
+            fileInputLabel.style.display = "none";
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
             document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
             document.title = config.pageSettings.pageTitle;
@@ -1389,19 +1383,20 @@
             updatePreviewButtonUI();
             updateBackgroundVideoVisibility();
 
-            const animationBtn = document.getElementById('animationBtn');
             animationBtn.addEventListener('click', (event) => {
-                if (document.getElementById('animationBtn-shuffle').contains(event.target)) {
-                    if (animationState === 2) { 
-                        shuffleBackgroundVideo();
-                    }
+                const shuffleBtn = document.getElementById('animationBtn-shuffle');
+                const playBtn = document.getElementById('animationBtn-play');
+                
+                if (shuffleBtn && shuffleBtn.contains(event.target)) {
+                    if (animationState === 2) shuffleBackgroundVideo();
+                } else if (playBtn && playBtn.contains(event.target)) {
+                    // Placeholder for future functionality
                 } else {
                     toggleAnimations();
                 }
             });
 
             if (dataFromFile && dataFromFile.trim().length > 0) {
-                fileInputLabel.style.display = 'none';
                 init(dataFromFile);
             } else {
                 fetch(config.paths.databaseFileName)
@@ -1417,10 +1412,13 @@
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = config.pageSettings.defaultFormat || "";
+            saveToLocalStorage('format', formatFilter.value);
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
+            saveToLocalStorage('sort', config.pageSettings.defaultSort);
             currentPage = 1;
             selectedRowCount = config.pageSettings.defaultRows;
+            saveToLocalStorage('rows', selectedRowCount);
             updatePaginationOptions();
             renderGuides();
         }
@@ -1457,16 +1455,13 @@
                 if (guide.format === "jpg" || guide.format === "png") {
                     a = `<a href="#" onclick="showImagePreview('${u}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
                     w = `<a href="#" onclick="showImagePreview('${u}'); return false;" class="cover-link">`;
-                } else if (location.protocol === "file:") {
+                } else {
                     const p = guide.format === "pdf";
                     a = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
                         }><i class="fas fa-${p ? "file-pdf" : "download"}"></i> ${p ? "Otwórz" : "Pobierz"
                         }</a>`;
                     w = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
                         } class="cover-link">`;
-                } else {
-                    a = `<a href="${config.paths.url404}" target="_blank" rel="noopener noreferrer"><i class="fas fa-exclamation-triangle"></i> Brak pliku</a>`;
-                    w = `<a href="${config.paths.url404}" target="_blank" rel="noopener noreferrer" class="cover-link">`;
                 }
             }
             const k = document.body.classList.contains("dark-mode")
@@ -1484,9 +1479,6 @@
                     g.title.toLowerCase().includes(search) &&
                     (!format || g.format === format)
             );
-
-            // Poprawka: Usunięto zbędne sortowanie, które powodowało błąd przy resecie.
-            // Główne sortowanie odbywa się teraz tylko w funkcjach `applySort`, `init` i `resetView`.
             
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
             currentPage = Math.min(currentPage, totalPages || 1);
@@ -1631,7 +1623,6 @@
         function updatePreviewButtonUI() {
             previewBtn.classList.remove("inactive", "highlighted-state");
             guideList.classList.remove("hide-covers", "only-covers");
-            // Nowa kolejność: 0: Tekst, 1: Grafika, 2: Wszystko
             switch (previewState) {
                 case 0: // Widok: Tekst (wyszarzony)
                     previewBtn.innerHTML = `<i class="fas fa-font"></i> Tekst`;
@@ -1661,10 +1652,12 @@
             
             const animationBtnMain = document.getElementById('animationBtn-main');
             const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
+            const animationBtnPlay = document.getElementById('animationBtn-play');
 
             animationBtn.classList.remove("inactive", "highlighted-state");
             document.body.classList.remove("no-animation");
             animationBtnShuffle.style.display = 'none';
+            animationBtnPlay.style.display = 'none';
 
             const numStates = hasAnyVideo ? 3 : 2;
 
@@ -1682,6 +1675,7 @@
                     animationBtn.classList.add("highlighted-state");
                     if (hasMultipleVideos) {
                         animationBtnShuffle.style.display = 'inline-flex';
+                        animationBtnPlay.style.display = 'inline-flex';
                     }
                     break;
             }
@@ -1920,4 +1914,3 @@
 </body>
 
 </html>
-
