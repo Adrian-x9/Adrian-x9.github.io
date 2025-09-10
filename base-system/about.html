@@ -135,6 +135,15 @@
             padding-right: 12px;
             padding-left: 12px;
         }
+        
+        #animationBtn-play {
+            padding: 0 12px;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #animationBtn-play:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
 
         #animationBtn-shuffle {
             padding-left: 12px;
@@ -379,17 +388,21 @@
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
         }
         
-        .dark-mode #animationBtn-shuffle {
+        .dark-mode #animationBtn-shuffle,
+        .dark-mode #animationBtn-play {
             border-left-color: rgba(255, 255, 255, 0.2);
         }
-        .dark-mode #animationBtn-shuffle:hover {
+        .dark-mode #animationBtn-shuffle:hover,
+        .dark-mode #animationBtn-play:hover {
             background-color: rgba(255,255,255,0.1);
         }
 
-        #animationBtn.highlighted-state #animationBtn-shuffle {
+        #animationBtn.highlighted-state #animationBtn-shuffle,
+        #animationBtn.highlighted-state #animationBtn-play {
             border-left-color: rgba(255, 255, 255, 0.5);
         }
-         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle {
+         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle,
+         .dark-mode #animationBtn.highlighted-state #animationBtn-play {
             border-left-color: rgba(255, 255, 255, 0.5);
         }
 
@@ -683,14 +696,18 @@
             </a>
         </div>
         <div class="header-controls-group">
-            <a id="backButton" class="dir-db-btn" href="javascript:history.back()">
-                <i class="fas fa-chevron-left"></i>&nbsp;Wstecz
-            </a>
+             <button id="resetSettingsBtn" class="dir-db-btn highlighted-state">
+                <i class="fas fa-undo"></i>
+            </button>
             <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
                 <span id="animationBtn-main"><i class="fas fa-video"></i></span>
+                <span id="animationBtn-play"><i class="fas fa-play"></i></span>
                 <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
             </button>
             <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i></button>
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()">
+                Wstecz&nbsp;<i class="fas fa-chevron-right"></i>
+            </a>
         </div>
     </div>
 
@@ -840,6 +857,7 @@
 
         let animationState;
         let currentTheme;
+        let autoShuffleInterval = null;
 
         function saveToLocalStorage(key, value) {
             try {
@@ -916,9 +934,11 @@
         function updateAnimationButtonUI() {
             const animationBtn = document.getElementById('animationBtn');
             const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
+            const animationBtnPlay = document.getElementById('animationBtn-play');
             
             animationBtn.classList.remove("inactive", "highlighted-state");
             animationBtnShuffle.style.display = 'none';
+            animationBtnPlay.style.display = 'none';
 
             switch (animationState) {
                 case 0: // Statycznie
@@ -929,12 +949,35 @@
                     const hasMultipleVideos = (config.pageSettings.bgVideoEndNum - config.pageSettings.bgVideoStartNum) > 0;
                     if (hasMultipleVideos) {
                         animationBtnShuffle.style.display = 'inline-flex';
+                        animationBtnPlay.style.display = 'inline-flex';
                     }
                     break;
             }
         }
+        
+        function toggleAutoShuffle() {
+            const playBtn = document.getElementById('animationBtn-play');
+            if (animationState !== 2) return; // Działa tylko, gdy wideo jest włączone
+
+            if (autoShuffleInterval) {
+                clearInterval(autoShuffleInterval);
+                autoShuffleInterval = null;
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.classList.remove('highlighted-state'); 
+            } else {
+                shuffleBackgroundVideo(); // Zmień od razu po wciśnięciu
+                autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('highlighted-state'); 
+            }
+        }
 
         function toggleAnimations() {
+            // Jeśli wyłączamy wideo, a automatyczne losowanie jest aktywne, zatrzymaj je
+            if (animationState === 2 && autoShuffleInterval) {
+                toggleAutoShuffle();
+            }
+
             animationState = animationState === 2 ? 0 : 2; // Przełączaj między 0 (Statycznie) a 2 (Video)
             saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
             updateAnimationButtonUI();
@@ -958,6 +1001,27 @@
             initializeBackgroundVideo(currentTheme);
         }
         
+        function resetVideoSettings() {
+            // Przywróć domyślny stan animacji (czy wideo ma być włączone)
+            animationState = config.pageSettings.defaultAnimation;
+            saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
+            
+            // Przywróć domyślny numer wideo
+            const { pageKey, defaultBgVideo } = config.pageSettings;
+            const storageKey = `visudir_bg_video_${pageKey}`;
+            localStorage.setItem(storageKey, defaultBgVideo);
+
+            // Zatrzymaj automatyczne odtwarzanie, jeśli jest aktywne
+            if (autoShuffleInterval) {
+                toggleAutoShuffle(); 
+            }
+
+            // Zaktualizuj interfejs użytkownika
+            updateAnimationButtonUI();
+            updateBackgroundVideoVisibility(); // To załaduje domyślne wideo
+            console.log('Ustawienia wideo zostały zresetowane do domyślnych.');
+        }
+
         function updateDarkModeButtonUI() {
             const darkModeBtn = document.getElementById('darkModeBtn');
             darkModeBtn.innerHTML = currentTheme === 'dark' ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>`;
@@ -1003,6 +1067,7 @@
             const backButton = document.getElementById('backButton');
             const animationBtn = document.getElementById('animationBtn');
             const darkModeBtn = document.getElementById('darkModeBtn');
+            const resetSettingsBtn = document.getElementById('resetSettingsBtn');
             
             if (!config.pageSettings.showMiniLogo) logoLink.style.display = 'none';
             if (!config.pageSettings.showBackButton) backButton.style.display = 'none';
@@ -1017,11 +1082,18 @@
             updateBackgroundVideoVisibility();
             
             darkModeBtn.addEventListener('click', toggleDarkMode);
+            resetSettingsBtn.addEventListener('click', resetVideoSettings);
+
             animationBtn.addEventListener('click', (event) => {
-                if (document.getElementById('animationBtn-shuffle').contains(event.target)) {
-                     if (animationState === 2) shuffleBackgroundVideo();
+                const shuffleBtn = document.getElementById('animationBtn-shuffle');
+                const playBtn = document.getElementById('animationBtn-play');
+
+                if (shuffleBtn && shuffleBtn.contains(event.target)) {
+                    if (animationState === 2) shuffleBackgroundVideo();
+                } else if (playBtn && playBtn.contains(event.target)) {
+                    toggleAutoShuffle();
                 } else {
-                     toggleAnimations();
+                    toggleAnimations();
                 }
             });
 
