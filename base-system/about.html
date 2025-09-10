@@ -55,7 +55,7 @@
             font-size: 1.6em;
             font-weight: normal;
         }
-        
+
         .top-header>span>strong {
             font-weight: bold;
         }
@@ -332,13 +332,23 @@
         }
 
         @keyframes flip-out {
-            from { transform: rotateY(0deg); }
-            to { transform: rotateY(90deg); }
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(90deg);
+            }
         }
 
         @keyframes flip-in {
-            from { transform: rotateY(-90deg); }
-            to { transform: rotateY(0deg); }
+            from {
+                transform: rotateY(-90deg);
+            }
+
+            to {
+                transform: rotateY(0deg);
+            }
         }
 
         .flipping-out {
@@ -351,36 +361,84 @@
 
 
         @keyframes slideInLeft {
-            from { opacity: 0; transform: translateX(-50px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(50px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .animated-left { animation: slideInLeft 0.8s ease-out forwards; }
-        .animated-right { animation: slideInRight 0.8s ease-out forwards; }
-        .animated-header { animation: fadeInDown 0.6s ease-out forwards; }
-        .animated-video { animation: fadeInDown 0.6s ease-out forwards; animation-delay: 0.4s; }
-        .animated-footer { animation: fadeInUp 0.6s ease-out forwards; }
+        .animated-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animated-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .animated-header {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+
+        .animated-video {
+            animation: fadeInDown 0.6s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        .animated-footer {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
 
         @media (max-width: 768px) {
-            .contact-image-wrapper { flex-direction: column; }
-            .top-header { gap: 15px; }
+            .contact-image-wrapper {
+                flex-direction: column;
+            }
+
+            .top-header {
+                gap: 15px;
+            }
         }
-        
+
         #lightbox {
             position: fixed;
             top: 0;
@@ -404,15 +462,21 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
-        
+
         @keyframes zoomInImage {
             from {
                 opacity: 0;
                 transform: scale(0.9);
             }
+
             to {
                 opacity: 1;
                 transform: scale(1);
@@ -450,7 +514,7 @@
         body:not(.dark-mode) #lightbox-close {
             color: #000;
         }
-        
+
         body:not(.dark-mode) #lightbox-close:hover {
             color: #cc0000;
         }
@@ -466,12 +530,12 @@
             transition: transform 0.5s ease-in-out;
             font-weight: bold;
         }
-        
+
         body:not(.dark-mode) #lightbox-caption {
             background-color: rgba(255, 255, 255, 0.8);
             color: #333;
         }
-        
+
         body:not(.dark-mode) #lightbox-caption .caption-name {
             color: #d32f2f;
         }
@@ -489,9 +553,9 @@
             transform: translate(-50%, 0);
         }
 
-        body.lightbox-active > .top-header,
-        body.lightbox-active > .container,
-        body.lightbox-active > .footer {
+        body.lightbox-active>.top-header,
+        body.lightbox-active>.container,
+        body.lightbox-active>.footer {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -526,7 +590,8 @@
         <div class="content-box">
             <div class="inner-content">
                 <h2>Czym jest VisuDir?</h2>
-                <p><strong><span class="title-red">Visu</span>Dir</strong> to nowoczesny, lekki i szybki system do katalogowania plików. Został
+                <p><strong><span class="title-red">Visu</span>Dir</strong> to nowoczesny, lekki i szybki system do
+                    katalogowania plików. Został
                     stworzony z
                     myślą o prostocie obsługi i estetycznej prezentacji kolekcji cyfrowych, takich jak e-booki,
                     poradniki,
@@ -559,8 +624,9 @@
                                     target="_blank" rel="noopener noreferrer">ade.pl</a>, <a href="https://ade24.pl"
                                     target="_blank" rel="noopener noreferrer">ade24.pl</a></span>
                         </div>
-                        <div class="contact-line"><i class="fas fa-money-check-alt"></i><a href="https://start.ade.pl/dane-do-wplat-i-przelew/"
-                                target="_blank" rel="noopener noreferrer">Dane do wpłat i przelewów</a></div>
+                        <div class="contact-line"><i class="fas fa-money-check-alt"></i><a
+                                href="https://start.ade.pl/dane-do-wplat-i-przelew/" target="_blank"
+                                rel="noopener noreferrer">Dane do wpłat i przelewów</a></div>
                         <div class="contact-line"><i class="fas fa-globe"></i><a href="https://www.ade24.pl/contact/"
                                 target="_blank" rel="noopener noreferrer">Formularz kontaktowy</a></div>
                         <div class="contact-line"><i class="fas fa-phone"></i><a href="tel:601190330">601 190 330</a>
@@ -579,22 +645,23 @@
         <div class="content-box">
             <div class="inner-content">
                 <h2>Historia wersji</h2>
-                <p><strong>v1.0.8 (2025-09-09)</strong> Przywrócenie wyszarzenia tła w trybie podglądu zdjęcia.</p>
-                <p><strong>v1.0.7 (2025-09-09)</strong> Zmiana stylizacji napisu w lightboxie.</p>
-                <p><strong>v1.0.6 (2025-09-09)</strong> Korekta przezroczystości kontenera zdjęcia.</p>
-                <p><strong>v1.0.5 (2025-09-09)</strong> Korekta opisu zdjęcia i przezroczystość kontenera.</p>
-                <p><strong>v1.0.4 (2025-09-09)</strong> Poprawki wizualne w lightboxie i dodanie danych do przelewów.</p>
+                <p><strong>v1.0.8 (2025-09-09)</strong> Stylizacja trybu podglądu zdjęcia i szlify końcowe.</p>
+                <p><strong>v1.0.7 (2025-09-09)</strong> Zmiana stylizacji w lightboxie.</p>
+                <p><strong>v1.0.6 (2025-09-09)</strong> Korekty błędów i optymalizacja kodu</p>
+                <p><strong>v1.0.5 (2025-09-09)</strong> Poprawki głównego widoku.</p>
+                <p><strong>v1.0.4 (2025-09-09)</strong> Poprawki index.html.</p>
                 <p><strong>v1.0.3 (2025-09-09)</strong> Poprawki nakładki i widoczności lightboxa.</p>
-                <p><strong>v1.0.2 (2025-09-09)</strong> Error corrections, functions update.</p>
-                <p><strong>v1.0.1 (2025-09-08)</strong> Errors fixing, media generation.</p>
-                <p><strong>v1.0.0 (2025-09-07)</strong> First version.</p>
+                <p><strong>v1.0.2 (2025-09-09)</strong> Poprawki błędów, poprawki funkcji.</p>
+                <p><strong>v1.0.1 (2025-09-08)</strong> Poprawki błędów, generacja mediów.</p>
+                <p><strong>v1.0.0 (2025-09-07)</strong> Publikacja pierwszej wersji systemu.</p>
             </div>
         </div>
 
     </div>
 
     <div class="footer">
-        <div><a href="about.html"><span class="title-red">Visu</span>Dir <span class="version-display"></span></a> <strong>© 2025-09-07</strong> System do katalogowania, zarządzania i
+        <div><a href="about.html"><span class="title-red">Visu</span>Dir <span class="version-display"></span></a>
+            <strong>© 2025-09-07</strong> System do katalogowania, zarządzania i
             prezentacji plików i folderów |
             <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
                     Ulbrych </a></span>
@@ -604,7 +671,7 @@
             <strong>Czysty i bezpieczny kod!</strong>
         </div>
     </div>
-    
+
     <div id="lightbox">
         <button id="lightbox-close"><i class="fas fa-times"></i></button>
         <img id="lightbox-content" src="">
@@ -614,8 +681,21 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.0.8',
-            defaultBgv: true,
+            version: 'v1.0.9',
+            defultLight: true, // Gdy brak w pamięci przeglądarki, ustawi motyw jasny (true) lub ciemny (false)
+
+            // ------ Do pamięci podręcznej przeglądarki
+            aboutStartBgVideo: 1, // Pierwszy numer tła video, w tym wypadku bg_light1.mp4 albo bg_dark1.mp4
+            aboutEndBgVideo: 2, // Ostatni numer tła video, w tym przypadku bg_light2.mp4 albo bg_dark2.mp4 
+            aboutDefaultBgVideo: 1, // Domyślny plik video | W naszym przypadku numer 1, a więc bg_dark1.mp4 albo bg_light1.mp4
+            defaultAnimation: 2, // 0 - Statycznie, 1 - Animacje, 2 - Video            
+            defaultBgv: true, // Niepotrzebne - usuń, bo jest defaultAnimation = 2
+            defultLight: true, // Gdy brak w pamięci przeglądarki, ustawi motyw jasny (true) lub ciemny (false) | Globalne ustaswienie dla wszystkich plików .html
+
+            videoBgLightUrlBase: ".video/bg_light", // do video doklejamy jego numer od 1 do n z konfiguracji
+            videoBgDarkUrlBase: "b.video/bg_dark", // do video doklejamy jego numer od 1 do n z konfiguracji
+            // ------ Koniec pamięci podręcznej przeglądarki
+
             videos: {
                 about_dark: '.video/about_dark.mp4',
                 about_light: '.video/about_light.mp4',
@@ -741,7 +821,7 @@
 
             footer.style.animationDelay = `${0.6 + (contentBoxes.length + 1) * 0.2}s`;
             footer.classList.add('animated-footer');
-            
+
             const imageForLightbox = document.getElementById('about-image-container');
             const lightbox = document.getElementById('lightbox');
             const lightboxContent = document.getElementById('lightbox-content');
@@ -783,4 +863,3 @@
 </body>
 
 </html>
-
