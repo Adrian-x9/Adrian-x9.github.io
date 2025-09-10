@@ -79,6 +79,15 @@
         body:not(.dark-mode) .version-suffix {
             color: #333;
         }
+        
+        /* Zmiana #1: Kolor licznika */
+        body:not(.dark-mode) .top-header .counter {
+            color: #555;
+        }
+        
+        .dark-mode .top-header .counter {
+            color: #ccc;
+        }
 
         .footer .version-suffix {
             font-weight: normal;
@@ -101,9 +110,11 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
         
+        /* Zmiana #3: Poprawiony styl aktywnego przycisku */
         body:not(.dark-mode) .dir-db-btn.highlighted-state {
              color: #fff;
              background: #cc0000;
+             box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2);
         }
         
         body:not(.dark-mode) input,
@@ -173,9 +184,11 @@
             border: 1px solid #555;
         }
 
+        /* Zmiana #3: Poprawiony styl aktywnego przycisku */
         .dark-mode .dir-db-btn.highlighted-state {
              color: #fff;
              background: #e53935;
+             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .dark-mode input,
@@ -268,11 +281,16 @@
         .header-logo-link {
             display: flex;
             align-items: center;
+            /* Zmiana #2: Dodane style dla animacji logo */
+            perspective: 1000px;
         }
 
         .header-logo {
             max-height: 42px;
             width: auto;
+            /* Zmiana #2: Dodane style dla animacji logo */
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
         }
 
         .top-header .title {
@@ -282,7 +300,7 @@
 
         .top-header .counter {
             font-size: 0.9em;
-            color: #aaa;
+            /* Usunięto stary kolor, teraz jest definiowany wyżej */
         }
 
         .top-header .counter b {
@@ -374,6 +392,30 @@
         }
          .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle {
             border-left-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        /* Zmiana #4: Dodanie ikony play na przycisku Video */
+        #animationBtn.highlighted-state > #animationBtn-main {
+            position: relative;
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+        #animationBtn.highlighted-state > #animationBtn-main > .fas {
+            opacity: 0.7;
+        }
+        #animationBtn.highlighted-state > #animationBtn-main::after {
+            font-family: "Font Awesome 6 Free";
+            content: "\f04b"; /* ikona fa-play */
+            font-weight: 900;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.6em;
+            color: rgba(255, 255, 255, 0.85);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+            transition: all 0.3s;
+            pointer-events: none;
+            opacity: 1;
         }
 
 
@@ -848,12 +890,13 @@
             <option value="9">9 pozycji</option>
             <option value="10">10 pozycji</option>
         </select>
+        <!-- Zmiana #5: Zamiana przycisków miejscami -->
+        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i> Tryb ciemny</button>
+        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
         <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
             <span id="animationBtn-main"><i class="fas fa-video"></i> Video</span>
             <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
         </button>
-        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
-        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i> Tryb ciemny</button>
     </div>
 
     <div class="guide-list" id="guideList"></div>
@@ -891,6 +934,25 @@
             // --- Ustawienia globalne, wspólne dla wszystkich stron ---
             global: {
                 defaultTheme: 'dark', // 'light' lub 'dark'
+            },
+            // Zmiana #2: Dodana konfiguracja rotatora logo
+            logoRotator: {
+                enabled: true,
+                interval: 5000, // czas w ms
+                logos: [
+                    {
+                        srcLight: "base-system/.gfx/interface/VisuDir_small_light.png",
+                        srcDark: "base-system/.gfx/interface/VisuDir_small_dark.png",
+                        href: "https://www.ade.pl",
+                        alt: "Logo VisuDir"
+                    },
+                    {
+                        srcLight: "base-system/.gfx/interface/ADE_small_light.png",
+                        srcDark: "base-system/.gfx/interface/ADE_small_dark.png",
+                        href: "https://www.adrianulbrych.pl",
+                        alt: "Logo ADE"
+                    }
+                ]
             },
             // --- Ustawienia specyficzne dla tej strony (index.html) ---
             pageSettings: {
@@ -967,6 +1029,10 @@
             itemsPerRow = 0;
         let animationState, previewState, currentTheme;
         let lastPlayedGuide = null, lastRandomPage = -1;
+        // Zmiana #2: Zmienne dla rotatora logo
+        let currentLogoIndex = 0;
+        let logoInterval;
+
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
@@ -986,6 +1052,7 @@
             playCounterElement = document.getElementById("play-counter"),
             playCloseBtn = document.getElementById("playCloseBtn"),
             headerLogo = document.getElementById("header-logo"),
+            logoLink = document.getElementById("logoLink"), // Zmiana #2
             bgVideo = document.getElementById("bg-video"),
             bgVideoSource = document.getElementById("bg-video-source");
 
@@ -1274,6 +1341,35 @@
             renderGuides();
         }
 
+        // Zmiana #2: Funkcja do rotacji logo
+        function startLogoRotator() {
+            if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
+                 // Ustawienie domyślnego logo jeśli rotator jest wyłączony
+                const defaultLogo = config.logoRotator.logos[0];
+                const isDark = document.body.classList.contains('dark-mode');
+                headerLogo.src = isDark ? defaultLogo.srcDark : defaultLogo.srcLight;
+                logoLink.href = defaultLogo.href;
+                headerLogo.alt = defaultLogo.alt;
+                return;
+            }
+
+            clearInterval(logoInterval);
+            logoInterval = setInterval(() => {
+                headerLogo.style.transform = 'rotateY(90deg)';
+                setTimeout(() => {
+                    currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
+                    const newLogo = config.logoRotator.logos[currentLogoIndex];
+                    const isDark = document.body.classList.contains('dark-mode');
+                    
+                    headerLogo.src = isDark ? newLogo.srcDark : newLogo.srcLight;
+                    headerLogo.alt = newLogo.alt;
+                    logoLink.href = newLogo.href;
+
+                    headerLogo.style.transform = 'rotateY(0deg)';
+                }, 300);
+            }, config.logoRotator.interval);
+        }
+
         window.onload = function () {
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
             document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
@@ -1286,13 +1382,14 @@
             darkModeBtn.innerHTML = currentTheme === 'dark'
                 ? `<i class="fas fa-moon"></i> Tryb ciemny`
                 : `<i class="fas fa-sun"></i> Tryb jasny`;
-
-            if (config.pageSettings.showMiniLogo)
-                headerLogo.src = currentTheme === 'dark'
-                    ? config.paths.miniLogoDarkUrl
-                    : config.paths.miniLogoLightUrl;
-            else document.getElementById("logoLink").style.display = "none";
-
+            
+            // Zmiana #2: Inicjalizacja rotatora logo
+            if (config.pageSettings.showMiniLogo) {
+                startLogoRotator();
+            } else {
+                 document.getElementById("logoLink").style.display = "none";
+            }
+            
             if (!config.pageSettings.showVisuDirButton) document.getElementById("visuDirBtn").style.display = "none";
             document.getElementById("backButton").style.display = config.pageSettings.showBackButton ? "flex" : "none";
 
@@ -1634,8 +1731,11 @@
                 ? `<i class="fas fa-moon"></i> Tryb ciemny`
                 : `<i class="fas fa-sun"></i> Tryb jasny`;
             
-            if (config.pageSettings.showMiniLogo)
-                headerLogo.src = currentTheme === 'dark' ? config.paths.miniLogoDarkUrl : config.paths.miniLogoLightUrl;
+            // Zmiana #2: Zaktualizuj logo przy zmianie motywu
+            if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
+                const currentLogoData = config.logoRotator.logos[currentLogoIndex];
+                headerLogo.src = currentTheme === 'dark' ? currentLogoData.srcDark : currentLogoData.srcLight;
+            }
             
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
                 img.src = currentTheme === 'dark' ? "gfx/no_cover_dark.png" : "gfx/no_cover_light.png";
