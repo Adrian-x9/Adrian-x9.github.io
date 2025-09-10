@@ -801,9 +801,9 @@
             <option value="9">9 pozycji</option>
             <option value="10">10 pozycji</option>
         </select>
-        <button id="animationBtn" onclick="toggleAnimations()"></button>
-        <button id="previewBtn" onclick="togglePreview()"></button>
-        <button id="darkModeBtn" onclick="toggleDarkMode()"></button>
+        <button id="animationBtn" onclick="toggleAnimations()" class="dir-db-btn"><i class="fas fa-video"></i> Video</button>
+        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
+        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i> Tryb ciemny</button>
     </div>
 
     <div class="guide-list" id="guideList"></div>
@@ -837,45 +837,48 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            // --- POCZĄTEK PLIKU <-> .konfiguracja.txt
-            
-            // ------ Do pamięci podręcznej przeglądarki
-            indexStartBgVideo: 3, // Pierwszy numer tła video, w tym wypadku bg_light3.mp4 albo bg_dark3.mp4
-            indexEndBgVideo: 5, // Ostatni numer tła video, w tym przypadku bg_light5.mp4 albo bg_dark5.mp4 
-            indexDefaultBgVideo: 4, // Domyślny plik video | W naszym przypadku bg_light4.mp4 albo bg_dark4.mp4 w zależności od motywu
-            defaultAnimation: 2, // 0 - Statycznie, 1 - Animacje, 2 - Video            
-            defultLight: true, // Gdy brak w pamięci przeglądarki, ustawi motyw jasny (true) lub ciemny (false) | Globalne ustaswienie dla wszystkich plików .html
-            defaultView: 1, // Widok siatki boxów: 0 - Tekst, 1 - Grafika, 2 - Wszystko | Przycisk zmienia się "Tekst" -> "Grafika" -> "Wszystko" -> "Tekst" ... Przycisk pokaże widok, który będzie po kliknięciu
-            defaultFormat: "LINK",
-            defaultSort: "nameAsc",
-            defaultRows: 3,
-            predefinedFilters: [
-                { label: "ADE", search: "ade" },
-                { label: "Galerie zdjęć", search: "galeria" },
-                { label: "Poradniki", search: "poradniki" },
-                { label: "", search: "" },
-                { label: "", search: "" },
-            ],  
-            // ------ Koniec pamięci podręcznej przeglądarki
-
             version: 'v1.0.9',
-            pageTitle: "▪ START ▪ MENU ▪",
-            showMiniLogo: true,
-            showVisuDirButton: true,
-            showBackButton: true,
-            
+            // --- Ustawienia globalne, wspólne dla wszystkich stron ---
+            global: {
+                defaultTheme: 'dark', // 'light' lub 'dark'
+            },
+            // --- Ustawienia specyficzne dla tej strony (index.html) ---
+            pageSettings: {
+                pageKey: 'index',
+                defaultBgVideo: 4,
+                bgVideoStartNum: 3,
+                bgVideoEndNum: 5,
+                defaultAnimation: 0, // 0-Statycznie, 1-Animacje, 2-Video
+                defaultView: 0, // 0-Tekst, 1-Grafika i tekst, 2-Grafika
+                defaultFormat: "LINK",
+                defaultSort: "nameAsc",
+                defaultRows: 3,
+                predefinedFilters: [
+                    { label: "ADE", search: "ade" },
+                    { label: "Galerie zdjęć", search: "galeria" },
+                    { label: "Poradniki", search: "poradniki" },
+                    { label: "", search: "" },
+                    { label: "", search: "" },
+                ],
+                pageTitle: "▪ START ▪ MENU ▪",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: true,
+            },
             // --- Ścieżki dostępu ---
-            url404: "base-system/404.html",
-            urlAbout: "base-system/about.html",
-            databaseFileName: "base-system/db.txt",
-            dataFolderName: "base-system/files",
-            coversFolderName: "base-system/preview",
-            miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
-            miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
-            videoBgLightUrlBase: "base-system/.video/bg_light", // do video doklejamy jego numer od 1 do n z konfiguracji
-            videoBgDarkUrlBase: "base-system/.video/bg_dark", // do video doklejamy jego numer od 1 do n z konfiguracji
+            paths: {
+                url404: "base-system/404.html",
+                urlAbout: "base-system/about.html",
+                databaseFileName: "base-system/db.txt",
+                dataFolderName: "base-system/files",
+                coversFolderName: "base-system/preview",
+                miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
+                miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
+                videoBgLightUrlBase: "base-system/.video/bg_light",
+                videoBgDarkUrlBase: "base-system/.video/bg_dark",
+            }
         };
-        // --- KONIEC PLIKU <-> .konfiguracja.txt
+        // --- KONIEC KONFIGURACJI ---
 
         // --- PLIKOWA BAZA DANYCH ---
         const dataFromFile = ` Volume in drive C has no label.
@@ -900,7 +903,7 @@
               14 File(s)              0 bytes
                2 Dir(s)     95305310208 bytes free
       `;
-        // --- KOINIEC KONFIGURACJI ---
+        // --- KONIEC BAZY DANYCH ---
 
         let guides = [],
             filteredGuides = [],
@@ -912,7 +915,7 @@
             selectedRowCount;
         let playCurrentIndex = 0,
             itemsPerRow = 0;
-        let animationState, previewState;
+        let animationState, previewState, currentTheme;
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
@@ -935,6 +938,53 @@
             bgVideo = document.getElementById("bg-video"),
             bgVideoSource = document.getElementById("bg-video-source");
 
+        function initializeTheme() {
+            const storedTheme = localStorage.getItem('visudir_theme');
+            const theme = storedTheme || config.global.defaultTheme;
+            if (theme === 'light') {
+                document.body.classList.remove('dark-mode');
+            } else {
+                document.body.classList.add('dark-mode');
+            }
+            if (!storedTheme) {
+                localStorage.setItem('visudir_theme', theme);
+            }
+            return theme;
+        }
+
+        function initializeBackgroundVideo(theme) {
+            const pageKey = config.pageSettings.pageKey;
+            const storageKey = `visudir_bg_video_${pageKey}`;
+            const storedVideoNum = localStorage.getItem(storageKey);
+            let videoNum = parseInt(storedVideoNum) || config.pageSettings.defaultBgVideo;
+
+            if (videoNum < config.pageSettings.bgVideoStartNum || videoNum > config.pageSettings.bgVideoEndNum) {
+                videoNum = config.pageSettings.defaultBgVideo;
+            }
+
+            if (bgVideo && bgVideoSource) {
+                const videoUrlBase = theme === 'light' ? config.paths.videoBgLightUrlBase : config.paths.videoBgDarkUrlBase;
+                const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
+                bgVideoSource.src = videoSrc;
+                bgVideo.load();
+                bgVideo.style.display = "block";
+                bgVideo.addEventListener("canplay", () => document.body.classList.add("video-ready"), { once: true });
+            }
+
+            if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
+                localStorage.setItem(storageKey, videoNum);
+            }
+        }
+        
+        function updateBackgroundVideoVisibility() {
+            if (animationState === 2) {
+                initializeBackgroundVideo(currentTheme);
+            } else {
+                bgVideo.style.display = 'none';
+                document.body.classList.remove('video-ready');
+            }
+        }
+        
         function saveToLocalStorage(key, value) {
             try {
                 localStorage.setItem(`visuDir_${key}`, value);
@@ -953,11 +1003,11 @@
         }
 
         function loadConfig() {
-            currentSort = getFromLocalStorage('sort') || config.defaultSort;
-            selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.defaultRows;
-            config.defaultFormat = getFromLocalStorage('format') || config.defaultFormat;
-            animationState = parseInt(getFromLocalStorage('animation')) ?? config.defaultAnimation;
-            previewState = parseInt(getFromLocalStorage('view')) ?? config.defaultView;
+            currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
+            selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
+            config.pageSettings.defaultFormat = getFromLocalStorage('format') || config.pageSettings.defaultFormat;
+            animationState = parseInt(getFromLocalStorage('animation')) ?? config.pageSettings.defaultAnimation;
+            previewState = parseInt(getFromLocalStorage('view')) ?? config.pageSettings.defaultView;
         }
 
         function getFileExtension(filename) {
@@ -1054,7 +1104,7 @@
 
                     if (format === 'link' && location.protocol !== 'file:') {
                         try {
-                            const response = await fetch(`${config.dataFolderName}/${filename}`);
+                            const response = await fetch(`${config.paths.dataFolderName}/${filename}`);
                             if (response.ok) {
                                 linkData.description = await response.text();
                             } else if (!offlineDesc) {
@@ -1086,13 +1136,13 @@
                 o.textContent = t;
                 formatFilter.appendChild(o);
             });
-            if (config.predefinedFilters.some((p) => p.label && p.search)) {
+            if (config.pageSettings.predefinedFilters.some((p) => p.label && p.search)) {
                 const s = document.createElement("option");
                 s.disabled = !0;
                 s.textContent = "──────────";
                 formatFilter.appendChild(s);
             }
-            config.predefinedFilters.forEach((p) => {
+            config.pageSettings.predefinedFilters.forEach((p) => {
                 if (p.label && p.search) {
                     const o = document.createElement("option");
                     o.value = `search:${p.search}`;
@@ -1119,7 +1169,7 @@
                 if (
                     totalRowsAvailable > 0 &&
                     rows > totalRowsAvailable &&
-                    rows > config.defaultRows
+                    rows > config.pageSettings.defaultRows
                 )
                     return;
                 const option = document.createElement("option");
@@ -1135,7 +1185,7 @@
                 )
             )
                 itemsPerPageSelector.value = selectedRowCount;
-            else itemsPerPageSelector.value = config.defaultRows;
+            else itemsPerPageSelector.value = config.pageSettings.defaultRows;
             selectedRowCount = parseInt(itemsPerPageSelector.value);
             itemsPerPage = selectedRowCount * itemsPerRow;
             if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
@@ -1166,8 +1216,8 @@
             if (searchQuery) {
                 searchInput.value = decodeURIComponent(searchQuery);
             }
-            if (formatFilter.querySelector(`option[value="${config.defaultFormat}"]`)) {
-                formatFilter.value = config.defaultFormat;
+            if (formatFilter.querySelector(`option[value="${config.pageSettings.defaultFormat}"]`)) {
+                formatFilter.value = config.pageSettings.defaultFormat;
             }
 
             updatePaginationOptions();
@@ -1176,40 +1226,40 @@
 
         window.onload = function () {
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
-            document.getElementById("pageTitle").textContent = config.pageTitle;
-            document.title = config.pageTitle;
-            document.getElementById("aboutLinkFooter").href = config.urlAbout;
-            document.getElementById("visuDirBtn").href = config.urlAbout;
+            document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
+            document.title = config.pageSettings.pageTitle;
+            document.getElementById("aboutLinkFooter").href = config.paths.urlAbout;
+            document.getElementById("visuDirBtn").href = config.paths.urlAbout;
 
-            const isDarkMode = getFromLocalStorage("darkMode") === "enabled";
-            if (isDarkMode) document.body.classList.add("dark-mode");
-            darkModeBtn.innerHTML = isDarkMode
+            currentTheme = initializeTheme();
+            
+            darkModeBtn.innerHTML = currentTheme === 'dark'
                 ? `<i class="fas fa-sun"></i> Tryb jasny`
                 : `<i class="fas fa-moon"></i> Tryb ciemny`;
 
-            if (config.showMiniLogo)
-                headerLogo.src = isDarkMode
-                    ? config.miniLogoDarkUrl
-                    : config.miniLogoLightUrl;
+            if (config.pageSettings.showMiniLogo)
+                headerLogo.src = currentTheme === 'dark'
+                    ? config.paths.miniLogoDarkUrl
+                    : config.paths.miniLogoLightUrl;
             else document.getElementById("logoLink").style.display = "none";
 
-            if (!config.showVisuDirButton) document.getElementById("visuDirBtn").style.display = "none";
-            document.getElementById("backButton").style.display = config.showBackButton ? "flex" : "none";
+            if (!config.pageSettings.showVisuDirButton) document.getElementById("visuDirBtn").style.display = "none";
+            document.getElementById("backButton").style.display = config.pageSettings.showBackButton ? "flex" : "none";
 
             loadConfig();
             updateAnimationButtonUI();
             updatePreviewButtonUI();
-            manageBgVideo();
+            updateBackgroundVideoVisibility();
 
             if (dataFromFile && dataFromFile.trim().length > 0) {
                 fileInputLabel.style.display = 'none';
                 init(dataFromFile);
             } else {
-                fetch(config.databaseFileName)
+                fetch(config.paths.databaseFileName)
                     .then((r) => (r.ok ? r.text() : Promise.reject(r.statusText)))
                     .then((t) => init(t))
                     .catch((e) => {
-                        console.error(`Automatyczne ładowanie pliku '${config.databaseFileName}' nie powiodło się. Błąd:`, e);
+                        console.error(`Automatyczne ładowanie pliku '${config.paths.databaseFileName}' nie powiodło się. Błąd:`, e);
                         fileInputLabel.style.display = "flex";
                     });
             }
@@ -1217,11 +1267,11 @@
         function resetView() {
             stopPlayAnimation();
             searchInput.value = "";
-            formatFilter.value = config.defaultFormat || "";
+            formatFilter.value = config.pageSettings.defaultFormat || "";
             sortSelector.value = "";
-            applySort(config.defaultSort, guides);
+            applySort(config.pageSettings.defaultSort, guides);
             currentPage = 1;
-            selectedRowCount = config.defaultRows;
+            selectedRowCount = config.pageSettings.defaultRows;
             updatePaginationOptions();
             renderGuides();
         }
@@ -1229,8 +1279,8 @@
             const f = guide.file
                 .replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "")
                 .split("$$")[0],
-                u = `${config.dataFolderName}/${encodeURIComponent(guide.file)}`,
-                c = `${config.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+                u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
+                c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
             let h = "",
                 i = "",
                 a = "",
@@ -1266,8 +1316,8 @@
                     w = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
                         } class="cover-link">`;
                 } else {
-                    a = `<a href="${config.url404}" target="_blank" rel="noopener noreferrer"><i class="fas fa-exclamation-triangle"></i> Brak pliku</a>`;
-                    w = `<a href="${config.url404}" target="_blank" rel="noopener noreferrer" class="cover-link">`;
+                    a = `<a href="${config.paths.url404}" target="_blank" rel="noopener noreferrer"><i class="fas fa-exclamation-triangle"></i> Brak pliku</a>`;
+                    w = `<a href="${config.paths.url404}" target="_blank" rel="noopener noreferrer" class="cover-link">`;
                 }
             }
             const k = document.body.classList.contains("dark-mode")
@@ -1428,17 +1478,18 @@
             guideList.classList.remove("hide-covers", "only-covers");
 
             switch (previewState) {
-                case 0: // currently Text, next is All
-                    previewBtn.innerHTML = `<i class="fas fa-object-group"></i> Grafika i tekst`;
+                case 0: // Widok: Tekst
+                    previewBtn.innerHTML = `<i class="fas fa-font"></i> Tekst`;
+                    previewBtn.classList.add("inactive");
                     guideList.classList.add("hide-covers");
                     break;
-                case 1: // currently All, next is Graphics
-                    previewBtn.innerHTML = `<i class="fas fa-font"></i> Tekst`;
-                    previewBtn.classList.add("highlighted-state");
+                case 1: // Widok: Grafika i tekst
+                    previewBtn.innerHTML = `<i class="fas fa-object-group"></i> Wszystko`;
+                    // Stan normalny, bez dodatkowych klas
                     break;
-                case 2: // currently Graphics, next is Text
+                case 2: // Widok: Grafika
                     previewBtn.innerHTML = `<i class="fas fa-image"></i> Grafika`;
-                    previewBtn.classList.add("inactive");
+                    previewBtn.classList.add("highlighted-state");
                     guideList.classList.add("only-covers");
                     break;
             }
@@ -1450,52 +1501,23 @@
             updatePreviewButtonUI();
         }
 
-        function manageBgVideo() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const bgvParam = urlParams.get("bgv");
-            const showVideoParam = bgvParam !== null ? bgvParam === "true" : null;
-
-            const shouldShowVideo = showVideoParam ?? animationState === 2;
-
-            if (shouldShowVideo) {
-                const videoNumber = config.defaultVideo === 0
-                    ? Math.floor(Math.random() * config.filesVideo) + 1
-                    : config.defaultVideo;
-
-                const videoBaseUrl = document.body.classList.contains("dark-mode")
-                    ? config.videoBgDarkUrlBase
-                    : config.videoBgLightUrlBase;
-
-                bgVideoSource.src = `${videoBaseUrl}_${videoNumber}.mp4`;
-                bgVideo.load();
-                bgVideo.style.display = "block";
-                bgVideo.addEventListener(
-                    "canplay",
-                    () => document.body.classList.add("video-ready"),
-                    { once: true }
-                );
-            } else {
-                bgVideo.style.display = "none";
-                document.body.classList.remove("video-ready");
-            }
-        }
-
         function updateAnimationButtonUI() {
             animationBtn.classList.remove("inactive", "highlighted-state");
             document.body.classList.remove("no-animation");
 
             switch (animationState) {
-                case 0: // currently Static, next is Animations
-                    animationBtn.innerHTML = `<i class="fas fa-video"></i> Video`;
+                case 0: // Tryb: Statycznie
+                    animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
+                    animationBtn.classList.add("inactive");
                     document.body.classList.add("no-animation");
                     break;
-                case 1: // currently Animations, next is Video
-                    animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
-                    animationBtn.classList.add("highlighted-state");
-                    break;
-                case 2: // currently Video, next is Static
+                case 1: // Tryb: Animacje
                     animationBtn.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
-                    animationBtn.classList.add("inactive");
+                    // Stan normalny, bez dodatkowych klas
+                    break;
+                case 2: // Tryb: Video
+                    animationBtn.innerHTML = `<i class="fas fa-video"></i> Video`;
+                    animationBtn.classList.add("highlighted-state");
                     break;
             }
         }
@@ -1504,23 +1526,26 @@
             animationState = (animationState + 1) % 3;
             saveToLocalStorage('animation', animationState);
             updateAnimationButtonUI();
-            manageBgVideo();
+            updateBackgroundVideoVisibility();
             renderGuides(); // Re-render to apply/remove animation classes
         }
 
         function toggleDarkMode() {
-            document.body.classList.toggle("dark-mode");
-            const i = document.body.classList.contains("dark-mode");
-            saveToLocalStorage("darkMode", i ? "enabled" : "disabled");
-            darkModeBtn.innerHTML = i
+            const isDark = document.body.classList.contains("dark-mode");
+            localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
+            currentTheme = initializeTheme();
+            
+            darkModeBtn.innerHTML = currentTheme === 'dark'
                 ? `<i class="fas fa-sun"></i> Tryb jasny`
                 : `<i class="fas fa-moon"></i> Tryb ciemny`;
-            if (config.showMiniLogo)
-                headerLogo.src = i ? config.miniLogoDarkUrl : config.miniLogoLightUrl;
+            
+            if (config.pageSettings.showMiniLogo)
+                headerLogo.src = currentTheme === 'dark' ? config.paths.miniLogoDarkUrl : config.paths.miniLogoLightUrl;
+            
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
-                img.src = i ? "gfx/no_cover_dark.png" : "gfx/no_cover_light.png";
+                img.src = currentTheme === 'dark' ? "gfx/no_cover_dark.png" : "gfx/no_cover_light.png";
             });
-            manageBgVideo();
+            updateBackgroundVideoVisibility();
         }
 
         playButton.addEventListener('click', togglePlayAnimation);
@@ -1575,7 +1600,7 @@
         function displayRandomGuide(guide) {
             const animationsOn = animationState !== 0;
             const display = () => {
-                const fileUrl = `${config.dataFolderName}/${encodeURIComponent(
+                const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(
                     guide.file
                 )}`;
                 let displayTitle = guide.title;
@@ -1698,3 +1723,6 @@
 </body>
 
 </html>
+
+
+
