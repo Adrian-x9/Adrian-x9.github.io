@@ -43,7 +43,9 @@
             transform: none !important;
         }
 
-        body.no-animation .guide-cover {
+        body.no-animation .guide-cover,
+        body.no-animation .top-header,
+        body.no-animation .footer {
             transition: none !important;
         }
 
@@ -257,7 +259,7 @@
             text-align: center;
             opacity: 0;
             transform: translateY(-20px);
-            max-height: 200px;
+            max-height: 200px; /* Wysokość do animacji */
             overflow: hidden;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
         }
@@ -525,6 +527,7 @@
         .pagination {
             text-align: center;
             margin-top: 40px;
+            margin-bottom: 15px; /* Dodatkowy odstęp */
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -607,6 +610,17 @@
             font-size: 0.9em;
             opacity: 0;
             transform: translateY(20px);
+            max-height: 200px; /* Wysokość do animacji */
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
+        }
+        
+        .footer.minimized-footer {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+            opacity: 0;
         }
 
         .nobr {
@@ -840,14 +854,7 @@
             animation-duration: 0.8s;
             animation-timing-function: ease-out;
         }
-
-        /* --- Style dla minimalizacji --- */
-        @keyframes slideOutDown {
-            from { transform: translateY(0); opacity: 1; }
-            to { transform: translateY(100%); opacity: 0; visibility: hidden; }
-        }
-        .animate-slide-out-down { animation: slideOutDown 0.5s ease-out forwards; }
-
+        
         .hidden-no-anim {
             display: none !important;
         }
@@ -1467,12 +1474,10 @@
         
         function toggleMinimizeView() {
             const topHeader = document.querySelector('.top-header');
-            const pagination = document.querySelector('.pagination');
             const footer = document.querySelector('.footer');
             const controls = document.querySelector('.controls');
             const minimizeBtn = document.getElementById('minimizeBtn');
             const minimizeIcon = minimizeBtn.querySelector('i');
-            const animationsOn = animationState !== 0;
 
             isMinimized = !isMinimized;
 
@@ -1486,25 +1491,8 @@
                 minimizeIcon.className = 'fas fa-window-minimize';
             }
 
-            if (animationsOn) {
-                topHeader.classList.toggle('minimized-header', isMinimized);
-
-                if (isMinimized) {
-                    pagination.classList.add('animate-slide-out-down');
-                    footer.classList.add('animate-slide-out-down');
-                    pagination.classList.remove('animated-pagination');
-                    footer.classList.remove('animated-footer');
-                } else {
-                    pagination.classList.remove('animate-slide-out-down');
-                    footer.classList.remove('animate-slide-out-down');
-                    pagination.classList.add('animated-pagination');
-                    footer.classList.add('animated-footer');
-                }
-            } else {
-                topHeader.classList.toggle('hidden-no-anim', isMinimized);
-                pagination.classList.toggle('hidden-no-anim', isMinimized);
-                footer.classList.toggle('hidden-no-anim', isMinimized);
-            }
+            topHeader.classList.toggle('minimized-header', isMinimized);
+            footer.classList.toggle('minimized-footer', isMinimized);
         }
 
         function resetView() {
