@@ -69,7 +69,7 @@
         .header-controls-group {
             display: flex;
             align-items: center;
-            margin-left: 25px;
+            margin-left: 10px;
         }
 
         .header-controls-group > * + * {
@@ -104,14 +104,6 @@
             align-items: center;
             justify-content: center;
             border: 1px solid transparent;
-        }
-
-        #backButton {
-            padding: 9px 20px;
-        }
-
-        #backButton i {
-            margin-right: 15px;
         }
 
         .dir-db-btn:hover {
@@ -548,11 +540,11 @@
         }
 
         body:not(.dark-mode) #lightbox {
-            background-color: rgba(255, 255, 255, 0.33);
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         .dark-mode #lightbox {
-            background-color: rgba(0, 0, 0, 0.33);
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         @keyframes fadeIn {
@@ -648,7 +640,7 @@
         }
 
         .dark-mode #lightbox-caption .caption-name {
-            color: #b71c1c;
+            color: #e53935;
         }
 
         #lightbox-caption.visible {
@@ -692,7 +684,7 @@
         </div>
         <div class="header-controls-group">
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()">
-                <i class="fas fa-chevron-left"></i>Wróć
+                <i class="fas fa-chevron-left"></i>&nbsp;Wstecz
             </a>
             <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
                 <span id="animationBtn-main"><i class="fas fa-video"></i></span>
