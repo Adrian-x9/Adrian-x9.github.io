@@ -336,6 +336,47 @@
             margin-right: 5px;
         }
 
+        .video-shuffle-btn {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .video-shuffle-btn > span {
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        #animationBtn-main {
+            flex-grow: 1;
+            padding-right: 15px;
+        }
+
+        #animationBtn-shuffle {
+            padding-left: 15px;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        #animationBtn-shuffle:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        .dark-mode #animationBtn-shuffle {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+        .dark-mode #animationBtn-shuffle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        #animationBtn.highlighted-state #animationBtn-shuffle {
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle {
+            border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+
         .guide-list {
             display: grid;
             grid-template-columns: repeat(auto-fill, 250px);
@@ -807,7 +848,10 @@
             <option value="9">9 pozycji</option>
             <option value="10">10 pozycji</option>
         </select>
-        <button id="animationBtn" onclick="toggleAnimations()" class="dir-db-btn"><i class="fas fa-video"></i> Video</button>
+        <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
+            <span id="animationBtn-main"><i class="fas fa-video"></i> Video</span>
+            <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
+        </button>
         <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i> Wszystko</button>
         <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i> Tryb ciemny</button>
     </div>
@@ -851,9 +895,9 @@
             // --- Ustawienia specyficzne dla tej strony (index.html) ---
             pageSettings: {
                 pageKey: 'index',
-                defaultBgVideo: 4,
-                bgVideoStartNum: 3,
-                bgVideoEndNum: 5,
+                defaultBgVideo: 1,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 6,
                 defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
                 defaultView: 2, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
                 defaultFormat: "LINK",
@@ -1262,6 +1306,17 @@
             updatePreviewButtonUI();
             updateBackgroundVideoVisibility();
 
+            const animationBtn = document.getElementById('animationBtn');
+            animationBtn.addEventListener('click', (event) => {
+                if (document.getElementById('animationBtn-shuffle').contains(event.target)) {
+                    if (animationState === 2) { 
+                        shuffleBackgroundVideo();
+                    }
+                } else {
+                    toggleAnimations();
+                }
+            });
+
             if (dataFromFile && dataFromFile.trim().length > 0) {
                 fileInputLabel.style.display = 'none';
                 init(dataFromFile);
@@ -1515,23 +1570,49 @@
         }
 
         function updateAnimationButtonUI() {
+            const animationBtnMain = document.getElementById('animationBtn-main');
+            const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
+
             animationBtn.classList.remove("inactive", "highlighted-state");
             document.body.classList.remove("no-animation");
+            animationBtnShuffle.style.display = 'none';
+
             // Stany: 0: Statycznie, 1: Animacje, 2: Video
             switch (animationState) {
                 case 0: // Tryb: Statycznie (wyszarzony)
-                    animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
+                    animationBtnMain.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
                     animationBtn.classList.add("inactive");
                     document.body.classList.add("no-animation");
                     break;
                 case 1: // Tryb: Animacje (normalny)
-                    animationBtn.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
+                    animationBtnMain.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
                     break;
                 case 2: // Tryb: Video (wyróżniony)
-                    animationBtn.innerHTML = `<i class="fas fa-video"></i> Video`;
+                    animationBtnMain.innerHTML = `<i class="fas fa-video"></i> Video`;
                     animationBtn.classList.add("highlighted-state");
+                    if (config.pageSettings.bgVideoEndNum - config.pageSettings.bgVideoStartNum > 0) {
+                        animationBtnShuffle.style.display = 'inline-flex';
+                    }
                     break;
             }
+        }
+        
+        function shuffleBackgroundVideo() {
+            const { pageKey, bgVideoStartNum, bgVideoEndNum, defaultBgVideo } = config.pageSettings;
+            const storageKey = `visudir_bg_video_${pageKey}`;
+            const range = bgVideoEndNum - bgVideoStartNum;
+
+            if (range < 1) return; 
+
+            const currentVideoNum = parseInt(localStorage.getItem(storageKey)) || defaultBgVideo;
+            
+            let newVideoNum;
+            do {
+                newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum;
+            } while (newVideoNum === currentVideoNum);
+
+            localStorage.setItem(storageKey, newVideoNum);
+            initializeBackgroundVideo(currentTheme);
         }
 
         function toggleAnimations() {
@@ -1744,4 +1825,6 @@
 </body>
 
 </html>
+
+Most up-to-date file for "about.html" is:
 
