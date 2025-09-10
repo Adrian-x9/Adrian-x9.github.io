@@ -1006,8 +1006,12 @@
             currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
             selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
             config.pageSettings.defaultFormat = getFromLocalStorage('format') || config.pageSettings.defaultFormat;
-            animationState = parseInt(getFromLocalStorage('animation')) ?? config.pageSettings.defaultAnimation;
-            previewState = parseInt(getFromLocalStorage('view')) ?? config.pageSettings.defaultView;
+
+            const storedAnimation = getFromLocalStorage('animation');
+            animationState = storedAnimation !== null ? parseInt(storedAnimation, 10) : config.pageSettings.defaultAnimation;
+
+            const storedView = getFromLocalStorage('view');
+            previewState = storedView !== null ? parseInt(storedView, 10) : config.pageSettings.defaultView;
         }
 
         function getFileExtension(filename) {
@@ -1723,6 +1727,4 @@
 </body>
 
 </html>
-
-
 
