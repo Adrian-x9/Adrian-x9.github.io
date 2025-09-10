@@ -354,7 +354,7 @@
         }
 
         .dark-mode {
-            background-color: #181818; /* ZMIANA: Poprawka tła */
+            background-color: #181818;
             color: #eee;
         }
 
@@ -406,7 +406,6 @@
             border-left-color: rgba(255, 255, 255, 0.5);
         }
 
-        /* ZMIANA: Tło dla kontenera obrazka */
         body:not(.dark-mode) #about-image-container {
             background-color: rgba(253, 253, 253, 0.67);
         }
@@ -639,7 +638,7 @@
         }
 
         body:not(.dark-mode) #lightbox-caption {
-            background-color: rgba(255, 255, 255, 0.9); /* PRZYWRÓCONO */
+            background-color: rgba(255, 255, 255, 0.9);
             color: #666;
         }
 
@@ -648,7 +647,7 @@
         }
 
         .dark-mode #lightbox-caption {
-            background-color: rgba(0, 0, 0, 0.85); /* PRZYWRÓCONO */
+            background-color: rgba(0, 0, 0, 0.85);
             color: #ccc;
         }
 
@@ -691,7 +690,7 @@
     <div class="top-header">
         <div class="header-logo-group">
             <span><strong><span class="title-red">Visu</span>Dir</strong> <span class="version-display"></span></span>
-            <a id="logoLink" href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">
+            <a id="logoLink" href="./about.html">
                 <img id="header-logo" src="" alt="VisuDir Logo" class="header-logo">
             </a>
         </div>
@@ -706,7 +705,7 @@
             </button>
             <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i></button>
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()">
-                < Wstecz
+                < Wstecz
             </a>
         </div>
     </div>
@@ -814,7 +813,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.0.9',
+            version: 'v1.0.9 beta',
             // Ustawienia globalne, wspólne dla wszystkich stron
             global: {
                 // Domyślny motyw, gdy brak w pamięci: 'light' lub 'dark'
@@ -842,12 +841,21 @@
                     about_light: '.video/about_light.mp4',
                 },
                 graphics: {
-                    logo_small_dark: '.gfx/interface/VisuDir_small_dark.png', // Zmien na logo1, itd... do 3...
-                    logo_small_light: '.gfx/interface/VisuDir_small_light.png',
-                    logo_ade_small_dark: '.gfx/interface/ADE_small_dark.png',
-                    logo_ade_small_light: '.gfx/interface/ADE_small_light.png',
-                    logo3_small_light: '.gfx/interface/Building_small_light.png6',
-                    logo3_small_dark: '.gfx/interface/Building_small_dark.png',
+                    logo1: {
+                        dark: '.gfx/interface/VisuDir_small_dark.png',
+                        light: '.gfx/interface/VisuDir_small_light.png',
+                        link: './about.html'
+                    },
+                    logo2: {
+                        dark: '.gfx/interface/ADE_small_dark.png',
+                        light: '.gfx/interface/ADE_small_light.png',
+                        link: 'https://www.ade.pl'
+                    },
+                    logo3: {
+                        dark: '.gfx/interface/Building_small_dark.png',
+                        light: '.gfx/interface/Building_small_light.png',
+                        link: './soon.html'
+                    },
                     about_dark: '.gfx/interface/VisuDir_dark.png',
                     about_light: '.gfx/interface/VisuDir_light.png',
                     about_ade_dark: '.gfx/interface/Adrian-dark.png',
@@ -1045,7 +1053,6 @@
             videoSource.src = isDarkModeNow ? config.paths.videos.about_dark : config.paths.videos.about_light;
             video.load();
             
-            // This logic is simplified; the automatic logo/image flipping will handle the rest
             aboutImage.src = isDarkModeNow ? config.paths.graphics.about_dark : config.paths.graphics.about_light;
         }
         
@@ -1107,11 +1114,11 @@
 
             if (isDarkMode) {
                 videoSource.src = config.paths.videos.about_dark;
-                headerLogo.src = config.paths.graphics.logo_small_dark;
+                headerLogo.src = config.paths.graphics.logo1.dark;
                 aboutImage.src = config.paths.graphics.about_dark;
             } else {
                 videoSource.src = config.paths.videos.about_light;
-                headerLogo.src = config.paths.graphics.logo_small_light;
+                headerLogo.src = config.paths.graphics.logo1.light;
                 aboutImage.src = config.paths.graphics.about_light;
             }
             video.load();
@@ -1131,38 +1138,40 @@
                 }, flipAnimationDuration);
             };
 
-            const useThreeLogos = config.paths.graphics.logo3_small_light && config.paths.graphics.logo3_small_dark;
-            let isVisuDirLogo = true; // State for 2-logo animation
-            let logoState = 0; // State for 3-logo animation
+            const useThreeLogos = config.paths.graphics.logo3?.light && config.paths.graphics.logo3?.dark;
+            let logoState = -1; // Zaczynamy od -1, aby pierwsza iteracja dała 0
 
             setInterval(() => {
                 runFlip(headerLogo, () => {
                     const currentModeIsDark = document.body.classList.contains('dark-mode');
+                    const theme = currentModeIsDark ? 'dark' : 'light';
+                    let currentLogoConfig;
 
                     if (useThreeLogos) {
-                        // 3-logo animation sequence: 1 -> 3 -> 2 -> 3 -> 1 ...
-                        logoState = (logoState + 1) % 4;
-                        switch (logoState) {
-                            case 0: // Icon 1 (VisuDir)
-                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_small_dark : config.paths.graphics.logo_small_light;
-                                break;
-                            case 1: // Icon 3
-                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo3_small_dark : config.paths.graphics.logo3_small_light;
-                                break;
-                            case 2: // Icon 2 (ADE)
-                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_ade_small_dark : config.paths.graphics.logo_ade_small_light;
-                                break;
-                            case 3: // Icon 3
-                                headerLogo.src = currentModeIsDark ? config.paths.graphics.logo3_small_dark : config.paths.graphics.logo3_small_light;
-                                break;
-                        }
+                        const sequence = [
+                            config.paths.graphics.logo1,
+                            config.paths.graphics.logo3,
+                            config.paths.graphics.logo2,
+                            config.paths.graphics.logo3
+                        ];
+                        logoState = (logoState + 1) % sequence.length;
+                        currentLogoConfig = sequence[logoState];
                     } else {
-                        // Original 2-logo animation
-                        isVisuDirLogo = !isVisuDirLogo;
-                        if (isVisuDirLogo) {
-                            headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_small_dark : config.paths.graphics.logo_small_light;
+                        const sequence = [config.paths.graphics.logo1, config.paths.graphics.logo2];
+                        logoState = (logoState + 1) % sequence.length;
+                        currentLogoConfig = sequence[logoState];
+                    }
+                    
+                    if (currentLogoConfig) {
+                        headerLogo.src = currentLogoConfig[theme];
+                        logoLink.href = currentLogoConfig.link;
+                        
+                        if (currentLogoConfig.link.startsWith('http') || currentLogoConfig.link.startsWith('www')) {
+                            logoLink.target = '_blank';
+                            logoLink.rel = 'noopener noreferrer';
                         } else {
-                            headerLogo.src = currentModeIsDark ? config.paths.graphics.logo_ade_small_dark : config.paths.graphics.logo_ade_small_light;
+                            logoLink.target = '';
+                            logoLink.rel = '';
                         }
                     }
                 });
