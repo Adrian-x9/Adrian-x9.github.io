@@ -55,7 +55,7 @@
         .header-logo-group {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 0;
         }
         
         .header-logo-group > span {
@@ -350,7 +350,7 @@
         }
 
         .dark-mode {
-            background-color: #121212;
+            background-color: #181818; /* ZMIANA: Poprawka tła */
             color: #eee;
         }
 
@@ -396,6 +396,14 @@
         }
          .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle {
             border-left-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ZMIANA: Tło dla kontenera obrazka */
+        body:not(.dark-mode) #about-image-container {
+            background-color: rgba(253, 253, 253, 0.67);
+        }
+        .dark-mode #about-image-container {
+            background-color: rgba(0, 0, 0, 0.67);
         }
 
         .dark-mode .inner-content {
@@ -612,7 +620,7 @@
         }
 
         body:not(.dark-mode) #lightbox-caption {
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.9); /* PRZYWRÓCONO */
             color: #666;
         }
 
@@ -621,7 +629,7 @@
         }
 
         .dark-mode #lightbox-caption {
-            background-color: rgba(0, 0, 0, 0.85);
+            background-color: rgba(0, 0, 0, 0.85); /* PRZYWRÓCONO */
             color: #ccc;
         }
 
@@ -645,6 +653,18 @@
 </head>
 
 <body>
+    <!-- ZMIANA: Skrypt zapobiegający "błyskowi" tła -->
+    <script>
+        (function() {
+            const defaultTheme = 'dark';
+            try {
+                const theme = localStorage.getItem('visudir_theme') || defaultTheme;
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+            } catch (e) { /* ignoruj błędy localStorage */ }
+        })();
+    </script>
 
     <video id="bg-video" autoplay loop muted playsinline>
         <source id="bg-video-source" src="" type="video/mp4">
@@ -787,8 +807,8 @@
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 5,
                 defaultAnimation: 2, // 0: Statycznie, 2: Video
-                showMiniLogo: false,
-                showBackButton: false,
+                showMiniLogo: true,
+                showBackButton: true,
                 showVideoButton: true,
                 showThemeButton: true,
             },
@@ -961,6 +981,17 @@
         currentTheme = initializeTheme();
         
         document.addEventListener('DOMContentLoaded', () => {
+            const bgVideo = document.getElementById('bg-video');
+            if (bgVideo) {
+                bgVideo.addEventListener('error', () => {
+                    bgVideo.style.display = 'none';
+                    document.body.classList.remove('video-ready');
+                    if (document.body.classList.contains('dark-mode')) {
+                        document.body.style.backgroundColor = '#181818';
+                    }
+                });
+            }
+            
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
 
             const logoLink = document.getElementById('logoLink');
@@ -1045,7 +1076,7 @@
                         aboutImage.src = currentModeIsDark ? config.paths.graphics.about_ade_dark : config.paths.graphics.about_ade_light;
                     }
                 });
-            }, 6000);
+            }, 5000);
 
             const header = document.querySelector('.top-header');
             const videoContainer = document.getElementById('video-box-container');
