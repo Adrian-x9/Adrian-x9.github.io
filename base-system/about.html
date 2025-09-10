@@ -45,7 +45,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 25px;
             margin-bottom: 20px;
             flex-wrap: wrap;
             opacity: 0;
@@ -70,7 +69,11 @@
         .header-controls-group {
             display: flex;
             align-items: center;
-            gap: 10px;
+            margin-left: 25px;
+        }
+
+        .header-controls-group > * + * {
+            margin-left: 10px;
         }
 
         .header-logo {
@@ -522,8 +525,11 @@
             }
 
             .top-header {
-                gap: 15px;
                 justify-content: center;
+            }
+
+            .header-controls-group {
+                margin-left: 15px;
             }
         }
 
@@ -579,6 +585,14 @@
             border-radius: 5px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
             animation: zoomInImage 0.5s ease-out;
+        }
+
+        body:not(.dark-mode) #lightbox-content {
+            background-color: rgba(255, 255, 255, 0.67);
+        }
+
+        .dark-mode #lightbox-content {
+            background-color: rgba(0, 0, 0, 0.67);
         }
 
         #lightbox-close {
@@ -653,7 +667,6 @@
 </head>
 
 <body>
-    <!-- ZMIANA: Skrypt zapobiegający "błyskowi" tła -->
     <script>
         (function() {
             const defaultTheme = 'dark';
@@ -1141,4 +1154,3 @@
 </body>
 
 </html>
-
