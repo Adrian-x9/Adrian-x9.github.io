@@ -48,6 +48,17 @@
         body.no-animation .footer {
             transition: none !important;
         }
+        
+        body.play-mode-active > .top-header,
+        body.play-mode-active > .controls,
+        body.play-mode-active > .guide-list,
+        body.play-mode-active > .pagination,
+        body.play-mode-active > .footer {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0s 0.4s;
+        }
 
         #fileInput {
             display: none;
@@ -91,7 +102,7 @@
         }
 
         body:not(.dark-mode) {
-            background-color: #f4f4f4;
+            background-color: #e1e1e1;
             color: #333;
         }
 
@@ -163,7 +174,7 @@
         }
 
         .dark-mode {
-            background-color: #181818;
+            background-color: #121212;
             color: #eee;
         }
 
@@ -674,9 +685,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 300px;
-            height: 400px;
             transition: opacity 0.2s ease-in-out;
+            width: 90vw;
+            height: 90vh;
+            max-width: 450px;
+            max-height: 700px;
         }
 
         .play-guide-container .guide,
@@ -689,6 +702,33 @@
             height: 95vh;
             max-width: initial;
             max-height: initial;
+        }
+        
+        .play-guide-container .guide {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+        }
+
+        .play-guide-container .guide a.cover-link {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-height: 0;
+        }
+
+        .play-guide-container .guide .guide-cover {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+        }
+
+        .play-guide-container .guide .guide-title {
+            font-size: 1.6em;
+            margin-top: 10px;
+        }
+        .play-guide-container .guide .guide-info {
+            font-size: 1.05em;
         }
 
         .preview-image {
@@ -782,34 +822,6 @@
         .play-close-btn:hover {
             transform: scale(1.2);
             color: #e53935;
-        }
-
-        @media (min-width: 1200px) {
-            .play-guide-container {
-                width: 90vw;
-                height: 90vh;
-                max-width: 450px;
-                max-height: 700px;
-            }
-
-            .play-guide-container.image-mode {
-                max-width: 95vw;
-                max-height: 95vh;
-            }
-
-            .play-guide-container .guide {
-                width: 100%;
-                height: 100%;
-                padding: 20px;
-            }
-
-            .play-guide-container .guide .guide-cover {
-                width: 100%;
-                height: 70%;
-                object-fit: contain;
-                max-width: 100%;
-                max-height: 100%;
-            }
         }
 
         @keyframes fadeInDown {
@@ -1901,6 +1913,8 @@
             lastPlayedGuide = null; // Reset
             if (currentSort !== "shuffle")
                 playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
+            
+            document.body.classList.add("play-mode-active");
             backdrop.classList.add("visible");
             playButton.querySelector('.btn-text').textContent = ' Stop';
             playButton.classList.add("inactive");
@@ -1913,6 +1927,8 @@
             if (playAnimationInterval) {
                 clearInterval(playAnimationInterval);
                 playAnimationInterval = null;
+                
+                document.body.classList.remove("play-mode-active");
                 backdrop.classList.remove("visible");
                 playGuideContainer.innerHTML = "";
                 playButton.classList.remove("inactive");
