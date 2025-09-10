@@ -1,56 +1,60 @@
-        // --- KONFIGURACJA --- Przekopiuj całość pliku .konfiguracja.txt
+// --- KONFIGURACJA ---
         const config = {
-            showBackButton: false,
-            showVisuDirButton: true,
-            showMiniLogo: false,
-
-            dataFolderName: 'base-system/files',
-            coversFolderName: 'base-system/mini',
-            coversHDFolderName: 'base-system/mini-HD',
-            databaseFileName: 'base-system/db.txt',
-            faviconsFolderUrl: "base-system/gfx/favicons",
-            logoUrl: 'base-system/gfx/logo-mini.png',
-            url404: "base-system/404.html",
-            urlAbout: "base-system/about.html",
-
-            pageTitle: 'Menu Główne',
-                     
-            defaultFormat: 'link',
-            defaultSort: 'nameAsc',
-
-            predefinedFilters: [
-                { label: "", search: "" },
-                { label: "", search: "" },
-                { label: "", search: "" },
-                { label: "", search: "" },
-                { label: "", search: "" }
-            ]
+            version: 'v1.0.9',
+            // --- Ustawienia globalne, wspólne dla wszystkich stron ---
+            global: {
+                defaultTheme: 'light', // 'light' lub 'dark'
+            },
+            logoRotator: {
+                enabled: true,
+                interval: 4500, // czas w ms
+                logos: [
+                    {
+                        srcLight: "../base-system/.gfx/interface/VisuDir_small_light.png",
+                        srcDark: "../base-system/.gfx/interface/VisuDir_small_dark.png",
+                        href: "base-sytem/about.html",
+                        alt: "Logo VisuDir"
+                    },
+                    {
+                        srcLight: "../base-system/.gfx/interface/ADE_small_light.png",
+                        srcDark: "../base-system/.gfx/interface/ADE_small_dark.png",
+                        href: "https://www.ade.pl",
+                        alt: "Logo ADE"
+                    }
+                ]
+            },
+            // --- Ustawienia specyficzne dla tej strony (index.html) ---
+            pageSettings: {
+                pageKey: 'poradniki_do_gier',
+                defaultBgVideo: 3,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 10,
+                defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
+                defaultView: 1, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
+                defaultFormat: "PDF", // Puste oznacza "Wszystko"
+                defaultSort: "shuffle",
+                defaultRows: 4,
+                predefinedFilters: [
+                    { label: "Poradniki Gry-Online", search: "gry online" },
+                    { label: "Poradniki PrzygodoMania.pl", search: "przygodomania" },
+                    { label: "Instrukcje", search: "instr" },
+                    { label: "", search: "" },
+                    { label: "", search: "" },
+                ],
+                pageTitle: "▪ Poradniki do Gier ▪",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: true,
+            },
+            // --- Ścieżki dostępu ---
+            paths: {
+                url404: "../base-system/404.html",
+                urlAbout: "../base-system/about.html",
+                databaseFileName: "./base-system/.db.txt",
+                dataFolderName: "./base-system/files",
+                coversFolderName: "./base-system/preview",
+                videoBgLightUrlBase: "../base-system/.video/bg_light",
+                videoBgDarkUrlBase: "../base-system/.video/bg_dark",
+            }
         };
-
-        // STAŁA Z DANYMI PLIKU
-        const dataFromFile = `
- Volume in drive C has no label.
- Volume Serial Number is 64E4-665E
-
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
-
-07.09.2025  07:59    <DIR>          .
-07.09.2025  07:33    <DIR>          ..
-06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
-06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
-06.09.2025  19:59                 0 .#certyfikaty#index.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
-06.09.2025  20:33                 0 .#index-mini.html$$01 MENU mini$$01 Mini menu.link
-06.09.2025  20:32                 0 .#index.html$$02 MENU pelne$$Pelne menu.link
-06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
-06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
-06.09.2025  20:33                 0 .#Poradniki#index-gryonline.html$$72 Poradniki Gry-Online$$Poradniki Gry-Online.link
-06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
-06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
-06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
-06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
-06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
-06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
-              14 File(s)              0 bytes
-               2 Dir(s)     98732941312 bytes free
-        `;
         // --- KONIEC KONFIGURACJI ---
