@@ -88,11 +88,6 @@
             color: #aaa;
         }
 
-        .footer .version-suffix {
-            font-weight: normal;
-        }
-
-
         body:not(.dark-mode) {
             background-color: #f4f4f4;
             color: #333;
@@ -321,6 +316,10 @@
             white-space: nowrap;
         }
 
+        #search {
+            width: 160px;
+        }
+
         input::placeholder {
             color: #aaa;
         }
@@ -346,6 +345,10 @@
 
         .dir-db-btn i {
             margin-right: 5px;
+        }
+        
+        #resetVideoBtn i {
+            margin-right: 0;
         }
 
         .video-shuffle-btn {
@@ -889,6 +892,9 @@
             <span id="animationBtn-play"><i class="fas fa-play"></i></span>
             <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
         </button>
+        <button id="resetVideoBtn" class="dir-db-btn" title="Resetuj ustawienia wideo">
+            <i class="fas fa-undo"></i>
+        </button>
     </div>
 
     <div class="guide-list" id="guideList"></div>
@@ -1019,7 +1025,7 @@
         let animationState, previewState, currentTheme;
         let lastPlayedGuide = null, lastRandomPage = -1;
         let currentLogoIndex = 0;
-        let logoInterval;
+        let logoInterval, autoShuffleInterval = null;
 
 
         const fileInput = document.getElementById("fileInput"),
@@ -1031,6 +1037,7 @@
             darkModeBtn = document.getElementById("darkModeBtn"),
             previewBtn = document.getElementById("previewBtn"),
             animationBtn = document.getElementById("animationBtn"),
+            resetVideoBtn = document.getElementById("resetVideoBtn"),
             sortSelector = document.getElementById("sortSelector"),
             itemsPerPageSelector = document.getElementById("itemsPerPageSelector"),
             randomSelector = document.getElementById("randomSelector"),
@@ -1111,7 +1118,7 @@
         function loadConfig() {
             currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
             selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
-            const storedAnimation = getFromLocalStorage('animation');
+            const storedAnimation = getFromLocalStorage(`animation_${config.pageSettings.pageKey}`);
             animationState = storedAnimation !== null ? parseInt(storedAnimation, 10) : config.pageSettings.defaultAnimation;
 
             const storedView = getFromLocalStorage('view');
@@ -1322,7 +1329,7 @@
             if (searchQuery) {
                 searchInput.value = decodeURIComponent(searchQuery);
             }
-            formatFilter.value = getFromLocalStorage('format') || config.pageSettings.defaultFormat;
+            formatFilter.value = getFromLocalStorage('format') || config.pageSettings.defaultFormat || "";
 
             updatePaginationOptions();
             renderGuides();
@@ -1383,6 +1390,7 @@
             updatePreviewButtonUI();
             updateBackgroundVideoVisibility();
 
+            resetVideoBtn.addEventListener('click', resetVideoSettings);
             animationBtn.addEventListener('click', (event) => {
                 const shuffleBtn = document.getElementById('animationBtn-shuffle');
                 const playBtn = document.getElementById('animationBtn-play');
@@ -1390,7 +1398,7 @@
                 if (shuffleBtn && shuffleBtn.contains(event.target)) {
                     if (animationState === 2) shuffleBackgroundVideo();
                 } else if (playBtn && playBtn.contains(event.target)) {
-                    // Placeholder for future functionality
+                    toggleAutoShuffle();
                 } else {
                     toggleAnimations();
                 }
@@ -1699,12 +1707,47 @@
             initializeBackgroundVideo(currentTheme);
         }
 
+        function toggleAutoShuffle() {
+            const playBtn = document.getElementById('animationBtn-play');
+            if (animationState !== 2) return;
+
+            if (autoShuffleInterval) {
+                clearInterval(autoShuffleInterval);
+                autoShuffleInterval = null;
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.classList.remove('highlighted-state'); 
+            } else {
+                shuffleBackgroundVideo();
+                autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('highlighted-state'); 
+            }
+        }
+        
+        function resetVideoSettings() {
+            animationState = config.pageSettings.defaultAnimation;
+            saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
+            
+            const { pageKey, defaultBgVideo } = config.pageSettings;
+            localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
+
+            if (autoShuffleInterval) {
+                toggleAutoShuffle(); 
+            }
+
+            updateAnimationButtonUI();
+            updateBackgroundVideoVisibility();
+        }
+
         function toggleAnimations() {
+            if (animationState === 2 && autoShuffleInterval) {
+                toggleAutoShuffle();
+            }
             const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
             const numStates = hasAnyVideo ? 3 : 2;
             animationState = (animationState + 1) % numStates;
 
-            saveToLocalStorage('animation', animationState);
+            saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
             renderGuides();
