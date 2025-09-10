@@ -100,7 +100,12 @@
             background: #fdfdfd;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
-
+        
+        body:not(.dark-mode) .dir-db-btn.highlighted-state {
+             color: #fff;
+             background: #cc0000;
+        }
+        
         body:not(.dark-mode) input,
         body:not(.dark-mode) select,
         body:not(.dark-mode) button {
@@ -168,6 +173,11 @@
             border: 1px solid #555;
         }
 
+        .dark-mode .dir-db-btn.highlighted-state {
+             color: #fff;
+             background: #e53935;
+        }
+
         .dark-mode input,
         .dark-mode select,
         .dark-mode button {
@@ -230,10 +240,6 @@
         button.inactive {
             font-weight: normal;
             opacity: 0.6;
-        }
-
-        button.highlighted-state {
-            font-weight: bold;
         }
 
         .top-header {
@@ -314,7 +320,7 @@
         .dir-db-btn {
             padding: 10px 20px;
             border-radius: 10px;
-            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s;
             display: flex;
             align-items: center;
             font-weight: bold;
@@ -848,8 +854,8 @@
                 defaultBgVideo: 4,
                 bgVideoStartNum: 3,
                 bgVideoEndNum: 5,
-                defaultAnimation: 0, // 0-Statycznie, 1-Animacje, 2-Video
-                defaultView: 0, // 0-Tekst, 1-Grafika i tekst, 2-Grafika
+                defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
+                defaultView: 2, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
                 defaultFormat: "LINK",
                 defaultSort: "nameAsc",
                 defaultRows: 3,
@@ -916,6 +922,7 @@
         let playCurrentIndex = 0,
             itemsPerRow = 0;
         let animationState, previewState, currentTheme;
+        let lastPlayedGuide = null, lastRandomPage = -1;
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
@@ -987,7 +994,7 @@
         
         function saveToLocalStorage(key, value) {
             try {
-                localStorage.setItem(`visuDir_${key}`, value);
+                localStorage.setItem(`visudir_${key}`, value);
             } catch (e) {
                 console.error("Error saving to localStorage", e);
             }
@@ -995,7 +1002,7 @@
 
         function getFromLocalStorage(key) {
             try {
-                return localStorage.getItem(`visuDir_${key}`);
+                return localStorage.getItem(`visudir_${key}`);
             } catch (e) {
                 console.error("Error reading from localStorage", e);
                 return null;
@@ -1407,7 +1414,10 @@
             randomBtn.title = "Losuj stronę";
             randomBtn.onclick = () => {
                 if (totalPages > 1) {
-                    const newPage = Math.floor(Math.random() * totalPages) + 1;
+                    let newPage;
+                    do {
+                       newPage = Math.floor(Math.random() * totalPages) + 1;
+                    } while (totalPages > 1 && newPage === currentPage);
                     currentPage = newPage;
                     renderGuides();
                     stopPlayAnimation();
@@ -1480,21 +1490,20 @@
         function updatePreviewButtonUI() {
             previewBtn.classList.remove("inactive", "highlighted-state");
             guideList.classList.remove("hide-covers", "only-covers");
-
+            // Nowa kolejność: 0: Tekst, 1: Grafika, 2: Wszystko
             switch (previewState) {
-                case 0: // Widok: Tekst
+                case 0: // Widok: Tekst (wyszarzony)
                     previewBtn.innerHTML = `<i class="fas fa-font"></i> Tekst`;
                     previewBtn.classList.add("inactive");
                     guideList.classList.add("hide-covers");
                     break;
-                case 1: // Widok: Grafika i tekst
-                    previewBtn.innerHTML = `<i class="fas fa-object-group"></i> Wszystko`;
-                    // Stan normalny, bez dodatkowych klas
-                    break;
-                case 2: // Widok: Grafika
+                case 1: // Widok: Grafika (normalny)
                     previewBtn.innerHTML = `<i class="fas fa-image"></i> Grafika`;
-                    previewBtn.classList.add("highlighted-state");
                     guideList.classList.add("only-covers");
+                    break;
+                case 2: // Widok: Wszystko (wyróżniony)
+                    previewBtn.innerHTML = `<i class="fas fa-object-group"></i> Wszystko`;
+                    previewBtn.classList.add("highlighted-state");
                     break;
             }
         }
@@ -1508,18 +1517,17 @@
         function updateAnimationButtonUI() {
             animationBtn.classList.remove("inactive", "highlighted-state");
             document.body.classList.remove("no-animation");
-
+            // Stany: 0: Statycznie, 1: Animacje, 2: Video
             switch (animationState) {
-                case 0: // Tryb: Statycznie
+                case 0: // Tryb: Statycznie (wyszarzony)
                     animationBtn.innerHTML = `<i class="fas fa-pause-circle"></i> Statycznie`;
                     animationBtn.classList.add("inactive");
                     document.body.classList.add("no-animation");
                     break;
-                case 1: // Tryb: Animacje
+                case 1: // Tryb: Animacje (normalny)
                     animationBtn.innerHTML = `<i class="fas fa-play-circle"></i> Animacje`;
-                    // Stan normalny, bez dodatkowych klas
                     break;
-                case 2: // Tryb: Video
+                case 2: // Tryb: Video (wyróżniony)
                     animationBtn.innerHTML = `<i class="fas fa-video"></i> Video`;
                     animationBtn.classList.add("highlighted-state");
                     break;
@@ -1531,7 +1539,7 @@
             saveToLocalStorage('animation', animationState);
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
-            renderGuides(); // Re-render to apply/remove animation classes
+            renderGuides();
         }
 
         function toggleDarkMode() {
@@ -1564,6 +1572,7 @@
             const source = filteredGuides.length > 0 ? filteredGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
             playGuidesQueue = [...source];
+            lastPlayedGuide = null; // Reset
             if (currentSort !== "shuffle")
                 playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
             backdrop.classList.add("visible");
@@ -1588,14 +1597,22 @@
 
         function scheduleNext() {
             let guide;
-            if (currentSort === "shuffle") {
-                guide =
-                    playGuidesQueue[Math.floor(Math.random() * playGuidesQueue.length)];
+             if (playGuidesQueue.length < 2) {
+                guide = playGuidesQueue[0];
             } else {
-                guide = playGuidesQueue[playCurrentIndex];
-                playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+                do {
+                    if (currentSort === "shuffle") {
+                        guide = playGuidesQueue[Math.floor(Math.random() * playGuidesQueue.length)];
+                    } else {
+                        guide = playGuidesQueue[playCurrentIndex];
+                        playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+                    }
+                } while (guide === lastPlayedGuide);
             }
+
             if (!guide) return;
+
+            lastPlayedGuide = guide;
             playCounterElement.textContent = `${playGuidesQueue.indexOf(guide) + 1
                 } / ${playGuidesQueue.length}`;
             displayRandomGuide(guide);
