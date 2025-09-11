@@ -336,6 +336,10 @@
             transform: translateY(20px);
             color: var(--footer-text-color);
         }
+
+        .footer a {
+            font-weight: bold;
+        }
         
         .footer .footer-special-text {
             color: var(--footer-special-text);
@@ -357,6 +361,18 @@
 
         .top-header a.dir-db-btn:hover {
             text-decoration: none;
+        }
+
+        @keyframes pulse-opacity {
+            0%, 66.67% {
+                opacity: 1;
+            }
+            83.33% {
+                opacity: 0.7;
+            }
+            100% {
+                opacity: 1;
+            }
         }
 
         @keyframes flip-out {
@@ -515,7 +531,7 @@
             cursor: default;
             border-radius: 5px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-            animation: zoomInImage 0.5s ease-out;
+            animation: zoomInImage 0.5s ease-out, pulse-opacity 6s infinite ease-in-out;
             background-color: var(--lightbox-content-bg);
         }
         
@@ -558,7 +574,7 @@
             padding: 10px 15px;
             border-radius: 5px;
             font-size: 1.2em;
-            transform: translate(-50%, 120%);
+            transform: translate(-50%, 150%);
             transition: transform 0.5s ease-in-out;
             font-weight: bold;
             background-color: var(--lightbox-caption-bg);
