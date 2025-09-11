@@ -1,6 +1,6 @@
 // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.0.9',
+            version: 'v1.1.3',
             // --- Ustawienia globalne, wspólne dla wszystkich stron ---
             global: {
                 defaultTheme: 'light', // 'light' lub 'dark'
@@ -41,7 +41,7 @@
                     { label: "", search: "" },
                     { label: "", search: "" },
                 ],
-                pageTitle: "▪ Poradniki do Gier ▪",
+                pageTitle: "Poradniki ▪ Gry komputerowe",
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: true,
