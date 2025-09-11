@@ -140,12 +140,21 @@
         .title-red,
         .dir-db-btn,
         .inner-content h2,
-        a,
         .inner-content li::before,
         .ade-brand {
             color: var(--accent-color);
         }
         
+        a {
+            color: var(--accent-color);
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
         .dir-db-btn {
             padding: 10px;
             border-radius: 10px;
@@ -309,6 +318,10 @@
             background-color: var(--image-container-bg);
         }
 
+        html.dark-mode #about-image-container {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
         #about-image-container img {
             max-width: 100%;
             border-radius: 6px;
@@ -337,8 +350,8 @@
             color: var(--footer-text-color);
         }
 
-        .footer a {
-            font-weight: bold;
+        .footer a:hover {
+            text-decoration: none;
         }
         
         .footer .footer-special-text {
@@ -353,10 +366,6 @@
 
         .nobr {
             white-space: nowrap;
-        }
-
-        a:hover {
-            text-decoration: underline;
         }
 
         .top-header a.dir-db-btn:hover {
