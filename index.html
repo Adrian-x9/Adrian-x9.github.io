@@ -24,7 +24,7 @@
             width: 100vw; height: 100vh; object-fit: cover; z-index: -1; display: none;
         }
         body.video-ready { background-color: transparent !important; }
-        body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; }
+        body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; min-height: 100vh; box-sizing: border-box; }
         body.no-animation .guide.animate-in, body.no-animation .guide.flip-animate { animation: none !important; transform: none !important; }
         body.no-animation .guide-cover, body.no-animation .top-header, body.no-animation .footer { transition: none !important; }
         body.play-mode-active > .top-header, body.play-mode-active > .controls,
@@ -32,7 +32,7 @@
         body.play-mode-active > .footer { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
         #fileInput { display: none; }
         a { font-weight: bold; text-decoration: none; }
-        a:hover { text-decoration: underline; }
+        a:hover { text-decoration: none; }
         .top-header a.dir-db-btn:hover { text-decoration: none; }
         .title-red { color: #cc0000; }
         .dark-mode .title-red { color: #e53935; }
@@ -92,23 +92,21 @@
         .video-shuffle-btn { padding: 0; overflow: hidden; }
         .video-shuffle-btn > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
         #animationBtn-main { flex-grow: 1; padding-right: 12px; }
-        #animationBtn-play, #animationBtn-reset { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        #animationBtn-play:hover, #animationBtn-reset:hover { background-color: rgba(0,0,0,0.05); }
-        .dark-mode #animationBtn-play, .dark-mode #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.2); }
-        .dark-mode #animationBtn-play:hover, .dark-mode #animationBtn-reset:hover { background-color: rgba(255,255,255,0.1); }
-        #animationBtn-shuffle { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        #animationBtn-shuffle:hover { background-color: rgba(0,0,0,0.05); }
-        .dark-mode #animationBtn-shuffle { border-left-color: rgba(255, 255, 255, 0.2); }
-        .dark-mode #animationBtn-shuffle:hover { background-color: rgba(255,255,255,0.1); }
+        #animationBtn-play, #animationBtn-reset, #animationBtn-shuffle { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
+        #animationBtn-play:hover, #animationBtn-reset:hover, #animationBtn-shuffle:hover { background-color: rgba(0,0,0,0.05); }
+        .dark-mode #animationBtn-play, .dark-mode #animationBtn-reset, .dark-mode #animationBtn-shuffle { border-left-color: rgba(255, 255, 255, 0.2); }
+        .dark-mode #animationBtn-play:hover, .dark-mode #animationBtn-reset:hover, .dark-mode #animationBtn-shuffle:hover { background-color: rgba(255,255,255,0.1); }
         #animationBtn.highlighted-state #animationBtn-shuffle, #animationBtn.highlighted-state #animationBtn-play, #animationBtn.highlighted-state #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.5); }
         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle, .dark-mode #animationBtn.highlighted-state #animationBtn-play, .dark-mode #animationBtn.highlighted-state #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.5); }
         #animationBtn.highlighted-state > #animationBtn-main { position: relative; }
-        #animationBtn-play.active-play i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
-        .dark-mode #animationBtn-play.active-play i { text-shadow: 0 0 10px #ff8a80; }
+        #animationBtn-play.active-play i, #lightbox-video-play.active-play i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
+        .dark-mode #animationBtn-play.active-play i, .dark-mode #lightbox-video-play.active-play i { text-shadow: 0 0 10px #ff8a80; }
         .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
-        .guide-list.hide-covers .guide-cover { visibility: hidden; opacity: 0; max-height: 0; margin: 0; padding: 0; border-width: 0; transform: scale(0.7); }
-        .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom>a:not(.cover-link), .guide-list.only-covers .guide-info-container { display: none; }
-        .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; }
+        .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
+        .guide-list.hide-covers .guide-cover { opacity: 0; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
+        .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; }
+        .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom>a:not(.cover-link), .guide-list.only-covers .guide-info-container { opacity: 0; max-height: 0; margin: 0; padding: 0; pointer-events: none; }
+        .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; height: 100%; }
         .guide-list.only-covers .guide-cover { margin: 0; border: none !important; }
         .guide { padding: 0 20px 10px; border-radius: 10px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; text-align: center; width: 250px; box-sizing: border-box; }
         .guide:hover { transform: translateY(-5px); }
@@ -121,7 +119,7 @@
         .pagination { text-align: center; margin-top: 20px; margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; opacity: 0; transform: translateY(20px); }
         .pagination button, .pagination input, .pagination select { padding: 10px; margin: 0; font-size: 0.9em; cursor: pointer; border-radius: 5px; width: auto; }
         .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
-        .guide-cover { max-width: 100%; height: auto; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s, border-width 0.7s, visibility 0.7s, transform 0.7s ease-in-out; opacity: 0; transform: scale(0.7); }
+        .guide-cover { max-width: 100%; height: auto; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s, border-width 0.7s, transform 0.7s ease-in-out; opacity: 0; transform: scale(0.7); }
         .guide.animate-in { animation: fadeInSlideIn 0.5s ease-out forwards; }
         @keyframes fadeInSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 0; transform: translateY(20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; }
@@ -134,8 +132,8 @@
         .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
         .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
         .play-guide-container img, .play-guide-container a { display: block; max-width: 100%; max-height: 100%; }
-        .play-guide-container img { object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
-        .dark-mode .play-guide-container img { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 35px rgba(255, 255, 255, 0.35); }
+        .play-guide-container img { object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
+        .dark-mode .play-guide-container img { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
         .play-caption { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 15px; border-radius: 5px; font-size: 1.2em; font-weight: bold; z-index: 1000; text-align: center; }
         .play-caption .filename { color: #e53935; }
         body:not(.dark-mode) .play-caption { background-color: rgba(255, 255, 255, 0.9); color: #333; }
@@ -146,10 +144,11 @@
         #lightbox-shuffle-controls { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; background-color: rgba(0,0,0,0.5); border-radius: 5px; }
         .dark-mode #lightbox-shuffle-controls { background-color: rgba(255,255,255,0.1); }
         #lightbox-shuffle-controls button { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #fff; padding: 10px 12px; transition: transform 0.2s ease, color 0.2s; }
-        #lightbox-shuffle-controls button:first-child { border-right: 1px solid rgba(255,255,255,0.2); }
-        .dark-mode #lightbox-shuffle-controls button:first-child { border-right-color: rgba(0,0,0,0.2); }
+        #lightbox-shuffle-controls button:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.2); }
+        .dark-mode #lightbox-shuffle-controls button:not(:last-child) { border-right-color: rgba(0,0,0,0.2); }
         #lightbox-shuffle-controls button:hover { transform: scale(1.2); color: #e53935; }
         @keyframes zoomInImage { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes zoomOutImage { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
         @keyframes pulse-opacity { 0%, 66.67% { opacity: 1; } 83.33% { opacity: 0.8; } 100% { opacity: 1; } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
@@ -169,7 +168,7 @@
     <div class="top-header">
         <div class="header-logo-group">
             <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
-            <a id="logoLink" href="https://www.ade.pl" target="_blank" rel="noopener noreferrer"
+            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer"
                 class="header-logo-link">
                 <img id="header-logo" src="" alt="Logo" class="header-logo" />
             </a>
@@ -200,6 +199,11 @@
         <select id="formatFilter">
             <option value="">Wszystko</option>
         </select>
+        <select id="orientationFilter">
+            <option value="">Orientacja...</option>
+            <option value="horizontal">Poziome</option>
+            <option value="vertical">Pionowe</option>
+        </select>
         <select id="sortSelector">
             <option value="">Sortuj...</option>
             <option value="shuffle">Wymieszaj</option>
@@ -220,7 +224,7 @@
             <option value="5">5 pozycji</option>
             <option value="6">6 pozycji</option>
             <option value="7">7 pozycji</option>
-            <option value="8">8 pozycje</option>
+            <option value="8">8 pozycji</option>
             <option value="9">9 pozycji</option>
             <option value="10">10 pozycji</option>
         </select>
@@ -228,8 +232,9 @@
         <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></button>
         <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
             <span id="animationBtn-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
-            <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span> <span id="animationBtn-play"><i class="fas fa-play"></i></span>
+            <span id="animationBtn-play"><i class="fas fa-play"></i></span>
             <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
+            <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
         </button>
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-window-minimize"></i>
@@ -259,8 +264,10 @@
     <div id="backdrop" class="backdrop">
         <button id="playCloseBtn" class="play-close-btn"><i class="fas fa-times"></i></button>
         <div id="lightbox-shuffle-controls">
-             <button id="lightbox-shuffle-video" title="Losuj wideo w tle"><i class="fas fa-video"></i></button>
              <button id="lightbox-shuffle-image" title="Losuj następny obrazek"><i class="fas fa-random"></i></button>
+             <button id="lightbox-shuffle-video" title="Losuj wideo w tle"><i class="fas fa-video"></i></button>
+             <button id="lightbox-video-play" title="Odtwarzaj/pauzuj losowe wideo"><i class="fas fa-play"></i></button>
+             <button id="lightbox-video-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></button>
         </div>
         <div id="play-guide-container" class="play-guide-container"></div>
         <div id="play-caption" class="play-caption"></div>
@@ -358,12 +365,14 @@
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null;
         let isMinimized = false;
+        let guideDimensionsCache = {};
 
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
             searchInput = document.getElementById("search"),
             formatFilter = document.getElementById("formatFilter"),
+            orientationFilter = document.getElementById("orientationFilter"),
             guideList = document.getElementById("guideList"),
             pagination = document.getElementById("pagination"),
             darkModeBtn = document.getElementById("darkModeBtn"),
@@ -379,6 +388,8 @@
             playCloseBtn = document.getElementById("playCloseBtn"),
             lightboxShuffleVideo = document.getElementById("lightbox-shuffle-video"),
             lightboxShuffleImage = document.getElementById("lightbox-shuffle-image"),
+            lightboxVideoPlay = document.getElementById("lightbox-video-play"),
+            lightboxVideoReset = document.getElementById("lightbox-video-reset"),
             headerLogo = document.getElementById("header-logo"),
             logoLink = document.getElementById("logoLink"), 
             bgVideo = document.getElementById("bg-video"),
@@ -527,6 +538,31 @@
             }
         }
 
+        function getGuideOrientation(guide) {
+            const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0];
+            const coverUrl = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+
+            if (guideDimensionsCache[coverUrl]) {
+                guide.orientation = guideDimensionsCache[coverUrl];
+                return;
+            }
+
+            const img = new Image();
+            img.onload = () => {
+                if (img.naturalHeight > img.naturalWidth) {
+                    guide.orientation = 'vertical';
+                } else {
+                    guide.orientation = 'horizontal'; // Includes square
+                }
+                guideDimensionsCache[coverUrl] = guide.orientation;
+            };
+            img.onerror = () => {
+                guide.orientation = 'unknown'; // Failed to load
+                guideDimensionsCache[coverUrl] = 'unknown';
+            };
+            img.src = coverUrl;
+        }
+
         async function processData(text) {
             const lines = text.split(/\r?\n/);
             guides = [];
@@ -570,10 +606,17 @@
                         date,
                         time,
                         timestamp: createDateFromStrings(date, time).getTime(),
-                        linkData
+                        linkData,
+                        orientation: 'pending' // Initial state
                     });
                 }
             }
+            // Start fetching orientations for all image-based guides
+            guides.forEach(guide => {
+                if (['jpg', 'png', 'link'].includes(guide.format)) { // 'link' can have covers
+                    getGuideOrientation(guide);
+                }
+            });
         }
 
         function updateFormatFilter() {
@@ -665,18 +708,20 @@
             let search = searchInput.value.toLowerCase();
             const formatValue = formatFilter.value;
             let format = formatValue;
+            const orientation = orientationFilter.value;
 
             if (formatValue.startsWith("search:")) {
                 search = formatValue.substring(7).toLowerCase();
                 format = "";
             }
 
-            filteredGuides = guides.filter(
-                (g) =>
-                    g.title.toLowerCase().includes(search) &&
-                    (!format || g.format === format)
+            filteredGuides = guides.filter(g =>
+                g.title.toLowerCase().includes(search) &&
+                (!format || g.format === format) &&
+                (!orientation || g.orientation === orientation)
             );
         }
+
 
         function init(data) {
             fileInputLabel.style.display = "none";
@@ -813,6 +858,7 @@
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = (config.pageSettings.defaultFormat || "").toLowerCase();
+            orientationFilter.value = "";
             saveToLocalStorage('format', formatFilter.value);
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
@@ -865,6 +911,7 @@
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onload="this.style.opacity=1;this.style.transform='scale(1)';" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
         function renderGuides() {
+            guideList.classList.remove('random-draw');
             applyFilters();
             
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
@@ -972,19 +1019,30 @@
             }
             guideList.innerHTML = "";
             pagination.innerHTML = "";
+            guideList.classList.add('random-draw');
+
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
             const animationsOn = animationState !== 0;
             randomGuides.forEach((guide, index) => {
                 const div = document.createElement("div");
-                div.className = "guide" + (animationsOn ? " animate-in" : "");
-                if (animationsOn) div.style.animationDelay = `${index * 0.05}s`;
+                div.className = "guide";
+                div.style.opacity = 0; // Hide before animating
                 div.innerHTML = createGuideHtml(guide);
                 guideList.appendChild(div);
+                if (animationsOn) {
+                    setTimeout(() => {
+                        div.classList.add("animate-in");
+                        div.style.animationDelay = `${index * 0.05}s`;
+                    }, 20);
+                } else {
+                    div.style.opacity = 1;
+                }
             });
             randomSelector.value = "";
         }
+
 
         function updatePreviewButtonUI() {
             previewBtn.classList.remove("inactive", "highlighted-state");
@@ -1060,12 +1118,16 @@
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
                 playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                playBtn.classList.remove('active-play'); 
+                lightboxVideoPlay.innerHTML = '<i class="fas fa-play"></i>';
+                playBtn.classList.remove('active-play');
+                lightboxVideoPlay.classList.remove('active-play');
             } else {
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
                 playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                playBtn.classList.add('active-play'); 
+                lightboxVideoPlay.innerHTML = '<i class="fas fa-pause"></i>';
+                playBtn.classList.add('active-play');
+                lightboxVideoPlay.classList.add('active-play');
             }
         }
         
@@ -1130,12 +1192,11 @@
             playButton.querySelector('.btn-text').textContent = ' Stop';
             playButton.classList.add("inactive");
             scheduleNext();
-            playAnimationInterval = setInterval(scheduleNext, 4000);
         }
 
         function stopPlayAnimation() {
             if (playAnimationInterval) {
-                clearInterval(playAnimationInterval);
+                clearTimeout(playAnimationInterval);
                 playAnimationInterval = null;
             }
             document.body.classList.remove("play-mode-active");
@@ -1171,60 +1232,82 @@
         }
         
         function displayRandomGuide(guide) {
-            playGuideContainer.innerHTML = "";
-            const isMediaFile = ['jpg', 'png', 'gif', 'webp', 'mp4', 'webm'].includes(guide.format);
-            const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
-            
-            let displayElement;
+            const container = playGuideContainer;
+            const existingContent = container.firstChild;
 
-            if (isMediaFile) {
-                const mediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
-                displayElement = document.createElement('img');
-                displayElement.src = mediaPath;
-                displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
-                playGuideContainer.appendChild(displayElement);
-            } else {
-                const baseFilename = guide.file.split("$$")[0];
-                const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-                const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+            const showNewGuide = () => {
+                container.innerHTML = "";
+                const isMediaFile = ['jpg', 'png', 'gif', 'webp', 'mp4', 'webm'].includes(guide.format);
+                const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
+                
+                let displayElement;
 
-                displayElement = document.createElement('img');
-                if (hdPath) {
-                    displayElement.src = hdPath;
-                    displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
-                } else {
-                    displayElement.src = sdPath;
+                if (isMediaFile) {
+                    const mediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                    displayElement = document.createElement('img');
+                    displayElement.src = mediaPath;
                     displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
+                    container.appendChild(displayElement);
+                } else {
+                    const baseFilename = guide.file.split("$$")[0].replace(/\.link$/i, "");
+                    const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+                    const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+
+                    displayElement = document.createElement('img');
+                    if (hdPath) {
+                        displayElement.src = hdPath;
+                        displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
+                    } else {
+                        displayElement.src = sdPath;
+                        displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
+                    }
+                    
+                    const link = document.createElement('a');
+                    if (guide.format === 'link') {
+                        const targetUrl = decodeUrlFromFilename(guide.file);
+                        link.href = targetUrl;
+                        if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        }
+                    } else {
+                        const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                        link.href = fileUrl;
+                        if (guide.format === 'pdf') {
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        } else {
+                            link.download = guide.file;
+                        }
+                    }
+                    link.appendChild(displayElement);
+                    container.appendChild(link);
                 }
                 
-                const link = document.createElement('a');
-                if (guide.format === 'link') {
-                    const targetUrl = decodeUrlFromFilename(guide.file);
-                    link.href = targetUrl;
-                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    }
-                } else {
-                    const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
-                    link.href = fileUrl;
-                    if (guide.format === 'pdf') {
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    } else {
-                        link.download = guide.file;
-                    }
+                const counterText = playGuidesQueue.length > 1 ? `<b>${playGuidesQueue.indexOf(guide) + 1}</b> / ${playGuidesQueue.length}` : '';
+                const descriptionText = guide.linkData.description || "";
+                let titleText = guide.title;
+                if (/^\d{2}\s*/.test(titleText)) titleText = titleText.replace(/^\d{2}\s*/, "");
+                
+                playCaption.innerHTML = `${counterText} <span class="filename">${titleText}</span> ${descriptionText}`;
+                
+                // Set timeout for the next slide
+                if (playAnimationInterval !== null) {
+                    playAnimationInterval = setTimeout(scheduleNext, 4000);
                 }
-                link.appendChild(displayElement);
-                playGuideContainer.appendChild(link);
+            };
+
+            if (existingContent) {
+                // Clear any running timeout before starting the animation
+                if (playAnimationInterval) clearTimeout(playAnimationInterval);
+                playAnimationInterval = null; 
+
+                const imgElement = existingContent.querySelector ? existingContent.querySelector('img') : existingContent;
+                imgElement.style.animation = 'zoomOutImage 0.5s ease-in forwards';
+                setTimeout(showNewGuide, 500);
+            } else {
+                showNewGuide();
             }
-            
-            const counterText = playGuidesQueue.length > 1 ? `<b>${playGuidesQueue.indexOf(guide) + 1}</b> / ${playGuidesQueue.length}` : '';
-            const descriptionText = guide.linkData.description || "";
-            let titleText = guide.title;
-            if (/^\d{2}\s*/.test(titleText)) titleText = titleText.replace(/^\d{2}\s*/, "");
-            
-            playCaption.innerHTML = `${counterText} <span class="filename">${titleText}</span> ${descriptionText}`;
         }
 
         function showImagePreview(imageUrl) {
@@ -1282,11 +1365,24 @@
         formatFilter.addEventListener("change", () => {
             currentPage = 1;
             const value = formatFilter.value;
+            // If user changes format, reset orientation
+            if (orientationFilter.value !== "") {
+                orientationFilter.value = "";
+            }
             if (value.startsWith("search:")) {
                 searchInput.value = value.substring(7);
             } else {
                 saveToLocalStorage('format', value);
             }
+            renderGuides();
+            stopPlayAnimation();
+        });
+        orientationFilter.addEventListener('change', () => {
+            if (orientationFilter.value !== "") {
+                // As requested, force format to JPG and re-render
+                formatFilter.value = 'jpg';
+            }
+            currentPage = 1;
             renderGuides();
             stopPlayAnimation();
         });
@@ -1313,22 +1409,23 @@
                 stopPlayAnimation();
             }
         });
-        if (lightboxShuffleVideo) {
-            lightboxShuffleVideo.addEventListener('click', (e) => {
-                e.stopPropagation();
-                shuffleBackgroundVideo();
-            });
-        }
-        if (lightboxShuffleImage) {
-            lightboxShuffleImage.addEventListener('click', (e) => {
-                e.stopPropagation();
-                if (playAnimationInterval) { // Reset timer on manual shuffle
-                    clearInterval(playAnimationInterval);
-                    playAnimationInterval = setInterval(scheduleNext, 4000);
-                }
-                scheduleNext();
-            });
-        }
+
+        lightboxShuffleVideo.addEventListener('click', (e) => {
+            e.stopPropagation();
+            shuffleBackgroundVideo();
+        });
+        lightboxVideoPlay.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleAutoShuffle();
+        });
+        lightboxVideoReset.addEventListener('click', (e) => {
+            e.stopPropagation();
+            resetVideoSettings();
+        });
+        lightboxShuffleImage.addEventListener('click', (e) => {
+            e.stopPropagation();
+            scheduleNext();
+        });
     </script>
 </body>
 
