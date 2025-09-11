@@ -1,39 +1,60 @@
-            // --- POCZĄTEK PLIKU <-> .konfiguracja.txt
-            
-            // ------ Do pamięci podręcznej przeglądarki
-            indexStartBgVideo: 3, // Pierwszy numer tła video, w tym wypadku bg_light3.mp4 albo bg_dark3.mp4
-            indexEndBgVideo: 5, // Ostatni numer tła video, w tym przypadku bg_light5.mp4 albo bg_dark5.mp4 
-            indexDefaultBgVideo: 4, // Domyślny plik video | W naszym przypadku bg_light4.mp4 albo bg_dark4.mp4 w zależności od motywu
-            defaultAnimation: 2, // 0 - Statycznie, 1 - Animacje, 2 - Video            
-            defultLight: true, // Gdy brak w pamięci przeglądarki, ustawi motyw jasny (true) lub ciemny (false) | Globalne ustaswienie dla wszystkich plików .html
-            defaultView: 1, // Widok siatki boxów: 0 - Tekst, 1 - Grafika, 2 - Wszystko | Przycisk zmienia się "Tekst" -> "Grafika" -> "Wszystko" -> "Tekst" ... Przycisk pokaże widok, który będzie po kliknięciu
-            defaultFormat: "LINK",
-            defaultSort: "nameAsc",
-            defaultRows: 3,
-            predefinedFilters: [
-                { label: "ADE", search: "ade" },
-                { label: "Galerie zdjęć", search: "galeria" },
-                { label: "Poradniki", search: "poradniki" },
-                { label: "", search: "" },
-                { label: "", search: "" },
-            ],  
-            // ------ Koniec pamięci podręcznej przeglądarki
-
-            version: 'v1.0.9',
-            pageTitle: "▪ START ▪ MENU ▪",
-            showMiniLogo: true,
-            showVisuDirButton: true,
-            showBackButton: true,
-            
-            // --- Ścieżki dostępu ---
-            url404: "base-system/404.html",
-            urlAbout: "base-system/about.html",
-            databaseFileName: "base-system/db.txt",
-            dataFolderName: "base-system/files",
-            coversFolderName: "base-system/preview",
-            miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
-            miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
-            videoBgLightUrlBase: "base-system/.video/bg_light", // do video doklejamy jego numer od 1 do n z konfiguracji
-            videoBgDarkUrlBase: "base-system/.video/bg_dark", // do video doklejamy jego numer od 1 do n z konfiguracji
+// --- KONFIGURACJA ---
+        const config = {
+            version: 'v1.1.3',
+            // --- Ustawienia globalne, wspĂłlne dla wszystkich stron ---
+            global: {
+                defaultTheme: 'light', // 'light' lub 'dark'
+            },
+            logoRotator: {
+                enabled: true,
+                interval: 4500, // czas w ms
+                logos: [
+                    {
+                        srcLight: "base-system/.gfx/interface/VisuDir_small_light.png",
+                        srcDark: "base-system/.gfx/interface/VisuDir_small_dark.png",
+                        href: "",
+                        alt: "Logo VisuDir"
+                    },
+                    {
+                        srcLight: "base-system/.gfx/interface/ADE_small_light.png",
+                        srcDark: "base-system/.gfx/interface/ADE_small_dark.png",
+                        href: "https://www.adrianulbrych.pl",
+                        alt: "Logo ADE"
+                    }
+                ]
+            },
+            // --- Ustawienia specyficzne dla tej strony (index.html) ---
+            pageSettings: {
+                pageKey: 'index',
+                defaultBgVideo: 3,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 10,
+                defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
+                defaultView: 2, // Nowa kolejnoĹ›Ä‡: 0-Tekst, 1-Grafika, 2-Wszystko
+                defaultFormat: "LINK", // Puste oznacza "Wszystko"
+                defaultSort: "nameAsc",
+                defaultRows: 3,
+                predefinedFilters: [
+                    { label: "ADE", search: "ade" },
+                    { label: "Galerie zdjÄ™Ä‡", search: "galeria" },
+                    { label: "Poradniki", search: "poradniki" },
+                    { label: "", search: "" },
+                    { label: "", search: "" },
+                ],
+                pageTitle: "â–Ş START â–Ş mini â–Ş",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: false,
+            }, 
+            // --- ĹšcieĹĽki dostÄ™pu ---
+            paths: {
+                url404: "base-system/404.html",
+                urlAbout: "base-system/about.html",
+                databaseFileName: "base-system/.db.txt",
+                dataFolderName: "base-system/files",
+                coversFolderName: "base-system/preview",
+                videoBgLightUrlBase: "base-system/.video/bg_light",
+                videoBgDarkUrlBase: "base-system/.video/bg_dark",
+            }
         };
-        // --- KONIEC PLIKU <-> .konfiguracja.txt
+        // --- KONIEC KONFIGURACJI ---

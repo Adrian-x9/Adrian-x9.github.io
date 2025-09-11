@@ -1,6 +1,6 @@
 <!-- Don't remove this comment
  
-  v1.1.2 – 2025-09-11  
+  v1.1.3 – 2025-09-11  
   First published version of the site  
 
   * Milestone: Initial Release  

@@ -8,7 +8,7 @@ Don't remove this comment!
 \## 🔹 English Version
 \### 📌 Version History
 
-\- \*\*v1.1.2\*\* – 2025-09-11 – Recent version  
+\- \*\*v1.1.3\*\* – 2025-09-11 – Recent version  
 \- \*\*v1.1.0\*\* – 2025-09-10 – First published version (Initial Release)
 
 ---
@@ -42,7 +42,7 @@ to indicate version history and authorship. Do not remove it.
 \## 🔸 Wersja Polska
 \### 📌 Historia wersji
 
-\- \*\*v1.1.2\*\* – 2025-09-11 – Najnowsza wersja  
+\- \*\*v1.1.3\*\* – 2025-09-11 – Najnowsza wersja  
 \- \*\*v1.1.0\*\* – 2025-09-10 – Pierwsza opublikowana wersja (Wersja początkowa)
 
 ---

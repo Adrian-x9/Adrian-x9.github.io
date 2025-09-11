@@ -1,7 +1,7 @@
 // --- KONFIGURACJA ---
         const config = {
             version: 'v1.1.3',
-            // --- Ustawienia globalne, wspólne dla wszystkich stron ---
+            // --- Ustawienia globalne, wspĂłlne dla wszystkich stron ---
             global: {
                 defaultTheme: 'light', // 'light' lub 'dark'
             },
@@ -12,12 +12,12 @@
                     {
                         srcLight: "../base-system/.gfx/interface/VisuDir_small_light.png",
                         srcDark: "../base-system/.gfx/interface/VisuDir_small_dark.png",
-                        href: "base-sytem/about.html",
+                        href: "",
                         alt: "Logo VisuDir"
                     },
                     {
                         srcLight: "../base-system/.gfx/interface/ADE_small_light.png",
-                        srcDark: "../base-system/.gfx/interface/ADE_small_dark.png",
+                        srcDark: "..//base-system/.gfx/interface/ADE_small_dark.png",
                         href: "https://www.ade.pl",
                         alt: "Logo ADE"
                     }
@@ -25,36 +25,36 @@
             },
             // --- Ustawienia specyficzne dla tej strony (index.html) ---
             pageSettings: {
-                pageKey: 'poradniki_do_gier',
+                pageKey: 'poradnikiDoGier',
                 defaultBgVideo: 3,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 10,
                 defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
-                defaultView: 1, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
-                defaultFormat: "PDF", // Puste oznacza "Wszystko"
-                defaultSort: "shuffle",
-                defaultRows: 4,
+                defaultView: 2, // Nowa kolejnoĹ›Ä‡: 0-Tekst, 1-Grafika, 2-Wszystko
+                defaultFormat: "LINK", // Puste oznacza "Wszystko"
+                defaultSort: "nameAsc",
+                defaultRows: 3,
                 predefinedFilters: [
-                    { label: "Poradniki Gry-Online", search: "gry online" },
-                    { label: "Poradniki PrzygodoMania.pl", search: "przygodomania" },
-                    { label: "Instrukcje", search: "instr" },
+                    { label: "ADE", search: "ade" },
+                    { label: "Galerie zdjÄ™Ä‡", search: "galeria" },
+                    { label: "Poradniki", search: "poradniki" },
                     { label: "", search: "" },
                     { label: "", search: "" },
                 ],
-                pageTitle: "Poradniki ▪ Gry komputerowe",
+                pageTitle: "â–Ş START â–Ş mini â–Ş",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: true,
-            },
-            // --- Ścieżki dostępu ---
+                showBackButton: false,
+            }, 
+            // --- ĹšcieĹĽki dostÄ™pu ---
             paths: {
-                url404: "../base-system/404.html",
-                urlAbout: "../base-system/about.html",
-                databaseFileName: "./base-system/.db.txt",
-                dataFolderName: "./base-system/files",
-                coversFolderName: "./base-system/preview",
-                videoBgLightUrlBase: "../base-system/.video/bg_light",
-                videoBgDarkUrlBase: "../base-system/.video/bg_dark",
+                url404: "base-system/404.html",
+                urlAbout: "base-system/about.html",
+                databaseFileName: "base-system/.db.txt",
+                dataFolderName: "base-system/files",
+                coversFolderName: "base-system/preview",
+                videoBgLightUrlBase: "base-system/.video/bg_light",
+                videoBgDarkUrlBase: "base-system/.video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
