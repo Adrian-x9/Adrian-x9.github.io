@@ -3,8 +3,8 @@
 
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Polska\base-system\files
 
-08.09.2025  23:00    <DIR>          .
-08.09.2025  22:57    <DIR>          ..
+11.09.2025  22:09    <DIR>          .
+11.09.2025  22:03    <DIR>          ..
 06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
 06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
 06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
@@ -26,8 +26,8 @@
 06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
 06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
 06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
-06.09.2025  07:28           1284251 Koˆobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
-06.09.2025  07:26            785680 Koˆobrzeg_Polska_7562038_1920.jpg
+06.09.2025  07:28           1284251 Kolobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
+06.09.2025  07:26            785680 Kolobrzeg_Polska_7562038_1920.jpg
 06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
 06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
 06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
@@ -48,4 +48,4 @@
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
               42 File(s)       32920780 bytes
-               2 Dir(s)     95289700352 bytes free
+               2 Dir(s)     81650532352 bytes free

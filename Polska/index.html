@@ -1,71 +1,5 @@
-<!-- 
-
-Last updated: 2025-09-11  
-
-============================  
-🔹 ENGLISH VERSION  
-============================  
-
-Version history:  
-- v1.1.3 – 2025-09-11 – LICENSE.md, README.md and README.txt added
-- v1.1.3 – 2025-09-11 – Bugs correctons and improvements
-- v1.1.0 – 2025-09-10 – First published version (Initial Release)
-
-Author: Adrian Ulbrych  
-Location: Gliwice, Silesia, Poland  
-Contact: +48 601 190 330  
-
-All rights reserved.  
-Use and modification of the code requires the author's permission.  
-
-This project includes embedded comments in HTML files  
-with version history and authorship.  
-Do not remove these comments.  
-
-============================  
-🔸 WERSJA POLSKA  
-============================  
-
-Historia wersji:
-- v1.1.3 – 2025-09-11 – Dodano LICENSE.md, README.md and README.txt added
-- v1.1.3 – 2025-09-11 – Poprawki błędów i ulepszenia 
-- v1.1.0 – 2025-09-10 – Pierwsza opublikowana wersja (Wersja początkowa)
-
-Autor: Adrian Ulbrych  
-Lokalizacja: Gliwice, Śląsk, Polska  
-Kontakt: +48 601 190 330  
-
-Wszystkie prawa zastrzeżone.  
-Użycie i modyfikacja kodu wymaga zgody autora.  
-
-Projekt zawiera komentarze w plikach HTML  
-z historią wersji i informacją o autorze.  
-Nie usuwaj tych komentarzy.
-
-============================
-
-⠀⠀⠀⠀⠀⠀⠘⢄⠀⢰⠁⠀⢀⣠⠜  
-⠀⠀⠀⠀⠀⠀⠀⠀⡆⢸⠀⠀⡏  
-⠀⠀⠀⠀⠀⠀⠀⠀⢇⠀⠃⠀⢈  
-⠀⠀⠀⢀⣤⣶⠾⠿⠛⠛⠛⠛⠛⠿⠿⣶⣤⣀  
-⠀⣠⡾⠋⠁⠀⠀⠀⢀⣠⣤⠤⢤⣤⣄⠀⠈⠙⢿⣦  
-⣸⡏⠀⠀⠀⣀⣤⠾⠋⠁⠀⠀⠀⣸⠟⠀⠀⠀⠀⠹⣷  
-⣿⣇⠀⠀⠀⠙⠳⢦⣄⡀⠀⠀⠈⢳⣦⠀⠀⠀⠀⣰⣿  
-⢹⣿⣶⣤⣀⠀⠀⠀⠈⠙⠳⠶⠶⠿⠋⠀⢀⣤⣾⣿⣿⣶⣶⣦⡀  
-⠘⣿⣿⣿⣿⣿⣶⣶⣦⣤⣤⣤⣤⣶⣶⣿⣿⣿⣿⣿⠋⠉⠙⣿⣧  
-⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⠀⠀⢠⣿⡿  
-⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣶⣶⣿⡿  
-⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠈⠉⠉⠁  
-⠀⠀⠀⠀⠀⠈⠛⠻⢿⣿⣿⣿⡿⠿⠛⠁  
-
-© 2025 Adrian Ulbrych – All rights reserved  
-
-Project page: https://adrian-x9.github.io/ 
-
--->
-
 <!DOCTYPE html>
-<html lang="pl" style="background-color: black;">
+<html lang="pl">
 
 <head>
     <meta charset="UTF-8" />
@@ -79,894 +13,151 @@ Project page: https://adrian-x9.github.io/
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        html {
+             background-color: #e1e1e1;
+        }
+        .dark-mode, .dark-mode html {
+            background-color: #121212;
+        }
         #bg-video {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
-            z-index: -1;
-            display: none;
-        }
-
-        body.video-ready {
-            background-color: transparent !important;
-        }
-
-        body {
-            font-family: "Segoe UI", sans-serif;
-            margin: 0;
-            padding: 20px;
-            transition: background-color 0.5s ease, color 0.3s ease;
-        }
-
-        body.no-animation .guide.animate-in,
-        body.no-animation .guide.flip-animate {
-            animation: none !important;
-            transform: none !important;
-        }
-
-        body.no-animation .guide-cover,
-        body.no-animation .top-header,
-        body.no-animation .footer {
-            transition: none !important;
-        }
-        
-        body.play-mode-active > .top-header,
-        body.play-mode-active > .controls,
-        body.play-mode-active > .guide-list,
-        body.play-mode-active > .pagination,
-        body.play-mode-active > .footer {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-            transition: opacity 0.4s ease, visibility 0s 0.4s;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        a {
-            font-weight: bold;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        .top-header a.dir-db-btn:hover {
-            text-decoration: none;
-        }
-
-        .title-red {
-            color: #cc0000;
-        }
-
-        .dark-mode .title-red {
-            color: #e53935;
-        }
-
-        .dark-mode .version-suffix {
-            color: #eee;
-        }
-
-        body:not(.dark-mode) .version-suffix {
-            color: #333;
-        }
-        
-        body:not(.dark-mode) .top-header .counter {
-            color: #555;
-        }
-        
-        .dark-mode .top-header .counter {
-            color: #aaa;
-        }
-
-        body:not(.dark-mode) {
-            background-color: #e1e1e1;
-            color: #333;
-        }
-
-        body:not(.dark-mode) a {
-            color: #cc0000;
-        }
-
-        body:not(.dark-mode) .dir-db-btn,
-        body:not(.dark-mode) .highlighted-state {
-            color: #cc0000;
-            background: #fdfdfd;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-        }
-        
-        body:not(.dark-mode) .dir-db-btn.highlighted-state {
-             color: #fff;
-             background: #cc0000;
-             box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2);
-        }
-        
-        body:not(.dark-mode) input,
-        body:not(.dark-mode) select,
-        body:not(.dark-mode) button {
-            background-color: #fff;
-            color: #333;
-            border-color: #ccc;
-        }
-
-        body:not(.dark-mode) button:hover {
-            background-color: #f0f0f0;
-        }
-
-        body:not(.dark-mode) .dir-db-btn:hover,
-        body:not(.dark-mode) .highlighted-state:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-        }
-
-        body:not(.dark-mode) .guide {
-            background: #fdfdfd;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-        }
-
-        body.video-ready:not(.dark-mode) .guide {
-            background: rgba(253, 253, 253, 0.5);
-        }
-
-        body:not(.dark-mode) .guide-cover {
-            border: 2px solid #cc0000;
-            box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
-        }
-
-        body:not(.dark-mode) .pagination-info {
-            background-color: #f0f0f0;
-            border-color: #ddd;
-            color: #555;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        body:not(.dark-mode) .footer {
-            color: #666;
-        }
-
-        body:not(.dark-mode) .footer .footer-special-text {
-            color: #555;
-        }
-
-        body:not(.dark-mode) .privacy-notice {
-            color: #bbb;
-        }
-
-        .dark-mode {
-            background-color: #121212; /* Poprawiono: Ciemne tło dla body */
-            color: #eee;
-        }
-
-        .dark-mode a {
-            color: #e53935;
-        }
-
-        .dark-mode .dir-db-btn,
-        .dark-mode .highlighted-state {
-            color: #e53935;
-            background: #000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-            border: 1px solid #555;
-        }
-
-        .dark-mode .dir-db-btn.highlighted-state {
-             color: #fff;
-             background: #a01515;
-             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 1px 3px rgba(0,0,0,0.3);
-        }
-
-        .dark-mode input,
-        .dark-mode select,
-        .dark-mode button {
-            background-color: #000;
-            color: #eee;
-            border-color: #555;
-        }
-
-        .dark-mode button:hover:not(:disabled) {
-            background-color: #222;
-        }
-
-        .dark-mode .dir-db-btn:hover,
-        .dark-mode .highlighted-state:hover {
-            background: #111;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-        }
-
-        .dark-mode .guide {
-            background: #000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-        }
-
-        body.video-ready.dark-mode .guide {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .dark-mode .guide:hover {
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-        }
-
-        .dark-mode .guide-info {
-            color: #bbb;
-        }
-
-        .dark-mode .guide-cover {
-            border: 2px solid #e53935;
-            box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
-        }
-
-        .dark-mode .pagination-info {
-            background-color: #222;
-            border-color: #444;
-            color: #ccc;
-            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05);
-        }
-
-        .dark-mode .footer {
-            color: #bbb;
-        }
-
-        .dark-mode .footer .footer-special-text {
-            color: #eee;
-        }
-
-        .dark-mode .privacy-notice {
-            color: #666;
-        }
-
-        button.inactive {
-            font-weight: normal;
-            opacity: 0.6;
-        }
-
-        .top-header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            text-align: center;
-            opacity: 0;
-            transform: translateY(-20px);
-            max-height: 200px; /* Wysokość do animacji */
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
-            padding-top: 5px;
-        }
-
-        .top-header.minimized-header {
-            max-height: 0 !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            margin-bottom: 0 !important;
-            opacity: 0;
-        }
-
-        .header-group {
-            display: flex;
-            gap: 10px;
-        }
-
-        .header-logo-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-logo-link {
-            display: flex;
-            align-items: center;
-            perspective: 1000px;
-        }
-
-        .header-logo {
-            max-height: 42px;
-            width: auto;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-        }
-
-        .top-header .title {
-            font-size: 1.6em;
-            font-weight: bold;
-        }
-
-        .top-header .counter {
-            font-size: 0.9em;
-        }
-
-        .top-header .counter b {
-            font-weight: bold;
-        }
-
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            opacity: 0;
-            transform: translateY(-20px);
-        }
-
-        input,
-        select,
-        button {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid;
-            white-space: nowrap;
-        }
-
-        #search {
-            width: 160px;
-        }
-
-        input::placeholder {
-            color: #aaa;
-        }
-
-        .dark-mode input::placeholder {
-            color: #666;
-        }
-
-        .dir-db-btn {
-            padding: 10px 20px;
-            border-radius: 10px;
-            transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s;
-            display: flex;
-            align-items: center;
-            font-weight: bold;
-            font-size: 1em;
-            cursor: pointer;
-        }
-
-        .dir-db-btn:hover {
-            transform: translateY(-5px);
-        }
-
-        .dir-db-btn i {
-            margin-right: 5px;
-        }
-        
-        #minimizeBtn i {
-             margin-right: 0;
-        }
-
-        .video-shuffle-btn {
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .video-shuffle-btn > span {
-            padding: 10px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-        }
-
-        #animationBtn-main {
-            flex-grow: 1;
-            padding-right: 12px;
-        }
-
-        /* Poprawione paddingi dla przycisków wideo */
-        #animationBtn-play, #animationBtn-reset {
-            padding: 10px 12px; /* Zmienione */
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        #animationBtn-play:hover, #animationBtn-reset:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        .dark-mode #animationBtn-play, .dark-mode #animationBtn-reset {
-            border-left-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .dark-mode #animationBtn-play:hover, .dark-mode #animationBtn-reset:hover {
-            background-color: rgba(255,255,255,0.1);
-        }
-        
-        #animationBtn-shuffle {
-            padding: 10px 12px; /* Zmienione */
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
-        }
-        
-        #animationBtn-shuffle:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-        .dark-mode #animationBtn-shuffle {
-            border-left-color: rgba(255, 255, 255, 0.2);
-        }
-        .dark-mode #animationBtn-shuffle:hover {
-            background-color: rgba(255,255,255,0.1);
-        }
-        
-        #animationBtn.highlighted-state #animationBtn-shuffle,
-        #animationBtn.highlighted-state #animationBtn-play,
-        #animationBtn.highlighted-state #animationBtn-reset {
-            border-left-color: rgba(255, 255, 255, 0.5);
-        }
-         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle,
-         .dark-mode #animationBtn.highlighted-state #animationBtn-play,
-         .dark-mode #animationBtn.highlighted-state #animationBtn-reset {
-            border-left-color: rgba(255, 255, 255, 0.5);
-        }
-        
-        #animationBtn.highlighted-state > #animationBtn-main {
-            position: relative;
-        }
-
-        #animationBtn-play.active-play i {
-             color: #fff;
-             text-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
-        }
-        .dark-mode #animationBtn-play.active-play i {
-             text-shadow: 0 0 10px #ff8a80;
-        }
-
-        .guide-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 250px);
-            justify-content: center;
-            gap: 20px;
-            width: 90%;
-            max-width: 1920px;
-            margin: 0 auto;
-        }
-
-        .guide-list.hide-covers .guide-cover {
-            visibility: hidden;
-            opacity: 0;
-            max-height: 0;
-            margin: 0;
-            padding: 0;
-            border-width: 0;
-            transform: scale(0.7);
-        }
-
-        .guide-list.only-covers .guide-title,
-        .guide-list.only-covers .guide-info,
-        .guide-list.only-covers .guide-content-bottom>a:not(.cover-link),
-        .guide-list.only-covers .guide-info-container {
-            display: none;
-        }
-
-        .guide-list.only-covers .guide {
-            padding: 10px;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .guide-list.only-covers .guide-cover {
-            margin: 0;
-            border: none !important;
-        }
-
-        .guide {
-            padding: 0 20px 10px;
-            border-radius: 10px;
-            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            width: 250px;
-            box-sizing: border-box;
-        }
-
-        .guide:hover {
-            transform: translateY(-5px);
-        }
-
-        .guide-content-bottom {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .guide-info-container {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .guide a {
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        .guide a.cover-link {
-            margin-top: 0;
-            display: block;
-        }
-
-        .guide-info {
-            font-size: 0.9em;
-        }
-
-        .guide-title {
-            margin-top: 7px;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            overflow-wrap: break-word;
-        }
-
-        .pagination {
-            text-align: center;
-            margin-top: 40px;
-            margin-bottom: 15px; /* Dodatkowy odstęp */
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            opacity: 0;
-            transform: translateY(20px);
-        }
-
-        .pagination button,
-        .pagination input,
-        .pagination select {
-            padding: 10px;
-            margin: 0;
-            font-size: 0.9em;
-            cursor: pointer;
-            border-radius: 5px;
-            width: auto;
-        }
-
-        .pagination button:disabled {
-            cursor: not-allowed;
-            opacity: 0.5;
-        }
-
-        .guide-cover {
-            max-width: 100%;
-            height: auto;
-            margin: 10px auto 0;
-            display: block;
-            border-radius: 5px;
-            transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s,
-                border-width 0.7s, visibility 0.7s, transform 0.7s ease-in-out;
-            opacity: 0;
-            transform: scale(0.7);
-        }
-
-        .guide.animate-in {
-            animation: fadeInSlideIn 0.5s ease-out forwards;
-        }
-
-        @keyframes fadeInSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes zoomInThenOut {
-            0% {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-
-            10% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            90% {
-                transform: scale(1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(0.95);
-                opacity: 0;
-            }
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            padding-top: 10px;
-            font-size: 0.9em;
-            opacity: 0;
-            transform: translateY(20px);
-            max-height: 200px; /* Wysokość do animacji */
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
-        }
-        
-        .footer.minimized-footer {
-            max-height: 0 !important;
-            padding-top: 0 !important;
-            padding-bottom: 0 !important;
-            margin-top: 0 !important;
-            opacity: 0;
-        }
-
-        .nobr {
-            white-space: nowrap;
-        }
-
-        .privacy-notice {
-            margin-top: 10px;
-            font-size: 0.9em;
-        }
-
-        .footer .footer-special-text {
-            font-weight: normal;
-        }
-
-        .backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease, background-color 0.3s;
-        }
-
-        .dark-mode .backdrop.image-mode-active,
-        .dark-mode .backdrop.preview-active {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
-
-        .backdrop.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        body:not(.dark-mode) .play-guide-container .guide {
-            background-color: rgba(255, 255, 255, 0.67);
-        }
-
-        .dark-mode .play-guide-container .guide {
-            background-color: rgba(0, 0, 0, 0.67);
-        }
-
-        .play-guide-container {
-            transform-style: preserve-3d;
-            perspective: 1000px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 0.2s ease-in-out;
-            width: 90vw;
-            height: 90vh;
-            max-width: 450px;
-            max-height: 700px;
-            /* Usunięto: padding-top i padding-bottom z głównego kontenera,
-               aby umożliwić zajęcie całej wysokości przez okładkę/obraz */
-            padding: 0; /* Zapewnia, że padding nie ogranicza zawartości */
-        }
-
-        .play-guide-container .guide,
-        .play-guide-container .play-image-view {
-            animation: zoomInThenOut 4s linear infinite;
-        }
-
-        .play-guide-container.image-mode {
-            width: 95vw;
-            height: 95vh;
-            max-width: initial;
-            max-height: initial;
-        }
-        
-        .play-guide-container .guide {
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            display: flex; /* Zmieniono na flexbox */
-            flex-direction: column; /* Ułożenie elementów w kolumnie */
-            justify-content: center; /* Wyśrodkowanie w pionie */
-            align-items: center; /* Wyśrodkowanie w poziomie */
-            box-sizing: border-box; /* Ważne dla paddingu */
-        }
-
-        .play-guide-container .guide a.cover-link {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            min-height: 0;
-            justify-content: center; /* Wyśrodkowanie linku z okładką */
-            align-items: center;
-        }
-
-        .play-guide-container .guide .guide-cover {
-            height: 100%; /* Okładka wypełnia całą dostępną wysokość */
-            width: 100%;
-            object-fit: contain; /* Obrazek będzie widoczny w całości, bez ucinania */
-            margin: 0; /* Usunięto margines */
-        }
-
-        .play-guide-container .guide .guide-title {
-            font-size: 1.6em;
-            margin-top: 10px;
-        }
-        .play-guide-container .guide .guide-info {
-            font-size: 1.05em;
-        }
-
-        .preview-image {
-            max-width: 90vw;
-            max-height: 90vh;
-            width: auto; /* Zapewnia skalowanie */
-            height: auto; /* Zapewnia skalowanie */
-            object-fit: contain; /* Obrazek będzie widoczny w całości */
-            border-radius: 5px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .play-image-view {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            box-sizing: border-box; /* Ważne dla paddingu */
-        }
-
-        .play-image-view img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            border-radius: 5px;
-        }
-
-        .play-image-view .guide-title {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            font-weight: bold;
-            z-index: 1000;
-        }
-
-        .dark-mode .play-image-view .guide-title {
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-        }
-
-        body:not(.dark-mode) .play-image-view .guide-title {
-            background-color: rgba(255, 255, 255, 0.8);
-            color: #333;
-        }
-
-        .play-counter {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: #fff;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 1.2em;
-            font-weight: bold;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.5s, background-color 0.3s, color 0.3s;
-        }
-
-        body:not(.dark-mode) .play-counter {
-            background-color: rgba(255, 255, 255, 0.8);
-            color: #333;
-        }
-
-        .play-counter.visible {
-            opacity: 1;
-        }
-
-        .play-close-btn {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: 0 0;
-            border: none;
-            color: #333;
-            font-size: 2em;
-            cursor: pointer;
-            z-index: 1001;
-            transition: transform 0.2s ease, color 0.2s;
-        }
-
-        .dark-mode .play-close-btn {
-            color: #fff;
-        }
-
-        .play-close-btn:hover {
-            transform: scale(1.2);
-            color: #e53935;
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .animated-header,
-        .animated-controls,
-        .animated-footer,
-        .animated-pagination {
-            animation-fill-mode: forwards;
-        }
-
-        .animated-header,
-        .animated-controls {
-            animation-name: fadeInDown;
-            animation-duration: 0.6s;
-            animation-timing-function: ease-out;
-        }
-
-        .animated-footer,
-        .animated-pagination {
-            animation-name: fadeInUp;
-            animation-duration: 0.8s;
-            animation-timing-function: ease-out;
-        }
-        
-        .hidden-no-anim {
-            display: none !important;
-        }
-        
-        .controls.minimized-view .btn-text {
-            display: none;
-        }
-        .controls.minimized-view .dir-db-btn i {
-            margin-right: 0;
-        }
+            position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%;
+            width: 100vw; height: 100vh; object-fit: cover; z-index: -1; display: none;
+        }
+        body.video-ready { background-color: transparent !important; }
+        body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; }
+        body.no-animation .guide.animate-in, body.no-animation .guide.flip-animate { animation: none !important; transform: none !important; }
+        body.no-animation .guide-cover, body.no-animation .top-header, body.no-animation .footer { transition: none !important; }
+        body.play-mode-active > .top-header, body.play-mode-active > .controls,
+        body.play-mode-active > .guide-list, body.play-mode-active > .pagination,
+        body.play-mode-active > .footer { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
+        #fileInput { display: none; }
+        a { font-weight: bold; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .top-header a.dir-db-btn:hover { text-decoration: none; }
+        .title-red { color: #cc0000; }
+        .dark-mode .title-red { color: #e53935; }
+        .dark-mode .version-suffix { color: #eee; }
+        body:not(.dark-mode) .version-suffix { color: #333; }
+        body:not(.dark-mode) .top-header .counter { color: #555; }
+        .dark-mode .top-header .counter { color: #aaa; }
+        body:not(.dark-mode) { background-color: #e1e1e1; color: #333; }
+        body:not(.dark-mode) a { color: #cc0000; }
+        body:not(.dark-mode) .dir-db-btn, body:not(.dark-mode) .highlighted-state { color: #cc0000; background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
+        body:not(.dark-mode) .dir-db-btn.highlighted-state { color: #fff; background: #cc0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2); }
+        body:not(.dark-mode) input, body:not(.dark-mode) select, body:not(.dark-mode) button { background-color: #fff; color: #333; border-color: #ccc; }
+        body:not(.dark-mode) button:hover { background-color: #f0f0f0; }
+        body:not(.dark-mode) .dir-db-btn:hover, body:not(.dark-mode) .highlighted-state:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
+        body:not(.dark-mode) .guide { background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
+        body.video-ready:not(.dark-mode) .guide { background: rgba(253, 253, 253, 0.5); }
+        body:not(.dark-mode) .guide-cover { border: 2px solid #cc0000; box-shadow: 0 0 10px rgba(204, 0, 0, 0.5); }
+        body:not(.dark-mode) .pagination-info { background-color: #f0f0f0; border-color: #ddd; color: #555; box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); }
+        body:not(.dark-mode) .footer { color: #666; }
+        body:not(.dark-mode) .footer .footer-special-text { color: #555; }
+        body:not(.dark-mode) .privacy-notice { color: #bbb; }
+        .dark-mode { color: #eee; }
+        .dark-mode a { color: #e53935; }
+        .dark-mode .dir-db-btn, .dark-mode .highlighted-state { color: #e53935; background: #000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); border: 1px solid #555; }
+        .dark-mode .dir-db-btn.highlighted-state { color: #fff; background: #a01515; box-shadow: 0 0 20px rgba(255, 0, 0, 0.4), inset 0 1px 3px rgba(0,0,0,0.3); }
+        .dark-mode input, .dark-mode select, .dark-mode button { background-color: #000; color: #eee; border-color: #555; }
+        .dark-mode button:hover:not(:disabled) { background-color: #222; }
+        .dark-mode .dir-db-btn:hover, .dark-mode .highlighted-state:hover { background: #111; box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); }
+        .dark-mode .guide { background: #000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
+        body.video-ready.dark-mode .guide { background: rgba(0, 0, 0, 0.3); }
+        .dark-mode .guide:hover { box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); }
+        .dark-mode .guide-info { color: #bbb; }
+        .dark-mode .guide-cover { border: 2px solid #e53935; box-shadow: 0 0 10px rgba(229, 57, 53, 0.5); }
+        .dark-mode .pagination-info { background-color: #222; border-color: #444; color: #ccc; box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.05); }
+        .dark-mode .footer { color: #bbb; }
+        .dark-mode .footer .footer-special-text { color: #eee; }
+        .dark-mode .privacy-notice { color: #666; }
+        button.inactive { font-weight: normal; opacity: 0.6; }
+        .top-header { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; text-align: center; opacity: 0; transform: translateY(-20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; padding-top: 5px; }
+        .top-header.minimized-header { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-bottom: 0 !important; opacity: 0; }
+        .header-group { display: flex; gap: 10px; }
+        .header-logo-group { display: flex; align-items: center; gap: 15px; }
+        .header-logo-link { display: flex; align-items: center; perspective: 1000px; }
+        .header-logo { max-height: 42px; width: auto; transition: transform 0.6s; transform-style: preserve-3d; }
+        .top-header .title { font-size: 1.6em; font-weight: bold; }
+        .top-header .counter { font-size: 0.9em; }
+        .top-header .counter b { font-weight: bold; }
+        .controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; opacity: 0; transform: translateY(-20px); }
+        input, select, button { padding: 10px; border-radius: 5px; border: 1px solid; white-space: nowrap; }
+        #search { width: 160px; }
+        input::placeholder { color: #aaa; }
+        .dark-mode input::placeholder { color: #666; }
+        .dir-db-btn { padding: 10px 20px; border-radius: 10px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s; display: flex; align-items: center; font-weight: bold; font-size: 1em; cursor: pointer; }
+        .dir-db-btn:hover { transform: translateY(-5px); }
+        .dir-db-btn i { margin-right: 5px; }
+        #minimizeBtn i { margin-right: 0; }
+        .video-shuffle-btn { padding: 0; overflow: hidden; }
+        .video-shuffle-btn > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
+        #animationBtn-main { flex-grow: 1; padding-right: 12px; }
+        #animationBtn-play, #animationBtn-reset { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
+        #animationBtn-play:hover, #animationBtn-reset:hover { background-color: rgba(0,0,0,0.05); }
+        .dark-mode #animationBtn-play, .dark-mode #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.2); }
+        .dark-mode #animationBtn-play:hover, .dark-mode #animationBtn-reset:hover { background-color: rgba(255,255,255,0.1); }
+        #animationBtn-shuffle { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
+        #animationBtn-shuffle:hover { background-color: rgba(0,0,0,0.05); }
+        .dark-mode #animationBtn-shuffle { border-left-color: rgba(255, 255, 255, 0.2); }
+        .dark-mode #animationBtn-shuffle:hover { background-color: rgba(255,255,255,0.1); }
+        #animationBtn.highlighted-state #animationBtn-shuffle, #animationBtn.highlighted-state #animationBtn-play, #animationBtn.highlighted-state #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.5); }
+        .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle, .dark-mode #animationBtn.highlighted-state #animationBtn-play, .dark-mode #animationBtn.highlighted-state #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.5); }
+        #animationBtn.highlighted-state > #animationBtn-main { position: relative; }
+        #animationBtn-play.active-play i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
+        .dark-mode #animationBtn-play.active-play i { text-shadow: 0 0 10px #ff8a80; }
+        .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
+        .guide-list.hide-covers .guide-cover { visibility: hidden; opacity: 0; max-height: 0; margin: 0; padding: 0; border-width: 0; transform: scale(0.7); }
+        .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom>a:not(.cover-link), .guide-list.only-covers .guide-info-container { display: none; }
+        .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; }
+        .guide-list.only-covers .guide-cover { margin: 0; border: none !important; }
+        .guide { padding: 0 20px 10px; border-radius: 10px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; text-align: center; width: 250px; box-sizing: border-box; }
+        .guide:hover { transform: translateY(-5px); }
+        .guide-content-bottom { flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-end; }
+        .guide-info-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
+        .guide a { margin-top: 10px; display: inline-block; }
+        .guide a.cover-link { margin-top: 0; display: block; }
+        .guide-info { font-size: 0.9em; }
+        .guide-title { margin-top: 7px; font-size: 1.2em; font-weight: bold; margin-bottom: 10px; overflow-wrap: break-word; }
+        .pagination { text-align: center; margin-top: 20px; margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; opacity: 0; transform: translateY(20px); }
+        .pagination button, .pagination input, .pagination select { padding: 10px; margin: 0; font-size: 0.9em; cursor: pointer; border-radius: 5px; width: auto; }
+        .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
+        .guide-cover { max-width: 100%; height: auto; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s, border-width 0.7s, visibility 0.7s, transform 0.7s ease-in-out; opacity: 0; transform: scale(0.7); }
+        .guide.animate-in { animation: fadeInSlideIn 0.5s ease-out forwards; }
+        @keyframes fadeInSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 0; transform: translateY(20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; }
+        .footer.minimized-footer { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; opacity: 0; }
+        .nobr { white-space: nowrap; }
+        .privacy-notice { margin-top: 10px; font-size: 0.9em; }
+        .footer .footer-special-text { font-weight: normal; }
+        .backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.5s ease; background-color: rgba(255, 255, 255, 0.1); }
+        .dark-mode .backdrop { background-color: rgba(0, 0, 0, 0.1); }
+        .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
+        .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
+        .play-guide-container img, .play-guide-container a { display: block; max-width: 100%; max-height: 100%; }
+        .play-guide-container img { object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
+        .dark-mode .play-guide-container img { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 35px rgba(255, 255, 255, 0.35); }
+        .play-caption { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 15px; border-radius: 5px; font-size: 1.2em; font-weight: bold; z-index: 1000; text-align: center; }
+        .play-caption .filename { color: #e53935; }
+        body:not(.dark-mode) .play-caption { background-color: rgba(255, 255, 255, 0.9); color: #333; }
+        .dark-mode .play-caption { background-color: rgba(0, 0, 0, 0.85); color: #ccc; }
+        .play-close-btn { position: fixed; top: 20px; right: 20px; background: 0 0; border: none; color: #000; font-size: 2em; cursor: pointer; z-index: 1001; transition: transform 0.2s ease, color 0.2s; }
+        .dark-mode .play-close-btn { color: #fff; }
+        .play-close-btn:hover { transform: scale(1.2); color: #e53935; }
+        #lightbox-shuffle-controls { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; background-color: rgba(0,0,0,0.5); border-radius: 5px; }
+        .dark-mode #lightbox-shuffle-controls { background-color: rgba(255,255,255,0.1); }
+        #lightbox-shuffle-controls button { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #fff; padding: 10px 12px; transition: transform 0.2s ease, color 0.2s; }
+        #lightbox-shuffle-controls button:first-child { border-right: 1px solid rgba(255,255,255,0.2); }
+        .dark-mode #lightbox-shuffle-controls button:first-child { border-right-color: rgba(0,0,0,0.2); }
+        #lightbox-shuffle-controls button:hover { transform: scale(1.2); color: #e53935; }
+        @keyframes zoomInImage { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse-opacity { 0%, 66.67% { opacity: 1; } 83.33% { opacity: 0.8; } 100% { opacity: 1; } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animated-header, .animated-controls, .animated-footer, .animated-pagination { animation-fill-mode: forwards; }
+        .animated-header, .animated-controls { animation-name: fadeInDown; animation-duration: 0.6s; animation-timing-function: ease-out; }
+        .animated-footer, .animated-pagination { animation-name: fadeInUp; animation-duration: 0.8s; animation-timing-function: ease-out; }
+        .controls.minimized-view .btn-text { display: none; }
+        .controls.minimized-view .dir-db-btn i { margin-right: 0; }
     </style>
 </head>
 
@@ -1066,54 +257,73 @@ Project page: https://adrian-x9.github.io/
     </div>
 
     <div id="backdrop" class="backdrop">
-        <button id="playCloseBtn" class="play-close-btn">
-            <i class="fas fa-times"></i>
-        </button>
+        <button id="playCloseBtn" class="play-close-btn"><i class="fas fa-times"></i></button>
+        <div id="lightbox-shuffle-controls">
+             <button id="lightbox-shuffle-video" title="Losuj wideo w tle"><i class="fas fa-video"></i></button>
+             <button id="lightbox-shuffle-image" title="Losuj następny obrazek"><i class="fas fa-random"></i></button>
+        </div>
         <div id="play-guide-container" class="play-guide-container"></div>
-        <div id="play-counter" class="play-counter"></div>
+        <div id="play-caption" class="play-caption"></div>
     </div>
 
     <script>
-                    // --- KONFIGURACJA ---
-      const config = {
-        version: 'v1.1.3',
-        defaultBgv: false,
-        showBackButton: true,
-        showVisuDirButton: true,
-        showMiniLogo: true,
-        dataFolderName: "base-system/files",
-        coversFolderName: "base-system/preview",
-        coversHDFolderName: "base-system/preview-HD",
-        databaseFileName: "base-system/.db.txt",
-        faviconsFolderUrl: "../base-system/.gfx/favicons",
-        miniLogoLightUrl: "base-system/.gfx/interface/logo-mini-light.png",
-        miniLogoDarkUrl: "base-system/.gfx/interface/logo-mini-dark.png",
-        videoBgLightUrl: "../base-system/.video/bg_light.mp4",
-        videoBgDarkUrl: "../base-system/.video/bg_dark.mp4",
-        url404: "../base-system/404.html",
-        urlAbout: "../base-system/about.html",
-        pageTitle: "Polska ▪ foto galeria",
-        defaultFormat: "",
-        defaultSort: "shuffle",
-        defaultRows: 3,
-        predefinedFilters: [
-          { label: "Gliwice", search: "gliwice" },
-          { label: "Warszawa", search: "warszawa" },
-          { label: "Morze BaĹ‚tyckie", search: "morze" },
-          { label: "", search: "" },
-          { label: "", search: "" },
-        ],
-      };
-      // --- KONIEC KODU ---
-      
-      const dataFromFile = `
+        // --- KONFIGURACJA ---
+        const config = {
+            version: 'v1.2.0',
+            global: {
+                defaultTheme: 'light',
+            },
+            logoRotator: {
+                enabled: true,
+                interval: 4500,
+                logos: [
+                    { srcLight: "../base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../base-system/gfx/interface/VisuDir_small_dark.png", href: "../base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: "../base-system/gfx/interface/ADE_small_light.png", srcDark: "../base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                ]
+            },
+            pageSettings: {
+                pageKey: 'polska',
+                defaultBgVideo: 1,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 16,
+                defaultAnimation: 2,
+                defaultView: 2,
+                defaultFormat: "JPG",
+                defaultSort: "shuffle",
+                defaultRows: 4,
+                predefinedFilters: [
+                    { label: "Polska", search: "polska" },
+                    { label: "Gliwice", search: "gliwice" },
+                    { label: "Slask", search: "slask" },
+                    { label: "Warszawa", search: "warszawa" },
+                ],
+                pageTitle: "POLSKA ▪ foto galeria",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: true,
+            }, 
+            paths: {
+                url404: "../base-system/404.html",
+                urlAbout: "../base-system/about.html",
+                databaseFileName: "base-system/db.txt",
+                dataFolderName: "base-system/files",
+                coversFolderName: "base-system/preview",
+                previewHdFolderName: "base-system/preview",
+                videoBgLightUrlBase: "../base-system/video/bg_light",
+                videoBgDarkUrlBase: "../base-system/video/bg_dark",
+            }
+        };
+        // --- KONIEC KONFIGURACJI ---
+
+        // --- PLIKOWA BAZA DANYCH ---
+        const dataFromFile = `
  Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Polska\base-system\files
 
-08.09.2025  23:00    <DIR>          .
-08.09.2025  22:57    <DIR>          ..
+11.09.2025  22:09    <DIR>          .
+11.09.2025  22:03    <DIR>          ..
 06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
 06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
 06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
@@ -1157,7 +367,7 @@ Project page: https://adrian-x9.github.io/
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
               42 File(s)       32920780 bytes
-               2 Dir(s)     95289700352 bytes free
+               2 Dir(s)     81650532352 bytes free
 
       `;
         // --- KONIEC BAZY DANYCH ---
@@ -1194,8 +404,10 @@ Project page: https://adrian-x9.github.io/
             playButton = document.getElementById("playButton"),
             backdrop = document.getElementById("backdrop"),
             playGuideContainer = document.getElementById("play-guide-container"),
-            playCounterElement = document.getElementById("play-counter"),
+            playCaption = document.getElementById("play-caption"),
             playCloseBtn = document.getElementById("playCloseBtn"),
+            lightboxShuffleVideo = document.getElementById("lightbox-shuffle-video"),
+            lightboxShuffleImage = document.getElementById("lightbox-shuffle-image"),
             headerLogo = document.getElementById("header-logo"),
             logoLink = document.getElementById("logoLink"), 
             bgVideo = document.getElementById("bg-video"),
@@ -1353,7 +565,7 @@ Project page: https://adrian-x9.github.io/
                     const date = match[1];
                     const time = match[2];
                     const sizeOrDir = match[3];
-                    const filename = match[4].trim();
+                    const filename = match[4];
                     const format = getFileExtension(filename);
 
                     let sizeBytes = 0;
@@ -1445,8 +657,7 @@ Project page: https://adrian-x9.github.io/
             if (validOption) {
                 itemsPerPageSelector.value = selectedRowCount;
             } else if (itemsPerPageSelector.options.length > 0) {
-                 // If the stored value is no longer valid, select the closest available option
-                const availableRows = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value));
+                 const availableRows = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value));
                 const closest = availableRows.reduce((prev, curr) => 
                     (Math.abs(curr - selectedRowCount) < Math.abs(prev - selectedRowCount) ? curr : prev)
                 );
@@ -1497,6 +708,7 @@ Project page: https://adrian-x9.github.io/
         }
 
         function init(data) {
+            fileInputLabel.style.display = "none";
             processData(data);
             updateFormatFilter();
             applySort(currentSort, guides);
@@ -1642,15 +854,10 @@ Project page: https://adrian-x9.github.io/
             renderGuides();
         }
         function createGuideHtml(guide) {
-            const f = guide.file
-                .replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "")
-                .split("$$")[0],
+            const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-            let h = "",
-                i = "",
-                a = "",
-                w = "";
+            let h = "", i = "", a = "", w = "";
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
@@ -1683,9 +890,7 @@ Project page: https://adrian-x9.github.io/
                         } class="cover-link">`;
                 }
             }
-            const k = document.body.classList.contains("dark-mode")
-                ? "gfx/no_cover_dark.png"
-                : "gfx/no_cover_light.png";
+            const k = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onload="this.style.opacity=1;this.style.transform='scale(1)';" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
         function renderGuides() {
@@ -1726,8 +931,7 @@ Project page: https://adrian-x9.github.io/
             pagination.innerHTML = "";
             if (totalPages <= 1) return;
             const container = document.createElement("div");
-            container.style.cssText =
-                "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
+            container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
             const createBtn = (html, disabled, onClick) => {
                 const btn = document.createElement("button");
                 btn.innerHTML = html;
@@ -1740,18 +944,10 @@ Project page: https://adrian-x9.github.io/
                 return btn;
             };
             container.appendChild(
-                createBtn(
-                    `<i class="fas fa-angle-double-left"></i> Pierwsza`,
-                    currentPage === 1,
-                    () => (currentPage = 1)
-                )
+                createBtn(`<i class="fas fa-angle-double-left"></i> Pierwsza`, currentPage === 1, () => (currentPage = 1))
             );
             container.appendChild(
-                createBtn(
-                    `<i class="fas fa-chevron-left"></i> Poprzednia`,
-                    currentPage === 1,
-                    () => currentPage--
-                )
+                createBtn(`<i class="fas fa-chevron-left"></i> Poprzednia`, currentPage === 1, () => currentPage--)
             );
             const randomBtn = document.createElement("button");
             randomBtn.innerHTML = `<i class="fas fa-random"></i> Losuj`;
@@ -1790,20 +986,8 @@ Project page: https://adrian-x9.github.io/
             info.className = "pagination-info";
             info.innerHTML = `/ ${totalPages}`;
             container.appendChild(info);
-            container.appendChild(
-                createBtn(
-                    `Następna <i class="fas fa-chevron-right"></i>`,
-                    currentPage === totalPages,
-                    () => currentPage++
-                )
-            );
-            container.appendChild(
-                createBtn(
-                    `Ostatnia <i class="fas fa-angle-double-right"></i>`,
-                    currentPage === totalPages,
-                    () => (currentPage = totalPages)
-                )
-            );
+            container.appendChild(createBtn(`Następna <i class="fas fa-chevron-right"></i>`, currentPage === totalPages, () => currentPage++));
+            container.appendChild(createBtn(`Ostatnia <i class="fas fa-angle-double-right"></i>`, currentPage === totalPages, () => (currentPage = totalPages)));
             pagination.appendChild(container);
         }
         function drawRandomGuides() {
@@ -1837,19 +1021,9 @@ Project page: https://adrian-x9.github.io/
             const previewBtnText = previewBtn.querySelector('.btn-text');
             
             switch (previewState) {
-                case 0: // Widok: Tekst (wyszarzony)
-                    if(previewBtnText) previewBtnText.textContent = ` Tekst`;
-                    previewBtn.classList.add("inactive");
-                    guideList.classList.add("hide-covers");
-                    break;
-                case 1: // Widok: Grafika (normalny)
-                    if(previewBtnText) previewBtnText.textContent = ` Grafika`;
-                    guideList.classList.add("only-covers");
-                    break;
-                case 2: // Widok: Wszystko (wyróżniony)
-                    if(previewBtnText) previewBtnText.textContent = ` Wszystko`;
-                    previewBtn.classList.add("highlighted-state");
-                    break;
+                case 0: if(previewBtnText) previewBtnText.textContent = ` Tekst`; previewBtn.classList.add("inactive"); guideList.classList.add("hide-covers"); break;
+                case 1: if(previewBtnText) previewBtnText.textContent = ` Grafika`; guideList.classList.add("only-covers"); break;
+                case 2: if(previewBtnText) previewBtnText.textContent = ` Wszystko`; previewBtn.classList.add("highlighted-state"); break;
             }
         }
 
@@ -1878,15 +1052,9 @@ Project page: https://adrian-x9.github.io/
             const numStates = hasAnyVideo ? 3 : 2;
 
             switch (animationState % numStates) {
-                case 0: // Tryb: Statycznie (wyszarzony)
-                    if(animationBtnText) animationBtnText.textContent = ` Statycznie`;
-                    animationBtn.classList.add("inactive");
-                    document.body.classList.add("no-animation");
-                    break;
-                case 1: // Tryb: Animacje (normalny)
-                    if(animationBtnText) animationBtnText.textContent = ` Animacje`;
-                    break;
-                case 2: // Tryb: Video (wyróżniony) - tylko jeśli są wideo
+                case 0: if(animationBtnText) animationBtnText.textContent = ` Statycznie`; animationBtn.classList.add("inactive"); document.body.classList.add("no-animation"); break;
+                case 1: if(animationBtnText) animationBtnText.textContent = ` Animacje`; break;
+                case 2:
                     if(animationBtnText) animationBtnText.textContent = ` Video`;
                     animationBtn.classList.add("highlighted-state");
                     if (hasMultipleVideos) {
@@ -1902,15 +1070,12 @@ Project page: https://adrian-x9.github.io/
             const { pageKey, bgVideoStartNum, bgVideoEndNum, defaultBgVideo } = config.pageSettings;
             const storageKey = `visudir_bg_video_${pageKey}`;
             const range = bgVideoEndNum - bgVideoStartNum;
-
             if (range < 1) return; 
 
             const currentVideoNum = parseInt(localStorage.getItem(storageKey)) || defaultBgVideo;
             
             let newVideoNum;
-            do {
-                newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum;
-            } while (newVideoNum === currentVideoNum);
+            do { newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum; } while (newVideoNum === currentVideoNum);
 
             localStorage.setItem(storageKey, newVideoNum);
             initializeBackgroundVideo(currentTheme);
@@ -1936,26 +1101,18 @@ Project page: https://adrian-x9.github.io/
         function resetVideoSettings() {
             animationState = config.pageSettings.defaultAnimation;
             saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
-            
             const { pageKey, defaultBgVideo } = config.pageSettings;
             localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
-
-            if (autoShuffleInterval) {
-                toggleAutoShuffle(); 
-            }
-
+            if (autoShuffleInterval) { toggleAutoShuffle(); }
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
         }
 
         function toggleAnimations() {
-            if (animationState === 2 && autoShuffleInterval) {
-                toggleAutoShuffle();
-            }
+            if (animationState === 2 && autoShuffleInterval) { toggleAutoShuffle(); }
             const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
             const numStates = hasAnyVideo ? 3 : 2;
             animationState = (animationState + 1) % numStates;
-
             saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
@@ -1968,9 +1125,7 @@ Project page: https://adrian-x9.github.io/
             currentTheme = initializeTheme();
             
             const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
-            if(darkModeBtnText) {
-                 darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny';
-            }
+            if(darkModeBtnText) { darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb ciemny' : ' Tryb jasny'; }
             
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
                 const currentLogoData = config.logoRotator.logos[currentLogoIndex];
@@ -1978,7 +1133,7 @@ Project page: https://adrian-x9.github.io/
             }
             
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
-                img.src = currentTheme === 'dark' ? "gfx/no_cover_dark.png" : "gfx/no_cover_light.png";
+                img.src = currentTheme === 'dark' ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
             });
             updateBackgroundVideoVisibility();
         }
@@ -1995,7 +1150,7 @@ Project page: https://adrian-x9.github.io/
             const source = filteredGuides.length > 0 ? filteredGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
             playGuidesQueue = [...source];
-            lastPlayedGuide = null; // Reset
+            lastPlayedGuide = null;
             if (currentSort !== "shuffle")
                 playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
             
@@ -2003,7 +1158,6 @@ Project page: https://adrian-x9.github.io/
             backdrop.classList.add("visible");
             playButton.querySelector('.btn-text').textContent = ' Stop';
             playButton.classList.add("inactive");
-            playCounterElement.classList.add("visible");
             scheduleNext();
             playAnimationInterval = setInterval(scheduleNext, 4000);
         }
@@ -2012,13 +1166,15 @@ Project page: https://adrian-x9.github.io/
             if (playAnimationInterval) {
                 clearInterval(playAnimationInterval);
                 playAnimationInterval = null;
-                
-                document.body.classList.remove("play-mode-active");
-                backdrop.classList.remove("visible");
-                playGuideContainer.innerHTML = "";
+            }
+            document.body.classList.remove("play-mode-active");
+            backdrop.classList.remove("visible", "preview-active");
+            playGuideContainer.innerHTML = "";
+            if (playCaption) playCaption.innerHTML = "";
+            if(playButton) {
                 playButton.classList.remove("inactive");
-                playButton.querySelector('.btn-text').textContent = ' Play';
-                playCounterElement.classList.remove("visible");
+                const btnText = playButton.querySelector('.btn-text');
+                if(btnText) btnText.textContent = ' Play';
             }
         }
 
@@ -2040,52 +1196,71 @@ Project page: https://adrian-x9.github.io/
             if (!guide) return;
 
             lastPlayedGuide = guide;
-            playCounterElement.textContent = `${playGuidesQueue.indexOf(guide) + 1
-                } / ${playGuidesQueue.length}`;
             displayRandomGuide(guide);
         }
-
+        
         function displayRandomGuide(guide) {
-            const animationsOn = animationState !== 0;
-            const display = () => {
-                const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(
-                    guide.file
-                )}`;
-                let displayTitle = guide.title;
-                if (guide.format === "link" && /^\d{2}\s*/.test(displayTitle))
-                    displayTitle = displayTitle.replace(/^\d{2}\s*/, "");
-                const isImageView = ["jpg", "png"].includes(guide.format);
-                backdrop.classList.toggle("image-mode-active", isImageView);
-                playGuideContainer.classList.toggle("image-mode", isImageView);
-                if (isImageView) {
-                    playGuideContainer.innerHTML = `<div class="play-image-view"><img src="${fileUrl}" alt="${displayTitle}"><div class="guide-title">${displayTitle}</div></div>`;
-                } else {
-                    const guideDiv = document.createElement("div");
-                    guideDiv.className = "guide";
-                    guideDiv.innerHTML = createGuideHtml(guide);
-                    playGuideContainer.innerHTML = guideDiv.outerHTML;
-                }
-                if (animationsOn) {
-                    const el = playGuideContainer.children[0];
-                    if (el) el.style.animation = "zoomInThenOut 4s linear infinite";
-                }
-            };
-            if (animationsOn) {
-                playGuideContainer.style.opacity = "0";
-                setTimeout(() => {
-                    display();
-                    playGuideContainer.style.opacity = "1";
-                }, 200);
+            playGuideContainer.innerHTML = "";
+            const isMediaFile = ['jpg', 'png', 'gif', 'webp', 'mp4', 'webm'].includes(guide.format);
+            const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
+            
+            let displayElement;
+
+            if (isMediaFile) {
+                const mediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                displayElement = document.createElement('img');
+                displayElement.src = mediaPath;
+                displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
+                playGuideContainer.appendChild(displayElement);
             } else {
-                display();
+                const baseFilename = guide.file.split("$$")[0];
+                const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+                const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+
+                displayElement = document.createElement('img');
+                if (hdPath) {
+                    displayElement.src = hdPath;
+                    displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
+                } else {
+                    displayElement.src = sdPath;
+                    displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
+                }
+                
+                const link = document.createElement('a');
+                if (guide.format === 'link') {
+                    const targetUrl = decodeUrlFromFilename(guide.file);
+                    link.href = targetUrl;
+                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                    }
+                } else {
+                    const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                    link.href = fileUrl;
+                    if (guide.format === 'pdf') {
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                    } else {
+                        link.download = guide.file;
+                    }
+                }
+                link.appendChild(displayElement);
+                playGuideContainer.appendChild(link);
             }
+            
+            const counterText = playGuidesQueue.length > 1 ? `<b>${playGuidesQueue.indexOf(guide) + 1}</b> / ${playGuidesQueue.length}` : '';
+            const descriptionText = guide.linkData.description || "";
+            let titleText = guide.title;
+            if (/^\d{2}\s*/.test(titleText)) titleText = titleText.replace(/^\d{2}\s*/, "");
+            
+            playCaption.innerHTML = `${counterText} <span class="filename">${titleText}</span> ${descriptionText}`;
         }
 
         function showImagePreview(imageUrl) {
             stopPlayAnimation();
             backdrop.classList.add("visible", "preview-active");
-            playCounterElement.style.display = "none";
             playGuideContainer.innerHTML = `<img src="${imageUrl}" class="preview-image" alt="Podgląd obrazu">`;
+            playCaption.innerHTML = "";
             const close = () => {
                 backdrop.classList.remove("visible", "preview-active");
                 playGuideContainer.innerHTML = "";
@@ -2100,7 +1275,7 @@ Project page: https://adrian-x9.github.io/
         }
 
         backdrop.addEventListener("click", (e) => {
-            if (e.target === backdrop) stopPlayAnimation();
+            if (e.target === backdrop && !backdrop.classList.contains('preview-active')) stopPlayAnimation();
         });
         function debounce(func, wait) {
             let timeout;
@@ -2167,6 +1342,22 @@ Project page: https://adrian-x9.github.io/
                 stopPlayAnimation();
             }
         });
+        if (lightboxShuffleVideo) {
+            lightboxShuffleVideo.addEventListener('click', (e) => {
+                e.stopPropagation();
+                shuffleBackgroundVideo();
+            });
+        }
+        if (lightboxShuffleImage) {
+            lightboxShuffleImage.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (playAnimationInterval) { // Reset timer on manual shuffle
+                    clearInterval(playAnimationInterval);
+                    playAnimationInterval = setInterval(scheduleNext, 4000);
+                }
+                scheduleNext();
+            });
+        }
     </script>
 </body>
 
