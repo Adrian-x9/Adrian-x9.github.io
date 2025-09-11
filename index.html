@@ -81,7 +81,7 @@
         .top-header .counter { font-size: 0.9em; }
         .top-header .counter b { font-weight: bold; }
         .controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; opacity: 0; transform: translateY(-20px); }
-        input, select, button { padding: 10px; border-radius: 5px; border: 1px solid; white-space: nowrap; }
+        input, select, button, .dir-db-btn { padding: 10px; border-radius: 5px; border: 1px solid; white-space: nowrap; }
         #search { width: 160px; }
         input::placeholder { color: #aaa; }
         .dark-mode input::placeholder { color: #666; }
@@ -89,25 +89,29 @@
         .dir-db-btn:hover { transform: translateY(-5px); }
         .dir-db-btn i { margin-right: 5px; }
         #minimizeBtn i { margin-right: 0; }
-        .video-shuffle-btn { padding: 0; overflow: hidden; }
-        .video-shuffle-btn > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
-        #animationBtn-main { flex-grow: 1; padding-right: 12px; }
-        #animationBtn-play, #animationBtn-reset, #animationBtn-shuffle { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        #animationBtn-play:hover, #animationBtn-reset:hover, #animationBtn-shuffle:hover { background-color: rgba(0,0,0,0.05); }
-        .dark-mode #animationBtn-play, .dark-mode #animationBtn-reset, .dark-mode #animationBtn-shuffle { border-left-color: rgba(255, 255, 255, 0.2); }
-        .dark-mode #animationBtn-play:hover, .dark-mode #animationBtn-reset:hover, .dark-mode #animationBtn-shuffle:hover { background-color: rgba(255,255,255,0.1); }
-        #animationBtn.highlighted-state #animationBtn-shuffle, #animationBtn.highlighted-state #animationBtn-play, #animationBtn.highlighted-state #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.5); }
-        .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle, .dark-mode #animationBtn.highlighted-state #animationBtn-play, .dark-mode #animationBtn.highlighted-state #animationBtn-reset { border-left-color: rgba(255, 255, 255, 0.5); }
-        #animationBtn.highlighted-state > #animationBtn-main { position: relative; }
+        .multi-button { padding: 0; overflow: hidden; }
+        .multi-button > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
+        .multi-button-main { flex-grow: 1; padding-right: 12px; }
+        .multi-button-child { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
+        .multi-button-child:hover { background-color: rgba(0,0,0,0.05); }
+        .dark-mode .multi-button-child { border-left-color: rgba(255, 255, 255, 0.2); }
+        .dark-mode .multi-button-child:hover { background-color: rgba(255,255,255,0.1); }
+        .dir-db-btn.highlighted-state .multi-button-child { border-left-color: rgba(255, 255, 255, 0.5); }
+        .dark-mode .dir-db-btn.highlighted-state .multi-button-child { border-left-color: rgba(255, 255, 255, 0.5); }
+        .dir-db-btn.highlighted-state > .multi-button-main { position: relative; }
         #animationBtn-play.active-play i, #lightbox-video-play.active-play i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
         .dark-mode #animationBtn-play.active-play i, .dark-mode #lightbox-video-play.active-play i { text-shadow: 0 0 10px #ff8a80; }
         .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
         .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
-        .guide-list.hide-covers .guide-cover { opacity: 0; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
-        .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; }
-        .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom>a:not(.cover-link), .guide-list.only-covers .guide-info-container { opacity: 0; max-height: 0; margin: 0; padding: 0; pointer-events: none; }
+        .guide-cover { max-width: 100%; height: auto; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
+        .guide .guide-cover { opacity: 1; transform: scale(1); }
+        .guide.animate-in .guide-cover { opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
+        @keyframes fadeInCover { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
+        .guide-list.hide-covers .guide-cover { opacity: 0 !important; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
+        .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; overflow: hidden; }
+        .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom > a:not(.cover-link) { opacity: 0; max-height: 0; margin: 0; padding: 0; pointer-events: none; }
         .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; height: 100%; }
-        .guide-list.only-covers .guide-cover { margin: 0; border: none !important; }
+        .guide-list.only-covers .guide-cover { margin: 0; border: none !important; opacity: 1; transform: scale(1); }
         .guide { padding: 0 20px 10px; border-radius: 10px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; text-align: center; width: 250px; box-sizing: border-box; }
         .guide:hover { transform: translateY(-5px); }
         .guide-content-bottom { flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-end; }
@@ -119,7 +123,6 @@
         .pagination { text-align: center; margin-top: 20px; margin-bottom: 15px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; opacity: 0; transform: translateY(20px); }
         .pagination button, .pagination input, .pagination select { padding: 10px; margin: 0; font-size: 0.9em; cursor: pointer; border-radius: 5px; width: auto; }
         .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
-        .guide-cover { max-width: 100%; height: auto; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.7s, max-height 0.7s, margin 0.7s, padding 0.7s, border-width 0.7s, transform 0.7s ease-in-out; opacity: 0; transform: scale(0.7); }
         .guide.animate-in { animation: fadeInSlideIn 0.5s ease-out forwards; }
         @keyframes fadeInSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 0; transform: translateY(20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; }
@@ -141,12 +144,16 @@
         .play-close-btn { position: fixed; top: 20px; right: 20px; background: 0 0; border: none; color: #000; font-size: 2em; cursor: pointer; z-index: 1001; transition: transform 0.2s ease, color 0.2s; }
         .dark-mode .play-close-btn { color: #fff; }
         .play-close-btn:hover { transform: scale(1.2); color: #e53935; }
-        #lightbox-shuffle-controls { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; background-color: rgba(0,0,0,0.5); border-radius: 5px; }
-        .dark-mode #lightbox-shuffle-controls { background-color: rgba(255,255,255,0.1); }
-        #lightbox-shuffle-controls button { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #fff; padding: 10px 12px; transition: transform 0.2s ease, color 0.2s; }
-        #lightbox-shuffle-controls button:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.2); }
-        .dark-mode #lightbox-shuffle-controls button:not(:last-child) { border-right-color: rgba(0,0,0,0.2); }
-        #lightbox-shuffle-controls button:hover { transform: scale(1.2); color: #e53935; }
+        #lightbox-video-controls { position: fixed; bottom: 20px; left: 20px; z-index: 1001; display: flex; background-color: rgba(0,0,0,0.5); border-radius: 5px; }
+        .dark-mode #lightbox-video-controls { background-color: rgba(255,255,255,0.1); }
+        #lightbox-video-controls button { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #fff; padding: 10px 12px; transition: transform 0.2s ease, color 0.2s; }
+        #lightbox-video-controls button:not(:last-child) { border-right: 1px solid rgba(255,255,255,0.2); }
+        .dark-mode #lightbox-video-controls button:not(:last-child) { border-right-color: rgba(0,0,0,0.2); }
+        #lightbox-video-controls button:hover { transform: scale(1.2); color: #e53935; }
+        #lightbox-image-next { position: fixed; top: 50%; right: 20px; transform: translateY(-50%); z-index: 1001; background: rgba(0,0,0,0.3); border-radius: 50%; border: none; color: #fff; font-size: 2em; cursor: pointer; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s ease, background 0.2s; }
+        #lightbox-image-next:hover { transform: translateY(-50%) scale(1.2); background: rgba(0,0,0,0.5); }
+        .dark-mode #lightbox-image-next { background: rgba(255,255,255,0.1); }
+        .dark-mode #lightbox-image-next:hover { background: rgba(255,255,255,0.2); }
         @keyframes zoomInImage { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes zoomOutImage { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
         @keyframes pulse-opacity { 0%, 66.67% { opacity: 1; } 83.33% { opacity: 0.8; } 100% { opacity: 1; } }
@@ -168,17 +175,14 @@
     <div class="top-header">
         <div class="header-logo-group">
             <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
-            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer"
-                class="header-logo-link">
+            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
                 <img id="header-logo" src="" alt="Logo" class="header-logo" />
             </a>
-
         </div>
         <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
-                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                        class="version-display"></span></span>
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
             </a>
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
                 <span class="btn-text">Wstecz</span></a>
@@ -199,11 +203,6 @@
         <select id="formatFilter">
             <option value="">Wszystko</option>
         </select>
-        <select id="orientationFilter">
-            <option value="">Orientacja...</option>
-            <option value="horizontal">Poziome</option>
-            <option value="vertical">Pionowe</option>
-        </select>
         <select id="sortSelector">
             <option value="">Sortuj...</option>
             <option value="shuffle">Wymieszaj</option>
@@ -214,30 +213,35 @@
             <option value="sizeAsc">Rozmiar ↑</option>
             <option value="sizeDesc">Rozmiar ↓</option>
         </select>
-        <select id="itemsPerPageSelector" title="Wierszy..."></select>
-        <select id="randomSelector" onchange="drawRandomGuides()">
+        <select id="itemsPerPageSelector"></select>
+        <select id="randomSelector">
             <option value="" disabled selected>Losuj...</option>
-            <option value="1">1 pozycja</option>
-            <option value="2">2 pozycje</option>
-            <option value="3">3 pozycje</option>
-            <option value="4">4 pozycje</option>
-            <option value="5">5 pozycji</option>
-            <option value="6">6 pozycji</option>
-            <option value="7">7 pozycji</option>
-            <option value="8">8 pozycji</option>
-            <option value="9">9 pozycji</option>
-            <option value="10">10 pozycji</option>
+            <option value="1">Pozycje: 1</option>
+            <option value="2">Pozycje: 2</option>
+            <option value="3">Pozycje: 3</option>
+            <option value="4">Pozycje: 4</option>
+            <option value="5">Pozycje: 5</option>
+            <option value="6">Pozycje: 6</option>
+            <option value="7">Pozycje: 7</option>
+            <option value="8">Pozycje: 8</option>
+            <option value="9">Pozycje: 9</option>
+            <option value="10">Pozycje: 10</option>
         </select>
         <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Tryb ciemny</span></button>
-        <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></button>
-        <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
-            <span id="animationBtn-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
-            <span id="animationBtn-play"><i class="fas fa-play"></i></span>
-            <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
-            <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+        <div id="previewBtnGroup" class="dir-db-btn multi-button">
+            <span id="previewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></span>
+            <span id="previewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i class="fas fa-arrows-alt-v"></i></span>
+            <span id="previewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i class="fas fa-arrows-alt-h"></i></span>
+            <span id="previewBtn-reset" class="multi-button-child" title="Resetuj widok"><i class="fas fa-undo"></i></span>
+        </div>
+        <button id="animationBtn" class="dir-db-btn multi-button">
+            <span id="animationBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
+            <span id="animationBtn-play" class="multi-button-child"><i class="fas fa-play"></i></span>
+            <span id="animationBtn-shuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
+            <span id="animationBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
         </button>
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
-            <i class="fas fa-window-minimize"></i>
+            <i class="fas fa-chevron-down"></i>
         </button>
     </div>
 
@@ -263,12 +267,12 @@
 
     <div id="backdrop" class="backdrop">
         <button id="playCloseBtn" class="play-close-btn"><i class="fas fa-times"></i></button>
-        <div id="lightbox-shuffle-controls">
-             <button id="lightbox-shuffle-image" title="Losuj następny obrazek"><i class="fas fa-random"></i></button>
-             <button id="lightbox-shuffle-video" title="Losuj wideo w tle"><i class="fas fa-video"></i></button>
+        <div id="lightbox-video-controls">
              <button id="lightbox-video-play" title="Odtwarzaj/pauzuj losowe wideo"><i class="fas fa-play"></i></button>
+             <button id="lightbox-shuffle-video" title="Losuj wideo w tle"><i class="fas fa-random"></i></button>
              <button id="lightbox-video-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></button>
         </div>
+        <button id="lightbox-image-next" title="Następny obrazek"><i class="fas fa-chevron-right"></i></button>
         <div id="play-guide-container" class="play-guide-container"></div>
         <div id="play-caption" class="play-caption"></div>
     </div>
@@ -355,12 +359,12 @@
             playGuidesQueue = [];
         let currentPage = 1,
             itemsPerPage;
-        let playAnimationInterval = null,
+        let playAnimationTimeout = null,
             currentSort,
             selectedRowCount;
         let playCurrentIndex = 0,
             itemsPerRow = 0;
-        let animationState, previewState, currentTheme;
+        let animationState, previewState, orientationFilterState = null;
         let lastPlayedGuide = null, lastRandomPage = -1;
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null;
@@ -372,11 +376,11 @@
             fileInputLabel = document.getElementById("fileInputLabel"),
             searchInput = document.getElementById("search"),
             formatFilter = document.getElementById("formatFilter"),
-            orientationFilter = document.getElementById("orientationFilter"),
             guideList = document.getElementById("guideList"),
             pagination = document.getElementById("pagination"),
             darkModeBtn = document.getElementById("darkModeBtn"),
-            previewBtn = document.getElementById("previewBtn"),
+            previewBtnGroup = document.getElementById("previewBtnGroup"),
+            previewBtnMain = document.getElementById("previewBtn-main"),
             animationBtn = document.getElementById("animationBtn"),
             sortSelector = document.getElementById("sortSelector"),
             itemsPerPageSelector = document.getElementById("itemsPerPageSelector"),
@@ -387,7 +391,7 @@
             playCaption = document.getElementById("play-caption"),
             playCloseBtn = document.getElementById("playCloseBtn"),
             lightboxShuffleVideo = document.getElementById("lightbox-shuffle-video"),
-            lightboxShuffleImage = document.getElementById("lightbox-shuffle-image"),
+            lightboxImageNext = document.getElementById("lightbox-image-next"),
             lightboxVideoPlay = document.getElementById("lightbox-video-play"),
             lightboxVideoReset = document.getElementById("lightbox-video-reset"),
             headerLogo = document.getElementById("header-logo"),
@@ -652,7 +656,7 @@
                 1,
                 Math.floor(guideList.clientWidth / (guideWidth + guideGap))
             );
-            itemsPerPageSelector.innerHTML = "";
+            itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
             const totalItems = filteredGuides.length;
             const totalRowsAvailable =
                 totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
@@ -661,29 +665,23 @@
                 if (totalRowsAvailable > 0 && rows > totalRowsAvailable) return;
                 const option = document.createElement("option");
                 option.value = rows;
-                const p = rows * itemsPerRow;
-                option.textContent = `${rows} ${rows === 1 ? "wiersz" : rows > 1 && rows < 5 ? "wiersze" : "wierszy"
-                    } / ${p} poz.`;
+                option.textContent = `Wierszy: ${rows}`;
                 itemsPerPageSelector.appendChild(option);
             });
             
             const validOption = itemsPerPageSelector.querySelector(`option[value="${selectedRowCount}"]`);
             if (validOption) {
                 itemsPerPageSelector.value = selectedRowCount;
-            } else if (itemsPerPageSelector.options.length > 0) {
-                 const availableRows = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value));
-                const closest = availableRows.reduce((prev, curr) => 
-                    (Math.abs(curr - selectedRowCount) < Math.abs(prev - selectedRowCount) ? curr : prev)
-                );
-                itemsPerPageSelector.value = closest;
-            } else if (totalItems === 0) {
-                 const option = document.createElement("option");
-                 option.value = selectedRowCount;
-                 option.textContent = `${selectedRowCount} wiersze...`;
-                 itemsPerPageSelector.appendChild(option);
+            } else {
+                 itemsPerPageSelector.selectedIndex = 0;
             }
 
-            selectedRowCount = itemsPerPageSelector.value ? parseInt(itemsPerPageSelector.value) : config.pageSettings.defaultRows;
+            if (itemsPerPageSelector.value) {
+                selectedRowCount = parseInt(itemsPerPageSelector.value);
+            } else {
+                selectedRowCount = config.pageSettings.defaultRows;
+            }
+            
             itemsPerPage = selectedRowCount * itemsPerRow;
 
             if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
@@ -708,7 +706,6 @@
             let search = searchInput.value.toLowerCase();
             const formatValue = formatFilter.value;
             let format = formatValue;
-            const orientation = orientationFilter.value;
 
             if (formatValue.startsWith("search:")) {
                 search = formatValue.substring(7).toLowerCase();
@@ -718,7 +715,7 @@
             filteredGuides = guides.filter(g =>
                 g.title.toLowerCase().includes(search) &&
                 (!format || g.format === format) &&
-                (!orientation || g.orientation === orientation)
+                (!orientationFilterState || g.orientation === orientationFilterState)
             );
         }
 
@@ -802,19 +799,42 @@
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             
             animationBtn.addEventListener('click', (event) => {
-                const shuffleBtn = document.getElementById('animationBtn-shuffle');
-                const playBtn = document.getElementById('animationBtn-play');
-                const resetBtn = document.getElementById('animationBtn-reset');
-                
-                if (shuffleBtn && shuffleBtn.contains(event.target)) {
+                const target = event.target.closest('span');
+                if (!target) return;
+
+                if (target.id === 'animationBtn-shuffle') {
                     if (animationState === 2) shuffleBackgroundVideo();
-                } else if (playBtn && playBtn.contains(event.target)) {
+                } else if (target.id === 'animationBtn-play') {
                     toggleAutoShuffle();
-                } else if (resetBtn && resetBtn.contains(event.target)) {
+                } else if (target.id === 'animationBtn-reset') {
                     resetVideoSettings();
-                }
-                else {
+                } else {
                     toggleAnimations();
+                }
+            });
+            
+            previewBtnGroup.addEventListener('click', (event) => {
+                const target = event.target.closest('span');
+                 if (!target) return;
+
+                if(target.id === 'previewBtn-vertical') {
+                    orientationFilterState = 'vertical';
+                    if (previewState === 0) { // If on 'text' view, switch to 'all'
+                         previewState = 2;
+                         updatePreviewButtonUI();
+                    }
+                    renderGuides();
+                } else if(target.id === 'previewBtn-horizontal') {
+                    orientationFilterState = 'horizontal';
+                    if (previewState === 0) { // If on 'text' view, switch to 'all'
+                        previewState = 2;
+                        updatePreviewButtonUI();
+                    }
+                    renderGuides();
+                } else if(target.id === 'previewBtn-reset') {
+                    resetPreview();
+                } else {
+                    togglePreview();
                 }
             });
 
@@ -843,11 +863,11 @@
             controls.classList.toggle('minimized-view', isMinimized);
             
             if (isMinimized) {
-                minimizeBtn.title = "Maksymalizuj interfejs";
-                minimizeIcon.className = 'fas fa-window-maximize';
+                minimizeBtn.title = "Przywróć interfejs";
+                minimizeIcon.className = 'fas fa-chevron-up';
             } else {
                 minimizeBtn.title = "Minimalizuj interfejs";
-                minimizeIcon.className = 'fas fa-window-minimize';
+                minimizeIcon.className = 'fas fa-chevron-down';
             }
 
             topHeader.classList.toggle('minimized-header', isMinimized);
@@ -858,7 +878,6 @@
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = (config.pageSettings.defaultFormat || "").toLowerCase();
-            orientationFilter.value = "";
             saveToLocalStorage('format', formatFilter.value);
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
@@ -866,9 +885,7 @@
             currentPage = 1;
             selectedRowCount = config.pageSettings.defaultRows;
             saveToLocalStorage('rows', selectedRowCount);
-            applyFilters();
-            updatePaginationOptions();
-            renderGuides();
+            resetPreview();
         }
         function createGuideHtml(guide) {
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0],
@@ -908,7 +925,7 @@
                 }
             }
             const k = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
-            return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onload="this.style.opacity=1;this.style.transform='scale(1)';" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
+            return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
         function renderGuides() {
             guideList.classList.remove('random-draw');
@@ -926,15 +943,12 @@
             pageItems.forEach((guide, index) => {
                 const div = document.createElement("div");
                 div.className = "guide";
-                if (!animationsOn) {
-                    div.style.opacity = 1;
-                } else {
-                    div.style.opacity = 0;
-                }
                 guideList.appendChild(div);
                 div.innerHTML = createGuideHtml(guide);
+                
                 if (animationsOn) {
-                    setTimeout(() => {
+                    div.style.opacity = 0;
+                     setTimeout(() => {
                         div.classList.add("animate-in");
                         div.style.animationDelay = `${index * 0.05}s`;
                     }, 20);
@@ -1011,6 +1025,7 @@
         function drawRandomGuides() {
             stopPlayAnimation();
             const count = parseInt(randomSelector.value);
+            if (!count) return;
             const source = filteredGuides.length > 0 ? filteredGuides : guides;
             if (source.length === 0) {
                 alert("Wczytaj plik, aby wylosować pozycje!");
@@ -1028,16 +1043,14 @@
             randomGuides.forEach((guide, index) => {
                 const div = document.createElement("div");
                 div.className = "guide";
-                div.style.opacity = 0; // Hide before animating
                 div.innerHTML = createGuideHtml(guide);
                 guideList.appendChild(div);
                 if (animationsOn) {
+                    div.style.opacity = 0; // Hide before animating
                     setTimeout(() => {
                         div.classList.add("animate-in");
                         div.style.animationDelay = `${index * 0.05}s`;
                     }, 20);
-                } else {
-                    div.style.opacity = 1;
                 }
             });
             randomSelector.value = "";
@@ -1045,21 +1058,33 @@
 
 
         function updatePreviewButtonUI() {
-            previewBtn.classList.remove("inactive", "highlighted-state");
+            previewBtnGroup.classList.remove("inactive", "highlighted-state");
             guideList.classList.remove("hide-covers", "only-covers");
-            const previewBtnText = previewBtn.querySelector('.btn-text');
+            const previewBtnText = previewBtnMain.querySelector('.btn-text');
             
             switch (previewState) {
-                case 0: if(previewBtnText) previewBtnText.textContent = ` Tekst`; previewBtn.classList.add("inactive"); guideList.classList.add("hide-covers"); break;
+                case 0: if(previewBtnText) previewBtnText.textContent = ` Tekst`; previewBtnGroup.classList.add("inactive"); guideList.classList.add("hide-covers"); break;
                 case 1: if(previewBtnText) previewBtnText.textContent = ` Grafika`; guideList.classList.add("only-covers"); break;
-                case 2: if(previewBtnText) previewBtnText.textContent = ` Wszystko`; previewBtn.classList.add("highlighted-state"); break;
+                case 2: if(previewBtnText) previewBtnText.textContent = ` Wszystko`; previewBtnGroup.classList.add("highlighted-state"); break;
             }
         }
 
         function togglePreview() {
+            if (orientationFilterState) {
+                orientationFilterState = null;
+                renderGuides();
+            }
             previewState = (previewState + 1) % 3;
             saveToLocalStorage('view', previewState);
             updatePreviewButtonUI();
+        }
+
+        function resetPreview() {
+            previewState = config.pageSettings.defaultView;
+            orientationFilterState = null;
+            saveToLocalStorage('view', previewState);
+            updatePreviewButtonUI();
+            renderGuides();
         }
 
         function updateAnimationButtonUI() {
@@ -1175,7 +1200,7 @@
         playCloseBtn.addEventListener('click', stopPlayAnimation);
 
         function togglePlayAnimation() {
-            if (playAnimationInterval) stopPlayAnimation();
+            if (playAnimationTimeout) stopPlayAnimation();
             else startPlayAnimation();
         }
 
@@ -1190,27 +1215,27 @@
             document.body.classList.add("play-mode-active");
             backdrop.classList.add("visible");
             playButton.querySelector('.btn-text').textContent = ' Stop';
-            playButton.classList.add("inactive");
+            playAnimationTimeout = 1; // Set a non-null value to indicate play is active
             scheduleNext();
         }
 
         function stopPlayAnimation() {
-            if (playAnimationInterval) {
-                clearTimeout(playAnimationInterval);
-                playAnimationInterval = null;
+            if (playAnimationTimeout) {
+                clearTimeout(playAnimationTimeout);
+                playAnimationTimeout = null;
             }
             document.body.classList.remove("play-mode-active");
             backdrop.classList.remove("visible", "preview-active");
             playGuideContainer.innerHTML = "";
             if (playCaption) playCaption.innerHTML = "";
             if(playButton) {
-                playButton.classList.remove("inactive");
                 const btnText = playButton.querySelector('.btn-text');
                 if(btnText) btnText.textContent = ' Play';
             }
         }
 
         function scheduleNext() {
+            if (!playAnimationTimeout) return;
             let guide;
              if (playGuidesQueue.length < 2) {
                 guide = playGuidesQueue[0];
@@ -1291,20 +1316,19 @@
                 
                 playCaption.innerHTML = `${counterText} <span class="filename">${titleText}</span> ${descriptionText}`;
                 
-                // Set timeout for the next slide
-                if (playAnimationInterval !== null) {
-                    playAnimationInterval = setTimeout(scheduleNext, 4000);
+                if (playAnimationTimeout) {
+                    playAnimationTimeout = setTimeout(scheduleNext, 4000);
                 }
             };
 
             if (existingContent) {
-                // Clear any running timeout before starting the animation
-                if (playAnimationInterval) clearTimeout(playAnimationInterval);
-                playAnimationInterval = null; 
+                if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
+                playAnimationTimeout = null; 
 
                 const imgElement = existingContent.querySelector ? existingContent.querySelector('img') : existingContent;
-                imgElement.style.animation = 'zoomOutImage 0.5s ease-in forwards';
-                setTimeout(showNewGuide, 500);
+                if(imgElement) imgElement.style.animation = 'zoomOutImage 0.5s ease-in forwards';
+                
+                playAnimationTimeout = setTimeout(showNewGuide, 500);
             } else {
                 showNewGuide();
             }
@@ -1365,10 +1389,7 @@
         formatFilter.addEventListener("change", () => {
             currentPage = 1;
             const value = formatFilter.value;
-            // If user changes format, reset orientation
-            if (orientationFilter.value !== "") {
-                orientationFilter.value = "";
-            }
+            orientationFilterState = null;
             if (value.startsWith("search:")) {
                 searchInput.value = value.substring(7);
             } else {
@@ -1377,25 +1398,17 @@
             renderGuides();
             stopPlayAnimation();
         });
-        orientationFilter.addEventListener('change', () => {
-            if (orientationFilter.value !== "") {
-                // As requested, force format to JPG and re-render
-                formatFilter.value = 'jpg';
-            }
-            currentPage = 1;
-            renderGuides();
-            stopPlayAnimation();
-        });
-        sortSelector.addEventListener("change", () => {
-            if (sortSelector.value) {
-                applySort(sortSelector.value, guides);
-                saveToLocalStorage('sort', sortSelector.value);
+        sortSelector.addEventListener("change", (e) => {
+            if (e.target.value) {
+                applySort(e.target.value, guides);
+                saveToLocalStorage('sort', e.target.value);
                 currentPage = 1;
                 renderGuides();
             }
-            sortSelector.value = "";
+            e.target.value = "";
         });
         itemsPerPageSelector.addEventListener("change", (e) => {
+            if(!e.target.value) return;
             selectedRowCount = parseInt(e.target.value);
             saveToLocalStorage('rows', selectedRowCount);
             itemsPerPage = selectedRowCount * itemsPerRow;
@@ -1403,6 +1416,7 @@
             renderGuides();
             stopPlayAnimation();
         });
+        randomSelector.addEventListener("change", drawRandomGuides);
         fileInput.addEventListener("change", function () {
             if (this.files[0]) {
                 loadAndParseFile(this.files[0]);
@@ -1422,7 +1436,7 @@
             e.stopPropagation();
             resetVideoSettings();
         });
-        lightboxShuffleImage.addEventListener('click', (e) => {
+        lightboxImageNext.addEventListener('click', (e) => {
             e.stopPropagation();
             scheduleNext();
         });
