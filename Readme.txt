@@ -1,15 +1,17 @@
-WEBSITE PROJECT – README
-Don't remove this file
+<!-- Do not remove these comments.
 
-Last updated: 2025-09-11  
+Last updated: 2025-09-11
 
 ============================  
 🔹 ENGLISH VERSION  
 ============================  
 
 Version history:  
-- v1.1.3 – 2025-09-11 – Recent version  
-- v1.1.0 – 2025-09-10 – First published version (Initial Release)
+v1.1.3 (2025-09-11) Bug fixes, created soon.html page
+v1.1.1 (2025-09-10) Public release of the first version
+v1.1.0 (2025-09-10) Beta version, pre-release testing
+v1.0.9 (2025-09-09) Bug fixes, new features
+v1.0.0 (2025-09-07) First version of the system
 
 Author: Adrian Ulbrych  
 Location: Gliwice, Silesia, Poland  
@@ -26,9 +28,12 @@ Do not remove these comments.
 🔸 WERSJA POLSKA  
 ============================  
 
-Historia wersji:  
-- v1.1.3 – 2025-09-11 – Najnowsza wersja  
-- v1.1.0 – 2025-09-10 – Pierwsza opublikowana wersja (Wersja początkowa)
+Historia wersji:
+v1.1.3 (2025-09-11) Poprawki błędów, utworzenie strony soon.html
+v1.1.1 (2025-09-10) Publiczne opublikowanie pierwszej wersji</strong>
+v1.1.0 (2025-09-10) Wersja beta, testy przed publikacją
+v1.0.9 (2025-09-09) Poprawki błędów, nowe funkcjonalności
+v1.0.0 (2025-09-07) Pierwsza wersja systemu
 
 Autor: Adrian Ulbrych  
 Lokalizacja: Gliwice, Śląsk, Polska  
@@ -58,6 +63,6 @@ Nie usuwaj tych komentarzy.
 ⠀⠀⠀⠀⠀⠈⠛⠻⢿⣿⣿⣿⡿⠿⠛⠁  
 
 © 2025 Adrian Ulbrych – All rights reserved  
+Project page: https://adrian-x9.github.io/ 
 
-Project page: https://adrian-x9.github.io/  
-Don't remove this file
+Do not remove these comments. -->

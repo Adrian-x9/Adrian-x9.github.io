@@ -1,15 +1,17 @@
 <!-- Do not remove these comments.
 
-Last updated: 2025-09-11  
+Last updated: 2025-09-11
 
 ============================  
 🔹 ENGLISH VERSION  
 ============================  
 
 Version history:  
-- v1.1.3 – 2025-09-11 – LICENSE.md, README.md and README.txt added
-- v1.1.2 – 2025-09-11 – Bugs correctons and improvements
-- v1.1.0 – 2025-09-10 – First published version (Initial Release)
+v1.1.3 (2025-09-11) Bug fixes, created soon.html page
+v1.1.1 (2025-09-10) Public release of the first version
+v1.1.0 (2025-09-10) Beta version, pre-release testing
+v1.0.9 (2025-09-09) Bug fixes, new features
+v1.0.0 (2025-09-07) First version of the system
 
 Author: Adrian Ulbrych  
 Location: Gliwice, Silesia, Poland  
@@ -27,9 +29,11 @@ Do not remove these comments.
 ============================  
 
 Historia wersji:
-- v1.1.3 – 2025-09-11 – Dodano LICENSE.md, README.md and README.txt added
-- v1.1.2 – 2025-09-11 – Poprawki błędów i ulepszenia 
-- v1.1.0 – 2025-09-10 – Pierwsza opublikowana wersja (Wersja początkowa)
+v1.1.3 (2025-09-11) Poprawki błędów, utworzenie strony soon.html
+v1.1.1 (2025-09-10) Publiczne opublikowanie pierwszej wersji</strong>
+v1.1.0 (2025-09-10) Wersja beta, testy przed publikacją
+v1.0.9 (2025-09-09) Poprawki błędów, nowe funkcjonalności
+v1.0.0 (2025-09-07) Pierwsza wersja systemu
 
 Autor: Adrian Ulbrych  
 Lokalizacja: Gliwice, Śląsk, Polska  
@@ -1088,15 +1092,15 @@ Do not remove these comments. -->
                 interval: 4500, // czas w ms
                 logos: [
                     {
-                        srcLight: "base-system/.gfx/interface/VisuDir_small_light.png",
-                        srcDark: "base-system/.gfx/interface/VisuDir_small_dark.png",
-                        href: "",
+                        srcLight: "base-system/gfx/interface/VisuDir_small_light.png",
+                        srcDark: "base-system/gfx/interface/VisuDir_small_dark.png",
+                        href: "about.html",
                         alt: "Logo VisuDir"
                     },
                     {
-                        srcLight: "base-system/.gfx/interface/ADE_small_light.png",
-                        srcDark: "base-system/.gfx/interface/ADE_small_dark.png",
-                        href: "https://www.adrianulbrych.pl",
+                        srcLight: "base-system/gfx/interface/ADE_small_light.png",
+                        srcDark: "base-system/gfx/interface/ADE_small_dark.png",
+                        href: "https://www.ade.pl",
                         alt: "Logo ADE"
                     }
                 ]
@@ -1104,14 +1108,14 @@ Do not remove these comments. -->
             // --- Ustawienia specyficzne dla tej strony (index.html) ---
             pageSettings: {
                 pageKey: 'index',
-                defaultBgVideo: 3,
+                defaultBgVideo: 4,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 10,
+                bgVideoEndNum: 14,
                 defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
                 defaultView: 2, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
                 defaultFormat: "LINK", // Puste oznacza "Wszystko"
                 defaultSort: "nameAsc",
-                defaultRows: 3,
+                defaultRows: 5,
                 predefinedFilters: [
                     { label: "ADE", search: "ade" },
                     { label: "Galerie zdjęć", search: "galeria" },
@@ -1119,7 +1123,7 @@ Do not remove these comments. -->
                     { label: "", search: "" },
                     { label: "", search: "" },
                 ],
-                pageTitle: "▪ START ▪ mini ▪",
+                pageTitle: "START ▪ mini",
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: false,
@@ -1128,11 +1132,11 @@ Do not remove these comments. -->
             paths: {
                 url404: "base-system/404.html",
                 urlAbout: "base-system/about.html",
-                databaseFileName: "base-system/.db.txt",
+                databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
-                videoBgLightUrlBase: "base-system/.video/bg_light",
-                videoBgDarkUrlBase: "base-system/.video/bg_dark",
+                videoBgLightUrlBase: "base-system/video/bg_light",
+                videoBgDarkUrlBase: "base-system/video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
