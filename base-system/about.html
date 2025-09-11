@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>O systemie VisuDir</title>
-    <link rel="icon" type="image/png" sizes="16x16" href=".gfx/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="gfx/favicons/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
         :root {
@@ -307,7 +307,8 @@
         }
 
         #about-image-container {
-            flex-basis: 300px;
+            margin-bottom: 0px;
+            flex-basis: 318px;
             flex-shrink: 0;
             padding: 10px;
             display: flex;
@@ -319,6 +320,11 @@
         }
 
         html.dark-mode #about-image-container {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        html.dark-mode .content-box,
+        html.dark-mode #video-box-container {
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
@@ -730,15 +736,11 @@
         <div class="content-box">
             <div class="inner-content">
                 <h2>Historia wersji</h2>
-                <p><strong>v1.0.8 (2025-09-09)</strong> Stylizacja trybu podglądu zdjęcia i szlify końcowe.</p>
-                <p><strong>v1.0.7 (2025-09-09)</strong> Zmiana stylizacji w lightboxie.</p>
-                <p><strong>v1.0.6 (2025-09-09)</strong> Korekty błędów i optymalizacja kodu</p>
-                <p><strong>v1.0.5 (2025-09-09)</strong> Poprawki głównego widoku.</p>
-                <p><strong>v1.0.4 (2025-09-09)</strong> Poprawki index.html.</p>
-                <p><strong>v1.0.3 (2025-09-09)</strong> Poprawki nakładki i widoczności lightboxa.</p>
-                <p><strong>v1.0.2 (2025-09-09)</strong> Poprawki błędów, poprawki funkcji.</p>
-                <p><strong>v1.0.1 (2025-09-08)</strong> Poprawki błędów, generacja mediów.</p>
-                <p><strong>v1.0.0 (2025-09-07)</strong> Publikacja pierwszej wersji systemu.</p>
+                <p><strong>v1.1.3 (2025-09-11)</strong> Poprawki błędów, utworzenie strony soon.html</p>
+                <p><strong>v1.1.1 (2025-09-10)</strong> <strong>Publiczne opublikowanie pierwszej wersji</strong></p>
+                <p><strong>v1.1.0 (2025-09-10)</strong> Wersja beta, testy przed publikacją</p>
+                <p><strong>v1.0.9 (2025-09-09)</strong> Poprawki błędów, nowe funkcjonalności</p>
+                <p><strong>v1.0.0 (2025-09-07)</strong> Pierwsza wersja systemu</p>
             </div>
         </div>
 
@@ -770,7 +772,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.1.3',
+            version: 'v1.1.4',
             // Ustawienia globalne, wspólne dla wszystkich stron
             global: {
                 // Domyślny motyw, gdy brak w pamięci: 'light' lub 'dark'
@@ -781,9 +783,9 @@
                 // Klucz strony (musi być unikalny, np. 'about', 'index')
                 pageKey: 'about',
                 // Domyślny numer wideo tła dla tej strony
-                defaultBgVideo: 1,
-                bgVideoStartNum: 1,
-                bgVideoEndNum: 6,
+                defaultBgVideo: 11,
+                bgVideoStartNum: 11,
+                bgVideoEndNum: 14,
                 defaultAnimation: 2, // 0: Statycznie, 2: Video
                 showMiniLogo: true,
                 showBackButton: true,
@@ -791,32 +793,32 @@
                 showThemeButton: true,
             },
             paths: {
-                videoBgLightUrlBase: ".video/bg_light", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
-                videoBgDarkUrlBase: ".video/bg_dark", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
+                videoBgLightUrlBase: "video/bg_light", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
+                videoBgDarkUrlBase: "video/bg_dark", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
                 videos: {
-                    about_dark: '.video/about_dark.mp4',
-                    about_light: '.video/about_light.mp4',
+                    about_dark: 'video/about_dark.mp4',
+                    about_light: 'video/about_light.mp4',
                 },
                 graphics: {
                     logo1: {
-                        dark: '.gfx/interface/VisuDir_small_dark.png',
-                        light: '.gfx/interface/VisuDir_small_light.png',
-                        link: './about.html'
+                        dark: 'gfx/interface/VisuDir_small_dark.png',
+                        light: 'gfx/interface/VisuDir_small_light.png',
+                        link: '/about.html'
                     },
                     logo2: {
-                        dark: '.gfx/interface/ADE_small_dark.png',
-                        light: '.gfx/interface/ADE_small_light.png',
+                        dark: 'gfx/interface/ADE_small_dark.png',
+                        light: 'gfx/interface/ADE_small_light.png',
                         link: 'https://www.ade.pl'
                     },
                     logo3: {
-                        dark: '.gfx/interface/Building_small_dark.png',
-                        light: '.gfx/interface/Building_small_light.png',
+                        dark: 'gfx/interface/Building_small_dark.png',
+                        light: 'gfx/interface/Building_small_light.png',
                         link: './soon.html'
                     },
-                    about_dark: '.gfx/interface/VisuDir_dark.png',
-                    about_light: '.gfx/interface/VisuDir_light.png',
-                    about_ade_dark: '.gfx/interface/Adrian-dark.png',
-                    about_ade_light: '.gfx/interface/Adrian-light.png'
+                    about_dark: 'gfx/interface/VisuDir_dark.png',
+                    about_light: 'gfx/interface/VisuDir_light.png',
+                    about_ade_dark: 'gfx/interface/Adrian-dark.png',
+                    about_ade_light: 'gfx/interface/Adrian-light.png'
                 }
             }
         };
