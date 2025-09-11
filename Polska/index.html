@@ -1,14 +1,80 @@
+<!-- 
+
+Last updated: 2025-09-11  
+
+============================  
+🔹 ENGLISH VERSION  
+============================  
+
+Version history:  
+- v1.1.3 – 2025-09-11 – LICENSE.md, README.md and README.txt added
+- v1.1.2 – 2025-09-11 – Bugs correctons and improvements
+- v1.1.0 – 2025-09-10 – First published version (Initial Release)
+
+Author: Adrian Ulbrych  
+Location: Gliwice, Silesia, Poland  
+Contact: +48 601 190 330  
+
+All rights reserved.  
+Use and modification of the code requires the author's permission.  
+
+This project includes embedded comments in HTML files  
+with version history and authorship.  
+Do not remove these comments.  
+
+============================  
+🔸 WERSJA POLSKA  
+============================  
+
+Historia wersji:
+- v1.1.3 – 2025-09-11 – Dodano LICENSE.md, README.md and README.txt added
+- v1.1.2 – 2025-09-11 – Poprawki błędów i ulepszenia 
+- v1.1.0 – 2025-09-10 – Pierwsza opublikowana wersja (Wersja początkowa)
+
+Autor: Adrian Ulbrych  
+Lokalizacja: Gliwice, Śląsk, Polska  
+Kontakt: +48 601 190 330  
+
+Wszystkie prawa zastrzeżone.  
+Użycie i modyfikacja kodu wymaga zgody autora.  
+
+Projekt zawiera komentarze w plikach HTML  
+z historią wersji i informacją o autorze.  
+Nie usuwaj tych komentarzy.
+
+============================
+
+⠀⠀⠀⠀⠀⠀⠘⢄⠀⢰⠁⠀⢀⣠⠜  
+⠀⠀⠀⠀⠀⠀⠀⠀⡆⢸⠀⠀⡏  
+⠀⠀⠀⠀⠀⠀⠀⠀⢇⠀⠃⠀⢈  
+⠀⠀⠀⢀⣤⣶⠾⠿⠛⠛⠛⠛⠛⠿⠿⣶⣤⣀  
+⠀⣠⡾⠋⠁⠀⠀⠀⢀⣠⣤⠤⢤⣤⣄⠀⠈⠙⢿⣦  
+⣸⡏⠀⠀⠀⣀⣤⠾⠋⠁⠀⠀⠀⣸⠟⠀⠀⠀⠀⠹⣷  
+⣿⣇⠀⠀⠀⠙⠳⢦⣄⡀⠀⠀⠈⢳⣦⠀⠀⠀⠀⣰⣿  
+⢹⣿⣶⣤⣀⠀⠀⠀⠈⠙⠳⠶⠶⠿⠋⠀⢀⣤⣾⣿⣿⣶⣶⣦⡀  
+⠘⣿⣿⣿⣿⣿⣶⣶⣦⣤⣤⣤⣤⣶⣶⣿⣿⣿⣿⣿⠋⠉⠙⣿⣧  
+⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⠀⠀⢠⣿⡿  
+⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣶⣶⣿⡿  
+⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠈⠉⠉⠁  
+⠀⠀⠀⠀⠀⠈⠛⠻⢿⣿⣿⣿⡿⠿⠛⠁  
+
+© 2025 Adrian Ulbrych – All rights reserved  
+
+Project page: https://adrian-x9.github.io/ 
+
+-->
+
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" style="background-color: black;">
 
 <head>
     <meta charset="UTF-8" />
     <title>Moja Biblioteka Poradników</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" sizes="16x16" href="../base-system/.gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="../base-system/.gfx/favicons/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="../base-system/.gfx/favicons/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./base-system/.gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./base-system/.gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./base-system/.gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -47,6 +113,17 @@
         body.no-animation .top-header,
         body.no-animation .footer {
             transition: none !important;
+        }
+        
+        body.play-mode-active > .top-header,
+        body.play-mode-active > .controls,
+        body.play-mode-active > .guide-list,
+        body.play-mode-active > .pagination,
+        body.play-mode-active > .footer {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0s 0.4s;
         }
 
         #fileInput {
@@ -91,7 +168,7 @@
         }
 
         body:not(.dark-mode) {
-            background-color: #f4f4f4;
+            background-color: #e1e1e1;
             color: #333;
         }
 
@@ -163,7 +240,7 @@
         }
 
         .dark-mode {
-            background-color: #181818;
+            background-color: #121212; /* Poprawiono: Ciemne tło dla body */
             color: #eee;
         }
 
@@ -383,8 +460,9 @@
             padding-right: 12px;
         }
 
+        /* Poprawione paddingi dla przycisków wideo */
         #animationBtn-play, #animationBtn-reset {
-            padding: 0 12px;
+            padding: 10px 12px; /* Zmienione */
             border-left: 1px solid rgba(0, 0, 0, 0.1);
         }
         
@@ -401,7 +479,7 @@
         }
         
         #animationBtn-shuffle {
-            padding-left: 12px;
+            padding: 10px 12px; /* Zmienione */
             border-left: 1px solid rgba(0, 0, 0, 0.1);
         }
         
@@ -414,7 +492,7 @@
         .dark-mode #animationBtn-shuffle:hover {
             background-color: rgba(255,255,255,0.1);
         }
-
+        
         #animationBtn.highlighted-state #animationBtn-shuffle,
         #animationBtn.highlighted-state #animationBtn-play,
         #animationBtn.highlighted-state #animationBtn-reset {
@@ -467,6 +545,8 @@
 
         .guide-list.only-covers .guide {
             padding: 10px;
+            justify-content: center;
+            align-items: center;
         }
 
         .guide-list.only-covers .guide-cover {
@@ -654,10 +734,6 @@
             transition: opacity 0.5s ease, background-color 0.3s;
         }
 
-        .dark-mode .backdrop {
-            background-color: rgba(255, 255, 255, 0.6);
-        }
-
         .dark-mode .backdrop.image-mode-active,
         .dark-mode .backdrop.preview-active {
             background-color: rgba(0, 0, 0, 0.8);
@@ -667,6 +743,14 @@
             opacity: 1;
             visibility: visible;
         }
+        
+        body:not(.dark-mode) .play-guide-container .guide {
+            background-color: rgba(255, 255, 255, 0.67);
+        }
+
+        .dark-mode .play-guide-container .guide {
+            background-color: rgba(0, 0, 0, 0.67);
+        }
 
         .play-guide-container {
             transform-style: preserve-3d;
@@ -674,9 +758,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 300px;
-            height: 400px;
             transition: opacity 0.2s ease-in-out;
+            width: 90vw;
+            height: 90vh;
+            max-width: 450px;
+            max-height: 700px;
+            /* Usunięto: padding-top i padding-bottom z głównego kontenera,
+               aby umożliwić zajęcie całej wysokości przez okładkę/obraz */
+            padding: 0; /* Zapewnia, że padding nie ogranicza zawartości */
         }
 
         .play-guide-container .guide,
@@ -690,10 +779,48 @@
             max-width: initial;
             max-height: initial;
         }
+        
+        .play-guide-container .guide {
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            display: flex; /* Zmieniono na flexbox */
+            flex-direction: column; /* Ułożenie elementów w kolumnie */
+            justify-content: center; /* Wyśrodkowanie w pionie */
+            align-items: center; /* Wyśrodkowanie w poziomie */
+            box-sizing: border-box; /* Ważne dla paddingu */
+        }
+
+        .play-guide-container .guide a.cover-link {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            min-height: 0;
+            justify-content: center; /* Wyśrodkowanie linku z okładką */
+            align-items: center;
+        }
+
+        .play-guide-container .guide .guide-cover {
+            height: 100%; /* Okładka wypełnia całą dostępną wysokość */
+            width: 100%;
+            object-fit: contain; /* Obrazek będzie widoczny w całości, bez ucinania */
+            margin: 0; /* Usunięto margines */
+        }
+
+        .play-guide-container .guide .guide-title {
+            font-size: 1.6em;
+            margin-top: 10px;
+        }
+        .play-guide-container .guide .guide-info {
+            font-size: 1.05em;
+        }
 
         .preview-image {
             max-width: 90vw;
             max-height: 90vh;
+            width: auto; /* Zapewnia skalowanie */
+            height: auto; /* Zapewnia skalowanie */
+            object-fit: contain; /* Obrazek będzie widoczny w całości */
             border-radius: 5px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         }
@@ -707,6 +834,7 @@
             width: 100%;
             height: 100%;
             position: relative;
+            box-sizing: border-box; /* Ważne dla paddingu */
         }
 
         .play-image-view img {
@@ -782,34 +910,6 @@
         .play-close-btn:hover {
             transform: scale(1.2);
             color: #e53935;
-        }
-
-        @media (min-width: 1200px) {
-            .play-guide-container {
-                width: 90vw;
-                height: 90vh;
-                max-width: 450px;
-                max-height: 700px;
-            }
-
-            .play-guide-container.image-mode {
-                max-width: 95vw;
-                max-height: 95vh;
-            }
-
-            .play-guide-container .guide {
-                width: 100%;
-                height: 100%;
-                padding: 20px;
-            }
-
-            .play-guide-container .guide .guide-cover {
-                width: 100%;
-                height: 70%;
-                object-fit: contain;
-                max-width: 100%;
-                max-height: 100%;
-            }
         }
 
         @keyframes fadeInDown {
@@ -937,8 +1037,7 @@
         <button id="previewBtn" onclick="togglePreview()" class="dir-db-btn"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></button>
         <button id="animationBtn" class="dir-db-btn video-shuffle-btn">
             <span id="animationBtn-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
-            <span id="animationBtn-play"><i class="fas fa-play"></i></span>
-            <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+            <span id="animationBtn-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span> <span id="animationBtn-play"><i class="fas fa-play"></i></span>
             <span id="animationBtn-shuffle"><i class="fas fa-random"></i></span>
         </button>
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
@@ -953,7 +1052,7 @@
         <div>
             <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
                     <span class="version-display"></span></span></a></strong>
-            <strong>© 2025-09-07</strong> do katalogowania, zarządzania i
+            <strong>© 2025-09-10</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
             <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
                 </a></span>
@@ -977,7 +1076,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.0.9',
+            version: 'v1.1.2',
             // --- Ustawienia globalne, wspólne dla wszystkich stron ---
             global: {
                 defaultTheme: 'light', // 'light' lub 'dark'
@@ -987,108 +1086,80 @@
                 interval: 4500, // czas w ms
                 logos: [
                     {
-                        srcLight: "../base-system/.gfx/interface/VisuDir_small_light.png",
-                        srcDark: "../base-system/.gfx/interface/VisuDir_small_dark.png",
-                        href: "base-sytem/about.html",
+                        srcLight: "base-system/.gfx/interface/VisuDir_small_light.png",
+                        srcDark: "base-system/.gfx/interface/VisuDir_small_dark.png",
+                        href: "",
                         alt: "Logo VisuDir"
                     },
                     {
-                        srcLight: "../base-system/.gfx/interface/ADE_small_light.png",
-                        srcDark: "../base-system/.gfx/interface/ADE_small_dark.png",
-                        href: "https://www.ade.pl",
+                        srcLight: "base-system/.gfx/interface/ADE_small_light.png",
+                        srcDark: "base-system/.gfx/interface/ADE_small_dark.png",
+                        href: "https://www.adrianulbrych.pl",
                         alt: "Logo ADE"
                     }
                 ]
             },
             // --- Ustawienia specyficzne dla tej strony (index.html) ---
             pageSettings: {
-                pageKey: 'polska',
+                pageKey: 'index',
                 defaultBgVideo: 3,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 10,
                 defaultAnimation: 2, // 0-Statycznie, 1-Animacje, 2-Video
                 defaultView: 2, // Nowa kolejność: 0-Tekst, 1-Grafika, 2-Wszystko
-                defaultFormat: "JPG", // Puste oznacza "Wszystko"
-                defaultSort: "shuffle",
-                defaultRows: 4,
+                defaultFormat: "LINK", // Puste oznacza "Wszystko"
+                defaultSort: "nameAsc",
+                defaultRows: 3,
                 predefinedFilters: [
-                    { label: "Polska", search: "polska" },
-                    { label: "Gliwice", search: "gliwice" },
-                    { label: "Warszawa", search: "warszawa" },
-                    { label: "Morze Bałtyckie", search: "morze" },
+                    { label: "ADE", search: "ade" },
+                    { label: "Galerie zdjęć", search: "galeria" },
+                    { label: "Poradniki", search: "poradniki" },
+                    { label: "", search: "" },
                     { label: "", search: "" },
                 ],
-                pageTitle: "▪ POLSKA ▪ foto galeria ▪",
+                pageTitle: "▪ START ▪ mini ▪",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: true,
-            },
+                showBackButton: false,
+            }, 
             // --- Ścieżki dostępu ---
             paths: {
-                url404: "../base-system/404.html",
-                urlAbout: "../base-system/about.html",
-                databaseFileName: "./base-system/.db.txt",
-                dataFolderName: "./base-system/files",
-                coversFolderName: "./base-system/preview",
-                videoBgLightUrlBase: "../base-system/.video/bg_light",
-                videoBgDarkUrlBase: "../base-system/.video/bg_dark",
+                url404: "base-system/404.html",
+                urlAbout: "base-system/about.html",
+                databaseFileName: "base-system/.db.txt",
+                dataFolderName: "base-system/files",
+                coversFolderName: "base-system/preview",
+                videoBgLightUrlBase: "base-system/.video/bg_light",
+                videoBgDarkUrlBase: "base-system/.video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
 
         // --- PLIKOWA BAZA DANYCH ---
         const dataFromFile = ` 
-  Volume in drive C has no label.
+ Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Polska\base-system\files
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
 
-08.09.2025  23:00    <DIR>          .
-08.09.2025  22:57    <DIR>          ..
-06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
-06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
-06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
-06.09.2025  07:07           1001189 Gliwice-Architektura_Polska_2461658_1920.jpg
-06.09.2025  07:11            579215 Gliwice-Autostrada-Noc_Polska_3248323_1920.jpg
-06.09.2025  07:15            960520 Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg
-06.09.2025  07:10            849329 Gliwice-Park-Jesien_Polska_4565816_1920.jpg
-06.09.2025  07:16            983087 Gliwice-Park-Jesien_Polska_4565817_1920.jpg
-06.09.2025  07:13            897171 Gliwice-Park-Jesien_Polska_4565819_1920.jpg
-06.09.2025  07:20            809564 Gliwice-Park-Natura_Polska_4565821_1920.jpg
-06.09.2025  07:20            670659 Gliwice-Radiostacja_Radio-Station_Polska_742266_1920.jpg
-06.09.2025  07:16            380364 Gliwice-Radiostacja_Radiotower_Polska_5046712_1920.jpg
-06.09.2025  07:09            665941 Gliwice-Ratusz_Polska_4634722_1920.jpg
-06.09.2025  07:17            718118 Gliwice-Rynek-Lato_Polska_4022057_1920.jpg
-06.09.2025  07:10            540677 Gliwice-Rynek-Ratusz_Polska_4022055_1920.jpg
-06.09.2025  07:18            665941 Gliwice-Rynek-Ratusz_Polska_4634722_1920.jpg
-06.09.2025  07:19            651140 Gliwice-Rzeka_River_Polska_6311462_1920.jpg
-06.09.2025  07:07            879613 Gliwice-Srodmiescie_Polska_2461654_1920.jpg
-06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
-06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
-06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
-06.09.2025  07:28           1284251 KoLobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
-06.09.2025  07:26            785680 KoLobrzeg_Polska_7562038_1920.jpg
-06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
-06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
-06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
-06.09.2025  07:30           1308124 Morskie-Oko_Mountains_Polska_4652861_1920.jpg
-06.09.2025  07:32            433921 Morze-Baltyckie_Baltic-Sea_Polska_7434540_1920.jpg
-06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
-06.09.2025  07:24            778656 Polska-Jura-Zamek_4717062_1920.jpg
-06.09.2025  07:24            897669 Polska-Wilamowice_Polska_5249675_1920.jpg
-06.09.2025  07:25            931818 Poznan-Rynek_Polska_983563_1920.jpg
-06.09.2025  07:03            648074 Standarcie-Kawiarnia-Krakow_Polska_street-cafe-4472312_1920.jpg
-06.09.2025  07:34            532992 Swinoujscie_Morze-Baltyckie_Baltic-Sea_Polska_2687131_1920.jpg
-06.09.2025  07:21            626930 Twierdza-Modlin-Narew_Fortress_Polska_7933060_1920.jpg
-06.09.2025  07:01            626930 Twierdza-modlin_modlin-fortress_Narew_Polska_7933060_1920.jpg
-06.09.2025  07:36            708799 Uznam-Morze-Baltyckie_Zachod-Slonca_Sunset_Polska_7147706_1920.jpg
-06.09.2025  07:35            579414 Uznam-Wolin_Usedom_Polska_3621894_1920.jpg
-06.09.2025  07:27            970499 Warszawa-Pomnik_Polska_2825709_1920.jpg
-06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
-06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
-06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
-              42 File(s)       32920780 bytes
-               2 Dir(s)     95289700352 bytes free
+10.09.2025  20:36    <DIR>          .
+10.09.2025  21:42    <DIR>          ..
+06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
+06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
+06.09.2025  19:59                 0 .#base-system#soon.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
+06.09.2025  20:33                 0 .#index-mini.html$$01 MENU mini$$01 Mini menu.link
+06.09.2025  20:32                 0 .#index.html$$01 MENU pelne$$Pelne menu.link
+06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
+06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
+06.09.2025  20:33                 0 .#Poradniki#index-gryonline.html$$72 Poradniki Gry-Online$$Poradniki Gry-Online.link
+06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
+06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
+06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
+06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
+06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
+06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
+              14 File(s)              0 bytes
+               2 Dir(s)     87254671360 bytes free
 
       `;
         // --- KONIEC BAZY DANYCH ---
@@ -1376,7 +1447,17 @@
             if (validOption) {
                 itemsPerPageSelector.value = selectedRowCount;
             } else if (itemsPerPageSelector.options.length > 0) {
-                itemsPerPageSelector.selectedIndex = itemsPerPageSelector.options.length - 1;
+                 // If the stored value is no longer valid, select the closest available option
+                const availableRows = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value));
+                const closest = availableRows.reduce((prev, curr) => 
+                    (Math.abs(curr - selectedRowCount) < Math.abs(prev - selectedRowCount) ? curr : prev)
+                );
+                itemsPerPageSelector.value = closest;
+            } else if (totalItems === 0) {
+                 const option = document.createElement("option");
+                 option.value = selectedRowCount;
+                 option.textContent = `${selectedRowCount} wiersze...`;
+                 itemsPerPageSelector.appendChild(option);
             }
 
             selectedRowCount = itemsPerPageSelector.value ? parseInt(itemsPerPageSelector.value) : config.pageSettings.defaultRows;
@@ -1399,6 +1480,23 @@
             r.readAsText(file, "utf-8");
             fileInput.value = null;
         }
+        
+        function applyFilters() {
+            let search = searchInput.value.toLowerCase();
+            const formatValue = formatFilter.value;
+            let format = formatValue;
+
+            if (formatValue.startsWith("search:")) {
+                search = formatValue.substring(7).toLowerCase();
+                format = "";
+            }
+
+            filteredGuides = guides.filter(
+                (g) =>
+                    g.title.toLowerCase().includes(search) &&
+                    (!format || g.format === format)
+            );
+        }
 
         function init(data) {
             processData(data);
@@ -1412,8 +1510,9 @@
             }
             
             const defaultFormat = config.pageSettings.defaultFormat || "";
-            formatFilter.value = getFromLocalStorage('format') || defaultFormat;
-
+            formatFilter.value = (getFromLocalStorage('format') || defaultFormat).toLowerCase();
+            
+            applyFilters();
             updatePaginationOptions();
             renderGuides();
         }
@@ -1532,7 +1631,7 @@
         function resetView() {
             stopPlayAnimation();
             searchInput.value = "";
-            formatFilter.value = config.pageSettings.defaultFormat || "";
+            formatFilter.value = (config.pageSettings.defaultFormat || "").toLowerCase();
             saveToLocalStorage('format', formatFilter.value);
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
@@ -1540,6 +1639,7 @@
             currentPage = 1;
             selectedRowCount = config.pageSettings.defaultRows;
             saveToLocalStorage('rows', selectedRowCount);
+            applyFilters();
             updatePaginationOptions();
             renderGuides();
         }
@@ -1591,15 +1691,7 @@
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onload="this.style.opacity=1;this.style.transform='scale(1)';" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
         function renderGuides() {
-            const search = searchInput.value.toLowerCase(),
-                format = formatFilter.value.startsWith("search:")
-                    ? ""
-                    : formatFilter.value;
-            filteredGuides = guides.filter(
-                (g) =>
-                    g.title.toLowerCase().includes(search) &&
-                    (!format || g.format === format)
-            );
+            applyFilters();
             
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
             currentPage = Math.min(currentPage, totalPages || 1);
@@ -1908,6 +2000,8 @@
             lastPlayedGuide = null; // Reset
             if (currentSort !== "shuffle")
                 playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length);
+            
+            document.body.classList.add("play-mode-active");
             backdrop.classList.add("visible");
             playButton.querySelector('.btn-text').textContent = ' Stop';
             playButton.classList.add("inactive");
@@ -1920,6 +2014,8 @@
             if (playAnimationInterval) {
                 clearInterval(playAnimationInterval);
                 playAnimationInterval = null;
+                
+                document.body.classList.remove("play-mode-active");
                 backdrop.classList.remove("visible");
                 playGuideContainer.innerHTML = "";
                 playButton.classList.remove("inactive");
