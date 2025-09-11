@@ -8,6 +8,60 @@
     <link rel="icon" type="image/png" sizes="16x16" href=".gfx/favicons/favicon-16x16.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <style>
+        :root {
+            --html-bg-color: #e1e1e1;
+            --body-bg-color: #e1e1e1;
+            --body-text-color: #333;
+            --accent-color: #cc0000;
+            --accent-color-darker: #b30000;
+            --button-bg-color: #fdfdfd;
+            --button-bg-hover: #f0f0f0;
+            --button-border-color: #ccc;
+            --button-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+            --button-shadow-hover: 0 0 20px rgba(255, 0, 0, 0.3);
+            --content-bg-color: #fdfdfd;
+            --footer-text-color: #666;
+            --footer-special-text: #555;
+            --privacy-notice-color: #bbb;
+            --lightbox-overlay-bg: rgba(255, 255, 255, 0.1);
+            --lightbox-content-bg: rgba(255, 255, 255, 0.67);
+            --lightbox-control-color: #000;
+            --lightbox-caption-bg: rgba(255, 255, 255, 0.9);
+            --lightbox-caption-text: #666;
+            --lightbox-caption-name: #d32f2f;
+            --image-container-bg: rgba(253, 253, 253, 0.67);
+            --separator-color: rgba(0, 0, 0, 0.1);
+        }
+
+        html.dark-mode {
+            --html-bg-color: #121212;
+            --body-bg-color: #181818;
+            --body-text-color: #eee;
+            --accent-color: #e53935;
+            --accent-color-darker: #c62828;
+            --button-bg-color: #000000;
+            --button-bg-hover: #111111;
+            --button-border-color: #555;
+            --button-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            --button-shadow-hover: 0 0 25px rgba(255, 0, 0, 0.3);
+            --content-bg-color: #000000;
+            --footer-text-color: #bbb;
+            --footer-special-text: #eee;
+            --privacy-notice-color: #777;
+            --lightbox-overlay-bg: rgba(0, 0, 0, 0.1);
+            --lightbox-content-bg: rgba(0, 0, 0, 0.67);
+            --lightbox-control-color: #fff;
+            --lightbox-caption-bg: rgba(0, 0, 0, 0.85);
+            --lightbox-caption-text: #ccc;
+            --lightbox-caption-name: #e53935;
+            --image-container-bg: rgba(0, 0, 0, 0.67);
+            --separator-color: rgba(255, 255, 255, 0.2);
+        }
+
+        html {
+            background-color: var(--html-bg-color);
+        }
+
         #bg-video {
             position: fixed;
             right: 0;
@@ -24,10 +78,11 @@
         body {
             font-family: 'Segoe UI', sans-serif;
             margin: 0;
-            color: #333;
             padding: 20px;
             transition: background-color 0.5s ease, color 0.3s ease;
             line-height: 1.6;
+            background-color: var(--body-bg-color);
+            color: var(--body-text-color);
         }
 
         body.video-ready {
@@ -82,12 +137,13 @@
             display: block;
         }
 
-        .title-red {
-            color: #cc0000;
-        }
-
-        .dark-mode .title-red {
-            color: #e53935;
+        .title-red,
+        .dir-db-btn,
+        .inner-content h2,
+        a,
+        .inner-content li::before,
+        .ade-brand {
+            color: var(--accent-color);
         }
         
         .dir-db-btn {
@@ -104,16 +160,30 @@
             align-items: center;
             justify-content: center;
             border: 1px solid transparent;
+            background: var(--button-bg-color);
+            box-shadow: var(--button-shadow);
+            border-color: var(--button-border-color);
         }
 
         .dir-db-btn:hover {
             transform: translateY(-5px);
             text-decoration: none;
+            box-shadow: var(--button-shadow-hover);
+            background-color: var(--button-bg-hover);
         }
         
         button.inactive {
             font-weight: normal;
             opacity: 0.6;
+        }
+
+        .dir-db-btn.highlighted-state {
+             color: #fff;
+             background: var(--accent-color);
+        }
+        
+        .dir-db-btn.highlighted-state:hover {
+            background-color: var(--accent-color-darker);
         }
 
         .video-shuffle-btn {
@@ -138,29 +208,34 @@
         
         #animationBtn-play {
             padding: 10px 12px;
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            border-left: 1px solid var(--separator-color);
         }
         
-        #animationBtn-play:hover {
-            background-color: rgba(0,0,0,0.05);
-        }
-
         #animationBtn-shuffle {
             padding: 10px 12px;
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            border-left: 1px solid var(--separator-color);
         }
         
-        #animationBtn-shuffle:hover {
+        html:not(.dark-mode) #animationBtn-play:hover,
+        html:not(.dark-mode) #animationBtn-shuffle:hover {
             background-color: rgba(0,0,0,0.05);
         }
 
-        .content-box {
+        html.dark-mode #animationBtn-play:hover,
+        html.dark-mode #animationBtn-shuffle:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        .content-box,
+        #video-box-container,
+        #about-image-container {
             padding: 10px;
             border-radius: 10px;
             margin-bottom: 20px;
             opacity: 0;
             box-sizing: border-box;
             background: transparent;
+            box-shadow: var(--button-shadow);
         }
 
         .inner-content {
@@ -169,6 +244,7 @@
             width: 100%;
             height: 100%;
             box-sizing: border-box;
+            background: var(--content-bg-color);
         }
 
         .inner-content h2 {
@@ -202,14 +278,6 @@
             margin-right: 10px;
         }
 
-        #video-box-container {
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            opacity: 0;
-            box-sizing: border-box;
-        }
-
         #theme-video {
             max-width: 100%;
             height: auto;
@@ -232,14 +300,13 @@
         #about-image-container {
             flex-basis: 300px;
             flex-shrink: 0;
-            border-radius: 10px;
             padding: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0;
             cursor: pointer;
             perspective: 1000px;
+            background-color: var(--image-container-bg);
         }
 
         #about-image-container img {
@@ -260,10 +327,6 @@
             margin-right: 10px;
         }
 
-        .contact-details .ade-brand {
-            font-weight: bold;
-        }
-
         .footer {
             text-align: center;
             padding: 20px;
@@ -271,32 +334,21 @@
             font-size: 0.9em;
             opacity: 0;
             transform: translateY(20px);
+            color: var(--footer-text-color);
+        }
+        
+        .footer .footer-special-text {
+            color: var(--footer-special-text);
         }
 
         .privacy-notice {
             margin-top: 10px;
             font-size: 0.9em;
+            color: var(--privacy-notice-color);
         }
 
         .nobr {
             white-space: nowrap;
-        }
-
-        body:not(.dark-mode) .privacy-notice {
-            color: #bbb;
-        }
-
-        .dark-mode .privacy-notice {
-            color: #777;
-        }
-
-        .footer .footer-special-text {
-            font-weight: normal;
-        }
-
-        a {
-            font-weight: bold;
-            text-decoration: none;
         }
 
         a:hover {
@@ -305,133 +357,6 @@
 
         .top-header a.dir-db-btn:hover {
             text-decoration: none;
-        }
-
-        body:not(.dark-mode) {
-            background-color: #e1e1e1;
-            color: #333;
-        }
-
-        body:not(.dark-mode) .dir-db-btn,
-        body:not(.dark-mode) .inner-content h2,
-        body:not(.dark-mode) a,
-        body:not(.dark-mode) .inner-content li::before,
-        body:not(.dark-mode) .ade-brand {
-            color: #cc0000;
-        }
-
-        body:not(.dark-mode) .dir-db-btn {
-            background: #fdfdfd;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-            border-color: #ccc;
-        }
-
-        body:not(.dark-mode) .dir-db-btn:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-            background-color: #f0f0f0;
-        }
-
-        body:not(.dark-mode) .dir-db-btn.highlighted-state {
-             color: #fff;
-             background: #cc0000;
-        }
-        
-        body:not(.dark-mode) .dir-db-btn.highlighted-state:hover {
-            background-color: #b30000;
-        }
-
-        body:not(.dark-mode) .inner-content {
-            background: #fdfdfd;
-        }
-
-        body:not(.dark-mode) .content-box,
-        body:not(.dark-mode) #video-box-container,
-        body:not(.dark-mode) #about-image-container {
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-        }
-
-        body:not(.dark-mode) .footer {
-            color: #666;
-        }
-
-        body:not(.dark-mode) .footer .footer-special-text {
-            color: #555;
-        }
-
-        .dark-mode {
-            background-color: #181818;
-            color: #eee;
-        }
-
-        .dark-mode .dir-db-btn,
-        .dark-mode .inner-content h2,
-        .dark-mode a,
-        .dark-mode .inner-content li::before,
-        .dark-mode .ade-brand {
-            color: #e53935;
-        }
-
-        .dark-mode .dir-db-btn {
-            background: #000000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-            border-color: #555;
-        }
-
-        .dark-mode .dir-db-btn:hover {
-            background: #111111;
-            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
-        }
-
-        .dark-mode .dir-db-btn.highlighted-state {
-             color: #fff;
-             background: #a01515;
-        }
-
-        .dark-mode .dir-db-btn.highlighted-state:hover {
-            background-color: #c62828;
-        }
-        
-        .dark-mode .content-box,
-        .dark-mode #video-box-container,
-        .dark-mode #about-image-container {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
-        }
-        
-        .dark-mode #animationBtn-shuffle,
-        .dark-mode #animationBtn-play {
-            border-left-color: rgba(255, 255, 255, 0.2);
-        }
-        .dark-mode #animationBtn-shuffle:hover,
-        .dark-mode #animationBtn-play:hover {
-            background-color: rgba(255,255,255,0.1);
-        }
-
-        #animationBtn.highlighted-state #animationBtn-shuffle,
-        #animationBtn.highlighted-state #animationBtn-play {
-            border-left-color: rgba(255, 255, 255, 0.5);
-        }
-         .dark-mode #animationBtn.highlighted-state #animationBtn-shuffle,
-         .dark-mode #animationBtn.highlighted-state #animationBtn-play {
-            border-left-color: rgba(255, 255, 255, 0.5);
-        }
-
-        body:not(.dark-mode) #about-image-container {
-            background-color: rgba(253, 253, 253, 0.67);
-        }
-        .dark-mode #about-image-container {
-            background-color: rgba(0, 0, 0, 0.67);
-        }
-
-        .dark-mode .inner-content {
-            background: #000000;
-        }
-
-        .dark-mode .footer {
-            color: #bbb;
-        }
-
-        .dark-mode .footer .footer-special-text {
-            color: #eee;
         }
 
         @keyframes flip-out {
@@ -558,14 +483,7 @@
             align-items: center;
             cursor: pointer;
             animation: fadeIn 0.3s ease;
-        }
-
-        body:not(.dark-mode) #lightbox {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .dark-mode #lightbox {
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: var(--lightbox-overlay-bg);
         }
 
         @keyframes fadeIn {
@@ -598,67 +516,39 @@
             border-radius: 5px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
             animation: zoomInImage 0.5s ease-out;
+            background-color: var(--lightbox-content-bg);
         }
-
-        body:not(.dark-mode) #lightbox-content {
-            background-color: rgba(255, 255, 255, 0.67);
-        }
-
-        .dark-mode #lightbox-content {
-            background-color: rgba(0, 0, 0, 0.67);
+        
+        html.dark-mode #lightbox-content {
             box-shadow: 0 0 35px rgba(229, 57, 53, 0.35);
         }
 
-        #lightbox-close {
+        #lightbox-close,
+        #lightbox-shuffle {
             position: fixed;
-            top: 20px;
-            right: 20px;
             background: none;
             border: none;
-            color: #fff;
             font-size: 2em;
             cursor: pointer;
             z-index: 1001;
             transition: transform 0.2s ease, color 0.2s;
+            color: var(--lightbox-control-color);
         }
 
-        #lightbox-close:hover {
-            transform: scale(1.2);
-            color: #e53935;
-        }
-
-        body:not(.dark-mode) #lightbox-close {
-            color: #000;
-        }
-
-        body:not(.dark-mode) #lightbox-close:hover {
-            color: #cc0000;
+        #lightbox-close {
+            top: 20px;
+            right: 20px;
         }
 
         #lightbox-shuffle {
-            position: fixed;
             bottom: 20px;
             left: 20px;
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 2em;
-            cursor: pointer;
-            z-index: 1001;
-            transition: transform 0.2s ease, color 0.2s;
         }
-
+        
+        #lightbox-close:hover,
         #lightbox-shuffle:hover {
             transform: scale(1.2);
-            color: #e53935;
-        }
-
-        body:not(.dark-mode) #lightbox-shuffle {
-            color: #000;
-        }
-
-        body:not(.dark-mode) #lightbox-shuffle:hover {
-            color: #cc0000;
+            color: var(--accent-color);
         }
 
         #lightbox-caption {
@@ -671,24 +561,12 @@
             transform: translate(-50%, 120%);
             transition: transform 0.5s ease-in-out;
             font-weight: bold;
+            background-color: var(--lightbox-caption-bg);
+            color: var(--lightbox-caption-text);
         }
 
-        body:not(.dark-mode) #lightbox-caption {
-            background-color: rgba(255, 255, 255, 0.9);
-            color: #666;
-        }
-
-        body:not(.dark-mode) #lightbox-caption .caption-name {
-            color: #d32f2f;
-        }
-
-        .dark-mode #lightbox-caption {
-            background-color: rgba(0, 0, 0, 0.85);
-            color: #ccc;
-        }
-
-        .dark-mode #lightbox-caption .caption-name {
-            color: #e53935;
+        #lightbox-caption .caption-name {
+            color: var(--lightbox-caption-name);
         }
 
         #lightbox-caption.visible {
@@ -717,7 +595,7 @@
             try {
                 const theme = localStorage.getItem('visudir_theme') || defaultTheme;
                 if (theme === 'dark') {
-                    document.body.classList.add('dark-mode');
+                    document.documentElement.classList.add('dark-mode');
                 }
             } catch (e) { /* ignoruj błędy localStorage */ }
         })();
@@ -930,11 +808,12 @@
         function initializeTheme() {
             const storedTheme = localStorage.getItem('visudir_theme');
             const theme = storedTheme || config.global.defaultTheme;
+            const htmlEl = document.documentElement;
 
             if (theme === 'light') {
-                document.body.classList.remove('dark-mode');
+                htmlEl.classList.remove('dark-mode');
             } else {
-                document.body.classList.add('dark-mode');
+                htmlEl.classList.add('dark-mode');
             }
 
             if (!storedTheme) {
@@ -1075,11 +954,11 @@
 
         function updateDarkModeButtonUI() {
             const darkModeBtn = document.getElementById('darkModeBtn');
-            darkModeBtn.innerHTML = currentTheme === 'dark' ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>`;
+            darkModeBtn.innerHTML = document.documentElement.classList.contains("dark-mode") ? `<i class="fas fa-moon"></i>` : `<i class="fas fa-sun"></i>`;
         }
 
         function toggleDarkMode() {
-            const isDark = document.body.classList.contains("dark-mode");
+            const isDark = document.documentElement.classList.contains("dark-mode");
             localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
             currentTheme = initializeTheme();
             updateDarkModeButtonUI();
@@ -1090,7 +969,7 @@
             const videoSource = document.getElementById('theme-video-source');
             const aboutImage = document.getElementById('about-image');
             
-            const isDarkModeNow = document.body.classList.contains('dark-mode');
+            const isDarkModeNow = document.documentElement.classList.contains('dark-mode');
             videoSource.src = isDarkModeNow ? config.paths.videos.about_dark : config.paths.videos.about_light;
             video.load();
             
@@ -1104,8 +983,7 @@
             if (bgVideo) {
                 bgVideo.addEventListener('error', () => {
                     bgVideo.style.display = 'none';
-                    document.body.classList.remove('video-ready');
-                    if (document.body.classList.contains('dark-mode')) {
+                    if (document.documentElement.classList.contains('dark-mode')) {
                         document.body.style.backgroundColor = '#181818';
                     }
                 });
@@ -1151,7 +1029,7 @@
             const videoSource = document.getElementById('theme-video-source');
             const headerLogo = document.getElementById('header-logo');
             const aboutImage = document.getElementById('about-image');
-            const isDarkMode = document.body.classList.contains('dark-mode');
+            const isDarkMode = document.documentElement.classList.contains('dark-mode');
 
             if (isDarkMode) {
                 videoSource.src = config.paths.videos.about_dark;
@@ -1184,7 +1062,7 @@
 
             setInterval(() => {
                 runFlip(headerLogo, () => {
-                    const currentModeIsDark = document.body.classList.contains('dark-mode');
+                    const currentModeIsDark = document.documentElement.classList.contains('dark-mode');
                     const theme = currentModeIsDark ? 'dark' : 'light';
                     let currentLogoConfig;
 
@@ -1221,7 +1099,7 @@
             let isVisuDirImage = true;
             setInterval(() => {
                 runFlip(aboutImage, () => {
-                    const currentModeIsDark = document.body.classList.contains('dark-mode');
+                    const currentModeIsDark = document.documentElement.classList.contains('dark-mode');
                     isVisuDirImage = !isVisuDirImage;
                     if (isVisuDirImage) {
                         aboutImage.src = currentModeIsDark ? config.paths.graphics.about_dark : config.paths.graphics.about_light;
