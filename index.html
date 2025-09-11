@@ -133,7 +133,8 @@
         .dark-mode .backdrop { background-color: rgba(0, 0, 0, 0.1); }
         .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
         .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
-        .play-guide-container img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
+        .play-guide-container img, .play-guide-container a { display: block; max-width: 100%; max-height: 100%; }
+        .play-guide-container img { object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
         .dark-mode .play-guide-container img { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 35px rgba(255, 255, 255, 0.35); }
         .play-caption { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 15px; border-radius: 5px; font-size: 1.2em; font-weight: bold; z-index: 1000; text-align: center; }
         .play-caption .filename { color: #e53935; }
@@ -268,7 +269,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.1.9',
+            version: 'v1.2.0',
             global: {
                 defaultTheme: 'light',
             },
@@ -320,7 +321,7 @@
 
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
 
-11.09.2025  20:40    <DIR>          .
+11.09.2025  21:05    <DIR>          .
 11.09.2025  18:50    <DIR>          ..
 06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
 06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
@@ -329,16 +330,15 @@
 06.09.2025  20:32                 0 .#index.html$$01 MENU pelne$$Pelne menu.link
 06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
 06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
-06.09.2025  20:33                 0 .#Poradniki#index-gryonline.html$$72 Poradniki Gry-Online$$Poradniki Gry-Online.link
 06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
 06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
 06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
-11.09.2025  20:22                 0 .#Poradniki#index.html&&search=instr$$Poradniki Gry-Online$$Pliki PDF i EPUB ze strony Gry-Online.pl.link
+11.09.2025  20:22                 0 .#Poradniki#index.html&&search=gry-online$$Poradniki Gry Online$$Poradniki EPUB i PDF z serwisu Gry-Online.pl.link
 06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
 06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
 06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
-              15 File(s)              0 bytes
-               2 Dir(s)     81718743040 bytes free
+              14 File(s)              0 bytes
+               2 Dir(s)     81699282944 bytes free
 
       `;
         // --- KONIEC BAZY DANYCH ---
@@ -1172,25 +1172,52 @@
         
         function displayRandomGuide(guide) {
             playGuideContainer.innerHTML = "";
-            const baseFilename = guide.file.split("$$")[0];
-            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-            const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+            const isMediaFile = ['jpg', 'png', 'gif', 'webp', 'mp4', 'webm'].includes(guide.format);
             const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
+            
+            let displayElement;
 
-            const img = document.createElement('img');
-            
-            if (hdPath) {
-                img.src = hdPath;
-                img.onerror = () => {
-                    img.src = sdPath;
-                    img.onerror = () => { img.src = fallbackCover; img.onerror = null; };
-                };
+            if (isMediaFile) {
+                const mediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                displayElement = document.createElement('img');
+                displayElement.src = mediaPath;
+                displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
+                playGuideContainer.appendChild(displayElement);
             } else {
-                img.src = sdPath;
-                img.onerror = () => { img.src = fallbackCover; img.onerror = null; };
+                const baseFilename = guide.file.split("$$")[0];
+                const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+                const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+
+                displayElement = document.createElement('img');
+                if (hdPath) {
+                    displayElement.src = hdPath;
+                    displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
+                } else {
+                    displayElement.src = sdPath;
+                    displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
+                }
+                
+                const link = document.createElement('a');
+                if (guide.format === 'link') {
+                    const targetUrl = decodeUrlFromFilename(guide.file);
+                    link.href = targetUrl;
+                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                    }
+                } else {
+                    const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                    link.href = fileUrl;
+                    if (guide.format === 'pdf') {
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                    } else {
+                        link.download = guide.file;
+                    }
+                }
+                link.appendChild(displayElement);
+                playGuideContainer.appendChild(link);
             }
-            
-            playGuideContainer.appendChild(img);
             
             const counterText = playGuidesQueue.length > 1 ? `<b>${playGuidesQueue.indexOf(guide) + 1}</b> / ${playGuidesQueue.length}` : '';
             const descriptionText = guide.linkData.description || "";
