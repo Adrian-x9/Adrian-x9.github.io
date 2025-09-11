@@ -350,6 +350,10 @@
             color: var(--footer-text-color);
         }
 
+        .footer .footer-dir-text {
+            color: var(--footer-text-color);
+        }
+
         .footer a:hover {
             text-decoration: none;
         }
@@ -480,6 +484,12 @@
 
         .animated-footer {
             animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        @media (min-width: 769px) {
+            .contact-image-wrapper {
+                align-items: center;
+            }
         }
 
         @media (max-width: 768px) {
@@ -735,7 +745,10 @@
     </div>
 
     <div class="footer">
-        <div><a href="about.html"><span class="title-red">Visu</span>Dir <span class="version-display"></span></a>
+        <div>
+            <a href="about.html">
+                <span class="title-red">Visu</span><span class="footer-dir-text">Dir <span class="version-display"></span></span>
+            </a>
             <strong>© 2025-09-10</strong> System do katalogowania, zarządzania i
             prezentacji plików i folderów |
             <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
