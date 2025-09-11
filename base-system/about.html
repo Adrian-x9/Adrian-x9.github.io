@@ -635,6 +635,32 @@
             color: #cc0000;
         }
 
+        #lightbox-shuffle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 1001;
+            transition: transform 0.2s ease, color 0.2s;
+        }
+
+        #lightbox-shuffle:hover {
+            transform: scale(1.2);
+            color: #e53935;
+        }
+
+        body:not(.dark-mode) #lightbox-shuffle {
+            color: #000;
+        }
+
+        body:not(.dark-mode) #lightbox-shuffle:hover {
+            color: #cc0000;
+        }
+
         #lightbox-caption {
             position: absolute;
             bottom: 20px;
@@ -667,6 +693,10 @@
 
         #lightbox-caption.visible {
             transform: translate(-50%, 0);
+        }
+        
+        body.lightbox-active {
+            overflow: hidden;
         }
 
         body.lightbox-active>.top-header,
@@ -816,6 +846,7 @@
 
     <div id="lightbox">
         <button id="lightbox-close"><i class="fas fa-times"></i></button>
+        <button id="lightbox-shuffle"><i class="fas fa-random"></i></button>
         <img id="lightbox-content" src="">
         <div id="lightbox-caption"></div>
     </div>
@@ -1226,6 +1257,7 @@
             const lightbox = document.getElementById('lightbox');
             const lightboxContent = document.getElementById('lightbox-content');
             const lightboxClose = document.getElementById('lightbox-close');
+            const lightboxShuffle = document.getElementById('lightbox-shuffle');
             const lightboxCaption = document.getElementById('lightbox-caption');
 
             if (imageForLightbox && lightbox && lightboxContent && lightboxClose && lightboxCaption) {
@@ -1238,11 +1270,9 @@
                     if (currentImgSrc.includes('Adrian-')) {
                         lightboxCaption.innerHTML = '<span class="caption-name">Adrian Ulbrych.</span> Zdjęcie archiwalne. Wyretuszowano z AI';
                         
-                        // Pokaż podpis po 1.5s
                         setTimeout(() => {
                             lightboxCaption.classList.add('visible');
                             
-                            // Ukryj podpis 3 sekundy później
                             setTimeout(() => {
                                 lightboxCaption.classList.remove('visible');
                             }, 3000);
@@ -1259,6 +1289,14 @@
                 };
 
                 lightboxClose.addEventListener('click', closeLightbox);
+                
+                if (lightboxShuffle) {
+                    lightboxShuffle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        shuffleBackgroundVideo();
+                    });
+                }
+
                 lightbox.addEventListener('click', (e) => {
                     if (e.target.id === 'lightbox') {
                         closeLightbox();
