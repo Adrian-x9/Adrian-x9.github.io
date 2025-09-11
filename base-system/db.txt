@@ -3,8 +3,8 @@
 
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
 
-10.09.2025  20:36    <DIR>          .
-10.09.2025  21:42    <DIR>          ..
+11.09.2025  20:40    <DIR>          .
+11.09.2025  18:50    <DIR>          ..
 06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
 06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
 06.09.2025  19:59                 0 .#base-system#soon.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
@@ -16,8 +16,9 @@
 06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
 06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
 06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
+11.09.2025  20:22                 0 .#Poradniki#index.html&&search=instr$$Poradniki Gry-Online$$Pliki PDF i EPUB ze strony Gry-Online.pl.link
 06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
 06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
 06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
-              14 File(s)              0 bytes
-               2 Dir(s)     87254671360 bytes free
+              15 File(s)              0 bytes
+               2 Dir(s)     81718743040 bytes free
