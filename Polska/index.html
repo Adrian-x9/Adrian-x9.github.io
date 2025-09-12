@@ -5,10 +5,10 @@
     <meta charset="UTF-8" />
     <title>Moja Biblioteka Poradników</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./base-system/.gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./base-system/.gfx/favicons/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./base-system/.gfx/favicons/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../base-system/gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../base-system/gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="../base-system/gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../base-system/gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -303,39 +303,39 @@
                 enabled: true,
                 interval: 4500,
                 logos: [
-                    { srcLight: "base-system/gfx/interface/VisuDir_small_light.png", srcDark: "base-system/gfx/interface/VisuDir_small_dark.png", href: "base-system/about.html", alt: "Logo VisuDir" },
-                    { srcLight: "base-system/gfx/interface/ADE_small_light.png", srcDark: "base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                    { srcLight: "../base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../base-system/gfx/interface/VisuDir_small_dark.png", href: "../base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: "../base-system/gfx/interface/ADE_small_light.png", srcDark: "../base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
                 ]
             },
             pageSettings: {
-                pageKey: 'index',
+                pageKey: 'polska',
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 16,
                 defaultAnimation: 2,
                 defaultView: 2,
-                defaultFormat: "LINK",
-                defaultSort: "nameAsc",
-                defaultRows: 5,
+                defaultFormat: "JPG",
+                defaultSort: "shuffle",
+                defaultRows: 4,
                 predefinedFilters: [
-                    { label: "ADE", search: "ade" },
-                    { label: "Galerie zdjęć", search: "galeria" },
-                    { label: "Poradniki", search: "poradniki" },
+                    { label: "Polska", search: "polska" },
+                    { label: "Gliwice", search: "gliwice" },
+                    { label: "Warszawa", search: "warszawa" },
                 ],
-                pageTitle: "START ▪ mini",
+                pageTitle: "POLSKA ▪ galeria foto ▪",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: false,
+                showBackButton: true,
             }, 
             paths: {
-                url404: "base-system/404.html",
-                urlAbout: "base-system/about.html",
+                url404: "../base-system/404.html",
+                urlAbout: "../base-system/about.html",
                 databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
-                previewHdFolderName: "base-system/preview-hd",
-                videoBgLightUrlBase: "base-system/video/bg_light",
-                videoBgDarkUrlBase: "base-system/video/bg_dark",
+                previewHdFolderName: "",
+                videoBgLightUrlBase: "../base-system/video/bg_light",
+                videoBgDarkUrlBase: "../base-system/video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
@@ -345,26 +345,54 @@
  Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Polska\base-system\files
 
-11.09.2025  21:05    <DIR>          .
-11.09.2025  18:50    <DIR>          ..
-06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
-06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
-06.09.2025  19:59                 0 .#base-system#soon.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
-06.09.2025  20:33                 0 .#index-mini.html$$01 MENU mini$$01 Mini menu.link
-06.09.2025  20:32                 0 .#index.html$$01 MENU pelne$$Pelne menu.link
-06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
-06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
-06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
-06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
-06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
-11.09.2025  20:22                 0 .#Poradniki#index.html&&search=gry-online$$Poradniki Gry Online$$Poradniki EPUB i PDF z serwisu Gry-Online.pl.link
-06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
-06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
-06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
-              14 File(s)              0 bytes
-               2 Dir(s)     81699282944 bytes free
+11.09.2025  22:09    <DIR>          .
+11.09.2025  22:03    <DIR>          ..
+06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
+06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
+06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
+06.09.2025  07:07           1001189 Gliwice-Architektura_Polska_2461658_1920.jpg
+06.09.2025  07:11            579215 Gliwice-Autostrada-Noc_Polska_3248323_1920.jpg
+06.09.2025  07:15            960520 Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg
+06.09.2025  07:10            849329 Gliwice-Park-Jesien_Polska_4565816_1920.jpg
+06.09.2025  07:16            983087 Gliwice-Park-Jesien_Polska_4565817_1920.jpg
+06.09.2025  07:13            897171 Gliwice-Park-Jesien_Polska_4565819_1920.jpg
+06.09.2025  07:20            809564 Gliwice-Park-Natura_Polska_4565821_1920.jpg
+06.09.2025  07:20            670659 Gliwice-Radiostacja_Radio-Station_Polska_742266_1920.jpg
+06.09.2025  07:16            380364 Gliwice-Radiostacja_Radiotower_Polska_5046712_1920.jpg
+06.09.2025  07:09            665941 Gliwice-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:17            718118 Gliwice-Rynek-Lato_Polska_4022057_1920.jpg
+06.09.2025  07:10            540677 Gliwice-Rynek-Ratusz_Polska_4022055_1920.jpg
+06.09.2025  07:18            665941 Gliwice-Rynek-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:19            651140 Gliwice-Rzeka_River_Polska_6311462_1920.jpg
+06.09.2025  07:07            879613 Gliwice-Srodmiescie_Polska_2461654_1920.jpg
+06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
+06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
+06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
+06.09.2025  07:28           1284251 Kolobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
+06.09.2025  07:26            785680 Kolobrzeg_Polska_7562038_1920.jpg
+06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
+06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
+06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
+06.09.2025  07:30           1308124 Morskie-Oko_Mountains_Polska_4652861_1920.jpg
+06.09.2025  07:32            433921 Morze-Baltyckie_Baltic-Sea_Polska_7434540_1920.jpg
+06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
+06.09.2025  07:24            778656 Polska-Jura-Zamek_4717062_1920.jpg
+06.09.2025  07:24            897669 Polska-Wilamowice_Polska_5249675_1920.jpg
+06.09.2025  07:25            931818 Poznan-Rynek_Polska_983563_1920.jpg
+06.09.2025  07:03            648074 Standarcie-Kawiarnia-Krakow_Polska_street-cafe-4472312_1920.jpg
+06.09.2025  07:34            532992 Swinoujscie_Morze-Baltyckie_Baltic-Sea_Polska_2687131_1920.jpg
+06.09.2025  07:21            626930 Twierdza-Modlin-Narew_Fortress_Polska_7933060_1920.jpg
+06.09.2025  07:01            626930 Twierdza-modlin_modlin-fortress_Narew_Polska_7933060_1920.jpg
+06.09.2025  07:36            708799 Uznam-Morze-Baltyckie_Zachod-Slonca_Sunset_Polska_7147706_1920.jpg
+06.09.2025  07:35            579414 Uznam-Wolin_Usedom_Polska_3621894_1920.jpg
+06.09.2025  07:27            970499 Warszawa-Pomnik_Polska_2825709_1920.jpg
+06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
+06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
+06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
+              42 File(s)       32920780 bytes
+               2 Dir(s)     81650532352 bytes free
 
       `;
         // --- KONIEC BAZY DANYCH ---
