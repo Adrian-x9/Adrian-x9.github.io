@@ -103,7 +103,7 @@
         .dark-mode #animationBtn-play.active-play i, .dark-mode #lightbox-video-play.active-play i { text-shadow: 0 0 10px #ff8a80; }
         .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
         .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
-        .guide-cover { max-width: 100%; height: auto; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
+        .guide-cover { max-width: 100%; height: auto; max-height: 300px; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
         .guide .guide-cover { opacity: 1; transform: scale(1); }
         .guide.animate-in .guide-cover { opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
         @keyframes fadeInCover { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
@@ -385,6 +385,8 @@
         let logoInterval, autoShuffleInterval = null;
         let isMinimized = false;
         let guideDimensionsCache = {};
+        let hasVertical = false,
+            hasHorizontal = false;
 
 
         const fileInput = document.getElementById("fileInput"),
@@ -560,28 +562,40 @@
         }
 
         function getGuideOrientation(guide) {
-            const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0];
-            const coverUrl = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+            return new Promise((resolve) => {
+                const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0];
+                const coverUrl = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
 
-            if (guideDimensionsCache[coverUrl]) {
-                guide.orientation = guideDimensionsCache[coverUrl];
-                return;
-            }
-
-            const img = new Image();
-            img.onload = () => {
-                if (img.naturalHeight > img.naturalWidth) {
-                    guide.orientation = 'vertical';
-                } else {
-                    guide.orientation = 'horizontal'; // Includes square
+                if (guideDimensionsCache[coverUrl]) {
+                    guide.orientation = guideDimensionsCache[coverUrl];
+                    resolve();
+                    return;
                 }
-                guideDimensionsCache[coverUrl] = guide.orientation;
-            };
-            img.onerror = () => {
-                guide.orientation = 'unknown'; // Failed to load
-                guideDimensionsCache[coverUrl] = 'unknown';
-            };
-            img.src = coverUrl;
+
+                const img = new Image();
+                img.onload = () => {
+                    guide.orientation = (img.naturalHeight > img.naturalWidth) ? 'vertical' : 'horizontal';
+                    guideDimensionsCache[coverUrl] = guide.orientation;
+                    resolve();
+                };
+                img.onerror = () => {
+                    guide.orientation = 'unknown';
+                    guideDimensionsCache[coverUrl] = 'unknown';
+                    resolve(); // Resolve promise even on error
+                };
+                img.src = coverUrl;
+            });
+        }
+
+        function setupOrientationButtons() {
+            // Check if there are images of both types in the entire database
+            hasVertical = guides.some(g => g.orientation === 'vertical');
+            hasHorizontal = guides.some(g => g.orientation === 'horizontal');
+
+            const showButtons = hasVertical && hasHorizontal;
+            document.getElementById('previewBtn-vertical').style.display = showButtons ? 'inline-flex' : 'none';
+            document.getElementById('previewBtn-horizontal').style.display = showButtons ? 'inline-flex' : 'none';
+            document.getElementById('previewBtn-reset').style.display = showButtons ? 'inline-flex' : 'none';
         }
 
         async function processData(text) {
@@ -632,12 +646,16 @@
                     });
                 }
             }
-            // Start fetching orientations for all image-based guides
-            guides.forEach(guide => {
-                if (['jpg', 'png', 'link'].includes(guide.format)) { // 'link' can have covers
-                    getGuideOrientation(guide);
-                }
-            });
+            
+            // Wait for all covers to be checked
+            const orientationPromises = guides
+                .filter(guide => ['jpg', 'png', 'link'].includes(guide.format))
+                .map(guide => getGuideOrientation(guide));
+
+            await Promise.all(orientationPromises);
+
+            // After checking all, set up the buttons once
+            setupOrientationButtons();
         }
 
         function updateFormatFilter() {
@@ -737,9 +755,9 @@
         }
 
 
-        function init(data) {
+        async function init(data) {
             fileInputLabel.style.display = "none";
-            processData(data);
+            await processData(data); // Wait for processing to finish
             updateFormatFilter();
             applySort(currentSort, guides);
 
@@ -947,14 +965,7 @@
         }
         function renderGuides() {
             guideList.classList.remove('random-draw');
-            applyFilters(); // Filters are applied first
-
-            // --- New logic to check orientations and hide buttons ---
-            const hasVertical = filteredGuides.some(g => g.orientation === 'vertical');
-            const hasHorizontal = filteredGuides.some(g => g.orientation === 'horizontal');
-            document.getElementById('previewBtn-vertical').style.display = hasVertical ? 'inline-flex' : 'none';
-            document.getElementById('previewBtn-horizontal').style.display = hasHorizontal ? 'inline-flex' : 'none';
-            // --- End of new logic ---
+            applyFilters();
             
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
             currentPage = Math.min(currentPage, totalPages || 1);
