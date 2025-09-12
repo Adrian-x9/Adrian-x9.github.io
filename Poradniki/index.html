@@ -13,10 +13,10 @@
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        html {
+        html:not(.dark-mode) {
              background-color: #e1e1e1;
         }
-        .dark-mode, .dark-mode html {
+        html.dark-mode {
             background-color: #121212;
         }
         #bg-video {
@@ -40,7 +40,7 @@
         body:not(.dark-mode) .version-suffix { color: #333; }
         body:not(.dark-mode) .top-header .counter { color: #555; }
         .dark-mode .top-header .counter { color: #aaa; }
-        body:not(.dark-mode) { background-color: #e1e1e1; color: #333; }
+        body:not(.dark-mode) { color: #333; }
         body:not(.dark-mode) a { color: #cc0000; }
         body:not(.dark-mode) .dir-db-btn, body:not(.dark-mode) .highlighted-state { color: #cc0000; background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
         body:not(.dark-mode) .dir-db-btn.highlighted-state { color: #fff; background: #cc0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2); }
@@ -107,7 +107,7 @@
         .guide .guide-cover { opacity: 1; transform: scale(1); }
         .guide.animate-in .guide-cover { opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
         @keyframes fadeInCover { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
-        .guide-list.hide-covers .guide-cover { opacity: 0 !important; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
+        .guide-list.hide-covers .guide-cover { opacity: 0; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
         .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; overflow: hidden; }
         .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom > a:not(.cover-link) { opacity: 0; max-height: 0; margin: 0; padding: 0; pointer-events: none; }
         .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; height: 100%; }
@@ -165,6 +165,21 @@
         .controls.minimized-view .btn-text { display: none; }
         .controls.minimized-view .dir-db-btn i { margin-right: 0; }
     </style>
+    <script>
+        // Prevents flash of light theme before the main script loads
+        (function() {
+            try {
+                const theme = localStorage.getItem('visudir_theme');
+                const defaultTheme = 'light'; // Should match config.global.defaultTheme
+                if ((theme === 'dark') || (!theme && defaultTheme === 'dark')) {
+                    document.documentElement.classList.add('dark-mode');
+                    // The class is added to <html> so '.dark-mode html' rule applies instantly
+                }
+            } catch (e) {
+                // Ignore errors
+            }
+        })();
+    </script>
 </head>
 
 <body>
@@ -323,7 +338,8 @@
                 videoBgDarkUrlBase: "../base-system/video/bg_dark",
             }
         };
-        // --- KONIEC KONFIGURACJI ---
+        
+
 
         // --- PLIKOWA BAZA DANYCH ---
         const dataFromFile = `
@@ -4087,9 +4103,9 @@
 25.08.2025  22:55            689507 Z_Steel_Soldiers_-_Poradnik_GRY-OnLine.pdf
             3751 File(s)    48445437076 bytes
                2 Dir(s)     87146864640 bytes free
-
       `;
         // --- KONIEC BAZY DANYCH ---
+      
 
         let guides = [],
             filteredGuides = [],
@@ -4141,8 +4157,10 @@
             const theme = storedTheme || config.global.defaultTheme;
             if (theme === 'light') {
                 document.body.classList.remove('dark-mode');
+                document.documentElement.classList.remove('dark-mode');
             } else {
                 document.body.classList.add('dark-mode');
+                document.documentElement.classList.add('dark-mode');
             }
             if (!storedTheme) {
                 localStorage.setItem('visudir_theme', theme);
@@ -4650,8 +4668,9 @@
                     }<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB
                     } MB</div>`;
                 if (guide.format === "jpg" || guide.format === "png") {
-                    a = `<a href="#" onclick="showImagePreview('${u}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
-                    w = `<a href="#" onclick="showImagePreview('${u}'); return false;" class="cover-link">`;
+                    // Pass the guide's unique filename to the preview function
+                    a = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
+                    w = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
                 } else {
                     const p = guide.format === "pdf";
                     a = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
@@ -4666,7 +4685,14 @@
         }
         function renderGuides() {
             guideList.classList.remove('random-draw');
-            applyFilters();
+            applyFilters(); // Filters are applied first
+
+            // --- New logic to check orientations and hide buttons ---
+            const hasVertical = filteredGuides.some(g => g.orientation === 'vertical');
+            const hasHorizontal = filteredGuides.some(g => g.orientation === 'horizontal');
+            document.getElementById('previewBtn-vertical').style.display = hasVertical ? 'inline-flex' : 'none';
+            document.getElementById('previewBtn-horizontal').style.display = hasHorizontal ? 'inline-flex' : 'none';
+            // --- End of new logic ---
             
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
             currentPage = Math.min(currentPage, totalPages || 1);
@@ -4801,7 +4827,7 @@
             
             switch (previewState) {
                 case 0: if(previewBtnText) previewBtnText.textContent = ` Tekst`; previewBtnGroup.classList.add("inactive"); guideList.classList.add("hide-covers"); break;
-                case 1: if(previewBtnText) previewBtnText.textContent = ` Grafika`; guideList.classList.add("only-covers"); break;
+                case 1: if(previewBtnText) previewBtnText.textContent = ` Obrazy`; guideList.classList.add("only-covers"); break;
                 case 2: if(previewBtnText) previewBtnText.textContent = ` Wszystko`; previewBtnGroup.classList.add("highlighted-state"); break;
             }
         }
@@ -4993,58 +5019,77 @@
             displayRandomGuide(guide);
         }
         
+        function preloadNextGuide() {
+            if (!playAnimationTimeout || playGuidesQueue.length < 2) return;
+
+            let nextIndex;
+            if (currentSort === "shuffle") {
+                // In shuffle mode, the "next" is also random, so preloading has limited effect.
+                // We'll just pick another random one to load into cache.
+                nextIndex = Math.floor(Math.random() * playGuidesQueue.length);
+            } else {
+                // In sequential mode, we know exactly which is next.
+                nextIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+            }
+            const nextGuide = playGuidesQueue[nextIndex];
+            if (!nextGuide) return;
+
+            const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
+            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+
+            if (hdPath) {
+                const preloader = new Image();
+                preloader.src = hdPath; // This starts the download
+            }
+        }
+
         function displayRandomGuide(guide) {
             const container = playGuideContainer;
             const existingContent = container.firstChild;
 
             const showNewGuide = () => {
                 container.innerHTML = "";
-                const isMediaFile = ['jpg', 'png', 'gif', 'webp', 'mp4', 'webm'].includes(guide.format);
                 const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
                 
-                let displayElement;
+                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
+                const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+                const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+                const directMediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                
+                const displayElement = document.createElement('img');
 
-                if (isMediaFile) {
-                    const mediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
-                    displayElement = document.createElement('img');
-                    displayElement.src = mediaPath;
-                    displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
-                    container.appendChild(displayElement);
+                // Determine the best image source to display
+                if (['jpg', 'png', 'gif'].includes(guide.format)) {
+                    displayElement.src = directMediaPath;
+                    displayElement.onerror = () => { if (hdPath) displayElement.src = hdPath; displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; }; };
+                } else if (hdPath) {
+                    displayElement.src = hdPath;
+                    displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
                 } else {
-                    const baseFilename = guide.file.split("$$")[0].replace(/\.link$/i, "");
-                    const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-                    const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
-
-                    displayElement = document.createElement('img');
-                    if (hdPath) {
-                        displayElement.src = hdPath;
-                        displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
-                    } else {
-                        displayElement.src = sdPath;
-                        displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
-                    }
-                    
-                    const link = document.createElement('a');
-                    if (guide.format === 'link') {
-                        const targetUrl = decodeUrlFromFilename(guide.file);
-                        link.href = targetUrl;
-                        if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
-                            link.target = '_blank';
-                            link.rel = 'noopener noreferrer';
-                        }
-                    } else {
-                        const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
-                        link.href = fileUrl;
-                        if (guide.format === 'pdf') {
-                            link.target = '_blank';
-                            link.rel = 'noopener noreferrer';
-                        } else {
-                            link.download = guide.file;
-                        }
-                    }
-                    link.appendChild(displayElement);
-                    container.appendChild(link);
+                    displayElement.src = sdPath;
+                    displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
                 }
+
+                const link = document.createElement('a');
+                if (guide.format === 'link') {
+                    const targetUrl = decodeUrlFromFilename(guide.file);
+                    link.href = targetUrl;
+                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                    }
+                } else {
+                    const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                    link.href = fileUrl;
+                    if (guide.format === 'pdf') {
+                        link.target = '_blank';
+                        link.rel = 'noopener noreferrer';
+                    } else {
+                        link.download = guide.file;
+                    }
+                }
+                link.appendChild(displayElement);
+                container.appendChild(link);
                 
                 const counterText = playGuidesQueue.length > 1 ? `<b>${playGuidesQueue.indexOf(guide) + 1}</b> / ${playGuidesQueue.length}` : '';
                 const descriptionText = guide.linkData.description || "";
@@ -5054,6 +5099,7 @@
                 playCaption.innerHTML = `${counterText} <span class="filename">${titleText}</span> ${descriptionText}`;
                 
                 if (playAnimationTimeout) {
+                    preloadNextGuide(); // Preload the next image
                     playAnimationTimeout = setTimeout(scheduleNext, 4000);
                 }
             };
@@ -5071,20 +5117,41 @@
             }
         }
 
-        function showImagePreview(imageUrl) {
+        function showImagePreview(guideFilename) {
             stopPlayAnimation();
             backdrop.classList.add("visible", "preview-active");
-            playGuideContainer.innerHTML = `<img src="${imageUrl}" class="preview-image" alt="Podgląd obrazu">`;
+
+            const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png)$/i, "");
+            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+            const directPath = `${config.paths.dataFolderName}/${encodeURIComponent(guideFilename)}`;
+            const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
+
+            const img = document.createElement('img');
+            img.className = "preview-image";
+            img.alt = "Podgląd obrazu";
+
+            // Prioritize HD path, then direct path, then fallback
+            if (hdPath) {
+                img.src = hdPath;
+                img.onerror = () => { img.src = directPath; img.onerror = () => { img.src = fallbackCover; img.onerror = null; }; };
+            } else {
+                img.src = directPath;
+                img.onerror = () => { img.src = fallbackCover; img.onerror = null; };
+            }
+
+            playGuideContainer.innerHTML = "";
+            playGuideContainer.appendChild(img);
             playCaption.innerHTML = "";
+
             const close = () => {
                 backdrop.classList.remove("visible", "preview-active");
                 playGuideContainer.innerHTML = "";
-                playCloseBtn.removeEventListener("click", close);
-                backdrop.removeEventListener("click", backdropClose);
             };
             const backdropClose = (e) => {
                 if (e.target === backdrop) close();
             };
+
+            // Use { once: true } to auto-remove listeners after they fire
             playCloseBtn.addEventListener("click", close, { once: true });
             backdrop.addEventListener("click", backdropClose, { once: true });
         }
@@ -5105,6 +5172,15 @@
         }
         const debouncedUpdatePagination = debounce(updatePaginationOptions, 250);
         window.addEventListener("resize", debouncedUpdatePagination);
+        window.addEventListener("pageshow", function(event) {
+            // Re-render if the page is shown from the back/forward cache
+            if (event.persisted) {
+                // Re-initialize the view without reprocessing data
+                applyFilters();
+                updatePaginationOptions();
+                renderGuides();
+            }
+        });
         document.addEventListener("DOMContentLoaded", () => {
             [".top-header", ".controls", ".pagination", ".footer"].forEach(
                 (sel, i) => {

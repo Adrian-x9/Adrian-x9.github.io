@@ -303,18 +303,18 @@
                 enabled: true,
                 interval: 4500,
                 logos: [
-                    { srcLight: "base-system/gfx/interface/VisuDir_small_light.png", srcDark: "base-system/gfx/interface/VisuDir_small_dark.png", href: "base-system/about.html", alt: "Logo VisuDir" },
-                    { srcLight: "base-system/gfx/interface/ADE_small_light.png", srcDark: "base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                    { srcLight: "../base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../base-system/gfx/interface/VisuDir_small_dark.png", href: "../base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: "../base-system/gfx/interface/ADE_small_light.png", srcDark: "../base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
                 ]
             },
             pageSettings: {
-                pageKey: 'index',
+                pageKey: 'PoradnikiDoGier',
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 16,
                 defaultAnimation: 2,
                 defaultView: 2,
-                defaultFormat: "LINK",
+                defaultFormat: "JPG",
                 defaultSort: "nameAsc",
                 defaultRows: 5,
                 predefinedFilters: [
@@ -322,20 +322,21 @@
                     { label: "Galerie zdjęć", search: "galeria" },
                     { label: "Poradniki", search: "poradniki" },
                 ],
-                pageTitle: "START ▪ mini",
+                pageTitle: "Poradniki do Gier",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: false,
+                showBackButton: true,
             }, 
             paths: {
-                url404: "base-system/404.html",
-                urlAbout: "base-system/about.html",
+                url404: "../base-system/404.html",
+                urlAbout: "../base-system/about.html",
                 databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
-                previewHdFolderName: "base-system/preview-hd",
-                videoBgLightUrlBase: "base-system/video/bg_light",
-                videoBgDarkUrlBase: "base-system/video/bg_dark",
+                previewFolderName: "base-system/files",
+                previewHdFolderName: "base-system/files",
+                videoBgLightUrlBase: "../base-system/video/bg_light",
+                videoBgDarkUrlBase: "../base-system/video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---

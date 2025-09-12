@@ -13,10 +13,10 @@
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        html:not(.dark-mode) {
+        html {
              background-color: #e1e1e1;
         }
-        html.dark-mode {
+        .dark-mode, .dark-mode html {
             background-color: #121212;
         }
         #bg-video {
@@ -40,7 +40,7 @@
         body:not(.dark-mode) .version-suffix { color: #333; }
         body:not(.dark-mode) .top-header .counter { color: #555; }
         .dark-mode .top-header .counter { color: #aaa; }
-        body:not(.dark-mode) { color: #333; }
+        body:not(.dark-mode) { background-color: #e1e1e1; color: #333; }
         body:not(.dark-mode) a { color: #cc0000; }
         body:not(.dark-mode) .dir-db-btn, body:not(.dark-mode) .highlighted-state { color: #cc0000; background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
         body:not(.dark-mode) .dir-db-btn.highlighted-state { color: #fff; background: #cc0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2); }
@@ -107,7 +107,7 @@
         .guide .guide-cover { opacity: 1; transform: scale(1); }
         .guide.animate-in .guide-cover { opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
         @keyframes fadeInCover { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
-        .guide-list.hide-covers .guide-cover { opacity: 0; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
+        .guide-list.hide-covers .guide-cover { opacity: 0 !important; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
         .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; overflow: hidden; }
         .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom > a:not(.cover-link) { opacity: 0; max-height: 0; margin: 0; padding: 0; pointer-events: none; }
         .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; height: 100%; }
@@ -165,21 +165,6 @@
         .controls.minimized-view .btn-text { display: none; }
         .controls.minimized-view .dir-db-btn i { margin-right: 0; }
     </style>
-    <script>
-        // Prevents flash of light theme before the main script loads
-        (function() {
-            try {
-                const theme = localStorage.getItem('visudir_theme');
-                const defaultTheme = 'light'; // Should match config.global.defaultTheme
-                if ((theme === 'dark') || (!theme && defaultTheme === 'dark')) {
-                    document.documentElement.classList.add('dark-mode');
-                    // The class is added to <html> so '.dark-mode html' rule applies instantly
-                }
-            } catch (e) {
-                // Ignore errors
-            }
-        })();
-    </script>
 </head>
 
 <body>
@@ -303,39 +288,40 @@
                 enabled: true,
                 interval: 4500,
                 logos: [
-                    { srcLight: "base-system/gfx/interface/VisuDir_small_light.png", srcDark: "base-system/gfx/interface/VisuDir_small_dark.png", href: "base-system/about.html", alt: "Logo VisuDir" },
-                    { srcLight: "base-system/gfx/interface/ADE_small_light.png", srcDark: "base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                    { srcLight: "../base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../base-system/gfx/interface/VisuDir_small_dark.png", href: "../base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: "../base-system/gfx/interface/ADE_small_light.png", srcDark: "../base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
                 ]
             },
             pageSettings: {
-                pageKey: 'index',
+                pageKey: 'polska',
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 16,
                 defaultAnimation: 2,
                 defaultView: 2,
-                defaultFormat: "LINK",
-                defaultSort: "nameAsc",
-                defaultRows: 5,
+                defaultFormat: "JPG",
+                defaultSort: "shuffle",
+                defaultRows: 4,
                 predefinedFilters: [
-                    { label: "ADE", search: "ade" },
-                    { label: "Galerie zdjęć", search: "galeria" },
-                    { label: "Poradniki", search: "poradniki" },
+                    { label: "Polska", search: "polska" },
+                    { label: "Gliwice", search: "gliwice" },
+                    { label: "Slask", search: "slask" },
+                    { label: "Warszawa", search: "warszawa" },
                 ],
-                pageTitle: "START ▪ mini",
+                pageTitle: "POLSKA ▪ foto galeria",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: false,
+                showBackButton: true,
             }, 
             paths: {
-                url404: "base-system/404.html",
-                urlAbout: "base-system/about.html",
+                url404: "../base-system/404.html",
+                urlAbout: "../base-system/about.html",
                 databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
-                previewHdFolderName: "base-system/preview-hd",
-                videoBgLightUrlBase: "base-system/video/bg_light",
-                videoBgDarkUrlBase: "base-system/video/bg_dark",
+                previewHdFolderName: "base-system/preview",
+                videoBgLightUrlBase: "../base-system/video/bg_light",
+                videoBgDarkUrlBase: "../base-system/video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
@@ -345,26 +331,54 @@
  Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Polska\base-system\files
 
-11.09.2025  21:05    <DIR>          .
-11.09.2025  18:50    <DIR>          ..
-06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
-06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
-06.09.2025  19:59                 0 .#base-system#soon.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
-06.09.2025  20:33                 0 .#index-mini.html$$01 MENU mini$$01 Mini menu.link
-06.09.2025  20:32                 0 .#index.html$$01 MENU pelne$$Pelne menu.link
-06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
-06.09.2025  08:54                 0 .#Polska#index.html$$51 Polska$$Galeria zdjec.link
-06.09.2025  20:01                 0 .#Poradniki#index-instrukcje.html$$74 Instrukcje do gier$$Instrukcje do gier.link
-06.09.2025  20:34                 0 .#Poradniki#index-przygodomania.html$$73 Poradniki PrzygodoMania.pl$$Darmowe poradniki ze strony PrzygodoMania.pl.link
-06.09.2025  15:52                 0 .#Poradniki#index.html$$71 Poradniki do Gier$$Poradniki i instrukcje do gier PDF oraz EPUB.link
-11.09.2025  20:22                 0 .#Poradniki#index.html&&search=gry-online$$Poradniki Gry Online$$Poradniki EPUB i PDF z serwisu Gry-Online.pl.link
-06.09.2025  10:49                 0 www.ade.pl#backup$$32 ADE Backup$$Powered by FreeFileSync.link
-06.09.2025  08:54                 0 www.ade.pl#poczta$$34 Poczta e-mail$$Panel dostepu do poczty.link
-06.09.2025  10:27                 0 www.ade.pl#rd$$33 ADE Zdalny dostep$$Powered by Rust Desk.link
-              14 File(s)              0 bytes
-               2 Dir(s)     81699282944 bytes free
+11.09.2025  22:09    <DIR>          .
+11.09.2025  22:03    <DIR>          ..
+06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
+06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
+06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
+06.09.2025  07:07           1001189 Gliwice-Architektura_Polska_2461658_1920.jpg
+06.09.2025  07:11            579215 Gliwice-Autostrada-Noc_Polska_3248323_1920.jpg
+06.09.2025  07:15            960520 Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg
+06.09.2025  07:10            849329 Gliwice-Park-Jesien_Polska_4565816_1920.jpg
+06.09.2025  07:16            983087 Gliwice-Park-Jesien_Polska_4565817_1920.jpg
+06.09.2025  07:13            897171 Gliwice-Park-Jesien_Polska_4565819_1920.jpg
+06.09.2025  07:20            809564 Gliwice-Park-Natura_Polska_4565821_1920.jpg
+06.09.2025  07:20            670659 Gliwice-Radiostacja_Radio-Station_Polska_742266_1920.jpg
+06.09.2025  07:16            380364 Gliwice-Radiostacja_Radiotower_Polska_5046712_1920.jpg
+06.09.2025  07:09            665941 Gliwice-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:17            718118 Gliwice-Rynek-Lato_Polska_4022057_1920.jpg
+06.09.2025  07:10            540677 Gliwice-Rynek-Ratusz_Polska_4022055_1920.jpg
+06.09.2025  07:18            665941 Gliwice-Rynek-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:19            651140 Gliwice-Rzeka_River_Polska_6311462_1920.jpg
+06.09.2025  07:07            879613 Gliwice-Srodmiescie_Polska_2461654_1920.jpg
+06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
+06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
+06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
+06.09.2025  07:28           1284251 Kolobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
+06.09.2025  07:26            785680 Kolobrzeg_Polska_7562038_1920.jpg
+06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
+06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
+06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
+06.09.2025  07:30           1308124 Morskie-Oko_Mountains_Polska_4652861_1920.jpg
+06.09.2025  07:32            433921 Morze-Baltyckie_Baltic-Sea_Polska_7434540_1920.jpg
+06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
+06.09.2025  07:24            778656 Polska-Jura-Zamek_4717062_1920.jpg
+06.09.2025  07:24            897669 Polska-Wilamowice_Polska_5249675_1920.jpg
+06.09.2025  07:25            931818 Poznan-Rynek_Polska_983563_1920.jpg
+06.09.2025  07:03            648074 Standarcie-Kawiarnia-Krakow_Polska_street-cafe-4472312_1920.jpg
+06.09.2025  07:34            532992 Swinoujscie_Morze-Baltyckie_Baltic-Sea_Polska_2687131_1920.jpg
+06.09.2025  07:21            626930 Twierdza-Modlin-Narew_Fortress_Polska_7933060_1920.jpg
+06.09.2025  07:01            626930 Twierdza-modlin_modlin-fortress_Narew_Polska_7933060_1920.jpg
+06.09.2025  07:36            708799 Uznam-Morze-Baltyckie_Zachod-Slonca_Sunset_Polska_7147706_1920.jpg
+06.09.2025  07:35            579414 Uznam-Wolin_Usedom_Polska_3621894_1920.jpg
+06.09.2025  07:27            970499 Warszawa-Pomnik_Polska_2825709_1920.jpg
+06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
+06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
+06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
+              42 File(s)       32920780 bytes
+               2 Dir(s)     81650532352 bytes free
 
       `;
         // --- KONIEC BAZY DANYCH ---
@@ -419,10 +433,8 @@
             const theme = storedTheme || config.global.defaultTheme;
             if (theme === 'light') {
                 document.body.classList.remove('dark-mode');
-                document.documentElement.classList.remove('dark-mode');
             } else {
                 document.body.classList.add('dark-mode');
-                document.documentElement.classList.add('dark-mode');
             }
             if (!storedTheme) {
                 localStorage.setItem('visudir_theme', theme);
@@ -930,9 +942,8 @@
                     }<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB
                     } MB</div>`;
                 if (guide.format === "jpg" || guide.format === "png") {
-                    // Pass the guide's unique filename to the preview function
-                    a = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
-                    w = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
+                    a = `<a href="#" onclick="showImagePreview('${u}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
+                    w = `<a href="#" onclick="showImagePreview('${u}'); return false;" class="cover-link">`;
                 } else {
                     const p = guide.format === "pdf";
                     a = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
@@ -947,14 +958,7 @@
         }
         function renderGuides() {
             guideList.classList.remove('random-draw');
-            applyFilters(); // Filters are applied first
-
-            // --- New logic to check orientations and hide buttons ---
-            const hasVertical = filteredGuides.some(g => g.orientation === 'vertical');
-            const hasHorizontal = filteredGuides.some(g => g.orientation === 'horizontal');
-            document.getElementById('previewBtn-vertical').style.display = hasVertical ? 'inline-flex' : 'none';
-            document.getElementById('previewBtn-horizontal').style.display = hasHorizontal ? 'inline-flex' : 'none';
-            // --- End of new logic ---
+            applyFilters();
             
             const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
             currentPage = Math.min(currentPage, totalPages || 1);
@@ -1089,7 +1093,7 @@
             
             switch (previewState) {
                 case 0: if(previewBtnText) previewBtnText.textContent = ` Tekst`; previewBtnGroup.classList.add("inactive"); guideList.classList.add("hide-covers"); break;
-                case 1: if(previewBtnText) previewBtnText.textContent = ` Obrazy`; guideList.classList.add("only-covers"); break;
+                case 1: if(previewBtnText) previewBtnText.textContent = ` Grafika`; guideList.classList.add("only-covers"); break;
                 case 2: if(previewBtnText) previewBtnText.textContent = ` Wszystko`; previewBtnGroup.classList.add("highlighted-state"); break;
             }
         }
@@ -1281,77 +1285,58 @@
             displayRandomGuide(guide);
         }
         
-        function preloadNextGuide() {
-            if (!playAnimationTimeout || playGuidesQueue.length < 2) return;
-
-            let nextIndex;
-            if (currentSort === "shuffle") {
-                // In shuffle mode, the "next" is also random, so preloading has limited effect.
-                // We'll just pick another random one to load into cache.
-                nextIndex = Math.floor(Math.random() * playGuidesQueue.length);
-            } else {
-                // In sequential mode, we know exactly which is next.
-                nextIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
-            }
-            const nextGuide = playGuidesQueue[nextIndex];
-            if (!nextGuide) return;
-
-            const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
-            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-
-            if (hdPath) {
-                const preloader = new Image();
-                preloader.src = hdPath; // This starts the download
-            }
-        }
-
         function displayRandomGuide(guide) {
             const container = playGuideContainer;
             const existingContent = container.firstChild;
 
             const showNewGuide = () => {
                 container.innerHTML = "";
+                const isMediaFile = ['jpg', 'png', 'gif', 'webp', 'mp4', 'webm'].includes(guide.format);
                 const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
                 
-                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
-                const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-                const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
-                const directMediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
-                
-                const displayElement = document.createElement('img');
+                let displayElement;
 
-                // Determine the best image source to display
-                if (['jpg', 'png', 'gif'].includes(guide.format)) {
-                    displayElement.src = directMediaPath;
-                    displayElement.onerror = () => { if (hdPath) displayElement.src = hdPath; displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; }; };
-                } else if (hdPath) {
-                    displayElement.src = hdPath;
-                    displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
-                } else {
-                    displayElement.src = sdPath;
+                if (isMediaFile) {
+                    const mediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                    displayElement = document.createElement('img');
+                    displayElement.src = mediaPath;
                     displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
-                }
-
-                const link = document.createElement('a');
-                if (guide.format === 'link') {
-                    const targetUrl = decodeUrlFromFilename(guide.file);
-                    link.href = targetUrl;
-                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    }
+                    container.appendChild(displayElement);
                 } else {
-                    const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
-                    link.href = fileUrl;
-                    if (guide.format === 'pdf') {
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
+                    const baseFilename = guide.file.split("$$")[0].replace(/\.link$/i, "");
+                    const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+                    const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+
+                    displayElement = document.createElement('img');
+                    if (hdPath) {
+                        displayElement.src = hdPath;
+                        displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
                     } else {
-                        link.download = guide.file;
+                        displayElement.src = sdPath;
+                        displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
                     }
+                    
+                    const link = document.createElement('a');
+                    if (guide.format === 'link') {
+                        const targetUrl = decodeUrlFromFilename(guide.file);
+                        link.href = targetUrl;
+                        if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        }
+                    } else {
+                        const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
+                        link.href = fileUrl;
+                        if (guide.format === 'pdf') {
+                            link.target = '_blank';
+                            link.rel = 'noopener noreferrer';
+                        } else {
+                            link.download = guide.file;
+                        }
+                    }
+                    link.appendChild(displayElement);
+                    container.appendChild(link);
                 }
-                link.appendChild(displayElement);
-                container.appendChild(link);
                 
                 const counterText = playGuidesQueue.length > 1 ? `<b>${playGuidesQueue.indexOf(guide) + 1}</b> / ${playGuidesQueue.length}` : '';
                 const descriptionText = guide.linkData.description || "";
@@ -1361,7 +1346,6 @@
                 playCaption.innerHTML = `${counterText} <span class="filename">${titleText}</span> ${descriptionText}`;
                 
                 if (playAnimationTimeout) {
-                    preloadNextGuide(); // Preload the next image
                     playAnimationTimeout = setTimeout(scheduleNext, 4000);
                 }
             };
@@ -1379,41 +1363,20 @@
             }
         }
 
-        function showImagePreview(guideFilename) {
+        function showImagePreview(imageUrl) {
             stopPlayAnimation();
             backdrop.classList.add("visible", "preview-active");
-
-            const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png)$/i, "");
-            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-            const directPath = `${config.paths.dataFolderName}/${encodeURIComponent(guideFilename)}`;
-            const fallbackCover = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
-
-            const img = document.createElement('img');
-            img.className = "preview-image";
-            img.alt = "Podgląd obrazu";
-
-            // Prioritize HD path, then direct path, then fallback
-            if (hdPath) {
-                img.src = hdPath;
-                img.onerror = () => { img.src = directPath; img.onerror = () => { img.src = fallbackCover; img.onerror = null; }; };
-            } else {
-                img.src = directPath;
-                img.onerror = () => { img.src = fallbackCover; img.onerror = null; };
-            }
-
-            playGuideContainer.innerHTML = "";
-            playGuideContainer.appendChild(img);
+            playGuideContainer.innerHTML = `<img src="${imageUrl}" class="preview-image" alt="Podgląd obrazu">`;
             playCaption.innerHTML = "";
-
             const close = () => {
                 backdrop.classList.remove("visible", "preview-active");
                 playGuideContainer.innerHTML = "";
+                playCloseBtn.removeEventListener("click", close);
+                backdrop.removeEventListener("click", backdropClose);
             };
             const backdropClose = (e) => {
                 if (e.target === backdrop) close();
             };
-
-            // Use { once: true } to auto-remove listeners after they fire
             playCloseBtn.addEventListener("click", close, { once: true });
             backdrop.addEventListener("click", backdropClose, { once: true });
         }
@@ -1434,15 +1397,6 @@
         }
         const debouncedUpdatePagination = debounce(updatePaginationOptions, 250);
         window.addEventListener("resize", debouncedUpdatePagination);
-        window.addEventListener("pageshow", function(event) {
-            // Re-render if the page is shown from the back/forward cache
-            if (event.persisted) {
-                // Re-initialize the view without reprocessing data
-                applyFilters();
-                updatePaginationOptions();
-                renderGuides();
-            }
-        });
         document.addEventListener("DOMContentLoaded", () => {
             [".top-header", ".controls", ".pagination", ".footer"].forEach(
                 (sel, i) => {
