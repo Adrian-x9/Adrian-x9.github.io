@@ -134,8 +134,8 @@
         .dark-mode .backdrop { background-color: rgba(0, 0, 0, 0.1); }
         .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
         .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
-        .play-guide-container img, .play-guide-container a { display: block; max-width: 100%; max-height: 100%; }
-        .play-guide-container img { object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
+        .play-guide-container > a, .play-guide-container > img { max-width: 100%; max-height: 100%; }
+        .play-guide-container img { display: block; object-fit: contain; border-radius: 5px; animation: zoomInImage 0.5s ease-out, pulse-opacity 4s infinite ease-in-out; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
         .dark-mode .play-guide-container img { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
         .play-caption { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); padding: 10px 15px; border-radius: 5px; font-size: 1.2em; font-weight: bold; z-index: 1000; text-align: center; }
         .play-caption .filename { color: #e53935; }
@@ -256,7 +256,7 @@
             <span id="animationBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
         </button>
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
-            <i class="fas fa-chevron-down"></i>
+            <i class="fas fa-chevron-up"></i>
         </button>
     </div>
 
@@ -790,13 +790,15 @@
         }
 
         function startLogoRotator() {
+            const initialLogo = config.logoRotator.logos[currentLogoIndex];
+            if (!initialLogo) return;
+            const isDark = document.body.classList.contains('dark-mode');
+            headerLogo.src = isDark ? initialLogo.srcDark : initialLogo.srcLight;
+            logoLink.href = initialLogo.href;
+            headerLogo.alt = initialLogo.alt;
+
             if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
-                 const defaultLogo = config.logoRotator.logos[0];
-                 const isDark = document.body.classList.contains('dark-mode');
-                 headerLogo.src = isDark ? defaultLogo.srcDark : defaultLogo.srcLight;
-                 logoLink.href = defaultLogo.href;
-                 headerLogo.alt = defaultLogo.alt;
-                 return;
+                return;
             }
 
             clearInterval(logoInterval);
@@ -805,9 +807,9 @@
                 setTimeout(() => {
                     currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
                     const newLogo = config.logoRotator.logos[currentLogoIndex];
-                    const isDark = document.body.classList.contains('dark-mode');
+                    const isDarkNow = document.body.classList.contains('dark-mode');
                     
-                    headerLogo.src = isDark ? newLogo.srcDark : newLogo.srcLight;
+                    headerLogo.src = isDarkNow ? newLogo.srcDark : newLogo.srcLight;
                     headerLogo.alt = newLogo.alt;
                     logoLink.href = newLogo.href;
 
@@ -913,10 +915,10 @@
             
             if (isMinimized) {
                 minimizeBtn.title = "Przywróć interfejs";
-                minimizeIcon.className = 'fas fa-chevron-up';
+                minimizeIcon.className = 'fas fa-chevron-down';
             } else {
                 minimizeBtn.title = "Minimalizuj interfejs";
-                minimizeIcon.className = 'fas fa-chevron-down';
+                minimizeIcon.className = 'fas fa-chevron-up';
             }
 
             topHeader.classList.toggle('minimized-header', isMinimized);
@@ -935,6 +937,21 @@
             selectedRowCount = config.pageSettings.defaultRows;
             saveToLocalStorage('rows', selectedRowCount);
             resetPreview();
+        }
+        function checkFileAndOpen(fileUrl, fallbackUrl) {
+            const http = new XMLHttpRequest();
+            http.open('HEAD', fileUrl, true);
+            http.onload = function() {
+                if (this.status === 200) {
+                    window.open(fileUrl, '_blank');
+                } else {
+                    window.open(fallbackUrl, '_blank');
+                }
+            };
+            http.onerror = function() {
+                window.open(fallbackUrl, '_blank');
+            };
+            http.send();
         }
         function createGuideHtml(guide) {
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0],
@@ -962,16 +979,18 @@
                     }<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB
                     } MB</div>`;
                 if (guide.format === "jpg" || guide.format === "png") {
-                    // Pass the guide's unique filename to the preview function
                     a = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
                     w = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
                 } else {
                     const p = guide.format === "pdf";
-                    a = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
-                        }><i class="fas fa-${p ? "file-pdf" : "download"}"></i> ${p ? "Otwórz" : "Pobierz"
-                        }</a>`;
-                    w = `<a href="${u}" ${p ? 'target="_blank" rel="noopener noreferrer"' : "download"
-                        } class="cover-link">`;
+                    const fallbackUrl = 'base-system/soon.html';
+                    if (p) {
+                        a = `<a href="${u}" onclick="checkFileAndOpen('${u}', '${fallbackUrl}'); return false;"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
+                        w = `<a href="${u}" onclick="checkFileAndOpen('${u}', '${fallbackUrl}'); return false;" class="cover-link">`;
+                    } else {
+                        a = `<a href="${u}" download><i class="fas fa-download"></i> Pobierz</a>`;
+                        w = `<a href="${u}" download class="cover-link">`;
+                    }
                 }
             }
             const k = document.body.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
