@@ -866,7 +866,7 @@ Project page: https://adrian-x9.github.io/
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.1.3',
+            version: 'v1.2.0',
             // Ustawienia globalne, wspólne dla wszystkich stron
             global: {
                 // Domyślny motyw, gdy brak w pamięci: 'light' lub 'dark'
@@ -877,9 +877,9 @@ Project page: https://adrian-x9.github.io/
                 // Klucz strony (musi być unikalny)
                 pageKey: 'soon',
                 // Domyślny numer wideo tła dla tej strony
-                defaultBgVideo: 1,
+                defaultBgVideo: 5,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 6,
+                bgVideoEndNum: 16,
                 defaultAnimation: 2, // 0: Statycznie, 2: Video
                 showMiniLogo: true,
                 showBackButton: true,
@@ -887,32 +887,32 @@ Project page: https://adrian-x9.github.io/
                 showThemeButton: true,
             },
             paths: {
-                videoBgLightUrlBase: ".video/bg_light", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
-                videoBgDarkUrlBase: ".video/bg_dark", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
+                videoBgLightUrlBase: "video/bg_light", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
+                videoBgDarkUrlBase: "video/bg_dark", // do nazwy doklejany jest numer (np. 1) i rozszerzenie .mp4
                 videos: {
-                    about_dark: '.video/about_dark.mp4',
-                    about_light: '.video/about_light.mp4',
+                    about_dark: 'video/in-progress_dark.mp4',
+                    about_light: 'video/in-progress_light.mp4',
                 },
                 graphics: {
                     logo1: {
-                        dark: '.gfx/interface/VisuDir_small_dark.png',
-                        light: '.gfx/interface/VisuDir_small_light.png',
+                        dark: 'gfx/interface/VisuDir_small_dark.png',
+                        light: 'gfx/interface/VisuDir_small_light.png',
                         link: './about.html'
                     },
                     logo2: {
-                        dark: '.gfx/interface/ADE_small_dark.png',
-                        light: '.gfx/interface/ADE_small_light.png',
+                        dark: 'gfx/interface/ADE_small_dark.png',
+                        light: 'gfx/interface/ADE_small_light.png',
                         link: 'https://www.ade.pl'
                     },
                     logo3: {
-                        dark: '.gfx/interface/Building_small_dark.png',
-                        light: '.gfx/interface/Building_small_light.png',
+                        dark: 'gfx/interface/Building_small_dark.png',
+                        light: 'gfx/interface/Building_small_light.png',
                         link: './soon.html'
                     },
-                    about_dark: '.gfx/interface/VisuDir_dark.png',
-                    about_light: '.gfx/interface/VisuDir_light.png',
-                    about_ade_dark: '.gfx/interface/Adrian-dark.png',
-                    about_ade_light: '.gfx/interface/Adrian-light.png'
+                    about_dark: 'gfx/interface/VisuDir_dark.png',
+                    about_light: 'gfx/interface/VisuDir_light.png',
+                    about_ade_dark: 'gfx/interface/Adrian-dark.png',
+                    about_ade_light: 'gfx/interface/Adrian-light.png'
                 }
             }
         };
