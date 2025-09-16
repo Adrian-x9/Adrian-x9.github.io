@@ -91,8 +91,25 @@ Ikona animacji w stylu "/" jest ok, ale mało intuicyjna. Daj może jakąś prop
 Ostatnie poprawki, zwróć szczególną uwagę, bo za każdym razem, przy poprawkach, znikają Ci kolejne linijki kodu. Zwróć teraz szczególną uwagę na pliki które Ci wysyłam, weź ostatni v1.3.1 i wprowadź tylko te zmiany, o których piszę niżej, dbając, by nie zgubiły się jakieś części pliku. W razie, gdybyś miał wątpliwości, wysyłam plik sprzed zmian - index-v1.2.9.html
 1. Tryb zwykły, pasek menu u góry:
 a) W trybie ciemnym przyciski mają jasno szare ramki, W trybie jasnym zrób wszystkim przyciskom i listom wyboru ramki, jak VisuDir v1.3.1 albo jak ikona zmiany języka, tak samo w panelu paginacji na dole strony.
-b) Kliknięcie na przycisk Tryb jasny / ciemny nie zmienia napisu ani ikony. Dopiero odświeżenie strony aktualizuje te przyciski.
+b) Kliknięcie na przycisk Tryb jasny / ciemny nie zmienia napisu ani ikony. Dopiero odświeżenie strony aktualizuje te przyciski. Tak dzieje się w trybie zwykłym i w trybie slideshow.
 c) Przy minimalizacji interfejsu, szerokie przyciski się zwijają - ładna animacja, zrób analogicznie przy maksymalizacji/przywracaniu interfejsu, ale odwrotnie, żeby się animowało ich poziome rozwijanie, wtedy gdy są wyświetlane szerokie przyciski i kiedy system wyświetla animacje - dotyczy przycisków Obrazy, Wszystko, Video.
+d) Przycisk shuffle - gdy jest włączony, przycisk następne / poprzednie video, losują następne / poprzednie video, zgodnie ze stanem przycisku, w innym wypadku, zgodnie z listą. Tak samo oba przyciski shuffle w trybie slide-show.
+
+2. Tryb slideshow.
+a) Napis u góry - licznik u góry w postaci "13 / x - / x" - zrób w tym kolorze, co linijka niżej z opisem pozycji i potłuść / wyróżnij tę liczbę.
+b) W panelu video na dole - dołóż ikonę reset video na końcu, dokładnie tak, jak w zwykłym trybie, w tym samym panelu, gdy play jest włączone, czyli wyświetlana ikona pauzy, ikona ma być czerwona, jak ikona shuffle, która jest czerwona, gdy aktywna.
+c) Dodaj animację wyłączania slideshow, jeśli animacje są włączone.
+d) Dodaj animację włączania slideshow, jeśli jej nie ma.
+e) Dodaj w trybie slideshow preloading obrazów, bo teraz się rysują.
+
+3. Błąd krytyczny.
+Strona ma działać online i offline
+a) W trybie offline, nie działają linki w plikach .LINK, nie wiem czy otwiera inne, ale tego nie otwiera. Przykład linku lokalnego: Polska/index.html. Plik jest na miejscu, ale mechanizm sprawdzania działa wadliwie.
+
+---
+
+
+
 
 
 

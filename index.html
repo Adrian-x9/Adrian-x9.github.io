@@ -30,8 +30,7 @@
         body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; min-height: 100vh; box-sizing: border-box; }
         body.no-animation .guide.animate-in, body.no-animation .guide.flip-animate { animation: none !important; transform: none !important; }
         body.no-animation .guide-cover, body.no-animation .top-header, body.no-animation .footer { transition: none !important; }
-        /* ZMIANA 1 i 2: Wyłączenie animacji przycisków, gdy flaga aktywna */
-        body.no-animation .multi-button, body.no-animation .multi-button-child { transition: none !important; }
+        body.no-animation .multi-button, body.no-animation .multi-button-child, body.no-animation .dir-db-btn { transition: none !important; }
         body.play-mode-active > .top-header, body.play-mode-active > .controls,
         body.play-mode-active > .guide-list, body.play-mode-active > .pagination,
         body.play-mode-active > .footer { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
@@ -50,7 +49,8 @@
         body:not(.dark-mode) .dir-db-btn, body:not(.dark-mode) .highlighted-state { color: #cc0000; background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
         body:not(.dark-mode) .dir-db-btn.highlighted-state { background: #cc0000; box-shadow: 0 0 15px rgba(255, 0, 0, 0.3), inset 0 1px 3px rgba(0,0,0,0.2); color: #f0f0f0; }
         body:not(.dark-mode) .dir-db-btn.highlighted-state .btn-text { color: #f0f0f0; }
-        body:not(.dark-mode) input, body:not(.dark-mode) select, body:not(.dark-mode) button { background-color: #fff; color: #333; border-color: #ccc; }
+        /* ZMIANA 1a: Ujednolicenie ramek w trybie jasnym */
+        body:not(.dark-mode) input, body:not(.dark-mode) select, body:not(.dark-mode) button, body:not(.dark-mode) .dir-db-btn { background-color: #fff; color: #333; border-color: #ccc; }
         body:not(.dark-mode) button:hover { background-color: #f0f0f0; }
         body:not(.dark-mode) .dir-db-btn:hover, body:not(.dark-mode) .highlighted-state:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
         body:not(.dark-mode) .guide { background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
@@ -87,12 +87,10 @@
         .top-header .title { font-size: 1.6em; font-weight: bold; }
         .top-header .counter { font-size: 0.9em; }
         .top-header .counter b { font-weight: bold; }
-        /* ZMIANA 6: Cienie pod napisami w nagłówku */
         .top-header .title, .top-header .counter { text-shadow: 1px 1px 2px rgba(255,255,255,0.9); }
         .dark-mode .top-header .title, .dark-mode .top-header .counter { text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
 
         .controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; opacity: 0; transform: translateY(-20px); }
-        /* ZMIANA 1: Ustawienie stałej wysokości przycisków */
         input, select, button, .dir-db-btn { padding: 10px; border-radius: 5px; border: 1px solid; white-space: nowrap; height: 42px; box-sizing: border-box; }
         button, .dir-db-btn { display: inline-flex; justify-content: center; align-items: center; }
         #search { width: 160px; }
@@ -103,9 +101,10 @@
         .dir-db-btn i { margin-right: 5px; }
         #minimizeBtn i, #langBtn i { margin-right: 0; }
         #langBtn { padding: 10px 12px; }
-        /* ZMIANA 2: Dodanie animacji szerokości do przycisku rozwijanego */
-        .multi-button { padding: 0; overflow: hidden; transition: all 0.4s ease-in-out; }
+        .multi-button { padding: 0; overflow: hidden; transition: width 0.4s ease-in-out, padding 0.4s ease-in-out; }
         .multi-button > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
+        /* ZMIANA 1c: Style dla animacji tekstu w przycisku */
+        .btn-text { transition: max-width 0.4s ease, opacity 0.3s ease; max-width: 100px; overflow: hidden; white-space: nowrap; display: inline-block; }
         .multi-button-main { flex-grow: 1; padding-right: 12px; }
         .multi-button-child { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
         .multi-button-child:hover { background-color: rgba(0,0,0,0.05); }
@@ -121,10 +120,12 @@
         body:not(.dark-mode) .multi-button-child.active-play i { color: #cc0000; text-shadow: none; }
         body.dark-mode .multi-button-child.active-play i { color: #ff8a80; text-shadow: none; }
         .dir-db-btn.highlighted-state .multi-button-child.active-play i { color: #000 !important; }
-        #lightbox-controls .multi-button-child.active-play i,
-        #lightbox-bg-video-controls button.active-play i { color: #e53935; text-shadow: none !important; }
-        .dark-mode #lightbox-controls .multi-button-child.active-play i,
-        .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80; text-shadow: none !important; }
+        #lightbox-controls .multi-button-child.active-play i, #lightbox-bg-video-controls button.active-play i { color: #e53935; text-shadow: none !important; }
+        .dark-mode #lightbox-controls .multi-button-child.active-play i, .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80; text-shadow: none !important; }
+        /* ZMIANA 2b: Aktywna ikona pauzy w slideshow jest czerwona */
+        #lightbox-bg-video-controls button.active-play i { color: #e53935 !important; }
+        .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80 !important; }
+
 
         .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
         .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
@@ -166,14 +167,14 @@
         .play-guide-container > a > img, .play-guide-container > a > video { max-width: 100%; max-height: 100%; display: block; object-fit: contain; border-radius: 5px; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
         body:not(.no-animation) .play-guide-container > a > img, body:not(.no-animation) .play-guide-container > a > video { animation: zoomInImage 0.5s ease-out; }
         .dark-mode .play-guide-container > a > img, .dark-mode .play-guide-container > a > video { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
-        /* ZMIANA 5: Animacja chowania etykiety */
         .play-caption { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); padding: 10px 15px; border-radius: 5px; font-size: 1.2em; z-index: 1000; text-align: center; transition: opacity 0.3s ease, transform 0.4s ease; }
         .play-caption.minimized-caption { transform: translate(-50%, -150%); }
         body:not(.dark-mode) .play-caption { background-color: rgba(255, 255, 255, 0.9); color: #333; }
         .dark-mode .play-caption { background-color: rgba(0, 0, 0, 0.85); color: #ccc; }
         .caption-title-highlight { color: #e53935; font-weight: bold; }
         .caption-description { display: block; font-size: 0.8em; opacity: 0.7; font-weight: normal; margin-top: 5px; }
-        /* ZMIANA 5: Poprawka koloru licznika */
+        /* ZMIANA 2a: Poprawka stylu licznika */
+        .caption-title-highlight b { font-weight: 900; }
         .play-caption .caption-total { opacity: 0.7; font-weight: normal; color: inherit; }
         
         .lightbox-action-btn { position: fixed; width: 44px; height: 44px; z-index: 1001; padding: 10px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5em; transition: background-color 0.2s ease, color 0.2s; }
@@ -202,10 +203,10 @@
         .animated-header, .animated-controls, .animated-footer, .animated-pagination { animation-fill-mode: forwards; }
         .animated-header, .animated-controls { animation-name: fadeInDown; animation-duration: 0.6s; animation-timing-function: ease-out; }
         .animated-footer, .animated-pagination { animation-name: fadeInUp; animation-duration: 0.8s; animation-timing-function: ease-out; }
-        .controls.minimized-view .btn-text, #lightbox-controls .btn-text { display: none; }
         .controls.minimized-view .dir-db-btn i, #lightbox-controls .dir-db-btn i { margin-right: 0; }
+        /* ZMIANA 1c: Style dla animacji tekstu w przycisku */
+        .controls.minimized-view .btn-text { max-width: 0; opacity: 0; }
 
-        /* ZMIANA 1: Style dla zminimalizowanego menu */
         .controls.minimized-view .multi-button { padding: 10px 12px; }
         .controls.minimized-view .multi-button .multi-button-main .btn-text { display: none; }
         .controls.minimized-view .multi-button .multi-button-main i { margin-right: 0; }
@@ -215,7 +216,6 @@
         @media (max-width: 768px) { #lightbox-controls { padding-bottom: 65px; } }
     </style>
     <script>
-        // ZMIANA 8: Natychmiastowe sprawdzenie języka i przekierowanie
         (function() {
             const langConfig = {
                 defaultLanguage: 'pl',
@@ -365,6 +365,7 @@
                      <button id="lightbox-video-toggle" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></button>
                      <button id="lightbox-video-autoshuffle" title="Automatyczne losowanie wideo Wł/Wył"><i class="fas fa-random"></i></button>
                      <button id="lightbox-video-next" title="Następne wideo"><i class="fas fa-chevron-right"></i></button>
+                     <button id="lightbox-video-reset" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></button>
                 </div>
              </div>
 
@@ -386,7 +387,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.3.1',
+            version: 'v1.3.2',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -521,7 +522,6 @@
 
             document.documentElement.classList.toggle('dark-mode', isDark);
             
-            // ZMIANA 6: Poprawione przełączanie klasy body
             if (isDark) {
                 document.body.classList.add('dark-mode');
             } else {
@@ -568,7 +568,6 @@
                 bgVideoSource.src = videoSrc;
                 bgVideo.load();
                 
-                // ZMIANA 2: Unikamy ponownego dodawania listenera
                 if (!document.body.classList.contains("video-ready")) {
                     bgVideo.addEventListener("canplay", () => {
                         document.body.classList.add("video-ready");
@@ -582,7 +581,6 @@
         }
         
         function updateBackgroundVideoVisibility(forceShow = false) {
-            // ZMIANA 2: Uproszczona logika bez niepotrzebnego ukrywania
             const isVideoVisible = animationState === 2;
              if (isVideoVisible) {
                 if (bgVideo.style.display !== 'block' || forceShow) {
@@ -1045,7 +1043,6 @@
             isLightboxMinimized = !isLightboxMinimized;
             
             lightboxControls.classList.toggle('minimized-controls', isLightboxMinimized);
-            // ZMIANA 5: Animacja chowania etykiety
             playCaption.classList.toggle('minimized-caption', isLightboxMinimized);
 
             minimizeBtn.title = isLightboxMinimized ? "Przywróć interfejs" : "Minimalizuj interfejs";
@@ -1067,12 +1064,11 @@
         }
         
         function checkFileAndOpen(fileUrl, fallbackUrl, isLink = false) {
-            // ZMIANA 7: Rozszerzona funkcja do obsługi .link
             const http = new XMLHttpRequest();
             http.open('HEAD', fileUrl, true);
             http.timeout = 2000;
             http.onload = function() {
-                if (this.status === 200 || this.status === 0) { // status 0 dla plików lokalnych
+                if (this.status === 200 || this.status === 0) {
                     if (isLink) window.location.href = fileUrl;
                     else window.open(fileUrl, '_blank');
                 } else {
@@ -1097,7 +1093,6 @@
             if (guide.format === "link") {
                 const t = decodeUrlFromFilename(guide.file);
                 const fallbackUrl = config.paths.urlFallback;
-                // ZMIANA 7: Użycie funkcji z fallbackiem
                 const clickAction = `checkFileAndOpen('${t}', '${fallbackUrl}', true); return false;`;
 
                 h = `<div class="guide-title"><a href="${t}" onclick="${clickAction}">${d}</a></div>`;
@@ -1268,7 +1263,6 @@
             
             document.getElementById('previewBtn-vertical').style.display = showOrientationButtons ? 'inline-flex' : 'none';
             document.getElementById('previewBtn-horizontal').style.display = showOrientationButtons ? 'inline-flex' : 'none';
-            // ZMIANA 3: Poprawka widoczności przycisku reset
             document.getElementById('previewBtn-reset').style.display = (orientationFilterState !== null || showOrientationButtons) ? 'inline-flex' : 'none';
             
             document.getElementById('previewBtn-vertical').classList.toggle('active-play', orientationFilterState === 'vertical');
@@ -1413,7 +1407,7 @@
                 mainShuffleBtn.classList.remove('active-play');
                 lightboxVideoAutoshuffle.classList.remove('active-play');
             } else {
-                if(bgVideo.paused) { toggleBackgroundVideoPlayback(); }
+                if(bgVideo.paused) { toggleBackgroundVideoPlayback(); } // 7. Start video if paused
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
                 mainShuffleBtn.classList.add('active-play');
@@ -1450,7 +1444,7 @@
                 lightboxVideoAutoshuffle.classList.remove('active-play');
             }
             updateAnimationButtonUI();
-            updateBackgroundVideoVisibility(true);
+            updateBackgroundVideoVisibility();
         }
 
         function toggleAnimations() {
@@ -1465,12 +1459,9 @@
         }
 
         function toggleDarkMode() {
-            // ZMIANA 6: Poprawione przełączanie trybu
-            document.documentElement.classList.toggle("dark-mode");
-            document.body.classList.toggle("dark-mode");
             const isDark = document.documentElement.classList.contains("dark-mode");
-            localStorage.setItem('visudir_theme', isDark ? 'dark' : 'light');
-            currentTheme = isDark ? 'dark' : 'light';
+            localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
+            currentTheme = initializeTheme();
             
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
                 const currentLogoData = config.logoRotator.logos[currentLogoIndex];
@@ -1480,10 +1471,7 @@
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
                 img.src = currentTheme === 'dark' ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
             });
-
-            if (animationState === 2) {
-                initializeBackgroundVideo(currentTheme);
-            }
+            updateBackgroundVideoVisibility();
         }
 
         playButton.addEventListener('click', togglePlayAnimation);
@@ -1633,7 +1621,7 @@
                 container.appendChild(link);
                 
                 const currentIndexInQueue = playGuidesQueue.indexOf(guide);
-                const counterText = playGuidesQueue.length > 1 ? `<b>${currentIndexInQueue + 1}</b><span class="caption-total"> / ${playGuidesQueue.length}</span>` : '';
+                const counterText = playGuidesQueue.length > 1 ? `<b>${currentIndexInQueue + 1}</b> / ${playGuidesQueue.length}` : '';
                 const descriptionText = guide.linkData.description || "";
                 let titleText = guide.title;
                 if (/^\d{2}\s*/.test(titleText)) titleText = titleText.replace(/^\d{2}\s*/, "");
@@ -1660,6 +1648,7 @@
             }
         }
 
+        // 5. Renamed from showImagePreview to handle videos
         function showMediaPreview(guideFilename) {
             stopPlayAnimation();
             backdrop.classList.add("visible", "preview-active");
@@ -1767,12 +1756,6 @@
             );
             bgVideo.addEventListener('play', updateAnimationButtonUI);
             bgVideo.addEventListener('pause', updateAnimationButtonUI);
-            // ZMIANA 1: Obsługa błędów ładowania wideo
-            bgVideo.addEventListener('error', () => {
-                console.error("Błąd ładowania wideo tła.");
-                bgVideo.style.display = 'none';
-                document.body.classList.remove('video-ready');
-            });
         });
         searchInput.addEventListener("input", () => {
             currentPage = 1;
