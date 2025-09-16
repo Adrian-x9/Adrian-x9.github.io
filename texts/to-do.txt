@@ -27,3 +27,12 @@ Tylko poprawki w 1.2.5:
 4. W trybie slideshow, przyciski shuffle są wyróżnione poprawnie, ale ikony na nich znikają. Zmień ich kolor.
 5. W trybie slideshow w obu trybach była wyświetlana pełnoekranowa maska, jest tak w 1.2.0, zrób tak samo.
 6. W trybie zykłym nie działa przycisk Tryb ciemny /jasny.
+
+---
+
+1. W trybie slideshow, po minimalizacji menu, nie działa przycisk przywróć
+2. W trybie slideshow, panel video, zwija się i rozwija w różnych trybach, dodaj animację.
+3. W trybie slideshow, aktywny przycisk shuffle w video, zrób jak w panelu obok, czerwony.
+Naważniejsze, przeczytaj dokładnie. W wersji 1.2.0, którą załączam, przycisk Tekst/Obrazy/… dodatkowo filtrował siatkę grafik - pozwalając wybierać grafiki pionowe, lub pozostałe. Ten przycisk robił się szerszy i miał dodatkowe ikony. Zrób to w naszej wersji, załączam plik.
+
+---
