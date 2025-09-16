@@ -47,3 +47,47 @@ Pracujemy na v1.2.8 i tylko poprawki:
 8. Dodaj efektowny i elegancki efekt preloadingu strony, uniwersalny dla ciemnego i jasnego motywu, bo te kafelki potrafią się chwilę ładować... Albo zrób dwa preloadingi - jasny i ciemny, w zależności od ustawień strony głównej.
 9. Przycisk Obrazy / Wszystko - zrób dodatkowo trzy przyciski - które załączą filtr wyświetlanych niżej pozycji. Pierwszy przycisk - okładki pionowe, drugi nie-pionowe, trzeci, wszystkie. Masz to zrobione w pliku index_v1.2.0 - obejrzyj jak to działało, może być tak samo.
 10. Przed otwieraniem linków z kafelków, skrypt ma sprawdzać czy jest plik na dysku, jeśli nie, otwiera fallback base-system/soon.html w tej samej zakładce, to kiedyś było, np. w 1.2.0. Dodaj to do konfiguracji systemu, żeby można było ustawić ścieżkę.
+
+---
+
+1. Tryb i ciemny, menu u góry, długie przyciski Obrazy i Video - gdy aktywne, zrób tło bez zmian, a kolor ikon i napisu niech się zmieni na czarny w obu trybach.
+2. Przy zmianie trybu przyciskiem Wszystko / Text. Nie ma animacji zanikania obrazka, powinien zmniejszać w pionie do góry kontenera, a w poziomie w środku. Dodaj tę animację na początku, a potem jak jest, rysujemy nowe kafle...
+3. Do przycisku Video menu trybu zwykłego dodaj przyciski - kolejne / poprzednie video tła, dokładnie tak, jak w slideshow, A w slideshow daj przycisk do resetu video tła do domyślnego, dokładnie jak w trybie zwykłym, czyli niech te panele wyglądają podobnie.
+4. W trybie slideshow, przycisk lewy pauzy, gdy pauza aktywna ma być czerwony, tak samo ja ten przycisk pauzy po prawej.
+5. W nagłówku slideshow, gdzie jest etykieta tekstowa, mamy np. 6 / 24. 6 zostaw jak jest, czerwone, a ilość pozycji 24 -> na czarno, jak niżej.
+6. Gdy użyję filtra w wyszukiwarce, pokaz slideshow to uwzględnia, gdy użyję losuj... i tak wyświetla wszystkie kafelki, a powinny być te wylosowane.
+7. Na węższych ekranach główne menu u góry niech się łamie na dwa wiersze w ten sposób, że w pierwszej kolumnie przyciski od Play do losuj... a w drugiej od obrazy do końca...
+8. W trybie ciemnym slideshow nie jest ukrywana zawartość strony. W obu trybach nie jest ukrywany pasek przewijania. Ukryte elementy są pasek przewijania pozostał. Dodatkowo w obu trybach ma być ta maska, tylko ma być przezroczysta w 50%, bo te video tła są bardzo ładne, i mają być ostre.
+9. Te szerokie rozwijanie przyciski w głównym menu, są animowane, ale zmień tę animację - niech się zmienia dokładnie tak, jak zwija się w trybie slideshow
+Nic innego nie zmieniaj
+
+Ikona animacji w stylu "/" jest ok, ale mało intuicyjna. Daj może jakąś propozycję intuicyjnej ikony, jeśli istnieje
+
+---
+
+
+1. Gdy system nie może załadować pełnoekranowego video tła, bo brak pliku - system czeka w nieskończoność i zawiesza się.
+2. Odświeżanie strony, zmiana strony, zmiana filtra, ilości wierszy, itp., nie musi ukrywać i odsłaniać video, albo go resetować, ono miga, niepotrzebnie, bo ono i tak się nie zmienia. Video ma resetować tylko przycisk na panelu video i tak jest.
+3. W menu głównym szerokie przyciski Wszystko i Video, gdy mają czerwone tło, niech czcionka jest jasno szara / biała. Natomiast kolor aktywnej ikony - czarny - aktywne mogą być tylko play/pause i shuffle.
+4. W trybie zminimalizowanym wyświetlamy tylko ikony, np. przycisk Video z ikonką zmieni się w ikonkę video, a przyciski po prawej zostaną ukryte. I po najechaniu myszą będzie się rozwijał tak, jak menu obrazy. Tak samo niech działa menu wszystkie, Czyli w zwykłym ikonka i napis, w zminimalizowanym tylko ikonka, a po najechaniu myszą się rozsuwa. Na komórce w trybie pełnym może być wszystko jak teraz, ale w trybie zminimalizowanym też tylko ikonki. Dodatkowo dodaj animacje zmniejszania i zwiększania tych szerokich przyciskow przy minimalizacji i zmianie trybu. 
+5. Przycisk w menu głównym następne video tła niech jest przedostatnim, tak jak w trybie slideshow.
+6. W trybie slideshow przy zmianie trybu jasny / ciemny, nagle pojawiają się wszystkie elementy po6 spodem, a powinny pozostać ukryte.
+7. Gdy brak pliku otwieranego z kafelków .link, system ma załadować plik z konfiguracji - domyślnie - /base-system/soon.html
+8. Dodaj do konfiguracji stałą język, ustaw domyślnie na pl i umieść w pamięci przeglądarki. Domyślnie plik jest po polsku, a gdy konfiguracja jest ustawiona (z pamięci przeglądarki) na en, wówczas, przy otwarciu pliku przekieruj do pliku index-en.html - jest w konfiguracji, a jak na pl, nic nie rób.
+9. Dodaj delikatne cienie pod napisami u góry, tj. 24 / 24 pozycji i START . maxi MENU ..
+10. W tybie mobilnym, podnieś menu nawigacyjne do góry w trybie slideshow o wysokość przycisku minimalizuj, bo te przyciski się nakładają
+
+---
+
+1. Gdy minimalizuję menu, te szerokie przyciski się ładnie zmniejszają. Ale animacje są jakby na odwrót, gdy minimalizuję, wówczas pojawiają się tylko ikony - ok, ale przycisk się zwiększa, gdy przywracam, wówczas pojawiają się pełne przyciski - ok, ale animacja zmniejszania, a przecież przycisk się zwiększa.
+2. Gdy wciskam przycisk tylko orientacja pionowa, lub pozostałe i nie ma takich okładek, nic się nie wyświetla - to jest ok, ale znika przycisk reset obok i nie mogę włączyć z powrotem wszystkich.
+3. 
+
+
+
+
+
+
+
+
+
