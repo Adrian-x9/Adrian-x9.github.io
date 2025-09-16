@@ -13,16 +13,19 @@
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        html:not(.dark-mode) {
-             background-color: #e1e1e1;
-        }
-        html.dark-mode {
-            background-color: #121212;
-        }
-        #bg-video {
-            position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%;
-            width: 100vw; height: 100vh; object-fit: cover; z-index: -1; display: none;
-        }
+        /* 8. Preloader Styles */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border-radius: 50%; animation: spin 1s linear infinite; }
+        html:not(.dark-mode) #preloader { background-color: #e1e1e1; }
+        html:not(.dark-mode) .spinner { border: 5px solid #f3f3f3; border-top: 5px solid #cc0000; }
+        html.dark-mode #preloader { background-color: #121212; }
+        html.dark-mode .spinner { border: 5px solid #333; border-top: 5px solid #e53935; }
+        #preloader.fade-out { opacity: 0; pointer-events: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        html:not(.dark-mode) { background-color: #e1e1e1; }
+        html.dark-mode { background-color: #121212; }
+        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; width: 100vw; height: 100vh; object-fit: cover; z-index: -1; display: none; }
         body.video-ready { background-color: transparent !important; }
         body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; min-height: 100vh; box-sizing: border-box; }
         body.no-animation .guide.animate-in, body.no-animation .guide.flip-animate { animation: none !important; transform: none !important; }
@@ -90,7 +93,7 @@
         .dir-db-btn i { margin-right: 5px; }
         #minimizeBtn i, #langBtn i { margin-right: 0; }
         #langBtn { padding: 10px 12px; }
-        .multi-button { padding: 0; overflow: hidden; }
+        .multi-button { padding: 0; overflow: hidden; /* 6. Button Animation */ transition: all 0.4s ease-in-out; }
         .multi-button > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
         .multi-button-main { flex-grow: 1; padding-right: 12px; }
         .multi-button-child { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
@@ -103,7 +106,11 @@
         .active-play i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
         .dark-mode .active-play i { text-shadow: 0 0 10px #ff8a80; }
         .multi-button-child.active-play { background-color: rgba(0,0,0,0.1); }
-        .dark-mode .multi-button-child.active-play { background-color: rgba(255,255,255,0.15); }
+        /* 2. Play Button Contrast */
+        .multi-button-child.active-play { background-color: rgba(204,0,0,0.2); }
+        .dark-mode .multi-button-child.active-play { background-color: rgba(229,57,53,0.3); }
+        body:not(.dark-mode) .multi-button-child.active-play i { color: #cc0000; text-shadow: none; }
+        body.dark-mode .multi-button-child.active-play i { color: #ff8a80; text-shadow: none; }
         #lightbox-controls .multi-button-child.active-play i,
         #lightbox-bg-video-controls button.active-play i { color: #e53935; text-shadow: none !important; }
         .dark-mode #lightbox-controls .multi-button-child.active-play i,
@@ -144,33 +151,20 @@
         .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
         .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
         .play-guide-container > a { max-width: 100%; max-height: 100%; display: flex; justify-content: center; align-items: center; }
-        .play-guide-container .preview-image { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 5px; }
-        .play-guide-container > a > img { max-width: 100%; max-height: 100%; display: block; object-fit: contain; border-radius: 5px; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
-        body:not(.no-animation) .play-guide-container > a > img { animation: zoomInImage 0.5s ease-out; }
-        .dark-mode .play-guide-container > a > img { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
+        .play-guide-container .preview-media { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 5px; }
+        .play-guide-container > a > img, .play-guide-container > a > video { max-width: 100%; max-height: 100%; display: block; object-fit: contain; border-radius: 5px; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
+        body:not(.no-animation) .play-guide-container > a > img, body:not(.no-animation) .play-guide-container > a > video { animation: zoomInImage 0.5s ease-out; }
+        .dark-mode .play-guide-container > a > img, .dark-mode .play-guide-container > a > video { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
         .play-caption { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); padding: 10px 15px; border-radius: 5px; font-size: 1.2em; z-index: 1000; text-align: center; transition: opacity 0.3s ease; }
         body:not(.dark-mode) .play-caption { background-color: rgba(255, 255, 255, 0.9); color: #333; }
         .dark-mode .play-caption { background-color: rgba(0, 0, 0, 0.85); color: #ccc; }
         .caption-title-highlight { color: #e53935; font-weight: bold; }
         .caption-description { display: block; font-size: 0.8em; opacity: 0.7; font-weight: normal; margin-top: 5px; }
         
-        .lightbox-action-btn {
-            position: fixed;
-            width: 44px; height: 44px;
-            z-index: 1001;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            transition: background-color 0.2s ease, color 0.2s;
-        }
+        .lightbox-action-btn { position: fixed; width: 44px; height: 44px; z-index: 1001; padding: 10px; border-radius: 5px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5em; transition: background-color 0.2s ease, color 0.2s; }
         .lightbox-action-btn i { margin: 0; }
         #playCloseBtn { top: 15px; right: 15px; }
         #lightbox-minimizeBtn { bottom: 15px; right: 15px; }
-
         #lightbox-controls { position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; transition: transform 0.4s ease; flex-wrap: wrap; z-index: 1000; }
         #lightbox-controls.minimized-controls { transform: translateY(100%); }
         .lightbox-control-group { display: flex; border-radius: 5px; overflow: hidden; }
@@ -197,7 +191,6 @@
         .controls.minimized-view .dir-db-btn i, #lightbox-controls .dir-db-btn i { margin-right: 0; }
     </style>
     <script>
-        // Prevents flash of light theme before the main script loads
         (function() {
             try {
                 const theme = localStorage.getItem('visudir_theme');
@@ -211,6 +204,10 @@
 </head>
 
 <body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
     <video id="bg-video" autoplay loop muted playsinline>
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
@@ -298,7 +295,7 @@
         <div>
             <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
                     <span class="version-display"></span></span></a></strong>
-            <strong>© 2025-09-10</strong> do katalogowania, zarządzania i
+            <strong>© 2025-09-12</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
             <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
                 </a></span>
@@ -345,7 +342,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.2.8',
+            version: 'v1.2.9', // Updated version
             global: {
                 defaultTheme: 'light',
             },
@@ -363,7 +360,7 @@
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: false,
-                showLanguageButton: true,
+                showLanguageButton: true, // 1. Added Language Button Config
                 defaultBgVideo: 17,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 18,
@@ -385,6 +382,7 @@
             paths: {
                 url404: "base-system/404.html",
                 urlAbout: "base-system/about.html",
+                urlFallback: "base-system/soon.html", // 10. Added Fallback URL Config
                 databaseFileName: "base-system/db.txt",
                 dataFolderName: "base-system/files",
                 coversFolderName: "base-system/preview",
@@ -399,9 +397,7 @@
         const dataFromFile = `
  Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
-
  Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\base-system\files
-
 12.09.2025  11:09    <DIR>          .
 12.09.2025  10:51    <DIR>          ..
 12.09.2025  10:15                 0 .#base-system#contact.html$$04 Kontakt$$Kontakt z autorem - Adrianem Ulbrych.link
@@ -430,7 +426,6 @@
 12.09.2025  10:50                 0 .#VisuKeys#index.html$$07 VisuKeys$$Autorski projekt - w budowie.link
               26 File(s)              0 bytes
                2 Dir(s)     78441779200 bytes free
-
         `;
         // --- KONIEC BAZY DANYCH ---
 
@@ -590,7 +585,8 @@
             return normalizeUrl(urlPart);
         }
         function parseGuideTitle(filename) {
-            const baseName = filename.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, '').trim();
+             // 5. Video File Support
+            const baseName = filename.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, '').trim();
             const parts = baseName.split('$$');
 
             if (getFileExtension(filename) === 'link' && parts.length > 1) {
@@ -643,7 +639,7 @@
 
         function getGuideOrientation(guide) {
             return new Promise((resolve) => {
-                const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0];
+                const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0];
                 const coverUrl = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
 
                 if (guideDimensionsCache[coverUrl]) {
@@ -717,7 +713,7 @@
             }
             
             const orientationPromises = guides
-                .filter(guide => ['jpg', 'png', 'link'].includes(guide.format))
+                .filter(guide => ['jpg', 'png', 'link', 'mp4', 'avi'].includes(guide.format))
                 .map(guide => getGuideOrientation(guide));
 
             await Promise.all(orientationPromises);
@@ -803,7 +799,7 @@
         }
         
         function applyFilters() {
-            let search = searchInput.value.toLowerCase();
+            const search = searchInput.value.toLowerCase();
             const formatValue = formatFilter.value;
             let format = formatValue;
 
@@ -812,11 +808,17 @@
                 format = "";
             }
 
-            filteredGuides = guides.filter(g =>
-                g.title.toLowerCase().includes(search) &&
-                (!format || g.format === format) &&
-                (!orientationFilterState || g.orientation === orientationFilterState)
-            );
+            filteredGuides = guides.filter(g => {
+                const inTitle = g.title.toLowerCase().includes(search);
+                // 4. Enhanced Search
+                const inDescription = g.linkData.description && g.linkData.description.toLowerCase().includes(search);
+                const searchMatch = inTitle || inDescription;
+
+                const formatMatch = !format || g.format === format;
+                const orientationMatch = !orientationFilterState || g.orientation === orientationFilterState;
+
+                return searchMatch && formatMatch && orientationMatch;
+            });
         }
 
 
@@ -838,6 +840,12 @@
             applyFilters();
             updatePaginationOptions();
             renderGuides();
+            
+            // 8. Hide preloader
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.classList.add('fade-out');
+            }
         }
 
         function startLogoRotator() {
@@ -885,6 +893,8 @@
                  document.getElementById("logoLink").style.display = "none";
             }
             
+            // 1. Language Button Visibility
+            if (!config.pageSettings.showLanguageButton) document.getElementById("langBtn").style.display = "none";
             if (!config.pageSettings.showVisuDirButton) document.getElementById("visuDirBtn").style.display = "none";
             document.getElementById("backButton").style.display = config.pageSettings.showBackButton ? "flex" : "none";
 
@@ -916,19 +926,14 @@
                 const target = event.target.closest('span');
                  if (!target) return;
 
+                // 9. Orientation Filters
                 if(target.id === 'previewBtn-vertical') {
-                    orientationFilterState = 'vertical';
-                    if (previewState === 0) {
-                         previewState = 2;
-                    }
-                    updatePreviewButtonUI();
+                    orientationFilterState = orientationFilterState === 'vertical' ? null : 'vertical';
+                    if (previewState === 0) { previewState = 2; }
                     renderGuides();
                 } else if(target.id === 'previewBtn-horizontal') {
-                    orientationFilterState = 'horizontal';
-                    if (previewState === 0) {
-                        previewState = 2;
-                    }
-                    updatePreviewButtonUI();
+                    orientationFilterState = orientationFilterState === 'horizontal' ? null : 'horizontal';
+                    if (previewState === 0) { previewState = 2; }
                     renderGuides();
                 } else if(target.id === 'previewBtn-reset') {
                     resetPreview();
@@ -946,6 +951,10 @@
                     .catch((e) => {
                         console.error(`Automatyczne ładowanie pliku '${config.paths.databaseFileName}' nie powiodło się. Błąd:`, e);
                         fileInputLabel.style.display = "flex";
+                        const preloader = document.getElementById('preloader');
+                        if (preloader) {
+                            preloader.classList.add('fade-out');
+                        }
                     });
             }
         };
@@ -958,17 +967,11 @@
             const minimizeIcon = minimizeBtn.querySelector('i');
 
             isMinimized = !isMinimized;
-
             controls.classList.toggle('minimized-view', isMinimized);
             
-            if (isMinimized) {
-                minimizeBtn.title = "Przywróć interfejs";
-                minimizeIcon.className = 'fas fa-chevron-down';
-            } else {
-                minimizeBtn.title = "Minimalizuj interfejs";
-                minimizeIcon.className = 'fas fa-chevron-up';
-            }
-
+            minimizeBtn.title = isMinimized ? "Przywróć interfejs" : "Minimalizuj interfejs";
+            minimizeIcon.className = isMinimized ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+            
             topHeader.classList.toggle('minimized-header', isMinimized);
             footer.classList.toggle('minimized-footer', isMinimized);
         }
@@ -980,14 +983,8 @@
             
             lightboxControls.classList.toggle('minimized-controls', isLightboxMinimized);
             playCaption.style.opacity = isLightboxMinimized ? '0' : '1';
-
-            if (isLightboxMinimized) {
-                minimizeBtn.title = "Przywróć interfejs";
-                minimizeIcon.className = 'fas fa-chevron-up';
-            } else {
-                minimizeBtn.title = "Minimalizuj interfejs";
-                minimizeIcon.className = 'fas fa-chevron-down';
-            }
+            minimizeBtn.title = isLightboxMinimized ? "Przywróć interfejs" : "Minimalizuj interfejs";
+            minimizeIcon.className = isLightboxMinimized ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
         }
 
         function resetView() {
@@ -1003,56 +1000,56 @@
             saveToLocalStorage('rows', selectedRowCount);
             resetPreview();
         }
+        
+        // 10. File Existence Check function
         function checkFileAndOpen(fileUrl, fallbackUrl) {
             const http = new XMLHttpRequest();
             http.open('HEAD', fileUrl, true);
+            http.timeout = 2000; // 2 seconds timeout
             http.onload = function() {
-                if (this.status === 200) {
+                if (this.status === 200 || this.status === 0) { // status 0 for local files
                     window.open(fileUrl, '_blank');
                 } else {
-                    window.open(fallbackUrl, '_blank');
+                    window.open(fallbackUrl, '_self');
                 }
             };
-            http.onerror = function() {
-                window.open(fallbackUrl, '_blank');
+            http.onerror = http.ontimeout = function() {
+                window.open(fallbackUrl, '_self');
             };
             http.send();
         }
+
         function createGuideHtml(guide) {
-            const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "").split("$$")[0],
+            const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
             let h = "", i = "", a = "", w = "";
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
+            
             if (guide.format === "link") {
                 const t = decodeUrlFromFilename(guide.file),
-                    g =
-                        t.startsWith(".") || t.startsWith("/")
-                            ? ""
-                            : 'target="_blank" rel="noopener noreferrer"';
+                    g = t.startsWith(".") || t.startsWith("/") ? "" : 'target="_blank" rel="noopener noreferrer"';
                 h = `<div class="guide-title"><a href="${t}" ${g}>${d}</a></div>`;
-                i = `<div class="guide-info">${guide.linkData.description || ""
-                    }</div>`;
+                i = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
                 a = `<a href="${t}" ${g}><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
                 w = `<a href="${t}" ${g} class="cover-link">`;
             } else {
                 h = `<div class="guide-title">${d}</div>`;
-                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date
-                    } ${guide.time
-                    }<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB
-                    } MB</div>`;
-                if (guide.format === "jpg" || guide.format === "png") {
-                    a = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
-                    w = `<a href="#" onclick="showImagePreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
+                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
+                
+                // 5. Video File Support
+                if (["jpg", "png", "mp4", "avi"].includes(guide.format)) {
+                    a = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
+                    w = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
                 } else {
-                    const p = guide.format === "pdf";
-                    const fallbackUrl = 'base-system/soon.html';
-                    if (p) {
-                        a = `<a href="${u}" onclick="checkFileAndOpen('${u}', '${fallbackUrl}'); return false;"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
-                        w = `<a href="${u}" onclick="checkFileAndOpen('${u}', '${fallbackUrl}'); return false;" class="cover-link">`;
-                    } else {
+                    const isPdf = guide.format === "pdf";
+                    if (isPdf) {
+                        // 10. Use fallback for PDFs
+                        a = `<a href="${u}" onclick="checkFileAndOpen('${u}', '${config.paths.urlFallback}'); return false;"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
+                        w = `<a href="#" onclick="checkFileAndOpen('${u}', '${config.paths.urlFallback}'); return false;" class="cover-link">`;
+                    } else { // Download for other formats like epub, mobi etc.
                         a = `<a href="${u}" download><i class="fas fa-download"></i> Pobierz</a>`;
                         w = `<a href="${u}" download class="cover-link">`;
                     }
@@ -1061,6 +1058,7 @@
             const k = document.documentElement.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
+
         function renderGuides() {
             guideList.innerHTML = "";
             applyFilters();
@@ -1197,13 +1195,17 @@
             const previewBtnText = previewBtnMain.querySelector('.btn-text');
             const previewBtnIcon = previewBtnMain.querySelector('i');
             
+            // 9. Orientation Filters UI
             const hasVertical = filteredGuides.some(g => g.orientation === 'vertical');
             const hasHorizontal = filteredGuides.some(g => g.orientation === 'horizontal');
-            const showOrientationButtons = (hasVertical && hasHorizontal) && (previewState === 1 || previewState === 2);
-
-            ['previewBtn-vertical', 'previewBtn-horizontal', 'previewBtn-reset'].forEach(id => {
-                 document.getElementById(id).style.display = showOrientationButtons ? 'inline-flex' : 'none';
-            });
+            const showOrientationButtons = (hasVertical || hasHorizontal) && (previewState === 1 || previewState === 2);
+            
+            document.getElementById('previewBtn-vertical').style.display = showOrientationButtons ? 'inline-flex' : 'none';
+            document.getElementById('previewBtn-horizontal').style.display = showOrientationButtons ? 'inline-flex' : 'none';
+            document.getElementById('previewBtn-reset').style.display = showOrientationButtons ? 'inline-flex' : 'none';
+            
+            document.getElementById('previewBtn-vertical').classList.toggle('active-play', orientationFilterState === 'vertical');
+            document.getElementById('previewBtn-horizontal').classList.toggle('active-play', orientationFilterState === 'horizontal');
             
             switch (previewState) {
                 case 0: 
@@ -1288,8 +1290,11 @@
                         animationBtnReset.style.display = 'inline-flex';
                         lightboxVideoControls.classList.add('visible');
                     }
-                    animationBtnPlay.innerHTML = bgVideo.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
-                    lightboxVideoToggle.innerHTML = bgVideo.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+                    // 3 & 7. Sync play button UI with video state
+                    const isPaused = bgVideo.paused;
+                    animationBtnPlay.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+                    lightboxVideoToggle.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
+                    animationBtnPlay.classList.toggle('active-play', !isPaused);
                     break;
             }
         }
@@ -1336,6 +1341,7 @@
                 mainShuffleBtn.classList.remove('active-play');
                 lightboxVideoAutoshuffle.classList.remove('active-play');
             } else {
+                if(bgVideo.paused) { toggleBackgroundVideoPlayback(); } // 7. Start video if paused
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
                 mainShuffleBtn.classList.add('active-play');
@@ -1345,18 +1351,8 @@
         
         function toggleBackgroundVideoPlayback() {
             if (animationState !== 2) return;
-            const playBtn = document.getElementById('animationBtn-play');
-            const lightboxPlayBtn = document.getElementById('lightbox-video-toggle');
-
-            if (bgVideo.paused) {
-                bgVideo.play();
-                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                lightboxPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            } else {
-                bgVideo.pause();
-                playBtn.innerHTML = '<i class="fas fa-play"></i>';
-                lightboxPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-            }
+            if (bgVideo.paused) { bgVideo.play(); } else { bgVideo.pause(); }
+            // UI is updated via the 'play' and 'pause' event listeners on the video element
         }
 
         function toggleLightboxVideo() {
@@ -1426,10 +1422,12 @@
                 slideshowIsPlaying = false;
                 clearTimeout(playAnimationTimeout);
                 slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                slideshowPlayBtn.classList.remove('active-play');
             } else {
                 if (playGuidesQueue.length < 2) return;
                 slideshowIsPlaying = true;
                 slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                slideshowPlayBtn.classList.add('active-play');
                 scheduleNext();
             }
         }
@@ -1457,6 +1455,7 @@
             
             slideshowIsPlaying = true;
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            slideshowPlayBtn.classList.add('active-play');
 
             scheduleNext();
         }
@@ -1471,6 +1470,7 @@
             playGuideContainer.innerHTML = "";
             if (playCaption) playCaption.innerHTML = "";
             slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+            slideshowPlayBtn.classList.remove('active-play');
             if(playButton) {
                 const btnText = playButton.querySelector('.btn-text');
                 if(btnText) btnText.textContent = ' Play';
@@ -1505,7 +1505,7 @@
             let nextIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
             const nextGuide = playGuidesQueue[nextIndex];
             if (!nextGuide) return;
-            const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
+            const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
             const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
             if (hdPath) { (new Image()).src = hdPath; }
         }
@@ -1518,13 +1518,20 @@
                 container.innerHTML = "";
                 const fallbackCover = document.documentElement.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
                 
-                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
+                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
                 const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
                 const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
                 const directMediaPath = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
                 
-                const displayElement = document.createElement('img');
-                if (['jpg', 'png', 'gif'].includes(guide.format)) {
+                const isVideo = ['mp4', 'avi'].includes(guide.format);
+                const displayElement = document.createElement(isVideo ? 'video' : 'img');
+                
+                if (isVideo) {
+                    displayElement.src = directMediaPath;
+                    displayElement.controls = true;
+                    displayElement.autoplay = true;
+                    displayElement.onerror = () => { displayElement.poster = sdPath; displayElement.onerror = () => { displayElement.poster = fallbackCover; displayElement.onerror = null; }; };
+                } else if (['jpg', 'png', 'gif'].includes(guide.format)) {
                     displayElement.src = directMediaPath;
                     displayElement.onerror = () => { if (hdPath) displayElement.src = hdPath; displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; }; };
                 } else if (hdPath) {
@@ -1534,6 +1541,7 @@
                     displayElement.src = sdPath;
                     displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; };
                 }
+
                 const link = document.createElement('a');
                 if (guide.format === 'link') {
                     const targetUrl = decodeUrlFromFilename(guide.file);
@@ -1542,7 +1550,7 @@
                 } else {
                     const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
                     link.href = fileUrl;
-                    if (guide.format === 'pdf') { link.target = '_blank'; link.rel = 'noopener noreferrer'; } else { link.download = guide.file; }
+                    if (guide.format === 'pdf' || isVideo) { link.target = '_blank'; link.rel = 'noopener noreferrer'; } else { link.download = guide.file; }
                 }
                 link.appendChild(displayElement);
                 container.appendChild(link);
@@ -1555,7 +1563,7 @@
                 
                 playCaption.innerHTML = `<div class="caption-title-highlight">${counterText} ${titleText}</div><div class="caption-description">${descriptionText}</div>`;
                 
-                if (slideshowIsPlaying) {
+                if (slideshowIsPlaying && !isVideo) {
                     preloadNextGuide();
                     playAnimationTimeout = setTimeout(()=> scheduleNext(), 4000);
                 }
@@ -1564,9 +1572,9 @@
             if (existingContent) {
                 if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
                 
-                const imgElement = existingContent.querySelector ? existingContent.querySelector('img') : existingContent;
-                if(imgElement && !document.body.classList.contains('no-animation')) {
-                     imgElement.style.animation = 'zoomOutImage 0.5s ease-in forwards';
+                const mediaElement = existingContent.querySelector ? existingContent.querySelector('img, video') : existingContent;
+                if(mediaElement && !document.body.classList.contains('no-animation')) {
+                     mediaElement.style.animation = 'zoomOutImage 0.5s ease-in forwards';
                 }
                 const timeout = document.body.classList.contains('no-animation') ? 0 : 500;
                 setTimeout(showNewGuide, timeout);
@@ -1575,30 +1583,41 @@
             }
         }
 
-        function showImagePreview(guideFilename) {
+        // 5. Renamed from showImagePreview to handle videos
+        function showMediaPreview(guideFilename) {
             stopPlayAnimation();
             backdrop.classList.add("visible", "preview-active");
 
-            const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png)$/i, "");
+            const guideFormat = getFileExtension(guideFilename);
+            const isVideo = ['mp4', 'avi'].includes(guideFormat);
+
+            const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png|mp4|avi)$/i, "");
             const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
             const directPath = `${config.paths.dataFolderName}/${encodeURIComponent(guideFilename)}`;
             const fallbackCover = document.documentElement.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
 
-            const img = document.createElement('img');
-            img.className = "preview-image";
-            img.alt = "Podgląd obrazu";
-
-            if (hdPath) {
-                img.src = hdPath;
-                img.onerror = () => { img.src = directPath; img.onerror = () => { img.src = fallbackCover; img.onerror = null; }; };
+            const mediaElement = document.createElement(isVideo ? 'video' : 'img');
+            mediaElement.className = "preview-media";
+            
+            if (isVideo) {
+                mediaElement.src = directPath;
+                mediaElement.controls = true;
+                mediaElement.autoplay = true;
             } else {
-                img.src = directPath;
-                img.onerror = () => { img.src = fallbackCover; img.onerror = null; };
+                mediaElement.alt = "Podgląd obrazu";
+                if (hdPath) {
+                    mediaElement.src = hdPath;
+                    mediaElement.onerror = () => { mediaElement.src = directPath; mediaElement.onerror = () => { mediaElement.src = fallbackCover; mediaElement.onerror = null; }; };
+                } else {
+                    mediaElement.src = directPath;
+                    mediaElement.onerror = () => { mediaElement.src = fallbackCover; mediaElement.onerror = null; };
+                }
             }
+
             const link = document.createElement('a');
             link.href = directPath;
             link.target = '_blank';
-            link.appendChild(img);
+            link.appendChild(mediaElement);
 
             playGuideContainer.innerHTML = "";
             playGuideContainer.appendChild(link);
@@ -1666,12 +1685,13 @@
                     const el = document.querySelector(sel);
                     if (el) {
                         el.style.animationDelay = `${0.2 + i * 0.2}s`;
-                        el.classList.add(
-                            i < 2 ? "animated-header" : "animated-pagination"
-                        );
+                        el.classList.add( i < 2 ? "animated-header" : "animated-pagination");
                     }
                 }
             );
+             // 3 & 7: Add event listeners to sync video state with UI
+            bgVideo.addEventListener('play', updateAnimationButtonUI);
+            bgVideo.addEventListener('pause', updateAnimationButtonUI);
         });
         searchInput.addEventListener("input", () => {
             currentPage = 1;
