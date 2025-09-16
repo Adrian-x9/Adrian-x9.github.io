@@ -18,6 +18,7 @@ Niech ich animacja pojawiania się przy ładowaniu, strony, odświeżaniu, filtr
 
 Pracujemy na wersji 1.2.5, zmieniamy tylko to, co powyżej. Plik 1.2.0 do wglądu
 
+---
 
 Tylko poprawki w 1.2.5:
 1. Obok przycisku VisuDir u góry maleńki przycisk w tym samym stylu z ikoną globusa kierujący do index-en.html w tej samej zakładce - zmiana języka na English International.
