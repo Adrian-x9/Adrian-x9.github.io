@@ -219,7 +219,7 @@
         (function() {
             const langConfig = {
                 defaultLanguage: 'pl',
-                englishUrl: 'index-en.html'
+                englishUrl: 'index.html'
             };
             try {
                 let currentLang = localStorage.getItem('visudir_lang');
@@ -266,7 +266,7 @@
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
             </a>
-            <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
+            <a id="langBtn" class="dir-db-btn" href="index.html" title="Switch to English">
                 <i class="fas fa-globe"></i>
             </a>
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
@@ -998,7 +998,7 @@
             document.getElementById('langBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 try {
-                    localStorage.setItem('visudir_lang', 'en');
+                    localStorage.setItem('visudir_lang', 'pl');
                 } catch (err) { /* ignore */ }
                 window.location.href = this.href;
             });

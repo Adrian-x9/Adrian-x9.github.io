@@ -79,10 +79,20 @@ Ikona animacji w stylu "/" jest ok, ale mało intuicyjna. Daj może jakąś prop
 
 ---
 
-1. Gdy minimalizuję menu, te szerokie przyciski się ładnie zmniejszają. Ale animacje są jakby na odwrót, gdy minimalizuję, wówczas pojawiają się tylko ikony - ok, ale przycisk się zwiększa, gdy przywracam, wówczas pojawiają się pełne przyciski - ok, ale animacja zmniejszania, a przecież przycisk się zwiększa.
-2. Gdy wciskam przycisk tylko orientacja pionowa, lub pozostałe i nie ma takich okładek, nic się nie wyświetla - to jest ok, ale znika przycisk reset obok i nie mogę włączyć z powrotem wszystkich.
-3. 
+1. Gdy minimalizuję menu, te szerokie przyciski się ładnie zmniejszają w poziomie, co ma znikać znika, ale one jednocześnie rosną w pionie, a nie powinny rosnąć. W trybie zminimalizowanym ładnie się rozsuwają na hover i potem zsuwają dodaj do tego animację, by to rozsuwanie, zsuwanie było płynne, ale animacje wyświetlaj tylko, gdy ustawiona jest zmienna - flaga
+2. Gdy przycisk Wszystko zmienia się w Tekst - dodaj płynną animację zmniejszania przycisku w poziomie, wg flagi animacji, a gdy przycisk tekst w obrazy, dodaj płynną animację poszerzania, tak samo, gdy flaga animacji aktywna.
+3. Gdy wciskam przycisk tylko orientacja pionowa, lub pozostałe i nie ma takich okładek, nic się nie wyświetla - to jest ok, ale znika przycisk reset obok i nie mogę włączyć z powrotem okładek.
+4. Na panelu Video przycisk < ma być przed przyciskiem play/pause, innych nie ruszaj: Przycisk Video: Previous, Play/Pause, Shuffle, Next, Rest.
+5. W trybie slideshow, etykieta u góry niech się płynnie zsuwa do góry, lub zsuwa z góry, gdy minimalizacja interfejsu, tak jak dzieje się z menu na dole. W liczniku Np. 5 / x to / x miało być w tym samym kolorze, co opis poniżej.
+6. Napisy w nagłówku strony w trybie ciemny mają ciemne tło - to jest dobrze, w trybie jasnym ustaw cienie napisów analogicznie na kolor jasny
 
+---
+
+Ostatnie poprawki, zwróć szczególną uwagę, bo za każdym razem, przy poprawkach, znikają Ci kolejne linijki kodu. Zwróć teraz szczególną uwagę na pliki które Ci wysyłam, weź ostatni v1.3.1 i wprowadź tylko te zmiany, o których piszę niżej, dbając, by nie zgubiły się jakieś części pliku. W razie, gdybyś miał wątpliwości, wysyłam plik sprzed zmian - index-v1.2.9.html
+1. Tryb zwykły, pasek menu u góry:
+a) W trybie ciemnym przyciski mają jasno szare ramki, W trybie jasnym zrób wszystkim przyciskom i listom wyboru ramki, jak VisuDir v1.3.1 albo jak ikona zmiany języka, tak samo w panelu paginacji na dole strony.
+b) Kliknięcie na przycisk Tryb jasny / ciemny nie zmienia napisu ani ikony. Dopiero odświeżenie strony aktualizuje te przyciski.
+c) Przy minimalizacji interfejsu, szerokie przyciski się zwijają - ładna animacja, zrób analogicznie przy maksymalizacji/przywracaniu interfejsu, ale odwrotnie, żeby się animowało ich poziome rozwijanie, wtedy gdy są wyświetlane szerokie przyciski i kiedy system wyświetla animacje - dotyczy przycisków Obrazy, Wszystko, Video.
 
 
 
