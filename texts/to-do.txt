@@ -108,6 +108,26 @@ a) W trybie offline, nie działają linki w plikach .LINK, nie wiem czy otwiera 
 
 ---
 
+Najpierw usuniemy błędy w kodzie.
+
+1. Tu się przyłóż, bo naprawiamy to już od dawna, utworzyłem nową sesję z Tobą, byś Ty miał czysty umysł / pamięć, może tym razem się uda, ale obejrzyj najpierw dokładnie kod. W skrócie, jest sporo animacji, nie są wyświetlane, gdy tryb statyczny, w pozostałych dwóch są wyświetlane i dotyczy to wszystkich animacji. W tej chwili mimo trybu statycznego, nadal animowane jest rozszerzanie i zwężanie menu video w trybie slideshow oraz minimalizowanie / pokazywanie całego menu w trybie slideshow. Animacje okładek przy ładowaniu strony, lub przy generacji od nowa, np. gdy zmieniam ilość wierszy, albo gdy losuję, działają bardzo dobrze, zobacz dokładnie jak. 
+
+Na przycisku Tekst -> Obrazy i tylko przy tym przejściu animacja rwie, jakby się zaczynała, przerywała, i zaczynała od nowa. Obejrzył dokładnie te i inne animacje i w odpowiednich funkcjach możesz np. dodać flagę, która uniemożliwi dwukrotne uruchomienie tej samej animacji, jeśli trwa, albo uruchomienie dwóch animacji na raz, które powoduję konflikt. Często w tych miejscach, gdzie animacja wydaje się działać dobrze, w pewnym momencie zaczyna się to co działało w trakcie początkowej fazy animacji resetować i zaczynać od nowa, wtedy już jest ok. Ale flaga powinna to załatwić. Gdy minimalizujemy interfejs, przycisk Obrazy i Video w menu głównym są płynnie zwężane, jednak, gdy przywrócę menu do normalnego stanu, nie są płynnie rozszerzane.
+
+2. Wyszukiwarka działa. Jednak nie działa część listy rozwijanej w dół obok. Wybór typu pliku działa, ale potem mogę wybrać predefiniowane ustawienie wyszukiwania, ono wstawia się do pola wyszukiwania, ale nie znajduje nic. Jak wrócę do Wszystko, pojawiają się wyniki wyszukiwania, więc zrób, żeby wracało do Wszystko.
+
+3. Wystylizuj wszystkie przyciski dla trybu jasnego, jak w załączniku v1.2.9. W trybie jasnym wszystkie przyciski z delikatną czerwoną ramką, a wszystkie obiekty w menu niech mają delikatny czerwony cień w tle, tak jak przyciski. W trybie ciemnym też dodaj czerwone cienie do obiektów menu, które nie mają, tu ramki są ok. W trybie jasnym ramki czerwone nie tylko wokół przycisków, ale wszystkich elementów menu, w tym przyciski w menu dolnym przestyluj tak samo.
+
+4. Slideshow wyświetla tylko elementy przefiltrowane na ekranie, jednak gdy wylosuję jakieś elementy, to i tak wyświetla slideshow dla wszystkich.
+
+5. W trybie slideshow licznik u góry dwukolorowy, np. 19 / 24 -> 24 zrób pogrubione i kolorze szarym, tak samo, jak tekst linijka niżej.
+
+6. W trybie ciemnym, rozwijający się przycisk video w trybie zwykłym, gdy interfejs jest zminimalizowany ma inny kolor tła niż np. przycisk video. Oba przyciski - video i zmieniają kolor tła tego subprzycisku, który jest aktywny, ale gdy część przycisku jest aktywna, zmienia się kolor ikony, tło ma pozostać bez zmian.
+
+7. Wszzystkie przyciski we wszystkich trybach zaokrąglij trochę bardziej - załącznik.
+
+8. Często nie ładuje plików tła video, jest jakiś błąd w js, wysyłam zawartość terminala.
+
 
 
 
