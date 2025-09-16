@@ -17,3 +17,12 @@ Ostatnia rzecz, ekran główny, kafelki.
 Niech ich animacja pojawiania się przy ładowaniu, strony, odświeżaniu, filtrowaniu, czyli zawsze, gdy włączone są animacje, to niech się rysują od pierwszej do ostatniej kafelki, dokładnie tak jak w wersji 1.2.0.
 
 Pracujemy na wersji 1.2.5, zmieniamy tylko to, co powyżej. Plik 1.2.0 do wglądu
+
+
+Tylko poprawki w 1.2.5:
+1. Obok przycisku VisuDir u góry maleńki przycisk w tym samym stylu z ikoną globusa kierujący do index-en.html w tej samej zakładce - zmiana języka na English International.
+2. Przycisk Obrazy / Wszystko / Tekst, w trybie obrazy i wszystko ma wyświetlać dodatkowe ikony do filtrowania pionowych i poziomych grafik - podglądów, podejrzyj, było v1.2.0.
+3. Przycisk Video ok, ale wyróżnij shuffle, gdy wciśnięty.
+4. W trybie slideshow, przyciski shuffle są wyróżnione poprawnie, ale ikony na nich znikają. Zmień ich kolor.
+5. W trybie slideshow w obu trybach była wyświetlana pełnoekranowa maska, jest tak w 1.2.0, zrób tak samo.
+6. W trybie zykłym nie działa przycisk Tryb ciemny /jasny.

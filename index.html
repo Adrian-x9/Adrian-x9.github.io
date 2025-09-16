@@ -99,13 +99,13 @@
         .dir-db-btn.highlighted-state .multi-button-child { border-left-color: rgba(255, 255, 255, 0.5); }
         .dark-mode .dir-db-btn.highlighted-state .multi-button-child { border-left-color: rgba(255, 255, 255, 0.5); }
         .dir-db-btn.highlighted-state > .multi-button-main { position: relative; }
-        #animationBtn-play.active-play i, #lightbox-video-autoshuffle.active-play i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
-        .dark-mode #animationBtn-play.active-play i, .dark-mode #lightbox-video-autoshuffle.active-play i { text-shadow: 0 0 10px #ff8a80; }
+        .active-play i, .active-shuffle i { color: #fff; text-shadow: 0 0 8px rgba(255, 255, 255, 0.9); }
+        .dark-mode .active-play i, .dark-mode .active-shuffle i { text-shadow: 0 0 10px #ff8a80; }
         .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
         .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
         .guide-cover { max-width: 100%; height: auto; max-height: 300px; margin: 10px auto 0; display: block; border-radius: 5px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
         .guide .guide-cover { opacity: 1; transform: scale(1); }
-        .guide.animate-in .guide-cover { transition: none; opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
+        .guide.animate-in .guide-cover { opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
         @keyframes fadeInCover { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
         .guide-list.hide-covers .guide-cover { opacity: 0; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
         .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; overflow: hidden; }
@@ -124,9 +124,7 @@
         .pagination button, .pagination input, .pagination select { padding: 10px; margin: 0; font-size: 0.9em; cursor: pointer; border-radius: 5px; width: auto; }
         .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
         .guide.animate-in { animation: fadeInSlideIn 0.5s ease-out forwards; }
-        .guide.fade-out { animation: fadeOutUp 0.2s forwards; pointer-events: none; }
         @keyframes fadeInSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
         .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 0; transform: translateY(20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; }
         .footer.minimized-footer { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; opacity: 0; }
         .nobr { white-space: nowrap; }
@@ -146,7 +144,6 @@
         .dark-mode .play-caption { background-color: rgba(0, 0, 0, 0.85); color: #ccc; }
         .caption-title-highlight { color: #e53935; font-weight: bold; }
         .caption-description { display: block; font-size: 0.8em; opacity: 0.7; font-weight: normal; margin-top: 5px; }
-        
         .lightbox-action-btn {
             position: fixed;
             width: 44px; height: 44px;
@@ -163,7 +160,6 @@
         .lightbox-action-btn i { margin: 0; }
         #playCloseBtn { top: 15px; right: 15px; }
         #lightbox-minimizeBtn { bottom: 15px; right: 15px; }
-
         #lightbox-controls { position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; transition: transform 0.4s ease; flex-wrap: wrap; z-index: 1000; }
         #lightbox-controls.minimized-controls { transform: translateY(100%); }
         .lightbox-control-group { display: flex; border-radius: 5px; overflow: hidden; }
@@ -177,7 +173,6 @@
         .dark-mode .lightbox-control-group button:not(:last-child), .dark-mode .lightbox-control-group span:not(:last-child) { border-right-color: rgba(255,255,255,0.2); }
         #lightbox-controls .dir-db-btn { padding: 10px 12px; border-radius: 5px; font-size: 1.5em; }
         #lightbox-bg-video-controls { display: flex; }
-
         @keyframes zoomInImage { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         @keyframes zoomOutImage { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
@@ -262,7 +257,6 @@
             <option value="9">Pozycje: 9</option>
             <option value="10">Pozycje: 10</option>
         </select>
-        <button id="darkModeBtn" onclick="toggleDarkMode()" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Tryb ciemny</span></button>
         <div id="previewBtnGroup" class="dir-db-btn multi-button">
             <span id="previewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text"> Wszystko</span></span>
             <span id="previewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i class="fas fa-arrows-alt-v"></i></span>
@@ -271,10 +265,12 @@
         </div>
         <button id="animationBtn" class="dir-db-btn multi-button">
             <span id="animationBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
-            <span id="animationBtn-play" class="multi-button-child"><i class="fas fa-play"></i></span>
-            <span id="animationBtn-shuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
+            <span id="animationBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-pause"></i></span>
+            <span id="animationBtn-shuffle" class="multi-button-child" title="Losowa zmiana wideo Wł/Wył"><i class="fas fa-random"></i></span>
+            <span id="animationBtn-onetime-shuffle" class="multi-button-child" title="Losuj następne wideo"><i class="fas fa-step-forward"></i></span>
             <span id="animationBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
         </button>
+        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Tryb ciemny</span></button>
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-chevron-up"></i>
         </button>
@@ -310,8 +306,8 @@
                  <button id="lightbox-animationBtn" title="Przełącz animacje"><i class="fas fa-magic"></i></button>
                  <div id="lightbox-bg-video-controls">
                      <button id="lightbox-video-prev" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></button>
-                     <button id="lightbox-video-toggle" title="Włącz wideo"><i class="fas fa-play"></i></button>
-                     <button id="lightbox-video-autoshuffle" title="Automatyczne losowanie wideo"><i class="fas fa-play"></i></button>
+                     <button id="lightbox-video-toggle" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></button>
+                     <button id="lightbox-video-autoshuffle" title="Automatyczne losowanie wideo Wł/Wył"><i class="fas fa-random"></i></button>
                      <button id="lightbox-video-next" title="Następne wideo"><i class="fas fa-chevron-right"></i></button>
                 </div>
              </div>
@@ -319,8 +315,9 @@
             <div id="slideshow-controls" class="lightbox-control-group">
                 <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i class="fas fa-fast-backward"></i></span>
                 <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i class="fas fa-step-backward"></i></span>
-                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i class="fas fa-play"></i></span>
                 <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child" title="Losowa kolejność Wł/Wył"><i class="fas fa-random"></i></span>
                 <span id="slideshow-next" class="multi-button-child" title="Następny"><i class="fas fa-step-forward"></i></span>
                 <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i class="fas fa-fast-forward"></i></span>
             </div>
@@ -427,6 +424,7 @@
         let currentPage = 1,
             itemsPerPage;
         let playAnimationTimeout = null, slideshowIsPlaying = false,
+            slideshowIsRandom = false,
             currentSort,
             selectedRowCount;
         let playCurrentIndex = 0,
@@ -861,11 +859,7 @@
             document.getElementById("visuDirBtn").href = config.paths.urlAbout;
 
             currentTheme = initializeTheme();
-            
-            const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
-            if(darkModeBtnText) {
-                darkModeBtnText.textContent = document.documentElement.classList.contains('dark-mode') ? ' Tryb jasny' : ' Tryb ciemny';
-            }
+            updateDarkModeButtonUI();
             
             if (config.pageSettings.showMiniLogo) {
                 startLogoRotator();
@@ -888,10 +882,12 @@
                 const target = event.target.closest('span');
                 if (!target) return;
 
-                if (target.id === 'animationBtn-shuffle') {
+                if (target.id === 'animationBtn-onetime-shuffle') {
                     if (animationState === 2) shuffleBackgroundVideo();
+                } else if (target.id === 'animationBtn-shuffle') {
+                    toggleVideoAutoChange();
                 } else if (target.id === 'animationBtn-play') {
-                    toggleAutoShuffle();
+                    toggleVideoPlayback();
                 } else if (target.id === 'animationBtn-reset') {
                     resetVideoSettings();
                 } else {
@@ -946,7 +942,7 @@
 
             isMinimized = !isMinimized;
 
-            controls.classList.toggle('minimized-view', !isMinimized);
+            controls.classList.toggle('minimized-view', isMinimized);
             
             if (isMinimized) {
                 minimizeBtn.title = "Przywróć interfejs";
@@ -1048,44 +1044,37 @@
             const k = document.documentElement.classList.contains("dark-mode") ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
+
         function renderGuides() {
-            const oldGuides = guideList.querySelectorAll('.guide');
+            guideList.classList.remove('random-draw');
+            applyFilters();
+            const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
+            currentPage = Math.min(currentPage, totalPages || 1);
+            const pageItems = filteredGuides.slice(
+                (currentPage - 1) * itemsPerPage,
+                currentPage * itemsPerPage
+            );
+            guideList.innerHTML = "";
             const animationsOn = animationState !== 0;
 
-            const drawNewGuides = () => {
-                applyFilters();
-                const totalPages = Math.ceil(filteredGuides.length / itemsPerPage);
-                currentPage = Math.min(currentPage, totalPages || 1);
-                const pageItems = filteredGuides.slice(
-                    (currentPage - 1) * itemsPerPage,
-                    currentPage * itemsPerPage
-                );
-                guideList.innerHTML = "";
-
-                pageItems.forEach((guide, index) => {
-                    const div = document.createElement("div");
-                    div.className = "guide";
-                    guideList.appendChild(div);
-                    div.innerHTML = createGuideHtml(guide);
-                    
-                    if (animationsOn) {
-                        setTimeout(() => {
-                            div.classList.add("animate-in");
-                            div.style.animationDelay = `${index * 0.05}s`;
-                        }, 20);
-                    }
-                });
-                renderPagination(totalPages);
-                document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
-            };
-            
-            if (animationsOn && oldGuides.length > 0) {
-                oldGuides.forEach(g => g.classList.add('fade-out'));
-                setTimeout(drawNewGuides, 200);
-            } else {
-                drawNewGuides();
-            }
+            pageItems.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide";
+                div.innerHTML = createGuideHtml(guide);
+                guideList.appendChild(div);
+                
+                if (animationsOn) {
+                    div.style.opacity = 0;
+                    setTimeout(() => {
+                        div.classList.add("animate-in");
+                        div.style.animationDelay = `${index * 0.05}s`;
+                    }, 20);
+                }
+            });
+            renderPagination(totalPages);
+            document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
         }
+
         function renderPagination(totalPages) {
             pagination.innerHTML = "";
             if (totalPages <= 1) return;
@@ -1159,37 +1148,29 @@
                 randomSelector.value = "";
                 return;
             }
-            const draw = () => {
-                guideList.innerHTML = "";
-                pagination.innerHTML = "";
-                guideList.classList.add('random-draw');
+            
+            guideList.innerHTML = "";
+            pagination.innerHTML = "";
+            guideList.classList.add('random-draw');
 
-                const randomGuides = [...source]
-                    .sort(() => 0.5 - Math.random())
-                    .slice(0, count);
-                const animationsOn = animationState !== 0;
-                randomGuides.forEach((guide, index) => {
-                    const div = document.createElement("div");
-                    div.className = "guide";
-                    div.innerHTML = createGuideHtml(guide);
-                    guideList.appendChild(div);
-                    if (animationsOn) {
-                        setTimeout(() => {
-                            div.classList.add("animate-in");
-                            div.style.animationDelay = `${index * 0.05}s`;
-                        }, 20);
-                    }
-                });
-                randomSelector.value = "";
-            };
-
-            const oldGuides = guideList.querySelectorAll('.guide');
-            if(animationState !== 0 && oldGuides.length > 0) {
-                oldGuides.forEach(g => g.classList.add('fade-out'));
-                setTimeout(draw, 200);
-            } else {
-                draw();
-            }
+            const randomGuides = [...source]
+                .sort(() => 0.5 - Math.random())
+                .slice(0, count);
+            const animationsOn = animationState !== 0;
+            randomGuides.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide";
+                div.innerHTML = createGuideHtml(guide);
+                guideList.appendChild(div);
+                if (animationsOn) {
+                    div.style.opacity = 0;
+                    setTimeout(() => {
+                        div.classList.add("animate-in");
+                        div.style.animationDelay = `${index * 0.05}s`;
+                    }, 20);
+                }
+            });
+            randomSelector.value = "";
         }
 
 
@@ -1197,11 +1178,25 @@
             previewBtnGroup.classList.remove("inactive", "highlighted-state");
             guideList.classList.remove("hide-covers", "only-covers");
             const previewBtnText = previewBtnMain.querySelector('.btn-text');
+            const mainIcon = previewBtnMain.querySelector('i');
             
             switch (previewState) {
-                case 0: if(previewBtnText) previewBtnText.textContent = ` Tekst`; previewBtnGroup.classList.add("inactive"); guideList.classList.add("hide-covers"); break;
-                case 1: if(previewBtnText) previewBtnText.textContent = ` Obrazy`; guideList.classList.add("only-covers"); break;
-                case 2: if(previewBtnText) previewBtnText.textContent = ` Wszystko`; previewBtnGroup.classList.add("highlighted-state"); break;
+                case 0: 
+                    if(previewBtnText) previewBtnText.textContent = ` Tekst`;
+                    if(mainIcon) mainIcon.className = 'fas fa-align-justify';
+                    previewBtnGroup.classList.add("inactive"); 
+                    guideList.classList.add("hide-covers"); 
+                    break;
+                case 1: 
+                    if(previewBtnText) previewBtnText.textContent = ` Obrazy`; 
+                    if(mainIcon) mainIcon.className = 'fas fa-th-large';
+                    guideList.classList.add("only-covers"); 
+                    break;
+                case 2: 
+                    if(previewBtnText) previewBtnText.textContent = ` Wszystko`; 
+                    if(mainIcon) mainIcon.className = 'fas fa-object-group';
+                    previewBtnGroup.classList.add("highlighted-state"); 
+                    break;
             }
         }
 
@@ -1229,13 +1224,17 @@
             
             const animationBtnMain = document.getElementById('animationBtn-main');
             const animationBtnShuffle = document.getElementById('animationBtn-shuffle');
+            const animationBtnOnetimeShuffle = document.getElementById('animationBtn-onetime-shuffle');
             const animationBtnPlay = document.getElementById('animationBtn-play');
             const animationBtnReset = document.getElementById('animationBtn-reset');
             const animationBtnText = animationBtnMain.querySelector('.btn-text');
+            const mainAnimIcon = animationBtnMain.querySelector('i');
+            const lightboxAnimBtnIcon = document.getElementById('lightbox-animationBtn').querySelector('i');
 
             animationBtn.classList.remove("inactive", "highlighted-state");
             document.body.classList.remove("no-animation");
             animationBtnShuffle.style.display = 'none';
+            animationBtnOnetimeShuffle.style.display = 'none';
             animationBtnPlay.style.display = 'none';
             animationBtnReset.style.display = 'none';
             
@@ -1245,18 +1244,31 @@
             const currentAnimationState = animationState % numStates;
             
             switch (currentAnimationState) {
-                case 0: if(animationBtnText) animationBtnText.textContent = ` Statycznie`; animationBtn.classList.add("inactive"); document.body.classList.add("no-animation"); break;
-                case 1: if(animationBtnText) animationBtnText.textContent = ` Animacje`; break;
+                case 0:
+                    if(animationBtnText) animationBtnText.textContent = ` Statycznie`;
+                    if(mainAnimIcon) mainAnimIcon.className = 'fas fa-image';
+                    if(lightboxAnimBtnIcon) lightboxAnimBtnIcon.className = 'fas fa-image';
+                    animationBtn.classList.add("inactive"); 
+                    document.body.classList.add("no-animation"); 
+                    break;
+                case 1:
+                    if(animationBtnText) animationBtnText.textContent = ` Animacje`;
+                    if(mainAnimIcon) mainAnimIcon.className = 'fas fa-magic';
+                    if(lightboxAnimBtnIcon) lightboxAnimBtnIcon.className = 'fas fa-magic';
+                    break;
                 case 2:
                     if(animationBtnText) animationBtnText.textContent = ` Video`;
+                    if(mainAnimIcon) mainAnimIcon.className = 'fas fa-video';
+                    if(lightboxAnimBtnIcon) lightboxAnimBtnIcon.className = 'fas fa-video';
                     animationBtn.classList.add("highlighted-state");
                     if (hasMultipleVideos) {
                         animationBtnShuffle.style.display = 'inline-flex';
+                        animationBtnOnetimeShuffle.style.display = 'inline-flex';
                         animationBtnPlay.style.display = 'inline-flex';
                         animationBtnReset.style.display = 'inline-flex';
                         document.getElementById('lightbox-bg-video-controls').style.display = 'flex';
                     }
-                    lightboxVideoToggle.innerHTML = '<i class="fas fa-stop"></i>';
+                    lightboxVideoToggle.innerHTML = bgVideo.paused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
                     break;
             }
             if(currentAnimationState !== 2) {
@@ -1277,12 +1289,13 @@
 
             localStorage.setItem(storageKey, newVideoNum);
             initializeBackgroundVideo(currentTheme);
+            bgVideo.play();
         }
 
         function changeBackgroundVideo(direction) {
             const { pageKey, bgVideoStartNum, bgVideoEndNum } = config.pageSettings;
              if (bgVideoEndNum - bgVideoStartNum < 1) return;
-             if (animationState !== 2) toggleLightboxVideo();
+             if (animationState !== 2) toggleAnimations();
 
             const storageKey = `visudir_bg_video_${pageKey}`;
             let currentVideoNum = parseInt(localStorage.getItem(storageKey)) || bgVideoStartNum;
@@ -1294,57 +1307,59 @@
             
             localStorage.setItem(storageKey, currentVideoNum);
             initializeBackgroundVideo(currentTheme);
+            bgVideo.play();
         }
 
-        function toggleAutoShuffle() {
-            const mainPlayBtn = document.getElementById('animationBtn-play');
+        function toggleVideoAutoChange() {
+            if (animationState !== 2) return;
+            const shuffleBtn = document.getElementById('animationBtn-shuffle');
             
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
-                mainPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-                lightboxVideoAutoshuffle.innerHTML = '<i class="fas fa-play"></i>';
-                mainPlayBtn.classList.remove('active-play');
-                lightboxVideoAutoshuffle.classList.remove('active-play');
+                shuffleBtn.classList.remove('active-shuffle');
+                lightboxVideoAutoshuffle.classList.remove('active-shuffle');
             } else {
-                 if (animationState !== 2) {
+                if (animationState !== 2) {
                     animationState = 2;
                     updateAnimationButtonUI();
                     updateBackgroundVideoVisibility();
                 }
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
-                mainPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                lightboxVideoAutoshuffle.innerHTML = '<i class="fas fa-pause"></i>';
-                mainPlayBtn.classList.add('active-play');
-                lightboxVideoAutoshuffle.classList.add('active-play');
+                shuffleBtn.classList.add('active-shuffle');
+                lightboxVideoAutoshuffle.classList.add('active-shuffle');
             }
         }
 
-        function toggleLightboxVideo() {
-            if (animationState === 2) {
-                animationState = 1; // Switch to regular animations
-                if(autoShuffleInterval) toggleAutoShuffle();
+        function toggleVideoPlayback() {
+            if (animationState !== 2) return;
+            const mainPlayBtn = document.getElementById('animationBtn-play');
+            
+            if(bgVideo.paused) {
+                bgVideo.play();
+                mainPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                lightboxVideoToggle.innerHTML = '<i class="fas fa-pause"></i>';
             } else {
-                animationState = 2; // Switch to video
+                bgVideo.pause();
+                mainPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                lightboxVideoToggle.innerHTML = '<i class="fas fa-play"></i>';
             }
-            saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
-            updateAnimationButtonUI();
-            updateBackgroundVideoVisibility();
         }
-        
+
         function resetVideoSettings() {
+            if (autoShuffleInterval) { toggleVideoAutoChange(); }
             animationState = config.pageSettings.defaultAnimation;
             saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
             const { pageKey, defaultBgVideo } = config.pageSettings;
             localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
-            if (autoShuffleInterval) { toggleAutoShuffle(); }
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
+            bgVideo.play();
         }
 
         function toggleAnimations() {
-            if (animationState === 2 && autoShuffleInterval) { toggleAutoShuffle(); }
+            if (animationState === 2 && autoShuffleInterval) { toggleVideoAutoChange(); }
             const hasAnyVideo = config.pageSettings.bgVideoEndNum > 0 && config.paths.videoBgLightUrlBase;
             const numStates = hasAnyVideo ? 3 : 2;
             animationState = (animationState + 1) % numStates;
@@ -1352,15 +1367,31 @@
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility();
             if(!backdrop.classList.contains('visible')) renderGuides();
+            if(animationState === 2) bgVideo.play();
+        }
+
+        function updateDarkModeButtonUI() {
+            const isDark = document.documentElement.classList.contains("dark-mode");
+            const mainBtn = document.getElementById('darkModeBtn');
+            const lightboxBtn = document.getElementById('lightbox-darkModeBtn');
+
+            if (mainBtn) {
+                const mainBtnText = mainBtn.querySelector('.btn-text');
+                const mainBtnIcon = mainBtn.querySelector('i');
+                if(mainBtnText) mainBtnText.textContent = isDark ? ' Tryb jasny' : ' Tryb ciemny';
+                if(mainBtnIcon) mainBtnIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            }
+            if (lightboxBtn) {
+                const lightboxBtnIcon = lightboxBtn.querySelector('i');
+                if(lightboxBtnIcon) lightboxBtnIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+                lightboxBtn.title = isDark ? 'Tryb jasny' : 'Tryb ciemny';
+            }
         }
 
         function toggleDarkMode() {
-            const isDark = document.documentElement.classList.contains("dark-mode");
-            localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
+            localStorage.setItem('visudir_theme', document.documentElement.classList.contains("dark-mode") ? 'light' : 'dark');
             currentTheme = initializeTheme();
-            
-            const darkModeBtnText = darkModeBtn.querySelector('.btn-text');
-            if(darkModeBtnText) { darkModeBtnText.textContent = currentTheme === 'dark' ? ' Tryb jasny' : ' Tryb ciemny'; }
+            updateDarkModeButtonUI();
             
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
                 const currentLogoData = config.logoRotator.logos[currentLogoIndex];
@@ -1394,13 +1425,18 @@
             }
         }
 
+        function toggleSlideshowRandom() {
+            slideshowIsRandom = !slideshowIsRandom;
+            const shuffleBtn = document.getElementById('slideshow-shuffle');
+            shuffleBtn.classList.toggle('active-shuffle', slideshowIsRandom);
+        }
+
         function startPlayAnimation() {
             const source = filteredGuides.length > 0 ? filteredGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
             playGuidesQueue = [...source];
             lastPlayedGuide = null;
-            if (currentSort !== "shuffle")
-                playCurrentIndex = 0;
+            playCurrentIndex = 0;
             
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
@@ -1412,6 +1448,8 @@
             }, 400);
             
             slideshowIsPlaying = true;
+            slideshowIsRandom = false;
+            document.getElementById('slideshow-shuffle').classList.remove('active-shuffle');
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
 
             scheduleNext();
@@ -1427,6 +1465,7 @@
             playGuideContainer.innerHTML = "";
             if (playCaption) playCaption.innerHTML = "";
             slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+            document.getElementById('slideshow-shuffle').classList.remove('active-shuffle');
             if(playButton) {
                 const btnText = playButton.querySelector('.btn-text');
                 if(btnText) btnText.textContent = ' Play';
@@ -1443,13 +1482,13 @@
                 guide = playGuidesQueue[0];
             } else {
                 do {
-                    if (currentSort === "shuffle" || isNav === 'random') {
+                    if (slideshowIsRandom || isNav === 'random') {
                          playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length)
                     } else if (isNav !== true) {
                         playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                     }
                     guide = playGuidesQueue[playCurrentIndex];
-                } while (playGuidesQueue.length > 1 && guide === lastPlayedGuide && currentSort === "shuffle");
+                } while (playGuidesQueue.length > 1 && guide === lastPlayedGuide && slideshowIsRandom);
             }
             if (!guide) return;
             lastPlayedGuide = guide;
@@ -1458,7 +1497,7 @@
         
         function preloadNextGuide() {
             if (!slideshowIsPlaying || playGuidesQueue.length < 2) return;
-            let nextIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+            let nextIndex = slideshowIsRandom ? Math.floor(Math.random() * playGuidesQueue.length) : (playCurrentIndex + 1) % playGuidesQueue.length;
             const nextGuide = playGuidesQueue[nextIndex];
             if (!nextGuide) return;
             const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
@@ -1579,14 +1618,15 @@
             document.getElementById('lightbox-darkModeBtn').addEventListener('click', toggleDarkMode);
             
             document.getElementById('slideshow-play').addEventListener('click', toggleSlideshowPlayPause);
+            document.getElementById('slideshow-shuffle').addEventListener('click', toggleSlideshowRandom);
             document.getElementById('slideshow-stop').addEventListener('click', stopPlayAnimation);
             document.getElementById('slideshow-next').addEventListener('click', () => { playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length; scheduleNext(true); });
             document.getElementById('slideshow-prev').addEventListener('click', () => { playCurrentIndex = (playCurrentIndex - 1 + playGuidesQueue.length) % playGuidesQueue.length; scheduleNext(true); });
             document.getElementById('slideshow-first').addEventListener('click', () => { playCurrentIndex = 0; scheduleNext(true); });
             document.getElementById('slideshow-last').addEventListener('click', () => { playCurrentIndex = playGuidesQueue.length - 1; scheduleNext(true); });
             
-            lightboxVideoToggle.addEventListener('click', toggleLightboxVideo);
-            lightboxVideoAutoshuffle.addEventListener('click', toggleAutoShuffle);
+            lightboxVideoToggle.addEventListener('click', toggleVideoPlayback);
+            lightboxVideoAutoshuffle.addEventListener('click', toggleVideoAutoChange);
             document.getElementById('lightbox-video-next').addEventListener('click', () => changeBackgroundVideo(1));
             document.getElementById('lightbox-video-prev').addEventListener('click', () => changeBackgroundVideo(-1));
         }
