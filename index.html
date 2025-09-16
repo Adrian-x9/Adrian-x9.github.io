@@ -30,7 +30,7 @@
         body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; min-height: 100vh; box-sizing: border-box; }
         body.no-animation .guide.animate-in, body.no-animation .guide.flip-animate { animation: none !important; transform: none !important; }
         body.no-animation .guide-cover, body.no-animation .top-header, body.no-animation .footer { transition: none !important; }
-        body.no-animation .multi-button, body.no-animation .multi-button-child, body.no-animation .dir-db-btn { transition: none !important; }
+        body.no-animation .multi-button, body.no-animation .multi-button-child, body.no-animation .dir-db-btn, body.no-animation .btn-text { transition: none !important; }
         body.play-mode-active > .top-header, body.play-mode-active > .controls,
         body.play-mode-active > .guide-list, body.play-mode-active > .pagination,
         body.play-mode-active > .footer { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
@@ -103,7 +103,6 @@
         #langBtn { padding: 10px 12px; }
         .multi-button { padding: 0; overflow: hidden; transition: width 0.4s ease-in-out, padding 0.4s ease-in-out; }
         .multi-button > span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
-        /* ZMIANA 1c: Style dla animacji tekstu w przycisku */
         .btn-text { transition: max-width 0.4s ease, opacity 0.3s ease; max-width: 100px; overflow: hidden; white-space: nowrap; display: inline-block; }
         .multi-button-main { flex-grow: 1; padding-right: 12px; }
         .multi-button-child { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
@@ -122,7 +121,6 @@
         .dir-db-btn.highlighted-state .multi-button-child.active-play i { color: #000 !important; }
         #lightbox-controls .multi-button-child.active-play i, #lightbox-bg-video-controls button.active-play i { color: #e53935; text-shadow: none !important; }
         .dark-mode #lightbox-controls .multi-button-child.active-play i, .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80; text-shadow: none !important; }
-        /* ZMIANA 2b: Aktywna ikona pauzy w slideshow jest czerwona */
         #lightbox-bg-video-controls button.active-play i { color: #e53935 !important; }
         .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80 !important; }
 
@@ -204,7 +202,6 @@
         .animated-header, .animated-controls { animation-name: fadeInDown; animation-duration: 0.6s; animation-timing-function: ease-out; }
         .animated-footer, .animated-pagination { animation-name: fadeInUp; animation-duration: 0.8s; animation-timing-function: ease-out; }
         .controls.minimized-view .dir-db-btn i, #lightbox-controls .dir-db-btn i { margin-right: 0; }
-        /* ZMIANA 1c: Style dla animacji tekstu w przycisku */
         .controls.minimized-view .btn-text { max-width: 0; opacity: 0; }
 
         .controls.minimized-view .multi-button { padding: 10px 12px; }
@@ -387,7 +384,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.3.2',
+            version: 'v1.3.3',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1064,6 +1061,11 @@
         }
         
         function checkFileAndOpen(fileUrl, fallbackUrl, isLink = false) {
+            // ZMIANA 3a: Poprawiona funkcja do obsługi linków lokalnych (offline)
+            if (isLink && (window.location.protocol === 'file:' || (!fileUrl.startsWith('http') && !fileUrl.startsWith('//')))) {
+                window.location.href = fileUrl;
+                return;
+            }
             const http = new XMLHttpRequest();
             http.open('HEAD', fileUrl, true);
             http.timeout = 2000;
@@ -1093,7 +1095,7 @@
             if (guide.format === "link") {
                 const t = decodeUrlFromFilename(guide.file);
                 const fallbackUrl = config.paths.urlFallback;
-                const clickAction = `checkFileAndOpen('${t}', '${fallbackUrl}', true); return false;`;
+                const clickAction = `checkFileAndOpen('${t.replace(/'/g, "\\'")}', '${fallbackUrl}', true); return false;`;
 
                 h = `<div class="guide-title"><a href="${t}" onclick="${clickAction}">${d}</a></div>`;
                 i = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
@@ -1361,6 +1363,8 @@
                     animationBtnPlay.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
                     lightboxVideoToggle.innerHTML = isPaused ? '<i class="fas fa-play"></i>' : '<i class="fas fa-pause"></i>';
                     animationBtnPlay.classList.toggle('active-play', !isPaused);
+                    // ZMIANA 2b: Przełączanie klasy dla aktywnej pauzy wideo w slideshow
+                    lightboxVideoToggle.classList.toggle('active-play', !isPaused);
                     break;
             }
         }
@@ -1381,6 +1385,11 @@
         }
 
         function changeBackgroundVideo(direction) {
+            // ZMIANA 1d: Logika przycisków nawigacji wideo w trybie shuffle
+            if (autoShuffleInterval) {
+                shuffleBackgroundVideo();
+                return;
+            }
             const { pageKey, bgVideoStartNum, bgVideoEndNum } = config.pageSettings;
              if (bgVideoEndNum - bgVideoStartNum < 1) return;
              if (animationState !== 2) toggleLightboxVideo();
@@ -1407,7 +1416,7 @@
                 mainShuffleBtn.classList.remove('active-play');
                 lightboxVideoAutoshuffle.classList.remove('active-play');
             } else {
-                if(bgVideo.paused) { toggleBackgroundVideoPlayback(); } // 7. Start video if paused
+                if(bgVideo.paused) { toggleBackgroundVideoPlayback(); }
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
                 mainShuffleBtn.classList.add('active-play');
@@ -1433,9 +1442,11 @@
         }
         
         function resetVideoSettings() {
-            animationState = config.pageSettings.defaultAnimation;
+            // ZMIANA 1: Poprawka funkcji resetowania wideo
+            const { pageKey, defaultBgVideo, defaultAnimation } = config.pageSettings;
+            animationState = defaultAnimation;
             saveToLocalStorage(`animation_${config.pageSettings.pageKey}`, animationState);
-            const { pageKey, defaultBgVideo } = config.pageSettings;
+            
             localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
             if (autoShuffleInterval) { 
                 clearInterval(autoShuffleInterval);
@@ -1444,7 +1455,7 @@
                 lightboxVideoAutoshuffle.classList.remove('active-play');
             }
             updateAnimationButtonUI();
-            updateBackgroundVideoVisibility();
+            updateBackgroundVideoVisibility(true);
         }
 
         function toggleAnimations() {
@@ -1459,9 +1470,14 @@
         }
 
         function toggleDarkMode() {
+            document.documentElement.classList.toggle("dark-mode");
+            document.body.classList.toggle("dark-mode");
             const isDark = document.documentElement.classList.contains("dark-mode");
-            localStorage.setItem('visudir_theme', isDark ? 'light' : 'dark');
-            currentTheme = initializeTheme();
+            localStorage.setItem('visudir_theme', isDark ? 'dark' : 'light');
+            currentTheme = isDark ? 'dark' : 'light';
+            
+            // ZMIANA 1b: Natychmiastowa aktualizacja UI przycisku po kliknięciu
+            updateDarkModeButtonUI();
             
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
                 const currentLogoData = config.logoRotator.logos[currentLogoIndex];
@@ -1471,7 +1487,11 @@
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
                 img.src = currentTheme === 'dark' ? "base-system/gfx/no_cover_dark.png" : "base-system/gfx/no_cover_light.png";
             });
-            updateBackgroundVideoVisibility();
+
+            // ZMIANA 2: Poprawka zmiany wideo tła przy zmianie motywu
+            if (animationState === 2) {
+                initializeBackgroundVideo(currentTheme);
+            }
         }
 
         playButton.addEventListener('click', togglePlayAnimation);
@@ -1503,6 +1523,7 @@
         }
 
         function startPlayAnimation() {
+            // ZMIANA 2d: Dodana animacja włączania slideshow
             const source = filteredGuides.length > 0 ? filteredGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
             playGuidesQueue = [...source];
@@ -1512,11 +1533,16 @@
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
             
-            setTimeout(() => {
+            if (!document.body.classList.contains('no-animation')) {
+                 setTimeout(() => {
+                    backdrop.classList.add("visible");
+                }, 10);
+            } else {
                 backdrop.classList.add("visible");
-                updateAnimationButtonUI();
-                updateBackgroundVideoVisibility();
-            }, 100);
+            }
+
+            updateAnimationButtonUI();
+            updateBackgroundVideoVisibility();
             
             slideshowIsPlaying = true;
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -1530,10 +1556,24 @@
             playAnimationTimeout = null;
             slideshowIsPlaying = false;
             
-            document.body.classList.remove("play-mode-active");
-            backdrop.classList.remove("visible", "preview-active");
-            playGuideContainer.innerHTML = "";
-            if (playCaption) playCaption.innerHTML = "";
+            const animationsOn = !document.body.classList.contains('no-animation');
+            const container = playGuideContainer;
+            const media = container.querySelector('img, video');
+
+            // ZMIANA 2c: Animacja wyłączania slideshow
+            if (media && animationsOn) {
+                media.style.animation = 'zoomOutImage 0.4s ease-in forwards';
+            }
+            
+            const timeout = animationsOn ? 400 : 0;
+            setTimeout(() => {
+                document.body.classList.remove("play-mode-active");
+                backdrop.classList.remove("visible", "preview-active");
+                if(media) media.style.animation = '';
+                playGuideContainer.innerHTML = "";
+                if (playCaption) playCaption.innerHTML = "";
+            }, timeout);
+
             slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
             slideshowPlayBtn.classList.remove('active-play');
             if(playButton) {
@@ -1551,28 +1591,48 @@
              if (playGuidesQueue.length < 2) {
                 guide = playGuidesQueue[0];
             } else {
-                do {
-                    if (slideshowIsRandom && !isNav) {
-                         playCurrentIndex = Math.floor(Math.random() * playGuidesQueue.length)
-                    } else if (!isNav) {
-                        playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
-                    }
-                    guide = playGuidesQueue[playCurrentIndex];
-                } while (playGuidesQueue.length > 1 && guide === lastPlayedGuide && slideshowIsRandom);
+                // ZMIANA 4: Poprawiona logika losowania dla przycisków nawigacji
+                if (slideshowIsRandom) {
+                    let newIndex;
+                    do {
+                        newIndex = Math.floor(Math.random() * playGuidesQueue.length);
+                    } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
+                    playCurrentIndex = newIndex;
+                } else if (isNav) {
+                    // isNav jest true, ale shuffle jest wyłączone, więc pozwalamy na normalną nawigację
+                } else { // Automatyczne przejście
+                    playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+                }
+                guide = playGuidesQueue[playCurrentIndex];
             }
+
             if (!guide) return;
             lastPlayedGuide = guide;
             displayRandomGuide(guide);
         }
         
-        function preloadNextGuide() {
+        function preloadNextGuide(count = 3) {
+            // ZMIANA 2e: Preloading większej liczby obrazów
             if (!slideshowIsPlaying || playGuidesQueue.length < 2) return;
-            let nextIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
-            const nextGuide = playGuidesQueue[nextIndex];
-            if (!nextGuide) return;
-            const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
-            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-            if (hdPath) { (new Image()).src = hdPath; }
+
+            for (let i = 1; i <= count; i++) {
+                let nextIndex;
+                if (slideshowIsRandom) {
+                    nextIndex = Math.floor(Math.random() * playGuidesQueue.length);
+                } else {
+                    nextIndex = (playCurrentIndex + i) % playGuidesQueue.length;
+                }
+                
+                if (nextIndex === playCurrentIndex) continue;
+
+                const nextGuide = playGuidesQueue[nextIndex];
+                if (!nextGuide || ['mp4', 'avi'].includes(nextGuide.format)) continue;
+                
+                const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
+                const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
+                
+                if (hdPath) { (new Image()).src = hdPath; }
+            }
         }
 
         function displayRandomGuide(guide) {
@@ -1621,7 +1681,7 @@
                 container.appendChild(link);
                 
                 const currentIndexInQueue = playGuidesQueue.indexOf(guide);
-                const counterText = playGuidesQueue.length > 1 ? `<b>${currentIndexInQueue + 1}</b> / ${playGuidesQueue.length}` : '';
+                const counterText = playGuidesQueue.length > 1 ? `<b>${currentIndexInQueue + 1}</b><span class="caption-total"> / ${playGuidesQueue.length}</span>` : '';
                 const descriptionText = guide.linkData.description || "";
                 let titleText = guide.title;
                 if (/^\d{2}\s*/.test(titleText)) titleText = titleText.replace(/^\d{2}\s*/, "");
@@ -1639,16 +1699,15 @@
                 
                 const mediaElement = existingContent.querySelector ? existingContent.querySelector('img, video') : existingContent;
                 if(mediaElement && !document.body.classList.contains('no-animation')) {
-                     mediaElement.style.animation = 'zoomOutImage 0.5s ease-in forwards';
+                     mediaElement.style.animation = 'zoomOutImage 0.4s ease-in forwards';
                 }
-                const timeout = document.body.classList.contains('no-animation') ? 0 : 500;
+                const timeout = document.body.classList.contains('no-animation') ? 0 : 400;
                 setTimeout(showNewGuide, timeout);
             } else {
                 showNewGuide();
             }
         }
 
-        // 5. Renamed from showImagePreview to handle videos
         function showMediaPreview(guideFilename) {
             stopPlayAnimation();
             backdrop.classList.add("visible", "preview-active");
@@ -1709,8 +1768,8 @@
             document.getElementById('slideshow-play').addEventListener('click', toggleSlideshowPlayPause);
             document.getElementById('slideshow-shuffle').addEventListener('click', toggleSlideshowShuffle);
             document.getElementById('slideshow-stop').addEventListener('click', stopPlayAnimation);
-            document.getElementById('slideshow-next').addEventListener('click', () => { playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length; scheduleNext(true); });
-            document.getElementById('slideshow-prev').addEventListener('click', () => { playCurrentIndex = (playCurrentIndex - 1 + playGuidesQueue.length) % playGuidesQueue.length; scheduleNext(true); });
+            document.getElementById('slideshow-next').addEventListener('click', () => { if(!slideshowIsRandom) playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length; scheduleNext(true); });
+            document.getElementById('slideshow-prev').addEventListener('click', () => { if(!slideshowIsRandom) playCurrentIndex = (playCurrentIndex - 1 + playGuidesQueue.length) % playGuidesQueue.length; scheduleNext(true); });
             document.getElementById('slideshow-first').addEventListener('click', () => { playCurrentIndex = 0; scheduleNext(true); });
             document.getElementById('slideshow-last').addEventListener('click', () => { playCurrentIndex = playGuidesQueue.length - 1; scheduleNext(true); });
             
@@ -1718,6 +1777,8 @@
             lightboxVideoAutoshuffle.addEventListener('click', toggleAutoShuffle);
             document.getElementById('lightbox-video-next').addEventListener('click', () => changeBackgroundVideo(1));
             document.getElementById('lightbox-video-prev').addEventListener('click', () => changeBackgroundVideo(-1));
+            // ZMIANA 2b: Dodany listener dla przycisku resetu
+            document.getElementById('lightbox-video-reset').addEventListener('click', resetVideoSettings);
         }
         setupLightboxListeners();
 
@@ -1756,6 +1817,11 @@
             );
             bgVideo.addEventListener('play', updateAnimationButtonUI);
             bgVideo.addEventListener('pause', updateAnimationButtonUI);
+            bgVideo.addEventListener('error', () => {
+                console.error("Błąd ładowania wideo tła.");
+                bgVideo.style.display = 'none';
+                document.body.classList.remove('video-ready');
+            });
         });
         searchInput.addEventListener("input", () => {
             currentPage = 1;
