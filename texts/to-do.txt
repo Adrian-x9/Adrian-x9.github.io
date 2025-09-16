@@ -36,3 +36,14 @@ Tylko poprawki w 1.2.5:
 Naważniejsze, przeczytaj dokładnie. W wersji 1.2.0, którą załączam, przycisk Tekst/Obrazy/… dodatkowo filtrował siatkę grafik - pozwalając wybierać grafiki pionowe, lub pozostałe. Ten przycisk robił się szerszy i miał dodatkowe ikony. Zrób to w naszej wersji, załączam plik.
 
 ---
+Pracujemy na v1.2.8 i tylko poprawki:
+1. Dodałem stałą do konfiguracji: showLanguageButton - przycisk u góry po prawej.
+2. Przycisk Statycznie / Animacje / Video, zwiększ kontrast wyróżnionego przycisku play (wtedy wyświetla pauzę i zmienia kolor tylko delikatnie)
+3. Przycisk Play w Panelu Video, gdy go pierwszy raz kliknę, nic się nie dzieje, dopiero od drugiego kliknięcia zmienia się ikona. System zapewne zakłada, że jest pauza i zmienia się na play, ale po uruchomieniu jest play dlatego nic się nie dzieje. Pewnie wystarczy zmienić flagę.
+4. Dynamiczna wyszukiwarka działa świetnie, ale niech wyszukuje również w opisach, nie tylko w tytułach. Niech będzie inteligentna.
+5. Sprawdź, czy mamy obsługę plików video, mp4, avi, jeśli nie, dodaj, logika, jak dla obrazów jpg, png.
+6. Szerokie przyciski w menu: tekst/obrazy... i stat, Animacje, Video, … animuj zmianę ich rozmiaru - jak w trybie slideshow.
+7. Przycisk shuffle na panelu video wznawia odtwarzanie, gdy jest wstrzymane, ale nie aktualizuje przycisku play, ikona głupieje, to samo, co przy ładowaniu strony.
+8. Dodaj efektowny i elegancki efekt preloadingu strony, uniwersalny dla ciemnego i jasnego motywu, bo te kafelki potrafią się chwilę ładować... Albo zrób dwa preloadingi - jasny i ciemny, w zależności od ustawień strony głównej.
+9. Przycisk Obrazy / Wszystko - zrób dodatkowo trzy przyciski - które załączą filtr wyświetlanych niżej pozycji. Pierwszy przycisk - okładki pionowe, drugi nie-pionowe, trzeci, wszystkie. Masz to zrobione w pliku index_v1.2.0 - obejrzyj jak to działało, może być tak samo.
+10. Przed otwieraniem linków z kafelków, skrypt ma sprawdzać czy jest plik na dysku, jeśli nie, otwiera fallback base-system/soon.html w tej samej zakładce, to kiedyś było, np. w 1.2.0. Dodaj to do konfiguracji systemu, żeby można było ustawić ścieżkę.

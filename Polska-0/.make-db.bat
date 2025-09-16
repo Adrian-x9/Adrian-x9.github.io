@@ -1,1 +1,0 @@
-dir zdjecia /-C > ./zdjecia.txt
