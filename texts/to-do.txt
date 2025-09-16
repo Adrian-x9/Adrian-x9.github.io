@@ -1,0 +1,19 @@
+Standardowe menu u góry:
+1. Przycisk Tryb ciemny - się wyświetla w trybie jasnym, a jasny w ciemnym, w jasnym ikona dla trybu jasnego. Przesuwamy przycisk na przedostatnią pozycję, przed minimalizuj, który minimalizuje do góry, dlatego strzałka w górę, jak jest.
+2. Przycisk Tekst / Obrazy / Wszystko - to filtr, więc wyświetla to, co poniżej. Zrób ten przycisk jak w 1.2.0, tj składający się z czterech segmentów, niech działa jak w 1.2.0 i dostosuj ikony do każdego trybu.
+3. Przycisk Video / Statycznie / Animacje - dostosuj ikony dla każdego trybu, tryb video ma ikonę ok, i zmodyfikuj tryb video:
+Gdy odtwarzane jest video, zamiast strzałki w prawo, daj pause, co umożliwi stopowanie video - stop klatkę. Video wyłączane jest przy zmianie trybu - po kliknięciu w Video, jak teraz. Video odtwarzane jest w pętli, chyba, że wciśnięty jest przycisk shuffle / który będzie miał dwa stany - on / off, gdy jest wciśnięty, video zmienia się na losowe jak w trybie slideshow, gdy nie jest wciśnięty, video jest stałe, przycisk reset, resetuje jak teraz.
+4. Gdy klikniemy Strzałkę w górę, minimalizującą interfejs w górę, wtedy ukrywamy opisy na przyciskach gdzie są ikony, zostawiamy ikony, które zmieniają się w zależności od trybu.
+5. Rozwinięcie menu przywraca opisy, teraz jest odwrotnie.
+
+Tryb slideshow:
+Menu na dole:
+6. Przycisk video / statycznie /… niech wyświetla ikony jak w zwykłym trybie. Przycisk stop, zmieniamy na pauzę, pauzuje video, robi stop klatkę, obok play / pause, zamiast teraz play, dajemy shuffle jak w zwykłym trybie, którego aktywacja oznacza, że video zmienia się co kilka sekund, jak teraz, przycisk jak w zwykłym trybie, on / off
+7. Panel do zarządzania pokazem slidów:
+Przycisk stpp powinien być na lewo od play
+A na prawo shuffle, jak w video, gdy wyłączony, slideshow po kolei, gdy włączony, losowo.
+
+Ostatnia rzecz, ekran główny, kafelki.
+Niech ich animacja pojawiania się przy ładowaniu, strony, odświeżaniu, filtrowaniu, czyli zawsze, gdy włączone są animacje, to niech się rysują od pierwszej do ostatniej kafelki, dokładnie tak jak w wersji 1.2.0.
+
+Pracujemy na wersji 1.2.5, zmieniamy tylko to, co powyżej. Plik 1.2.0 do wglądu

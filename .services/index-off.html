@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konserwacja - ADE Adrian Ulbrych</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e74c3c; /* Intensywna czerwień */
+            --text-color: #f1f1f1; /* Czysta biel/jasnoszary */
+            --bg-color: #0d0d0d; /* Głęboka czerń */
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            animation: background-pulse 10s infinite ease-in-out;
+        }
+
+        @keyframes background-pulse {
+            0% { background-color: var(--bg-color); }
+            50% { background-color: #1a0000; } /* Bardzo ciemna czerwień */
+            100% { background-color: var(--bg-color); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            padding: 20px;
+            max-width: 90%;
+            animation: float 8s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        h1 {
+            font-size: 4em;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(231, 76, 60, 0.7);
+        }
+
+        p {
+            font-size: 1.6em;
+            font-weight: 300;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+        
+        .date {
+            margin-top: 30px; /* Dodatkowa spacja nad datą */
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 400;
+            border-bottom: 1px dotted var(--primary-color);
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        a:hover {
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .flying-text-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .flying-text {
+            position: absolute;
+            font-size: 1.8em;
+            color: rgba(241, 241, 241, 0.15);
+            white-space: nowrap;
+            opacity: 0;
+            font-weight: 700;
+        }
+
+        /* Ustawienia responsywności */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5em; }
+            p { font-size: 1.2em; }
+            .flying-text { font-size: 1.2em; }
+        }
+        @media (max-width: 480px) {
+            h1 { font-size: 2em; }
+            p { font-size: 1em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="flying-text-container"></div>
+
+    <div class="container">
+        <h1>Konserwacja</h1>
+        <p class="date">Zapraszamy jutro <br>2025-09-17</p>
+        <p><a href="http://www.ade.pl" target="_blank">www.ade.pl</a></p>
+        <p><span class="highlight">ADE</span> Adrian Ulbrych</p>
+    </div>
+
+    <script>
+        const flyingTextContainer = document.querySelector('.flying-text-container');
+        const phrases = [
+            "Konserwacja",
+            "Zapraszamy jutro",
+            "ADE",
+            "www.ade.pl",
+            "Adrian Ulbrych",
+            "2025-09-17",
+            "...",
+            "Ładowanie rzeczywistości",
+            "Synchronizacja",
+            "Już wkrótce",
+            "Przerwa techniczna"
+        ];
+        
+        // Funkcja do wstrzykiwania reguł CSS (unika tworzenia tysięcy stylów)
+        const styleSheet = document.createElement("style");
+        document.head.appendChild(styleSheet);
+
+        function createFlyingText() {
+            const text = document.createElement('span');
+            text.classList.add('flying-text');
+            text.textContent = phrases[Math.floor(Math.random() * phrases.length)];
+
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            const endX = Math.random() * window.innerWidth;
+            const endY = Math.random() * window.innerHeight;
+            const animationDuration = (Math.random() * 8) + 8; // od 8 do 16 sekund
+            const animationDelay = Math.random() * 5;
+            
+            // Generowanie unikalnej nazwy animacji
+            const animationName = 'fly-' + Math.random().toString(36).substring(2, 10);
+
+            // Tworzenie keyframes z efektem blur
+            const keyframes = `
+                @keyframes ${animationName} {
+                    0% {
+                        transform: translate(${startX - window.innerWidth / 2}px, ${startY - window.innerHeight / 2}px) scale(0.7);
+                        opacity: 0;
+                        filter: blur(10px);
+                    }
+                    20%, 80% {
+                        opacity: 1;
+                        filter: blur(0px);
+                    }
+                    100% {
+                        transform: translate(${endX - window.innerWidth / 2}px, ${endY - window.innerHeight / 2}px) scale(1.3);
+                        opacity: 0;
+                        filter: blur(10px);
+                    }
+                }`;
+            
+            styleSheet.sheet.insertRule(keyframes, styleSheet.sheet.cssRules.length);
+            
+            text.style.animation = `${animationName} ${animationDuration}s ${animationDelay}s linear forwards`;
+
+            flyingTextContainer.appendChild(text);
+
+            text.addEventListener('animationend', () => {
+                text.remove();
+                // Ta reguła nie jest już potrzebna
+                // styleSheet.sheet.deleteRule(styleSheet.sheet.cssRules.length - 1); 
+                createFlying-text(); // Tworzenie nowego elementu
+            });
+        }
+        
+        // Generowanie początkowej partii 15 tekstów
+        for (let i = 0; i < 15; i++) {
+            createFlyingText();
+        }
+    </script>
+</body>
+</html>
