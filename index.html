@@ -14,224 +14,1293 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
         /* Preloader Styles */
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: flex; justify-content: center; align-items: center; transition: opacity 0.5s ease; }
-        .spinner { width: 50px; height: 50px; border-radius: 50%; animation: spin 1s linear infinite; }
-        html:not(.dark-mode) #preloader { background-color: #e1e1e1; }
-        html:not(.dark-mode) .spinner { border: 5px solid #f3f3f3; border-top: 5px solid #cc0000; }
-        html.dark-mode #preloader { background-color: #121212; }
-        html.dark-mode .spinner { border: 5px solid #333; border-top: 5px solid #e53935; }
-        #preloader.fade-out { opacity: 0; pointer-events: none; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
 
-        html:not(.dark-mode) { background-color: #e1e1e1; }
-        html.dark-mode { background-color: #121212; }
-        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; width: 100vw; height: 100vh; object-fit: cover; z-index: -1; display: none; }
-        body.video-ready { background-color: transparent !important; }
-        body { font-family: "Segoe UI", sans-serif; margin: 0; padding: 20px; transition: background-color 0.5s ease, color 0.3s ease; min-height: 100vh; box-sizing: border-box; }
-        body.no-animation .guide.animate-in, body.no-animation .guide.flip-animate { animation: none !important; transform: none !important; }
-        body.no-animation .guide-cover, body.no-animation .top-header, body.no-animation .footer { transition: none !important; }
-        body.no-animation .multi-button, body.no-animation .multi-button-child, body.no-animation .dir-db-btn, body.no-animation .btn-text { transition: none !important; }
-        body.play-mode-active > .top-header, body.play-mode-active > .controls,
-        body.play-mode-active > .guide-list, body.play-mode-active > .pagination,
-        body.play-mode-active > .footer, body.play-mode-active > #fullscreenBtn { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
-        #fileInput { display: none; }
-        a { font-weight: bold; text-decoration: none; }
-        a:hover { text-decoration: none; }
-        .top-header a.dir-db-btn:hover { text-decoration: none; }
-        .title-red { color: #cc0000; }
-        .dark-mode .title-red { color: #e53935; }
-        .dark-mode .version-suffix { color: #eee; }
-        body:not(.dark-mode) .version-suffix { color: #333; }
-        body:not(.dark-mode) .top-header .counter { color: #555; }
-        .dark-mode .top-header .counter { color: #aaa; }
-        body:not(.dark-mode) { color: #333; }
-        body:not(.dark-mode) a { color: #cc0000; }
-        body:not(.dark-mode) button:hover { background-color: #f0f0f0; }
-        body:not(.dark-mode) .dir-db-btn:hover, body:not(.dark-mode) .highlighted-state:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.3); }
-        body:not(.dark-mode) .guide { background: #fdfdfd; box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); }
-        body.video-ready:not(.dark-mode) .guide { background: rgba(253, 253, 253, 0.5); }
-        body:not(.dark-mode) .guide-cover { border: 2px solid #cc0000; box-shadow: 0 0 10px rgba(204, 0, 0, 0.5); }
-        body:not(.dark-mode) .footer { color: #666; }
-        body:not(.dark-mode) .footer .footer-special-text { color: #555; }
-        body:not(.dark-mode) .privacy-notice { color: #bbb; }
-        .dark-mode { color: #eee; }
-        .dark-mode a { color: #e53935; }
-        .dark-mode button:hover:not(:disabled) { background-color: #222; }
-        .dark-mode .dir-db-btn:hover, .dark-mode .highlighted-state:hover { background: #111; box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); }
-        .dark-mode .guide { background: #000; box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
-        body.video-ready.dark-mode .guide { background: rgba(0, 0, 0, 0.5); }
-        .dark-mode .guide:hover { box-shadow: 0 0 25px rgba(255, 0, 0, 0.3); }
-        .dark-mode .guide-info { color: #bbb; }
-        .dark-mode .guide-cover { border: 2px solid #e53935; box-shadow: 0 0 10px rgba(229, 57, 53, 0.5); }
-        .dark-mode .footer { color: #bbb; }
-        .dark-mode .footer .footer-special-text { color: #eee; }
-        .dark-mode .privacy-notice { color: #666; }
-        .top-header { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; text-align: center; opacity: 0; transform: translateY(-20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; padding-top: 5px; }
-        .top-header.minimized-header { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-bottom: 0 !important; opacity: 0; }
-        .header-group { display: flex; gap: 10px; }
-        .header-logo-group { display: flex; align-items: center; gap: 15px; }
-        .header-logo-link { display: flex; align-items: center; perspective: 1000px; }
-        .header-logo { max-height: 42px; width: auto; transition: transform 0.6s; transform-style: preserve-3d; }
-        .top-header .title { font-size: 1.6em; font-weight: bold; }
-        .top-header .counter { font-size: 0.9em; }
-        .top-header .counter b { font-weight: bold; }
-        .top-header .title, .top-header .counter { padding: 5px 10px; border-radius: 8px; }
-        body:not(.dark-mode) .top-header .title, body:not(.dark-mode) .top-header .counter { background-color: rgba(240, 240, 240, 0.4); }
-        .dark-mode .top-header .title, .dark-mode .top-header .counter { background-color: rgba(20, 20, 20, 0.5); }
-        .controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; opacity: 0; transform: translateY(-20px); }
-        input, select, button, .dir-db-btn { padding: 10px; border-radius: 10px; border: 1px solid; white-space: nowrap; height: 42px; box-sizing: border-box; }
-        button, .dir-db-btn { display: inline-flex; justify-content: center; align-items: center; }
-        #search { width: 160px; }
-        input::placeholder { color: #aaa; }
-        .dark-mode input::placeholder { color: #666; }
-        .dir-db-btn { padding: 10px 20px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s, width 0.4s ease, opacity 0.3s; font-size: 1em; cursor: pointer; }
-        .dir-db-btn:hover { transform: translateY(-5px); }
-        .dir-db-btn i { margin-right: 5px; }
-        #minimizeBtn i, #langBtn i, #fullscreenBtn i { margin-right: 0; }
-        #langBtn { padding: 10px 12px; }
-        .multi-button { padding: 0; overflow: hidden; }
-        .multi-button>span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
-        .btn-text { transition: max-width 0.4s ease, opacity 0.3s ease; max-width: 100px; overflow: hidden; white-space: nowrap; display: inline-block; }
-        .multi-button-main { flex-grow: 1; padding-right: 12px; }
-        .multi-button-child { padding: 10px 12px; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        .dark-mode .multi-button-child { border-left-color: rgba(255, 255, 255, 0.2); }
-        .multi-button .multi-button-child { max-width: 0; padding: 0; opacity: 0; border-left: none; transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease; }
-        .multi-button.expanded .multi-button-child { max-width: 45px; padding: 10px 12px; opacity: 1; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        .dark-mode .multi-button.expanded .multi-button-child { border-left-color: rgba(255, 255, 255, 0.2); }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        html:not(.dark-mode) #preloader {
+            background-color: #e1e1e1;
+        }
+
+        html:not(.dark-mode) .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #cc0000;
+        }
+
+        html.dark-mode #preloader {
+            background-color: #121212;
+        }
+
+        html.dark-mode .spinner {
+            border: 5px solid #333;
+            border-top: 5px solid #e53935;
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        html:not(.dark-mode) {
+            background-color: #e1e1e1;
+        }
+
+        html.dark-mode {
+            background-color: #121212;
+        }
+
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: -1;
+            display: none;
+        }
+
+        body.video-ready {
+            background-color: transparent !important;
+        }
+
+        body {
+            font-family: "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.5s ease, color 0.3s ease;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body.no-animation .guide.animate-in,
+        body.no-animation .guide.flip-animate {
+            animation: none !important;
+            transform: none !important;
+        }
+
+        body.no-animation .guide-cover,
+        body.no-animation .top-header,
+        body.no-animation .footer {
+            transition: none !important;
+        }
+
+        body.no-animation .multi-button,
+        body.no-animation .multi-button-child,
+        body.no-animation .dir-db-btn,
+        body.no-animation .btn-text {
+            transition: none !important;
+        }
+
+        body.play-mode-active>.top-header,
+        body.play-mode-active>.controls,
+        body.play-mode-active>.guide-list,
+        body.play-mode-active>.pagination,
+        body.play-mode-active>.footer,
+        body.play-mode-active>#fullscreenBtn {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0s 0.4s;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        a {
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .top-header a.dir-db-btn:hover {
+            text-decoration: none;
+        }
+
+        .title-red {
+            color: #cc0000;
+        }
+
+        .dark-mode .title-red {
+            color: #e53935;
+        }
+
+        .dark-mode .version-suffix {
+            color: #eee;
+        }
+
+        body:not(.dark-mode) .version-suffix {
+            color: #333;
+        }
+
+        body:not(.dark-mode) .top-header .counter {
+            color: #555;
+        }
+
+        .dark-mode .top-header .counter {
+            color: #aaa;
+        }
+
+        body:not(.dark-mode) {
+            color: #333;
+        }
+
+        body:not(.dark-mode) a {
+            color: #cc0000;
+        }
+
+        body:not(.dark-mode) button:hover {
+            background-color: #f0f0f0;
+        }
+
+        body:not(.dark-mode) .dir-db-btn:hover,
+        body:not(.dark-mode) .highlighted-state:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        body:not(.dark-mode) .guide {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        body.video-ready:not(.dark-mode) .guide {
+            background: rgba(253, 253, 253, 0.5);
+        }
+
+        body:not(.dark-mode) .guide-cover {
+            border: 2px solid #cc0000;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+        }
+
+        body:not(.dark-mode) .footer {
+            color: #666;
+        }
+
+        body:not(.dark-mode) .footer .footer-special-text {
+            color: #555;
+        }
+
+        body:not(.dark-mode) .privacy-notice {
+            color: #bbb;
+        }
+
+        .dark-mode {
+            color: #eee;
+        }
+
+        .dark-mode a {
+            color: #e53935;
+        }
+
+        .dark-mode button:hover:not(:disabled) {
+            background-color: #222;
+        }
+
+        .dark-mode .dir-db-btn:hover,
+        .dark-mode .highlighted-state:hover {
+            background: #111;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .guide {
+            background: #000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        body.video-ready.dark-mode .guide {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-mode .guide:hover {
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .guide-info {
+            color: #bbb;
+        }
+
+        .dark-mode .guide-cover {
+            border: 2px solid #e53935;
+            box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
+        }
+
+        .dark-mode .footer {
+            color: #bbb;
+        }
+
+        .dark-mode .footer .footer-special-text {
+            color: #eee;
+        }
+
+        .dark-mode .privacy-notice {
+            color: #666;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+            max-height: 200px;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out;
+            padding-top: 5px;
+        }
+
+        .top-header.minimized-header {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-bottom: 0 !important;
+            opacity: 0;
+        }
+
+        .header-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .header-logo-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-logo-link {
+            display: flex;
+            align-items: center;
+            perspective: 1000px;
+        }
+
+        .header-logo {
+            max-height: 42px;
+            width: auto;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .top-header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .top-header .counter {
+            font-size: 0.9em;
+        }
+
+        .top-header .counter b {
+            font-weight: bold;
+        }
+
+        .top-header .title,
+        .top-header .counter {
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+
+        body:not(.dark-mode) .top-header .title,
+        body:not(.dark-mode) .top-header .counter {
+            background-color: rgba(240, 240, 240, 0.4);
+        }
+
+        .dark-mode .top-header .title,
+        .dark-mode .top-header .counter {
+            background-color: rgba(20, 20, 20, 0.5);
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        input,
+        select,
+        button,
+        .dir-db-btn {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid;
+            white-space: nowrap;
+            height: 42px;
+            box-sizing: border-box;
+        }
+
+        button,
+        .dir-db-btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #search {
+            width: 160px;
+        }
+
+        input::placeholder {
+            color: #aaa;
+        }
+
+        .dark-mode input::placeholder {
+            color: #666;
+        }
+
+        .dir-db-btn {
+            padding: 10px 20px;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s, width 0.4s ease, opacity 0.3s;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        .dir-db-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .dir-db-btn i {
+            margin-right: 5px;
+        }
+
+        #minimizeBtn i,
+        #langBtn i,
+        #fullscreenBtn i {
+            margin-right: 0;
+        }
+
+        #langBtn {
+            padding: 10px 12px;
+        }
+
+        .multi-button {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .multi-button>span {
+            padding: 10px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .btn-text {
+            transition: max-width 0.4s ease, opacity 0.3s ease;
+            max-width: 100px;
+            overflow: hidden;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .multi-button-main {
+            flex-grow: 1;
+            padding-right: 12px;
+        }
+
+        .multi-button-child {
+            padding: 10px 12px;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .multi-button-child {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .multi-button .multi-button-child {
+            max-width: 0;
+            padding: 0;
+            opacity: 0;
+            border-left: none;
+            transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+        }
+
+        .multi-button.expanded .multi-button-child {
+            max-width: 45px;
+            padding: 10px 12px;
+            opacity: 1;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .multi-button.expanded .multi-button-child {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
 
         /* --- NOWE, UPORZĄDKOWANE STYLE KONTROLEK --- */
-        input, select { border-color: #808080; }
-        body:not(.dark-mode) input, body:not(.dark-mode) select { background-color: #fff; color: #333; }
-        .dark-mode input, .dark-mode select { background-color: #000; color: #eee; border-color: #808080; }
-        .controls .dir-db-btn, .controls button, .top-header .dir-db-btn { border-color: #a00000; box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); font-weight: bold; }
-        .controls .dir-db-btn:hover, .controls button:hover, .top-header .dir-db-btn:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
-        body:not(.dark-mode) .controls .dir-db-btn, body:not(.dark-mode) .controls button, body:not(.dark-mode) .top-header .dir-db-btn { background: #fdfdfd; color: #cc0000; }
-        body:not(.dark-mode) .controls .btn-text { color: #333; }
-        .dark-mode .controls .dir-db-btn, .dark-mode .controls button, .dark-mode .top-header .dir-db-btn { background: #000; color: #e53935; }
-        .dark-mode .controls .btn-text { color: #eee; }
-        .controls .multi-button.expanded, #fxBtn.active { background: #fff; }
-        .dark-mode .controls .multi-button.expanded, .dark-mode #fxBtn.active { background: #111; }
-        .controls .multi-button:not(.expanded), #fxBtn:not(.active) { font-weight: normal; }
-        #fxBtn.active .fa-cog, #lightbox-fxBtn.active .fa-cog { animation: spin 2s linear infinite; }
-        #lightbox-fxBtn.active i { color: #e53935; }
-        .dark-mode #lightbox-fxBtn.active i { color: #ff8a80; }
-        .multi-button-child:hover { background-color: rgba(0, 0, 0, 0.05); }
-        .dark-mode .multi-button-child:hover { background-color: rgba(255, 255, 255, 0.1); }
-        .multi-button-child.active-play, #lightbox-labelsBtn.active-play { background-color: rgba(204, 0, 0, 0.2); }
-        .dark-mode .multi-button-child.active-play, .dark-mode #lightbox-labelsBtn.active-play { background-color: rgba(229, 57, 53, 0.3); }
-        body:not(.dark-mode) .multi-button-child.active-play i, body:not(.dark-mode) #lightbox-labelsBtn.active-play i { color: #cc0000; text-shadow: none; }
-        body.dark-mode .multi-button-child.active-play i, body.dark-mode #lightbox-labelsBtn.active-play i { color: #ff8a80; text-shadow: none; }
-        #lightbox-controls .multi-button-child.active-play i, #lightbox-bg-video-controls button.active-play i { color: #e53935; text-shadow: none !important; }
-        .dark-mode #lightbox-controls .multi-button-child.active-play i, .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80; text-shadow: none !important; }
+        input,
+        select {
+            border-color: #808080;
+        }
 
-        .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; transition: min-height 0.4s ease-out; }
-        .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
-        .guide-list + .footer { margin-top: 35px; }
-        .guide-cover { max-width: 100%; height: auto; max-height: 300px; margin: 10px auto 0; display: block; border-radius: 10px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
-        .guide .guide-cover { opacity: 1; transform: scale(1); }
-        .guide.animate-in .guide-cover { transition: none; opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
-        @keyframes fadeInCover { from { opacity: 0; transform: scale(0.7); } to { opacity: 1; transform: scale(1); } }
-        .guide-list.hide-covers .guide-cover { opacity: 0; max-height: 0; margin-top: 0; margin-bottom: 0; padding-top: 0; padding-bottom: 0; border-width: 0; transform: scale(0.7); overflow: hidden; }
-        .guide-title, .guide-info, .guide-content-bottom > a:not(.cover-link) { transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s; overflow: hidden; }
-        .guide-list.only-covers .guide-title, .guide-list.only-covers .guide-info, .guide-list.only-covers .guide-content-bottom > a:not(.cover-link) { opacity: 0; max-height: 0; margin: 0; padding: 0; pointer-events: none; }
-        .guide-list.only-covers .guide { padding: 10px; justify-content: center; align-items: center; height: 100%; }
-        .guide-list.only-covers .guide-cover { margin: 0; border: none !important; opacity: 1; transform: scale(1); }
-        .guide { padding: 0 20px 10px; border-radius: 10px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s; display: flex; flex-direction: column; justify-content: space-between; text-align: center; width: 250px; box-sizing: border-box; }
-        .guide:hover { transform: translateY(-5px); }
-        .guide-content-bottom { flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-end; }
-        .guide-info-container { flex-grow: 1; display: flex; align-items: center; justify-content: center; }
-        .guide a { margin-top: 10px; display: inline-block; }
-        .guide a.cover-link { margin-top: 0; display: block; }
-        .guide-info { font-size: 0.9em; }
-        .guide-title { margin-top: 7px; font-size: 1.2em; font-weight: bold; margin-bottom: 10px; overflow-wrap: break-word; }
+        body:not(.dark-mode) input,
+        body:not(.dark-mode) select {
+            background-color: #fff;
+            color: #333;
+        }
 
-        .pagination { text-align: center; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease-out, transform 0.5s ease-out, max-height 0.5s, margin 0.5s, padding 0.5s; max-height: 0; overflow: hidden; margin: 0; padding: 0; }
-        .pagination.visible { opacity: 1; transform: translateY(0); max-height: 200px; margin-top: 20px; margin-bottom: 15px; }
-        .pagination button, .pagination input, .pagination select { cursor: pointer; }
-        .pagination button, .pagination input { border-radius: 10px; border: 1px solid #a00000; box-shadow: 0 0 15px rgba(204, 0, 0, 0.2); font-weight: bold; height: 42px; box-sizing: border-box; padding: 10px; }
-        .pagination button:hover:not(:disabled), .pagination input:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); }
-        body:not(.dark-mode) .pagination button, body:not(.dark-mode) .pagination input { background: #fdfdfd; color: #cc0000; }
-        .dark-mode .pagination button, .dark-mode .pagination input { background: #000; color: #e53935; border-color: #a00000; }
-        body:not(.dark-mode) .pagination input { color: #333; }
-        .dark-mode .pagination input { color: #eee; }
-        .pagination .pagination-info { padding: 10px; font-weight: bold; }
-        body:not(.dark-mode) .pagination .pagination-info { color: #555; }
-        .dark-mode .pagination .pagination-info { color: #aaa; }
-        .pagination button:disabled { cursor: not-allowed; opacity: 0.5; }
+        .dark-mode input,
+        .dark-mode select {
+            background-color: #000;
+            color: #eee;
+            border-color: #808080;
+        }
 
-        .guide.animate-in { animation: fadeInSlideIn 0.5s ease-out forwards; }
-        .guide.fade-out { animation: fadeOutUp 0.2s forwards; pointer-events: none; }
-        @keyframes fadeInSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeOutUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-        .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 1; transform: translateY(0); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out, transform 0.5s ease-out; }
-        .footer.minimized-footer { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; opacity: 0; }
-        .footer.hidden-animated { opacity: 0; transform: translateY(20px); }
-        .nobr { white-space: nowrap; }
-        .privacy-notice { margin-top: 10px; font-size: 0.9em; }
-        .footer .footer-special-text { font-weight: normal; }
-        body.play-mode-active { overflow: hidden; }
-        .backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 999; opacity: 0; visibility: hidden; transition: opacity 0.5s ease; background-color: rgba(0, 0, 0, 0.5); backdrop-filter: none; -webkit-backdrop-filter: none; }
-        .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
-        .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
-        .play-guide-container > a { max-width: 100%; max-height: 100%; display: flex; justify-content: center; align-items: center; }
-        .play-guide-container .preview-media, .play-guide-container > a > img, .play-guide-container > a > video { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 10px; }
-        .play-guide-container > a > img, .play-guide-container > a > video { display: block; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
-        body:not(.no-animation) .play-guide-container > a > img, body:not(.no-animation) .play-guide-container > a > video { animation: zoomInImage 0.5s ease-out; }
-        .dark-mode .play-guide-container > a > img, .dark-mode .play-guide-container > a > video { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
-        
-        .play-caption { position: fixed; top: 20px; left: 50%; padding: 10px 15px; border-radius: 10px; font-size: 1.2em; z-index: 1000; text-align: center; opacity: 0; transform: translateX(-50%) scale(0.95); transition: transform 0.4s ease-out, opacity 0.4s ease-out; }
-        .play-caption.visible { transform: translateX(-50%) scale(1); opacity: 1; }
-        body:not(.dark-mode) .play-caption { background-color: rgba(255, 255, 255, 0.9); color: #333; }
-        .dark-mode .play-caption { background-color: rgba(0, 0, 0, 0.85); color: #ccc; }
-        body:not(.dark-mode) .caption-title-highlight { color: #000; font-weight: bold; }
-        .dark-mode .caption-title-highlight { color: #fff; font-weight: bold; }
-        .caption-description { display: block; font-size: 0.8em; opacity: 0.7; font-weight: normal; margin-top: 5px; }
-        .caption-title-highlight b { font-weight: 900; }
-        .play-caption .caption-total { opacity: 0.7; font-weight: normal; color: inherit; }
+        .controls .dir-db-btn,
+        .controls button,
+        .top-header .dir-db-btn {
+            border-color: #a00000;
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+            font-weight: bold;
+        }
 
-        .lightbox-action-btn { position: fixed; width: 44px; height: 44px; z-index: 1001; padding: 10px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5em; transition: background-color 0.2s ease, color 0.2s; }
-        .lightbox-action-btn i { margin: 0; }
-        #fullscreenBtn { position: fixed; top: 15px; right: 15px; z-index: 998; }
-        #playCloseBtn { top: 15px; right: 15px; }
-        #fullscreenBtnLightbox { top: 15px; right: 69px; }
-        #lightbox-minimizeBtn { bottom: 15px; right: 15px; }
-        #lightbox-controls { position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; transition: transform 0.4s ease, padding-bottom 0.3s ease; flex-wrap: wrap; z-index: 1000; }
-        #lightbox-controls.minimized-controls { transform: translateY(100%); }
-        .lightbox-control-group { display: flex; border-radius: 10px; overflow: hidden; }
-        body:not(.dark-mode) .lightbox-control-group, body:not(.dark-mode) #lightbox-controls .dir-db-btn, body:not(.dark-mode) .lightbox-action-btn { background-color: rgba(255,255,255,0.8); color: #333; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-        .dark-mode .lightbox-control-group, .dark-mode #lightbox-controls .dir-db-btn, .dark-mode .lightbox-action-btn { background-color: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-        #lightbox-controls button, #lightbox-controls .dir-db-btn, #lightbox-controls .multi-button-child, .lightbox-action-btn { background: none; border: none; cursor: pointer; padding: 10px 12px; transition: background-color 0.2s ease, color 0.2s; white-space: nowrap; }
-        #lightbox-controls .dir-db-btn, #lightbox-controls button { font-size: 1em; }
-        #lightbox-videoBtn { flex-grow: 0; }
-        #slideshow-controls .multi-button-child { font-size: 1.5em; justify-content: center; }
-        #lightbox-controls button:hover, #lightbox-controls .dir-db-btn:hover, #lightbox-controls .multi-button-child:hover, .lightbox-action-btn:hover { background-color: rgba(0,0,0,0.1); color: #e53935; }
-        .dark-mode #lightbox-controls button:hover, .dark-mode #lightbox-controls .dir-db-btn:hover, .dark-mode #lightbox-controls .multi-button-child:hover, .dark-mode .lightbox-action-btn:hover { background-color: rgba(255,255,255,0.15); }
-        .lightbox-control-group button:not(:last-child), .lightbox-control-group span:not(:last-child) { border-right: 1px solid rgba(0,0,0,0.1); }
-        .dark-mode .lightbox-control-group button:not(:last-child), .dark-mode .lightbox-control-group span:not(:last-child) { border-right-color: rgba(255,255,255,0.2); }
-        #lightbox-videoBtn .multi-button-child { max-width: 0; padding: 0; opacity: 0; border-left: none; transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease; }
-        #lightbox-videoBtn.expanded .multi-button-child { max-width: 45px; padding: 10px 12px; opacity: 1; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        .dark-mode #lightbox-videoBtn.expanded .multi-button-child { border-left-color: rgba(255, 255, 255, 0.2); }
+        .controls .dir-db-btn:hover,
+        .controls button:hover,
+        .top-header .dir-db-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
 
-        @keyframes zoomInImage { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-        @keyframes zoomOutImage { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.95); } }
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animated-header, .animated-controls, .animated-footer, .animated-pagination { animation-fill-mode: forwards; }
-        .animated-header, .animated-controls { animation-name: fadeInDown; animation-duration: 0.6s; animation-timing-function: ease-out; }
-        .animated-footer, .animated-pagination { animation-name: fadeInUp; animation-duration: 0.8s; animation-timing-function: ease-out; }
-        .controls.minimized-view .dir-db-btn i, #lightbox-controls .dir-db-btn i { margin-right: 0; }
-        .controls.minimized-view .btn-text { max-width: 0; opacity: 0; }
-        .controls.minimized-view .multi-button { padding: 10px 12px; }
-        .controls.minimized-view .multi-button-main { pointer-events: none; }
-        .controls.minimized-view .multi-button .multi-button-main .btn-text { display: none; }
-        .controls.minimized-view .multi-button .multi-button-main i { margin-right: 0; }
-        .controls.minimized-view .multi-button .multi-button-child { max-width: 0; padding: 0; opacity: 0; border-left: none; transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease; }
-        .controls.minimized-view .multi-button:hover .multi-button-child { max-width: 45px; padding: 10px 12px; opacity: 1; border-left: 1px solid rgba(0, 0, 0, 0.1); }
-        .dark-mode .controls.minimized-view .multi-button:hover .multi-button-child { border-left-color: rgba(255, 255, 255, 0.2); }
-        @media (max-width: 768px) { #lightbox-controls { padding-bottom: 65px; } }
+        body:not(.dark-mode) .controls .dir-db-btn,
+        body:not(.dark-mode) .controls button,
+        body:not(.dark-mode) .top-header .dir-db-btn {
+            background: #fdfdfd;
+            color: #cc0000;
+        }
+
+        body:not(.dark-mode) .controls .btn-text {
+            color: #333;
+        }
+
+        .dark-mode .controls .dir-db-btn,
+        .dark-mode .controls button,
+        .dark-mode .top-header .dir-db-btn {
+            background: #000;
+            color: #e53935;
+        }
+
+        .dark-mode .controls .btn-text {
+            color: #eee;
+        }
+
+        .controls .multi-button.expanded,
+        #fxBtn.active {
+            background: #fff;
+        }
+
+        .dark-mode .controls .multi-button.expanded,
+        .dark-mode #fxBtn.active {
+            background: #111;
+        }
+
+        .controls .multi-button:not(.expanded),
+        #fxBtn:not(.active) {
+            font-weight: normal;
+        }
+
+        #fxBtn.active .fa-cog,
+        #lightbox-fxBtn.active .fa-cog {
+            animation: spin 2s linear infinite;
+        }
+
+        #lightbox-fxBtn.active i {
+            color: #e53935;
+        }
+
+        .dark-mode #lightbox-fxBtn.active i {
+            color: #ff8a80;
+        }
+
+        .multi-button-child:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode .multi-button-child:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .multi-button-child.active-play,
+        #lightbox-labelsBtn.active-play {
+            background-color: rgba(204, 0, 0, 0.2);
+        }
+
+        .dark-mode .multi-button-child.active-play,
+        .dark-mode #lightbox-labelsBtn.active-play {
+            background-color: rgba(229, 57, 53, 0.3);
+        }
+
+        body:not(.dark-mode) .multi-button-child.active-play i,
+        body:not(.dark-mode) #lightbox-labelsBtn.active-play i {
+            color: #cc0000;
+            text-shadow: none;
+        }
+
+        body.dark-mode .multi-button-child.active-play i,
+        body.dark-mode #lightbox-labelsBtn.active-play i {
+            color: #ff8a80;
+            text-shadow: none;
+        }
+
+        #lightbox-controls .multi-button-child.active-play i,
+        #lightbox-bg-video-controls button.active-play i {
+            color: #e53935;
+            text-shadow: none !important;
+        }
+
+        .dark-mode #lightbox-controls .multi-button-child.active-play i,
+        .dark-mode #lightbox-bg-video-controls button.active-play i {
+            color: #ff8a80;
+            text-shadow: none !important;
+        }
+
+        .guide-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 250px);
+            justify-content: center;
+            gap: 20px;
+            width: 90%;
+            max-width: 1920px;
+            margin: 0 auto;
+            transition: min-height 0.4s ease-out;
+        }
+
+        .guide-list.random-draw {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .guide-list+.footer {
+            margin-top: 35px;
+        }
+
+        .guide-cover {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            margin: 10px auto 0;
+            display: block;
+            border-radius: 10px;
+            transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out;
+        }
+
+        .guide .guide-cover {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .guide.animate-in .guide-cover {
+            transition: none;
+            opacity: 0;
+            transform: scale(0.7);
+            animation: fadeInCover 0.5s 0.1s ease-out forwards;
+        }
+
+        @keyframes fadeInCover {
+            from {
+                opacity: 0;
+                transform: scale(0.7);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .guide-list.hide-covers .guide-cover {
+            opacity: 0;
+            max-height: 0;
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            border-width: 0;
+            transform: scale(0.7);
+            overflow: hidden;
+        }
+
+        .guide-title,
+        .guide-info,
+        .guide-content-bottom>a:not(.cover-link) {
+            transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s;
+            overflow: hidden;
+        }
+
+        .guide-list.only-covers .guide-title,
+        .guide-list.only-covers .guide-info,
+        .guide-list.only-covers .guide-content-bottom>a:not(.cover-link) {
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
+
+        .guide-list.only-covers .guide {
+            padding: 10px;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        .guide-list.only-covers .guide-cover {
+            margin: 0;
+            border: none !important;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .guide {
+            padding: 0 20px 10px;
+            border-radius: 10px;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-align: center;
+            width: 250px;
+            box-sizing: border-box;
+        }
+
+        .guide:hover {
+            transform: translateY(-5px);
+        }
+
+        .guide-content-bottom {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        .guide-info-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guide a {
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .guide a.cover-link {
+            margin-top: 0;
+            display: block;
+        }
+
+        .guide-info {
+            font-size: 0.9em;
+        }
+
+        .guide-title {
+            margin-top: 7px;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            overflow-wrap: break-word;
+        }
+
+        .pagination {
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out, max-height 0.5s, margin 0.5s, padding 0.5s;
+            max-height: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .pagination.visible {
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 200px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .pagination button,
+        .pagination input,
+        .pagination select {
+            cursor: pointer;
+        }
+
+        .pagination button,
+        .pagination input {
+            border-radius: 10px;
+            border: 1px solid #a00000;
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+            font-weight: bold;
+            height: 42px;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+
+        .pagination button:hover:not(:disabled),
+        .pagination input:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        body:not(.dark-mode) .pagination button,
+        body:not(.dark-mode) .pagination input {
+            background: #fdfdfd;
+            color: #cc0000;
+        }
+
+        .dark-mode .pagination button,
+        .dark-mode .pagination input {
+            background: #000;
+            color: #e53935;
+            border-color: #a00000;
+        }
+
+        body:not(.dark-mode) .pagination input {
+            color: #333;
+        }
+
+        .dark-mode .pagination input {
+            color: #eee;
+        }
+
+        .pagination .pagination-info {
+            padding: 10px;
+            font-weight: bold;
+        }
+
+        body:not(.dark-mode) .pagination .pagination-info {
+            color: #555;
+        }
+
+        .dark-mode .pagination .pagination-info {
+            color: #aaa;
+        }
+
+        .pagination button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .guide.animate-in {
+            animation: fadeInSlideIn 0.5s ease-out forwards;
+        }
+
+        .guide.fade-out {
+            animation: fadeOutUp 0.2s forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fadeInSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOutUp {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            padding-top: 10px;
+            font-size: 0.9em;
+            opacity: 1;
+            transform: translateY(0);
+            max-height: 200px;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        .footer.minimized-footer {
+            max-height: 0 !important;
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            margin-top: 0 !important;
+            opacity: 0;
+        }
+
+        .footer.hidden-animated {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .nobr {
+            white-space: nowrap;
+        }
+
+        .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .footer .footer-special-text {
+            font-weight: normal;
+        }
+
+        body.play-mode-active {
+            overflow: hidden;
+        }
+
+        .backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .backdrop.visible {
+            display: flex;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .play-guide-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90vw;
+            height: 90vh;
+        }
+
+        .play-guide-container>a {
+            max-width: 100%;
+            max-height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .play-guide-container .preview-media,
+        .play-guide-container>a>img,
+        .play-guide-container>a>video {
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .play-guide-container>a>img,
+        .play-guide-container>a>video {
+            display: block;
+            background-color: rgba(255, 255, 255, 0.67);
+            box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        body:not(.no-animation) .play-guide-container>a>img,
+        body:not(.no-animation) .play-guide-container>a>video {
+            animation: zoomInImage 0.5s ease-out;
+        }
+
+        .dark-mode .play-guide-container>a>img,
+        .dark-mode .play-guide-container>a>video {
+            background-color: rgba(0, 0, 0, 0.67);
+            box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35);
+        }
+
+        .play-caption {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            z-index: 1000;
+            text-align: center;
+            opacity: 0;
+            transform: translateX(-50%) scale(0.95);
+            transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+        }
+
+        .play-caption.visible {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+
+        body:not(.dark-mode) .play-caption {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .dark-mode .play-caption {
+            background-color: rgba(0, 0, 0, 0.85);
+            color: #ccc;
+        }
+
+        body:not(.dark-mode) .caption-title-highlight {
+            color: #000;
+            font-weight: bold;
+        }
+
+        .dark-mode .caption-title-highlight {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .caption-description {
+            display: block;
+            font-size: 0.8em;
+            opacity: 0.7;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        .caption-title-highlight b {
+            font-weight: 900;
+        }
+
+        .play-caption .caption-total {
+            opacity: 0.7;
+            font-weight: normal;
+            color: inherit;
+        }
+
+        .lightbox-action-btn {
+            position: fixed;
+            width: 44px;
+            height: 44px;
+            z-index: 1001;
+            padding: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            transition: background-color 0.2s ease, color 0.2s;
+        }
+
+        .lightbox-action-btn i {
+            margin: 0;
+        }
+
+        #fullscreenBtn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 998;
+        }
+
+        #playCloseBtn {
+            top: 15px;
+            right: 15px;
+        }
+
+        #fullscreenBtnLightbox {
+            top: 15px;
+            right: 69px;
+        }
+
+        #lightbox-minimizeBtn {
+            bottom: 15px;
+            right: 15px;
+        }
+
+        #lightbox-controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.4s ease, padding-bottom 0.3s ease;
+            flex-wrap: wrap;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        #lightbox-controls.minimized-controls {
+            transform: translateY(100%);
+        }
+
+        .lightbox-control-group {
+            display: flex;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        body:not(.dark-mode) .lightbox-control-group,
+        body:not(.dark-mode) #lightbox-controls .dir-db-btn,
+        body:not(.dark-mode) .lightbox-action-btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .dark-mode .lightbox-control-group,
+        .dark-mode #lightbox-controls .dir-db-btn,
+        .dark-mode .lightbox-action-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #lightbox-controls button,
+        #lightbox-controls .dir-db-btn,
+        #lightbox-controls .multi-button-child,
+        .lightbox-action-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 12px;
+            transition: background-color 0.2s ease, color 0.2s;
+            white-space: nowrap;
+        }
+
+        #lightbox-controls .dir-db-btn,
+        #lightbox-controls button {
+            font-size: 1em;
+        }
+
+        #lightbox-videoBtn {
+            flex-grow: 0;
+        }
+
+        #slideshow-controls .multi-button-child {
+            font-size: 1.5em;
+            justify-content: center;
+        }
+
+        #lightbox-controls button:hover,
+        #lightbox-controls .dir-db-btn:hover,
+        #lightbox-controls .multi-button-child:hover,
+        .lightbox-action-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: #e53935;
+        }
+
+        .dark-mode #lightbox-controls button:hover,
+        .dark-mode #lightbox-controls .dir-db-btn:hover,
+        .dark-mode #lightbox-controls .multi-button-child:hover,
+        .dark-mode .lightbox-action-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .lightbox-control-group button:not(:last-child),
+        .lightbox-control-group span:not(:last-child) {
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .lightbox-control-group button:not(:last-child),
+        .dark-mode .lightbox-control-group span:not(:last-child) {
+            border-right-color: rgba(255, 255, 255, 0.2);
+        }
+
+        #lightbox-videoBtn .multi-button-child {
+            max-width: 0;
+            padding: 0;
+            opacity: 0;
+            border-left: none;
+            transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+        }
+
+        #lightbox-videoBtn.expanded .multi-button-child {
+            max-width: 45px;
+            padding: 10px 12px;
+            opacity: 1;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode #lightbox-videoBtn.expanded .multi-button-child {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes zoomInImage {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes zoomOutImage {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            to {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-header,
+        .animated-controls,
+        .animated-footer,
+        .animated-pagination {
+            animation-fill-mode: forwards;
+        }
+
+        .animated-header,
+        .animated-controls {
+            animation-name: fadeInDown;
+            animation-duration: 0.6s;
+            animation-timing-function: ease-out;
+        }
+
+        .animated-footer,
+        .animated-pagination {
+            animation-name: fadeInUp;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-out;
+        }
+
+        .controls.minimized-view .dir-db-btn i,
+        #lightbox-controls .dir-db-btn i {
+            margin-right: 0;
+        }
+
+        .controls.minimized-view .btn-text {
+            max-width: 0;
+            opacity: 0;
+        }
+
+        .controls.minimized-view .multi-button {
+            padding: 10px 12px;
+        }
+
+        .controls.minimized-view .multi-button-main {
+            pointer-events: none;
+        }
+
+        .controls.minimized-view .multi-button .multi-button-main .btn-text {
+            display: none;
+        }
+
+        .controls.minimized-view .multi-button .multi-button-main i {
+            margin-right: 0;
+        }
+
+        .controls.minimized-view .multi-button .multi-button-child {
+            max-width: 0;
+            padding: 0;
+            opacity: 0;
+            border-left: none;
+            transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+        }
+
+        .controls.minimized-view .multi-button:hover .multi-button-child {
+            max-width: 45px;
+            padding: 10px 12px;
+            opacity: 1;
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .controls.minimized-view .multi-button:hover .multi-button-child {
+            border-left-color: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            #lightbox-controls {
+                padding-bottom: 65px;
+            }
+        }
     </style>
     <script>
-        (function() {
+        (function () {
             const langConfig = {
                 defaultLanguage: 'pl',
                 englishUrl: 'index-en.html'
@@ -248,7 +1317,7 @@
             } catch (e) { /* Ignore storage errors */ }
         })();
 
-        (function() {
+        (function () {
             try {
                 const theme = localStorage.getItem('visudir_theme');
                 const defaultTheme = 'light';
@@ -279,7 +1348,8 @@
         <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
-                <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
+                        class="version-display"></span></span>
             </a>
             <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
                 <i class="fas fa-globe"></i>
@@ -329,29 +1399,42 @@
         </select>
 
         <div id="viewBtnGroup" class="dir-db-btn multi-button">
-            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text"> Widok</span></span>
-            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i class="fas fa-image"></i></span>
-            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i class="fas fa-align-justify"></i></span>
-            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i class="fas fa-arrows-alt-v"></i></span>
-            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i class="fas fa-arrows-alt-h"></i></span>
-            <span id="viewBtn-reset" class="multi-button-child" title="Resetuj filtry widoku"><i class="fas fa-undo"></i></span>
+            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
+                    Widok</span></span>
+            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
+                    class="fas fa-image"></i></span>
+            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
+                    class="fas fa-align-justify"></i></span>
+            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
+                    class="fas fa-arrows-alt-v"></i></span>
+            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
+                    class="fas fa-arrows-alt-h"></i></span>
+            <span id="viewBtn-reset" class="multi-button-child" title="Resetuj filtry widoku"><i
+                    class="fas fa-undo"></i></span>
         </div>
 
         <button id="videoBtn" class="dir-db-btn multi-button">
-            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"> Video</span></span>
-            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
-            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
-            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
-            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
-            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
+                    Video</span></span>
+            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                    class="fas fa-chevron-left"></i></span>
+            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                    class="fas fa-play"></i></span>
+            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                    class="fas fa-random"></i></span>
+            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
+                    class="fas fa-chevron-right"></i></span>
+            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                    class="fas fa-undo"></i></span>
         </button>
 
         <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
             <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
         </button>
 
-        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Ciemny</span></button>
-        
+        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
+                Ciemny</span></button>
+
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-chevron-up"></i>
         </button>
@@ -362,7 +1445,8 @@
 
     <div class="footer">
         <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                        class="version-suffix">Dir
                         <span class="version-display"></span></span></a></strong>
             <strong>© 2025-09-12</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
@@ -381,37 +1465,54 @@
 
     <div id="backdrop" class="backdrop">
         <div id="play-caption" class="play-caption"></div>
-        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i
+                class="fas fa-expand"></i></button>
         <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
         <div id="play-guide-container" class="play-guide-container"></div>
-        
+
         <div id="lightbox-controls">
-            <div id="lightbox-videoBtn" class="dir-db-btn multi-button">
-                <span id="lightbox-videoBtn-main" class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
-                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
-                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
-                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
-                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
-                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
+                    class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
+                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                        class="fas fa-chevron-left"></i></span>
+                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i
+                        class="fas fa-chevron-right"></i></span>
+                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                        class="fas fa-undo"></i></span>
             </div>
-    
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i class="fas fa-cog"></i></button>
-    
+
+            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
+                    class="fas fa-cog"></i></button>
+
             <div id="slideshow-controls" class="lightbox-control-group">
-                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i class="fas fa-fast-backward"></i></span>
-                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i class="fas fa-step-backward"></i></span>
-                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i class="fas fa-stop"></i></span>
-                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i class="fas fa-play"></i></span>
-                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i class="fas fa-random"></i></span>
-                <span id="slideshow-next" class="multi-button-child" title="Następny"><i class="fas fa-step-forward"></i></span>
-                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i class="fas fa-fast-forward"></i></span>
+                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
+                        class="fas fa-fast-backward"></i></span>
+                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i
+                        class="fas fa-step-backward"></i></span>
+                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i
+                        class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="slideshow-next" class="multi-button-child" title="Następny"><i
+                        class="fas fa-step-forward"></i></span>
+                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i
+                        class="fas fa-fast-forward"></i></span>
             </div>
-    
-            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i class="fas fa-tags"></i></button>
-            
-            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i class="fas fa-moon"></i></button>
+
+            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
+                    class="fas fa-tags"></i></button>
+
+            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
+                    class="fas fa-moon"></i></button>
         </div>
-        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i class="fas fa-chevron-down"></i></button>
+        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
+                class="fas fa-chevron-down"></i></button>
     </div>
 
     <script>
@@ -657,14 +1758,14 @@
             document.body.classList.toggle('no-animation', !animationsEnabled);
             fxBtn.classList.toggle('active', animationsEnabled);
             lightboxFxBtn.classList.toggle('active', animationsEnabled);
-            
+
             const savedVideoState = getFromLocalStorage('video_bg_state');
             if (savedVideoState) {
                 videoBgState = savedVideoState;
             } else {
                 videoBgState = config.pageSettings.defaultVideoBg ? 'playing' : 'off';
             }
-            
+
             const viewExpanded = JSON.parse(getFromLocalStorage('view_expanded')) || config.pageSettings.defaultViewExpanded;
             viewBtnGroup.classList.toggle('expanded', viewExpanded);
             const videoExpanded = JSON.parse(getFromLocalStorage('video_expanded')) || config.pageSettings.defaultVideoExpanded;
@@ -854,7 +1955,7 @@
             const guideWidth = 250, guideGap = 20;
             itemsPerRow = Math.max(1, Math.floor(guideList.clientWidth / (guideWidth + guideGap)));
             itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
-            
+
             const totalItems = filteredGuides.length;
             const totalRowsAvailable = totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
             const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100, 1000];
@@ -876,7 +1977,7 @@
                     targetRowCount = options.length > 0 ? options[0] : 1;
                 }
             }
-            
+
             itemsPerPageSelector.value = targetRowCount;
             selectedRowCount = parseInt(targetRowCount) || 1;
             itemsPerPage = selectedRowCount * itemsPerRow;
@@ -1070,7 +2171,7 @@
                     });
                 return;
             }
-            
+
             const http = new XMLHttpRequest();
             http.open('HEAD', filePath, true);
             http.timeout = 2000;
@@ -1141,7 +2242,7 @@
             guideList.innerHTML = "";
             applyFilters();
             updatePaginationOptions();
-            
+
             const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
             currentPage = Math.min(currentPage, totalPages || 1);
             const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
@@ -1263,7 +2364,7 @@
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
-            
+
             slideshowSourceGuides = randomGuides;
             document.getElementById("guideCountDisplay").innerHTML = `<b>${randomGuides.length}</b> / ${source.length} wylosowano`;
 
@@ -1379,7 +2480,7 @@
                 case 'off':
                     videoBgState = 'playing';
                     updateBackgroundVideoVisibility(true);
-                    if(bgVideo.paused) bgVideo.play();
+                    if (bgVideo.paused) bgVideo.play();
                     break;
                 case 'playing':
                     videoBgState = 'paused';
@@ -1394,7 +2495,7 @@
             saveToLocalStorage('video_bg_state', videoBgState);
             updateVideoBtnUI();
         }
-        
+
         function updateVideoBtnUI() {
             const buttons = [
                 { play: document.getElementById('videoBtn-play') },
@@ -1425,7 +2526,7 @@
                 shuffleBtn.classList.toggle('active-play', autoShuffleInterval !== null);
             }
             const lightboxShuffleBtn = document.getElementById('lightbox-video-autoshuffle');
-            if(lightboxShuffleBtn) {
+            if (lightboxShuffleBtn) {
                 lightboxShuffleBtn.classList.toggle('active-play', autoShuffleInterval !== null);
             }
         }
@@ -1456,8 +2557,8 @@
             if (currentVideoNum > bgVideoEndNum) currentVideoNum = bgVideoStartNum;
             if (currentVideoNum < bgVideoStartNum) currentVideoNum = bgVideoEndNum;
             localStorage.setItem(storageKey, currentVideoNum);
-            
-            if(videoBgState === 'paused') {
+
+            if (videoBgState === 'paused') {
                 videoBgState = 'playing';
             }
 
@@ -1466,7 +2567,7 @@
         }
 
         function toggleAutoShuffle() {
-            if (videoBgState === 'off') return;
+            if (videoBgState !== 'playing') return; // <-- Zezwalaj tylko przy odtwarzaniu
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
@@ -1492,7 +2593,7 @@
                 autoShuffleInterval = null;
             }
             if (videoBgState !== 'off') {
-                 updateBackgroundVideoVisibility(true);
+                updateBackgroundVideoVisibility(true);
             }
             updateVideoBtnUI();
         }
@@ -1547,7 +2648,7 @@
         function startPlayAnimation() {
             const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
-            
+
             playGuidesQueue = [...source];
             lastPlayedGuide = null;
             playCurrentIndex = 0;
@@ -1608,7 +2709,7 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (isNav) {}
+                } else if (isNav) { }
                 else {
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
@@ -1638,6 +2739,7 @@
         }
 
         function displayRandomGuide(guide) {
+            playCaption.classList.remove('visible');
             const container = playGuideContainer;
             const existingContent = container.firstChild;
             const showNewGuide = () => {
