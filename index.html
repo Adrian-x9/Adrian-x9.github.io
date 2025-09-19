@@ -33,7 +33,7 @@
         body.no-animation .multi-button, body.no-animation .multi-button-child, body.no-animation .dir-db-btn, body.no-animation .btn-text { transition: none !important; }
         body.play-mode-active > .top-header, body.play-mode-active > .controls,
         body.play-mode-active > .guide-list, body.play-mode-active > .pagination,
-        body.play-mode-active > .footer { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
+        body.play-mode-active > .footer, body.play-mode-active > #fullscreenBtn { opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.4s ease, visibility 0s 0.4s; }
         #fileInput { display: none; }
         a { font-weight: bold; text-decoration: none; }
         a:hover { text-decoration: none; }
@@ -76,8 +76,8 @@
         .top-header .counter { font-size: 0.9em; }
         .top-header .counter b { font-weight: bold; }
         .top-header .title, .top-header .counter { padding: 5px 10px; border-radius: 8px; }
-        body:not(.dark-mode) .top-header .title, body:not(.dark-mode) .top-header .counter { background-color: rgba(180, 180, 180, 0.5); }
-        .dark-mode .top-header .title, .dark-mode .top-header .counter { background-color: rgba(40, 40, 40, 0.6); }
+        body:not(.dark-mode) .top-header .title, body:not(.dark-mode) .top-header .counter { background-color: rgba(240, 240, 240, 0.4); }
+        .dark-mode .top-header .title, .dark-mode .top-header .counter { background-color: rgba(20, 20, 20, 0.5); }
         .controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-bottom: 20px; opacity: 0; transform: translateY(-20px); }
         input, select, button, .dir-db-btn { padding: 10px; border-radius: 10px; border: 1px solid; white-space: nowrap; height: 42px; box-sizing: border-box; }
         button, .dir-db-btn { display: inline-flex; justify-content: center; align-items: center; }
@@ -88,7 +88,7 @@
         .dir-db-btn:hover { transform: translateY(-5px); }
         .dir-db-btn i { margin-right: 5px; }
         #minimizeBtn i, #langBtn i, #fullscreenBtn i { margin-right: 0; }
-        #langBtn, #fullscreenBtn { padding: 10px 12px; }
+        #langBtn { padding: 10px 12px; }
         .multi-button { padding: 0; overflow: hidden; }
         .multi-button>span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
         .btn-text { transition: max-width 0.4s ease, opacity 0.3s ease; max-width: 100px; overflow: hidden; white-space: nowrap; display: inline-block; }
@@ -126,6 +126,7 @@
 
         .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; transition: min-height 0.4s ease-out; }
         .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
+        .guide-list + .footer { margin-top: 35px; }
         .guide-cover { max-width: 100%; height: auto; max-height: 300px; margin: 10px auto 0; display: block; border-radius: 10px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
         .guide .guide-cover { opacity: 1; transform: scale(1); }
         .guide.animate-in .guide-cover { transition: none; opacity: 0; transform: scale(0.7); animation: fadeInCover 0.5s 0.1s ease-out forwards; }
@@ -190,6 +191,7 @@
 
         .lightbox-action-btn { position: fixed; width: 44px; height: 44px; z-index: 1001; padding: 10px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5em; transition: background-color 0.2s ease, color 0.2s; }
         .lightbox-action-btn i { margin: 0; }
+        #fullscreenBtn { position: fixed; top: 15px; right: 15px; z-index: 998; }
         #playCloseBtn { top: 15px; right: 15px; }
         #fullscreenBtnLightbox { top: 15px; right: 69px; }
         #lightbox-minimizeBtn { bottom: 15px; right: 15px; }
@@ -200,6 +202,7 @@
         .dark-mode .lightbox-control-group, .dark-mode #lightbox-controls .dir-db-btn, .dark-mode .lightbox-action-btn { background-color: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
         #lightbox-controls button, #lightbox-controls .dir-db-btn, #lightbox-controls .multi-button-child, .lightbox-action-btn { background: none; border: none; cursor: pointer; padding: 10px 12px; transition: background-color 0.2s ease, color 0.2s; white-space: nowrap; }
         #lightbox-controls .dir-db-btn, #lightbox-controls button { font-size: 1em; }
+        #lightbox-videoBtn { flex-grow: 0; }
         #slideshow-controls .multi-button-child { font-size: 1.5em; width: 44px; justify-content: center; }
         #lightbox-controls button:hover, #lightbox-controls .dir-db-btn:hover, #lightbox-controls .multi-button-child:hover, .lightbox-action-btn:hover { background-color: rgba(0,0,0,0.1); color: #e53935; }
         .dark-mode #lightbox-controls button:hover, .dark-mode #lightbox-controls .dir-db-btn:hover, .dark-mode #lightbox-controls .multi-button-child:hover, .dark-mode .lightbox-action-btn:hover { background-color: rgba(255,255,255,0.15); }
@@ -349,10 +352,6 @@
 
         <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Ciemny</span></button>
         
-        <button id="fullscreenBtn" class="dir-db-btn" title="Pełny ekran">
-            <i class="fas fa-expand"></i>
-        </button>
-
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-chevron-up"></i>
         </button>
@@ -377,6 +376,8 @@
             <strong>Czysty i bezpieczny kod!</strong>
         </div>
     </div>
+
+    <button id="fullscreenBtn" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
 
     <div id="backdrop" class="backdrop">
         <div id="play-caption" class="play-caption"></div>
@@ -416,7 +417,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.3.7', // Version updated for new changes
+            version: 'v1.3.8', // Version updated for new changes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -516,6 +517,7 @@
         let areLabelsVisible;
         let guides = [],
             filteredGuides = [],
+            slideshowSourceGuides = [],
             playGuidesQueue = [];
         let currentPage = 1,
             itemsPerPage;
@@ -909,6 +911,7 @@
                 const orientationMatch = !orientationFilterState || g.orientation === orientationFilterState;
                 return searchMatch && formatMatch && orientationMatch;
             });
+            slideshowSourceGuides = filteredGuides;
         }
 
         async function init(data) {
@@ -1260,6 +1263,10 @@
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
+            
+            slideshowSourceGuides = randomGuides;
+            document.getElementById("guideCountDisplay").innerHTML = `<b>${randomGuides.length}</b> / ${source.length} wylosowano`;
+
             const animationsOn = !document.body.classList.contains('no-animation');
             randomGuides.forEach((guide, index) => {
                 const div = document.createElement("div");
@@ -1538,8 +1545,9 @@
         }
 
         function startPlayAnimation() {
-            const source = filteredGuides.length > 0 ? filteredGuides : guides;
+            const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
+            
             playGuidesQueue = [...source];
             lastPlayedGuide = null;
             playCurrentIndex = 0;
