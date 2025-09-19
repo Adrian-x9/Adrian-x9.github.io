@@ -1,1 +1,0 @@
-dir files /-C > ./db.txt

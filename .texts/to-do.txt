@@ -1,0 +1,140 @@
+Standardowe menu u góry:
+1. Przycisk Tryb ciemny - się wyświetla w trybie jasnym, a jasny w ciemnym, w jasnym ikona dla trybu jasnego. Przesuwamy przycisk na przedostatnią pozycję, przed minimalizuj, który minimalizuje do góry, dlatego strzałka w górę, jak jest.
+2. Przycisk Tekst / Obrazy / Wszystko - to filtr, więc wyświetla to, co poniżej. Zrób ten przycisk jak w 1.2.0, tj składający się z czterech segmentów, niech działa jak w 1.2.0 i dostosuj ikony do każdego trybu.
+3. Przycisk Video / Statycznie / Animacje - dostosuj ikony dla każdego trybu, tryb video ma ikonę ok, i zmodyfikuj tryb video:
+Gdy odtwarzane jest video, zamiast strzałki w prawo, daj pause, co umożliwi stopowanie video - stop klatkę. Video wyłączane jest przy zmianie trybu - po kliknięciu w Video, jak teraz. Video odtwarzane jest w pętli, chyba, że wciśnięty jest przycisk shuffle / który będzie miał dwa stany - on / off, gdy jest wciśnięty, video zmienia się na losowe jak w trybie slideshow, gdy nie jest wciśnięty, video jest stałe, przycisk reset, resetuje jak teraz.
+4. Gdy klikniemy Strzałkę w górę, minimalizującą interfejs w górę, wtedy ukrywamy opisy na przyciskach gdzie są ikony, zostawiamy ikony, które zmieniają się w zależności od trybu.
+5. Rozwinięcie menu przywraca opisy, teraz jest odwrotnie.
+
+Tryb slideshow:
+Menu na dole:
+6. Przycisk video / statycznie /… niech wyświetla ikony jak w zwykłym trybie. Przycisk stop, zmieniamy na pauzę, pauzuje video, robi stop klatkę, obok play / pause, zamiast teraz play, dajemy shuffle jak w zwykłym trybie, którego aktywacja oznacza, że video zmienia się co kilka sekund, jak teraz, przycisk jak w zwykłym trybie, on / off
+7. Panel do zarządzania pokazem slidów:
+Przycisk stpp powinien być na lewo od play
+A na prawo shuffle, jak w video, gdy wyłączony, slideshow po kolei, gdy włączony, losowo.
+
+Ostatnia rzecz, ekran główny, kafelki.
+Niech ich animacja pojawiania się przy ładowaniu, strony, odświeżaniu, filtrowaniu, czyli zawsze, gdy włączone są animacje, to niech się rysują od pierwszej do ostatniej kafelki, dokładnie tak jak w wersji 1.2.0.
+
+Pracujemy na wersji 1.2.5, zmieniamy tylko to, co powyżej. Plik 1.2.0 do wglądu
+
+---
+
+Tylko poprawki w 1.2.5:
+1. Obok przycisku VisuDir u góry maleńki przycisk w tym samym stylu z ikoną globusa kierujący do index-en.html w tej samej zakładce - zmiana języka na English International.
+2. Przycisk Obrazy / Wszystko / Tekst, w trybie obrazy i wszystko ma wyświetlać dodatkowe ikony do filtrowania pionowych i poziomych grafik - podglądów, podejrzyj, było v1.2.0.
+3. Przycisk Video ok, ale wyróżnij shuffle, gdy wciśnięty.
+4. W trybie slideshow, przyciski shuffle są wyróżnione poprawnie, ale ikony na nich znikają. Zmień ich kolor.
+5. W trybie slideshow w obu trybach była wyświetlana pełnoekranowa maska, jest tak w 1.2.0, zrób tak samo.
+6. W trybie zykłym nie działa przycisk Tryb ciemny /jasny.
+
+---
+
+1. W trybie slideshow, po minimalizacji menu, nie działa przycisk przywróć
+2. W trybie slideshow, panel video, zwija się i rozwija w różnych trybach, dodaj animację.
+3. W trybie slideshow, aktywny przycisk shuffle w video, zrób jak w panelu obok, czerwony.
+Naważniejsze, przeczytaj dokładnie. W wersji 1.2.0, którą załączam, przycisk Tekst/Obrazy/… dodatkowo filtrował siatkę grafik - pozwalając wybierać grafiki pionowe, lub pozostałe. Ten przycisk robił się szerszy i miał dodatkowe ikony. Zrób to w naszej wersji, załączam plik.
+
+---
+Pracujemy na v1.2.8 i tylko poprawki:
+1. Dodałem stałą do konfiguracji: showLanguageButton - przycisk u góry po prawej.
+2. Przycisk Statycznie / Animacje / Video, zwiększ kontrast wyróżnionego przycisku play (wtedy wyświetla pauzę i zmienia kolor tylko delikatnie)
+3. Przycisk Play w Panelu Video, gdy go pierwszy raz kliknę, nic się nie dzieje, dopiero od drugiego kliknięcia zmienia się ikona. System zapewne zakłada, że jest pauza i zmienia się na play, ale po uruchomieniu jest play dlatego nic się nie dzieje. Pewnie wystarczy zmienić flagę.
+4. Dynamiczna wyszukiwarka działa świetnie, ale niech wyszukuje również w opisach, nie tylko w tytułach. Niech będzie inteligentna.
+5. Sprawdź, czy mamy obsługę plików video, mp4, avi, jeśli nie, dodaj, logika, jak dla obrazów jpg, png.
+6. Szerokie przyciski w menu: tekst/obrazy... i stat, Animacje, Video, … animuj zmianę ich rozmiaru - jak w trybie slideshow.
+7. Przycisk shuffle na panelu video wznawia odtwarzanie, gdy jest wstrzymane, ale nie aktualizuje przycisku play, ikona głupieje, to samo, co przy ładowaniu strony.
+8. Dodaj efektowny i elegancki efekt preloadingu strony, uniwersalny dla ciemnego i jasnego motywu, bo te kafelki potrafią się chwilę ładować... Albo zrób dwa preloadingi - jasny i ciemny, w zależności od ustawień strony głównej.
+9. Przycisk Obrazy / Wszystko - zrób dodatkowo trzy przyciski - które załączą filtr wyświetlanych niżej pozycji. Pierwszy przycisk - okładki pionowe, drugi nie-pionowe, trzeci, wszystkie. Masz to zrobione w pliku index_v1.2.0 - obejrzyj jak to działało, może być tak samo.
+10. Przed otwieraniem linków z kafelków, skrypt ma sprawdzać czy jest plik na dysku, jeśli nie, otwiera fallback .base-system/soon.html w tej samej zakładce, to kiedyś było, np. w 1.2.0. Dodaj to do konfiguracji systemu, żeby można było ustawić ścieżkę.
+
+---
+
+1. Tryb i ciemny, menu u góry, długie przyciski Obrazy i Video - gdy aktywne, zrób tło bez zmian, a kolor ikon i napisu niech się zmieni na czarny w obu trybach.
+2. Przy zmianie trybu przyciskiem Wszystko / Text. Nie ma animacji zanikania obrazka, powinien zmniejszać w pionie do góry kontenera, a w poziomie w środku. Dodaj tę animację na początku, a potem jak jest, rysujemy nowe kafle...
+3. Do przycisku Video menu trybu zwykłego dodaj przyciski - kolejne / poprzednie video tła, dokładnie tak, jak w slideshow, A w slideshow daj przycisk do resetu video tła do domyślnego, dokładnie jak w trybie zwykłym, czyli niech te panele wyglądają podobnie.
+4. W trybie slideshow, przycisk lewy pauzy, gdy pauza aktywna ma być czerwony, tak samo ja ten przycisk pauzy po prawej.
+5. W nagłówku slideshow, gdzie jest etykieta tekstowa, mamy np. 6 / 24. 6 zostaw jak jest, czerwone, a ilość pozycji 24 -> na czarno, jak niżej.
+6. Gdy użyję filtra w wyszukiwarce, pokaz slideshow to uwzględnia, gdy użyję losuj... i tak wyświetla wszystkie kafelki, a powinny być te wylosowane.
+7. Na węższych ekranach główne menu u góry niech się łamie na dwa wiersze w ten sposób, że w pierwszej kolumnie przyciski od Play do losuj... a w drugiej od obrazy do końca...
+8. W trybie ciemnym slideshow nie jest ukrywana zawartość strony. W obu trybach nie jest ukrywany pasek przewijania. Ukryte elementy są pasek przewijania pozostał. Dodatkowo w obu trybach ma być ta maska, tylko ma być przezroczysta w 50%, bo te video tła są bardzo ładne, i mają być ostre.
+9. Te szerokie rozwijanie przyciski w głównym menu, są animowane, ale zmień tę animację - niech się zmienia dokładnie tak, jak zwija się w trybie slideshow
+Nic innego nie zmieniaj
+
+Ikona animacji w stylu "/" jest ok, ale mało intuicyjna. Daj może jakąś propozycję intuicyjnej ikony, jeśli istnieje
+
+---
+
+
+1. Gdy system nie może załadować pełnoekranowego video tła, bo brak pliku - system czeka w nieskończoność i zawiesza się.
+2. Odświeżanie strony, zmiana strony, zmiana filtra, ilości wierszy, itp., nie musi ukrywać i odsłaniać video, albo go resetować, ono miga, niepotrzebnie, bo ono i tak się nie zmienia. Video ma resetować tylko przycisk na panelu video i tak jest.
+3. W menu głównym szerokie przyciski Wszystko i Video, gdy mają czerwone tło, niech czcionka jest jasno szara / biała. Natomiast kolor aktywnej ikony - czarny - aktywne mogą być tylko play/pause i shuffle.
+4. W trybie zminimalizowanym wyświetlamy tylko ikony, np. przycisk Video z ikonką zmieni się w ikonkę video, a przyciski po prawej zostaną ukryte. I po najechaniu myszą będzie się rozwijał tak, jak menu obrazy. Tak samo niech działa menu wszystkie, Czyli w zwykłym ikonka i napis, w zminimalizowanym tylko ikonka, a po najechaniu myszą się rozsuwa. Na komórce w trybie pełnym może być wszystko jak teraz, ale w trybie zminimalizowanym też tylko ikonki. Dodatkowo dodaj animacje zmniejszania i zwiększania tych szerokich przyciskow przy minimalizacji i zmianie trybu. 
+5. Przycisk w menu głównym następne video tła niech jest przedostatnim, tak jak w trybie slideshow.
+6. W trybie slideshow przy zmianie trybu jasny / ciemny, nagle pojawiają się wszystkie elementy po6 spodem, a powinny pozostać ukryte.
+7. Gdy brak pliku otwieranego z kafelków .link, system ma załadować plik z konfiguracji - domyślnie - /.base-system/soon.html
+8. Dodaj do konfiguracji stałą język, ustaw domyślnie na pl i umieść w pamięci przeglądarki. Domyślnie plik jest po polsku, a gdy konfiguracja jest ustawiona (z pamięci przeglądarki) na en, wówczas, przy otwarciu pliku przekieruj do pliku index-en.html - jest w konfiguracji, a jak na pl, nic nie rób.
+9. Dodaj delikatne cienie pod napisami u góry, tj. 24 / 24 pozycji i START . maxi MENU ..
+10. W tybie mobilnym, podnieś menu nawigacyjne do góry w trybie slideshow o wysokość przycisku minimalizuj, bo te przyciski się nakładają
+
+---
+
+1. Gdy minimalizuję menu, te szerokie przyciski się ładnie zmniejszają w poziomie, co ma znikać znika, ale one jednocześnie rosną w pionie, a nie powinny rosnąć. W trybie zminimalizowanym ładnie się rozsuwają na hover i potem zsuwają dodaj do tego animację, by to rozsuwanie, zsuwanie było płynne, ale animacje wyświetlaj tylko, gdy ustawiona jest zmienna - flaga
+2. Gdy przycisk Wszystko zmienia się w Tekst - dodaj płynną animację zmniejszania przycisku w poziomie, wg flagi animacji, a gdy przycisk tekst w obrazy, dodaj płynną animację poszerzania, tak samo, gdy flaga animacji aktywna.
+3. Gdy wciskam przycisk tylko orientacja pionowa, lub pozostałe i nie ma takich okładek, nic się nie wyświetla - to jest ok, ale znika przycisk reset obok i nie mogę włączyć z powrotem okładek.
+4. Na panelu Video przycisk < ma być przed przyciskiem play/pause, innych nie ruszaj: Przycisk Video: Previous, Play/Pause, Shuffle, Next, Rest.
+5. W trybie slideshow, etykieta u góry niech się płynnie zsuwa do góry, lub zsuwa z góry, gdy minimalizacja interfejsu, tak jak dzieje się z menu na dole. W liczniku Np. 5 / x to / x miało być w tym samym kolorze, co opis poniżej.
+6. Napisy w nagłówku strony w trybie ciemny mają ciemne tło - to jest dobrze, w trybie jasnym ustaw cienie napisów analogicznie na kolor jasny
+
+---
+
+Ostatnie poprawki, zwróć szczególną uwagę, bo za każdym razem, przy poprawkach, znikają Ci kolejne linijki kodu. Zwróć teraz szczególną uwagę na pliki które Ci wysyłam, weź ostatni v1.3.1 i wprowadź tylko te zmiany, o których piszę niżej, dbając, by nie zgubiły się jakieś części pliku. W razie, gdybyś miał wątpliwości, wysyłam plik sprzed zmian - index-v1.2.9.html
+1. Tryb zwykły, pasek menu u góry:
+a) W trybie ciemnym przyciski mają jasno szare ramki, W trybie jasnym zrób wszystkim przyciskom i listom wyboru ramki, jak VisuDir v1.3.1 albo jak ikona zmiany języka, tak samo w panelu paginacji na dole strony.
+b) Kliknięcie na przycisk Tryb jasny / ciemny nie zmienia napisu ani ikony. Dopiero odświeżenie strony aktualizuje te przyciski. Tak dzieje się w trybie zwykłym i w trybie slideshow.
+c) Przy minimalizacji interfejsu, szerokie przyciski się zwijają - ładna animacja, zrób analogicznie przy maksymalizacji/przywracaniu interfejsu, ale odwrotnie, żeby się animowało ich poziome rozwijanie, wtedy gdy są wyświetlane szerokie przyciski i kiedy system wyświetla animacje - dotyczy przycisków Obrazy, Wszystko, Video.
+d) Przycisk shuffle - gdy jest włączony, przycisk następne / poprzednie video, losują następne / poprzednie video, zgodnie ze stanem przycisku, w innym wypadku, zgodnie z listą. Tak samo oba przyciski shuffle w trybie slide-show.
+
+2. Tryb slideshow.
+a) Napis u góry - licznik u góry w postaci "13 / x - / x" - zrób w tym kolorze, co linijka niżej z opisem pozycji i potłuść / wyróżnij tę liczbę.
+b) W panelu video na dole - dołóż ikonę reset video na końcu, dokładnie tak, jak w zwykłym trybie, w tym samym panelu, gdy play jest włączone, czyli wyświetlana ikona pauzy, ikona ma być czerwona, jak ikona shuffle, która jest czerwona, gdy aktywna.
+c) Dodaj animację wyłączania slideshow, jeśli animacje są włączone.
+d) Dodaj animację włączania slideshow, jeśli jej nie ma.
+e) Dodaj w trybie slideshow preloading obrazów, bo teraz się rysują.
+
+3. Błąd krytyczny.
+Strona ma działać online i offline
+a) W trybie offline, nie działają linki w plikach .LINK, nie wiem czy otwiera inne, ale tego nie otwiera. Przykład linku lokalnego: Polska/index.html. Plik jest na miejscu, ale mechanizm sprawdzania działa wadliwie.
+
+---
+
+Najpierw usuniemy błędy w kodzie.
+
+1. Tu się przyłóż, bo naprawiamy to już od dawna, utworzyłem nową sesję z Tobą, byś Ty miał czysty umysł / pamięć, może tym razem się uda, ale obejrzyj najpierw dokładnie kod. W skrócie, jest sporo animacji, nie są wyświetlane, gdy tryb statyczny, w pozostałych dwóch są wyświetlane i dotyczy to wszystkich animacji. W tej chwili mimo trybu statycznego, nadal animowane jest rozszerzanie i zwężanie menu video w trybie slideshow oraz minimalizowanie / pokazywanie całego menu w trybie slideshow. Animacje okładek przy ładowaniu strony, lub przy generacji od nowa, np. gdy zmieniam ilość wierszy, albo gdy losuję, działają bardzo dobrze, zobacz dokładnie jak. 
+
+Na przycisku Tekst -> Obrazy i tylko przy tym przejściu animacja rwie, jakby się zaczynała, przerywała, i zaczynała od nowa. Obejrzył dokładnie te i inne animacje i w odpowiednich funkcjach możesz np. dodać flagę, która uniemożliwi dwukrotne uruchomienie tej samej animacji, jeśli trwa, albo uruchomienie dwóch animacji na raz, które powoduję konflikt. Często w tych miejscach, gdzie animacja wydaje się działać dobrze, w pewnym momencie zaczyna się to co działało w trakcie początkowej fazy animacji resetować i zaczynać od nowa, wtedy już jest ok. Ale flaga powinna to załatwić. Gdy minimalizujemy interfejs, przycisk Obrazy i Video w menu głównym są płynnie zwężane, jednak, gdy przywrócę menu do normalnego stanu, nie są płynnie rozszerzane.
+
+2. Wyszukiwarka działa. Jednak nie działa część listy rozwijanej w dół obok. Wybór typu pliku działa, ale potem mogę wybrać predefiniowane ustawienie wyszukiwania, ono wstawia się do pola wyszukiwania, ale nie znajduje nic. Jak wrócę do Wszystko, pojawiają się wyniki wyszukiwania, więc zrób, żeby wracało do Wszystko.
+
+3. Wystylizuj wszystkie przyciski dla trybu jasnego, jak w załączniku v1.2.9. W trybie jasnym wszystkie przyciski z delikatną czerwoną ramką, a wszystkie obiekty w menu niech mają delikatny czerwony cień w tle, tak jak przyciski. W trybie ciemnym też dodaj czerwone cienie do obiektów menu, które nie mają, tu ramki są ok. W trybie jasnym ramki czerwone nie tylko wokół przycisków, ale wszystkich elementów menu, w tym przyciski w menu dolnym przestyluj tak samo.
+
+4. Slideshow wyświetla tylko elementy przefiltrowane na ekranie, jednak gdy wylosuję jakieś elementy, to i tak wyświetla slideshow dla wszystkich.
+
+5. W trybie slideshow licznik u góry dwukolorowy, np. 19 / 24 -> 24 zrób pogrubione i kolorze szarym, tak samo, jak tekst linijka niżej.
+
+6. W trybie ciemnym, rozwijający się przycisk video w trybie zwykłym, gdy interfejs jest zminimalizowany ma inny kolor tła niż np. przycisk video. Oba przyciski - video i zmieniają kolor tła tego subprzycisku, który jest aktywny, ale gdy część przycisku jest aktywna, zmienia się kolor ikony, tło ma pozostać bez zmian.
+
+7. Wszzystkie przyciski we wszystkich trybach zaokrąglij trochę bardziej - załącznik.
+
+8. Często nie ładuje plików tła video, jest jakiś błąd w js, wysyłam zawartość terminala.
+
+
+
+
+
+
+
+
+
+
+

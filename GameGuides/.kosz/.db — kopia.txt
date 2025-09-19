@@ -1,0 +1,9 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 64E4-665E
+
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poradniki\.base-system\files
+
+08.09.2025  22:50    <DIR>          .
+08.09.2025  22:54    <DIR>          ..
+               0 File(s)              0 bytes
+               2 Dir(s)     95328501760 bytes free

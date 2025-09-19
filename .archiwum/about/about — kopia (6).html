@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>O systemie VisuDir</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="favicons/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        /* Styl dla wideo w tle */
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Zapewnia pokrycie całego ekranu bez zniekształceń */
+            z-index: -1; /* Umieszcza wideo pod całą zawartością */
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            /* Usunięto kolor tła, aby wideo było widoczne */
+            color: #333;
+            padding: 20px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .top-header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px; /* Zmniejszony odstęp, aby pasował do reszty */
+            flex-wrap: wrap;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        .top-header .title {
+            font-size: 1.6em;
+            font-weight: bold;
+        }
+
+        .dir-db-btn {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dir-db-btn:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-box {
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            opacity: 0;
+        }
+
+        .content-box h2 {
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .content-box .subheader-features {
+            font-size: 1.4em;
+            margin-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content-box p,
+        .content-box li {
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .content-box ul {
+            padding-left: 20px;
+            list-style: none;
+            margin: 0;
+        }
+
+        .content-box li::before {
+            content: "\f058";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        .features-content {
+            display: flex;
+            align-items: flex-end;
+            gap: 30px;
+        }
+
+        .features-content ul {
+            flex-grow: 1;
+        }
+
+        #about-image-container {
+            width: 250px;
+            height: 170px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+        
+        #theme-video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: block;
+            opacity: 0;
+        }
+
+        .contact-details .contact-line {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .contact-details .contact-line i {
+            width: 25px;
+            text-align: center;
+            margin-right: 10px;
+        }
+
+        .contact-details .ade-brand {
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            /* Usunięty górny margines */
+            padding: 20px;
+            font-size: 0.9em;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+
+        .dark-mode .privacy-notice {
+            color: #777;
+        }
+
+        .footer .footer-special-text {
+            font-weight: normal;
+        }
+
+        a {
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .top-header a.dir-db-btn:hover {
+            text-decoration: none;
+        }
+
+        body:not(.dark-mode) {
+            background-color: #f4f4f4; /* Kolor tła jako fallback */
+            color: #333;
+        }
+
+        body:not(.dark-mode) .dir-db-btn,
+        body:not(.dark-mode) .content-box h2,
+        body:not(.dark-mode) a,
+        body:not(.dark-mode) .content-box li::before,
+        body:not(.dark-mode) .ade-brand {
+            color: #cc0000;
+        }
+
+        body:not(.dark-mode) .dir-db-btn {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        body:not(.dark-mode) .dir-db-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+        }
+
+        body:not(.dark-mode) .content-box {
+            background: #fdfdfd;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+        
+        body:not(.dark-mode) #theme-video {
+             /* Zwiększona poświata dla lepszej widoczności */
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+
+        body:not(.dark-mode) #about-image-container {
+            background-image: url('gfx/interface/about-light.svg');
+            border: 2px solid #cc0000;
+            box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+        }
+
+        body:not(.dark-mode) .footer {
+            color: #666;
+        }
+
+        body:not(.dark-mode) .footer .footer-special-text {
+            color: #555;
+        }
+
+        .dark-mode {
+            background-color: #181818; /* Kolor tła jako fallback */
+            color: #eee;
+        }
+
+        .dark-mode .dir-db-btn,
+        .dark-mode .content-box h2,
+        .dark-mode a,
+        .dark-mode .content-box li::before,
+        .dark-mode .ade-brand {
+            color: #e53935;
+        }
+
+        .dark-mode .dir-db-btn {
+            background: #000000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            border: none;
+        }
+
+        .dark-mode .dir-db-btn:hover {
+            background: #111111;
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+        }
+
+        .dark-mode .content-box {
+            background: #000000;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        
+        .dark-mode #theme-video {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .dark-mode #about-image-container {
+            background-image: url('gfx/interface/about-dark.svg');
+            border: 2px solid #e53935;
+            box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
+        }
+
+        .dark-mode .footer {
+            color: #bbb;
+        }
+
+        .dark-mode .footer .footer-special-text {
+            color: #eee;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animated-left {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animated-right {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .animated-header {
+            animation: fadeInDown 0.6s ease-out forwards;
+        }
+        
+        .animated-video {
+            animation: fadeInDown 0.6s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        .animated-footer {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body class="dark-mode">
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source id="bg-video-source" src="" type="video/mp4">
+    </video>
+
+    <div class="top-header">
+        <a class="dir-db-btn" href="javascript:history.back()">
+            <i class="fas fa-arrow-left"></i> Wróć do Biblioteki</a>
+        <div class="title"><i class="fas fa-info-circle"></i> System VisuDir v1.0.0</div>
+    </div>
+
+    <div class="container">
+        
+        <video id="theme-video" autoplay loop muted playsinline>
+            <source id="theme-video-source" src="" type="video/mp4">
+            Twoja przeglądarka nie obsługuje tagu wideo.
+        </video>
+
+        <div class="content-box">
+            <h2>Czym jest dir-db?</h2>
+            <p><strong>dir-db</strong> to nowoczesny, lekki i szybki system do katalogowania plików. Został stworzony z
+                myślą o prostocie obsługi i estetycznej prezentacji kolekcji cyfrowych, takich jak e-booki, poradniki,
+                filmy, muzyka czy dokumenty.</p>
+            <div class="features-wrapper">
+                <h2 class="subheader-features">Główne cechy systemu:</h2>
+                <div class="features-content">
+                    <ul>
+                        <li>Automatyczna generacja okładek i plikowej bazy z dowolnego folderu</li>
+                        <li>Działanie offline z folderu i bez serwera www oraz online z serwerem</li>
+                        <li>Pełna responsywność - od smarfonów po największe ekrany PC</li>
+                        <li>Turbo przeglądanie i wyszukiwanie z dużą ilością filtrów i opcji</li>
+                        <li>Unikalny tryb losowania i wyświetlania wymieszanych pozycji</li>
+                        <li>Atrakcyjna prezentacja kolekcji lub jej części (klawisz Play)</li>
+                        <li>Bez jakiejkolwiek instalacji i bez bazy danych</li>
+                        <li>Komfortowy i estetyczny tryb jasny i ciemny</li>
+                    </ul>
+                    <div id="about-image-container"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-box">
+            <h2>Historia wersji</h2>
+            <p><strong>v1.0.0 (2025-09-07)</strong> Pierwsza pełna wersja systemu.</p>
+        </div>
+        <div class="content-box">
+            <h2>Kontakt</h2>
+            <div class="contact-details">
+                <div class="contact-line">
+                    <i class="fas fa-user"></i>
+                    <span><span class="ade-brand">ADE</span> Adrian Ulbrych, <a href="https://start.ade.pl"
+                            target="_blank" rel="noopener noreferrer">start.ade.pl</a>, <a href="https://ade.pl"
+                            target="_blank" rel="noopener noreferrer">ade.pl</a>, <a href="https://ade24.pl"
+                            target="_blank" rel="noopener noreferrer">ade24.pl</a></span>
+                </div>
+                <div class="contact-line"><i class="fas fa-globe"></i><a href="https://www.ade24.pl/contact/"
+                        target="_blank" rel="noopener noreferrer">Formularz kontaktowy</a></div>
+                <div class="contact-line"><i class="fas fa-phone"></i><a href="tel:601190330">601 190 330</a></div>
+                <div class="contact-line"><i class="fas fa-map-marker-alt"></i><span><a
+                            href="https://www.google.com/maps/place/Gliwice" target="_blank"
+                            rel="noopener noreferrer">Gliwice</a>, woj. śląskie, Polska</span></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div>System <a href="about.html">dir-db</a> do katalogowania, zarządzania i prezentacji plików i folderów |
+            <strong>© 2025-09-07</strong> by <a href="https://www.ade.pl" target="_blank"
+                rel="noopener noreferrer">Adrian Ulbrych</a> | <strong>tel.</strong> <a
+                href="tel:601190330">601 190 330</a></div>
+        <div class="privacy-notice"><strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani śledzenia.
+            <strong>Czysty i bezpieczny kod!</strong></div>
+    </div>
+
+    <script>
+        if (localStorage.getItem('darkMode') === 'disabled') {
+            document.body.classList.remove('dark-mode');
+        } else {
+            document.body.classList.add('dark-mode');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const video = document.getElementById('theme-video');
+            const videoSource = document.getElementById('theme-video-source');
+            const bgVideo = document.getElementById('bg-video'); // Nowy element
+            const bgVideoSource = document.getElementById('bg-video-source'); // Nowy element
+            const isDarkMode = document.body.classList.contains('dark-mode');
+
+            if (isDarkMode) {
+                videoSource.src = 'about-dark.mp4';
+                bgVideoSource.src = 'bg-dark.mp4'; // Ustawienie wideo tła
+            } else {
+                videoSource.src = 'about-light.mp4';
+                bgVideoSource.src = 'bg-light.mp4'; // Ustawienie wideo tła
+            }
+            video.load();
+            bgVideo.load(); // Załadowanie wideo tła
+
+            // Animacje
+            const header = document.querySelector('.top-header');
+            const contentBoxes = document.querySelectorAll('.content-box');
+            const footer = document.querySelector('.footer');
+            
+            header.style.animationDelay = '0.2s';
+            header.classList.add('animated-header');
+
+            video.classList.add('animated-video');
+
+            contentBoxes.forEach((box, index) => {
+                box.style.animationDelay = `${0.6 + (index + 1) * 0.2}s`;
+                if (index % 2 === 0) { box.classList.add('animated-left'); } else { box.classList.add('animated-right'); }
+            });
+
+            footer.style.animationDelay = `${0.6 + contentBoxes.length * 0.2 + 0.2}s`;
+            footer.classList.add('animated-footer');
+        });
+    </script>
+</body>
+
+</html>
