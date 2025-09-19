@@ -1580,33 +1580,30 @@
         })();
 
         /**
- * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
- * Zwraca Promise, który rozwiązuje się po zakończeniu animacji.
- */
+         * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
+         * Zwraca Promise, który rozwiązuje się po zakończeniu animacji.
+         */
         function intro() {
             return new Promise(resolve => {
-                // Ukryj wszystkie główne elementy interfejsu
-                const elementsToHide = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
-                elementsToHide.forEach(selector => {
-                    const el = document.querySelector(selector);
-                    if (el) el.style.opacity = '0';
-                });
+                // ZMIANA: Usunęliśmy stąd logikę ukrywania elementów.
+                // Teraz ta funkcja odpowiada tylko za animację.
 
                 // Stwórz i aktywuj nakładkę CRT
                 const overlay = document.createElement('div');
                 overlay.id = 'crt-overlay';
                 document.body.appendChild(overlay);
 
-                // Daj przeglądarce chwilę na dodanie elementu przed animacją
                 setTimeout(() => {
                     overlay.classList.add('active');
                 }, 20);
 
                 // Zakończ po czasie trwania animacji
                 setTimeout(() => {
-                    document.body.removeChild(overlay);
+                    if (document.body.contains(overlay)) {
+                        document.body.removeChild(overlay);
+                    }
                     resolve();
-                }, 1600); // Czas musi być nieco dłuższy niż animacja `crt-collapse`
+                }, 1600);
             });
         }
 
@@ -1628,6 +1625,13 @@
          * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
          */
         function clearScreen() {
+            // ZMIANA: Definiujemy elementy i od razu je ukrywamy.
+            const elementsToToggle = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
+            elementsToToggle.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (el) el.style.display = 'none'; // Używamy 'display' zamiast 'opacity'
+            });
+
             // Stwórz przycisk zamykania
             const closeBtn = document.createElement('button');
             closeBtn.id = 'clear-close-btn';
@@ -1637,21 +1641,17 @@
 
             // Dodaj logikę do przycisku
             closeBtn.addEventListener('click', () => {
-                // Pokaż ponownie wszystkie ukryte elementy
-                const elementsToShow = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
-                elementsToShow.forEach(selector => {
+                // ZMIANA: Przywracamy elementy, usuwając styl 'display: none'.
+                elementsToToggle.forEach(selector => {
                     const el = document.querySelector(selector);
-                    // Sprawdzamy czy element istnieje i przywracamy mu domyślną widoczność
                     if (el) {
-                        el.style.opacity = '1';
+                        el.style.display = ''; // To przywróci domyślną wartość z CSS (np. 'flex', 'grid')
                     }
                 });
 
-                // Usuń przycisk zamykania
                 document.body.removeChild(closeBtn);
-                // Odśwież widok kafelków
                 renderGuides();
-            }, { once: true }); // Listener uruchomi się tylko raz
+            }, { once: true });
         }
     </script>
 </head>
