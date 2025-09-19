@@ -1565,9 +1565,9 @@
 
     <script>
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
-        // --- Configuraton / Konfiguracja ---
+        // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.0', // Version updated for new changes
+            version: 'v1.4.2', 
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1598,6 +1598,7 @@
                 defaultVideoExpanded: false,
                 defaultLabelsVisible: true,
                 defaultRows: 4,
+                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
                 predefinedFilters: [
                     { label: "ADE", search: "ade" },
                     { label: "E-booki", search: "e-book" },
@@ -2196,6 +2197,7 @@
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = "";
+            const defaultSortValue = config.pageSettings.defaultSort;
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort || "nameAsc", guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort || "nameAsc");
