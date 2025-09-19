@@ -1387,7 +1387,6 @@
             <option value="sizeAsc">Rozmiar ↑</option>
             <option value="sizeDesc">Rozmiar ↓</option>
         </select>
-        <select id="itemsPerPageSelector"></select>
         <select id="randomSelector">
             <option value="" disabled selected>Losuj...</option>
             <option value="1">Pozycje: 1</option>
@@ -1401,6 +1400,7 @@
             <option value="9">Pozycje: 9</option>
             <option value="10">Pozycje: 10</option>
         </select>
+        <select id="itemsPerPageSelector"></select>
 
         <div id="viewBtnGroup" class="dir-db-btn multi-button">
             <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
@@ -1522,7 +1522,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.3.8', // Version updated for new changes
+            version: 'v1.3.9', // Version updated for new changes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1541,7 +1541,7 @@
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: false,
-                showLanguageButton: true,
+                showLanguageButton: false,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 23,
@@ -1555,12 +1555,12 @@
                 defaultRows: 4,
                 predefinedFilters: [
                     { label: "ADE", search: "ade" },
-                    { label: "E-booki", search: "e-booki" },
-                    { label: "Galerie", search: "galerie" },
-                    { label: "Hiszpania", search: "hiszpania" },
-                    { label: "Niemcy", search: "niemcy" },
-                    { label: "Polska", search: "polska" },
-                    { label: "Poradniki", search: "poradniki" },
+                    { label: "E-booki", search: "e-book" },
+                    { label: "Galerie", search: "galeri" },
+                    { label: "Hiszpania", search: "Hiszpania" },
+                    { label: "Niemcy", search: "Niemcy" },
+                    { label: "Polska", search: "Polska" },
+                    { label: "Poradniki", search: "Poradniki" },
                 ],
             },
             paths: {
@@ -1637,6 +1637,7 @@
         let logoInterval, autoShuffleInterval = null;
         let isMinimized = false, isLightboxMinimized = false;
         let guideDimensionsCache = {};
+        let pausedTime = 0;
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
@@ -2500,6 +2501,7 @@
                 case 'playing':
                     videoBgState = 'paused';
                     bgVideo.pause();
+                    pausedTime = bgVideo.currentTime;
                     break;
                 case 'paused':
                     videoBgState = 'off';
@@ -2560,24 +2562,35 @@
 
         function changeBackgroundVideo(direction) {
             if (videoBgState === 'off') return;
+
             if (autoShuffleInterval) {
                 shuffleBackgroundVideo();
                 return;
             }
+
             const { pageKey, bgVideoStartNum, bgVideoEndNum } = config.pageSettings;
             if (bgVideoEndNum - bgVideoStartNum < 1) return;
+
             const storageKey = `visudir_bg_video_${pageKey}`;
             let currentVideoNum = parseInt(localStorage.getItem(storageKey)) || bgVideoStartNum;
             currentVideoNum += direction;
+
             if (currentVideoNum > bgVideoEndNum) currentVideoNum = bgVideoStartNum;
             if (currentVideoNum < bgVideoStartNum) currentVideoNum = bgVideoEndNum;
+
             localStorage.setItem(storageKey, currentVideoNum);
 
-            if (videoBgState === 'paused') {
-                videoBgState = 'playing';
-            }
+            const wasPaused = videoBgState === 'paused';
 
             initializeBackgroundVideo(currentTheme);
+
+            if (wasPaused) {
+                bgVideo.addEventListener('canplay', function onCanPlay() {
+                    bgVideo.currentTime = pausedTime;
+                    bgVideo.pause();
+                }, { once: true });
+            }
+
             updateVideoBtnUI();
         }
 
@@ -2628,7 +2641,13 @@
                 img.src = currentTheme === 'dark' ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
             });
             if (videoBgState !== 'off') {
+                const wasPaused = videoBgState === 'paused';
                 initializeBackgroundVideo(currentTheme);
+                if (wasPaused) {
+                    bgVideo.addEventListener('canplay', () => {
+                        bgVideo.pause();
+                    }, { once: true });
+                }
             }
         }
 
