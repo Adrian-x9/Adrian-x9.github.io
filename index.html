@@ -1303,6 +1303,49 @@
         #lightbox-controls .multi-button {
             padding: 0;
         }
+
+        /* --- Style dla mobilnego widoku slideshow --- */
+        @media (max-width: 1024px) {
+
+            /* Ukrywamy przycisk pełnego ekranu */
+            #fullscreenBtnLightbox {
+                display: none !important;
+            }
+
+            /* Ustawiamy kolejność przycisków w pierwszym wierszu */
+            /* 1. Animacje (FX) */
+            #lightbox-fxBtn {
+                order: 1;
+            }
+
+            /* 2. Etykiety (Labels) */
+            #lightbox-labelsBtn {
+                order: 2;
+            }
+
+            /* 3. Tryb Ciemny/Jasny */
+            #lightbox-darkModeBtn {
+                order: 3;
+            }
+
+            /* 4. Przycisk Wideo */
+            #lightbox-videoBtn {
+                order: 4;
+            }
+
+            /* Zamiast rozciągać sam przycisk, tworzymy przed nim niewidzialny element o szerokości 100%, który zepchnie go do nowej linii. */
+            #lightbox-videoBtn.expanded::before {
+                content: '';
+                flex-basis: 100%;
+            }
+
+            /* Panel slideshow zawsze jest na końcu */
+            #slideshow-controls {
+                order: 5;
+                /* Dodajemy odstęp, aby oddzielić go od górnego wiersza */
+                margin-top: 10px;
+            }
+        }
     </style>
     <script>
         (function () {
@@ -1453,7 +1496,7 @@
             <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
                         class="version-suffix">Dir
                         <span class="version-display"></span></span></a></strong>
-            <strong>© 2025-09-12</strong> do katalogowania, zarządzania i
+            <strong>© 2025-09-17</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
             <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
                 </a></span>
@@ -1524,7 +1567,7 @@
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- Configuraton / Konfiguracja ---
         const config = {
-            version: 'v1.3.10', // Version updated for new changes
+            version: 'v1.4.0', // Version updated for new changes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -2243,71 +2286,71 @@
 
 
 
-function renderGuides() {
-    const animationsOn = !document.body.classList.contains('no-animation');
-    const footer = document.querySelector('.footer');
-    const oldGuides = Array.from(guideList.children);
-    const animationDuration = 200; // Czas animacji 'fadeOutUp' w ms
+        function renderGuides() {
+            const animationsOn = !document.body.classList.contains('no-animation');
+            const footer = document.querySelector('.footer');
+            const oldGuides = Array.from(guideList.children);
+            const animationDuration = 200; // Czas animacji 'fadeOutUp' w ms
 
-    // Funkcja wewnętrzna, która renderuje nową zawartość
-    const renderNewContent = () => {
-        guideList.innerHTML = ""; // Czyścimy kontener dopiero teraz
-        applyFilters();
-        updatePaginationOptions();
+            // Funkcja wewnętrzna, która renderuje nową zawartość
+            const renderNewContent = () => {
+                guideList.innerHTML = ""; // Czyścimy kontener dopiero teraz
+                applyFilters();
+                updatePaginationOptions();
 
-        const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
-        currentPage = Math.min(currentPage, totalPages || 1);
-        const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
-            (currentPage - 1) * itemsPerPage,
-            currentPage * itemsPerPage
-        ) : filteredGuides;
+                const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
+                currentPage = Math.min(currentPage, totalPages || 1);
+                const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
+                    (currentPage - 1) * itemsPerPage,
+                    currentPage * itemsPerPage
+                ) : filteredGuides;
 
-        pageItems.forEach((guide, index) => {
-            const div = document.createElement("div");
-            div.className = "guide";
-            guideList.appendChild(div);
-            div.innerHTML = createGuideHtml(guide);
-            if (animationsOn) {
-                div.style.opacity = 0;
+                pageItems.forEach((guide, index) => {
+                    const div = document.createElement("div");
+                    div.className = "guide";
+                    guideList.appendChild(div);
+                    div.innerHTML = createGuideHtml(guide);
+                    if (animationsOn) {
+                        div.style.opacity = 0;
+                        setTimeout(() => {
+                            div.classList.add("animate-in");
+                            div.style.animationDelay = `${index * 0.05}s`;
+                        }, 20); // Małe opóźnienie dla pewności
+                    }
+                });
+
+                renderPagination(totalPages);
+                document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+
+                // Pokazujemy ponownie stopkę i paginację po pojawieniu się nowych elementów
+                const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
                 setTimeout(() => {
-                    div.classList.add("animate-in");
-                    div.style.animationDelay = `${index * 0.05}s`;
-                }, 20); // Małe opóźnienie dla pewności
-            }
-        });
+                    if (animationsOn) {
+                        footer.classList.remove('hidden-animated');
+                        pagination.classList.add('visible');
+                    } else {
+                        pagination.style.visibility = 'visible';
+                        footer.style.visibility = 'visible';
+                    }
+                }, revealDelay);
+            };
 
-        renderPagination(totalPages);
-        document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
-        
-        // Pokazujemy ponownie stopkę i paginację po pojawieniu się nowych elementów
-        const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
-        setTimeout(() => {
+            // Główna logika sterująca przejściem
             if (animationsOn) {
-                footer.classList.remove('hidden-animated');
-                pagination.classList.add('visible');
+                pagination.classList.remove('visible');
+                footer.classList.add('hidden-animated');
             } else {
-                pagination.style.visibility = 'visible';
-                footer.style.visibility = 'visible';
+                pagination.style.visibility = 'hidden';
+                footer.style.visibility = 'hidden';
             }
-        }, revealDelay);
-    };
 
-    // Główna logika sterująca przejściem
-    if (animationsOn) {
-        pagination.classList.remove('visible');
-        footer.classList.add('hidden-animated');
-    } else {
-        pagination.style.visibility = 'hidden';
-        footer.style.visibility = 'hidden';
-    }
-
-    if (animationsOn && oldGuides.length > 0) {
-        oldGuides.forEach(guide => guide.classList.add('fade-out'));
-        setTimeout(renderNewContent, animationDuration);
-    } else {
-        renderNewContent();
-    }
-}
+            if (animationsOn && oldGuides.length > 0) {
+                oldGuides.forEach(guide => guide.classList.add('fade-out'));
+                setTimeout(renderNewContent, animationDuration);
+            } else {
+                renderNewContent();
+            }
+        }
 
         function renderPagination(totalPages) {
             if (totalPages <= 1) {
@@ -2516,7 +2559,7 @@ function renderGuides() {
                     videoBgState = 'paused';
                     bgVideo.pause();
                     pausedTime = bgVideo.currentTime;
-                    saveToLocalStorage('video_paused_time', pausedTime); 
+                    saveToLocalStorage('video_paused_time', pausedTime);
                     break;
                 case 'paused':
                     videoBgState = 'off';
