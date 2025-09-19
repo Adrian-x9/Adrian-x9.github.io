@@ -2171,15 +2171,16 @@
             const minimizeBtn = document.getElementById('minimizeBtn');
             const minimizeIcon = minimizeBtn.querySelector('i');
             isMinimized = !isMinimized;
+
             controls.classList.toggle('minimized-view', isMinimized);
             minimizeBtn.title = isMinimized ? "Przywróć interfejs" : "Minimalizuj interfejs";
             minimizeIcon.className = isMinimized ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
-            if (window.innerWidth > 768) {
-                const topHeader = document.querySelector('.top-header');
-                const footer = document.querySelector('.footer');
-                topHeader.classList.toggle('minimized-header', isMinimized);
-                footer.classList.toggle('minimized-footer', isMinimized);
-            }
+
+            // Usunęliśmy warunek 'if', aby poniższy kod działał zawsze
+            const topHeader = document.querySelector('.top-header');
+            const footer = document.querySelector('.footer');
+            topHeader.classList.toggle('minimized-header', isMinimized);
+            footer.classList.toggle('minimized-footer', isMinimized);
         }
 
         function toggleLightboxMinimize() {
@@ -3124,6 +3125,29 @@
                 stopPlayAnimation();
             }
         });
+
+        // --- Blokada "Pull-to-Refresh" na urządzeniach mobilnych ---
+        let touchstartY = 0;
+
+        document.addEventListener('touchstart', e => {
+            // Zapisujemy pozycję startową dotyku
+            if (e.touches.length === 1) { // Upewniamy się, że to pojedynczy dotyk
+                touchstartY = e.touches[0].clientY;
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', e => {
+            if (e.touches.length === 1) {
+                const touchY = e.touches[0].clientY;
+                const isPullingDown = touchY > touchstartY;
+
+                // Jeśli jesteśmy na samej górze strony i próbujemy przewinąć jeszcze wyżej (gest odświeżenia)
+                if (window.scrollY === 0 && isPullingDown) {
+                    // Zablokuj domyślną akcję przeglądarki (odświeżenie)
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });        
     </script>
 </body>
 
