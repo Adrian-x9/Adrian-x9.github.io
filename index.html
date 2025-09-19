@@ -105,6 +105,7 @@
         body.no-animation .guide.flip-animate {
             animation: none !important;
             transform: none !important;
+            opacity: 1 !important;
         }
 
         body.no-animation .guide-cover,
@@ -1716,11 +1717,10 @@
                 const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
                 bgVideoSource.src = videoSrc;
                 bgVideo.load();
-                if (!document.body.classList.contains("video-ready")) {
-                    bgVideo.addEventListener("canplay", () => {
-                        document.body.classList.add("video-ready");
-                    }, { once: true });
-                }
+                // Upewnij się, że klasa video-ready jest dodawana przy każdym załadowaniu wideo
+                bgVideo.addEventListener("canplay", () => {
+                    document.body.classList.add("video-ready");
+                }, { once: true });
             }
             if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
                 localStorage.setItem(storageKey, videoNum);
@@ -1783,6 +1783,8 @@
             viewState.text = savedText !== null ? JSON.parse(savedText) : config.pageSettings.defaultShowText;
             const savedLabels = getFromLocalStorage('labels_visible');
             areLabelsVisible = savedLabels !== null ? JSON.parse(savedLabels) : config.pageSettings.defaultLabelsVisible;
+            // Wczytaj zapisany czas pauzy
+            pausedTime = parseFloat(getFromLocalStorage('video_paused_time')) || 0;
         }
 
         function getFileExtension(filename) {
@@ -2086,6 +2088,13 @@
             loadUiSettings();
             applyView();
             updateBackgroundVideoVisibility(true);
+            // Jeśli wczytany stan to pauza, zatrzymaj wideo po załadowaniu
+            if (videoBgState === 'paused') {
+                bgVideo.addEventListener('canplay', () => {
+                    bgVideo.currentTime = pausedTime;
+                    bgVideo.pause();
+                }, { once: true });
+            }
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
             darkModeBtn.addEventListener('click', toggleDarkMode);
@@ -2234,68 +2243,71 @@
 
 
 
-        function renderGuides() {
-            const animationsOn = !document.body.classList.contains('no-animation');
-            const footer = document.querySelector('.footer');
-            const oldHeight = guideList.offsetHeight;
+function renderGuides() {
+    const animationsOn = !document.body.classList.contains('no-animation');
+    const footer = document.querySelector('.footer');
+    const oldGuides = Array.from(guideList.children);
+    const animationDuration = 200; // Czas animacji 'fadeOutUp' w ms
 
+    // Funkcja wewnętrzna, która renderuje nową zawartość
+    const renderNewContent = () => {
+        guideList.innerHTML = ""; // Czyścimy kontener dopiero teraz
+        applyFilters();
+        updatePaginationOptions();
+
+        const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
+        currentPage = Math.min(currentPage, totalPages || 1);
+        const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
+            (currentPage - 1) * itemsPerPage,
+            currentPage * itemsPerPage
+        ) : filteredGuides;
+
+        pageItems.forEach((guide, index) => {
+            const div = document.createElement("div");
+            div.className = "guide";
+            guideList.appendChild(div);
+            div.innerHTML = createGuideHtml(guide);
             if (animationsOn) {
-                guideList.style.minHeight = `${oldHeight}px`;
-                pagination.classList.remove('visible');
-                footer.classList.add('hidden-animated');
-            } else {
-                pagination.style.visibility = 'hidden';
-                footer.style.visibility = 'hidden';
+                div.style.opacity = 0;
+                setTimeout(() => {
+                    div.classList.add("animate-in");
+                    div.style.animationDelay = `${index * 0.05}s`;
+                }, 20); // Małe opóźnienie dla pewności
             }
+        });
 
-            // Krótkie opóźnienie, aby przeglądarka "załapała" zmianę min-height przed czyszczeniem
-            setTimeout(() => {
-                guideList.innerHTML = "";
-                applyFilters();
-                updatePaginationOptions();
+        renderPagination(totalPages);
+        document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+        
+        // Pokazujemy ponownie stopkę i paginację po pojawieniu się nowych elementów
+        const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
+        setTimeout(() => {
+            if (animationsOn) {
+                footer.classList.remove('hidden-animated');
+                pagination.classList.add('visible');
+            } else {
+                pagination.style.visibility = 'visible';
+                footer.style.visibility = 'visible';
+            }
+        }, revealDelay);
+    };
 
-                const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
-                currentPage = Math.min(currentPage, totalPages || 1);
-                const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
-                    (currentPage - 1) * itemsPerPage,
-                    currentPage * itemsPerPage
-                ) : filteredGuides;
+    // Główna logika sterująca przejściem
+    if (animationsOn) {
+        pagination.classList.remove('visible');
+        footer.classList.add('hidden-animated');
+    } else {
+        pagination.style.visibility = 'hidden';
+        footer.style.visibility = 'hidden';
+    }
 
-                pageItems.forEach((guide, index) => {
-                    const div = document.createElement("div");
-                    div.className = "guide";
-                    guideList.appendChild(div);
-                    div.innerHTML = createGuideHtml(guide);
-                    if (animationsOn) {
-                        div.style.opacity = 0;
-                        setTimeout(() => {
-                            div.classList.add("animate-in");
-                            div.style.animationDelay = `${index * 0.05}s`;
-                        }, 20);
-                    }
-                });
-
-                renderPagination(totalPages);
-                document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
-
-                const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
-
-                // KLUCZOWA POPRAWKA: Używamy requestAnimationFrame, aby usunąć min-height
-                // po tym, jak przeglądarka na pewno dodała już nowe elementy do DOM.
-                requestAnimationFrame(() => {
-                    setTimeout(() => {
-                        if (animationsOn) {
-                            footer.classList.remove('hidden-animated');
-                        } else {
-                            pagination.style.visibility = 'visible';
-                            footer.style.visibility = 'visible';
-                        }
-                        // Ta linia jest teraz wywoływana w odpowiednim momencie, co zapobiega skokom
-                        guideList.style.minHeight = '';
-                    }, revealDelay);
-                });
-            }, 0); // Opóźnienie 0ms wystarczy, by zadziałało
-        }
+    if (animationsOn && oldGuides.length > 0) {
+        oldGuides.forEach(guide => guide.classList.add('fade-out'));
+        setTimeout(renderNewContent, animationDuration);
+    } else {
+        renderNewContent();
+    }
+}
 
         function renderPagination(totalPages) {
             if (totalPages <= 1) {
@@ -2320,13 +2332,13 @@
                 return btn;
             };
             container.appendChild(
-                createBtn(`<i class="fas fa-angle-double-left"></i> Pierwsza`, currentPage === 1, () => (currentPage = 1))
+                createBtn(`<i class="fas fa-angle-double-left"></i>&nbsp;Pierwsza`, currentPage === 1, () => (currentPage = 1))
             );
             container.appendChild(
-                createBtn(`<i class="fas fa-chevron-left"></i> Poprzednia`, currentPage === 1, () => currentPage--)
+                createBtn(`<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`, currentPage === 1, () => currentPage--)
             );
             const randomBtn = document.createElement("button");
-            randomBtn.innerHTML = `<i class="fas fa-random"></i> Losuj`;
+            randomBtn.innerHTML = `<i class="fas fa-random"></i>&nbsp;Losuj`;
             randomBtn.title = "Losuj stronę";
             randomBtn.onclick = () => {
                 if (totalPages > 1) {
@@ -2361,8 +2373,8 @@
             info.className = "pagination-info";
             info.innerHTML = `/ ${totalPages}`;
             container.appendChild(info);
-            container.appendChild(createBtn(`Następna <i class="fas fa-chevron-right"></i>`, currentPage === totalPages, () => currentPage++));
-            container.appendChild(createBtn(`Ostatnia <i class="fas fa-angle-double-right"></i>`, currentPage === totalPages, () => (currentPage = totalPages)));
+            container.appendChild(createBtn(`Następna&nbsp;<i class="fas fa-chevron-right"></i>`, currentPage === totalPages, () => currentPage++));
+            container.appendChild(createBtn(`Ostatnia&nbsp;<i class="fas fa-angle-double-right"></i>`, currentPage === totalPages, () => (currentPage = totalPages)));
             pagination.appendChild(container);
         }
         function drawRandomGuides() {
@@ -2504,6 +2516,7 @@
                     videoBgState = 'paused';
                     bgVideo.pause();
                     pausedTime = bgVideo.currentTime;
+                    saveToLocalStorage('video_paused_time', pausedTime); 
                     break;
                 case 'paused':
                     videoBgState = 'off';
@@ -2618,13 +2631,21 @@
         function resetVideoSettings() {
             const { pageKey, defaultBgVideo } = config.pageSettings;
             localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
+
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
             }
+
+            // Jeśli stan był spauzowany, teraz będzie odtwarzany
+            if (videoBgState === 'paused') {
+                videoBgState = 'playing';
+            }
+
             if (videoBgState !== 'off') {
                 updateBackgroundVideoVisibility(true);
             }
+
             updateVideoBtnUI();
         }
 
@@ -2642,11 +2663,18 @@
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
                 img.src = currentTheme === 'dark' ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
             });
+
             if (videoBgState !== 'off') {
                 const wasPaused = videoBgState === 'paused';
+                // Zapisz czas PRZED zainicjowaniem nowego wideo
+                if (wasPaused) {
+                    pausedTime = bgVideo.currentTime;
+                }
                 initializeBackgroundVideo(currentTheme);
                 if (wasPaused) {
                     bgVideo.addEventListener('canplay', () => {
+                        // Ustaw zapisany czas, a potem spauzuj
+                        bgVideo.currentTime = pausedTime;
                         bgVideo.pause();
                     }, { once: true });
                 }
