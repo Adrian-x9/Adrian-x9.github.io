@@ -1346,6 +1346,210 @@
                 margin-top: 10px;
             }
         }
+
+        /* --- EASTER EGG: CRT Effect Styles --- */
+        #crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10001;
+            /* Wyżej niż preloader */
+            background: #111;
+            opacity: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        html.dark-mode #crt-overlay {
+            background: #eee;
+        }
+
+        #crt-overlay.active {
+            opacity: 1;
+            animation: crt-flicker 0.1s infinite, crt-collapse 1s 0.5s ease-out forwards;
+        }
+
+        #crt-overlay::before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 4px, 3px 100%;
+            animation: crt-scanline 2s linear infinite;
+        }
+
+        html.dark-mode #crt-overlay::before {
+            background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(200, 200, 200, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background-size: 100% 4px, 3px 100%;
+        }
+
+
+        @keyframes crt-flicker {
+            0% {
+                opacity: 0.95;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.98;
+            }
+        }
+
+        @keyframes crt-scanline {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        @keyframes crt-collapse {
+            0% {
+                transform: scale(1, 1);
+            }
+
+            30% {
+                transform: scale(1.05, 1);
+            }
+
+            80% {
+                transform: scale(0.001, 1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.001, 0);
+                opacity: 0;
+            }
+        }
+
+        /* --- EASTER EGG: CRT Effect Styles --- */
+        #crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10001;
+            /* Wyżej niż preloader */
+            background: #111;
+            opacity: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        html.dark-mode #crt-overlay {
+            background: #eee;
+        }
+
+        #crt-overlay.active {
+            opacity: 1;
+            animation: crt-flicker 0.1s infinite, crt-collapse 1s 0.5s ease-out forwards;
+        }
+
+        #crt-overlay::before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 2;
+            background-size: 100% 4px, 3px 100%;
+            animation: crt-scanline 2s linear infinite;
+        }
+
+        html.dark-mode #crt-overlay::before {
+            background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(200, 200, 200, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background-size: 100% 4px, 3px 100%;
+        }
+
+
+        @keyframes crt-flicker {
+            0% {
+                opacity: 0.95;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.98;
+            }
+        }
+
+        @keyframes crt-scanline {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(100%);
+            }
+        }
+
+        @keyframes crt-collapse {
+            0% {
+                transform: scale(1, 1);
+            }
+
+            30% {
+                transform: scale(1.05, 1);
+            }
+
+            80% {
+                transform: scale(0.001, 1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.001, 0);
+                opacity: 0;
+            }
+        }
+
+        /* --- EASTER EGG: Clear Screen Close Button --- */
+        #clear-close-btn {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 9999;
+            width: 44px;
+            height: 44px;
+            font-size: 1.5em;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body:not(.dark-mode) #clear-close-btn {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+        }
+
+        .dark-mode #clear-close-btn {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
     </style>
     <script>
         (function () {
@@ -1374,6 +1578,81 @@
                 }
             } catch (e) { /* Ignore */ }
         })();
+
+        /**
+ * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
+ * Zwraca Promise, który rozwiązuje się po zakończeniu animacji.
+ */
+        function intro() {
+            return new Promise(resolve => {
+                // Ukryj wszystkie główne elementy interfejsu
+                const elementsToHide = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
+                elementsToHide.forEach(selector => {
+                    const el = document.querySelector(selector);
+                    if (el) el.style.opacity = '0';
+                });
+
+                // Stwórz i aktywuj nakładkę CRT
+                const overlay = document.createElement('div');
+                overlay.id = 'crt-overlay';
+                document.body.appendChild(overlay);
+
+                // Daj przeglądarce chwilę na dodanie elementu przed animacją
+                setTimeout(() => {
+                    overlay.classList.add('active');
+                }, 20);
+
+                // Zakończ po czasie trwania animacji
+                setTimeout(() => {
+                    document.body.removeChild(overlay);
+                    resolve();
+                }, 1600); // Czas musi być nieco dłuższy niż animacja `crt-collapse`
+            });
+        }
+
+        /**
+         * EASTER EGG: Funkcja do twardego resetu ustawień aplikacji.
+         */
+        function hardReset() {
+            // Usuń wszystkie zapisane ustawienia z localStorage, które należą do tej aplikacji
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('visudir_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            // Przeładuj stronę, co spowoduje wczytanie domyślnych ustawień z obiektu config
+            location.reload();
+        }
+
+        /**
+         * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
+         */
+        function clearScreen() {
+            // Stwórz przycisk zamykania
+            const closeBtn = document.createElement('button');
+            closeBtn.id = 'clear-close-btn';
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            closeBtn.title = 'Zamknij';
+            document.body.appendChild(closeBtn);
+
+            // Dodaj logikę do przycisku
+            closeBtn.addEventListener('click', () => {
+                // Pokaż ponownie wszystkie ukryte elementy
+                const elementsToShow = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
+                elementsToShow.forEach(selector => {
+                    const el = document.querySelector(selector);
+                    // Sprawdzamy czy element istnieje i przywracamy mu domyślną widoczność
+                    if (el) {
+                        el.style.opacity = '1';
+                    }
+                });
+
+                // Usuń przycisk zamykania
+                document.body.removeChild(closeBtn);
+                // Odśwież widok kafelków
+                renderGuides();
+            }, { once: true }); // Listener uruchomi się tylko raz
+        }
     </script>
 </head>
 
@@ -1567,7 +1846,7 @@
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.2', 
+            version: 'v1.4.3',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -3086,7 +3365,26 @@
                 document.body.classList.remove('video-ready');
             });
         });
-        searchInput.addEventListener("input", () => {
+        searchInput.addEventListener("input", async () => {
+            const query = searchInput.value.toLowerCase().trim();
+
+            // --- EASTER EGG TRIGGER ---
+            if (query === 'reset' || query === 'clear') {
+                const command = query; // Zapisujemy komendę
+                searchInput.value = ''; // Czyścimy pole natychmiast
+
+                await intro(); // Czekamy na zakończenie animacji intro
+
+                if (command === 'reset') {
+                    hardReset();
+                } else if (command === 'clear') {
+                    clearScreen();
+                }
+                return; // Zakończ działanie, aby nie filtrować normalnie
+            }
+            // --- Koniec logiki Easter Egga ---
+
+            // Normalne działanie wyszukiwarki
             currentPage = 1;
             renderGuides();
             stopPlayAnimation();
