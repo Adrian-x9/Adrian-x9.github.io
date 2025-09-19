@@ -2229,6 +2229,8 @@
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
 
+
+
         function renderGuides() {
             const animationsOn = !document.body.classList.contains('no-animation');
             const footer = document.querySelector('.footer');
@@ -2243,44 +2245,53 @@
                 footer.style.visibility = 'hidden';
             }
 
-            guideList.innerHTML = "";
-            applyFilters();
-            updatePaginationOptions();
-
-            const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
-            currentPage = Math.min(currentPage, totalPages || 1);
-            const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
-                (currentPage - 1) * itemsPerPage,
-                currentPage * itemsPerPage
-            ) : filteredGuides;
-
-            pageItems.forEach((guide, index) => {
-                const div = document.createElement("div");
-                div.className = "guide";
-                guideList.appendChild(div);
-                div.innerHTML = createGuideHtml(guide);
-                if (animationsOn) {
-                    div.style.opacity = 0;
-                    setTimeout(() => {
-                        div.classList.add("animate-in");
-                        div.style.animationDelay = `${index * 0.05}s`;
-                    }, 20);
-                }
-            });
-
-            renderPagination(totalPages);
-            document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
-
-            const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
+            // Krótkie opóźnienie, aby przeglądarka "załapała" zmianę min-height przed czyszczeniem
             setTimeout(() => {
-                if (animationsOn) {
-                    footer.classList.remove('hidden-animated');
-                    guideList.style.minHeight = '';
-                } else {
-                    pagination.style.visibility = 'visible';
-                    footer.style.visibility = 'visible';
-                }
-            }, revealDelay);
+                guideList.innerHTML = "";
+                applyFilters();
+                updatePaginationOptions();
+
+                const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
+                currentPage = Math.min(currentPage, totalPages || 1);
+                const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
+                    (currentPage - 1) * itemsPerPage,
+                    currentPage * itemsPerPage
+                ) : filteredGuides;
+
+                pageItems.forEach((guide, index) => {
+                    const div = document.createElement("div");
+                    div.className = "guide";
+                    guideList.appendChild(div);
+                    div.innerHTML = createGuideHtml(guide);
+                    if (animationsOn) {
+                        div.style.opacity = 0;
+                        setTimeout(() => {
+                            div.classList.add("animate-in");
+                            div.style.animationDelay = `${index * 0.05}s`;
+                        }, 20);
+                    }
+                });
+
+                renderPagination(totalPages);
+                document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+
+                const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
+
+                // KLUCZOWA POPRAWKA: Używamy requestAnimationFrame, aby usunąć min-height
+                // po tym, jak przeglądarka na pewno dodała już nowe elementy do DOM.
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        if (animationsOn) {
+                            footer.classList.remove('hidden-animated');
+                        } else {
+                            pagination.style.visibility = 'visible';
+                            footer.style.visibility = 'visible';
+                        }
+                        // Ta linia jest teraz wywoływana w odpowiednim momencie, co zapobiega skokom
+                        guideList.style.minHeight = '';
+                    }, revealDelay);
+                });
+            }, 0); // Opóźnienie 0ms wystarczy, by zadziałało
         }
 
         function renderPagination(totalPages) {
