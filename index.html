@@ -87,8 +87,8 @@
         .dir-db-btn { padding: 10px 20px; transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s, width 0.4s ease, opacity 0.3s; font-size: 1em; cursor: pointer; }
         .dir-db-btn:hover { transform: translateY(-5px); }
         .dir-db-btn i { margin-right: 5px; }
-        #minimizeBtn i, #langBtn i { margin-right: 0; }
-        #langBtn { padding: 10px 12px; }
+        #minimizeBtn i, #langBtn i, #fullscreenBtn i { margin-right: 0; }
+        #langBtn, #fullscreenBtn { padding: 10px 12px; }
         .multi-button { padding: 0; overflow: hidden; }
         .multi-button>span { padding: 10px; display: inline-flex; align-items: center; justify-content: center; height: 100%; }
         .btn-text { transition: max-width 0.4s ease, opacity 0.3s ease; max-width: 100px; overflow: hidden; white-space: nowrap; display: inline-block; }
@@ -124,7 +124,7 @@
         #lightbox-controls .multi-button-child.active-play i, #lightbox-bg-video-controls button.active-play i { color: #e53935; text-shadow: none !important; }
         .dark-mode #lightbox-controls .multi-button-child.active-play i, .dark-mode #lightbox-bg-video-controls button.active-play i { color: #ff8a80; text-shadow: none !important; }
 
-        .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; }
+        .guide-list { display: grid; grid-template-columns: repeat(auto-fill, 250px); justify-content: center; gap: 20px; width: 90%; max-width: 1920px; margin: 0 auto; transition: min-height 0.4s ease-out; }
         .guide-list.random-draw { display: flex; justify-content: center; flex-wrap: wrap; }
         .guide-cover { max-width: 100%; height: auto; max-height: 300px; margin: 10px auto 0; display: block; border-radius: 10px; transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s, border-width 0.5s, transform 0.5s ease-in-out; }
         .guide .guide-cover { opacity: 1; transform: scale(1); }
@@ -162,8 +162,9 @@
         .guide.fade-out { animation: fadeOutUp 0.2s forwards; pointer-events: none; }
         @keyframes fadeInSlideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeOutUp { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-20px); } }
-        .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 0; transform: translateY(20px); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out; }
+        .footer { text-align: center; padding: 20px; padding-top: 10px; font-size: 0.9em; opacity: 1; transform: translateY(0); max-height: 200px; overflow: hidden; transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out, transform 0.5s ease-out; }
         .footer.minimized-footer { max-height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; margin-top: 0 !important; opacity: 0; }
+        .footer.hidden-animated { opacity: 0; transform: translateY(20px); }
         .nobr { white-space: nowrap; }
         .privacy-notice { margin-top: 10px; font-size: 0.9em; }
         .footer .footer-special-text { font-weight: normal; }
@@ -172,8 +173,8 @@
         .backdrop.visible { display: flex; opacity: 1; visibility: visible; }
         .play-guide-container { display: flex; justify-content: center; align-items: center; width: 90vw; height: 90vh; }
         .play-guide-container > a { max-width: 100%; max-height: 100%; display: flex; justify-content: center; align-items: center; }
-        .play-guide-container .preview-media { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px; }
-        .play-guide-container > a > img, .play-guide-container > a > video { max-width: 100%; max-height: 100%; display: block; object-fit: contain; border-radius: 10px; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
+        .play-guide-container .preview-media, .play-guide-container > a > img, .play-guide-container > a > video { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 10px; }
+        .play-guide-container > a > img, .play-guide-container > a > video { display: block; background-color: rgba(255, 255, 255, 0.67); box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5); }
         body:not(.no-animation) .play-guide-container > a > img, body:not(.no-animation) .play-guide-container > a > video { animation: zoomInImage 0.5s ease-out; }
         .dark-mode .play-guide-container > a > img, .dark-mode .play-guide-container > a > video { background-color: rgba(0, 0, 0, 0.67); box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35); }
         
@@ -190,7 +191,7 @@
         .lightbox-action-btn { position: fixed; width: 44px; height: 44px; z-index: 1001; padding: 10px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.5em; transition: background-color 0.2s ease, color 0.2s; }
         .lightbox-action-btn i { margin: 0; }
         #playCloseBtn { top: 15px; right: 15px; }
-        #fullscreenBtn { top: 15px; right: 69px; }
+        #fullscreenBtnLightbox { top: 15px; right: 69px; }
         #lightbox-minimizeBtn { bottom: 15px; right: 15px; }
         #lightbox-controls { position: fixed; bottom: 0; left: 0; width: 100%; padding: 15px; display: flex; justify-content: center; align-items: center; gap: 10px; transition: transform 0.4s ease, padding-bottom 0.3s ease; flex-wrap: wrap; z-index: 1000; }
         #lightbox-controls.minimized-controls { transform: translateY(100%); }
@@ -199,7 +200,7 @@
         .dark-mode .lightbox-control-group, .dark-mode #lightbox-controls .dir-db-btn, .dark-mode .lightbox-action-btn { background-color: rgba(0,0,0,0.5); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
         #lightbox-controls button, #lightbox-controls .dir-db-btn, #lightbox-controls .multi-button-child, .lightbox-action-btn { background: none; border: none; cursor: pointer; padding: 10px 12px; transition: background-color 0.2s ease, color 0.2s; white-space: nowrap; }
         #lightbox-controls .dir-db-btn, #lightbox-controls button { font-size: 1em; }
-        #slideshow-controls .multi-button-child { font-size: 1.5em; }
+        #slideshow-controls .multi-button-child { font-size: 1.5em; width: 44px; justify-content: center; }
         #lightbox-controls button:hover, #lightbox-controls .dir-db-btn:hover, #lightbox-controls .multi-button-child:hover, .lightbox-action-btn:hover { background-color: rgba(0,0,0,0.1); color: #e53935; }
         .dark-mode #lightbox-controls button:hover, .dark-mode #lightbox-controls .dir-db-btn:hover, .dark-mode #lightbox-controls .multi-button-child:hover, .dark-mode .lightbox-action-btn:hover { background-color: rgba(255,255,255,0.15); }
         .lightbox-control-group button:not(:last-child), .lightbox-control-group span:not(:last-child) { border-right: 1px solid rgba(0,0,0,0.1); }
@@ -218,6 +219,7 @@
         .controls.minimized-view .dir-db-btn i, #lightbox-controls .dir-db-btn i { margin-right: 0; }
         .controls.minimized-view .btn-text { max-width: 0; opacity: 0; }
         .controls.minimized-view .multi-button { padding: 10px 12px; }
+        .controls.minimized-view .multi-button-main { pointer-events: none; }
         .controls.minimized-view .multi-button .multi-button-main .btn-text { display: none; }
         .controls.minimized-view .multi-button .multi-button-main i { margin-right: 0; }
         .controls.minimized-view .multi-button .multi-button-child { max-width: 0; padding: 0; opacity: 0; border-left: none; transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease; }
@@ -347,6 +349,10 @@
 
         <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Ciemny</span></button>
         
+        <button id="fullscreenBtn" class="dir-db-btn" title="Pełny ekran">
+            <i class="fas fa-expand"></i>
+        </button>
+
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-chevron-up"></i>
         </button>
@@ -374,7 +380,7 @@
 
     <div id="backdrop" class="backdrop">
         <div id="play-caption" class="play-caption"></div>
-        <button id="fullscreenBtn" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
         <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
         <div id="play-guide-container" class="play-guide-container"></div>
         
@@ -410,7 +416,7 @@
     <script>
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.3.6',
+            version: 'v1.3.7', // Version updated for new changes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -541,6 +547,7 @@
             playCaption = document.getElementById("play-caption"),
             playCloseBtn = document.getElementById("playCloseBtn"),
             fullscreenBtn = document.getElementById("fullscreenBtn"),
+            fullscreenBtnLightbox = document.getElementById("fullscreenBtnLightbox"),
             lightboxControls = document.getElementById("lightbox-controls"),
             slideshowPlayBtn = document.getElementById("slideshow-play"),
             headerLogo = document.getElementById("header-logo"),
@@ -1042,14 +1049,16 @@
                 window.open(targetUrl, '_blank');
                 return;
             }
-            // For .link files pointing to local .html files
-            if (isLink && targetUrl.startsWith('.') && targetUrl.endsWith('.html')) {
+
+            const [filePath] = targetUrl.split('?');
+            const isLocalHtml = filePath.endsWith('.html');
+
+            if (isLink && isLocalHtml) {
                 if (window.location.protocol === 'file:') {
-                    window.location.href = targetUrl; // Cannot check existence, just navigate
+                    window.location.href = targetUrl;
                     return;
                 }
-                // For http/https protocol, check if the file exists
-                fetch(targetUrl, { method: 'HEAD' })
+                fetch(filePath, { method: 'HEAD' })
                     .then(response => {
                         window.location.href = response.ok ? targetUrl : fallbackUrl;
                     })
@@ -1058,12 +1067,12 @@
                     });
                 return;
             }
-            // For other local files (like PDF) to be opened
+            
             const http = new XMLHttpRequest();
-            http.open('HEAD', targetUrl, true);
+            http.open('HEAD', filePath, true);
             http.timeout = 2000;
             http.onload = function () {
-                if (this.status === 200 || this.status === 0) { // status 0 for file://
+                if (this.status === 200 || this.status === 0) {
                     window.open(targetUrl, '_blank');
                 } else {
                     window.location.href = fallbackUrl;
@@ -1098,9 +1107,8 @@
                     a = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
                     w = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
                 } else {
-                    const isPdf = guide.format === "pdf";
                     const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
-                    if (isPdf) {
+                    if (guide.format === "pdf") {
                         a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
                         w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
                     } else {
@@ -1114,9 +1122,23 @@
         }
 
         function renderGuides() {
+            const animationsOn = !document.body.classList.contains('no-animation');
+            const footer = document.querySelector('.footer');
+            const oldHeight = guideList.offsetHeight;
+
+            if (animationsOn) {
+                guideList.style.minHeight = `${oldHeight}px`;
+                pagination.classList.remove('visible');
+                footer.classList.add('hidden-animated');
+            } else {
+                pagination.style.visibility = 'hidden';
+                footer.style.visibility = 'hidden';
+            }
+
             guideList.innerHTML = "";
             applyFilters();
-            updatePaginationOptions(); // Ensure row count is valid before rendering
+            updatePaginationOptions();
+            
             const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
             currentPage = Math.min(currentPage, totalPages || 1);
             const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
@@ -1124,7 +1146,6 @@
                 currentPage * itemsPerPage
             ) : filteredGuides;
 
-            const animationsOn = !document.body.classList.contains('no-animation');
             pageItems.forEach((guide, index) => {
                 const div = document.createElement("div");
                 div.className = "guide";
@@ -1138,9 +1159,22 @@
                     }, 20);
                 }
             });
+
             renderPagination(totalPages);
             document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+
+            const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
+            setTimeout(() => {
+                if (animationsOn) {
+                    footer.classList.remove('hidden-animated');
+                    guideList.style.minHeight = '';
+                } else {
+                    pagination.style.visibility = 'visible';
+                    footer.style.visibility = 'visible';
+                }
+            }, revealDelay);
         }
+
         function renderPagination(totalPages) {
             if (totalPages <= 1) {
                 pagination.innerHTML = "";
@@ -1415,6 +1449,11 @@
             if (currentVideoNum > bgVideoEndNum) currentVideoNum = bgVideoStartNum;
             if (currentVideoNum < bgVideoStartNum) currentVideoNum = bgVideoEndNum;
             localStorage.setItem(storageKey, currentVideoNum);
+            
+            if(videoBgState === 'paused') {
+                videoBgState = 'playing';
+            }
+
             initializeBackgroundVideo(currentTheme);
             updateVideoBtnUI();
         }
@@ -1696,13 +1735,13 @@
             playCaption.innerHTML = "";
             document.getElementById('lightbox-controls').style.display = 'none';
             document.getElementById('lightbox-minimizeBtn').style.display = 'none';
-            document.getElementById('fullscreenBtn').style.display = 'none';
+            document.getElementById('fullscreenBtnLightbox').style.display = 'none';
             const close = () => {
                 backdrop.classList.remove("visible", "preview-active");
                 playGuideContainer.innerHTML = "";
                 document.getElementById('lightbox-controls').style.display = 'flex';
                 document.getElementById('lightbox-minimizeBtn').style.display = 'flex';
-                document.getElementById('fullscreenBtn').style.display = 'flex';
+                document.getElementById('fullscreenBtnLightbox').style.display = 'flex';
             };
             const backdropClose = (e) => { if (e.target === backdrop) close(); };
             playCloseBtn.addEventListener("click", close, { once: true });
@@ -1725,19 +1764,23 @@
 
         function updateFullscreenIcon() {
             const icon = fullscreenBtn.querySelector('i');
+            const iconLightbox = fullscreenBtnLightbox.querySelector('i');
             if (document.fullscreenElement) {
-                icon.classList.remove('fa-expand');
-                icon.classList.add('fa-compress');
+                icon.className = 'fas fa-compress';
+                iconLightbox.className = 'fas fa-compress';
                 fullscreenBtn.title = "Wyjdź z pełnego ekranu";
+                fullscreenBtnLightbox.title = "Wyjdź z pełnego ekranu";
             } else {
-                icon.classList.remove('fa-compress');
-                icon.classList.add('fa-expand');
+                icon.className = 'fas fa-expand';
+                iconLightbox.className = 'fas fa-expand';
                 fullscreenBtn.title = "Pełny ekran";
+                fullscreenBtnLightbox.title = "Pełny ekran";
             }
         }
 
         function setupLightboxListeners() {
             fullscreenBtn.addEventListener('click', toggleFullScreen);
+            fullscreenBtnLightbox.addEventListener('click', toggleFullScreen);
             document.addEventListener('fullscreenchange', updateFullscreenIcon);
             document.getElementById('lightbox-fxBtn').addEventListener('click', toggleFx);
             document.getElementById('lightbox-darkModeBtn').addEventListener('click', toggleDarkMode);
@@ -1796,7 +1839,6 @@
             };
         }
         const debouncedRender = debounce(() => {
-            updatePaginationOptions();
             renderGuides();
         }, 250);
         window.addEventListener("resize", debouncedRender);
