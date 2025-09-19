@@ -1581,30 +1581,23 @@
 
         /**
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
-         * Zwraca Promise, który rozwiązuje się po zakończeniu animacji.
          */
         function intro() {
-            return new Promise(resolve => {
-                // ZMIANA: Usunęliśmy stąd logikę ukrywania elementów.
-                // Teraz ta funkcja odpowiada tylko za animację.
+            // ZMIANA: Usunęliśmy 'return new Promise'. Funkcja teraz tylko uruchamia animację.
+            const overlay = document.createElement('div');
+            overlay.id = 'crt-overlay';
+            document.body.appendChild(overlay);
 
-                // Stwórz i aktywuj nakładkę CRT
-                const overlay = document.createElement('div');
-                overlay.id = 'crt-overlay';
-                document.body.appendChild(overlay);
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 20);
 
-                setTimeout(() => {
-                    overlay.classList.add('active');
-                }, 20);
-
-                // Zakończ po czasie trwania animacji
-                setTimeout(() => {
-                    if (document.body.contains(overlay)) {
-                        document.body.removeChild(overlay);
-                    }
-                    resolve();
-                }, 1600);
-            });
+            // Zaplanuj usunięcie nakładki po zakończeniu animacji
+            setTimeout(() => {
+                if (document.body.contains(overlay)) {
+                    document.body.removeChild(overlay);
+                }
+            }, 1600);
         }
 
         /**
@@ -1843,10 +1836,12 @@
     </div>
 
     <script>
+        // v1.4.4 Animation fixed
+
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.3',
+            version: 'v1.4.4',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -2571,12 +2566,12 @@
         function renderGuides() {
             const animationsOn = !document.body.classList.contains('no-animation');
             const footer = document.querySelector('.footer');
-            const oldGuides = Array.from(guideList.children);
-            const animationDuration = 200; // Czas animacji 'fadeOutUp' w ms
 
-            // Funkcja wewnętrzna, która renderuje nową zawartość
+            // ZMIANA: Usunięto zmienne 'oldGuides' i 'animationDuration', bo nie są już potrzebne.
+
+            // Ta funkcja wewnętrzna pozostaje bez większych zmian, jest w porządku.
             const renderNewContent = () => {
-                guideList.innerHTML = ""; // Czyścimy kontener dopiero teraz
+                // guideList.innerHTML = ""; // Natychmiastowe wyczyszczenie starych okładek.
                 applyFilters();
                 updatePaginationOptions();
 
@@ -2590,21 +2585,30 @@
                 pageItems.forEach((guide, index) => {
                     const div = document.createElement("div");
                     div.className = "guide";
-                    guideList.appendChild(div);
                     div.innerHTML = createGuideHtml(guide);
+
+                    // ZMIANA: Zmieniliśmy kolejność operacji
                     if (animationsOn) {
+                        // 1. NAJPIERW uczyń element niewidzialnym
                         div.style.opacity = 0;
+
+                        // 2. DOPIERO TERAZ dodaj go do strony
+                        guideList.appendChild(div);
+
+                        // 3. Po chwili uruchom animację pojawiania się
                         setTimeout(() => {
                             div.classList.add("animate-in");
                             div.style.animationDelay = `${index * 0.05}s`;
-                        }, 20); // Małe opóźnienie dla pewności
+                        }, 20);
+                    } else {
+                        // Jeśli animacje są wyłączone, po prostu dodaj element
+                        guideList.appendChild(div);
                     }
                 });
 
                 renderPagination(totalPages);
                 document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
 
-                // Pokazujemy ponownie stopkę i paginację po pojawieniu się nowych elementów
                 const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
                 setTimeout(() => {
                     if (animationsOn) {
@@ -2617,7 +2621,7 @@
                 }, revealDelay);
             };
 
-            // Główna logika sterująca przejściem
+            // Ukrywamy stopkę i paginację przed rozpoczęciem rysowania.
             if (animationsOn) {
                 pagination.classList.remove('visible');
                 footer.classList.add('hidden-animated');
@@ -2626,12 +2630,11 @@
                 footer.style.visibility = 'hidden';
             }
 
-            if (animationsOn && oldGuides.length > 0) {
-                oldGuides.forEach(guide => guide.classList.add('fade-out'));
-                setTimeout(renderNewContent, animationDuration);
-            } else {
-                renderNewContent();
-            }
+            // ZMIANA: Usunęliśmy całą logikę 'if/else' z animacją 'fade-out'.
+            // Teraz po prostu od razu wywołujemy rysowanie nowej zawartości.
+            // Animacja "rysowania" jest zawarta w samej funkcji renderNewContent.
+            guideList.innerHTML = '';
+            renderNewContent();
         }
 
         function renderPagination(totalPages) {
@@ -3365,22 +3368,26 @@
                 document.body.classList.remove('video-ready');
             });
         });
-        searchInput.addEventListener("input", async () => {
+        searchInput.addEventListener("input", () => { // ZMIANA: Usunięto 'async'
             const query = searchInput.value.toLowerCase().trim();
 
             // --- EASTER EGG TRIGGER ---
             if (query === 'reset' || query === 'clear') {
-                const command = query; // Zapisujemy komendę
-                searchInput.value = ''; // Czyścimy pole natychmiast
+                const command = query;
+                searchInput.value = '';
 
-                await intro(); // Czekamy na zakończenie animacji intro
+                // ZMIANA: Uruchamiamy animację, ale NIE czekamy na jej koniec (usunięto 'await').
+                intro();
 
+                // Logika resetu lub czyszczenia ekranu wykonuje się OD RAZU,
+                // w tle, gdy użytkownik ogląda animację.
                 if (command === 'reset') {
-                    hardReset();
+                    // Dajemy minimalne opóźnienie, aby animacja na 100% zdążyła zasłonić ekran przed przeładowaniem strony.
+                    setTimeout(hardReset, 1300);
                 } else if (command === 'clear') {
                     clearScreen();
                 }
-                return; // Zakończ działanie, aby nie filtrować normalnie
+                return;
             }
             // --- Koniec logiki Easter Egga ---
 
