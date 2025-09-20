@@ -596,18 +596,8 @@
 
         .guide-list {
             display: grid;
-            
-            /* Standardowy wynik */
-            /* grid-template-columns: repeat(auto-fill, 250px);
-            justify-content: center;
-            gap: 20px;
-            width: 90%;
-            max-width: 1920px;
-            margin: 0 auto; */
-            /* transition: opacity 0.4s ease-out; */
-
-            /* Dodatkowy mniejszy widok */
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, 257px); 
+            /* Tym parametrem będziemy sterować z js -> kod do napisania, settings from config section */
             justify-content: center;
             gap: 20px;
             width: 90%;
@@ -710,9 +700,8 @@
             flex-direction: column;
             justify-content: space-between;
             text-align: center;
-            /* USUŃ TĘ LINIĘ: Pozwalamy, aby kafelek dopasował się do elastycznej siatki */
-            /* width: 250px; */
             box-sizing: border-box;
+            /* width: 120px; */
         }
 
         .guide:hover {
@@ -1810,6 +1799,9 @@
                 defaultShowText: true,
                 defaultViewExpanded: false,
                 defaultVideoExpanded: false,
+                defaultBoxWidth1: '257px', // To moja propozycja nowej stałej, możesz zrobić jedną z trzema wartościami, albo dostosować nazwę, no i napisz kod do tego
+                defaultBoxWidth2: '217px',
+                defaultBoxWidth3: '127px',
                 defaultLabelsVisible: true,
                 defaultRows: 4,
                 defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
