@@ -1,4 +1,4 @@
- // --- KONFIGURACJA ---
+        // --- KONFIGURACJA ---
         const config = {
             version: 'v1.2.0',
             global: {
@@ -14,20 +14,20 @@
             },
             pageSettings: {
                 pageKey: 'poradnikiDoGier',
-                defaultBgVideo: 3,
+                defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 16,
+                bgVideoEndNum: 23,
                 defaultAnimation: 2,
                 defaultView: 2,
                 defaultFormat: "pdf",
                 defaultSort: "shuffle",
                 defaultRows: 5,
                 predefinedFilters: [
-                    { label: "Poradniki Gry-Online", search: "gry online" },
+                    { label: "Poradniki Gry-Online", search: "online" },
                     { label: "Poradniki PrzygodoMania.pl", search: "mania" },
                     { label: "Instrukcje do gier", search: "instr" },
                 ],
-                pageTitle: "Poradniki do Gier",
+                pageTitle: "Poradniki ▪ do ▪ Gier",
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: true,

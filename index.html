@@ -596,7 +596,7 @@
 
         .guide-list {
             display: grid;
-            grid-template-columns: repeat(auto-fill, 257px); 
+            grid-template-columns: repeat(auto-fill, 257px);
             /* Tym parametrem będziemy sterować z js -> kod do napisania, settings from config section */
             justify-content: center;
             gap: 20px;
@@ -1651,8 +1651,8 @@
                     class="fas fa-arrows-alt-v"></i></span>
             <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
                     class="fas fa-arrows-alt-h"></i></span>
-            <span id="viewBtn-reset" class="multi-button-child" title="Resetuj filtry widoku"><i
-                    class="fas fa-undo"></i></span>
+            <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
+                    class="fas fa-columns"></i></span>
         </div>
 
         <button id="videoBtn" class="dir-db-btn multi-button">
@@ -1758,12 +1758,12 @@
     </div>
 
     <script>
-        // v1.4.5 Animations fixes
+        // v1.4.6 New views
 
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.5',
+            version: 'v1.4.7',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1801,7 +1801,8 @@
                 defaultVideoExpanded: false,
                 defaultBoxWidth1: '257px', // To moja propozycja nowej stałej, możesz zrobić jedną z trzema wartościami, albo dostosować nazwę, no i napisz kod do tego
                 defaultBoxWidth2: '217px',
-                defaultBoxWidth3: '127px',
+                defaultBoxWidth3: '172px',
+                defaultBoxWidth4: '127px',
                 defaultLabelsVisible: true,
                 defaultRows: 4,
                 defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
@@ -1908,6 +1909,7 @@
             isLightboxMinimized = false;
         let guideDimensionsCache = {};
         let pausedTime = 0;
+        let currentBoxWidthIndex = 0;
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
@@ -2054,6 +2056,8 @@
             areLabelsVisible = savedLabels !== null ? JSON.parse(savedLabels) : config.pageSettings.defaultLabelsVisible;
             // Wczytaj zapisany czas pauzy
             pausedTime = parseFloat(getFromLocalStorage('video_paused_time')) || 0;
+            const savedWidthIndex = getFromLocalStorage(`box_width_index_${config.pageSettings.pageKey}`);
+            currentBoxWidthIndex = savedWidthIndex !== null ? parseInt(savedWidthIndex) : 0;
         }
 
         function getFileExtension(filename) {
@@ -2236,46 +2240,93 @@
             });
         }
 
+        /**
+ * Oblicza, ile elementów mieści się w jednym wierszu na podstawie aktualnej
+ * szerokości okna i wybranego rozmiaru miniaturek.
+ * @returns {number} Liczba kolumn (elementów w wierszu).
+ */
+        function calculateItemsPerRow() {
+            // Tablica z dostępnymi szerokościami z konfiguracji
+            const widths = [
+                config.pageSettings.defaultBoxWidth1,
+                config.pageSettings.defaultBoxWidth2,
+                config.pageSettings.defaultBoxWidth3,
+                config.pageSettings.defaultBoxWidth4
+            ];
+            // Pobierz aktualnie wybraną szerokość (np. "257px")
+            const currentWidthString = widths[currentBoxWidthIndex];
+            // Wyciągnij samą liczbę z tekstu i zamień na integer
+            const currentWidth = parseInt(currentWidthString, 10);
+            const guideGap = 20; // Odstęp między elementami jest stały
+
+            // Oblicz, ile elementów (szerokość + odstęp) zmieści się w kontenerze
+            const items = Math.floor(guideList.clientWidth / (currentWidth + guideGap));
+
+            // Zwróć co najmniej 1, aby uniknąć dzielenia przez zero
+            return Math.max(1, items);
+        }
+
+        /**
+ * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
+ * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
+ */
+        /**
+ * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
+ * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
+ */
         function updatePaginationOptions() {
             const oldItemsPerPage = itemsPerPage;
-            const guideWidth = 250,
-                guideGap = 20;
-            itemsPerRow = Math.max(1, Math.floor(guideList.clientWidth / (guideWidth + guideGap)));
-            itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
+
+            itemsPerRow = calculateItemsPerRow();
 
             const totalItems = filteredGuides.length;
             const totalRowsAvailable = totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
-            const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100, 1000];
+
+            itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
+            const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100];
 
             rowOptions.forEach((rows) => {
-                if (totalRowsAvailable > 0 && rows > totalRowsAvailable && rows !== 1) return;
+                if (totalRowsAvailable > 0 && rows > totalRowsAvailable && rows !== 1) {
+                    return;
+                }
                 const option = document.createElement("option");
                 option.value = rows;
                 option.textContent = `Wierszy: ${rows}`;
                 itemsPerPageSelector.appendChild(option);
             });
 
-            const options = Array.from(itemsPerPageSelector.options).map(o => o.value).filter(v => v);
-            let targetRowCount = selectedRowCount;
-
-            if (!options.includes(String(targetRowCount))) {
-                targetRowCount = config.pageSettings.defaultRows;
-                if (!options.includes(String(targetRowCount))) {
-                    targetRowCount = options.length > 0 ? options[0] : 1;
-                }
+            if (totalRowsAvailable > Math.max(...rowOptions) && totalRowsAvailable > 0) {
+                const allOption = document.createElement("option");
+                allOption.value = totalRowsAvailable;
+                allOption.textContent = `Wszystko (${totalRowsAvailable})`;
+                itemsPerPageSelector.appendChild(allOption);
             }
 
-            itemsPerPageSelector.value = targetRowCount;
-            selectedRowCount = parseInt(targetRowCount) || 1;
+            const allAvailableOptions = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value)).filter(v => !isNaN(v));
+
+            if (allAvailableOptions.includes(selectedRowCount)) {
+                itemsPerPageSelector.value = selectedRowCount;
+            } else {
+                const closestOption = allAvailableOptions.slice().reverse().find(opt => opt <= selectedRowCount) || allAvailableOptions[0] || 1;
+                itemsPerPageSelector.value = closestOption;
+            }
+
+            selectedRowCount = parseInt(itemsPerPageSelector.value) || 1;
             itemsPerPage = selectedRowCount * itemsPerRow;
 
+            // --- POPRAWKA ---
+            // Zmieniamy logikę przeliczania strony, aby uniknąć "ucinania" wierszy.
             if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
                 const firstItemIndex = (currentPage - 1) * (oldItemsPerPage || itemsPerPage);
-                currentPage = Math.max(1, Math.floor(firstItemIndex / itemsPerPage) + 1);
+
+                // Nowa, bezpieczniejsza logika:
+                // Jeśli dzielenie daje resztę, to znaczy, że jesteśmy "w trakcie" strony,
+                // więc zaokrąglamy w górę, aby na niej pozostać.
+                currentPage = Math.max(1, Math.ceil((firstItemIndex + 1) / itemsPerPage));
             }
+            // --- KONIEC POPRAWKI ---
         }
-
-
+        
         function loadAndParseFile(file) {
             const r = new FileReader();
             r.onload = (e) => init(e.target.result);
@@ -2714,8 +2765,23 @@
             randomSelector.value = "";
         }
 
-        // --- NOWA LOGIKA PRZYCISKÓW MENU ---
+        function cycleBoxWidth() {
+            // Zmień 3 na 4, aby cykl obejmował indeksy 0, 1, 2, 3
+            currentBoxWidthIndex = (currentBoxWidthIndex + 1) % 4;
+            saveToLocalStorage(`box_width_index_${config.pageSettings.pageKey}`, currentBoxWidthIndex);
 
+            const widths = [
+                config.pageSettings.defaultBoxWidth1,
+                config.pageSettings.defaultBoxWidth2,
+                config.pageSettings.defaultBoxWidth3,
+                config.pageSettings.defaultBoxWidth4 // <-- DODAJ TĘ LINIĘ
+            ];
+            guideList.style.gridTemplateColumns = `repeat(auto-fill, ${widths[currentBoxWidthIndex]})`;
+
+            renderGuides();
+        }
+
+        // --- NOWA LOGIKA PRZYCISKÓW MENU ---
         let viewState = {
             covers: true,
             text: true
@@ -2735,6 +2801,13 @@
             const viewBtnText = document.getElementById('viewBtn-text');
             if (viewBtnCovers) viewBtnCovers.classList.toggle('active-play', viewState.covers);
             if (viewBtnText) viewBtnText.classList.toggle('active-play', viewState.text);
+            const widths = [
+                config.pageSettings.defaultBoxWidth1,
+                config.pageSettings.defaultBoxWidth2,
+                config.pageSettings.defaultBoxWidth3,
+                config.pageSettings.defaultBoxWidth4
+            ];
+            guideList.style.gridTemplateColumns = `repeat(auto-fill, ${widths[currentBoxWidthIndex]})`;
             renderGuides();
         }
 
@@ -2769,14 +2842,8 @@
                         renderGuides();
                         break;
                     case 'viewBtn-reset':
-                        orientationFilterState = null;
-                        viewState = {
-                            covers: true,
-                            text: true
-                        };
-                        saveToLocalStorage('view_show_covers', viewState.covers);
-                        saveToLocalStorage('view_show_text', viewState.text);
-                        applyView();
+                    case 'viewBtn-size': // Zmieniona nazwa id
+                        cycleBoxWidth(); // Wywołanie nowej funkcji
                         break;
                 }
                 document.getElementById('viewBtn-vertical').classList.toggle('active-play', orientationFilterState === 'vertical');
