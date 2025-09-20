@@ -596,8 +596,18 @@
 
         .guide-list {
             display: grid;
-            /* ZMIANA: Zastąp starą definicję kolumn tą nową, elastyczną */
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            
+            /* Standardowy wynik */
+            /* grid-template-columns: repeat(auto-fill, 250px);
+            justify-content: center;
+            gap: 20px;
+            width: 90%;
+            max-width: 1920px;
+            margin: 0 auto; */
+            /* transition: opacity 0.4s ease-out; */
+
+            /* Dodatkowy mniejszy widok */
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             justify-content: center;
             gap: 20px;
             width: 90%;
@@ -1353,98 +1363,6 @@
                 order: 5;
                 /* Dodajemy odstęp, aby oddzielić go od górnego wiersza */
                 margin-top: 10px;
-            }
-        }
-
-        /* --- EASTER EGG: CRT Effect Styles --- */
-        #crt-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 10001;
-            /* Wyżej niż preloader */
-            background: #eee;
-            /* <-- Zmienione z #111 */
-            opacity: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        html.dark-mode #crt-overlay {
-            background: #111;
-            /* <-- Zmienione z #eee */
-        }
-
-        #crt-overlay.active {
-            opacity: 1;
-            animation: crt-flicker 0.1s infinite, crt-collapse 1s 0.5s ease-out forwards;
-        }
-
-        #crt-overlay::before {
-            content: ' ';
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            /* Ten gradient był wcześniej w trybie ciemnym */
-            background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(200, 200, 200, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
-            z-index: 2;
-            background-size: 100% 4px, 3px 100%;
-            animation: crt-scanline 2s linear infinite;
-        }
-
-        html.dark-mode #crt-overlay::before {
-            /* Ten gradient był wcześniej w trybie jasnym */
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-            background-size: 100% 4px, 3px 100%;
-        }
-
-
-        @keyframes crt-flicker {
-            0% {
-                opacity: 0.95;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.98;
-            }
-        }
-
-        @keyframes crt-scanline {
-            0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(100%);
-            }
-        }
-
-        @keyframes crt-collapse {
-            0% {
-                transform: scale(1, 1);
-            }
-
-            30% {
-                transform: scale(1.05, 1);
-            }
-
-            80% {
-                transform: scale(0.001, 1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(0.001, 0);
-                opacity: 0;
             }
         }
 
