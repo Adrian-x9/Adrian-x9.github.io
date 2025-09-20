@@ -1830,12 +1830,12 @@ Do not remove these comments. -->
     </div>
 
     <script>
-        // v1.4.6 New views
+        // v1.4.8 bug fixes
 
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.7',
+            version: 'v1.4.8',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1873,8 +1873,7 @@ Do not remove these comments. -->
                 defaultVideoExpanded: false,
                 defaultBoxWidth1: '257px', // To moja propozycja nowej stałej, możesz zrobić jedną z trzema wartościami, albo dostosować nazwę, no i napisz kod do tego
                 defaultBoxWidth2: '217px',
-                defaultBoxWidth3: '172px',
-                defaultBoxWidth4: '127px',
+                defaultBoxWidth3: '137px',
                 defaultLabelsVisible: true,
                 defaultRows: 4,
                 defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
@@ -2322,8 +2321,7 @@ Do not remove these comments. -->
             const widths = [
                 config.pageSettings.defaultBoxWidth1,
                 config.pageSettings.defaultBoxWidth2,
-                config.pageSettings.defaultBoxWidth3,
-                config.pageSettings.defaultBoxWidth4
+                config.pageSettings.defaultBoxWidth3
             ];
             // Pobierz aktualnie wybraną szerokość (np. "257px")
             const currentWidthString = widths[currentBoxWidthIndex];
@@ -2339,26 +2337,25 @@ Do not remove these comments. -->
         }
 
         /**
- * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
- * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
- */
-        /**
- * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
- * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
- */
+         * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
+         * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
+         */
         function updatePaginationOptions() {
             const oldItemsPerPage = itemsPerPage;
 
+            // 1. Użyj nowej funkcji do pobrania POPRAWNEJ liczby kolumn
             itemsPerRow = calculateItemsPerRow();
 
             const totalItems = filteredGuides.length;
             const totalRowsAvailable = totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
 
+            // 2. Wyczyść i dynamicznie zbuduj listę wyboru wierszy
             itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
-            const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100];
+            const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100]; // Można dodać więcej opcji
 
             rowOptions.forEach((rows) => {
-                if (totalRowsAvailable > 0 && rows > totalRowsAvailable && rows !== 1) {
+                // Inteligentne dodawanie opcji: nie pokazuj opcji "10 wierszy", jeśli dostępne są tylko 3
+                if (totalRowsAvailable > 0 && rows > totalRowsAvailable && rows !== 1 && totalRowsAvailable > 0) {
                     return;
                 }
                 const option = document.createElement("option");
@@ -2367,38 +2364,37 @@ Do not remove these comments. -->
                 itemsPerPageSelector.appendChild(option);
             });
 
-            if (totalRowsAvailable > Math.max(...rowOptions) && totalRowsAvailable > 0) {
+            // Dodaj opcję "Wszystko", jeśli jest więcej niż jedna strona z opcjami
+            if (totalRowsAvailable > Math.max(...rowOptions)) {
                 const allOption = document.createElement("option");
                 allOption.value = totalRowsAvailable;
                 allOption.textContent = `Wszystko (${totalRowsAvailable})`;
                 itemsPerPageSelector.appendChild(allOption);
             }
 
+            // 3. Sprytnie wybierz aktywną opcję, aby widok był stabilny
             const allAvailableOptions = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value)).filter(v => !isNaN(v));
 
+            // Jeśli zapisany wybór jest wciąż dostępny, użyj go
             if (allAvailableOptions.includes(selectedRowCount)) {
                 itemsPerPageSelector.value = selectedRowCount;
-            } else {
-                const closestOption = allAvailableOptions.slice().reverse().find(opt => opt <= selectedRowCount) || allAvailableOptions[0] || 1;
+            }
+            // W przeciwnym razie wybierz największą dostępną opcję, która jest mniejsza lub równa zapisanemu wyborowi
+            else {
+                const closestOption = allAvailableOptions.reverse().find(opt => opt <= selectedRowCount) || allAvailableOptions[0] || 1;
                 itemsPerPageSelector.value = closestOption;
             }
 
             selectedRowCount = parseInt(itemsPerPageSelector.value) || 1;
             itemsPerPage = selectedRowCount * itemsPerRow;
 
-            // --- POPRAWKA ---
-            // Zmieniamy logikę przeliczania strony, aby uniknąć "ucinania" wierszy.
-            if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
+            // 4. Przelicz bieżącą stronę, aby użytkownik pozostał przy tych samych elementach
+            if (oldItemsPerPage !== itemsPerPage && filteredGuides.length > 0) {
                 const firstItemIndex = (currentPage - 1) * (oldItemsPerPage || itemsPerPage);
-
-                // Nowa, bezpieczniejsza logika:
-                // Jeśli dzielenie daje resztę, to znaczy, że jesteśmy "w trakcie" strony,
-                // więc zaokrąglamy w górę, aby na niej pozostać.
-                currentPage = Math.max(1, Math.ceil((firstItemIndex + 1) / itemsPerPage));
+                currentPage = Math.max(1, Math.floor(firstItemIndex / itemsPerPage) + 1);
             }
-            // --- KONIEC POPRAWKI ---
         }
-        
+
         function loadAndParseFile(file) {
             const r = new FileReader();
             r.onload = (e) => init(e.target.result);
@@ -2706,7 +2702,7 @@ Do not remove these comments. -->
                 setTimeout(() => {
                     if (animationsOn) {
                         footer.classList.remove('hidden-animated');
-                        pagination.classList.add('visible');
+                        // pagination.classList.add('visible');
                     } else {
                         pagination.style.visibility = 'visible';
                         footer.style.visibility = 'visible';
@@ -2838,18 +2834,18 @@ Do not remove these comments. -->
         }
 
         function cycleBoxWidth() {
-            // Zmień 3 na 4, aby cykl obejmował indeksy 0, 1, 2, 3
-            currentBoxWidthIndex = (currentBoxWidthIndex + 1) % 4;
+            // Cyklicznie zmienia indeks szerokości (0 -> 1 -> 2 -> 0)
+            currentBoxWidthIndex = (currentBoxWidthIndex + 1) % 3;
             saveToLocalStorage(`box_width_index_${config.pageSettings.pageKey}`, currentBoxWidthIndex);
 
             const widths = [
                 config.pageSettings.defaultBoxWidth1,
                 config.pageSettings.defaultBoxWidth2,
-                config.pageSettings.defaultBoxWidth3,
-                config.pageSettings.defaultBoxWidth4 // <-- DODAJ TĘ LINIĘ
+                config.pageSettings.defaultBoxWidth3
             ];
             guideList.style.gridTemplateColumns = `repeat(auto-fill, ${widths[currentBoxWidthIndex]})`;
 
+            // Przelicz paginację i przerysuj widok, aby dopasować liczbę kolumn
             renderGuides();
         }
 
@@ -2876,8 +2872,7 @@ Do not remove these comments. -->
             const widths = [
                 config.pageSettings.defaultBoxWidth1,
                 config.pageSettings.defaultBoxWidth2,
-                config.pageSettings.defaultBoxWidth3,
-                config.pageSettings.defaultBoxWidth4
+                config.pageSettings.defaultBoxWidth3
             ];
             guideList.style.gridTemplateColumns = `repeat(auto-fill, ${widths[currentBoxWidthIndex]})`;
             renderGuides();
