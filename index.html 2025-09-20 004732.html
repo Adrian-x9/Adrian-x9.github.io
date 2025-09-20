@@ -99,8 +99,6 @@
             transition: background-color 0.5s ease, color 0.3s ease;
             min-height: 100vh;
             box-sizing: border-box;
-            overscroll-behavior-y: contain;
-            /* <-- POPRAWKA 2: Nowoczesna blokada "pull-to-refresh" */
         }
 
         body.no-animation .guide.animate-in,
@@ -596,13 +594,13 @@
 
         .guide-list {
             display: grid;
-            /* ZMIANA: Zastąp starą definicję kolumn tą nową, elastyczną */
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, 250px);
             justify-content: center;
             gap: 20px;
             width: 90%;
             max-width: 1920px;
             margin: 0 auto;
+            /* transition: opacity 0.4s ease-out; */
         }
 
         .guide-list.random-draw {
@@ -630,7 +628,7 @@
             transform: scale(1);
         }
 
-        .guide-list:not(.only-covers) .guide.animate-in .guide-cover {
+        .guide.animate-in .guide-cover {
             transition: none;
             opacity: 0;
             transform: scale(0.7);
@@ -700,8 +698,7 @@
             flex-direction: column;
             justify-content: space-between;
             text-align: center;
-            /* USUŃ TĘ LINIĘ: Pozwalamy, aby kafelek dopasował się do elastycznej siatki */
-            /* width: 250px; */
+            width: 250px;
             box-sizing: border-box;
         }
 
@@ -1297,12 +1294,6 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* <-- POPRAWKA 1: Ukrywanie kontrolek w widoku zminimalizowanym --> */
-        .controls.minimized-view>input[type="text"],
-        .controls.minimized-view>select {
-            display: none;
-        }
-
         @media (max-width: 768px) {
             #lightbox-controls {
                 padding-bottom: 65px;
@@ -1365,16 +1356,14 @@
             height: 100vh;
             z-index: 10001;
             /* Wyżej niż preloader */
-            background: #eee;
-            /* <-- Zmienione z #111 */
+            background: #111;
             opacity: 0;
             pointer-events: none;
             overflow: hidden;
         }
 
         html.dark-mode #crt-overlay {
-            background: #111;
-            /* <-- Zmienione z #eee */
+            background: #eee;
         }
 
         #crt-overlay.active {
@@ -1390,16 +1379,14 @@
             left: 0;
             bottom: 0;
             right: 0;
-            /* Ten gradient był wcześniej w trybie ciemnym */
-            background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(200, 200, 200, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
             z-index: 2;
             background-size: 100% 4px, 3px 100%;
             animation: crt-scanline 2s linear infinite;
         }
 
         html.dark-mode #crt-overlay::before {
-            /* Ten gradient był wcześniej w trybie jasnym */
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background: linear-gradient(rgba(255, 255, 255, 0) 50%, rgba(200, 200, 200, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
             background-size: 100% 4px, 3px 100%;
         }
 
@@ -1593,24 +1580,34 @@
         })();
 
         /**
-         * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
-         */
+ * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
+ * Zwraca Promise, który rozwiązuje się po zakończeniu animacji.
+ */
         function intro() {
-            // ZMIANA: Usunęliśmy 'return new Promise'. Funkcja teraz tylko uruchamia animację.
-            const overlay = document.createElement('div');
-            overlay.id = 'crt-overlay';
-            document.body.appendChild(overlay);
+            return new Promise(resolve => {
+                // Ukryj wszystkie główne elementy interfejsu
+                const elementsToHide = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
+                elementsToHide.forEach(selector => {
+                    const el = document.querySelector(selector);
+                    if (el) el.style.opacity = '0';
+                });
 
-            setTimeout(() => {
-                overlay.classList.add('active');
-            }, 20);
+                // Stwórz i aktywuj nakładkę CRT
+                const overlay = document.createElement('div');
+                overlay.id = 'crt-overlay';
+                document.body.appendChild(overlay);
 
-            // Zaplanuj usunięcie nakładki po zakończeniu animacji
-            setTimeout(() => {
-                if (document.body.contains(overlay)) {
+                // Daj przeglądarce chwilę na dodanie elementu przed animacją
+                setTimeout(() => {
+                    overlay.classList.add('active');
+                }, 20);
+
+                // Zakończ po czasie trwania animacji
+                setTimeout(() => {
                     document.body.removeChild(overlay);
-                }
-            }, 1600);
+                    resolve();
+                }, 1600); // Czas musi być nieco dłuższy niż animacja `crt-collapse`
+            });
         }
 
         /**
@@ -1631,13 +1628,6 @@
          * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
          */
         function clearScreen() {
-            // ZMIANA: Definiujemy elementy i od razu je ukrywamy.
-            const elementsToToggle = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
-            elementsToToggle.forEach(selector => {
-                const el = document.querySelector(selector);
-                if (el) el.style.display = 'none'; // Używamy 'display' zamiast 'opacity'
-            });
-
             // Stwórz przycisk zamykania
             const closeBtn = document.createElement('button');
             closeBtn.id = 'clear-close-btn';
@@ -1647,19 +1637,21 @@
 
             // Dodaj logikę do przycisku
             closeBtn.addEventListener('click', () => {
-                // ZMIANA: Przywracamy elementy, usuwając styl 'display: none'.
-                elementsToToggle.forEach(selector => {
+                // Pokaż ponownie wszystkie ukryte elementy
+                const elementsToShow = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
+                elementsToShow.forEach(selector => {
                     const el = document.querySelector(selector);
+                    // Sprawdzamy czy element istnieje i przywracamy mu domyślną widoczność
                     if (el) {
-                        el.style.display = ''; // To przywróci domyślną wartość z CSS (np. 'flex', 'grid')
+                        el.style.opacity = '1';
                     }
                 });
 
+                // Usuń przycisk zamykania
                 document.body.removeChild(closeBtn);
+                // Odśwież widok kafelków
                 renderGuides();
-            }, {
-                once: true
-            });
+            }, { once: true }); // Listener uruchomi się tylko raz
         }
     </script>
 </head>
@@ -1851,12 +1843,10 @@
     </div>
 
     <script>
-        // v1.4.5 Animations fixes
-
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.5',
+            version: 'v1.4.2',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1864,17 +1854,10 @@
             logoRotator: {
                 enabled: true,
                 interval: 4500,
-                logos: [{
-                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
-                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
-                    href: ".base-system/about.html",
-                    alt: "Logo VisuDir"
-                }, {
-                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
-                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
-                    href: "https://www.ade.pl",
-                    alt: "Logo ADE"
-                }]
+                logos: [
+                    { srcLight: ".base-system/gfx/interface/VisuDir_small_light.png", srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png", href: ".base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: ".base-system/gfx/interface/ADE_small_light.png", srcDark: ".base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                ]
             },
             pageSettings: {
                 pageKey: 'indexMaxi',
@@ -1895,28 +1878,15 @@
                 defaultLabelsVisible: true,
                 defaultRows: 4,
                 defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
-                predefinedFilters: [{
-                    label: "ADE",
-                    search: "ade"
-                }, {
-                    label: "E-booki",
-                    search: "e-book"
-                }, {
-                    label: "Galerie",
-                    search: "galeri"
-                }, {
-                    label: "Hiszpania",
-                    search: "Hiszpania"
-                }, {
-                    label: "Niemcy",
-                    search: "Niemcy"
-                }, {
-                    label: "Polska",
-                    search: "Polska"
-                }, {
-                    label: "Poradniki",
-                    search: "Poradniki"
-                },],
+                predefinedFilters: [
+                    { label: "ADE", search: "ade" },
+                    { label: "E-booki", search: "e-book" },
+                    { label: "Galerie", search: "galeri" },
+                    { label: "Hiszpania", search: "Hiszpania" },
+                    { label: "Niemcy", search: "Niemcy" },
+                    { label: "Polska", search: "Polska" },
+                    { label: "Poradniki", search: "Poradniki" },
+                ],
             },
             paths: {
                 url404: ".base-system/404.html",
@@ -1935,41 +1905,41 @@
 
         // --- File database ---
         const dataFromFile = `
-17.09.2025  20:19               0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
-17.09.2025  19:00               0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
-17.09.2025  19:00               0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
-17.09.2025  20:21               0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
-17.09.2025  20:26               0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
-17.09.2025  20:26               0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
-17.09.2025  20:26               0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
-17.09.2025  22:51               0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
-17.09.2025  19:59               0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
-17.09.2025  22:50               0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
-17.09.2025  22:50               0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
-17.09.2025  22:50               0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
-17.09.2025  22:50               0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
-17.09.2025  22:51               0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
-17.09.2025  22:51               0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
-17.09.2025  22:10               0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
-17.09.2025  22:50               0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
-17.09.2025  22:49               0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
-17.09.2025  18:41               0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
-17.09.2025  19:57               0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
-17.09.2025  19:58               0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
-17.09.2025  20:37               0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
-17.09.2025  18:40               0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
-17.09.2025  21:41               0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
-17.09.2025  21:47               0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
-17.09.2025  22:10               0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
-17.09.2025  22:10               0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
-17.09.2025  22:50               0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
-17.09.2025  22:50               0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
-17.09.2025  22:50               0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
-17.09.2025  20:20               0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
-17.09.2025  20:27               0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
+17.09.2025  20:19                 0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
+17.09.2025  19:00                 0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
+17.09.2025  19:00                 0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
+17.09.2025  20:21                 0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
+17.09.2025  20:26                 0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
+17.09.2025  20:26                 0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
+17.09.2025  20:26                 0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
+17.09.2025  22:51                 0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
+17.09.2025  19:59                 0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
+17.09.2025  22:50                 0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
+17.09.2025  22:50                 0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
+17.09.2025  22:50                 0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
+17.09.2025  22:50                 0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
+17.09.2025  22:51                 0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
+17.09.2025  22:51                 0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
+17.09.2025  22:10                 0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
+17.09.2025  22:50                 0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
+17.09.2025  22:49                 0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
+17.09.2025  18:41                 0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
+17.09.2025  19:57                 0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
+17.09.2025  19:58                 0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
+17.09.2025  20:37                 0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
+17.09.2025  18:40                 0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
+17.09.2025  21:41                 0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
+17.09.2025  21:47                 0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
+17.09.2025  22:10                 0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
+17.09.2025  22:10                 0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
+17.09.2025  22:50                 0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
+17.09.2025  22:50                 0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
+17.09.2025  22:50                 0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
+17.09.2025  20:20                 0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
+17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
         `;
         // --- Database end ---
         // --- End of copying / Kopiuj do tego miejsca ---
@@ -1982,20 +1952,16 @@
             playGuidesQueue = [];
         let currentPage = 1,
             itemsPerPage;
-        let playAnimationTimeout = null,
-            slideshowIsPlaying = false,
-            slideshowIsRandom = false,
+        let playAnimationTimeout = null, slideshowIsPlaying = false, slideshowIsRandom = false,
             currentSort,
             selectedRowCount;
         let playCurrentIndex = 0,
             itemsPerRow = 0;
         let orientationFilterState = null;
-        let lastPlayedGuide = null,
-            lastRandomPage = -1;
+        let lastPlayedGuide = null, lastRandomPage = -1;
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null;
-        let isMinimized = false,
-            isLightboxMinimized = false;
+        let isMinimized = false, isLightboxMinimized = false;
         let guideDimensionsCache = {};
         let pausedTime = 0;
 
@@ -2077,9 +2043,7 @@
                 // Upewnij się, że klasa video-ready jest dodawana przy każdym załadowaniu wideo
                 bgVideo.addEventListener("canplay", () => {
                     document.body.classList.add("video-ready");
-                }, {
-                    once: true
-                });
+                }, { once: true });
             }
             if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
                 localStorage.setItem(storageKey, videoNum);
@@ -2176,10 +2140,7 @@
                 };
             }
             const title = decodeURIComponent(parts[0].replace(/_/g, ' ').replace(/-/g, ' ')).replace(/\s*-\s*Poradnik(?:_do_gry)?\s*(?:GRY-OnLine|Gry-OnLine)?\s*/i, '').trim();
-            return {
-                title: title,
-                offlineDesc: null
-            };
+            return { title: title, offlineDesc: null };
         }
 
         function createDateFromStrings(dateStr, timeStr) {
@@ -2263,13 +2224,8 @@
                     }
                     if (sizeBytes === 0 && format !== 'link') continue;
                     const sizeMB = (sizeBytes / (1024 * 1024)).toFixed(2);
-                    const {
-                        title,
-                        offlineDesc
-                    } = parseGuideTitle(filename);
-                    let linkData = {
-                        description: offlineDesc
-                    };
+                    const { title, offlineDesc } = parseGuideTitle(filename);
+                    let linkData = { description: offlineDesc };
                     if (format === 'link' && location.protocol !== 'file:') {
                         try {
                             const response = await fetch(`${config.paths.dataFolderName}/${filename}`);
@@ -2328,8 +2284,7 @@
 
         function updatePaginationOptions() {
             const oldItemsPerPage = itemsPerPage;
-            const guideWidth = 250,
-                guideGap = 20;
+            const guideWidth = 250, guideGap = 20;
             itemsPerRow = Math.max(1, Math.floor(guideList.clientWidth / (guideWidth + guideGap)));
             itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
 
@@ -2461,9 +2416,7 @@
                 bgVideo.addEventListener('canplay', () => {
                     bgVideo.currentTime = pausedTime;
                     bgVideo.pause();
-                }, {
-                    once: true
-                });
+                }, { once: true });
             }
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
@@ -2530,10 +2483,7 @@
             currentPage = 1;
             // The selectedRowCount will be validated by updatePaginationOptions inside renderGuides
             orientationFilterState = null;
-            viewState = {
-                covers: true,
-                text: true
-            };
+            viewState = { covers: true, text: true };
             saveToLocalStorage('view_show_covers', viewState.covers);
             saveToLocalStorage('view_show_text', viewState.text);
             applyView();
@@ -2553,9 +2503,7 @@
                     window.location.href = targetUrl;
                     return;
                 }
-                fetch(filePath, {
-                    method: 'HEAD'
-                })
+                fetch(filePath, { method: 'HEAD' })
                     .then(response => {
                         window.location.href = response.ok ? targetUrl : fallbackUrl;
                     })
@@ -2586,10 +2534,7 @@
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-            let h = "",
-                i = "",
-                a = "",
-                w = "";
+            let h = "", i = "", a = "", w = "";
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
@@ -2626,12 +2571,12 @@
         function renderGuides() {
             const animationsOn = !document.body.classList.contains('no-animation');
             const footer = document.querySelector('.footer');
+            const oldGuides = Array.from(guideList.children);
+            const animationDuration = 200; // Czas animacji 'fadeOutUp' w ms
 
-            // ZMIANA: Usunięto zmienne 'oldGuides' i 'animationDuration', bo nie są już potrzebne.
-
-            // Ta funkcja wewnętrzna pozostaje bez większych zmian, jest w porządku.
+            // Funkcja wewnętrzna, która renderuje nową zawartość
             const renderNewContent = () => {
-                // guideList.innerHTML = ""; // Natychmiastowe wyczyszczenie starych okładek.
+                guideList.innerHTML = ""; // Czyścimy kontener dopiero teraz
                 applyFilters();
                 updatePaginationOptions();
 
@@ -2645,30 +2590,21 @@
                 pageItems.forEach((guide, index) => {
                     const div = document.createElement("div");
                     div.className = "guide";
+                    guideList.appendChild(div);
                     div.innerHTML = createGuideHtml(guide);
-
-                    // ZMIANA: Zmieniliśmy kolejność operacji
                     if (animationsOn) {
-                        // 1. NAJPIERW uczyń element niewidzialnym
                         div.style.opacity = 0;
-
-                        // 2. DOPIERO TERAZ dodaj go do strony
-                        guideList.appendChild(div);
-
-                        // 3. Po chwili uruchom animację pojawiania się
                         setTimeout(() => {
                             div.classList.add("animate-in");
                             div.style.animationDelay = `${index * 0.05}s`;
-                        }, 20);
-                    } else {
-                        // Jeśli animacje są wyłączone, po prostu dodaj element
-                        guideList.appendChild(div);
+                        }, 20); // Małe opóźnienie dla pewności
                     }
                 });
 
                 renderPagination(totalPages);
                 document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
 
+                // Pokazujemy ponownie stopkę i paginację po pojawieniu się nowych elementów
                 const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
                 setTimeout(() => {
                     if (animationsOn) {
@@ -2681,7 +2617,7 @@
                 }, revealDelay);
             };
 
-            // Ukrywamy stopkę i paginację przed rozpoczęciem rysowania.
+            // Główna logika sterująca przejściem
             if (animationsOn) {
                 pagination.classList.remove('visible');
                 footer.classList.add('hidden-animated');
@@ -2690,11 +2626,12 @@
                 footer.style.visibility = 'hidden';
             }
 
-            // ZMIANA: Usunęliśmy całą logikę 'if/else' z animacją 'fade-out'.
-            // Teraz po prostu od razu wywołujemy rysowanie nowej zawartości.
-            // Animacja "rysowania" jest zawarta w samej funkcji renderNewContent.
-            guideList.innerHTML = '';
-            renderNewContent();
+            if (animationsOn && oldGuides.length > 0) {
+                oldGuides.forEach(guide => guide.classList.add('fade-out'));
+                setTimeout(renderNewContent, animationDuration);
+            } else {
+                renderNewContent();
+            }
         }
 
         function renderPagination(totalPages) {
@@ -2765,7 +2702,6 @@
             container.appendChild(createBtn(`Ostatnia&nbsp;<i class="fas fa-angle-double-right"></i>`, currentPage === totalPages, () => (currentPage = totalPages)));
             pagination.appendChild(container);
         }
-
         function drawRandomGuides() {
             stopPlayAnimation();
             const count = parseInt(randomSelector.value);
@@ -2806,10 +2742,7 @@
 
         // --- NOWA LOGIKA PRZYCISKÓW MENU ---
 
-        let viewState = {
-            covers: true,
-            text: true
-        };
+        let viewState = { covers: true, text: true };
 
         function toggleFx() {
             const isActive = fxBtn.classList.toggle('active');
@@ -2860,10 +2793,7 @@
                         break;
                     case 'viewBtn-reset':
                         orientationFilterState = null;
-                        viewState = {
-                            covers: true,
-                            text: true
-                        };
+                        viewState = { covers: true, text: true };
                         saveToLocalStorage('view_show_covers', viewState.covers);
                         saveToLocalStorage('view_show_text', viewState.text);
                         applyView();
@@ -2924,11 +2854,10 @@
         }
 
         function updateVideoBtnUI() {
-            const buttons = [{
-                play: document.getElementById('videoBtn-play')
-            }, {
-                play: document.getElementById('lightbox-video-toggle')
-            }];
+            const buttons = [
+                { play: document.getElementById('videoBtn-play') },
+                { play: document.getElementById('lightbox-video-toggle') }
+            ];
             buttons.forEach(btnSet => {
                 if (!btnSet.play) return;
                 switch (videoBgState) {
@@ -2960,20 +2889,13 @@
         }
 
         function shuffleBackgroundVideo() {
-            const {
-                pageKey,
-                bgVideoStartNum,
-                bgVideoEndNum,
-                defaultBgVideo
-            } = config.pageSettings;
+            const { pageKey, bgVideoStartNum, bgVideoEndNum, defaultBgVideo } = config.pageSettings;
             const storageKey = `visudir_bg_video_${pageKey}`;
             const range = bgVideoEndNum - bgVideoStartNum;
             if (range < 1) return;
             const currentVideoNum = parseInt(localStorage.getItem(storageKey)) || defaultBgVideo;
             let newVideoNum;
-            do {
-                newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum;
-            } while (newVideoNum === currentVideoNum);
+            do { newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum; } while (newVideoNum === currentVideoNum);
             localStorage.setItem(storageKey, newVideoNum);
             initializeBackgroundVideo(currentTheme);
         }
@@ -2986,11 +2908,7 @@
                 return;
             }
 
-            const {
-                pageKey,
-                bgVideoStartNum,
-                bgVideoEndNum
-            } = config.pageSettings;
+            const { pageKey, bgVideoStartNum, bgVideoEndNum } = config.pageSettings;
             if (bgVideoEndNum - bgVideoStartNum < 1) return;
 
             const storageKey = `visudir_bg_video_${pageKey}`;
@@ -3010,9 +2928,7 @@
                 bgVideo.addEventListener('canplay', function onCanPlay() {
                     bgVideo.currentTime = pausedTime;
                     bgVideo.pause();
-                }, {
-                    once: true
-                });
+                }, { once: true });
             }
 
             updateVideoBtnUI();
@@ -3024,9 +2940,7 @@
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
             } else {
-                if (bgVideo.paused) {
-                    bgVideo.play();
-                }
+                if (bgVideo.paused) { bgVideo.play(); }
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
             }
@@ -3035,19 +2949,12 @@
 
         function toggleBackgroundVideoPlayback() {
             if (videoBgState === 'off') return;
-            if (bgVideo.paused) {
-                bgVideo.play();
-            } else {
-                bgVideo.pause();
-            }
+            if (bgVideo.paused) { bgVideo.play(); } else { bgVideo.pause(); }
             updateVideoBtnUI();
         }
 
         function resetVideoSettings() {
-            const {
-                pageKey,
-                defaultBgVideo
-            } = config.pageSettings;
+            const { pageKey, defaultBgVideo } = config.pageSettings;
             localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
 
             if (autoShuffleInterval) {
@@ -3094,9 +3001,7 @@
                         // Ustaw zapisany czas, a potem spauzuj
                         bgVideo.currentTime = pausedTime;
                         bgVideo.pause();
-                    }, {
-                        once: true
-                    });
+                    }, { once: true });
                 }
             }
         }
@@ -3193,7 +3098,8 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (isNav) { } else {
+                } else if (isNav) { }
+                else {
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
                 guide = playGuidesQueue[playCurrentIndex];
@@ -3217,9 +3123,7 @@
                 if (!nextGuide || ['mp4', 'avi'].includes(nextGuide.format)) continue;
                 const baseFilename = nextGuide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
                 const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-                if (hdPath) {
-                    (new Image()).src = hdPath;
-                }
+                if (hdPath) { (new Image()).src = hdPath; }
             }
         }
 
@@ -3241,40 +3145,20 @@
                     displayElement.src = directMediaPath;
                     displayElement.controls = true;
                     displayElement.autoplay = true;
-                    displayElement.onerror = () => {
-                        displayElement.poster = sdPath;
-                        displayElement.onerror = () => {
-                            displayElement.poster = fallbackCover;
-                            displayElement.onerror = null;
-                        };
-                    };
+                    displayElement.onerror = () => { displayElement.poster = sdPath; displayElement.onerror = () => { displayElement.poster = fallbackCover; displayElement.onerror = null; }; };
                 } else {
                     displayElement.src = hdPath || sdPath;
-                    displayElement.onerror = () => {
-                        displayElement.src = sdPath;
-                        displayElement.onerror = () => {
-                            displayElement.src = fallbackCover;
-                            displayElement.onerror = null;
-                        };
-                    };
+                    displayElement.onerror = () => { displayElement.src = sdPath; displayElement.onerror = () => { displayElement.src = fallbackCover; displayElement.onerror = null; }; };
                 }
                 const link = document.createElement('a');
                 if (guide.format === 'link') {
                     const targetUrl = decodeUrlFromFilename(guide.file);
                     link.href = targetUrl;
-                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) {
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    }
+                    if (!targetUrl.startsWith('.') && !targetUrl.startsWith('/')) { link.target = '_blank'; link.rel = 'noopener noreferrer'; }
                 } else {
                     const fileUrl = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`;
                     link.href = fileUrl;
-                    if (guide.format === 'pdf' || isVideo) {
-                        link.target = '_blank';
-                        link.rel = 'noopener noreferrer';
-                    } else {
-                        link.download = guide.file;
-                    }
+                    if (guide.format === 'pdf' || isVideo) { link.target = '_blank'; link.rel = 'noopener noreferrer'; } else { link.download = guide.file; }
                 }
                 link.appendChild(displayElement);
                 container.appendChild(link);
@@ -3335,19 +3219,10 @@
                 mediaElement.alt = "Podgląd obrazu";
                 if (hdPath) {
                     mediaElement.src = hdPath;
-                    mediaElement.onerror = () => {
-                        mediaElement.src = directPath;
-                        mediaElement.onerror = () => {
-                            mediaElement.src = fallbackCover;
-                            mediaElement.onerror = null;
-                        };
-                    };
+                    mediaElement.onerror = () => { mediaElement.src = directPath; mediaElement.onerror = () => { mediaElement.src = fallbackCover; mediaElement.onerror = null; }; };
                 } else {
                     mediaElement.src = directPath;
-                    mediaElement.onerror = () => {
-                        mediaElement.src = fallbackCover;
-                        mediaElement.onerror = null;
-                    };
+                    mediaElement.onerror = () => { mediaElement.src = fallbackCover; mediaElement.onerror = null; };
                 }
             }
             const link = document.createElement('a');
@@ -3367,16 +3242,10 @@
                 document.getElementById('lightbox-minimizeBtn').style.display = 'flex';
                 document.getElementById('fullscreenBtnLightbox').style.display = 'flex';
             };
-            const backdropClose = (e) => {
-                if (e.target === backdrop) close();
-            };
-            playCloseBtn.addEventListener("click", close, {
-                once: true
-            });
+            const backdropClose = (e) => { if (e.target === backdrop) close(); };
+            playCloseBtn.addEventListener("click", close, { once: true });
             setTimeout(() => {
-                backdrop.addEventListener("click", backdropClose, {
-                    once: true
-                });
+                backdrop.addEventListener("click", backdropClose, { once: true });
             }, 0);
         }
 
@@ -3447,29 +3316,16 @@
             document.getElementById('slideshow-play').addEventListener('click', toggleSlideshowPlayPause);
             document.getElementById('slideshow-shuffle').addEventListener('click', toggleSlideshowShuffle);
             document.getElementById('slideshow-stop').addEventListener('click', stopPlayAnimation);
-            document.getElementById('slideshow-next').addEventListener('click', () => {
-                if (!slideshowIsRandom) playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
-                scheduleNext(true);
-            });
-            document.getElementById('slideshow-prev').addEventListener('click', () => {
-                if (!slideshowIsRandom) playCurrentIndex = (playCurrentIndex - 1 + playGuidesQueue.length) % playGuidesQueue.length;
-                scheduleNext(true);
-            });
-            document.getElementById('slideshow-first').addEventListener('click', () => {
-                playCurrentIndex = 0;
-                scheduleNext(true);
-            });
-            document.getElementById('slideshow-last').addEventListener('click', () => {
-                playCurrentIndex = playGuidesQueue.length - 1;
-                scheduleNext(true);
-            });
+            document.getElementById('slideshow-next').addEventListener('click', () => { if (!slideshowIsRandom) playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length; scheduleNext(true); });
+            document.getElementById('slideshow-prev').addEventListener('click', () => { if (!slideshowIsRandom) playCurrentIndex = (playCurrentIndex - 1 + playGuidesQueue.length) % playGuidesQueue.length; scheduleNext(true); });
+            document.getElementById('slideshow-first').addEventListener('click', () => { playCurrentIndex = 0; scheduleNext(true); });
+            document.getElementById('slideshow-last').addEventListener('click', () => { playCurrentIndex = playGuidesQueue.length - 1; scheduleNext(true); });
         }
         setupLightboxListeners();
 
         backdrop.addEventListener("click", (e) => {
             if (e.target === backdrop && !backdrop.classList.contains('preview-active')) stopPlayAnimation();
         });
-
         function debounce(func, wait) {
             let timeout;
             return function (...args) {
@@ -3481,18 +3337,10 @@
                 timeout = setTimeout(later, wait);
             };
         }
-
-        // --- POPRAWKA 2: Zmieniona logika obsługi resize ---
-        let lastWindowWidth = window.innerWidth;
         const debouncedRender = debounce(() => {
-            // Odświeżaj siatkę tylko przy zmianie szerokości ekranu, ignorując zmiany wysokości (np. przez pasek adresu w mobilce)
-            if (window.innerWidth !== lastWindowWidth) {
-                lastWindowWidth = window.innerWidth;
-                renderGuides();
-            }
+            renderGuides();
         }, 250);
         window.addEventListener("resize", debouncedRender);
-
         window.addEventListener("pageshow", function (event) {
             if (event.persisted) {
                 applyFilters();
@@ -3517,26 +3365,22 @@
                 document.body.classList.remove('video-ready');
             });
         });
-        searchInput.addEventListener("input", () => { // ZMIANA: Usunięto 'async'
+        searchInput.addEventListener("input", async () => {
             const query = searchInput.value.toLowerCase().trim();
 
             // --- EASTER EGG TRIGGER ---
             if (query === 'reset' || query === 'clear') {
-                const command = query;
-                searchInput.value = '';
+                const command = query; // Zapisujemy komendę
+                searchInput.value = ''; // Czyścimy pole natychmiast
 
-                // ZMIANA: Uruchamiamy animację, ale NIE czekamy na jej koniec (usunięto 'await').
-                intro();
+                await intro(); // Czekamy na zakończenie animacji intro
 
-                // Logika resetu lub czyszczenia ekranu wykonuje się OD RAZU,
-                // w tle, gdy użytkownik ogląda animację.
                 if (command === 'reset') {
-                    // Dajemy minimalne opóźnienie, aby animacja na 100% zdążyła zasłonić ekran przed przeładowaniem strony.
-                    setTimeout(hardReset, 1300);
+                    hardReset();
                 } else if (command === 'clear') {
                     clearScreen();
                 }
-                return;
+                return; // Zakończ działanie, aby nie filtrować normalnie
             }
             // --- Koniec logiki Easter Egga ---
 
@@ -3582,7 +3426,28 @@
             }
         });
 
-        // --- POPRAWKA 2: Usunięto stary, nieefektywny kod do blokowania "pull-to-refresh" ---
+        // --- Blokada "Pull-to-Refresh" na urządzeniach mobilnych ---
+        let touchstartY = 0;
+
+        document.addEventListener('touchstart', e => {
+            // Zapisujemy pozycję startową dotyku
+            if (e.touches.length === 1) { // Upewniamy się, że to pojedynczy dotyk
+                touchstartY = e.touches[0].clientY;
+            }
+        }, { passive: false });
+
+        document.addEventListener('touchmove', e => {
+            if (e.touches.length === 1) {
+                const touchY = e.touches[0].clientY;
+                const isPullingDown = touchY > touchstartY;
+
+                // Jeśli jesteśmy na samej górze strony i próbujemy przewinąć jeszcze wyżej (gest odświeżenia)
+                if (window.scrollY === 0 && isPullingDown) {
+                    // Zablokuj domyślną akcję przeglądarki (odświeżenie)
+                    e.preventDefault();
+                }
+            }
+        }, { passive: false });        
     </script>
 </body>
 
