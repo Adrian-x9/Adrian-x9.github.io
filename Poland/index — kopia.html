@@ -125,7 +125,6 @@
         body.play-mode-active>.top-header,
         body.play-mode-active>.controls,
         body.play-mode-active>.guide-list-wrapper,
-        body.play-mode-active>.filter-controls,
         body.play-mode-active>.pagination,
         body.play-mode-active>.footer,
         body.play-mode-active>#fullscreenBtn {
@@ -348,23 +347,15 @@
             background-color: rgba(20, 20, 20, 0.5);
         }
 
-        .controls,
-        .filter-controls {
+        .controls {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 10px;
             margin-bottom: 20px;
-        }
-
-        .controls {
             opacity: 0;
             transform: translateY(-20px);
-        }
-
-        .filter-controls {
-            margin-top: 20px;
         }
 
         input,
@@ -477,6 +468,7 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* --- NOWE, UPORZĄDKOWANE STYLE KONTROLEK --- */
         input,
         select {
             border-color: #808080;
@@ -601,6 +593,10 @@
             text-shadow: none !important;
         }
 
+        /********************************************/
+        /* NOWE STYLE DLA PAGINACJI CSS SCROLL    */
+        /********************************************/
+
         .guide-list-wrapper {
             width: 90%;
             max-width: 1920px;
@@ -621,21 +617,24 @@
             display: none;
         }
 
-        .guide-list-wrapper+.filter-controls {
-            margin-top: 20px;
+        .guide-list-wrapper+.footer {
+            margin-top: 35px;
         }
 
         .guide-page {
-            box-sizing: border-box;
             flex: 0 0 100%;
             scroll-snap-align: start;
             scroll-snap-stop: always;
+
             display: grid;
+            /* ZMIANA: Używamy zmiennej CSS do dynamicznego ustawiania liczby wierszy */
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
+            /* ZMIANA: Szerokość kolumn jest teraz dynamiczna */
             grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 257px), 1fr));
             justify-content: center;
             gap: 20px;
             padding: 2px;
+            /* Drobny padding, by uniknąć ucinania cienia */
         }
 
         .guide-list.random-draw {
@@ -644,6 +643,10 @@
             flex-wrap: wrap;
             overflow-x: hidden;
         }
+
+        /********************************************/
+        /* KONIEC STYLÓW DLA PAGINACJI CSS     */
+        /********************************************/
 
         .guide-cover {
             max-width: 100%;
@@ -660,7 +663,7 @@
             transform: scale(1);
         }
 
-        .guide-page:not(.only-covers) .guide.animate-in .guide-cover {
+        .guide-list:not(.only-covers) .guide.animate-in .guide-cover {
             transition: none;
             opacity: 0;
             transform: scale(0.7);
@@ -844,6 +847,8 @@
         .guide.animate-in {
             animation: fadeInSlideIn 0.5s ease-out forwards;
         }
+
+        /* ZMIANA: Usunięto animację .fade-out, ponieważ nie jest już potrzebna w nowej logice */
 
         @keyframes fadeInSlideIn {
             from {
@@ -1291,6 +1296,7 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
+        /* <-- POPRAWKA 1: Ukrywanie kontrolek w widoku zminimalizowanym --> */
         .controls.minimized-view>input[type="text"],
         .controls.minimized-view>select {
             display: none;
@@ -1308,30 +1314,45 @@
 
         /* --- Style dla mobilnego widoku slideshow --- */
         @media (max-width: 1024px) {
+
+            /* Ukrywamy przycisk pełnego ekranu */
             #fullscreenBtnLightbox {
                 display: none !important;
             }
-        }
 
-        /* ZMIANA: Nowe style 'order' dla kontrolek slideshow */
-        #lightbox-controls #lightbox-fxBtn {
-            order: 1;
-        }
+            /* Ustawiamy kolejność przycisków w pierwszym wierszu */
+            /* 1. Animacje (FX) */
+            #lightbox-fxBtn {
+                order: 1;
+            }
 
-        #lightbox-controls #lightbox-videoBtn {
-            order: 2;
-        }
+            /* 2. Etykiety (Labels) */
+            #lightbox-labelsBtn {
+                order: 2;
+            }
 
-        #lightbox-controls #slideshow-controls {
-            order: 3;
-        }
+            /* 3. Tryb Ciemny/Jasny */
+            #lightbox-darkModeBtn {
+                order: 3;
+            }
 
-        #lightbox-controls #lightbox-darkModeBtn {
-            order: 4;
-        }
+            /* 4. Przycisk Wideo */
+            #lightbox-videoBtn {
+                order: 4;
+            }
 
-        #lightbox-controls #lightbox-labelsBtn {
-            order: 5;
+            /* Zamiast rozciągać sam przycisk, tworzymy przed nim niewidzialny element o szerokości 100%, który zepchnie go do nowej linii. */
+            #lightbox-videoBtn.expanded::before {
+                content: '';
+                flex-basis: 100%;
+            }
+
+            /* Panel slideshow zawsze jest na końcu */
+            #slideshow-controls {
+                order: 5;
+                /* Dodajemy odstęp, aby oddzielić go od górnego wiersza */
+                margin-top: 10px;
+            }
         }
 
         /* --- EASTER EGG: CRT Effect Styles --- */
@@ -1342,6 +1363,7 @@
             width: 100vw;
             height: 100vh;
             z-index: 10001;
+            /* Wyżej niż preloader */
             background: #111;
             opacity: 0;
             pointer-events: none;
@@ -1476,6 +1498,68 @@
                 }
             } catch (e) { /* Ignore */ }
         })();
+
+        /**
+         * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
+         */
+        function intro() {
+            const overlay = document.createElement('div');
+            overlay.id = 'crt-overlay';
+            document.body.appendChild(overlay);
+
+            setTimeout(() => {
+                overlay.classList.add('active');
+            }, 20);
+
+            setTimeout(() => {
+                if (document.body.contains(overlay)) {
+                    document.body.removeChild(overlay);
+                }
+            }, 1600);
+        }
+
+        /**
+         * EASTER EGG: Funkcja do twardego resetu ustawień aplikacji.
+         */
+        function hardReset() {
+            Object.keys(localStorage).forEach(key => {
+                if (key.startsWith('visudir_')) {
+                    localStorage.removeItem(key);
+                }
+            });
+            location.reload();
+        }
+
+        /**
+         * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
+         */
+        function clearScreen() {
+            const elementsToToggle = ['.top-header', '.controls', '.guide-list-wrapper', '.pagination', '.footer'];
+            elementsToToggle.forEach(selector => {
+                const el = document.querySelector(selector);
+                if (el) el.style.display = 'none';
+            });
+
+            const closeBtn = document.createElement('button');
+            closeBtn.id = 'clear-close-btn';
+            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+            closeBtn.title = 'Zamknij';
+            document.body.appendChild(closeBtn);
+
+            closeBtn.addEventListener('click', () => {
+                elementsToToggle.forEach(selector => {
+                    const el = document.querySelector(selector);
+                    if (el) {
+                        el.style.display = '';
+                    }
+                });
+
+                document.body.removeChild(closeBtn);
+                renderGuides();
+            }, {
+                once: true
+            });
+        }
     </script>
 </head>
 
@@ -1513,58 +1597,12 @@
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
         <input type="file" id="fileInput" accept=".txt" />
-
-        <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
-            <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
-        </button>
-
-        <button id="videoBtn" class="dir-db-btn multi-button">
-            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
-                    Video</span></span>
-            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                    class="fas fa-chevron-left"></i></span>
-            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                    class="fas fa-play"></i></span>
-            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                    class="fas fa-random"></i></span>
-            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
-                    class="fas fa-chevron-right"></i></span>
-            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                    class="fas fa-undo"></i></span>
-        </button>
-
-        <div id="viewBtnGroup" class="dir-db-btn multi-button">
-            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
-                    Widok</span></span>
-            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
-                    class="fas fa-image"></i></span>
-            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
-                    class="fas fa-align-justify"></i></span>
-            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
-                    class="fas fa-arrows-alt-v"></i></span>
-            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
-                    class="fas fa-arrows-alt-h"></i></span>
-            <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
-                    class="fas fa-columns"></i></span>
-        </div>
-
-        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
-                Ciemny</span></button>
-
         <button id="playButton" title="Losuj animacją" class="dir-db-btn">
             <i class="fas fa-play"></i><span class="btn-text"> Play</span>
         </button>
-
-        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
-            <i class="fas fa-chevron-up"></i>
+        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
+            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
         </button>
-    </div>
-
-    <div class="guide-list-wrapper">
-        <div class="guide-list" id="guideList"></div>
-    </div>
-
-    <div class="filter-controls" id="filterControls">
         <input type="text" id="search" placeholder="Szukaj pozycji..." />
         <select id="formatFilter">
             <option value="">Wszystko</option>
@@ -1593,11 +1631,52 @@
             <option value="10">Pozycje: 10</option>
         </select>
         <select id="itemsPerPageSelector"></select>
-        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
-            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
+
+        <div id="viewBtnGroup" class="dir-db-btn multi-button">
+            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
+                    Widok</span></span>
+            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
+                    class="fas fa-image"></i></span>
+            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
+                    class="fas fa-align-justify"></i></span>
+            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
+                    class="fas fa-arrows-alt-v"></i></span>
+            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
+                    class="fas fa-arrows-alt-h"></i></span>
+            <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
+                    class="fas fa-columns"></i></span>
+        </div>
+
+        <button id="videoBtn" class="dir-db-btn multi-button">
+            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
+                    Video</span></span>
+            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                    class="fas fa-chevron-left"></i></span>
+            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                    class="fas fa-play"></i></span>
+            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                    class="fas fa-random"></i></span>
+            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
+                    class="fas fa-chevron-right"></i></span>
+            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                    class="fas fa-undo"></i></span>
+        </button>
+
+        <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
+            <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
+        </button>
+
+        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
+                Ciemny</span></button>
+
+        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
+            <i class="fas fa-chevron-up"></i>
         </button>
     </div>
 
+    <div class="guide-list-wrapper">
+        <div class="guide-list" id="guideList"></div>
+    </div>
     <div class="pagination" id="pagination"></div>
 
     <div class="footer">
@@ -1628,9 +1707,6 @@
         <div id="play-guide-container" class="play-guide-container"></div>
 
         <div id="lightbox-controls">
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
-                    class="fas fa-cog"></i></button>
-
             <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
                     class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
                 <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
@@ -1644,6 +1720,9 @@
                 <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
                         class="fas fa-undo"></i></span>
             </div>
+
+            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
+                    class="fas fa-cog"></i></button>
 
             <div id="slideshow-controls" class="lightbox-control-group">
                 <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
@@ -1662,84 +1741,23 @@
                         class="fas fa-fast-forward"></i></span>
             </div>
 
-            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
-                    class="fas fa-moon"></i></button>
             <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
                     class="fas fa-tags"></i></button>
+
+            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
+                    class="fas fa-moon"></i></button>
         </div>
         <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
                 class="fas fa-chevron-down"></i></button>
     </div>
 
     <script>
-        // v1.5.2 - UI refactoring, click on thumb opens slideshow
-
-        /**
-         * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
-         */
-        function intro() {
-            const overlay = document.createElement('div');
-            overlay.id = 'crt-overlay';
-            document.body.appendChild(overlay);
-
-            setTimeout(() => {
-                overlay.classList.add('active');
-            }, 20);
-
-            setTimeout(() => {
-                if (document.body.contains(overlay)) {
-                    document.body.removeChild(overlay);
-                }
-            }, 1600);
-        }
-
-        /**
-         * EASTER EGG: Funkcja do twardego resetu ustawień aplikacji.
-         */
-        function hardReset() {
-            Object.keys(localStorage).forEach(key => {
-                if (key.startsWith('visudir_')) {
-                    localStorage.removeItem(key);
-                }
-            });
-            location.reload();
-        }
-
-        /**
-         * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
-         */
-        function clearScreen() {
-            const elementsToToggle = ['.top-header', '.controls', '.guide-list-wrapper', '.filter-controls', '.pagination', '.footer'];
-            elementsToToggle.forEach(selector => {
-                const el = document.querySelector(selector);
-                if (el) el.style.display = 'none';
-            });
-
-            const closeBtn = document.createElement('button');
-            closeBtn.id = 'clear-close-btn';
-            closeBtn.innerHTML = '<i class="fas fa-times"></i>';
-            closeBtn.title = 'Zamknij';
-            document.body.appendChild(closeBtn);
-
-            closeBtn.addEventListener('click', () => {
-                elementsToToggle.forEach(selector => {
-                    const el = document.querySelector(selector);
-                    if (el) {
-                        el.style.display = '';
-                    }
-                });
-
-                document.body.removeChild(closeBtn);
-                renderGuides();
-            }, {
-                once: true
-            });
-        }
+        // v1.5.1 - Multi-row CSS Scroll Snap pagination, JS logic refactored
 
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- KONFIGURACJA ---
         const config = {
-            version: 'v1.5.4',
+            version: 'v1.5.1',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1766,7 +1784,7 @@
                 defaultView: 2,
                 defaultFormat: "jpg",
                 defaultSort: "shuffle",
-                defaultRows: 1,
+                defaultRows: 3,
                 predefinedFilters: [
                     { label: "Polska", search: "Polska" },
                     { label: "Gliwice", search: "Gliwice" },
@@ -1852,10 +1870,8 @@
 
         let currentPage = 1;
         let totalPages = 1;
-        let pagesCache = [];
-        let preloadQueue = new Set();
         let isInitialLoad = true;
-        let lazyLoadObserver;
+        let lazyLoadObserver; // Obserwator dla Lazy Loading
 
         let playAnimationTimeout = null,
             slideshowIsPlaying = false,
@@ -1863,7 +1879,8 @@
 
         let playCurrentIndex = 0;
         let orientationFilterState = null;
-        let lastPlayedGuide = null;
+        let lastPlayedGuide = null,
+            lastRandomPage = -1;
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null;
         let isMinimized = false,
@@ -2366,24 +2383,20 @@
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = "";
+            const defaultSortValue = config.pageSettings.defaultSort;
             sortSelector.value = "";
-            applySort(config.pageSettings.defaultSort, guides);
-            saveToLocalStorage('sort', config.pageSettings.defaultSort);
+            applySort(config.pageSettings.defaultSort || "nameAsc", guides);
+            saveToLocalStorage('sort', config.pageSettings.defaultSort || "nameAsc");
 
             if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
 
             orientationFilterState = null;
             viewState = {
-                covers: config.pageSettings.defaultShowCovers,
-                text: config.pageSettings.defaultShowText
+                covers: true,
+                text: true
             };
             saveToLocalStorage('view_show_covers', viewState.covers);
             saveToLocalStorage('view_show_text', viewState.text);
-
-            selectedRowCount = config.pageSettings.defaultRows;
-            itemsPerPageSelector.value = selectedRowCount;
-            saveToLocalStorage('rows', selectedRowCount);
-
             applyView();
         }
 
@@ -2441,9 +2454,6 @@
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
-
-            const mediaTypes = ["jpg", "png", "mp4", "avi"];
-
             if (guide.format === "link") {
                 const t = decodeUrlFromFilename(guide.file);
                 const clickAction = `checkFileAndOpen('${t.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
@@ -2451,23 +2461,21 @@
                 i = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
                 a = `<a href="${t}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
                 w = `<a href="${t}" onclick="${clickAction}" class="cover-link">`;
-            } else if (mediaTypes.includes(guide.format)) {
-                // ZMIANA: Wywołanie nowej funkcji startSlideshowFrom
-                const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
-                h = `<div class="guide-title"><a href="#" onclick="${clickAction}">${d}</a></div>`;
-                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
-                a = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> Otwórz</a>`;
-                w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
             } else {
                 h = `<div class="guide-title">${d}</div>`;
                 i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
-                const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
-                if (guide.format === "pdf") {
-                    a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
-                    w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
+                if (["jpg", "png", "mp4", "avi"].includes(guide.format)) {
+                    a = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
+                    w = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
                 } else {
-                    a = `<a href="${u}" download><i class="fas fa-download"></i> Pobierz</a>`;
-                    w = `<a href="${u}" download class="cover-link">`;
+                    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
+                    if (guide.format === "pdf") {
+                        a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
+                        w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
+                    } else {
+                        a = `<a href="${u}" download><i class="fas fa-download"></i> Pobierz</a>`;
+                        w = `<a href="${u}" download class="cover-link">`;
+                    }
                 }
             }
             const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
@@ -2476,8 +2484,8 @@
 
 
 
+        // ZMIANA: Przebudowana funkcja renderowania z warunkową animacją
         function renderGuides() {
-            guideList.classList.remove('random-draw');
             const animationsOn = !document.body.classList.contains('no-animation');
 
             applyFilters();
@@ -2493,25 +2501,26 @@
             const columns = Math.floor((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) || 1;
             const itemsPerPage = columns * selectedRowCount;
 
-            pagesCache = [];
+            const pages = [];
             if (itemsPerPage > 0) {
                 for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
-                    pagesCache.push(filteredGuides.slice(i, i + itemsPerPage));
+                    pages.push(filteredGuides.slice(i, i + itemsPerPage));
                 }
             } else if (filteredGuides.length > 0) {
-                pagesCache.push(filteredGuides);
+                pages.push(filteredGuides);
             }
-            totalPages = pagesCache.length || 1;
+            totalPages = pages.length;
 
-            pagesCache.forEach((pageItems, pageIndex) => {
+            pages.forEach((pageItems, pageIndex) => {
                 const pageDiv = document.createElement('div');
                 pageDiv.className = 'guide-page';
                 pageDiv.dataset.pageNumber = pageIndex + 1;
 
-                if (pageIndex === 0) {
+                if (pageIndex === 0) { // Renderuj od razu tylko pierwszą stronę
                     pageItems.forEach((guide, index) => {
                         const div = document.createElement("div");
                         div.className = "guide";
+                        // Uruchom animację tylko przy pierwszym ładowaniu
                         if (animationsOn && isInitialLoad) {
                             div.classList.add("animate-in");
                             div.style.animationDelay = `${index * 0.04}s`;
@@ -2523,17 +2532,19 @@
                 guideList.appendChild(pageDiv);
             });
 
-            setupLazyLoading(pagesCache);
+            setupLazyLoading(pages);
             renderPagination();
             document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
 
+            // Po pierwszym renderowaniu, wyłącz flagę
             if (isInitialLoad) {
                 isInitialLoad = false;
-                preloadNextPageImages();
             }
         }
 
+        // NOWA FUNKCJA: Obsługa Lazy Loading dla stron
         function setupLazyLoading(pages) {
+            // Jeśli już istnieje, rozłącz stary obserwator
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
             lazyLoadObserver = new IntersectionObserver((entries, observer) => {
@@ -2542,9 +2553,11 @@
                         const pageDiv = entry.target;
                         const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
 
+                        // Wypełnij stronę zawartością, jeśli jest pusta
                         if (pageDiv.childElementCount === 0 && pageNum > 1) {
                             const pageItems = pages[pageNum - 1];
                             if (pageItems) {
+                                // Użyj requestAnimationFrame, by renderowanie było płynniejsze
                                 requestAnimationFrame(() => {
                                     pageItems.forEach((guide, index) => {
                                         const div = document.createElement("div");
@@ -2555,12 +2568,13 @@
                                 });
                             }
                         }
+                        // Po wczytaniu przestajemy obserwować ten element
                         observer.unobserve(pageDiv);
                     }
                 });
             }, {
                 root: guideList,
-                rootMargin: '0px 300px 0px 300px'
+                rootMargin: '0px 300px 0px 300px' // Zaczyna ładować następną stronę 300px przed jej pojawieniem się
             });
 
             document.querySelectorAll('.guide-page').forEach(page => {
@@ -2568,6 +2582,7 @@
             });
         }
 
+        // ZMIANA: Przebudowana funkcja renderowania paginacji dla Scroll Snap
         function renderPagination() {
             pagination.innerHTML = "";
             if (totalPages <= 1) {
@@ -2587,52 +2602,30 @@
             const nextBtn = document.createElement("button");
             nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
             nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
-            nextBtn.addEventListener('mouseenter', preloadNextPageImages);
 
             const info = document.createElement("span");
             info.className = "pagination-info";
 
-            const paginationObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        currentPage = parseInt(entry.target.dataset.pageNumber, 10);
-                        info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-                        prevBtn.disabled = (currentPage <= 1);
-                        nextBtn.disabled = (currentPage >= totalPages);
-                        preloadNextPageImages();
-                    }
-                });
-            }, { root: guideList, threshold: 0.75 });
+            const updateButtons = () => {
+                const newPage = Math.round(guideList.scrollLeft / guideList.clientWidth) + 1;
+                if (currentPage !== newPage) {
+                    currentPage = newPage > totalPages ? totalPages : newPage; // Zabezpieczenie
+                    info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+                }
+                prevBtn.disabled = (currentPage <= 1);
+                nextBtn.disabled = (currentPage >= totalPages);
+            };
 
-            document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
+            guideList.addEventListener('scroll', debounce(updateButtons, 100));
 
             container.appendChild(prevBtn);
             container.appendChild(info);
             container.appendChild(nextBtn);
             pagination.appendChild(container);
 
-            currentPage = 1;
+            currentPage = Math.round(guideList.scrollLeft / guideList.clientWidth) + 1;
             info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-            prevBtn.disabled = true;
-            nextBtn.disabled = (totalPages <= 1);
-        }
-
-        function preloadNextPageImages() {
-            const nextPage = currentPage + 1;
-            if (nextPage > totalPages || !pagesCache[nextPage - 1]) return;
-
-            const nextGuides = pagesCache[nextPage - 1];
-
-            nextGuides.forEach(guide => {
-                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
-                const thumbnailUrl = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
-
-                if (!preloadQueue.has(thumbnailUrl)) {
-                    const img = new Image();
-                    img.src = thumbnailUrl;
-                    preloadQueue.add(thumbnailUrl);
-                }
-            });
+            updateButtons();
         }
 
         function drawRandomGuides() {
@@ -2966,24 +2959,10 @@
             }
         }
 
-        // ZMIANA: Dodajemy nową funkcję do uruchamiania slideshow z konkretnego elementu
-        function startSlideshowFrom(guideFilename) {
-            // Używamy aktualnie przefiltrowanej listy jako źródła dla slideshow
-            const sourceGuides = filteredGuides;
-            const startIndex = sourceGuides.findIndex(g => g.file === guideFilename);
-
-            if (startIndex === -1) {
-                console.error("Nie znaleziono elementu w przefiltrowanej liście.");
-                return;
-            }
-
-            startPlayAnimation(startIndex);
-        }
-
-        playButton.addEventListener('click', () => startPlayAnimation()); // Zmieniamy domyślne wywołanie
+        playButton.addEventListener('click', togglePlayAnimation);
         playCloseBtn.addEventListener('click', stopPlayAnimation);
 
-        function togglePlayAnimation() { // Ta funkcja nie jest już bezpośrednio używana
+        function togglePlayAnimation() {
             if (playAnimationTimeout || slideshowIsPlaying) stopPlayAnimation();
             else startPlayAnimation();
         }
@@ -3008,14 +2987,13 @@
             document.getElementById('slideshow-shuffle').classList.toggle('active-play', slideshowIsRandom);
         }
 
-        // ZMIANA: Funkcja akceptuje teraz opcjonalny indeks startowy
-        function startPlayAnimation(startIndex = 0) {
+        function startPlayAnimation() {
             const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
 
             playGuidesQueue = [...source];
-            playCurrentIndex = startIndex; // Ustawiamy indeks startowy
-
+            lastPlayedGuide = null;
+            playCurrentIndex = 0;
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
             if (!document.body.classList.contains('no-animation')) {
@@ -3030,9 +3008,7 @@
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
             slideshowPlayBtn.classList.add('active-play');
             lightboxLabelsBtn.classList.toggle('active-play', areLabelsVisible);
-
-            // Zamiast scheduleNext, od razu wyświetlamy właściwy slajd
-            displayRandomGuide(playGuidesQueue[playCurrentIndex]);
+            scheduleNext();
         }
 
         function stopPlayAnimation() {
@@ -3075,7 +3051,7 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (!isNav) { // Tylko auto-play przesuwa do przodu
+                } else if (isNav) { } else {
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
                 guide = playGuidesQueue[playCurrentIndex];
@@ -3399,18 +3375,6 @@
         });
 
         searchInput.addEventListener("input", () => {
-            const query = searchInput.value.toLowerCase().trim();
-            if (query === 'reset' || query === 'clear') {
-                const command = query;
-                searchInput.value = '';
-                intro();
-                if (command === 'reset') {
-                    setTimeout(hardReset, 1300);
-                } else if (command === 'clear') {
-                    clearScreen();
-                }
-                return;
-            }
             renderGuides();
             stopPlayAnimation();
         });

@@ -125,6 +125,7 @@
         body.play-mode-active>.top-header,
         body.play-mode-active>.controls,
         body.play-mode-active>.guide-list-wrapper,
+        body.play-mode-active>.filter-controls,
         body.play-mode-active>.pagination,
         body.play-mode-active>.footer,
         body.play-mode-active>#fullscreenBtn {
@@ -337,37 +338,33 @@
             border-radius: 8px;
         }
 
-        /* Jasny motyw */
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
-            background: none;
-            font-weight: 600;
-            /* kompensacja optyczna dla stroke */
-            color: black;
-            -webkit-text-stroke: 0.5px $ffffff80;
-            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
-            /* fallback dla Firefox */
+            background-color: rgba(240, 240, 240, 0.4);
         }
 
-        /* Ciemny motyw */
-        body.dark-mode .top-header .title,
-        body.dark-mode .top-header .counter {
-            background: none;
-            font-weight: 600;
-            color: white;
-            -webkit-text-stroke: 0.5px black;
-            text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+        .dark-mode .top-header .title,
+        .dark-mode .top-header .counter {
+            background-color: rgba(20, 20, 20, 0.5);
         }
 
-        .controls {
+        .controls,
+        .filter-controls {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 10px;
             margin-bottom: 20px;
+        }
+
+        .controls {
             opacity: 0;
             transform: translateY(-20px);
+        }
+
+        .filter-controls {
+            margin-top: 20px;
         }
 
         input,
@@ -480,7 +477,6 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- NOWE, UPORZĄDKOWANE STYLE KONTROLEK --- */
         input,
         select {
             border-color: #808080;
@@ -605,10 +601,6 @@
             text-shadow: none !important;
         }
 
-        /********************************************/
-        /* NOWE STYLE DLA PAGINACJI CSS SCROLL    */
-        /********************************************/
-
         .guide-list-wrapper {
             width: 90%;
             max-width: 1920px;
@@ -629,17 +621,15 @@
             display: none;
         }
 
-        .guide-list-wrapper+.footer {
-            margin-top: 35px;
+        .guide-list-wrapper+.filter-controls {
+            margin-top: 20px;
         }
 
         .guide-page {
             box-sizing: border-box;
-            /* <-- DODAJ TĘ LINIĘ */
             flex: 0 0 100%;
             scroll-snap-align: start;
             scroll-snap-stop: always;
-
             display: grid;
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
             grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 257px), 1fr));
@@ -654,10 +644,6 @@
             flex-wrap: wrap;
             overflow-x: hidden;
         }
-
-        /********************************************/
-        /* KONIEC STYLÓW DLA PAGINACJI CSS     */
-        /********************************************/
 
         .guide-cover {
             max-width: 100%;
@@ -674,7 +660,7 @@
             transform: scale(1);
         }
 
-        .guide-list:not(.only-covers) .guide.animate-in .guide-cover {
+        .guide-page:not(.only-covers) .guide.animate-in .guide-cover {
             transition: none;
             opacity: 0;
             transform: scale(0.7);
@@ -858,8 +844,6 @@
         .guide.animate-in {
             animation: fadeInSlideIn 0.5s ease-out forwards;
         }
-
-        /* ZMIANA: Usunięto animację .fade-out, ponieważ nie jest już potrzebna w nowej logice */
 
         @keyframes fadeInSlideIn {
             from {
@@ -1307,7 +1291,6 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* <-- POPRAWKA 1: Ukrywanie kontrolek w widoku zminimalizowanym --> */
         .controls.minimized-view>input[type="text"],
         .controls.minimized-view>select {
             display: none;
@@ -1325,45 +1308,30 @@
 
         /* --- Style dla mobilnego widoku slideshow --- */
         @media (max-width: 1024px) {
-
-            /* Ukrywamy przycisk pełnego ekranu */
             #fullscreenBtnLightbox {
                 display: none !important;
             }
+        }
 
-            /* Ustawiamy kolejność przycisków w pierwszym wierszu */
-            /* 1. Animacje (FX) */
-            #lightbox-fxBtn {
-                order: 1;
-            }
+        /* ZMIANA: Nowe style 'order' dla kontrolek slideshow */
+        #lightbox-controls #lightbox-fxBtn {
+            order: 1;
+        }
 
-            /* 2. Etykiety (Labels) */
-            #lightbox-labelsBtn {
-                order: 2;
-            }
+        #lightbox-controls #lightbox-videoBtn {
+            order: 2;
+        }
 
-            /* 3. Tryb Ciemny/Jasny */
-            #lightbox-darkModeBtn {
-                order: 3;
-            }
+        #lightbox-controls #slideshow-controls {
+            order: 3;
+        }
 
-            /* 4. Przycisk Wideo */
-            #lightbox-videoBtn {
-                order: 4;
-            }
+        #lightbox-controls #lightbox-darkModeBtn {
+            order: 4;
+        }
 
-            /* Zamiast rozciągać sam przycisk, tworzymy przed nim niewidzialny element o szerokości 100%, który zepchnie go do nowej linii. */
-            #lightbox-videoBtn.expanded::before {
-                content: '';
-                flex-basis: 100%;
-            }
-
-            /* Panel slideshow zawsze jest na końcu */
-            #slideshow-controls {
-                order: 5;
-                /* Dodajemy odstęp, aby oddzielić go od górnego wiersza */
-                margin-top: 10px;
-            }
+        #lightbox-controls #lightbox-labelsBtn {
+            order: 5;
         }
 
         /* --- EASTER EGG: CRT Effect Styles --- */
@@ -1374,7 +1342,6 @@
             width: 100vw;
             height: 100vh;
             z-index: 10001;
-            /* Wyżej niż preloader */
             background: #111;
             opacity: 0;
             pointer-events: none;
@@ -1509,6 +1476,203 @@
                 }
             } catch (e) { /* Ignore */ }
         })();
+    </script>
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source id="bg-video-source" src="" type="video/mp4" />
+    </video>
+
+    <div class="top-header">
+        <div class="header-logo-group">
+            <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
+            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+                <img id="header-logo" src="" alt="Logo" class="header-logo" />
+            </a>
+        </div>
+        <div id="pageTitle" class="title">Poradniki do Gier</div>
+        <div class="header-group">
+            <a id="visuDirBtn" class="dir-db-btn" href="#">
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
+                        class="version-display"></span></span>
+            </a>
+            <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
+                <i class="fas fa-globe"></i>
+            </a>
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
+                <span class="btn-text">Wstecz</span></a>
+        </div>
+    </div>
+
+    <div class="controls">
+        <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
+            <span class="btn-text">Załaduj...</span></label>
+        <input type="file" id="fileInput" accept=".txt" />
+
+        <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
+            <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
+        </button>
+
+        <button id="videoBtn" class="dir-db-btn multi-button">
+            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
+                    Video</span></span>
+            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                    class="fas fa-chevron-left"></i></span>
+            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                    class="fas fa-play"></i></span>
+            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                    class="fas fa-random"></i></span>
+            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
+                    class="fas fa-chevron-right"></i></span>
+            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                    class="fas fa-undo"></i></span>
+        </button>
+
+        <div id="viewBtnGroup" class="dir-db-btn multi-button">
+            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
+                    Widok</span></span>
+            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
+                    class="fas fa-image"></i></span>
+            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
+                    class="fas fa-align-justify"></i></span>
+            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
+                    class="fas fa-arrows-alt-v"></i></span>
+            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
+                    class="fas fa-arrows-alt-h"></i></span>
+            <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
+                    class="fas fa-columns"></i></span>
+        </div>
+
+        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
+                Ciemny</span></button>
+
+        <button id="playButton" title="Losuj animacją" class="dir-db-btn">
+            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
+        </button>
+
+        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
+            <i class="fas fa-chevron-up"></i>
+        </button>
+    </div>
+
+    <div class="guide-list-wrapper">
+        <div class="guide-list" id="guideList"></div>
+    </div>
+
+    <div class="filter-controls" id="filterControls">
+        <input type="text" id="search" placeholder="Szukaj pozycji..." />
+        <select id="formatFilter">
+            <option value="">Wszystko</option>
+        </select>
+        <select id="sortSelector">
+            <option value="">Sortuj...</option>
+            <option value="shuffle">Wymieszaj</option>
+            <option value="nameAsc">Nazwa A–Z</option>
+            <option value="nameDesc">Nazwa Z–A</option>
+            <option value="dateAsc">Data ↑</option>
+            <option value="dateDesc">Data ↓</option>
+            <option value="sizeAsc">Rozmiar ↑</option>
+            <option value="sizeDesc">Rozmiar ↓</option>
+        </select>
+        <select id="randomSelector">
+            <option value="" disabled selected>Losuj...</option>
+            <option value="1">Pozycje: 1</option>
+            <option value="2">Pozycje: 2</option>
+            <option value="3">Pozycje: 3</option>
+            <option value="4">Pozycje: 4</option>
+            <option value="5">Pozycje: 5</option>
+            <option value="6">Pozycje: 6</option>
+            <option value="7">Pozycje: 7</option>
+            <option value="8">Pozycje: 8</option>
+            <option value="9">Pozycje: 9</option>
+            <option value="10">Pozycje: 10</option>
+        </select>
+        <select id="itemsPerPageSelector"></select>
+        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
+            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
+        </button>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <div class="footer">
+        <div>
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                        class="version-suffix">Dir
+                        <span class="version-display"></span></span></a></strong>
+            <strong>© 2025-09-17</strong> do katalogowania, zarządzania i
+            prezentacji plików i folderów |
+            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
+                </a></span>
+            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+        </div>
+        <div class="privacy-notice">
+            <strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani
+            śledzenia.
+            <strong>Czysty i bezpieczny kod!</strong>
+        </div>
+    </div>
+
+    <button id="fullscreenBtn" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
+
+    <div id="backdrop" class="backdrop">
+        <div id="play-caption" class="play-caption"></div>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i
+                class="fas fa-expand"></i></button>
+        <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
+        <div id="play-guide-container" class="play-guide-container"></div>
+
+        <div id="lightbox-controls">
+            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
+                    class="fas fa-cog"></i></button>
+
+            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
+                    class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
+                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                        class="fas fa-chevron-left"></i></span>
+                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i
+                        class="fas fa-chevron-right"></i></span>
+                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                        class="fas fa-undo"></i></span>
+            </div>
+
+            <div id="slideshow-controls" class="lightbox-control-group">
+                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
+                        class="fas fa-fast-backward"></i></span>
+                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i
+                        class="fas fa-step-backward"></i></span>
+                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i
+                        class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="slideshow-next" class="multi-button-child" title="Następny"><i
+                        class="fas fa-step-forward"></i></span>
+                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i
+                        class="fas fa-fast-forward"></i></span>
+            </div>
+
+            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
+                    class="fas fa-moon"></i></button>
+            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
+                    class="fas fa-tags"></i></button>
+        </div>
+        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
+                class="fas fa-chevron-down"></i></button>
+    </div>
+
+    <script>
+        // v1.5.2 - UI refactoring, click on thumb opens slideshow
 
         /**
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
@@ -1545,7 +1709,7 @@
          * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
          */
         function clearScreen() {
-            const elementsToToggle = ['.top-header', '.controls', '.guide-list-wrapper', '.pagination', '.footer'];
+            const elementsToToggle = ['.top-header', '.controls', '.guide-list-wrapper', '.filter-controls', '.pagination', '.footer'];
             elementsToToggle.forEach(selector => {
                 const el = document.querySelector(selector);
                 if (el) el.style.display = 'none';
@@ -1572,221 +1736,10 @@
             });
         }
 
-        function preloadNextPageImages() {
-            const nextPage = currentPage + 1;
-            if (nextPage > totalPages || !pagesCache[nextPage - 1]) return;
-
-            const nextGuides = pagesCache[nextPage - 1];
-
-            nextGuides.forEach(guide => {
-                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
-                const thumbnailUrl = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
-
-                if (!preloadQueue.has(thumbnailUrl)) {
-                    const img = new Image();
-                    img.src = thumbnailUrl;
-                    preloadQueue.add(thumbnailUrl);
-                }
-            });
-        }
-    </script>
-</head>
-
-<body>
-    <div id="preloader">
-        <div class="spinner"></div>
-    </div>
-
-    <video id="bg-video" autoplay loop muted playsinline>
-        <source id="bg-video-source" src="" type="video/mp4" />
-    </video>
-
-    <div class="top-header">
-        <div id="pageTitle" class="title">Poradniki do Gier</div>
-        <div class="header-logo-group">
-            <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
-            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-                <img id="header-logo" src="" alt="Logo" class="header-logo" />
-            </a>
-        </div>
-        <div class="header-group">
-            <a id="visuDirBtn" class="dir-db-btn" href="#">
-                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                        class="version-display"></span></span>
-            </a>
-            <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
-                <i class="fas fa-globe"></i>
-            </a>
-            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
-                <span class="btn-text">Wstecz</span></a>
-        </div>
-    </div>
-
-    <div class="controls">
-        <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
-            <span class="btn-text">Załaduj...</span></label>
-        <input type="file" id="fileInput" accept=".txt" />
-        <button id="playButton" title="Losuj animacją" class="dir-db-btn">
-            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
-        </button>
-        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
-            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
-        </button>
-        <input type="text" id="search" placeholder="Szukaj pozycji..." />
-        <select id="formatFilter">
-            <option value="">Wszystko</option>
-        </select>
-        <select id="sortSelector">
-            <option value="">Sortuj...</option>
-            <option value="shuffle">Wymieszaj</option>
-            <option value="nameAsc">Nazwa A–Z</option>
-            <option value="nameDesc">Nazwa Z–A</option>
-            <option value="dateAsc">Data ↑</option>
-            <option value="dateDesc">Data ↓</option>
-            <option value="sizeAsc">Rozmiar ↑</option>
-            <option value="sizeDesc">Rozmiar ↓</option>
-        </select>
-        <select id="randomSelector">
-            <option value="" disabled selected>Losuj...</option>
-            <option value="1">Pozycje: 1</option>
-            <option value="2">Pozycje: 2</option>
-            <option value="3">Pozycje: 3</option>
-            <option value="4">Pozycje: 4</option>
-            <option value="5">Pozycje: 5</option>
-            <option value="6">Pozycje: 6</option>
-            <option value="7">Pozycje: 7</option>
-            <option value="8">Pozycje: 8</option>
-            <option value="9">Pozycje: 9</option>
-            <option value="10">Pozycje: 10</option>
-        </select>
-        <select id="itemsPerPageSelector"></select>
-
-        <div id="viewBtnGroup" class="dir-db-btn multi-button">
-            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
-                    Widok</span></span>
-            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
-                    class="fas fa-image"></i></span>
-            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
-                    class="fas fa-align-justify"></i></span>
-            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
-                    class="fas fa-arrows-alt-v"></i></span>
-            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
-                    class="fas fa-arrows-alt-h"></i></span>
-            <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
-                    class="fas fa-columns"></i></span>
-        </div>
-
-        <button id="videoBtn" class="dir-db-btn multi-button">
-            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
-                    Video</span></span>
-            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                    class="fas fa-chevron-left"></i></span>
-            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                    class="fas fa-play"></i></span>
-            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                    class="fas fa-random"></i></span>
-            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
-                    class="fas fa-chevron-right"></i></span>
-            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                    class="fas fa-undo"></i></span>
-        </button>
-
-        <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
-            <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
-        </button>
-
-        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
-                Ciemny</span></button>
-
-        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
-            <i class="fas fa-chevron-up"></i>
-        </button>
-    </div>
-
-    <div class="guide-list-wrapper">
-        <div class="guide-list" id="guideList"></div>
-    </div>
-    <div class="pagination" id="pagination"></div>
-
-    <div class="footer">
-        <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                        class="version-suffix">Dir
-                        <span class="version-display"></span></span></a></strong>
-            <strong>© 2025-09-17</strong> do katalogowania, zarządzania i
-            prezentacji plików i folderów |
-            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
-                </a></span>
-            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
-        </div>
-        <div class="privacy-notice">
-            <strong>Szanujemy Twoją prywatność</strong>. Żadnych ciasteczek ani
-            śledzenia.
-            <strong>Czysty i bezpieczny kod!</strong>
-        </div>
-    </div>
-
-    <button id="fullscreenBtn" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
-
-    <div id="backdrop" class="backdrop">
-        <div id="play-caption" class="play-caption"></div>
-        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i
-                class="fas fa-expand"></i></button>
-        <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
-        <div id="play-guide-container" class="play-guide-container"></div>
-
-        <div id="lightbox-controls">
-            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
-                    class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
-                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                        class="fas fa-chevron-left"></i></span>
-                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i
-                        class="fas fa-chevron-right"></i></span>
-                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                        class="fas fa-undo"></i></span>
-            </div>
-
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
-                    class="fas fa-cog"></i></button>
-
-            <div id="slideshow-controls" class="lightbox-control-group">
-                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
-                        class="fas fa-fast-backward"></i></span>
-                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i
-                        class="fas fa-step-backward"></i></span>
-                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i
-                        class="fas fa-stop"></i></span>
-                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="slideshow-next" class="multi-button-child" title="Następny"><i
-                        class="fas fa-step-forward"></i></span>
-                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i
-                        class="fas fa-fast-forward"></i></span>
-            </div>
-
-            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
-                    class="fas fa-tags"></i></button>
-
-            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
-                    class="fas fa-moon"></i></button>
-        </div>
-        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
-                class="fas fa-chevron-down"></i></button>
-    </div>
-
-    <script>
-        // --- version: 'v1.5.3', // Interface rework - start ---
-
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.5.3', // Interface rework - start
+            version: 'v1.5.4', // Bug fixes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1815,7 +1768,7 @@
                 showLanguageButton: false,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 23,
+                bgVideoEndNum: 26,
                 defaultAnimations: true,
                 defaultVideoBg: true,
                 defaultShowCovers: true,
@@ -1826,7 +1779,7 @@
                 defaultBoxWidth2: '217px',
                 defaultBoxWidth3: '137px',
                 defaultLabelsVisible: true,
-                defaultRows: 4, // Ta wartość będzie teraz kontrolować wysokość siatki
+                defaultRows: 1, // Ta wartość będzie teraz kontrolować wysokość siatki
                 defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
                 predefinedFilters: [{
                     label: "ADE",
@@ -1868,42 +1821,41 @@
 
         // --- File database ---
         const dataFromFile = `
-17.09.2025  20:19                 0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
-17.09.2025  19:00                 0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
-17.09.2025  19:00                 0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
-17.09.2025  20:21                 0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
-17.09.2025  20:26                 0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
-17.09.2025  20:26                 0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
-17.09.2025  20:26                 0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
-17.09.2025  22:51                 0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
-17.09.2025  19:59                 0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
-17.09.2025  22:50                 0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
-17.09.2025  22:50                 0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
-17.09.2025  22:50                 0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
-17.09.2025  22:50                 0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
-17.09.2025  22:51                 0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
-17.09.2025  22:51                 0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
-17.09.2025  22:51                 0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
-17.09.2025  22:51                 0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
-17.09.2025  22:51                 0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
-17.09.2025  22:10                 0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
-17.09.2025  22:50                 0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
-17.09.2025  22:49                 0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
-17.09.2025  18:41                 0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
-17.09.2025  19:57                 0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
-17.09.2025  19:58                 0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
-17.09.2025  20:37                 0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
-17.09.2025  18:40                 0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
-17.09.2025  21:41                 0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
-17.09.2025  21:47                 0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
-17.09.2025  22:10                 0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
-17.09.2025  22:10                 0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
-17.09.2025  22:50                 0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
-17.09.2025  22:50                 0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
-17.09.2025  22:50                 0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
-17.09.2025  20:20                 0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
-17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
-
+17.09.2025  20:19               0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
+17.09.2025  19:00               0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
+17.09.2025  19:00               0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
+17.09.2025  20:21               0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
+17.09.2025  20:26               0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
+17.09.2025  20:26               0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
+17.09.2025  20:26               0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
+17.09.2025  22:51               0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
+17.09.2025  19:59               0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
+17.09.2025  22:50               0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
+17.09.2025  22:50               0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
+17.09.2025  22:50               0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
+17.09.2025  22:50               0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
+17.09.2025  22:51               0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
+17.09.2025  22:51               0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
+17.09.2025  22:51               0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
+17.09.2025  22:51               0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
+17.09.2025  22:51               0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
+17.09.2025  22:10               0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
+17.09.2025  22:50               0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
+17.09.2025  22:49               0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
+17.09.2025  18:41               0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
+17.09.2025  19:57               0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
+17.09.2025  19:58               0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
+17.09.2025  20:37               0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
+17.09.2025  18:40               0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
+17.09.2025  21:41               0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
+17.09.2025  21:47               0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
+17.09.2025  22:10               0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
+17.09.2025  22:10               0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
+17.09.2025  22:50               0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
+17.09.2025  22:50               0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
+17.09.2025  22:50               0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
+17.09.2025  20:20               0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
+17.09.2025  20:27               0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
         `;
         // --- Database end ---
         // --- End of copying / Kopiuj do tego miejsca ---
@@ -1920,11 +1872,10 @@
 
         let currentPage = 1;
         let totalPages = 1;
-        let pagesCache = []; // Przechowuje podział na strony
-        let preloadQueue = new Set(); // Zapobiega wielokrotnemu ładowaniu tego samego obrazka
+        let pagesCache = [];
+        let preloadQueue = new Set();
         let isInitialLoad = true;
-
-        let lazyLoadObserver; // Obserwator dla Lazy Loading
+        let lazyLoadObserver;
 
         let playAnimationTimeout = null,
             slideshowIsPlaying = false,
@@ -1932,8 +1883,7 @@
 
         let playCurrentIndex = 0;
         let orientationFilterState = null;
-        let lastPlayedGuide = null,
-            lastRandomPage = -1;
+        let lastPlayedGuide = null;
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null;
         let isMinimized = false,
@@ -2432,23 +2382,17 @@
             minimizeIcon.className = isLightboxMinimized ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
         }
 
-        // ZMIANA: Resetowanie widoku do wartości z obiektu config
         function resetView() {
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = "";
-
-            // Sortowanie
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort);
 
-            // Przewinięcie do początku
             if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
 
             orientationFilterState = null;
-
-            // Przywrócenie widoku z konfiguracji
             viewState = {
                 covers: config.pageSettings.defaultShowCovers,
                 text: config.pageSettings.defaultShowText
@@ -2456,7 +2400,6 @@
             saveToLocalStorage('view_show_covers', viewState.covers);
             saveToLocalStorage('view_show_text', viewState.text);
 
-            // Przywrócenie domyślnej liczby wierszy
             selectedRowCount = config.pageSettings.defaultRows;
             itemsPerPageSelector.value = selectedRowCount;
             saveToLocalStorage('rows', selectedRowCount);
@@ -2518,6 +2461,9 @@
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
+
+            const mediaTypes = ["jpg", "png", "mp4", "avi"];
+
             if (guide.format === "link") {
                 const t = decodeUrlFromFilename(guide.file);
                 const clickAction = `checkFileAndOpen('${t.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
@@ -2525,21 +2471,23 @@
                 i = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
                 a = `<a href="${t}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
                 w = `<a href="${t}" onclick="${clickAction}" class="cover-link">`;
+            } else if (mediaTypes.includes(guide.format)) {
+                // ZMIANA: Wywołanie nowej funkcji startSlideshowFrom
+                const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
+                h = `<div class="guide-title"><a href="#" onclick="${clickAction}">${d}</a></div>`;
+                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
+                a = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> Otwórz</a>`;
+                w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
             } else {
                 h = `<div class="guide-title">${d}</div>`;
                 i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
-                if (["jpg", "png", "mp4", "avi"].includes(guide.format)) {
-                    a = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`;
-                    w = `<a href="#" onclick="showMediaPreview('${guide.file.replace(/'/g, "\\'")}'); return false;" class="cover-link">`;
+                const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
+                if (guide.format === "pdf") {
+                    a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
+                    w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
                 } else {
-                    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
-                    if (guide.format === "pdf") {
-                        a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> Otwórz</a>`;
-                        w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
-                    } else {
-                        a = `<a href="${u}" download><i class="fas fa-download"></i> Pobierz</a>`;
-                        w = `<a href="${u}" download class="cover-link">`;
-                    }
+                    a = `<a href="${u}" download><i class="fas fa-download"></i> Pobierz</a>`;
+                    w = `<a href="${u}" download class="cover-link">`;
                 }
             }
             const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
@@ -2548,7 +2496,6 @@
 
 
 
-        // ZMIANA: Przebudowana funkcja renderowania z warunkową animacją
         function renderGuides() {
             guideList.classList.remove('random-draw');
             const animationsOn = !document.body.classList.contains('no-animation');
@@ -2574,7 +2521,7 @@
             } else if (filteredGuides.length > 0) {
                 pagesCache.push(filteredGuides);
             }
-            totalPages = pagesCache.length;
+            totalPages = pagesCache.length || 1;
 
             pagesCache.forEach((pageItems, pageIndex) => {
                 const pageDiv = document.createElement('div');
@@ -2602,13 +2549,11 @@
 
             if (isInitialLoad) {
                 isInitialLoad = false;
-                preloadNextPageImages(); // Pierwsze preloadowanie po załadowaniu strony
+                preloadNextPageImages();
             }
         }
 
-        // NOWA FUNKCJA: Obsługa Lazy Loading dla stron
         function setupLazyLoading(pages) {
-            // Jeśli już istnieje, rozłącz stary obserwator
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
             lazyLoadObserver = new IntersectionObserver((entries, observer) => {
@@ -2617,11 +2562,9 @@
                         const pageDiv = entry.target;
                         const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
 
-                        // Wypełnij stronę zawartością, jeśli jest pusta
                         if (pageDiv.childElementCount === 0 && pageNum > 1) {
                             const pageItems = pages[pageNum - 1];
                             if (pageItems) {
-                                // Użyj requestAnimationFrame, by renderowanie było płynniejsze
                                 requestAnimationFrame(() => {
                                     pageItems.forEach((guide, index) => {
                                         const div = document.createElement("div");
@@ -2632,13 +2575,12 @@
                                 });
                             }
                         }
-                        // Po wczytaniu przestajemy obserwować ten element
                         observer.unobserve(pageDiv);
                     }
                 });
             }, {
                 root: guideList,
-                rootMargin: '0px 300px 0px 300px' // Zaczyna ładować następną stronę 300px przed jej pojawieniem się
+                rootMargin: '0px 300px 0px 300px'
             });
 
             document.querySelectorAll('.guide-page').forEach(page => {
@@ -2646,8 +2588,6 @@
             });
         }
 
-        // ZMIANA: Przebudowana funkcja renderowania paginacji dla Scroll Snap
-        // ZMIANA: Przebudowana funkcja renderowania paginacji z IntersectionObserver do aktualizacji licznika
         function renderPagination() {
             pagination.innerHTML = "";
             if (totalPages <= 1) {
@@ -2672,7 +2612,6 @@
             const info = document.createElement("span");
             info.className = "pagination-info";
 
-            // Obserwator do aktualizacji licznika i przycisków
             const paginationObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -2680,12 +2619,11 @@
                         info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
                         prevBtn.disabled = (currentPage <= 1);
                         nextBtn.disabled = (currentPage >= totalPages);
-                        preloadNextPageImages(); // Przy okazji ładujemy w tle następną stronę
+                        preloadNextPageImages();
                     }
                 });
-            }, { root: guideList, threshold: 0.75 }); // Odpala się, gdy 75% strony jest widoczne
+            }, { root: guideList, threshold: 0.75 });
 
-            // Obserwujemy każdą stronę
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
             container.appendChild(prevBtn);
@@ -2693,11 +2631,28 @@
             container.appendChild(nextBtn);
             pagination.appendChild(container);
 
-            // Inicjalizacja stanu
             currentPage = 1;
             info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
             prevBtn.disabled = true;
             nextBtn.disabled = (totalPages <= 1);
+        }
+
+        function preloadNextPageImages() {
+            const nextPage = currentPage + 1;
+            if (nextPage > totalPages || !pagesCache[nextPage - 1]) return;
+
+            const nextGuides = pagesCache[nextPage - 1];
+
+            nextGuides.forEach(guide => {
+                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
+                const thumbnailUrl = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+
+                if (!preloadQueue.has(thumbnailUrl)) {
+                    const img = new Image();
+                    img.src = thumbnailUrl;
+                    preloadQueue.add(thumbnailUrl);
+                }
+            });
         }
 
         function drawRandomGuides() {
@@ -3031,10 +2986,24 @@
             }
         }
 
-        playButton.addEventListener('click', togglePlayAnimation);
+        // ZMIANA: Dodajemy nową funkcję do uruchamiania slideshow z konkretnego elementu
+        function startSlideshowFrom(guideFilename) {
+            // Używamy aktualnie przefiltrowanej listy jako źródła dla slideshow
+            const sourceGuides = filteredGuides;
+            const startIndex = sourceGuides.findIndex(g => g.file === guideFilename);
+
+            if (startIndex === -1) {
+                console.error("Nie znaleziono elementu w przefiltrowanej liście.");
+                return;
+            }
+
+            startPlayAnimation(startIndex);
+        }
+
+        playButton.addEventListener('click', () => startPlayAnimation()); // Zmieniamy domyślne wywołanie
         playCloseBtn.addEventListener('click', stopPlayAnimation);
 
-        function togglePlayAnimation() {
+        function togglePlayAnimation() { // Ta funkcja nie jest już bezpośrednio używana
             if (playAnimationTimeout || slideshowIsPlaying) stopPlayAnimation();
             else startPlayAnimation();
         }
@@ -3059,13 +3028,14 @@
             document.getElementById('slideshow-shuffle').classList.toggle('active-play', slideshowIsRandom);
         }
 
-        function startPlayAnimation() {
+        // ZMIANA: Funkcja akceptuje teraz opcjonalny indeks startowy
+        function startPlayAnimation(startIndex = 0) {
             const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
 
             playGuidesQueue = [...source];
-            lastPlayedGuide = null;
-            playCurrentIndex = 0;
+            playCurrentIndex = startIndex; // Ustawiamy indeks startowy
+
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
             if (!document.body.classList.contains('no-animation')) {
@@ -3080,7 +3050,9 @@
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
             slideshowPlayBtn.classList.add('active-play');
             lightboxLabelsBtn.classList.toggle('active-play', areLabelsVisible);
-            scheduleNext();
+
+            // Zamiast scheduleNext, od razu wyświetlamy właściwy slajd
+            displayRandomGuide(playGuidesQueue[playCurrentIndex]);
         }
 
         function stopPlayAnimation() {
@@ -3123,7 +3095,7 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (isNav) { } else {
+                } else if (!isNav) { // Tylko auto-play przesuwa do przodu
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
                 guide = playGuidesQueue[playCurrentIndex];
@@ -3448,24 +3420,17 @@
 
         searchInput.addEventListener("input", () => {
             const query = searchInput.value.toLowerCase().trim();
-
-            // --- EASTER EGG TRIGGER ---
             if (query === 'reset' || query === 'clear') {
                 const command = query;
                 searchInput.value = '';
-                intro(); // Uruchom animację
-
-                // Opóźnienie, aby animacja zdążyła zasłonić ekran
+                intro();
                 if (command === 'reset') {
                     setTimeout(hardReset, 1300);
                 } else if (command === 'clear') {
-                    // clearScreen wykonuje się natychmiast, w tle animacji
                     clearScreen();
                 }
                 return;
             }
-            // --- Koniec logiki Easter Egga ---
-
             renderGuides();
             stopPlayAnimation();
         });
