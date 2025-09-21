@@ -100,7 +100,6 @@
             min-height: 100vh;
             box-sizing: border-box;
             overscroll-behavior-y: contain;
-            /* <-- POPRAWKA 2: Nowoczesna blokada "pull-to-refresh" */
         }
 
         body.no-animation .guide.animate-in,
@@ -125,7 +124,7 @@
 
         body.play-mode-active>.top-header,
         body.play-mode-active>.controls,
-        body.play-mode-active>.guide-list,
+        body.play-mode-active>.guide-list-wrapper,
         body.play-mode-active>.pagination,
         body.play-mode-active>.footer,
         body.play-mode-active>#fullscreenBtn {
@@ -594,26 +593,60 @@
             text-shadow: none !important;
         }
 
-        .guide-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, 257px);
-            /* Tym parametrem będziemy sterować z js -> kod do napisania, settings from config section */
-            justify-content: center;
-            gap: 20px;
+        /********************************************/
+        /* NOWE STYLE DLA PAGINACJI CSS SCROLL    */
+        /********************************************/
+
+        .guide-list-wrapper {
             width: 90%;
             max-width: 1920px;
             margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .guide-list {
+            display: flex;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .guide-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .guide-list-wrapper+.footer {
+            margin-top: 35px;
+        }
+
+        .guide-page {
+            flex: 0 0 100%;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+
+            display: grid;
+            /* ZMIANA: Używamy zmiennej CSS do dynamicznego ustawiania liczby wierszy */
+            grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
+            /* ZMIANA: Szerokość kolumn jest teraz dynamiczna */
+            grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 257px), 1fr));
+            justify-content: center;
+            gap: 20px;
+            padding: 2px;
+            /* Drobny padding, by uniknąć ucinania cienia */
         }
 
         .guide-list.random-draw {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
+            overflow-x: hidden;
         }
 
-        .guide-list+.footer {
-            margin-top: 35px;
-        }
+        /********************************************/
+        /* KONIEC STYLÓW DLA PAGINACJI CSS     */
+        /********************************************/
 
         .guide-cover {
             max-width: 100%;
@@ -701,7 +734,6 @@
             justify-content: space-between;
             text-align: center;
             box-sizing: border-box;
-            /* width: 120px; */
         }
 
         .guide:hover {
@@ -768,14 +800,8 @@
             margin-bottom: 15px;
         }
 
-        .pagination button,
-        .pagination input,
-        .pagination select {
+        .pagination button {
             cursor: pointer;
-        }
-
-        .pagination button,
-        .pagination input {
             border-radius: 10px;
             border: 1px solid #a00000;
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
@@ -785,30 +811,19 @@
             padding: 10px;
         }
 
-        .pagination button:hover:not(:disabled),
-        .pagination input:hover {
+        .pagination button:hover:not(:disabled) {
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
-        body:not(.dark-mode) .pagination button,
-        body:not(.dark-mode) .pagination input {
+        body:not(.dark-mode) .pagination button {
             background: #fdfdfd;
             color: #cc0000;
         }
 
-        .dark-mode .pagination button,
-        .dark-mode .pagination input {
+        .dark-mode .pagination button {
             background: #000;
             color: #e53935;
             border-color: #a00000;
-        }
-
-        body:not(.dark-mode) .pagination input {
-            color: #333;
-        }
-
-        .dark-mode .pagination input {
-            color: #eee;
         }
 
         .pagination .pagination-info {
@@ -833,10 +848,7 @@
             animation: fadeInSlideIn 0.5s ease-out forwards;
         }
 
-        .guide.fade-out {
-            animation: fadeOutUp 0.2s forwards;
-            pointer-events: none;
-        }
+        /* ZMIANA: Usunięto animację .fade-out, ponieważ nie jest już potrzebna w nowej logice */
 
         @keyframes fadeInSlideIn {
             from {
@@ -847,18 +859,6 @@
             to {
                 opacity: 1;
                 transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeOutUp {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            to {
-                opacity: 0;
-                transform: translateY(-20px);
             }
         }
 
@@ -1503,7 +1503,6 @@
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
          */
         function intro() {
-            // ZMIANA: Usunęliśmy 'return new Promise'. Funkcja teraz tylko uruchamia animację.
             const overlay = document.createElement('div');
             overlay.id = 'crt-overlay';
             document.body.appendChild(overlay);
@@ -1512,7 +1511,6 @@
                 overlay.classList.add('active');
             }, 20);
 
-            // Zaplanuj usunięcie nakładki po zakończeniu animacji
             setTimeout(() => {
                 if (document.body.contains(overlay)) {
                     document.body.removeChild(overlay);
@@ -1524,13 +1522,11 @@
          * EASTER EGG: Funkcja do twardego resetu ustawień aplikacji.
          */
         function hardReset() {
-            // Usuń wszystkie zapisane ustawienia z localStorage, które należą do tej aplikacji
             Object.keys(localStorage).forEach(key => {
                 if (key.startsWith('visudir_')) {
                     localStorage.removeItem(key);
                 }
             });
-            // Przeładuj stronę, co spowoduje wczytanie domyślnych ustawień z obiektu config
             location.reload();
         }
 
@@ -1538,27 +1534,23 @@
          * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
          */
         function clearScreen() {
-            // ZMIANA: Definiujemy elementy i od razu je ukrywamy.
-            const elementsToToggle = ['.top-header', '.controls', '.guide-list', '.pagination', '.footer'];
+            const elementsToToggle = ['.top-header', '.controls', '.guide-list-wrapper', '.pagination', '.footer'];
             elementsToToggle.forEach(selector => {
                 const el = document.querySelector(selector);
-                if (el) el.style.display = 'none'; // Używamy 'display' zamiast 'opacity'
+                if (el) el.style.display = 'none';
             });
 
-            // Stwórz przycisk zamykania
             const closeBtn = document.createElement('button');
             closeBtn.id = 'clear-close-btn';
             closeBtn.innerHTML = '<i class="fas fa-times"></i>';
             closeBtn.title = 'Zamknij';
             document.body.appendChild(closeBtn);
 
-            // Dodaj logikę do przycisku
             closeBtn.addEventListener('click', () => {
-                // ZMIANA: Przywracamy elementy, usuwając styl 'display: none'.
                 elementsToToggle.forEach(selector => {
                     const el = document.querySelector(selector);
                     if (el) {
-                        el.style.display = ''; // To przywróci domyślną wartość z CSS (np. 'flex', 'grid')
+                        el.style.display = '';
                     }
                 });
 
@@ -1682,7 +1674,9 @@
         </button>
     </div>
 
-    <div class="guide-list" id="guideList"></div>
+    <div class="guide-list-wrapper">
+        <div class="guide-list" id="guideList"></div>
+    </div>
     <div class="pagination" id="pagination"></div>
 
     <div class="footer">
@@ -1758,64 +1752,93 @@
     </div>
 
     <script>
-        // v1.4.7 New views
+        // v1.5.1 - Multi-row CSS Scroll Snap pagination, JS logic refactored
 
-              // --- KONFIGURACJA ---
+        // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
+        // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.4.7',
+            version: 'v1.5.1', // Zaktualizowana wersja
             global: {
                 defaultTheme: 'light',
+                defaultLanguage: 'pl'
             },
             logoRotator: {
                 enabled: true,
                 interval: 4500,
-                logos: [
-                    { srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png", href: "../.base-system/about.html", alt: "Logo VisuDir" },
-                    { srcLight: "../.base-system/gfx/interface/ADE_small_light.png", srcDark: "../.base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
-                ]
+                logos: [{
+                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
+                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
+                    href: ".base-system/about.html",
+                    alt: "Logo VisuDir"
+                }, {
+                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
+                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
+                    href: "https://www.ade.pl",
+                    alt: "Logo ADE"
+                }]
             },
             pageSettings: {
-                pageKey: 'poradnikiDoGier',
+                pageKey: 'indexMaxi',
+                pageTitle: "START ▪ maxi MENU ▪",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: false,
+                showLanguageButton: false,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 23,
-                defaultAnimation: 2,
-                defaultView: 2,
-                defaultFormat: "pdf",
-                defaultSort: "shuffle",
-                defaultRows: 5,
-                predefinedFilters: [
-                    { label: "Poradniki Gry-Online", search: "online" },
-                    { label: "Poradniki PrzygodoMania.pl", search: "mania" },
-                    { label: "Instrukcje do gier", search: "instr" },
-                ],
-                pageTitle: "Poradniki ▪ do ▪ Gier",
-                showMiniLogo: true,
-                showVisuDirButton: true,
-                showBackButton: true,
-            }, 
+                defaultAnimations: true,
+                defaultVideoBg: true,
+                defaultShowCovers: true,
+                defaultShowText: true,
+                defaultViewExpanded: false,
+                defaultVideoExpanded: false,
+                defaultBoxWidth1: '257px',
+                defaultBoxWidth2: '217px',
+                defaultBoxWidth3: '137px',
+                defaultLabelsVisible: true,
+                defaultRows: 4, // Ta wartość będzie teraz kontrolować wysokość siatki
+                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
+                predefinedFilters: [{
+                    label: "ADE",
+                    search: "ade"
+                }, {
+                    label: "E-booki",
+                    search: "e-book"
+                }, {
+                    label: "Galerie",
+                    search: "galeri"
+                }, {
+                    label: "Hiszpania",
+                    search: "Hiszpania"
+                }, {
+                    label: "Niemcy",
+                    search: "Niemcy"
+                }, {
+                    label: "Polska",
+                    search: "Polska"
+                }, {
+                    label: "Poradniki",
+                    search: "Poradniki"
+                },],
+            },
             paths: {
-                url404: "../.base-system/404.html",
-                urlAbout: "../.base-system/about.html",
+                url404: ".base-system/404.html",
+                urlAbout: ".base-system/about.html",
+                urlFallback: ".base-system/soon.html",
                 databaseFileName: ".base-system/db.txt",
                 dataFolderName: ".base-system/files",
                 coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/preview",
-                videoBgLightUrlBase: "../.base-system/video/bg_light",
-                videoBgDarkUrlBase: "../.base-system/video/bg_dark",
+                previewHdFolderName: ".base-system/preview-hd",
+                videoBgLightUrlBase: ".base-system/video-bg/bg-light",
+                videoBgDarkUrlBase: ".base-system/video-bg/bg-dark",
+                urlEnglishVersion: "index-en.html"
             }
         };
-        // --- KONIEC KONFIGURACJI ---
+        // --- Configuration end ---
 
-        // --- PLIKOWA BAZA DANYCH ---
+        // --- File database ---
         const dataFromFile = `
- Volume in drive C has no label.
- Volume Serial Number is 64E4-665E
-
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poradniki\.base-system\files
-
-10.09.2025  22:16    <DIR>          .
-08.09.2025  22:54    <DIR>          ..
 29.08.2025  17:40          11484620 007_-_Blood_Stone_-_Poradnik_GRY-OnLine.epub
 29.08.2025  17:40          19608615 007_-_Blood_Stone_-_Poradnik_GRY-OnLine.pdf
 25.08.2025  22:55           1028372 18_Wheels_of_Steel_Haulin_-_Poradnik_Gry-OnLine.epub
@@ -5574,21 +5597,26 @@
         // --- Database end ---
         // --- End of copying / Kopiuj do tego miejsca ---
 
-        let videoBgState; // Może przyjąć wartości: 'off', 'playing', 'paused'
+        let videoBgState;
         let areLabelsVisible;
         let guides = [],
             filteredGuides = [],
             slideshowSourceGuides = [],
             playGuidesQueue = [];
-        let currentPage = 1,
-            itemsPerPage;
+
+        let currentSort,
+            selectedRowCount;
+
+        let currentPage = 1;
+        let totalPages = 1;
+        let isInitialLoad = true;
+        let lazyLoadObserver; // Obserwator dla Lazy Loading
+
         let playAnimationTimeout = null,
             slideshowIsPlaying = false,
-            slideshowIsRandom = false,
-            currentSort,
-            selectedRowCount;
-        let playCurrentIndex = 0,
-            itemsPerRow = 0;
+            slideshowIsRandom = false;
+
+        let playCurrentIndex = 0;
         let orientationFilterState = null;
         let lastPlayedGuide = null,
             lastRandomPage = -1;
@@ -5675,7 +5703,6 @@
                 const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
                 bgVideoSource.src = videoSrc;
                 bgVideo.load();
-                // Upewnij się, że klasa video-ready jest dodawana przy każdym załadowaniu wideo
                 bgVideo.addEventListener("canplay", () => {
                     document.body.classList.add("video-ready");
                 }, {
@@ -5743,7 +5770,6 @@
             viewState.text = savedText !== null ? JSON.parse(savedText) : config.pageSettings.defaultShowText;
             const savedLabels = getFromLocalStorage('labels_visible');
             areLabelsVisible = savedLabels !== null ? JSON.parse(savedLabels) : config.pageSettings.defaultLabelsVisible;
-            // Wczytaj zapisany czas pauzy
             pausedTime = parseFloat(getFromLocalStorage('video_paused_time')) || 0;
             const savedWidthIndex = getFromLocalStorage(`box_width_index_${config.pageSettings.pageKey}`);
             currentBoxWidthIndex = savedWidthIndex !== null ? parseInt(savedWidthIndex) : 0;
@@ -5929,93 +5955,6 @@
             });
         }
 
-        /**
- * Oblicza, ile elementów mieści się w jednym wierszu na podstawie aktualnej
- * szerokości okna i wybranego rozmiaru miniaturek.
- * @returns {number} Liczba kolumn (elementów w wierszu).
- */
-        function calculateItemsPerRow() {
-            // Tablica z dostępnymi szerokościami z konfiguracji
-            const widths = [
-                config.pageSettings.defaultBoxWidth1,
-                config.pageSettings.defaultBoxWidth2,
-                config.pageSettings.defaultBoxWidth3,
-                config.pageSettings.defaultBoxWidth4
-            ];
-            // Pobierz aktualnie wybraną szerokość (np. "257px")
-            const currentWidthString = widths[currentBoxWidthIndex];
-            // Wyciągnij samą liczbę z tekstu i zamień na integer
-            const currentWidth = parseInt(currentWidthString, 10);
-            const guideGap = 20; // Odstęp między elementami jest stały
-
-            // Oblicz, ile elementów (szerokość + odstęp) zmieści się w kontenerze
-            const items = Math.floor(guideList.clientWidth / (currentWidth + guideGap));
-
-            // Zwróć co najmniej 1, aby uniknąć dzielenia przez zero
-            return Math.max(1, items);
-        }
-
-        /**
- * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
- * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
- */
-        /**
- * Aktualizuje opcje paginacji (głównie listę wyboru wierszy)
- * i przelicza kluczowe zmienne, jak `itemsPerPage` i `currentPage`.
- */
-        function updatePaginationOptions() {
-            const oldItemsPerPage = itemsPerPage;
-
-            itemsPerRow = calculateItemsPerRow();
-
-            const totalItems = filteredGuides.length;
-            const totalRowsAvailable = totalItems > 0 ? Math.ceil(totalItems / itemsPerRow) : 0;
-
-            itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
-            const rowOptions = [1, 2, 3, 4, 5, 10, 20, 50, 100];
-
-            rowOptions.forEach((rows) => {
-                if (totalRowsAvailable > 0 && rows > totalRowsAvailable && rows !== 1) {
-                    return;
-                }
-                const option = document.createElement("option");
-                option.value = rows;
-                option.textContent = `Wierszy: ${rows}`;
-                itemsPerPageSelector.appendChild(option);
-            });
-
-            if (totalRowsAvailable > Math.max(...rowOptions) && totalRowsAvailable > 0) {
-                const allOption = document.createElement("option");
-                allOption.value = totalRowsAvailable;
-                allOption.textContent = `Wszystko (${totalRowsAvailable})`;
-                itemsPerPageSelector.appendChild(allOption);
-            }
-
-            const allAvailableOptions = Array.from(itemsPerPageSelector.options).map(o => parseInt(o.value)).filter(v => !isNaN(v));
-
-            if (allAvailableOptions.includes(selectedRowCount)) {
-                itemsPerPageSelector.value = selectedRowCount;
-            } else {
-                const closestOption = allAvailableOptions.slice().reverse().find(opt => opt <= selectedRowCount) || allAvailableOptions[0] || 1;
-                itemsPerPageSelector.value = closestOption;
-            }
-
-            selectedRowCount = parseInt(itemsPerPageSelector.value) || 1;
-            itemsPerPage = selectedRowCount * itemsPerRow;
-
-            // --- POPRAWKA ---
-            // Zmieniamy logikę przeliczania strony, aby uniknąć "ucinania" wierszy.
-            if (oldItemsPerPage !== itemsPerPage && guides.length > 0) {
-                const firstItemIndex = (currentPage - 1) * (oldItemsPerPage || itemsPerPage);
-
-                // Nowa, bezpieczniejsza logika:
-                // Jeśli dzielenie daje resztę, to znaczy, że jesteśmy "w trakcie" strony,
-                // więc zaokrąglamy w górę, aby na niej pozostać.
-                currentPage = Math.max(1, Math.ceil((firstItemIndex + 1) / itemsPerPage));
-            }
-            // --- KONIEC POPRAWKI ---
-        }
-        
         function loadAndParseFile(file) {
             const r = new FileReader();
             r.onload = (e) => init(e.target.result);
@@ -6046,6 +5985,18 @@
             fileInputLabel.style.display = "none";
             await processData(data);
             updateFormatFilter();
+
+            // ZMIANA: Wypełniamy selektor wierszy
+            const rowOptions = [1, 2, 3, 4, 5, 10, 20];
+            itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
+            rowOptions.forEach(r => {
+                const opt = document.createElement('option');
+                opt.value = r;
+                opt.textContent = `Wierszy: ${r}`;
+                itemsPerPageSelector.appendChild(opt);
+            });
+            itemsPerPageSelector.value = selectedRowCount;
+
             applySort(currentSort, guides);
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
@@ -6106,7 +6057,6 @@
             loadUiSettings();
             applyView();
             updateBackgroundVideoVisibility(true);
-            // Jeśli wczytany stan to pauza, zatrzymaj wideo po załadowaniu
             if (videoBgState === 'paused') {
                 bgVideo.addEventListener('canplay', () => {
                     bgVideo.currentTime = pausedTime;
@@ -6153,7 +6103,6 @@
             minimizeBtn.title = isMinimized ? "Przywróć interfejs" : "Minimalizuj interfejs";
             minimizeIcon.className = isMinimized ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
 
-            // Usunęliśmy warunek 'if', aby poniższy kod działał zawsze
             const topHeader = document.querySelector('.top-header');
             const footer = document.querySelector('.footer');
             topHeader.classList.toggle('minimized-header', isMinimized);
@@ -6177,8 +6126,9 @@
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort || "nameAsc", guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort || "nameAsc");
-            currentPage = 1;
-            // The selectedRowCount will be validated by updatePaginationOptions inside renderGuides
+
+            if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
+
             orientationFilterState = null;
             viewState = {
                 covers: true,
@@ -6273,147 +6223,148 @@
 
 
 
+        // ZMIANA: Przebudowana funkcja renderowania z warunkową animacją
         function renderGuides() {
             const animationsOn = !document.body.classList.contains('no-animation');
-            const footer = document.querySelector('.footer');
 
-            // ZMIANA: Usunięto zmienne 'oldGuides' i 'animationDuration', bo nie są już potrzebne.
+            applyFilters();
+            guideList.innerHTML = "";
+            if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
-            // Ta funkcja wewnętrzna pozostaje bez większych zmian, jest w porządku.
-            const renderNewContent = () => {
-                // guideList.innerHTML = ""; // Natychmiastowe wyczyszczenie starych okładek.
-                applyFilters();
-                updatePaginationOptions();
+            const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
+            guideList.style.setProperty('--grid-rows', selectedRowCount);
+            guideList.style.setProperty('--box-width', currentWidthValue);
 
-                const totalPages = itemsPerPage > 0 ? Math.ceil(filteredGuides.length / itemsPerPage) : 1;
-                currentPage = Math.min(currentPage, totalPages || 1);
-                const pageItems = itemsPerPage > 0 ? filteredGuides.slice(
-                    (currentPage - 1) * itemsPerPage,
-                    currentPage * itemsPerPage
-                ) : filteredGuides;
+            const guideGap = 20;
+            const itemWidth = parseInt(currentWidthValue, 10);
+            const columns = Math.floor((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) || 1;
+            const itemsPerPage = columns * selectedRowCount;
 
-                pageItems.forEach((guide, index) => {
-                    const div = document.createElement("div");
-                    div.className = "guide";
-                    div.innerHTML = createGuideHtml(guide);
-
-                    // ZMIANA: Zmieniliśmy kolejność operacji
-                    if (animationsOn) {
-                        // 1. NAJPIERW uczyń element niewidzialnym
-                        div.style.opacity = 0;
-
-                        // 2. DOPIERO TERAZ dodaj go do strony
-                        guideList.appendChild(div);
-
-                        // 3. Po chwili uruchom animację pojawiania się
-                        setTimeout(() => {
-                            div.classList.add("animate-in");
-                            div.style.animationDelay = `${index * 0.05}s`;
-                        }, 20);
-                    } else {
-                        // Jeśli animacje są wyłączone, po prostu dodaj element
-                        guideList.appendChild(div);
-                    }
-                });
-
-                renderPagination(totalPages);
-                document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
-
-                const revealDelay = animationsOn ? pageItems.length * 50 + 50 : 0;
-                setTimeout(() => {
-                    if (animationsOn) {
-                        footer.classList.remove('hidden-animated');
-                        pagination.classList.add('visible');
-                    } else {
-                        pagination.style.visibility = 'visible';
-                        footer.style.visibility = 'visible';
-                    }
-                }, revealDelay);
-            };
-
-            // Ukrywamy stopkę i paginację przed rozpoczęciem rysowania.
-            if (animationsOn) {
-                pagination.classList.remove('visible');
-                footer.classList.add('hidden-animated');
-            } else {
-                pagination.style.visibility = 'hidden';
-                footer.style.visibility = 'hidden';
+            const pages = [];
+            if (itemsPerPage > 0) {
+                for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
+                    pages.push(filteredGuides.slice(i, i + itemsPerPage));
+                }
+            } else if (filteredGuides.length > 0) {
+                pages.push(filteredGuides);
             }
+            totalPages = pages.length;
 
-            // ZMIANA: Usunęliśmy całą logikę 'if/else' z animacją 'fade-out'.
-            // Teraz po prostu od razu wywołujemy rysowanie nowej zawartości.
-            // Animacja "rysowania" jest zawarta w samej funkcji renderNewContent.
-            guideList.innerHTML = '';
-            renderNewContent();
+            pages.forEach((pageItems, pageIndex) => {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'guide-page';
+                pageDiv.dataset.pageNumber = pageIndex + 1;
+
+                if (pageIndex === 0) { // Renderuj od razu tylko pierwszą stronę
+                    pageItems.forEach((guide, index) => {
+                        const div = document.createElement("div");
+                        div.className = "guide";
+                        // Uruchom animację tylko przy pierwszym ładowaniu
+                        if (animationsOn && isInitialLoad) {
+                            div.classList.add("animate-in");
+                            div.style.animationDelay = `${index * 0.04}s`;
+                        }
+                        div.innerHTML = createGuideHtml(guide);
+                        pageDiv.appendChild(div);
+                    });
+                }
+                guideList.appendChild(pageDiv);
+            });
+
+            setupLazyLoading(pages);
+            renderPagination();
+            document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+
+            // Po pierwszym renderowaniu, wyłącz flagę
+            if (isInitialLoad) {
+                isInitialLoad = false;
+            }
         }
 
-        function renderPagination(totalPages) {
+        // NOWA FUNKCJA: Obsługa Lazy Loading dla stron
+        function setupLazyLoading(pages) {
+            // Jeśli już istnieje, rozłącz stary obserwator
+            if (lazyLoadObserver) lazyLoadObserver.disconnect();
+
+            lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const pageDiv = entry.target;
+                        const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
+
+                        // Wypełnij stronę zawartością, jeśli jest pusta
+                        if (pageDiv.childElementCount === 0 && pageNum > 1) {
+                            const pageItems = pages[pageNum - 1];
+                            if (pageItems) {
+                                // Użyj requestAnimationFrame, by renderowanie było płynniejsze
+                                requestAnimationFrame(() => {
+                                    pageItems.forEach((guide, index) => {
+                                        const div = document.createElement("div");
+                                        div.className = "guide";
+                                        div.innerHTML = createGuideHtml(guide);
+                                        pageDiv.appendChild(div);
+                                    });
+                                });
+                            }
+                        }
+                        // Po wczytaniu przestajemy obserwować ten element
+                        observer.unobserve(pageDiv);
+                    }
+                });
+            }, {
+                root: guideList,
+                rootMargin: '0px 300px 0px 300px' // Zaczyna ładować następną stronę 300px przed jej pojawieniem się
+            });
+
+            document.querySelectorAll('.guide-page').forEach(page => {
+                lazyLoadObserver.observe(page);
+            });
+        }
+
+        // ZMIANA: Przebudowana funkcja renderowania paginacji dla Scroll Snap
+        function renderPagination() {
+            pagination.innerHTML = "";
             if (totalPages <= 1) {
-                pagination.innerHTML = "";
                 pagination.classList.remove('visible');
                 return;
             }
-            pagination.innerHTML = "";
+
             pagination.classList.add('visible');
 
             const container = document.createElement("div");
             container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
-            const createBtn = (html, disabled, onClick) => {
-                const btn = document.createElement("button");
-                btn.innerHTML = html;
-                btn.disabled = disabled;
-                btn.onclick = () => {
-                    onClick();
-                    renderGuides();
-                    stopPlayAnimation();
-                };
-                return btn;
-            };
-            container.appendChild(
-                createBtn(`<i class="fas fa-angle-double-left"></i>&nbsp;Pierwsza`, currentPage === 1, () => (currentPage = 1))
-            );
-            container.appendChild(
-                createBtn(`<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`, currentPage === 1, () => currentPage--)
-            );
-            const randomBtn = document.createElement("button");
-            randomBtn.innerHTML = `<i class="fas fa-random"></i>&nbsp;Losuj`;
-            randomBtn.title = "Losuj stronę";
-            randomBtn.onclick = () => {
-                if (totalPages > 1) {
-                    let newPage;
-                    do {
-                        newPage = Math.floor(Math.random() * totalPages) + 1;
-                    } while (totalPages > 1 && newPage === currentPage);
-                    currentPage = newPage;
-                    renderGuides();
-                    stopPlayAnimation();
-                }
-            };
-            container.appendChild(randomBtn);
-            const pageInput = document.createElement("input");
-            pageInput.type = "number";
-            pageInput.min = 1;
-            pageInput.max = totalPages;
-            pageInput.value = currentPage;
-            pageInput.style.width = "60px";
-            pageInput.onchange = (e) => {
-                const newPage = parseInt(e.target.value);
-                if (newPage >= 1 && newPage <= totalPages) {
-                    currentPage = newPage;
-                    renderGuides();
-                    stopPlayAnimation();
-                } else {
-                    e.target.value = currentPage;
-                }
-            };
-            container.appendChild(pageInput);
+
+            const prevBtn = document.createElement("button");
+            prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
+            prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
+
+            const nextBtn = document.createElement("button");
+            nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
+            nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
+
             const info = document.createElement("span");
             info.className = "pagination-info";
-            info.innerHTML = `/ ${totalPages}`;
+
+            const updateButtons = () => {
+                const newPage = Math.round(guideList.scrollLeft / guideList.clientWidth) + 1;
+                if (currentPage !== newPage) {
+                    currentPage = newPage > totalPages ? totalPages : newPage; // Zabezpieczenie
+                    info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+                }
+                prevBtn.disabled = (currentPage <= 1);
+                nextBtn.disabled = (currentPage >= totalPages);
+            };
+
+            guideList.addEventListener('scroll', debounce(updateButtons, 100));
+
+            container.appendChild(prevBtn);
             container.appendChild(info);
-            container.appendChild(createBtn(`Następna&nbsp;<i class="fas fa-chevron-right"></i>`, currentPage === totalPages, () => currentPage++));
-            container.appendChild(createBtn(`Ostatnia&nbsp;<i class="fas fa-angle-double-right"></i>`, currentPage === totalPages, () => (currentPage = totalPages)));
+            container.appendChild(nextBtn);
             pagination.appendChild(container);
+
+            currentPage = Math.round(guideList.scrollLeft / guideList.clientWidth) + 1;
+            info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+            updateButtons();
         }
 
         function drawRandomGuides() {
@@ -6430,6 +6381,7 @@
             pagination.innerHTML = "";
             pagination.classList.remove('visible');
             guideList.classList.add('random-draw');
+
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
@@ -6455,22 +6407,11 @@
         }
 
         function cycleBoxWidth() {
-            // Zmień 3 na 4, aby cykl obejmował indeksy 0, 1, 2, 3
-            currentBoxWidthIndex = (currentBoxWidthIndex + 1) % 4;
+            currentBoxWidthIndex = (currentBoxWidthIndex + 1) % 3;
             saveToLocalStorage(`box_width_index_${config.pageSettings.pageKey}`, currentBoxWidthIndex);
-
-            const widths = [
-                config.pageSettings.defaultBoxWidth1,
-                config.pageSettings.defaultBoxWidth2,
-                config.pageSettings.defaultBoxWidth3,
-                config.pageSettings.defaultBoxWidth4 // <-- DODAJ TĘ LINIĘ
-            ];
-            guideList.style.gridTemplateColumns = `repeat(auto-fill, ${widths[currentBoxWidthIndex]})`;
-
             renderGuides();
         }
 
-        // --- NOWA LOGIKA PRZYCISKÓW MENU ---
         let viewState = {
             covers: true,
             text: true
@@ -6490,13 +6431,6 @@
             const viewBtnText = document.getElementById('viewBtn-text');
             if (viewBtnCovers) viewBtnCovers.classList.toggle('active-play', viewState.covers);
             if (viewBtnText) viewBtnText.classList.toggle('active-play', viewState.text);
-            const widths = [
-                config.pageSettings.defaultBoxWidth1,
-                config.pageSettings.defaultBoxWidth2,
-                config.pageSettings.defaultBoxWidth3,
-                config.pageSettings.defaultBoxWidth4
-            ];
-            guideList.style.gridTemplateColumns = `repeat(auto-fill, ${widths[currentBoxWidthIndex]})`;
             renderGuides();
         }
 
@@ -6531,8 +6465,8 @@
                         renderGuides();
                         break;
                     case 'viewBtn-reset':
-                    case 'viewBtn-size': // Zmieniona nazwa id
-                        cycleBoxWidth(); // Wywołanie nowej funkcji
+                    case 'viewBtn-size':
+                        cycleBoxWidth();
                         break;
                 }
                 document.getElementById('viewBtn-vertical').classList.toggle('active-play', orientationFilterState === 'vertical');
@@ -6685,7 +6619,7 @@
         }
 
         function toggleAutoShuffle() {
-            if (videoBgState !== 'playing') return; // <-- Zezwalaj tylko przy odtwarzaniu
+            if (videoBgState !== 'playing') return;
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
@@ -6721,7 +6655,6 @@
                 autoShuffleInterval = null;
             }
 
-            // Jeśli stan był spauzowany, teraz będzie odtwarzany
             if (videoBgState === 'paused') {
                 videoBgState = 'playing';
             }
@@ -6750,14 +6683,12 @@
 
             if (videoBgState !== 'off') {
                 const wasPaused = videoBgState === 'paused';
-                // Zapisz czas PRZED zainicjowaniem nowego wideo
                 if (wasPaused) {
                     pausedTime = bgVideo.currentTime;
                 }
                 initializeBackgroundVideo(currentTheme);
                 if (wasPaused) {
                     bgVideo.addEventListener('canplay', () => {
-                        // Ustaw zapisany czas, a potem spauzuj
                         bgVideo.currentTime = pausedTime;
                         bgVideo.pause();
                     }, {
@@ -7148,10 +7079,8 @@
             };
         }
 
-        // --- POPRAWKA 2: Zmieniona logika obsługi resize ---
         let lastWindowWidth = window.innerWidth;
         const debouncedRender = debounce(() => {
-            // Odświeżaj siatkę tylko przy zmianie szerokości ekranu, ignorując zmiany wysokości (np. przez pasek adresu w mobilce)
             if (window.innerWidth !== lastWindowWidth) {
                 lastWindowWidth = window.innerWidth;
                 renderGuides();
@@ -7183,36 +7112,13 @@
                 document.body.classList.remove('video-ready');
             });
         });
-        searchInput.addEventListener("input", () => { // ZMIANA: Usunięto 'async'
-            const query = searchInput.value.toLowerCase().trim();
 
-            // --- EASTER EGG TRIGGER ---
-            if (query === 'reset' || query === 'clear') {
-                const command = query;
-                searchInput.value = '';
-
-                // ZMIANA: Uruchamiamy animację, ale NIE czekamy na jej koniec (usunięto 'await').
-                intro();
-
-                // Logika resetu lub czyszczenia ekranu wykonuje się OD RAZU,
-                // w tle, gdy użytkownik ogląda animację.
-                if (command === 'reset') {
-                    // Dajemy minimalne opóźnienie, aby animacja na 100% zdążyła zasłonić ekran przed przeładowaniem strony.
-                    setTimeout(hardReset, 1300);
-                } else if (command === 'clear') {
-                    clearScreen();
-                }
-                return;
-            }
-            // --- Koniec logiki Easter Egga ---
-
-            // Normalne działanie wyszukiwarki
-            currentPage = 1;
+        searchInput.addEventListener("input", () => {
             renderGuides();
             stopPlayAnimation();
         });
+
         formatFilter.addEventListener("change", () => {
-            currentPage = 1;
             const value = formatFilter.value;
             orientationFilterState = null;
             if (value.startsWith("search:")) {
@@ -7223,23 +7129,24 @@
             renderGuides();
             stopPlayAnimation();
         });
+
         sortSelector.addEventListener("change", (e) => {
             if (e.target.value) {
                 applySort(e.target.value, guides);
                 saveToLocalStorage('sort', e.target.value);
-                currentPage = 1;
                 renderGuides();
             }
             e.target.value = "";
         });
+
         itemsPerPageSelector.addEventListener("change", (e) => {
             if (!e.target.value) return;
             selectedRowCount = parseInt(e.target.value);
             saveToLocalStorage('rows', selectedRowCount);
-            currentPage = 1;
             renderGuides();
             stopPlayAnimation();
         });
+
         randomSelector.addEventListener("change", drawRandomGuides);
         fileInput.addEventListener("change", function () {
             if (this.files[0]) {
@@ -7247,8 +7154,6 @@
                 stopPlayAnimation();
             }
         });
-
-        // --- POPRAWKA 2: Usunięto stary, nieefektywny kod do blokowania "pull-to-refresh" ---
     </script>
 </body>
 
