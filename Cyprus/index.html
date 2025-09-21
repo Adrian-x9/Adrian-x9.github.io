@@ -322,15 +322,17 @@
         .top-header .title {
             font-size: 1.6em;
         }
-        
+
         /* NOWE STYLE DLA NAGŁÓWKA */
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
             background: none;
-            font-weight: 600; /* kompensacja optyczna dla stroke */
+            font-weight: 600;
+            /* kompensacja optyczna dla stroke */
             color: black;
             -webkit-text-stroke: 0.5px gray;
-            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3); /* fallback dla Firefox */
+            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
+            /* fallback dla Firefox */
         }
 
         body.dark-mode .top-header .title,
@@ -364,13 +366,13 @@
             align-items: center;
             gap: 10px;
         }
-        
+
         .controls {
-             margin-bottom: 20px;
+            margin-bottom: 20px;
         }
-        
+
         .action-controls {
-             margin-top: 20px;
+            margin-top: 20px;
         }
 
         .controls {
@@ -506,22 +508,28 @@
             border-color: #808080;
         }
 
-        .controls .dir-db-btn, .controls button,
-        .action-controls .dir-db-btn, .action-controls button,
+        .controls .dir-db-btn,
+        .controls button,
+        .action-controls .dir-db-btn,
+        .action-controls button,
         .top-header .dir-db-btn {
             border-color: #a00000;
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
             font-weight: bold;
         }
 
-        .controls .dir-db-btn:hover, .controls button:hover,
-        .action-controls .dir-db-btn:hover, .action-controls button:hover,
+        .controls .dir-db-btn:hover,
+        .controls button:hover,
+        .action-controls .dir-db-btn:hover,
+        .action-controls button:hover,
         .top-header .dir-db-btn:hover {
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
-        body:not(.dark-mode) .controls .dir-db-btn, body:not(.dark-mode) .controls button,
-        body:not(.dark-mode) .action-controls .dir-db-btn, body:not(.dark-mode) .action-controls button,
+        body:not(.dark-mode) .controls .dir-db-btn,
+        body:not(.dark-mode) .controls button,
+        body:not(.dark-mode) .action-controls .dir-db-btn,
+        body:not(.dark-mode) .action-controls button,
         body:not(.dark-mode) .top-header .dir-db-btn {
             background: #fdfdfd;
             color: #cc0000;
@@ -532,8 +540,10 @@
             color: #333;
         }
 
-        .dark-mode .controls .dir-db-btn, .dark-mode .controls button,
-        .dark-mode .action-controls .dir-db-btn, .dark-mode .action-controls button,
+        .dark-mode .controls .dir-db-btn,
+        .dark-mode .controls button,
+        .dark-mode .action-controls .dir-db-btn,
+        .dark-mode .action-controls button,
         .dark-mode .top-header .dir-db-btn {
             background: #000;
             color: #e53935;
@@ -635,7 +645,7 @@
         }
 
         .guide-list-wrapper+.pagination {
-             margin-top: 20px;
+            margin-top: 20px;
         }
 
         .guide-page {
@@ -869,7 +879,7 @@
                 transform: translateY(0);
             }
         }
-        
+
         .footer {
             text-align: center;
             padding: 20px;
@@ -1239,7 +1249,8 @@
         }
 
         .animated-header,
-        .controls, /* Animate all control groups */
+        .controls,
+        /* Animate all control groups */
         .action-controls,
         .animated-footer,
         .animated-pagination {
@@ -1252,7 +1263,7 @@
             animation-duration: 0.6s;
             animation-timing-function: ease-out;
         }
-        
+
         .action-controls,
         .animated-footer,
         .animated-pagination {
@@ -1305,21 +1316,24 @@
         .dark-mode .controls.minimized-view .multi-button:hover .multi-button-child {
             border-left-color: rgba(255, 255, 255, 0.2);
         }
-        
+
         @media (max-width: 768px) {
+
             .controls.minimized-view>#search,
             .controls.minimized-view>#formatFilter {
                 display: flex;
             }
-            .controls.minimized-view > #sortSelector,
-            .controls.minimized-view > #randomSelector,
-            .controls.minimized-view > #itemsPerPageSelector {
+
+            .controls.minimized-view>#sortSelector,
+            .controls.minimized-view>#randomSelector,
+            .controls.minimized-view>#itemsPerPageSelector {
                 display: none;
             }
-            
+
             .action-controls {
                 flex-direction: column;
             }
+
             .action-controls .action-row {
                 display: flex;
                 flex-wrap: wrap;
@@ -1345,12 +1359,26 @@
                 display: none !important;
             }
         }
-        
-        #lightbox-controls #lightbox-fxBtn { order: 1; }
-        #lightbox-controls #lightbox-videoBtn { order: 2; }
-        #lightbox-controls #slideshow-controls { order: 3; }
-        #lightbox-controls #lightbox-darkModeBtn { order: 4; }
-        #lightbox-controls #lightbox-labelsBtn { order: 5; }
+
+        #lightbox-controls #lightbox-fxBtn {
+            order: 1;
+        }
+
+        #lightbox-controls #lightbox-videoBtn {
+            order: 2;
+        }
+
+        #lightbox-controls #slideshow-controls {
+            order: 3;
+        }
+
+        #lightbox-controls #lightbox-darkModeBtn {
+            order: 4;
+        }
+
+        #lightbox-controls #lightbox-labelsBtn {
+            order: 5;
+        }
 
         /* --- EASTER EGG: CRT Effect Styles --- */
         #crt-overlay {
@@ -1468,7 +1496,7 @@
         }
     </style>
     <script>
-        (function() {
+        (function () {
             const langConfig = {
                 defaultLanguage: 'pl',
                 englishUrl: 'index-en.html'
@@ -1485,7 +1513,7 @@
             } catch (e) { /* Ignore storage errors */ }
         })();
 
-        (function() {
+        (function () {
             try {
                 const theme = localStorage.getItem('visudir_theme');
                 const defaultTheme = 'light';
@@ -1516,7 +1544,8 @@
         <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
-                <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
+                        class="version-display"></span></span>
             </a>
             <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
                 <i class="fas fa-globe"></i>
@@ -1525,7 +1554,7 @@
                 <span class="btn-text">Wstecz</span></a>
         </div>
     </div>
-    
+
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
@@ -1572,7 +1601,7 @@
     <div class="guide-list-wrapper">
         <div class="guide-list" id="guideList"></div>
     </div>
-    
+
     <div class="pagination" id="pagination"></div>
 
     <div class="action-controls" id="actionControls">
@@ -1580,31 +1609,45 @@
             <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
                 <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
             </button>
-            <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Ciemny</span></button>
+            <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
+                    Ciemny</span></button>
         </div>
         <div class="action-row">
             <button id="videoBtn" class="dir-db-btn multi-button">
-                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"> Wideo</span></span>
-                <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
-                <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
-                <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
-                <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
-                <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
+                        Wideo</span></span>
+                <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                        class="fas fa-chevron-left"></i></span>
+                <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
+                        class="fas fa-chevron-right"></i></span>
+                <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                        class="fas fa-undo"></i></span>
             </button>
             <div id="viewBtnGroup" class="dir-db-btn multi-button">
-                <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text"> Widok</span></span>
-                <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i class="fas fa-image"></i></span>
-                <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i class="fas fa-align-justify"></i></span>
-                <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i class="fas fa-arrows-alt-v"></i></span>
-                <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i class="fas fa-arrows-alt-h"></i></span>
-                <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i class="fas fa-columns"></i></span>
+                <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span
+                        class="btn-text"> Widok</span></span>
+                <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
+                        class="fas fa-image"></i></span>
+                <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
+                        class="fas fa-align-justify"></i></span>
+                <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
+                        class="fas fa-arrows-alt-v"></i></span>
+                <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
+                        class="fas fa-arrows-alt-h"></i></span>
+                <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
+                        class="fas fa-columns"></i></span>
             </div>
         </div>
     </div>
 
     <div class="footer">
         <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                        class="version-suffix">Dir
                         <span class="version-display"></span></span></a></strong>
             <strong>© 2025-09-17</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
@@ -1623,40 +1666,58 @@
 
     <div id="backdrop" class="backdrop">
         <div id="play-caption" class="play-caption"></div>
-        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i
+                class="fas fa-expand"></i></button>
         <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
         <div id="play-guide-container" class="play-guide-container"></div>
 
         <div id="lightbox-controls">
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i class="fas fa-cog"></i></button>
+            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
+                    class="fas fa-cog"></i></button>
 
-            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main" class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
-                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
-                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
-                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
-                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
-                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
+                    class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
+                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                        class="fas fa-chevron-left"></i></span>
+                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i
+                        class="fas fa-chevron-right"></i></span>
+                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                        class="fas fa-undo"></i></span>
             </div>
-            
+
             <div id="slideshow-controls" class="lightbox-control-group">
-                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i class="fas fa-fast-backward"></i></span>
-                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i class="fas fa-step-backward"></i></span>
-                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i class="fas fa-stop"></i></span>
-                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i class="fas fa-play"></i></span>
-                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i class="fas fa-random"></i></span>
-                <span id="slideshow-next" class="multi-button-child" title="Następny"><i class="fas fa-step-forward"></i></span>
-                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i class="fas fa-fast-forward"></i></span>
+                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
+                        class="fas fa-fast-backward"></i></span>
+                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i
+                        class="fas fa-step-backward"></i></span>
+                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i
+                        class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i
+                        class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i
+                        class="fas fa-random"></i></span>
+                <span id="slideshow-next" class="multi-button-child" title="Następny"><i
+                        class="fas fa-step-forward"></i></span>
+                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i
+                        class="fas fa-fast-forward"></i></span>
             </div>
 
-            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i class="fas fa-moon"></i></button>
-            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i class="fas fa-tags"></i></button>
+            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
+                    class="fas fa-moon"></i></button>
+            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
+                    class="fas fa-tags"></i></button>
         </div>
-        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i class="fas fa-chevron-down"></i></button>
+        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
+                class="fas fa-chevron-down"></i></button>
     </div>
 
     <script>
         // v1.5.5 - UI refactoring for mobile and desktop views
-        
+
         /**
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
          */
@@ -1845,13 +1906,13 @@
             filteredGuides = [],
             slideshowSourceGuides = [],
             playGuidesQueue = [];
-        
+
         let currentSort,
             selectedRowCount;
-        
+
         let currentPage = 1;
         let totalPages = 1;
-        let pagesCache = []; 
+        let pagesCache = [];
         let preloadQueue = new Set();
         let isInitialLoad = true;
         let lazyLoadObserver;
@@ -2198,7 +2259,7 @@
                 }
             });
         }
-        
+
         function loadAndParseFile(file) {
             const r = new FileReader();
             r.onload = (e) => init(e.target.result);
@@ -2229,7 +2290,7 @@
             fileInputLabel.style.display = "none";
             await processData(data);
             updateFormatFilter();
-            
+
             const rowOptions = [1, 2, 3, 4, 5, 10, 20];
             itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
             rowOptions.forEach(r => {
@@ -2281,7 +2342,7 @@
             }, config.logoRotator.interval);
         }
 
-        window.onload = function() {
+        window.onload = function () {
             fileInputLabel.style.display = "none";
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
             document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
@@ -2311,7 +2372,7 @@
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
             darkModeBtn.addEventListener('click', toggleDarkMode);
-            document.getElementById('langBtn').addEventListener('click', function(e) {
+            document.getElementById('langBtn').addEventListener('click', function (e) {
                 e.preventDefault();
                 try {
                     localStorage.setItem('visudir_lang', 'en');
@@ -2368,10 +2429,15 @@
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort);
-            
-            if(guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
-            
+
+            if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
+
             orientationFilterState = null;
+
+            // ZMIANA: Resetujemy indeks rozmiaru kafelka do wartości domyślnej (0)
+            currentBoxWidthIndex = 0;
+            saveToLocalStorage(`box_width_index_${config.pageSettings.pageKey}`, currentBoxWidthIndex);
+
             viewState = {
                 covers: config.pageSettings.defaultShowCovers,
                 text: config.pageSettings.defaultShowText
@@ -2401,8 +2467,8 @@
                     return;
                 }
                 fetch(filePath, {
-                        method: 'HEAD'
-                    })
+                    method: 'HEAD'
+                })
                     .then(response => {
                         window.location.href = response.ok ? targetUrl : fallbackUrl;
                     })
@@ -2415,14 +2481,14 @@
             const http = new XMLHttpRequest();
             http.open('HEAD', filePath, true);
             http.timeout = 2000;
-            http.onload = function() {
+            http.onload = function () {
                 if (this.status === 200 || this.status === 0) {
                     window.open(targetUrl, '_blank');
                 } else {
                     window.location.href = fallbackUrl;
                 }
             };
-            http.onerror = http.ontimeout = function() {
+            http.onerror = http.ontimeout = function () {
                 window.location.href = fallbackUrl;
             };
             http.send();
@@ -2440,7 +2506,7 @@
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
-            
+
             const mediaTypes = ["jpg", "png", "mp4", "avi"];
 
             if (guide.format === "link") {
@@ -2472,23 +2538,72 @@
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
 
+        // =======================================================================
+        // NOWA, NIEZAWODNA LOGIKA RENDEROWANIA I PAGINACJI (v1.5.5+)
+        // =======================================================================
+
+        /**
+         * KROK 1: Mierzy, ile kolumn FAKTYCZNIE wyrenderowała przeglądarka.
+         * Działa przez tymczasowe dodanie elementów i sprawdzenie ich pozycji.
+         * @returns {number} Rzeczywista liczba kolumn w siatce.
+         */
+        function getActualColumnCount() {
+            // Jeśli kontener jest niewidoczny, zwróć 1, aby uniknąć błędów
+            if (guideList.offsetParent === null) return 1;
+
+            // Tworzymy fragment DOM, aby uniknąć wielokrotnych zmian w głównym dokumencie
+            const fragment = document.createDocumentFragment();
+            const tempItems = [];
+            // Dodajemy 20 tymczasowych elementów (więcej niż jakakolwiek możliwa liczba kolumn)
+            for (let i = 0; i < 20; i++) {
+                const div = document.createElement('div');
+                // Kopiujemy minimalne style, aby element zajął miejsce w siatce
+                div.style.width = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
+                div.style.height = '1px';
+                fragment.appendChild(div);
+                tempItems.push(div);
+            }
+            guideList.appendChild(fragment);
+
+            // Mierzymy pozycję pierwszego elementu
+            const firstItemOffsetTop = tempItems[0] ? tempItems[0].offsetTop : 0;
+            let columns = 0;
+
+            // Liczymy, ile elementów ma tę samą pozycję pionową
+            for (const item of tempItems) {
+                if (item.offsetTop === firstItemOffsetTop) {
+                    columns++;
+                } else {
+                    break; // Koniec pierwszego wiersza
+                }
+            }
+
+            // Czyścimy kontener z tymczasowych elementów
+            guideList.innerHTML = '';
+
+            return columns > 0 ? columns : 1; // Zabezpieczenie na wypadek, gdyby coś poszło nie tak
+        }
 
 
+        /**
+         * KROK 2: Główna funkcja renderująca, napisana od nowa.
+         * Używa getActualColumnCount() do precyzyjnego podziału na strony.
+         */
         function renderGuides() {
             guideList.classList.remove('random-draw');
             const animationsOn = !document.body.classList.contains('no-animation');
-            
+
             applyFilters();
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
-            
+
+            // Ustawiamy zmienne CSS dla stylów siatki
             const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', currentWidthValue);
 
-            const guideGap = 20;
-            const itemWidth = parseInt(currentWidthValue, 10);
-            const columns = Math.floor((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) || 1;
+            // --- Nowa, niezawodna logika ---
+            const columns = getActualColumnCount();
             const itemsPerPage = columns * selectedRowCount;
 
             pagesCache = [];
@@ -2501,12 +2616,13 @@
             }
             totalPages = pagesCache.length || 1;
 
+            // Renderowanie stron i kafelków (z lazy loading)
             pagesCache.forEach((pageItems, pageIndex) => {
                 const pageDiv = document.createElement('div');
                 pageDiv.className = 'guide-page';
                 pageDiv.dataset.pageNumber = pageIndex + 1;
 
-                if (pageIndex === 0) {
+                if (pageIndex === 0) { // Renderuj od razu tylko pierwszą stronę
                     pageItems.forEach((guide, index) => {
                         const div = document.createElement("div");
                         div.className = "guide";
@@ -2520,7 +2636,7 @@
                 }
                 guideList.appendChild(pageDiv);
             });
-            
+
             setupLazyLoading(pagesCache);
             renderPagination();
             document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
@@ -2531,6 +2647,9 @@
             }
         }
 
+        /**
+         * KROK 3: Niezmienione funkcje pomocnicze (wklej je, by mieć pewność).
+         */
         function setupLazyLoading(pages) {
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
@@ -2539,12 +2658,12 @@
                     if (entry.isIntersecting) {
                         const pageDiv = entry.target;
                         const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
-                        
+
                         if (pageDiv.childElementCount === 0 && pageNum > 1) {
                             const pageItems = pages[pageNum - 1];
                             if (pageItems) {
                                 requestAnimationFrame(() => {
-                                    pageItems.forEach((guide, index) => {
+                                    pageItems.forEach((guide) => {
                                         const div = document.createElement("div");
                                         div.className = "guide";
                                         div.innerHTML = createGuideHtml(guide);
@@ -2556,8 +2675,8 @@
                         observer.unobserve(pageDiv);
                     }
                 });
-            }, { 
-                root: guideList, 
+            }, {
+                root: guideList,
                 rootMargin: '0px 300px 0px 300px'
             });
 
@@ -2565,14 +2684,14 @@
                 lazyLoadObserver.observe(page);
             });
         }
-        
+
         function renderPagination() {
             pagination.innerHTML = "";
             if (totalPages <= 1) {
                 pagination.classList.remove('visible');
                 return;
             }
-            
+
             pagination.classList.add('visible');
 
             const container = document.createElement("div");
@@ -2581,7 +2700,7 @@
             const prevBtn = document.createElement("button");
             prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
             prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
-            
+
             const nextBtn = document.createElement("button");
             nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
             nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
@@ -2589,7 +2708,7 @@
 
             const info = document.createElement("span");
             info.className = "pagination-info";
-            
+
             const paginationObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -2603,7 +2722,7 @@
             }, { root: guideList, threshold: 0.75 });
 
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
-            
+
             container.appendChild(prevBtn);
             container.appendChild(info);
             container.appendChild(nextBtn);
@@ -2647,7 +2766,7 @@
             pagination.innerHTML = "";
             pagination.classList.remove('visible');
             guideList.classList.add('random-draw');
-            
+
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
@@ -2972,7 +3091,7 @@
                 console.error("Nie znaleziono elementu w przefiltrowanej liście.");
                 return;
             }
-            
+
             startPlayAnimation(startIndex);
         }
 
@@ -3009,7 +3128,7 @@
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
 
             playGuidesQueue = [...source];
-            playCurrentIndex = startIndex; 
+            playCurrentIndex = startIndex;
 
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
@@ -3025,7 +3144,7 @@
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
             slideshowPlayBtn.classList.add('active-play');
             lightboxLabelsBtn.classList.toggle('active-play', areLabelsVisible);
-            
+
             displayRandomGuide(playGuidesQueue[playCurrentIndex]);
         }
 
@@ -3069,7 +3188,7 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (!isNav) { 
+                } else if (!isNav) {
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
                 guide = playGuidesQueue[playCurrentIndex];
@@ -3348,7 +3467,7 @@
 
         function debounce(func, wait) {
             let timeout;
-            return function(...args) {
+            return function (...args) {
                 const later = () => {
                     clearTimeout(timeout);
                     func.apply(this, args);
@@ -3367,7 +3486,7 @@
         }, 250);
         window.addEventListener("resize", debouncedRender);
 
-        window.addEventListener("pageshow", function(event) {
+        window.addEventListener("pageshow", function (event) {
             if (event.persisted) {
                 applyFilters();
                 renderGuides();
@@ -3391,7 +3510,7 @@
                 document.body.classList.remove('video-ready');
             });
         });
-        
+
         searchInput.addEventListener("input", () => {
             const query = searchInput.value.toLowerCase().trim();
             if (query === 'reset' || query === 'clear') {
@@ -3408,7 +3527,7 @@
             renderGuides();
             stopPlayAnimation();
         });
-        
+
         formatFilter.addEventListener("change", () => {
             const value = formatFilter.value;
             orientationFilterState = null;
@@ -3420,7 +3539,7 @@
             renderGuides();
             stopPlayAnimation();
         });
-        
+
         sortSelector.addEventListener("change", (e) => {
             if (e.target.value) {
                 applySort(e.target.value, guides);
@@ -3429,7 +3548,7 @@
             }
             e.target.value = "";
         });
-        
+
         itemsPerPageSelector.addEventListener("change", (e) => {
             if (!e.target.value) return;
             selectedRowCount = parseInt(e.target.value);
@@ -3439,7 +3558,7 @@
         });
 
         randomSelector.addEventListener("change", drawRandomGuides);
-        fileInput.addEventListener("change", function() {
+        fileInput.addEventListener("change", function () {
             if (this.files[0]) {
                 loadAndParseFile(this.files[0]);
                 stopPlayAnimation();

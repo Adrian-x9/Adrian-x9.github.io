@@ -2468,146 +2468,201 @@
 
 
 
-        function renderGuides() {
-            guideList.classList.remove('random-draw');
-            const animationsOn = !document.body.classList.contains('no-animation');
-            
-            applyFilters();
-            guideList.innerHTML = "";
-            if (lazyLoadObserver) lazyLoadObserver.disconnect();
-            
-            const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
-            guideList.style.setProperty('--grid-rows', selectedRowCount);
-            guideList.style.setProperty('--box-width', currentWidthValue);
+        // =======================================================================
+// NOWA, NIEZAWODNA LOGIKA RENDEROWANIA I PAGINACJI (v1.5.5+)
+// =======================================================================
 
-            const guideGap = 20;
-            const itemWidth = parseInt(currentWidthValue, 10);
-            const columns = Math.floor((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) || 1;
-            const itemsPerPage = columns * selectedRowCount;
+/**
+ * KROK 1: Mierzy, ile kolumn FAKTYCZNIE wyrenderowała przeglądarka.
+ * Działa przez tymczasowe dodanie elementów i sprawdzenie ich pozycji.
+ * @returns {number} Rzeczywista liczba kolumn w siatce.
+ */
+function getActualColumnCount() {
+    // Jeśli kontener jest niewidoczny, zwróć 1, aby uniknąć błędów
+    if (guideList.offsetParent === null) return 1;
 
-            pagesCache = [];
-            if (itemsPerPage > 0) {
-                for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
-                    pagesCache.push(filteredGuides.slice(i, i + itemsPerPage));
+    // Tworzymy fragment DOM, aby uniknąć wielokrotnych zmian w głównym dokumencie
+    const fragment = document.createDocumentFragment();
+    const tempItems = [];
+    // Dodajemy 20 tymczasowych elementów (więcej niż jakakolwiek możliwa liczba kolumn)
+    for (let i = 0; i < 20; i++) {
+        const div = document.createElement('div');
+        // Kopiujemy minimalne style, aby element zajął miejsce w siatce
+        div.style.width = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
+        div.style.height = '1px';
+        fragment.appendChild(div);
+        tempItems.push(div);
+    }
+    guideList.appendChild(fragment);
+
+    // Mierzymy pozycję pierwszego elementu
+    const firstItemOffsetTop = tempItems[0] ? tempItems[0].offsetTop : 0;
+    let columns = 0;
+    
+    // Liczymy, ile elementów ma tę samą pozycję pionową
+    for (const item of tempItems) {
+        if (item.offsetTop === firstItemOffsetTop) {
+            columns++;
+        } else {
+            break; // Koniec pierwszego wiersza
+        }
+    }
+
+    // Czyścimy kontener z tymczasowych elementów
+    guideList.innerHTML = '';
+    
+    return columns > 0 ? columns : 1; // Zabezpieczenie na wypadek, gdyby coś poszło nie tak
+}
+
+
+/**
+ * KROK 2: Główna funkcja renderująca, napisana od nowa.
+ * Używa getActualColumnCount() do precyzyjnego podziału na strony.
+ */
+function renderGuides() {
+    guideList.classList.remove('random-draw');
+    const animationsOn = !document.body.classList.contains('no-animation');
+    
+    applyFilters();
+    guideList.innerHTML = "";
+    if (lazyLoadObserver) lazyLoadObserver.disconnect();
+    
+    // Ustawiamy zmienne CSS dla stylów siatki
+    const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
+    guideList.style.setProperty('--grid-rows', selectedRowCount);
+    guideList.style.setProperty('--box-width', currentWidthValue);
+    
+    // --- Nowa, niezawodna logika ---
+    const columns = getActualColumnCount();
+    const itemsPerPage = columns * selectedRowCount;
+
+    pagesCache = [];
+    if (itemsPerPage > 0) {
+        for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
+            pagesCache.push(filteredGuides.slice(i, i + itemsPerPage));
+        }
+    } else if (filteredGuides.length > 0) {
+        pagesCache.push(filteredGuides);
+    }
+    totalPages = pagesCache.length || 1;
+
+    // Renderowanie stron i kafelków (z lazy loading)
+    pagesCache.forEach((pageItems, pageIndex) => {
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'guide-page';
+        pageDiv.dataset.pageNumber = pageIndex + 1;
+
+        if (pageIndex === 0) { // Renderuj od razu tylko pierwszą stronę
+            pageItems.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide";
+                if (animationsOn && isInitialLoad) {
+                    div.classList.add("animate-in");
+                    div.style.animationDelay = `${index * 0.04}s`;
                 }
-            } else if (filteredGuides.length > 0) {
-                pagesCache.push(filteredGuides);
-            }
-            totalPages = pagesCache.length || 1;
-
-            pagesCache.forEach((pageItems, pageIndex) => {
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'guide-page';
-                pageDiv.dataset.pageNumber = pageIndex + 1;
-
-                if (pageIndex === 0) {
-                    pageItems.forEach((guide, index) => {
-                        const div = document.createElement("div");
-                        div.className = "guide";
-                        if (animationsOn && isInitialLoad) {
-                            div.classList.add("animate-in");
-                            div.style.animationDelay = `${index * 0.04}s`;
-                        }
-                        div.innerHTML = createGuideHtml(guide);
-                        pageDiv.appendChild(div);
-                    });
-                }
-                guideList.appendChild(pageDiv);
+                div.innerHTML = createGuideHtml(guide);
+                pageDiv.appendChild(div);
             });
-            
-            setupLazyLoading(pagesCache);
-            renderPagination();
-            document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+        }
+        guideList.appendChild(pageDiv);
+    });
+    
+    setupLazyLoading(pagesCache);
+    renderPagination();
+    document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
 
-            if (isInitialLoad) {
-                isInitialLoad = false;
+    if (isInitialLoad) {
+        isInitialLoad = false;
+        preloadNextPageImages();
+    }
+}
+
+/**
+ * KROK 3: Niezmienione funkcje pomocnicze (wklej je, by mieć pewność).
+ */
+function setupLazyLoading(pages) {
+    if (lazyLoadObserver) lazyLoadObserver.disconnect();
+
+    lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const pageDiv = entry.target;
+                const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
+                
+                if (pageDiv.childElementCount === 0 && pageNum > 1) {
+                    const pageItems = pages[pageNum - 1];
+                    if (pageItems) {
+                        requestAnimationFrame(() => {
+                            pageItems.forEach((guide) => {
+                                const div = document.createElement("div");
+                                div.className = "guide";
+                                div.innerHTML = createGuideHtml(guide);
+                                pageDiv.appendChild(div);
+                            });
+                        });
+                    }
+                }
+                observer.unobserve(pageDiv);
+            }
+        });
+    }, { 
+        root: guideList, 
+        rootMargin: '0px 300px 0px 300px'
+    });
+
+    document.querySelectorAll('.guide-page').forEach(page => {
+        lazyLoadObserver.observe(page);
+    });
+}
+        
+function renderPagination() {
+    pagination.innerHTML = "";
+    if (totalPages <= 1) {
+        pagination.classList.remove('visible');
+        return;
+    }
+    
+    pagination.classList.add('visible');
+
+    const container = document.createElement("div");
+    container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
+    prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
+    
+    const nextBtn = document.createElement("button");
+    nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
+    nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
+    nextBtn.addEventListener('mouseenter', preloadNextPageImages);
+
+    const info = document.createElement("span");
+    info.className = "pagination-info";
+    
+    const paginationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                currentPage = parseInt(entry.target.dataset.pageNumber, 10);
+                info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+                prevBtn.disabled = (currentPage <= 1);
+                nextBtn.disabled = (currentPage >= totalPages);
                 preloadNextPageImages();
             }
-        }
+        });
+    }, { root: guideList, threshold: 0.75 });
 
-        function setupLazyLoading(pages) {
-            if (lazyLoadObserver) lazyLoadObserver.disconnect();
+    document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
+    
+    container.appendChild(prevBtn);
+    container.appendChild(info);
+    container.appendChild(nextBtn);
+    pagination.appendChild(container);
 
-            lazyLoadObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const pageDiv = entry.target;
-                        const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
-                        
-                        if (pageDiv.childElementCount === 0 && pageNum > 1) {
-                            const pageItems = pages[pageNum - 1];
-                            if (pageItems) {
-                                requestAnimationFrame(() => {
-                                    pageItems.forEach((guide, index) => {
-                                        const div = document.createElement("div");
-                                        div.className = "guide";
-                                        div.innerHTML = createGuideHtml(guide);
-                                        pageDiv.appendChild(div);
-                                    });
-                                });
-                            }
-                        }
-                        observer.unobserve(pageDiv);
-                    }
-                });
-            }, { 
-                root: guideList, 
-                rootMargin: '0px 300px 0px 300px'
-            });
-
-            document.querySelectorAll('.guide-page').forEach(page => {
-                lazyLoadObserver.observe(page);
-            });
-        }
-        
-        function renderPagination() {
-            pagination.innerHTML = "";
-            if (totalPages <= 1) {
-                pagination.classList.remove('visible');
-                return;
-            }
-            
-            pagination.classList.add('visible');
-
-            const container = document.createElement("div");
-            container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
-
-            const prevBtn = document.createElement("button");
-            prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
-            prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
-            
-            const nextBtn = document.createElement("button");
-            nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
-            nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
-            nextBtn.addEventListener('mouseenter', preloadNextPageImages);
-
-            const info = document.createElement("span");
-            info.className = "pagination-info";
-            
-            const paginationObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        currentPage = parseInt(entry.target.dataset.pageNumber, 10);
-                        info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-                        prevBtn.disabled = (currentPage <= 1);
-                        nextBtn.disabled = (currentPage >= totalPages);
-                        preloadNextPageImages();
-                    }
-                });
-            }, { root: guideList, threshold: 0.75 });
-
-            document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
-            
-            container.appendChild(prevBtn);
-            container.appendChild(info);
-            container.appendChild(nextBtn);
-            pagination.appendChild(container);
-
-            currentPage = 1;
-            info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-            prevBtn.disabled = true;
-            nextBtn.disabled = (totalPages <= 1);
-        }
+    currentPage = 1;
+    info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+    prevBtn.disabled = true;
+    nextBtn.disabled = (totalPages <= 1);
+}
 
         function preloadNextPageImages() {
             const nextPage = currentPage + 1;
