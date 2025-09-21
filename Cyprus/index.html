@@ -1739,7 +1739,7 @@
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.5.4', // Bug fixes
+            version: 'v1.5.5', // Bug fixes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1748,31 +1748,31 @@
                 enabled: true,
                 interval: 4500,
                 logos: [{
-                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
-                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
-                    href: ".base-system/about.html",
+                    srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png",
+                    srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png",
+                    href: "../.base-system/about.html",
                     alt: "Logo VisuDir"
                 }, {
-                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
-                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
+                    srcLight: "../.base-system/gfx/interface/ADE_small_light.png",
+                    srcDark: "../.base-system/gfx/interface/ADE_small_dark.png",
                     href: "https://www.ade.pl",
                     alt: "Logo ADE"
                 }]
             },
             pageSettings: {
-                pageKey: 'indexMaxi',
-                pageTitle: "START ▪ maxi MENU ▪",
+                pageKey: 'cyprus',
+                pageTitle: "CYPR ▪ CYPRUS ▪",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: false,
-                showLanguageButton: false,
+                showBackButton: true,
+                showLanguageButton: true,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 26,
                 defaultAnimations: true,
                 defaultVideoBg: true,
                 defaultShowCovers: true,
-                defaultShowText: true,
+                defaultShowText: false,
                 defaultViewExpanded: false,
                 defaultVideoExpanded: false,
                 defaultBoxWidth1: '257px',
@@ -1780,40 +1780,34 @@
                 defaultBoxWidth3: '137px',
                 defaultLabelsVisible: true,
                 defaultRows: 1, // Ta wartość będzie teraz kontrolować wysokość siatki
-                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
+                defaultSort: 'shuffle', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
                 predefinedFilters: [{
-                    label: "ADE",
-                    search: "ade"
+                    label: "Cypr",
+                    search: "Cypr"
                 }, {
-                    label: "E-booki",
-                    search: "e-book"
+                    label: "Cyprus",
+                    search: "Cypr"
                 }, {
                     label: "Galerie",
                     search: "galeri"
                 }, {
-                    label: "Hiszpania",
-                    search: "Hiszpania"
+                    label: "Ayia-Napa_Atlantica-",
+                    search: "Ayia"
                 }, {
-                    label: "Niemcy",
-                    search: "Niemcy"
-                }, {
-                    label: "Polska",
-                    search: "Polska"
-                }, {
-                    label: "Poradniki",
-                    search: "Poradniki"
+                    label: "Aeneas-Resort",
+                    search: "Aeneas"
                 },],
             },
             paths: {
-                url404: ".base-system/404.html",
-                urlAbout: ".base-system/about.html",
-                urlFallback: ".base-system/soon.html",
+                url404: "../.base-system/404.html",
+                urlAbout: "../.base-system/about.html",
+                urlFallback: "../.base-system/soon.html",
                 databaseFileName: ".base-system/db.txt",
                 dataFolderName: ".base-system/files",
                 coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/preview-hd",
-                videoBgLightUrlBase: ".base-system/video-bg/bg-light",
-                videoBgDarkUrlBase: ".base-system/video-bg/bg-dark",
+                previewHdFolderName: ".base-system/files",
+                videoBgLightUrlBase: "../.base-system/video-bg/bg-light",
+                videoBgDarkUrlBase: "../.base-system/video-bg/bg-dark",
                 urlEnglishVersion: "index-en.html"
             }
         };
@@ -1821,41 +1815,42 @@
 
         // --- File database ---
         const dataFromFile = `
-17.09.2025  20:19               0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
-17.09.2025  19:00               0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
-17.09.2025  19:00               0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
-17.09.2025  20:21               0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
-17.09.2025  20:26               0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
-17.09.2025  20:26               0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
-17.09.2025  20:26               0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
-17.09.2025  22:51               0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
-17.09.2025  19:59               0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
-17.09.2025  22:50               0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
-17.09.2025  22:50               0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
-17.09.2025  22:50               0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
-17.09.2025  22:50               0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
-17.09.2025  22:51               0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
-17.09.2025  22:51               0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
-17.09.2025  22:10               0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
-17.09.2025  22:50               0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
-17.09.2025  22:49               0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
-17.09.2025  18:41               0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
-17.09.2025  19:57               0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
-17.09.2025  19:58               0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
-17.09.2025  20:37               0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
-17.09.2025  18:40               0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
-17.09.2025  21:41               0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
-17.09.2025  21:47               0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
-17.09.2025  22:10               0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
-17.09.2025  22:10               0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
-17.09.2025  22:50               0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
-17.09.2025  22:50               0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
-17.09.2025  22:50               0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
-17.09.2025  20:20               0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
-17.09.2025  20:27               0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
+21.09.2025  09:07           3259967 Ayia-Napa-Nissi_Cypr_Cyprus_George-Lemon-oUi2tvBLInY-unsplash.jpg
+21.09.2025  08:08            117510 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.53_2.jpg
+21.09.2025  08:08             71140 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.54.jpg
+21.09.2025  10:01            319215 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.54_1.jpg
+21.09.2025  08:08            150488 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.54_2.jpg
+21.09.2025  10:02            467616 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.54_3.jpg
+21.09.2025  10:02            363296 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.55.jpg
+21.09.2025  10:02            677633 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.55_1.jpg
+21.09.2025  08:08            586161 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.55_2.jpg
+21.09.2025  09:23           2293298 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.56.jpg
+21.09.2025  08:08            184571 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.56_1.jpg
+21.09.2025  08:08            198810 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.56_2.jpg
+21.09.2025  08:08            246354 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.57_1.jpg
+21.09.2025  08:08            402176 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.57_2.jpg
+21.09.2025  08:08            175296 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.58.jpg
+21.09.2025  08:08            230259 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.58_1.jpg
+21.09.2025  10:04            433676 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.58_2.jpg
+21.09.2025  08:08            340399 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.05.58_3.jpg
+21.09.2025  08:08            201029 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.06.00_1.jpg
+21.09.2025  10:02            287846 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.06.02.jpg
+21.09.2025  08:08            439728 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.06.03.jpg
+21.09.2025  08:08            901109 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-01 at 17.06.05.jpg
+21.09.2025  08:08             82037 Ayia-Napa_Atlantica-Aeneas-Resort_Cypr_Cyprus_2025-09-03 at 20.29.12.jpg
+21.09.2025  10:06           2306265 Cypr_Cyprus_datingjungle-9ztssr7gntg-unsplash.jpg
+21.09.2025  10:06           2526506 Cypr_Cyprus_datingscout-3SdITUfm85M-unsplash.jpg
+21.09.2025  10:06           2693538 Cypr_Cyprus_datingscout-Fs3tnxNGutk-unsplash.jpg
+21.09.2025  10:06           2525553 Cypr_Cyprus_dylan-sosso-dkUn2_2tNdQ-unsplash.jpg
+21.09.2025  10:06           1971350 Cypr_Cyprus_dylan-sosso-GHAfBOw-1rk-unsplash.jpg
+21.09.2025  10:06           4316627 Cypr_Cyprus_george-lemon-Q1PWLzsn61Q-unsplash.jpg
+21.09.2025  10:06           1674336 Cypr_Cyprus_hert-niks-7lL6PMVPeU4-unsplash.jpg
+21.09.2025  10:06           1614511 Cypr_Cyprus_hert-niks-qtsjDHePgS8-unsplash.jpg
+21.09.2025  10:06           2383594 Cypr_Cyprus_katerina-bot-sZ8zn03gFKU-unsplash.jpg
+21.09.2025  10:06           1821608 Cypr_Cyprus_mike-yukhtenko-Dv2n1Tv_WcI-unsplash.jpg
+21.09.2025  10:06           3754680 Cypr_Cyprus_secret-travel-guide-C0V2eXAbSK8-unsplash.jpg
+21.09.2025  10:06           2811223 Cypr_Cyprus_secret-travel-guide-fmZTiJ64QCw-unsplash.jpg
+21.09.2025  10:06           3246517 Cypr_Cyprus_secret-travel-guide-O_7emptPfWM-unsplash.jpg
         `;
         // --- Database end ---
         // --- End of copying / Kopiuj do tego miejsca ---
