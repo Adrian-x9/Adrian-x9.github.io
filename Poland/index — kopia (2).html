@@ -322,17 +322,15 @@
         .top-header .title {
             font-size: 1.6em;
         }
-
+        
         /* NOWE STYLE DLA NAGŁÓWKA */
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
             background: none;
-            font-weight: 600;
-            /* kompensacja optyczna dla stroke */
+            font-weight: 600; /* kompensacja optyczna dla stroke */
             color: black;
             -webkit-text-stroke: 0.5px gray;
-            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
-            /* fallback dla Firefox */
+            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3); /* fallback dla Firefox */
         }
 
         body.dark-mode .top-header .title,
@@ -366,13 +364,13 @@
             align-items: center;
             gap: 10px;
         }
-
+        
         .controls {
-            margin-bottom: 20px;
+             margin-bottom: 20px;
         }
-
+        
         .action-controls {
-            margin-top: 20px;
+             margin-top: 20px;
         }
 
         .controls {
@@ -508,28 +506,22 @@
             border-color: #808080;
         }
 
-        .controls .dir-db-btn,
-        .controls button,
-        .action-controls .dir-db-btn,
-        .action-controls button,
+        .controls .dir-db-btn, .controls button,
+        .action-controls .dir-db-btn, .action-controls button,
         .top-header .dir-db-btn {
             border-color: #a00000;
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
             font-weight: bold;
         }
 
-        .controls .dir-db-btn:hover,
-        .controls button:hover,
-        .action-controls .dir-db-btn:hover,
-        .action-controls button:hover,
+        .controls .dir-db-btn:hover, .controls button:hover,
+        .action-controls .dir-db-btn:hover, .action-controls button:hover,
         .top-header .dir-db-btn:hover {
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
-        body:not(.dark-mode) .controls .dir-db-btn,
-        body:not(.dark-mode) .controls button,
-        body:not(.dark-mode) .action-controls .dir-db-btn,
-        body:not(.dark-mode) .action-controls button,
+        body:not(.dark-mode) .controls .dir-db-btn, body:not(.dark-mode) .controls button,
+        body:not(.dark-mode) .action-controls .dir-db-btn, body:not(.dark-mode) .action-controls button,
         body:not(.dark-mode) .top-header .dir-db-btn {
             background: #fdfdfd;
             color: #cc0000;
@@ -540,10 +532,8 @@
             color: #333;
         }
 
-        .dark-mode .controls .dir-db-btn,
-        .dark-mode .controls button,
-        .dark-mode .action-controls .dir-db-btn,
-        .dark-mode .action-controls button,
+        .dark-mode .controls .dir-db-btn, .dark-mode .controls button,
+        .dark-mode .action-controls .dir-db-btn, .dark-mode .action-controls button,
         .dark-mode .top-header .dir-db-btn {
             background: #000;
             color: #e53935;
@@ -645,7 +635,7 @@
         }
 
         .guide-list-wrapper+.pagination {
-            margin-top: 20px;
+             margin-top: 20px;
         }
 
         .guide-page {
@@ -879,7 +869,7 @@
                 transform: translateY(0);
             }
         }
-
+        
         .footer {
             text-align: center;
             padding: 20px;
@@ -1249,8 +1239,7 @@
         }
 
         .animated-header,
-        .controls,
-        /* Animate all control groups */
+        .controls, /* Animate all control groups */
         .action-controls,
         .animated-footer,
         .animated-pagination {
@@ -1263,7 +1252,7 @@
             animation-duration: 0.6s;
             animation-timing-function: ease-out;
         }
-
+        
         .action-controls,
         .animated-footer,
         .animated-pagination {
@@ -1316,24 +1305,21 @@
         .dark-mode .controls.minimized-view .multi-button:hover .multi-button-child {
             border-left-color: rgba(255, 255, 255, 0.2);
         }
-
+        
         @media (max-width: 768px) {
-
             .controls.minimized-view>#search,
             .controls.minimized-view>#formatFilter {
                 display: flex;
             }
-
-            .controls.minimized-view>#sortSelector,
-            .controls.minimized-view>#randomSelector,
-            .controls.minimized-view>#itemsPerPageSelector {
+            .controls.minimized-view > #sortSelector,
+            .controls.minimized-view > #randomSelector,
+            .controls.minimized-view > #itemsPerPageSelector {
                 display: none;
             }
-
+            
             .action-controls {
                 flex-direction: column;
             }
-
             .action-controls .action-row {
                 display: flex;
                 flex-wrap: wrap;
@@ -1359,26 +1345,12 @@
                 display: none !important;
             }
         }
-
-        #lightbox-controls #lightbox-fxBtn {
-            order: 1;
-        }
-
-        #lightbox-controls #lightbox-videoBtn {
-            order: 2;
-        }
-
-        #lightbox-controls #slideshow-controls {
-            order: 3;
-        }
-
-        #lightbox-controls #lightbox-darkModeBtn {
-            order: 4;
-        }
-
-        #lightbox-controls #lightbox-labelsBtn {
-            order: 5;
-        }
+        
+        #lightbox-controls #lightbox-fxBtn { order: 1; }
+        #lightbox-controls #lightbox-videoBtn { order: 2; }
+        #lightbox-controls #slideshow-controls { order: 3; }
+        #lightbox-controls #lightbox-darkModeBtn { order: 4; }
+        #lightbox-controls #lightbox-labelsBtn { order: 5; }
 
         /* --- EASTER EGG: CRT Effect Styles --- */
         #crt-overlay {
@@ -1494,153 +1466,9 @@
             color: #fff;
             border-color: rgba(255, 255, 255, 0.2);
         }
-
-        /* --- Nowoczesne style paginacji --- */
-        .pagination-controls {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            width: 100%;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 8px 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-
-        body:not(.dark-mode) .pagination-controls {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-color: #a00000;
-            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
-        }
-
-        .dark-mode .pagination-controls {
-            background-color: rgba(0, 0, 0, 0.5);
-            border-color: #a00000;
-        }
-
-        .pagination-controls button {
-            padding: 0;
-            width: 42px;
-            height: 42px;
-            font-size: 1em;
-            flex-shrink: 0;
-        }
-
-        .pagination-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-grow: 1;
-        }
-
-        .page-info {
-            display: flex;
-            align-items: center;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .page-input {
-            width: 60px;
-            height: 30px;
-            text-align: center;
-            border: 1px solid #808080;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 1.1em;
-            padding: 5px;
-            -moz-appearance: textfield;
-        }
-
-        .page-input::-webkit-outer-spin-button,
-        .page-input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-
-        .page-info-text {
-            margin-left: 8px;
-            font-size: 1.1em;
-        }
-
-        body:not(.dark-mode) .page-input {
-            background-color: #fff;
-            color: #333;
-        }
-
-        .dark-mode .page-input {
-            background-color: #222;
-            color: #eee;
-            border-color: #666;
-        }
-
-        .page-slider {
-            width: 100%;
-            -webkit-appearance: none;
-            appearance: none;
-            height: 8px;
-            background: rgba(0, 0, 0, 0.1);
-            outline: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .dark-mode .page-slider {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        /* --- Styl suwaka dla Chrome/Safari/Opera --- */
-        .page-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            background: #cc0000;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .dark-mode .page-slider::-webkit-slider-thumb {
-            background: #e53935;
-            border-color: #000;
-        }
-
-        .page-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-
-        /* --- Styl suwaka dla Firefox --- */
-        .page-slider::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 2px solid #fff;
-            background: #cc0000;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .dark-mode .page-slider::-moz-range-thumb {
-            background: #e53935;
-            border-color: #000;
-        }
-
-        .page-slider::-moz-range-thumb:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
     </style>
     <script>
-        (function () {
+        (function() {
             const langConfig = {
                 defaultLanguage: 'pl',
                 englishUrl: 'index-en.html'
@@ -1657,7 +1485,7 @@
             } catch (e) { /* Ignore storage errors */ }
         })();
 
-        (function () {
+        (function() {
             try {
                 const theme = localStorage.getItem('visudir_theme');
                 const defaultTheme = 'light';
@@ -1688,8 +1516,7 @@
         <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
-                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                        class="version-display"></span></span>
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
             </a>
             <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
                 <i class="fas fa-globe"></i>
@@ -1698,7 +1525,7 @@
                 <span class="btn-text">Wstecz</span></a>
         </div>
     </div>
-
+    
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
@@ -1745,69 +1572,39 @@
     <div class="guide-list-wrapper">
         <div class="guide-list" id="guideList"></div>
     </div>
-
-    <div class="pagination" id="pagination">
-        <div class="pagination-controls" style="display: none;">
-            <button id="firstPageBtn" title="Pierwsza strona"><i class="fas fa-fast-backward"></i></button>
-            <button id="prevPageBtn" title="Poprzednia strona"><i class="fas fa-chevron-left"></i></button>
-
-            <div class="pagination-center">
-                <div class="page-info">
-                    <input type="number" id="pageInput" min="1" value="1" class="page-input">
-                    <span id="pageInfoText" class="page-info-text">/ 1</span>
-                </div>
-                <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
-            </div>
-
-            <button id="nextPageBtn" title="Następna strona"><i class="fas fa-chevron-right"></i></button>
-            <button id="lastPageBtn" title="Ostatnia strona"><i class="fas fa-fast-forward"></i></button>
-        </div>
-    </div>
+    
+    <div class="pagination" id="pagination"></div>
 
     <div class="action-controls" id="actionControls">
         <div class="action-row">
             <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
                 <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
             </button>
-            <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
-                    Ciemny</span></button>
+            <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Ciemny</span></button>
         </div>
         <div class="action-row">
             <button id="videoBtn" class="dir-db-btn multi-button">
-                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
-                        Wideo</span></span>
-                <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                        class="fas fa-chevron-left"></i></span>
-                <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
-                        class="fas fa-chevron-right"></i></span>
-                <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                        class="fas fa-undo"></i></span>
+                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"> Wideo</span></span>
+                <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
+                <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
+                <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
+                <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
+                <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
             </button>
             <div id="viewBtnGroup" class="dir-db-btn multi-button">
-                <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span
-                        class="btn-text"> Widok</span></span>
-                <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
-                        class="fas fa-image"></i></span>
-                <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
-                        class="fas fa-align-justify"></i></span>
-                <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
-                        class="fas fa-arrows-alt-v"></i></span>
-                <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
-                        class="fas fa-arrows-alt-h"></i></span>
-                <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
-                        class="fas fa-columns"></i></span>
+                <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text"> Widok</span></span>
+                <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i class="fas fa-image"></i></span>
+                <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i class="fas fa-align-justify"></i></span>
+                <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i class="fas fa-arrows-alt-v"></i></span>
+                <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i class="fas fa-arrows-alt-h"></i></span>
+                <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i class="fas fa-columns"></i></span>
             </div>
         </div>
     </div>
 
     <div class="footer">
         <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                        class="version-suffix">Dir
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
                         <span class="version-display"></span></span></a></strong>
             <strong>© 2025-09-17</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
@@ -1826,56 +1623,40 @@
 
     <div id="backdrop" class="backdrop">
         <div id="play-caption" class="play-caption"></div>
-        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i
-                class="fas fa-expand"></i></button>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
         <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
         <div id="play-guide-container" class="play-guide-container"></div>
 
         <div id="lightbox-controls">
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
-                    class="fas fa-cog"></i></button>
+            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i class="fas fa-cog"></i></button>
 
-            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
-                    class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
-                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                        class="fas fa-chevron-left"></i></span>
-                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i
-                        class="fas fa-chevron-right"></i></span>
-                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                        class="fas fa-undo"></i></span>
+            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main" class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
+                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
+                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
+                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
+                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
+                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
             </div>
-
+            
             <div id="slideshow-controls" class="lightbox-control-group">
-                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
-                        class="fas fa-fast-backward"></i></span>
-                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i
-                        class="fas fa-step-backward"></i></span>
-                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i
-                        class="fas fa-stop"></i></span>
-                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="slideshow-next" class="multi-button-child" title="Następny"><i
-                        class="fas fa-step-forward"></i></span>
-                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i
-                        class="fas fa-fast-forward"></i></span>
+                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i class="fas fa-fast-backward"></i></span>
+                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i class="fas fa-step-backward"></i></span>
+                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i class="fas fa-random"></i></span>
+                <span id="slideshow-next" class="multi-button-child" title="Następny"><i class="fas fa-step-forward"></i></span>
+                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i class="fas fa-fast-forward"></i></span>
             </div>
 
-            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
-                    class="fas fa-moon"></i></button>
-            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
-                    class="fas fa-tags"></i></button>
+            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i class="fas fa-moon"></i></button>
+            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i class="fas fa-tags"></i></button>
         </div>
-        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
-                class="fas fa-chevron-down"></i></button>
+        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i class="fas fa-chevron-down"></i></button>
     </div>
 
     <script>
+        // v1.5.5 - UI refactoring for mobile and desktop views
+        
         /**
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
          */
@@ -1939,136 +1720,114 @@
         }
 
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
-        // --- configuraton / konfiguracja ---
+        // --- KONFIGURACJA ---
         const config = {
-            // Ustawienia główne / Main settings
-            version: 'v1.5.7', // Pagination rebuilt // Przebudowano paginację
+            version: 'v1.5.5',
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
             },
-            pageSettings: {
-                // Video & animations settings // Ustawienia wideo i animacji
-                defaultAnimations: true,
-                defaultBgVideo: 1,
-                bgVideoStartNum: 1,
-                bgVideoEndNum: 26,
-                defaultVideoBg: true,
-                defaultLabelsVisible: true, // slideshow labels visibility // widoczność etykiet w pokazie slajdów
-
-                // Setting for header line // Ustawienia dla linii nagłówka
-                pageKey: 'indexMaxi',
-                pageTitle: "START ▪ maxi MENU ▪",
-                showMiniLogo: true,
-                showVisuDirButton: true,
-                showBackButton: false,
-                showLanguageButton: false,
-
-                // Settings for miniatures grid // Ustawienia dla siatki miniaturek
-                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
-                defaultBoxWidth1: '256px',
-                defaultBoxWidth2: '197px',
-                defaultBoxWidth3: '137px',
-                defaultRows: 2,
-                defaultShowCovers: true,
-                defaultShowText: true,
-                defaultViewExpanded: false,
-                defaultVideoExpanded: false,
-                predefinedFilters: [{
-                    label: "ADE",
-                    search: "ade"
-                }, {
-                    label: "E-booki",
-                    search: "e-book"
-                }, {
-                    label: "Galerie",
-                    search: "galeri"
-                }, {
-                    label: "Hiszpania",
-                    search: "Hiszpania"
-                }, {
-                    label: "Niemcy",
-                    search: "Niemcy"
-                }, {
-                    label: "Polska",
-                    search: "Polska"
-                }, {
-                    label: "Poradniki",
-                    search: "Poradniki"
-                },],
-            },
-
-            // Paths and logos // Ścieżki i loga
             logoRotator: {
                 enabled: true,
                 interval: 4500,
-                logos: [{
-                    // Global for multiple systems // Globalne dla wielu systemów
-                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
-                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
-                    href: ".base-system/about.html",
-                    alt: "Logo VisuDir"
-                }, {
-                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
-                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
-                    href: "https://www.ade.pl",
-                    alt: "Logo ADE"
-                }]
+                logos: [
+                    { srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png", href: "../.base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: "../.base-system/gfx/interface/ADE_small_light.png", srcDark: "../.base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                ]
             },
-
+            pageSettings: {
+                pageKey: 'polska',
+                pageTitle: "Polska ▪ galeria zdjęć ▪",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: true,
+                showLanguageButton: false,
+                defaultBgVideo: 1,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 26,
+                defaultAnimations: true,
+                defaultVideoBg: true,
+                defaultShowCovers: true,
+                defaultShowText: false,
+                defaultViewExpanded: false,
+                defaultVideoExpanded: false,
+                defaultBoxWidth1: '257px',
+                defaultBoxWidth2: '217px',
+                defaultBoxWidth3: '137px',
+                defaultLabelsVisible: true,
+                defaultAnimation: 2,
+                defaultView: 2,
+                defaultFormat: "jpg",
+                defaultSort: "shuffle",
+                defaultRows: 2,
+                predefinedFilters: [
+                    { label: "Polska", search: "Polska" },
+                    { label: "Gliwice", search: "Gliwice" },
+                    { label: "Warszawa", search: "Warszawa" },
+                    { label: "Morze bałtyckie", search: "morze" },
+                ],
+            },
             paths: {
-                url404: ".base-system/404.html",
-                urlAbout: ".base-system/about.html",
-                urlFallback: ".base-system/soon.html",
-                videoBgLightUrlBase: ".base-system/video-bg/bg-light",
-                videoBgDarkUrlBase: ".base-system/video-bg/bg-dark",
-                urlEnglishVersion: "index-en.html",
-
-                databaseFileName: ".base-system/db.txt",
+                url404: "../.base-system/404.html",
+                urlAbout: "../.base-system/about.html",
+                urlFallback: "../.base-system/soon.html",
+                databaseFileName: "../.base-system/db.txt",
                 dataFolderName: ".base-system/files",
                 coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/preview-hd"
+                previewHdFolderName: ".base-system/files",
+                videoBgLightUrlBase: "../.base-system/video-bg/bg-light",
+                videoBgDarkUrlBase: "../.base-system/video-bg/bg-dark",
+                urlEnglishVersion: "../index-en.html"
             }
         };
+        // --- KONIEC KONFIGURACJI ---// --- KONFIGURACJA ---
+
         // --- Configuration end ---
 
         // --- File database ---
         const dataFromFile = `
-17.09.2025  20:19                 0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
-17.09.2025  19:00                 0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
-17.09.2025  19:00                 0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
-17.09.2025  20:21                 0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
-17.09.2025  20:26                 0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
-17.09.2025  20:26                 0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
-17.09.2025  20:26                 0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
-17.09.2025  22:51                 0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
-17.09.2025  19:59                 0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
-17.09.2025  22:50                 0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
-17.09.2025  22:50                 0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
-17.09.2025  22:50                 0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
-17.09.2025  22:50                 0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
-17.09.2025  22:51                 0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
-17.09.2025  22:51                 0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
-17.09.2025  22:51                 0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
-17.09.2025  22:51                 0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
-17.09.2025  22:51                 0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
-17.09.2025  22:10                 0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
-17.09.2025  22:50                 0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
-17.09.2025  22:49                 0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
-17.09.2025  18:41                 0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
-17.09.2025  19:57                 0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
-17.09.2025  19:58                 0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
-17.09.2025  20:37                 0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
-17.09.2025  18:40                 0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
-17.09.2025  21:41                 0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
-17.09.2025  21:47                 0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
-17.09.2025  22:10                 0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
-17.09.2025  22:10                 0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
-17.09.2025  22:50                 0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
-17.09.2025  22:50                 0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
-17.09.2025  22:50                 0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
-17.09.2025  20:20                 0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
-17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
+06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
+06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
+06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
+06.09.2025  07:07           1001189 Gliwice-Architektura_Polska_2461658_1920.jpg
+06.09.2025  07:11            579215 Gliwice-Autostrada-Noc_Polska_3248323_1920.jpg
+06.09.2025  07:15            960520 Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg
+06.09.2025  07:10            849329 Gliwice-Park-Jesien_Polska_4565816_1920.jpg
+06.09.2025  07:16            983087 Gliwice-Park-Jesien_Polska_4565817_1920.jpg
+06.09.2025  07:13            897171 Gliwice-Park-Jesien_Polska_4565819_1920.jpg
+06.09.2025  07:20            809564 Gliwice-Park-Natura_Polska_4565821_1920.jpg
+06.09.2025  07:20            670659 Gliwice-Radiostacja_Radio-Station_Polska_742266_1920.jpg
+06.09.2025  07:16            380364 Gliwice-Radiostacja_Radiotower_Polska_5046712_1920.jpg
+06.09.2025  07:09            665941 Gliwice-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:17            718118 Gliwice-Rynek-Lato_Polska_4022057_1920.jpg
+06.09.2025  07:10            540677 Gliwice-Rynek-Ratusz_Polska_4022055_1920.jpg
+06.09.2025  07:18            665941 Gliwice-Rynek-Ratusz_Polska_4634722_1920.jpg
+06.09.2025  07:19            651140 Gliwice-Rzeka_River_Polska_6311462_1920.jpg
+06.09.2025  07:07            879613 Gliwice-Srodmiescie_Polska_2461654_1920.jpg
+06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
+06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
+06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
+06.09.2025  07:28           1284251 Kolobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
+06.09.2025  07:26            785680 Kolobrzeg_Polska_7562038_1920.jpg
+06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
+06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
+06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
+06.09.2025  07:30           1308124 Morskie-Oko_Mountains_Polska_4652861_1920.jpg
+06.09.2025  07:32            433921 Morze-Baltyckie_Baltic-Sea_Polska_7434540_1920.jpg
+06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
+06.09.2025  07:24            778656 Polska-Jura-Zamek_4717062_1920.jpg
+06.09.2025  07:24            897669 Polska-Wilamowice_Polska_5249675_1920.jpg
+06.09.2025  07:25            931818 Poznan-Rynek_Polska_983563_1920.jpg
+06.09.2025  07:03            648074 Standarcie-Kawiarnia-Krakow_Polska_street-cafe-4472312_1920.jpg
+06.09.2025  07:34            532992 Swinoujscie_Morze-Baltyckie_Baltic-Sea_Polska_2687131_1920.jpg
+06.09.2025  07:21            626930 Twierdza-Modlin-Narew_Fortress_Polska_7933060_1920.jpg
+06.09.2025  07:01            626930 Twierdza-modlin_modlin-fortress_Narew_Polska_7933060_1920.jpg
+06.09.2025  07:36            708799 Uznam-Morze-Baltyckie_Zachod-Slonca_Sunset_Polska_7147706_1920.jpg
+06.09.2025  07:35            579414 Uznam-Wolin_Usedom_Polska_3621894_1920.jpg
+06.09.2025  07:27            970499 Warszawa-Pomnik_Polska_2825709_1920.jpg
+06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
+06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
+06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
 
         `;
         // --- Database end ---
@@ -2080,13 +1839,13 @@
             filteredGuides = [],
             slideshowSourceGuides = [],
             playGuidesQueue = [];
-
+        
         let currentSort,
             selectedRowCount;
-
+        
         let currentPage = 1;
         let totalPages = 1;
-        let pagesCache = [];
+        let pagesCache = []; 
         let preloadQueue = new Set();
         let isInitialLoad = true;
         let lazyLoadObserver;
@@ -2433,7 +2192,7 @@
                 }
             });
         }
-
+        
         function loadAndParseFile(file) {
             const r = new FileReader();
             r.onload = (e) => init(e.target.result);
@@ -2464,7 +2223,7 @@
             fileInputLabel.style.display = "none";
             await processData(data);
             updateFormatFilter();
-
+            
             const rowOptions = [1, 2, 3, 4, 5, 10, 20];
             itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
             rowOptions.forEach(r => {
@@ -2516,7 +2275,7 @@
             }, config.logoRotator.interval);
         }
 
-        window.onload = function () {
+        window.onload = function() {
             fileInputLabel.style.display = "none";
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
             document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
@@ -2546,7 +2305,7 @@
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
             darkModeBtn.addEventListener('click', toggleDarkMode);
-            document.getElementById('langBtn').addEventListener('click', function (e) {
+            document.getElementById('langBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 try {
                     localStorage.setItem('visudir_lang', 'en');
@@ -2603,9 +2362,9 @@
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort);
-
-            if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
-
+            
+            if(guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
+            
             orientationFilterState = null;
             viewState = {
                 covers: config.pageSettings.defaultShowCovers,
@@ -2636,8 +2395,8 @@
                     return;
                 }
                 fetch(filePath, {
-                    method: 'HEAD'
-                })
+                        method: 'HEAD'
+                    })
                     .then(response => {
                         window.location.href = response.ok ? targetUrl : fallbackUrl;
                     })
@@ -2650,14 +2409,14 @@
             const http = new XMLHttpRequest();
             http.open('HEAD', filePath, true);
             http.timeout = 2000;
-            http.onload = function () {
+            http.onload = function() {
                 if (this.status === 200 || this.status === 0) {
                     window.open(targetUrl, '_blank');
                 } else {
                     window.location.href = fallbackUrl;
                 }
             };
-            http.onerror = http.ontimeout = function () {
+            http.onerror = http.ontimeout = function() {
                 window.location.href = fallbackUrl;
             };
             http.send();
@@ -2675,7 +2434,7 @@
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
-
+            
             const mediaTypes = ["jpg", "png", "mp4", "avi"];
 
             if (guide.format === "link") {
@@ -2709,204 +2468,201 @@
 
 
 
-        function renderGuides() {
-            guideList.classList.remove('random-draw');
-            const animationsOn = !document.body.classList.contains('no-animation');
+        // =======================================================================
+// NOWA, NIEZAWODNA LOGIKA RENDEROWANIA I PAGINACJI (v1.5.5+)
+// =======================================================================
 
-            applyFilters();
-            guideList.innerHTML = "";
-            if (lazyLoadObserver) lazyLoadObserver.disconnect();
+/**
+ * KROK 1: Mierzy, ile kolumn FAKTYCZNIE wyrenderowała przeglądarka.
+ * Działa przez tymczasowe dodanie elementów i sprawdzenie ich pozycji.
+ * @returns {number} Rzeczywista liczba kolumn w siatce.
+ */
+function getActualColumnCount() {
+    // Jeśli kontener jest niewidoczny, zwróć 1, aby uniknąć błędów
+    if (guideList.offsetParent === null) return 1;
 
-            const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
-            guideList.style.setProperty('--grid-rows', selectedRowCount);
-            guideList.style.setProperty('--box-width', currentWidthValue);
+    // Tworzymy fragment DOM, aby uniknąć wielokrotnych zmian w głównym dokumencie
+    const fragment = document.createDocumentFragment();
+    const tempItems = [];
+    // Dodajemy 20 tymczasowych elementów (więcej niż jakakolwiek możliwa liczba kolumn)
+    for (let i = 0; i < 20; i++) {
+        const div = document.createElement('div');
+        // Kopiujemy minimalne style, aby element zajął miejsce w siatce
+        div.style.width = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
+        div.style.height = '1px';
+        fragment.appendChild(div);
+        tempItems.push(div);
+    }
+    guideList.appendChild(fragment);
 
-            const guideGap = 20;
-            const itemWidth = parseInt(currentWidthValue, 10);
-            const columns = Math.floor((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) || 1;
-            const itemsPerPage = columns * selectedRowCount;
+    // Mierzymy pozycję pierwszego elementu
+    const firstItemOffsetTop = tempItems[0] ? tempItems[0].offsetTop : 0;
+    let columns = 0;
+    
+    // Liczymy, ile elementów ma tę samą pozycję pionową
+    for (const item of tempItems) {
+        if (item.offsetTop === firstItemOffsetTop) {
+            columns++;
+        } else {
+            break; // Koniec pierwszego wiersza
+        }
+    }
 
-            pagesCache = [];
-            if (itemsPerPage > 0) {
-                for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
-                    pagesCache.push(filteredGuides.slice(i, i + itemsPerPage));
+    // Czyścimy kontener z tymczasowych elementów
+    guideList.innerHTML = '';
+    
+    return columns > 0 ? columns : 1; // Zabezpieczenie na wypadek, gdyby coś poszło nie tak
+}
+
+
+/**
+ * KROK 2: Główna funkcja renderująca, napisana od nowa.
+ * Używa getActualColumnCount() do precyzyjnego podziału na strony.
+ */
+function renderGuides() {
+    guideList.classList.remove('random-draw');
+    const animationsOn = !document.body.classList.contains('no-animation');
+    
+    applyFilters();
+    guideList.innerHTML = "";
+    if (lazyLoadObserver) lazyLoadObserver.disconnect();
+    
+    // Ustawiamy zmienne CSS dla stylów siatki
+    const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
+    guideList.style.setProperty('--grid-rows', selectedRowCount);
+    guideList.style.setProperty('--box-width', currentWidthValue);
+    
+    // --- Nowa, niezawodna logika ---
+    const columns = getActualColumnCount();
+    const itemsPerPage = columns * selectedRowCount;
+
+    pagesCache = [];
+    if (itemsPerPage > 0) {
+        for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
+            pagesCache.push(filteredGuides.slice(i, i + itemsPerPage));
+        }
+    } else if (filteredGuides.length > 0) {
+        pagesCache.push(filteredGuides);
+    }
+    totalPages = pagesCache.length || 1;
+
+    // Renderowanie stron i kafelków (z lazy loading)
+    pagesCache.forEach((pageItems, pageIndex) => {
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'guide-page';
+        pageDiv.dataset.pageNumber = pageIndex + 1;
+
+        if (pageIndex === 0) { // Renderuj od razu tylko pierwszą stronę
+            pageItems.forEach((guide, index) => {
+                const div = document.createElement("div");
+                div.className = "guide";
+                if (animationsOn && isInitialLoad) {
+                    div.classList.add("animate-in");
+                    div.style.animationDelay = `${index * 0.04}s`;
                 }
-            } else if (filteredGuides.length > 0) {
-                pagesCache.push(filteredGuides);
-            }
-            totalPages = pagesCache.length || 1;
-
-            pagesCache.forEach((pageItems, pageIndex) => {
-                const pageDiv = document.createElement('div');
-                pageDiv.className = 'guide-page';
-                pageDiv.dataset.pageNumber = pageIndex + 1;
-
-                if (pageIndex === 0) {
-                    pageItems.forEach((guide, index) => {
-                        const div = document.createElement("div");
-                        div.className = "guide";
-                        if (animationsOn && isInitialLoad) {
-                            div.classList.add("animate-in");
-                            div.style.animationDelay = `${index * 0.04}s`;
-                        }
-                        div.innerHTML = createGuideHtml(guide);
-                        pageDiv.appendChild(div);
-                    });
-                }
-                guideList.appendChild(pageDiv);
+                div.innerHTML = createGuideHtml(guide);
+                pageDiv.appendChild(div);
             });
+        }
+        guideList.appendChild(pageDiv);
+    });
+    
+    setupLazyLoading(pagesCache);
+    renderPagination();
+    document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
 
-            setupLazyLoading(pagesCache);
-            renderPagination();
-            document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
+    if (isInitialLoad) {
+        isInitialLoad = false;
+        preloadNextPageImages();
+    }
+}
 
-            if (isInitialLoad) {
-                isInitialLoad = false;
+/**
+ * KROK 3: Niezmienione funkcje pomocnicze (wklej je, by mieć pewność).
+ */
+function setupLazyLoading(pages) {
+    if (lazyLoadObserver) lazyLoadObserver.disconnect();
+
+    lazyLoadObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const pageDiv = entry.target;
+                const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
+                
+                if (pageDiv.childElementCount === 0 && pageNum > 1) {
+                    const pageItems = pages[pageNum - 1];
+                    if (pageItems) {
+                        requestAnimationFrame(() => {
+                            pageItems.forEach((guide) => {
+                                const div = document.createElement("div");
+                                div.className = "guide";
+                                div.innerHTML = createGuideHtml(guide);
+                                pageDiv.appendChild(div);
+                            });
+                        });
+                    }
+                }
+                observer.unobserve(pageDiv);
+            }
+        });
+    }, { 
+        root: guideList, 
+        rootMargin: '0px 300px 0px 300px'
+    });
+
+    document.querySelectorAll('.guide-page').forEach(page => {
+        lazyLoadObserver.observe(page);
+    });
+}
+        
+function renderPagination() {
+    pagination.innerHTML = "";
+    if (totalPages <= 1) {
+        pagination.classList.remove('visible');
+        return;
+    }
+    
+    pagination.classList.add('visible');
+
+    const container = document.createElement("div");
+    container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
+    prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
+    
+    const nextBtn = document.createElement("button");
+    nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
+    nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
+    nextBtn.addEventListener('mouseenter', preloadNextPageImages);
+
+    const info = document.createElement("span");
+    info.className = "pagination-info";
+    
+    const paginationObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                currentPage = parseInt(entry.target.dataset.pageNumber, 10);
+                info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+                prevBtn.disabled = (currentPage <= 1);
+                nextBtn.disabled = (currentPage >= totalPages);
                 preloadNextPageImages();
             }
-        }
+        });
+    }, { root: guideList, threshold: 0.75 });
 
-        function setupLazyLoading(pages) {
-            if (lazyLoadObserver) lazyLoadObserver.disconnect();
+    document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
+    
+    container.appendChild(prevBtn);
+    container.appendChild(info);
+    container.appendChild(nextBtn);
+    pagination.appendChild(container);
 
-            lazyLoadObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const pageDiv = entry.target;
-                        const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
-
-                        if (pageDiv.childElementCount === 0 && pageNum > 1) {
-                            const pageItems = pages[pageNum - 1];
-                            if (pageItems) {
-                                requestAnimationFrame(() => {
-                                    pageItems.forEach((guide, index) => {
-                                        const div = document.createElement("div");
-                                        div.className = "guide";
-                                        div.innerHTML = createGuideHtml(guide);
-                                        pageDiv.appendChild(div);
-                                    });
-                                });
-                            }
-                        }
-                        observer.unobserve(pageDiv);
-                    }
-                });
-            }, {
-                root: guideList,
-                rootMargin: '0px 300px 0px 300px'
-            });
-
-            document.querySelectorAll('.guide-page').forEach(page => {
-                lazyLoadObserver.observe(page);
-            });
-        }
-
-       function renderPagination() {
-            const paginationContainer = document.getElementById('pagination');
-            
-            // Wyczyść stary kontener i przygotuj nową strukturę
-            paginationContainer.innerHTML = `
-                <div class="pagination-controls">
-                    <button id="firstPageBtn" title="Pierwsza strona"><i class="fas fa-fast-backward"></i></button>
-                    <button id="prevPageBtn" title="Poprzednia strona"><i class="fas fa-chevron-left"></i></button>
-                    <div class="pagination-center">
-                        <div class="page-info">
-                            <input type="number" id="pageInput" min="1" value="1" class="page-input">
-                            <span id="pageInfoText" class="page-info-text">/ 1</span>
-                        </div>
-                        <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
-                    </div>
-                    <button id="nextPageBtn" title="Następna strona"><i class="fas fa-chevron-right"></i></button>
-                    <button id="lastPageBtn" title="Ostatnia strona"><i class="fas fa-fast-forward"></i></button>
-                </div>
-            `;
-
-            const controls = paginationContainer.querySelector('.pagination-controls');
-
-            if (totalPages <= 1) {
-                paginationContainer.classList.remove('visible');
-                controls.style.display = 'none';
-                return;
-            }
-
-            paginationContainer.classList.add('visible');
-            controls.style.display = 'flex';
-
-            const firstPageBtn = document.getElementById('firstPageBtn');
-            const prevPageBtn = document.getElementById('prevPageBtn');
-            const nextPageBtn = document.getElementById('nextPageBtn');
-            const lastPageBtn = document.getElementById('lastPageBtn');
-            const pageInput = document.getElementById('pageInput');
-            const pageSlider = document.getElementById('pageSlider');
-            const pageInfoText = document.getElementById('pageInfoText');
-
-            const goToPage = (pageNum) => {
-                pageNum = Math.max(1, Math.min(totalPages, pageNum)); // Walidacja numeru strony
-                const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
-                guideList.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
-            };
-
-            const updateControls = (pageNum) => {
-                pageInfoText.textContent = `/ ${totalPages}`;
-                pageInput.value = pageNum;
-                pageInput.max = totalPages;
-                pageSlider.value = pageNum;
-                pageSlider.max = totalPages;
-
-                firstPageBtn.disabled = prevPageBtn.disabled = (pageNum <= 1);
-                lastPageBtn.disabled = nextPageBtn.disabled = (pageNum >= totalPages);
-
-                preloadNextPageImages(); // Funkcja preload zostaje
-            };
-
-            // Listenery dla przycisków
-            firstPageBtn.onclick = () => goToPage(1);
-            prevPageBtn.onclick = () => goToPage(currentPage - 1);
-            nextPageBtn.onclick = () => goToPage(currentPage + 1);
-            lastPageBtn.onclick = () => goToPage(totalPages);
-
-            // --- KLUCZOWA LOGIKA ŁĄCZĄCA SUWAK I POLE INPUT ---
-
-            // Aktualizuj pole tekstowe w czasie rzeczywistym podczas przesuwania suwaka
-            pageSlider.addEventListener('input', () => {
-                pageInput.value = pageSlider.value;
-            });
-
-            // Zmień stronę dopiero po puszczeniu suwaka
-            pageSlider.addEventListener('change', () => {
-                goToPage(parseInt(pageSlider.value, 10));
-            });
-
-            // Zmień stronę po wpisaniu numeru i wciśnięciu Enter lub wyjściu z pola
-            pageInput.addEventListener('change', () => {
-                goToPage(parseInt(pageInput.value, 10));
-            });
-             pageInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    goToPage(parseInt(pageInput.value, 10));
-                    pageInput.blur(); // Zdejmij focus z pola
-                }
-            });
-
-
-            // Observer do aktualizacji kontrolek podczas scrollowania myszką/palcem
-            const paginationObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const pageNum = parseInt(entry.target.dataset.pageNumber, 10);
-                        currentPage = pageNum;
-                        updateControls(pageNum);
-                    }
-                });
-            }, { root: guideList, threshold: 0.75 });
-            
-            document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
-
-            // Inicjalizacja stanu
-            currentPage = 1; 
-            updateControls(1);
-        }
+    currentPage = 1;
+    info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+    prevBtn.disabled = true;
+    nextBtn.disabled = (totalPages <= 1);
+}
 
         function preloadNextPageImages() {
             const nextPage = currentPage + 1;
@@ -2940,7 +2696,7 @@
             pagination.innerHTML = "";
             pagination.classList.remove('visible');
             guideList.classList.add('random-draw');
-
+            
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
@@ -3265,7 +3021,7 @@
                 console.error("Nie znaleziono elementu w przefiltrowanej liście.");
                 return;
             }
-
+            
             startPlayAnimation(startIndex);
         }
 
@@ -3302,7 +3058,7 @@
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
 
             playGuidesQueue = [...source];
-            playCurrentIndex = startIndex;
+            playCurrentIndex = startIndex; 
 
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
@@ -3318,7 +3074,7 @@
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
             slideshowPlayBtn.classList.add('active-play');
             lightboxLabelsBtn.classList.toggle('active-play', areLabelsVisible);
-
+            
             displayRandomGuide(playGuidesQueue[playCurrentIndex]);
         }
 
@@ -3362,7 +3118,7 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (!isNav) {
+                } else if (!isNav) { 
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
                 guide = playGuidesQueue[playCurrentIndex];
@@ -3641,7 +3397,7 @@
 
         function debounce(func, wait) {
             let timeout;
-            return function (...args) {
+            return function(...args) {
                 const later = () => {
                     clearTimeout(timeout);
                     func.apply(this, args);
@@ -3660,7 +3416,7 @@
         }, 250);
         window.addEventListener("resize", debouncedRender);
 
-        window.addEventListener("pageshow", function (event) {
+        window.addEventListener("pageshow", function(event) {
             if (event.persisted) {
                 applyFilters();
                 renderGuides();
@@ -3684,7 +3440,7 @@
                 document.body.classList.remove('video-ready');
             });
         });
-
+        
         searchInput.addEventListener("input", () => {
             const query = searchInput.value.toLowerCase().trim();
             if (query === 'reset' || query === 'clear') {
@@ -3701,7 +3457,7 @@
             renderGuides();
             stopPlayAnimation();
         });
-
+        
         formatFilter.addEventListener("change", () => {
             const value = formatFilter.value;
             orientationFilterState = null;
@@ -3713,7 +3469,7 @@
             renderGuides();
             stopPlayAnimation();
         });
-
+        
         sortSelector.addEventListener("change", (e) => {
             if (e.target.value) {
                 applySort(e.target.value, guides);
@@ -3722,7 +3478,7 @@
             }
             e.target.value = "";
         });
-
+        
         itemsPerPageSelector.addEventListener("change", (e) => {
             if (!e.target.value) return;
             selectedRowCount = parseInt(e.target.value);
@@ -3732,7 +3488,7 @@
         });
 
         randomSelector.addEventListener("change", drawRandomGuides);
-        fileInput.addEventListener("change", function () {
+        fileInput.addEventListener("change", function() {
             if (this.files[0]) {
                 loadAndParseFile(this.files[0]);
                 stopPlayAnimation();
