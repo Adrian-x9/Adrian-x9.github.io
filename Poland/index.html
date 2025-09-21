@@ -1942,7 +1942,7 @@
         // --- configuraton / konfiguracja ---
         const config = {
             // Ustawienia główne / Main settings
-            version: 'v1.5.8', // New background video added // Dodano nowe tła video
+            version: 'v1.5.7', // Update the whole system
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1952,50 +1952,34 @@
                 defaultAnimations: true,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 30,
+                bgVideoEndNum: 32,
                 defaultVideoBg: true,
                 defaultLabelsVisible: true, // slideshow labels visibility // widoczność etykiet w pokazie slajdów
 
                 // Setting for header line // Ustawienia dla linii nagłówka
-                pageKey: 'indexMaxi',
-                pageTitle: "START ▪ maxi MENU ▪",
+                pageKey: 'POLAND',
+                pageTitle: "POLSKA ▪ maxi MENU ▪",
                 showMiniLogo: true,
                 showVisuDirButton: true,
-                showBackButton: false,
+                showBackButton: true,
                 showLanguageButton: false,
 
                 // Settings for miniatures grid // Ustawienia dla siatki miniaturek
-                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
+                defaultSort: 'shuffle', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
                 defaultBoxWidth1: '256px',
                 defaultBoxWidth2: '197px',
                 defaultBoxWidth3: '137px',
                 defaultRows: 2,
                 defaultShowCovers: true,
-                defaultShowText: true,
+                defaultShowText: false,
                 defaultViewExpanded: false,
                 defaultVideoExpanded: false,
-                predefinedFilters: [{
-                    label: "ADE",
-                    search: "ade"
-                }, {
-                    label: "E-booki",
-                    search: "e-book"
-                }, {
-                    label: "Galerie",
-                    search: "galeri"
-                }, {
-                    label: "Hiszpania",
-                    search: "Hiszpania"
-                }, {
-                    label: "Niemcy",
-                    search: "Niemcy"
-                }, {
-                    label: "Polska",
-                    search: "Polska"
-                }, {
-                    label: "Poradniki",
-                    search: "Poradniki"
-                },],
+                predefinedFilters: [
+                    { label: "Polska", search: "Polska" },
+                    { label: "Gliwice", search: "Gliwice" },
+                    { label: "Warszawa", search: "Warszawa" },
+                    { label: "Morze bałtyckie", search: "morze" },
+                ],
             },
 
             // Paths and logos // Ścieżki i loga
@@ -2004,9 +1988,9 @@
                 interval: 4500,
                 logos: [{
                     // Global for multiple systems // Globalne dla wielu systemów
-                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
-                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
-                    href: ".base-system/about.html",
+                    srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png",
+                    srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png",
+                    href: "../.base-system/about.html",
                     alt: "Logo VisuDir"
                 }, {
                     srcLight: ".base-system/gfx/interface/ADE_small_light.png",
@@ -2017,12 +2001,12 @@
             },
 
             paths: {
-                url404: ".base-system/404.html",
-                urlAbout: ".base-system/about.html",
-                urlFallback: ".base-system/soon.html",
-                videoBgLightUrlBase: ".base-system/video-bg/bg-light",
-                videoBgDarkUrlBase: ".base-system/video-bg/bg-dark",
-                urlEnglishVersion: "index-en.html",
+                url404: "../.base-system/404.html",
+                urlAbout: "../.base-system/about.html",
+                urlFallback: "../.base-system/soon.html",
+                videoBgLightUrlBase: "../.base-system/video-bg/bg-light",
+                videoBgDarkUrlBase: "../.base-system/video-bg/bg-dark",
+                urlEnglishVersion: "../index-en.html",
 
                 databaseFileName: ".base-system/db.txt",
                 dataFolderName: ".base-system/files",
@@ -2069,7 +2053,6 @@
 17.09.2025  22:50                 0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
 17.09.2025  20:20                 0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
 17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
-
         `;
         // --- Database end ---
         // --- End of copying / Kopiuj do tego miejsca ---
@@ -2801,9 +2784,9 @@
             });
         }
 
-       function renderPagination() {
+        function renderPagination() {
             const paginationContainer = document.getElementById('pagination');
-            
+
             // Wyczyść stary kontener i przygotuj nową strukturę
             paginationContainer.innerHTML = `
                 <div class="pagination-controls">
@@ -2881,7 +2864,7 @@
             pageInput.addEventListener('change', () => {
                 goToPage(parseInt(pageInput.value, 10));
             });
-             pageInput.addEventListener('keydown', (e) => {
+            pageInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     goToPage(parseInt(pageInput.value, 10));
@@ -2900,11 +2883,11 @@
                     }
                 });
             }, { root: guideList, threshold: 0.75 });
-            
+
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
             // Inicjalizacja stanu
-            currentPage = 1; 
+            currentPage = 1;
             updateControls(1);
         }
 
