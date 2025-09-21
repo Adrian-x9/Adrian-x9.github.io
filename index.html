@@ -1494,6 +1494,150 @@
             color: #fff;
             border-color: rgba(255, 255, 255, 0.2);
         }
+
+        /* --- Nowoczesne style paginacji --- */
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 8px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body:not(.dark-mode) .pagination-controls {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-color: #a00000;
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+        }
+
+        .dark-mode .pagination-controls {
+            background-color: rgba(0, 0, 0, 0.5);
+            border-color: #a00000;
+        }
+
+        .pagination-controls button {
+            padding: 0;
+            width: 42px;
+            height: 42px;
+            font-size: 1em;
+            flex-shrink: 0;
+        }
+
+        .pagination-center {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        .page-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .page-input {
+            width: 60px;
+            height: 30px;
+            text-align: center;
+            border: 1px solid #808080;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            padding: 5px;
+            -moz-appearance: textfield;
+        }
+
+        .page-input::-webkit-outer-spin-button,
+        .page-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+
+        .page-info-text {
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+
+        body:not(.dark-mode) .page-input {
+            background-color: #fff;
+            color: #333;
+        }
+
+        .dark-mode .page-input {
+            background-color: #222;
+            color: #eee;
+            border-color: #666;
+        }
+
+        .page-slider {
+            width: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.1);
+            outline: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .dark-mode .page-slider {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Styl suwaka dla Chrome/Safari/Opera --- */
+        .page-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: #cc0000;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dark-mode .page-slider::-webkit-slider-thumb {
+            background: #e53935;
+            border-color: #000;
+        }
+
+        .page-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+
+        /* --- Styl suwaka dla Firefox --- */
+        .page-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+            background: #cc0000;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .dark-mode .page-slider::-moz-range-thumb {
+            background: #e53935;
+            border-color: #000;
+        }
+
+        .page-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
     </style>
     <script>
         (function () {
@@ -1602,7 +1746,23 @@
         <div class="guide-list" id="guideList"></div>
     </div>
 
-    <div class="pagination" id="pagination"></div>
+    <div class="pagination" id="pagination">
+        <div class="pagination-controls" style="display: none;">
+            <button id="firstPageBtn" title="Pierwsza strona"><i class="fas fa-fast-backward"></i></button>
+            <button id="prevPageBtn" title="Poprzednia strona"><i class="fas fa-chevron-left"></i></button>
+
+            <div class="pagination-center">
+                <div class="page-info">
+                    <input type="number" id="pageInput" min="1" value="1" class="page-input">
+                    <span id="pageInfoText" class="page-info-text">/ 1</span>
+                </div>
+                <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
+            </div>
+
+            <button id="nextPageBtn" title="Następna strona"><i class="fas fa-chevron-right"></i></button>
+            <button id="lastPageBtn" title="Ostatnia strona"><i class="fas fa-fast-forward"></i></button>
+        </div>
+    </div>
 
     <div class="action-controls" id="actionControls">
         <div class="action-row">
@@ -1716,8 +1876,6 @@
     </div>
 
     <script>
-        // v1.5.5 - UI refactoring for mobile and desktop views
-
         /**
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
          */
@@ -1784,7 +1942,7 @@
         // --- configuraton / konfiguracja ---
         const config = {
             // Ustawienia główne / Main settings
-            version: 'v1.5.6', // Pagination fixes // Poprawki paginacji
+            version: 'v1.5.7', // Pagination rebuilt // Przebudowano paginację
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -2643,53 +2801,111 @@
             });
         }
 
-        function renderPagination() {
-            pagination.innerHTML = "";
+       function renderPagination() {
+            const paginationContainer = document.getElementById('pagination');
+            
+            // Wyczyść stary kontener i przygotuj nową strukturę
+            paginationContainer.innerHTML = `
+                <div class="pagination-controls">
+                    <button id="firstPageBtn" title="Pierwsza strona"><i class="fas fa-fast-backward"></i></button>
+                    <button id="prevPageBtn" title="Poprzednia strona"><i class="fas fa-chevron-left"></i></button>
+                    <div class="pagination-center">
+                        <div class="page-info">
+                            <input type="number" id="pageInput" min="1" value="1" class="page-input">
+                            <span id="pageInfoText" class="page-info-text">/ 1</span>
+                        </div>
+                        <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
+                    </div>
+                    <button id="nextPageBtn" title="Następna strona"><i class="fas fa-chevron-right"></i></button>
+                    <button id="lastPageBtn" title="Ostatnia strona"><i class="fas fa-fast-forward"></i></button>
+                </div>
+            `;
+
+            const controls = paginationContainer.querySelector('.pagination-controls');
+
             if (totalPages <= 1) {
-                pagination.classList.remove('visible');
+                paginationContainer.classList.remove('visible');
+                controls.style.display = 'none';
                 return;
             }
 
-            pagination.classList.add('visible');
+            paginationContainer.classList.add('visible');
+            controls.style.display = 'flex';
 
-            const container = document.createElement("div");
-            container.style.cssText = "display:flex; flex-wrap:wrap; justify-content:center; align-items:center; gap:10px;";
+            const firstPageBtn = document.getElementById('firstPageBtn');
+            const prevPageBtn = document.getElementById('prevPageBtn');
+            const nextPageBtn = document.getElementById('nextPageBtn');
+            const lastPageBtn = document.getElementById('lastPageBtn');
+            const pageInput = document.getElementById('pageInput');
+            const pageSlider = document.getElementById('pageSlider');
+            const pageInfoText = document.getElementById('pageInfoText');
 
-            const prevBtn = document.createElement("button");
-            prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
-            prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
+            const goToPage = (pageNum) => {
+                pageNum = Math.max(1, Math.min(totalPages, pageNum)); // Walidacja numeru strony
+                const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
+                guideList.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+            };
 
-            const nextBtn = document.createElement("button");
-            nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
-            nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
-            nextBtn.addEventListener('mouseenter', preloadNextPageImages);
+            const updateControls = (pageNum) => {
+                pageInfoText.textContent = `/ ${totalPages}`;
+                pageInput.value = pageNum;
+                pageInput.max = totalPages;
+                pageSlider.value = pageNum;
+                pageSlider.max = totalPages;
 
-            const info = document.createElement("span");
-            info.className = "pagination-info";
+                firstPageBtn.disabled = prevPageBtn.disabled = (pageNum <= 1);
+                lastPageBtn.disabled = nextPageBtn.disabled = (pageNum >= totalPages);
 
+                preloadNextPageImages(); // Funkcja preload zostaje
+            };
+
+            // Listenery dla przycisków
+            firstPageBtn.onclick = () => goToPage(1);
+            prevPageBtn.onclick = () => goToPage(currentPage - 1);
+            nextPageBtn.onclick = () => goToPage(currentPage + 1);
+            lastPageBtn.onclick = () => goToPage(totalPages);
+
+            // --- KLUCZOWA LOGIKA ŁĄCZĄCA SUWAK I POLE INPUT ---
+
+            // Aktualizuj pole tekstowe w czasie rzeczywistym podczas przesuwania suwaka
+            pageSlider.addEventListener('input', () => {
+                pageInput.value = pageSlider.value;
+            });
+
+            // Zmień stronę dopiero po puszczeniu suwaka
+            pageSlider.addEventListener('change', () => {
+                goToPage(parseInt(pageSlider.value, 10));
+            });
+
+            // Zmień stronę po wpisaniu numeru i wciśnięciu Enter lub wyjściu z pola
+            pageInput.addEventListener('change', () => {
+                goToPage(parseInt(pageInput.value, 10));
+            });
+             pageInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    goToPage(parseInt(pageInput.value, 10));
+                    pageInput.blur(); // Zdejmij focus z pola
+                }
+            });
+
+
+            // Observer do aktualizacji kontrolek podczas scrollowania myszką/palcem
             const paginationObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        currentPage = parseInt(entry.target.dataset.pageNumber, 10);
-                        info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-                        prevBtn.disabled = (currentPage <= 1);
-                        nextBtn.disabled = (currentPage >= totalPages);
-                        preloadNextPageImages();
+                        const pageNum = parseInt(entry.target.dataset.pageNumber, 10);
+                        currentPage = pageNum;
+                        updateControls(pageNum);
                     }
                 });
             }, { root: guideList, threshold: 0.75 });
-
+            
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
-            container.appendChild(prevBtn);
-            container.appendChild(info);
-            container.appendChild(nextBtn);
-            pagination.appendChild(container);
-
-            currentPage = 1;
-            info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-            prevBtn.disabled = true;
-            nextBtn.disabled = (totalPages <= 1);
+            // Inicjalizacja stanu
+            currentPage = 1; 
+            updateControls(1);
         }
 
         function preloadNextPageImages() {
