@@ -1595,16 +1595,16 @@
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                    class="version-display"></span></span>
-                </a>
-                <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
-                    <i class="fas fa-globe"></i>
-                </a>
-                <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
-                    <span class="btn-text">Wstecz</span></a>
-                </div>
-            </div>
-            
+                        class="version-display"></span></span>
+            </a>
+            <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
+                <i class="fas fa-globe"></i>
+            </a>
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
+                <span class="btn-text">Wstecz</span></a>
+        </div>
+    </div>
+
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
@@ -1764,12 +1764,12 @@
     </div>
 
     <script>
-        // v1.5.1 - Multi-row CSS Scroll Snap pagination, JS logic refactored
+        // --- version: 'v1.5.2', // Bug fixes
 
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.5.1', // Zaktualizowana wersja
+            version: 'v1.5.2', // Bug fixes
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1825,7 +1825,7 @@
                     search: "Ayia"
                 }, {
                     label: "Aeneas-Resort",
-                    search: "Aeneas"               
+                    search: "Aeneas"
                 },],
             },
             paths: {
@@ -3402,6 +3402,25 @@
         });
 
         searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase().trim();
+
+            // --- EASTER EGG TRIGGER ---
+            if (query === 'reset' || query === 'clear') {
+                const command = query;
+                searchInput.value = '';
+                intro(); // Uruchom animację
+
+                // Opóźnienie, aby animacja zdążyła zasłonić ekran
+                if (command === 'reset') {
+                    setTimeout(hardReset, 1300);
+                } else if (command === 'clear') {
+                    // clearScreen wykonuje się natychmiast, w tle animacji
+                    clearScreen();
+                }
+                return;
+            }
+            // --- Koniec logiki Easter Egga ---
+
             renderGuides();
             stopPlayAnimation();
         });

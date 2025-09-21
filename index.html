@@ -634,19 +634,18 @@
         }
 
         .guide-page {
+            box-sizing: border-box;
+            /* <-- DODAJ TĘ LINIĘ */
             flex: 0 0 100%;
             scroll-snap-align: start;
             scroll-snap-stop: always;
 
             display: grid;
-            /* ZMIANA: Używamy zmiennej CSS do dynamicznego ustawiania liczby wierszy */
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-            /* ZMIANA: Szerokość kolumn jest teraz dynamiczna */
             grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 257px), 1fr));
             justify-content: center;
             gap: 20px;
             padding: 2px;
-            /* Drobny padding, by uniknąć ucinania cienia */
         }
 
         .guide-list.random-draw {
@@ -1572,6 +1571,24 @@
                 once: true
             });
         }
+
+        function preloadNextPageImages() {
+            const nextPage = currentPage + 1;
+            if (nextPage > totalPages || !pagesCache[nextPage - 1]) return;
+
+            const nextGuides = pagesCache[nextPage - 1];
+
+            nextGuides.forEach(guide => {
+                const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
+                const thumbnailUrl = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
+
+                if (!preloadQueue.has(thumbnailUrl)) {
+                    const img = new Image();
+                    img.src = thumbnailUrl;
+                    preloadQueue.add(thumbnailUrl);
+                }
+            });
+        }
     </script>
 </head>
 
@@ -1595,16 +1612,16 @@
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                    class="version-display"></span></span>
-                </a>
-                <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
-                    <i class="fas fa-globe"></i>
-                </a>
-                <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
-                    <span class="btn-text">Wstecz</span></a>
-                </div>
-            </div>
-            
+                        class="version-display"></span></span>
+            </a>
+            <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
+                <i class="fas fa-globe"></i>
+            </a>
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
+                <span class="btn-text">Wstecz</span></a>
+        </div>
+    </div>
+
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
@@ -1764,12 +1781,12 @@
     </div>
 
     <script>
-        // v1.5.1 - Multi-row CSS Scroll Snap pagination, JS logic refactored
+        // --- version: 'v1.5.3', // Interface rework - start ---
 
         // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.5.1', // Zaktualizowana wersja
+            version: 'v1.5.3', // Interface rework - start
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1851,41 +1868,42 @@
 
         // --- File database ---
         const dataFromFile = `
-17.09.2025  20:19               0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
-17.09.2025  19:00               0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
-17.09.2025  19:00               0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
-17.09.2025  20:21               0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
-17.09.2025  20:26               0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
-17.09.2025  20:26               0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
-17.09.2025  20:26               0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
-17.09.2025  22:51               0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
-17.09.2025  19:59               0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
-17.09.2025  22:50               0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
-17.09.2025  22:50               0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
-17.09.2025  22:50               0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
-17.09.2025  22:50               0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
-17.09.2025  22:51               0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
-17.09.2025  22:51               0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
-17.09.2025  22:51               0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
-17.09.2025  22:10               0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
-17.09.2025  22:50               0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
-17.09.2025  22:49               0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
-17.09.2025  18:41               0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
-17.09.2025  19:57               0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
-17.09.2025  19:58               0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
-17.09.2025  20:37               0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
-17.09.2025  18:40               0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
-17.09.2025  21:41               0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
-17.09.2025  21:47               0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
-17.09.2025  22:10               0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
-17.09.2025  22:10               0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
-17.09.2025  22:50               0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
-17.09.2025  22:50               0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
-17.09.2025  22:50               0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
-17.09.2025  20:20               0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
-17.09.2025  20:27               0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
+17.09.2025  20:19                 0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
+17.09.2025  19:00                 0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
+17.09.2025  19:00                 0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
+17.09.2025  20:21                 0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
+17.09.2025  20:26                 0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
+17.09.2025  20:26                 0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
+17.09.2025  20:26                 0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
+17.09.2025  22:51                 0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
+17.09.2025  19:59                 0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
+17.09.2025  22:50                 0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
+17.09.2025  22:50                 0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
+17.09.2025  22:50                 0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
+17.09.2025  22:50                 0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
+17.09.2025  22:51                 0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
+17.09.2025  22:51                 0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
+17.09.2025  22:10                 0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
+17.09.2025  22:50                 0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
+17.09.2025  22:49                 0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
+17.09.2025  18:41                 0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
+17.09.2025  19:57                 0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
+17.09.2025  19:58                 0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
+17.09.2025  20:37                 0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
+17.09.2025  18:40                 0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
+17.09.2025  21:41                 0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
+17.09.2025  21:47                 0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
+17.09.2025  22:10                 0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
+17.09.2025  22:10                 0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
+17.09.2025  22:50                 0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
+17.09.2025  22:50                 0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
+17.09.2025  22:50                 0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
+17.09.2025  20:20                 0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
+17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
+
         `;
         // --- Database end ---
         // --- End of copying / Kopiuj do tego miejsca ---
@@ -1902,7 +1920,10 @@
 
         let currentPage = 1;
         let totalPages = 1;
+        let pagesCache = []; // Przechowuje podział na strony
+        let preloadQueue = new Set(); // Zapobiega wielokrotnemu ładowaniu tego samego obrazka
         let isInitialLoad = true;
+
         let lazyLoadObserver; // Obserwator dla Lazy Loading
 
         let playAnimationTimeout = null,
@@ -2411,24 +2432,35 @@
             minimizeIcon.className = isLightboxMinimized ? 'fas fa-chevron-up' : 'fas fa-chevron-down';
         }
 
+        // ZMIANA: Resetowanie widoku do wartości z obiektu config
         function resetView() {
             stopPlayAnimation();
             searchInput.value = "";
             formatFilter.value = "";
-            const defaultSortValue = config.pageSettings.defaultSort;
-            sortSelector.value = "";
-            applySort(config.pageSettings.defaultSort || "nameAsc", guides);
-            saveToLocalStorage('sort', config.pageSettings.defaultSort || "nameAsc");
 
+            // Sortowanie
+            sortSelector.value = "";
+            applySort(config.pageSettings.defaultSort, guides);
+            saveToLocalStorage('sort', config.pageSettings.defaultSort);
+
+            // Przewinięcie do początku
             if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
 
             orientationFilterState = null;
+
+            // Przywrócenie widoku z konfiguracji
             viewState = {
-                covers: true,
-                text: true
+                covers: config.pageSettings.defaultShowCovers,
+                text: config.pageSettings.defaultShowText
             };
             saveToLocalStorage('view_show_covers', viewState.covers);
             saveToLocalStorage('view_show_text', viewState.text);
+
+            // Przywrócenie domyślnej liczby wierszy
+            selectedRowCount = config.pageSettings.defaultRows;
+            itemsPerPageSelector.value = selectedRowCount;
+            saveToLocalStorage('rows', selectedRowCount);
+
             applyView();
         }
 
@@ -2518,6 +2550,7 @@
 
         // ZMIANA: Przebudowana funkcja renderowania z warunkową animacją
         function renderGuides() {
+            guideList.classList.remove('random-draw');
             const animationsOn = !document.body.classList.contains('no-animation');
 
             applyFilters();
@@ -2533,26 +2566,25 @@
             const columns = Math.floor((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) || 1;
             const itemsPerPage = columns * selectedRowCount;
 
-            const pages = [];
+            pagesCache = [];
             if (itemsPerPage > 0) {
                 for (let i = 0; i < filteredGuides.length; i += itemsPerPage) {
-                    pages.push(filteredGuides.slice(i, i + itemsPerPage));
+                    pagesCache.push(filteredGuides.slice(i, i + itemsPerPage));
                 }
             } else if (filteredGuides.length > 0) {
-                pages.push(filteredGuides);
+                pagesCache.push(filteredGuides);
             }
-            totalPages = pages.length;
+            totalPages = pagesCache.length;
 
-            pages.forEach((pageItems, pageIndex) => {
+            pagesCache.forEach((pageItems, pageIndex) => {
                 const pageDiv = document.createElement('div');
                 pageDiv.className = 'guide-page';
                 pageDiv.dataset.pageNumber = pageIndex + 1;
 
-                if (pageIndex === 0) { // Renderuj od razu tylko pierwszą stronę
+                if (pageIndex === 0) {
                     pageItems.forEach((guide, index) => {
                         const div = document.createElement("div");
                         div.className = "guide";
-                        // Uruchom animację tylko przy pierwszym ładowaniu
                         if (animationsOn && isInitialLoad) {
                             div.classList.add("animate-in");
                             div.style.animationDelay = `${index * 0.04}s`;
@@ -2564,13 +2596,13 @@
                 guideList.appendChild(pageDiv);
             });
 
-            setupLazyLoading(pages);
+            setupLazyLoading(pagesCache);
             renderPagination();
             document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
 
-            // Po pierwszym renderowaniu, wyłącz flagę
             if (isInitialLoad) {
                 isInitialLoad = false;
+                preloadNextPageImages(); // Pierwsze preloadowanie po załadowaniu strony
             }
         }
 
@@ -2615,6 +2647,7 @@
         }
 
         // ZMIANA: Przebudowana funkcja renderowania paginacji dla Scroll Snap
+        // ZMIANA: Przebudowana funkcja renderowania paginacji z IntersectionObserver do aktualizacji licznika
         function renderPagination() {
             pagination.innerHTML = "";
             if (totalPages <= 1) {
@@ -2634,30 +2667,37 @@
             const nextBtn = document.createElement("button");
             nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
             nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
+            nextBtn.addEventListener('mouseenter', preloadNextPageImages);
 
             const info = document.createElement("span");
             info.className = "pagination-info";
 
-            const updateButtons = () => {
-                const newPage = Math.round(guideList.scrollLeft / guideList.clientWidth) + 1;
-                if (currentPage !== newPage) {
-                    currentPage = newPage > totalPages ? totalPages : newPage; // Zabezpieczenie
-                    info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-                }
-                prevBtn.disabled = (currentPage <= 1);
-                nextBtn.disabled = (currentPage >= totalPages);
-            };
+            // Obserwator do aktualizacji licznika i przycisków
+            const paginationObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        currentPage = parseInt(entry.target.dataset.pageNumber, 10);
+                        info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
+                        prevBtn.disabled = (currentPage <= 1);
+                        nextBtn.disabled = (currentPage >= totalPages);
+                        preloadNextPageImages(); // Przy okazji ładujemy w tle następną stronę
+                    }
+                });
+            }, { root: guideList, threshold: 0.75 }); // Odpala się, gdy 75% strony jest widoczne
 
-            guideList.addEventListener('scroll', debounce(updateButtons, 100));
+            // Obserwujemy każdą stronę
+            document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
             container.appendChild(prevBtn);
             container.appendChild(info);
             container.appendChild(nextBtn);
             pagination.appendChild(container);
 
-            currentPage = Math.round(guideList.scrollLeft / guideList.clientWidth) + 1;
+            // Inicjalizacja stanu
+            currentPage = 1;
             info.innerHTML = `Strona <b>${currentPage}</b> / ${totalPages}`;
-            updateButtons();
+            prevBtn.disabled = true;
+            nextBtn.disabled = (totalPages <= 1);
         }
 
         function drawRandomGuides() {
@@ -3407,6 +3447,25 @@
         });
 
         searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase().trim();
+
+            // --- EASTER EGG TRIGGER ---
+            if (query === 'reset' || query === 'clear') {
+                const command = query;
+                searchInput.value = '';
+                intro(); // Uruchom animację
+
+                // Opóźnienie, aby animacja zdążyła zasłonić ekran
+                if (command === 'reset') {
+                    setTimeout(hardReset, 1300);
+                } else if (command === 'clear') {
+                    // clearScreen wykonuje się natychmiast, w tle animacji
+                    clearScreen();
+                }
+                return;
+            }
+            // --- Koniec logiki Easter Egga ---
+
             renderGuides();
             stopPlayAnimation();
         });
