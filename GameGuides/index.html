@@ -321,7 +321,25 @@
 
         .top-header .title {
             font-size: 1.6em;
-            font-weight: bold;
+        }
+        
+        /* NOWE STYLE DLA NAGŁÓWKA */
+        body:not(.dark-mode) .top-header .title,
+        body:not(.dark-mode) .top-header .counter {
+            background: none;
+            font-weight: 600; /* kompensacja optyczna dla stroke */
+            color: black;
+            -webkit-text-stroke: 0.5px gray;
+            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3); /* fallback dla Firefox */
+        }
+
+        body.dark-mode .top-header .title,
+        body.dark-mode .top-header .counter {
+            background: none;
+            font-weight: 600;
+            color: white;
+            -webkit-text-stroke: 0.5px #ccc;
+            text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
         }
 
         .top-header .counter {
@@ -338,33 +356,26 @@
             border-radius: 8px;
         }
 
-        body:not(.dark-mode) .top-header .title,
-        body:not(.dark-mode) .top-header .counter {
-            background-color: rgba(240, 240, 240, 0.4);
-        }
-
-        .dark-mode .top-header .title,
-        .dark-mode .top-header .counter {
-            background-color: rgba(20, 20, 20, 0.5);
-        }
-
         .controls,
-        .filter-controls {
+        .action-controls {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
             gap: 10px;
-            margin-bottom: 20px;
+        }
+        
+        .controls {
+             margin-bottom: 20px;
+        }
+        
+        .action-controls {
+             margin-top: 20px;
         }
 
         .controls {
             opacity: 0;
             transform: translateY(-20px);
-        }
-
-        .filter-controls {
-            margin-top: 20px;
         }
 
         input,
@@ -495,53 +506,55 @@
             border-color: #808080;
         }
 
-        .controls .dir-db-btn,
-        .controls button,
+        .controls .dir-db-btn, .controls button,
+        .action-controls .dir-db-btn, .action-controls button,
         .top-header .dir-db-btn {
             border-color: #a00000;
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
             font-weight: bold;
         }
 
-        .controls .dir-db-btn:hover,
-        .controls button:hover,
+        .controls .dir-db-btn:hover, .controls button:hover,
+        .action-controls .dir-db-btn:hover, .action-controls button:hover,
         .top-header .dir-db-btn:hover {
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
-        body:not(.dark-mode) .controls .dir-db-btn,
-        body:not(.dark-mode) .controls button,
+        body:not(.dark-mode) .controls .dir-db-btn, body:not(.dark-mode) .controls button,
+        body:not(.dark-mode) .action-controls .dir-db-btn, body:not(.dark-mode) .action-controls button,
         body:not(.dark-mode) .top-header .dir-db-btn {
             background: #fdfdfd;
             color: #cc0000;
         }
 
-        body:not(.dark-mode) .controls .btn-text {
+        body:not(.dark-mode) .controls .btn-text,
+        body:not(.dark-mode) .action-controls .btn-text {
             color: #333;
         }
 
-        .dark-mode .controls .dir-db-btn,
-        .dark-mode .controls button,
+        .dark-mode .controls .dir-db-btn, .dark-mode .controls button,
+        .dark-mode .action-controls .dir-db-btn, .dark-mode .action-controls button,
         .dark-mode .top-header .dir-db-btn {
             background: #000;
             color: #e53935;
         }
 
-        .dark-mode .controls .btn-text {
+        .dark-mode .controls .btn-text,
+        .dark-mode .action-controls .btn-text {
             color: #eee;
         }
 
-        .controls .multi-button.expanded,
+        .action-controls .multi-button.expanded,
         #fxBtn.active {
             background: #fff;
         }
 
-        .dark-mode .controls .multi-button.expanded,
+        .dark-mode .action-controls .multi-button.expanded,
         .dark-mode #fxBtn.active {
             background: #111;
         }
 
-        .controls .multi-button:not(.expanded),
+        .action-controls .multi-button:not(.expanded),
         #fxBtn:not(.active) {
             font-weight: normal;
         }
@@ -621,8 +634,8 @@
             display: none;
         }
 
-        .guide-list-wrapper+.filter-controls {
-            margin-top: 20px;
+        .guide-list-wrapper+.pagination {
+             margin-top: 20px;
         }
 
         .guide-page {
@@ -794,7 +807,7 @@
             transform: translateY(0);
             max-height: 200px;
             margin-top: 20px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .pagination button {
@@ -856,7 +869,7 @@
                 transform: translateY(0);
             }
         }
-
+        
         .footer {
             text-align: center;
             padding: 20px;
@@ -1226,19 +1239,21 @@
         }
 
         .animated-header,
-        .animated-controls,
+        .controls, /* Animate all control groups */
+        .action-controls,
         .animated-footer,
         .animated-pagination {
             animation-fill-mode: forwards;
         }
 
         .animated-header,
-        .animated-controls {
+        .controls {
             animation-name: fadeInDown;
             animation-duration: 0.6s;
             animation-timing-function: ease-out;
         }
-
+        
+        .action-controls,
         .animated-footer,
         .animated-pagination {
             animation-name: fadeInUp;
@@ -1290,11 +1305,29 @@
         .dark-mode .controls.minimized-view .multi-button:hover .multi-button-child {
             border-left-color: rgba(255, 255, 255, 0.2);
         }
-
-        .controls.minimized-view>input[type="text"],
-        .controls.minimized-view>select {
-            display: none;
+        
+        @media (max-width: 768px) {
+            .controls.minimized-view>#search,
+            .controls.minimized-view>#formatFilter {
+                display: flex;
+            }
+            .controls.minimized-view > #sortSelector,
+            .controls.minimized-view > #randomSelector,
+            .controls.minimized-view > #itemsPerPageSelector {
+                display: none;
+            }
+            
+            .action-controls {
+                flex-direction: column;
+            }
+            .action-controls .action-row {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
         }
+
 
         @media (max-width: 768px) {
             #lightbox-controls {
@@ -1312,27 +1345,12 @@
                 display: none !important;
             }
         }
-
-        /* ZMIANA: Nowe style 'order' dla kontrolek slideshow */
-        #lightbox-controls #lightbox-fxBtn {
-            order: 1;
-        }
-
-        #lightbox-controls #lightbox-videoBtn {
-            order: 2;
-        }
-
-        #lightbox-controls #slideshow-controls {
-            order: 3;
-        }
-
-        #lightbox-controls #lightbox-darkModeBtn {
-            order: 4;
-        }
-
-        #lightbox-controls #lightbox-labelsBtn {
-            order: 5;
-        }
+        
+        #lightbox-controls #lightbox-fxBtn { order: 1; }
+        #lightbox-controls #lightbox-videoBtn { order: 2; }
+        #lightbox-controls #slideshow-controls { order: 3; }
+        #lightbox-controls #lightbox-darkModeBtn { order: 4; }
+        #lightbox-controls #lightbox-labelsBtn { order: 5; }
 
         /* --- EASTER EGG: CRT Effect Styles --- */
         #crt-overlay {
@@ -1450,7 +1468,7 @@
         }
     </style>
     <script>
-        (function () {
+        (function() {
             const langConfig = {
                 defaultLanguage: 'pl',
                 englishUrl: 'index-en.html'
@@ -1467,7 +1485,7 @@
             } catch (e) { /* Ignore storage errors */ }
         })();
 
-        (function () {
+        (function() {
             try {
                 const theme = localStorage.getItem('visudir_theme');
                 const defaultTheme = 'light';
@@ -1498,8 +1516,7 @@
         <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
-                <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                        class="version-display"></span></span>
+                <span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span>
             </a>
             <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
                 <i class="fas fa-globe"></i>
@@ -1508,63 +1525,11 @@
                 <span class="btn-text">Wstecz</span></a>
         </div>
     </div>
-
+    
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
         <input type="file" id="fileInput" accept=".txt" />
-
-        <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
-            <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
-        </button>
-
-        <button id="videoBtn" class="dir-db-btn multi-button">
-            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
-                    Video</span></span>
-            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                    class="fas fa-chevron-left"></i></span>
-            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                    class="fas fa-play"></i></span>
-            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                    class="fas fa-random"></i></span>
-            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
-                    class="fas fa-chevron-right"></i></span>
-            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                    class="fas fa-undo"></i></span>
-        </button>
-
-        <div id="viewBtnGroup" class="dir-db-btn multi-button">
-            <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text">
-                    Widok</span></span>
-            <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i
-                    class="fas fa-image"></i></span>
-            <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i
-                    class="fas fa-align-justify"></i></span>
-            <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i
-                    class="fas fa-arrows-alt-v"></i></span>
-            <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i
-                    class="fas fa-arrows-alt-h"></i></span>
-            <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i
-                    class="fas fa-columns"></i></span>
-        </div>
-
-        <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
-                Ciemny</span></button>
-
-        <button id="playButton" title="Losuj animacją" class="dir-db-btn">
-            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
-        </button>
-
-        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
-            <i class="fas fa-chevron-up"></i>
-        </button>
-    </div>
-
-    <div class="guide-list-wrapper">
-        <div class="guide-list" id="guideList"></div>
-    </div>
-
-    <div class="filter-controls" id="filterControls">
         <input type="text" id="search" placeholder="Szukaj pozycji..." />
         <select id="formatFilter">
             <option value="">Wszystko</option>
@@ -1593,17 +1558,53 @@
             <option value="10">Pozycje: 10</option>
         </select>
         <select id="itemsPerPageSelector"></select>
-        <button onclick="resetView()" title="Resetuj widok" class="dir-db-btn">
+        <button id="resetButton" title="Resetuj widok" class="dir-db-btn">
             <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
+        </button>
+        <button id="playButton" title="Losuj animacją" class="dir-db-btn">
+            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
+        </button>
+        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
+            <i class="fas fa-chevron-up"></i>
         </button>
     </div>
 
+    <div class="guide-list-wrapper">
+        <div class="guide-list" id="guideList"></div>
+    </div>
+    
     <div class="pagination" id="pagination"></div>
+
+    <div class="action-controls" id="actionControls">
+        <div class="action-row">
+            <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
+                <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
+            </button>
+            <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text"> Ciemny</span></button>
+        </div>
+        <div class="action-row">
+            <button id="videoBtn" class="dir-db-btn multi-button">
+                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"> Wideo</span></span>
+                <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
+                <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
+                <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
+                <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
+                <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
+            </button>
+            <div id="viewBtnGroup" class="dir-db-btn multi-button">
+                <span id="viewBtn-main" class="multi-button-main"><i class="fas fa-object-group"></i><span class="btn-text"> Widok</span></span>
+                <span id="viewBtn-covers" class="multi-button-child" title="Pokaż/ukryj okładki"><i class="fas fa-image"></i></span>
+                <span id="viewBtn-text" class="multi-button-child" title="Pokaż/ukryj tekst"><i class="fas fa-align-justify"></i></span>
+                <span id="viewBtn-vertical" class="multi-button-child" title="Pokaż pionowe"><i class="fas fa-arrows-alt-v"></i></span>
+                <span id="viewBtn-horizontal" class="multi-button-child" title="Pokaż poziome"><i class="fas fa-arrows-alt-h"></i></span>
+                <span id="viewBtn-size" class="multi-button-child" title="Zmień rozmiar miniaturek"><i class="fas fa-columns"></i></span>
+            </div>
+        </div>
+    </div>
 
     <div class="footer">
         <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                        class="version-suffix">Dir
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir
                         <span class="version-display"></span></span></a></strong>
             <strong>© 2025-09-17</strong> do katalogowania, zarządzania i
             prezentacji plików i folderów |
@@ -1622,58 +1623,40 @@
 
     <div id="backdrop" class="backdrop">
         <div id="play-caption" class="play-caption"></div>
-        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i
-                class="fas fa-expand"></i></button>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn" title="Pełny ekran"><i class="fas fa-expand"></i></button>
         <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
         <div id="play-guide-container" class="play-guide-container"></div>
 
         <div id="lightbox-controls">
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
-                    class="fas fa-cog"></i></button>
+            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i class="fas fa-cog"></i></button>
 
-            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
-                    class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
-                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                        class="fas fa-chevron-left"></i></span>
-                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i
-                        class="fas fa-chevron-right"></i></span>
-                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                        class="fas fa-undo"></i></span>
+            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main" class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
+                <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i class="fas fa-chevron-left"></i></span>
+                <span id="lightbox-video-toggle" class="multi-button-child" title="Odtwarzaj / Pauza"><i class="fas fa-play"></i></span>
+                <span id="lightbox-video-autoshuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i class="fas fa-random"></i></span>
+                <span id="lightbox-video-next" class="multi-button-child" title="Następne wideo"><i class="fas fa-chevron-right"></i></span>
+                <span id="lightbox-video-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i class="fas fa-undo"></i></span>
             </div>
-
+            
             <div id="slideshow-controls" class="lightbox-control-group">
-                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i
-                        class="fas fa-fast-backward"></i></span>
-                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i
-                        class="fas fa-step-backward"></i></span>
-                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i
-                        class="fas fa-stop"></i></span>
-                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="slideshow-next" class="multi-button-child" title="Następny"><i
-                        class="fas fa-step-forward"></i></span>
-                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i
-                        class="fas fa-fast-forward"></i></span>
+                <span id="slideshow-first" class="multi-button-child" title="Pierwszy"><i class="fas fa-fast-backward"></i></span>
+                <span id="slideshow-prev" class="multi-button-child" title="Poprzedni"><i class="fas fa-step-backward"></i></span>
+                <span id="slideshow-stop" class="multi-button-child" title="Zatrzymaj"><i class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child" title="Play/Pauza"><i class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child" title="Losowe slajdy Wł/Wył"><i class="fas fa-random"></i></span>
+                <span id="slideshow-next" class="multi-button-child" title="Następny"><i class="fas fa-step-forward"></i></span>
+                <span id="slideshow-last" class="multi-button-child" title="Ostatni"><i class="fas fa-fast-forward"></i></span>
             </div>
 
-            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i
-                    class="fas fa-moon"></i></button>
-            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i
-                    class="fas fa-tags"></i></button>
+            <button id="lightbox-darkModeBtn" class="dir-db-btn" title="Tryb ciemny/jasny"><i class="fas fa-moon"></i></button>
+            <button id="lightbox-labelsBtn" class="dir-db-btn" title="Pokaż/ukryj etykiety"><i class="fas fa-tags"></i></button>
         </div>
-        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i
-                class="fas fa-chevron-down"></i></button>
+        <button id="lightbox-minimizeBtn" class="lightbox-action-btn" title="Minimalizuj interfejs"><i class="fas fa-chevron-down"></i></button>
     </div>
 
     <script>
-        // v1.5.2 - UI refactoring, click on thumb opens slideshow
-
+        // v1.5.5 - UI refactoring for mobile and desktop views
+        
         /**
          * EASTER EGG: Funkcja intro, która czyści ekran z efektem CRT.
          */
@@ -1736,10 +1719,10 @@
             });
         }
 
-       // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
+        // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
         // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.5.4', // Zaktualizowana wersja
+            version: 'v1.5.5', // Zaktualizowana wersja
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1748,20 +1731,20 @@
                 enabled: true,
                 interval: 4500,
                 logos: [{
-                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
-                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
-                    href: ".base-system/about.html",
+                    srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png",
+                    srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png",
+                    href: "../.base-system/about.html",
                     alt: "Logo VisuDir"
                 }, {
-                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
-                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
+                    srcLight: "../.base-system/gfx/interface/ADE_small_light.png",
+                    srcDark: "../.base-system/gfx/interface/ADE_small_dark.png",
                     href: "https://www.ade.pl",
                     alt: "Logo ADE"
                 }]
             },
             pageSettings: {
-                pageKey: 'indexMaxi',
-                pageTitle: "PORADNIKI ▪ do Gier ▪",
+                pageKey: 'gameGuides',
+                pageTitle: "PORADNIKI ▪ do GIER ▪",
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: false,
@@ -1772,36 +1755,21 @@
                 defaultAnimations: true,
                 defaultVideoBg: true,
                 defaultShowCovers: true,
-                defaultShowText: true,
+                defaultShowText: false,
                 defaultViewExpanded: false,
                 defaultVideoExpanded: false,
                 defaultBoxWidth1: '257px',
                 defaultBoxWidth2: '217px',
                 defaultBoxWidth3: '137px',
                 defaultLabelsVisible: true,
-                defaultRows: 2, // Ta wartość będzie teraz kontrolować wysokość siatki
-                defaultSort: 'shuffle', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
+                defaultRows: 3, // Ta wartość będzie teraz kontrolować wysokość siatki
+                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
                 predefinedFilters: [{
-                    label: "ADE",
-                    search: "ade"
+                    label: "Gry-Online",
+                    search: "online"
                 }, {
-                    label: "E-booki",
-                    search: "e-book"
-                }, {
-                    label: "Galerie",
-                    search: "galeri"
-                }, {
-                    label: "Hiszpania",
-                    search: "Hiszpania"
-                }, {
-                    label: "Niemcy",
-                    search: "Niemcy"
-                }, {
-                    label: "Polska",
-                    search: "Polska"
-                }, {
-                    label: "Poradniki",
-                    search: "Poradniki"
+                    label: "PrzygodoMania.pl",
+                    search: "mania"
                 },],
             },
             paths: {
@@ -5585,13 +5553,13 @@
             filteredGuides = [],
             slideshowSourceGuides = [],
             playGuidesQueue = [];
-
+        
         let currentSort,
             selectedRowCount;
-
+        
         let currentPage = 1;
         let totalPages = 1;
-        let pagesCache = [];
+        let pagesCache = []; 
         let preloadQueue = new Set();
         let isInitialLoad = true;
         let lazyLoadObserver;
@@ -5622,6 +5590,7 @@
             itemsPerPageSelector = document.getElementById("itemsPerPageSelector"),
             randomSelector = document.getElementById("randomSelector"),
             playButton = document.getElementById("playButton"),
+            resetButton = document.getElementById("resetButton"),
             backdrop = document.getElementById("backdrop"),
             playGuideContainer = document.getElementById("play-guide-container"),
             playCaption = document.getElementById("play-caption"),
@@ -5937,7 +5906,7 @@
                 }
             });
         }
-
+        
         function loadAndParseFile(file) {
             const r = new FileReader();
             r.onload = (e) => init(e.target.result);
@@ -5968,8 +5937,7 @@
             fileInputLabel.style.display = "none";
             await processData(data);
             updateFormatFilter();
-
-            // ZMIANA: Wypełniamy selektor wierszy
+            
             const rowOptions = [1, 2, 3, 4, 5, 10, 20];
             itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
             rowOptions.forEach(r => {
@@ -6021,7 +5989,7 @@
             }, config.logoRotator.interval);
         }
 
-        window.onload = function () {
+        window.onload = function() {
             fileInputLabel.style.display = "none";
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
             document.getElementById("pageTitle").textContent = config.pageSettings.pageTitle;
@@ -6051,7 +6019,7 @@
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
             darkModeBtn.addEventListener('click', toggleDarkMode);
-            document.getElementById('langBtn').addEventListener('click', function (e) {
+            document.getElementById('langBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 try {
                     localStorage.setItem('visudir_lang', 'en');
@@ -6108,9 +6076,9 @@
             sortSelector.value = "";
             applySort(config.pageSettings.defaultSort, guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort);
-
-            if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
-
+            
+            if(guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
+            
             orientationFilterState = null;
             viewState = {
                 covers: config.pageSettings.defaultShowCovers,
@@ -6141,8 +6109,8 @@
                     return;
                 }
                 fetch(filePath, {
-                    method: 'HEAD'
-                })
+                        method: 'HEAD'
+                    })
                     .then(response => {
                         window.location.href = response.ok ? targetUrl : fallbackUrl;
                     })
@@ -6155,14 +6123,14 @@
             const http = new XMLHttpRequest();
             http.open('HEAD', filePath, true);
             http.timeout = 2000;
-            http.onload = function () {
+            http.onload = function() {
                 if (this.status === 200 || this.status === 0) {
                     window.open(targetUrl, '_blank');
                 } else {
                     window.location.href = fallbackUrl;
                 }
             };
-            http.onerror = http.ontimeout = function () {
+            http.onerror = http.ontimeout = function() {
                 window.location.href = fallbackUrl;
             };
             http.send();
@@ -6180,7 +6148,7 @@
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
-
+            
             const mediaTypes = ["jpg", "png", "mp4", "avi"];
 
             if (guide.format === "link") {
@@ -6191,7 +6159,6 @@
                 a = `<a href="${t}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> Otwórz</a>`;
                 w = `<a href="${t}" onclick="${clickAction}" class="cover-link">`;
             } else if (mediaTypes.includes(guide.format)) {
-                // ZMIANA: Wywołanie nowej funkcji startSlideshowFrom
                 const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
                 h = `<div class="guide-title"><a href="#" onclick="${clickAction}">${d}</a></div>`;
                 i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> Format: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> Rozmiar: ${guide.sizeMB} MB</div>`;
@@ -6218,11 +6185,11 @@
         function renderGuides() {
             guideList.classList.remove('random-draw');
             const animationsOn = !document.body.classList.contains('no-animation');
-
+            
             applyFilters();
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
-
+            
             const currentWidthValue = config.pageSettings[`defaultBoxWidth${currentBoxWidthIndex + 1}`];
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', currentWidthValue);
@@ -6261,7 +6228,7 @@
                 }
                 guideList.appendChild(pageDiv);
             });
-
+            
             setupLazyLoading(pagesCache);
             renderPagination();
             document.getElementById("guideCountDisplay").innerHTML = `<b>${filteredGuides.length}</b> / ${guides.length} pozycji`;
@@ -6280,7 +6247,7 @@
                     if (entry.isIntersecting) {
                         const pageDiv = entry.target;
                         const pageNum = parseInt(pageDiv.dataset.pageNumber, 10);
-
+                        
                         if (pageDiv.childElementCount === 0 && pageNum > 1) {
                             const pageItems = pages[pageNum - 1];
                             if (pageItems) {
@@ -6297,8 +6264,8 @@
                         observer.unobserve(pageDiv);
                     }
                 });
-            }, {
-                root: guideList,
+            }, { 
+                root: guideList, 
                 rootMargin: '0px 300px 0px 300px'
             });
 
@@ -6306,14 +6273,14 @@
                 lazyLoadObserver.observe(page);
             });
         }
-
+        
         function renderPagination() {
             pagination.innerHTML = "";
             if (totalPages <= 1) {
                 pagination.classList.remove('visible');
                 return;
             }
-
+            
             pagination.classList.add('visible');
 
             const container = document.createElement("div");
@@ -6322,7 +6289,7 @@
             const prevBtn = document.createElement("button");
             prevBtn.innerHTML = `<i class="fas fa-chevron-left"></i>&nbsp;Poprzednia`;
             prevBtn.onclick = () => guideList.scrollBy({ left: -guideList.clientWidth, behavior: 'smooth' });
-
+            
             const nextBtn = document.createElement("button");
             nextBtn.innerHTML = `Następna&nbsp;<i class="fas fa-chevron-right"></i>`;
             nextBtn.onclick = () => guideList.scrollBy({ left: guideList.clientWidth, behavior: 'smooth' });
@@ -6330,7 +6297,7 @@
 
             const info = document.createElement("span");
             info.className = "pagination-info";
-
+            
             const paginationObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -6344,7 +6311,7 @@
             }, { root: guideList, threshold: 0.75 });
 
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
-
+            
             container.appendChild(prevBtn);
             container.appendChild(info);
             container.appendChild(nextBtn);
@@ -6388,7 +6355,7 @@
             pagination.innerHTML = "";
             pagination.classList.remove('visible');
             guideList.classList.add('random-draw');
-
+            
             const randomGuides = [...source]
                 .sort(() => 0.5 - Math.random())
                 .slice(0, count);
@@ -6705,9 +6672,7 @@
             }
         }
 
-        // ZMIANA: Dodajemy nową funkcję do uruchamiania slideshow z konkretnego elementu
         function startSlideshowFrom(guideFilename) {
-            // Używamy aktualnie przefiltrowanej listy jako źródła dla slideshow
             const sourceGuides = filteredGuides;
             const startIndex = sourceGuides.findIndex(g => g.file === guideFilename);
 
@@ -6715,14 +6680,14 @@
                 console.error("Nie znaleziono elementu w przefiltrowanej liście.");
                 return;
             }
-
+            
             startPlayAnimation(startIndex);
         }
 
-        playButton.addEventListener('click', () => startPlayAnimation()); // Zmieniamy domyślne wywołanie
+        playButton.addEventListener('click', () => startPlayAnimation());
         playCloseBtn.addEventListener('click', stopPlayAnimation);
 
-        function togglePlayAnimation() { // Ta funkcja nie jest już bezpośrednio używana
+        function togglePlayAnimation() {
             if (playAnimationTimeout || slideshowIsPlaying) stopPlayAnimation();
             else startPlayAnimation();
         }
@@ -6747,13 +6712,12 @@
             document.getElementById('slideshow-shuffle').classList.toggle('active-play', slideshowIsRandom);
         }
 
-        // ZMIANA: Funkcja akceptuje teraz opcjonalny indeks startowy
         function startPlayAnimation(startIndex = 0) {
             const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
 
             playGuidesQueue = [...source];
-            playCurrentIndex = startIndex; // Ustawiamy indeks startowy
+            playCurrentIndex = startIndex; 
 
             document.body.classList.add("play-mode-active");
             playButton.querySelector('.btn-text').textContent = ' Stop';
@@ -6769,8 +6733,7 @@
             slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
             slideshowPlayBtn.classList.add('active-play');
             lightboxLabelsBtn.classList.toggle('active-play', areLabelsVisible);
-
-            // Zamiast scheduleNext, od razu wyświetlamy właściwy slajd
+            
             displayRandomGuide(playGuidesQueue[playCurrentIndex]);
         }
 
@@ -6814,7 +6777,7 @@
                         newIndex = Math.floor(Math.random() * playGuidesQueue.length);
                     } while (playGuidesQueue.length > 1 && newIndex === playCurrentIndex);
                     playCurrentIndex = newIndex;
-                } else if (!isNav) { // Tylko auto-play przesuwa do przodu
+                } else if (!isNav) { 
                     playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
                 }
                 guide = playGuidesQueue[playCurrentIndex];
@@ -7093,7 +7056,7 @@
 
         function debounce(func, wait) {
             let timeout;
-            return function (...args) {
+            return function(...args) {
                 const later = () => {
                     clearTimeout(timeout);
                     func.apply(this, args);
@@ -7112,7 +7075,7 @@
         }, 250);
         window.addEventListener("resize", debouncedRender);
 
-        window.addEventListener("pageshow", function (event) {
+        window.addEventListener("pageshow", function(event) {
             if (event.persisted) {
                 applyFilters();
                 renderGuides();
@@ -7136,7 +7099,7 @@
                 document.body.classList.remove('video-ready');
             });
         });
-
+        
         searchInput.addEventListener("input", () => {
             const query = searchInput.value.toLowerCase().trim();
             if (query === 'reset' || query === 'clear') {
@@ -7153,7 +7116,7 @@
             renderGuides();
             stopPlayAnimation();
         });
-
+        
         formatFilter.addEventListener("change", () => {
             const value = formatFilter.value;
             orientationFilterState = null;
@@ -7165,7 +7128,7 @@
             renderGuides();
             stopPlayAnimation();
         });
-
+        
         sortSelector.addEventListener("change", (e) => {
             if (e.target.value) {
                 applySort(e.target.value, guides);
@@ -7174,7 +7137,7 @@
             }
             e.target.value = "";
         });
-
+        
         itemsPerPageSelector.addEventListener("change", (e) => {
             if (!e.target.value) return;
             selectedRowCount = parseInt(e.target.value);
@@ -7184,12 +7147,14 @@
         });
 
         randomSelector.addEventListener("change", drawRandomGuides);
-        fileInput.addEventListener("change", function () {
+        fileInput.addEventListener("change", function() {
             if (this.files[0]) {
                 loadAndParseFile(this.files[0]);
                 stopPlayAnimation();
             }
         });
+        // ZMIANA: Przycisk Reset jest teraz w innym miejscu, więc jego listener jest tutaj
+        resetButton.addEventListener('click', resetView);
     </script>
 </body>
 
