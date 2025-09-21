@@ -337,26 +337,14 @@
             border-radius: 8px;
         }
 
-        /* Jasny motyw */
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
-            background: none;
-            font-weight: 600;
-            /* kompensacja optyczna dla stroke */
-            color: black;
-            -webkit-text-stroke: 0.5px $ffffff80;
-            text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
-            /* fallback dla Firefox */
+            background-color: rgba(240, 240, 240, 0.4);
         }
 
-        /* Ciemny motyw */
-        body.dark-mode .top-header .title,
-        body.dark-mode .top-header .counter {
-            background: none;
-            font-weight: 600;
-            color: white;
-            -webkit-text-stroke: 0.5px black;
-            text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+        .dark-mode .top-header .title,
+        .dark-mode .top-header .counter {
+            background-color: rgba(20, 20, 20, 0.5);
         }
 
         .controls {
@@ -1585,26 +1573,26 @@
     </video>
 
     <div class="top-header">
-        <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-logo-group">
             <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
             <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
                 <img id="header-logo" src="" alt="Logo" class="header-logo" />
             </a>
         </div>
+        <div id="pageTitle" class="title">Poradniki do Gier</div>
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span
-                    class="version-display"></span></span>
-                </a>
-                <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
-                    <i class="fas fa-globe"></i>
-                </a>
-                <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
-                    <span class="btn-text">Wstecz</span></a>
-                </div>
-            </div>
-            
+                        class="version-display"></span></span>
+            </a>
+            <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English">
+                <i class="fas fa-globe"></i>
+            </a>
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
+                <span class="btn-text">Wstecz</span></a>
+        </div>
+    </div>
+
     <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text">Załaduj...</span></label>
