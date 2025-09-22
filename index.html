@@ -1638,6 +1638,205 @@
             transform: scale(1.1);
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
+
+        /* --- Nowy Panel Wyświetlania --- */
+        .display-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            /* Umożliwia zawijanie na mobilkach */
+            gap: 10px;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto 20px auto;
+            padding: 8px;
+            border-radius: 12px;
+            box-sizing: border-box;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        body:not(.dark-mode) .display-panel {
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #a00000;
+            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+        }
+
+        .dark-mode .display-panel {
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 1px solid #a00000;
+        }
+
+        .display-panel-group {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(0, 0, 0, 0.05);
+            padding: 5px;
+            border-radius: 8px;
+        }
+
+        .dark-mode .display-panel-group {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .display-panel button {
+            width: 42px;
+            height: 42px;
+            font-size: 1.1em;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        .display-panel button:hover {
+            border-color: #cc0000;
+        }
+
+        .dark-mode .display-panel button:hover {
+            border-color: #e53935;
+        }
+
+        .display-panel button.active {
+            background-color: #cc0000;
+            color: white;
+        }
+
+        .dark-mode .display-panel button.active {
+            background-color: #e53935;
+            color: black;
+        }
+
+        /* Styl dla wyróżnionego przycisku PLAY */
+        .display-panel .play-accent {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            border-color: #cc0000;
+        }
+
+        .dark-mode .display-panel .play-accent {
+            box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
+        }
+
+        .display-panel .play-accent:hover {
+            animation: pulse-red 1s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+            }
+        }
+
+        /* Styl dla suwaków */
+        .display-panel .slider-group {
+            flex-grow: 1;
+            padding: 5px 15px;
+            gap: 10px;
+        }
+
+        .slider-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .slider-control i {
+            font-size: 1.2em;
+            color: #888;
+        }
+
+        .dark-mode .slider-control i {
+            color: #aaa;
+        }
+
+        .slider-control input[type="range"] {
+            flex-grow: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 6px;
+            background: rgba(0, 0, 0, 0.1);
+            outline: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .dark-mode .slider-control input[type="range"] {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .slider-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #cc0000;
+            cursor: pointer;
+        }
+
+        .dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
+            background: #e53935;
+        }
+
+        .slider-control input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #cc0000;
+            cursor: pointer;
+        }
+
+        .dark-mode .slider-control input[type="range"]::-moz-range-thumb {
+            background: #e53935;
+        }
+
+        .slider-control span {
+            font-weight: bold;
+            min-width: 45px;
+            text-align: right;
+        }
+
+        /* Efekt hover dla trybu "tylko grafika" */
+        .guide-list.view-image-only .guide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .guide-list.view-image-only .guide-title,
+        .guide-list.view-image-only .guide-info,
+        .guide-list.view-image-only .guide-content-bottom>a:not(.cover-link) {
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
+
+        .guide-list.view-image-only .guide:hover .guide-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px;
+            opacity: 1;
+            max-height: 100px;
+            /* przywracamy wysokość */
+            transition: opacity 0.3s ease-out;
+            pointer-events: auto;
+            border-radius: 0 0 10px 10px;
+        }
     </style>
     <script>
         (function () {
@@ -1740,6 +1939,36 @@
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-chevron-up"></i>
         </button>
+    </div>
+
+    <div class="display-panel" id="displayPanel">
+        <div class="display-panel-group">
+            <button id="viewThemeBtn" title="Tryb Ciemny / Jasny"><i class="fas fa-sun"></i></button>
+            <button id="viewContentBtn" title="Widok: Grafika / Tekst"><i class="fas fa-image"></i></button>
+            <button id="viewOrientationBtn" title="Pokaż tylko pionowe okładki"><i
+                    class="fas fa-arrows-alt-v"></i></button>
+        </div>
+
+        <div class="display-panel-group slider-group">
+            <div class="slider-control">
+                <i class="fas fa-th-large" title="Wielkość miniaturek"></i>
+                <input type="range" id="sizeSlider" min="50" max="150" value="100" step="1">
+                <span id="sizeValue">100%</span>
+            </div>
+            <div class="slider-control">
+                <i class="fas fa-grip-lines" title="Liczba wierszy"></i>
+                <input type="range" id="rowsSlider" min="1" max="10" value="2" step="1">
+                <span id="rowsValue">2</span>
+            </div>
+        </div>
+
+        <div class="display-panel-group">
+            <button id="viewResetBtn" title="Resetuj widok"><i class="fas fa-sync-alt"></i></button>
+            <button id="viewPlayBtn" class="play-accent" title="Rozpocznij pokaz"><i class="fas fa-play"></i></button>
+        </div>
+    </div>
+    <div class="guide-list-wrapper">
+        <div class="guide-list" id="guideList"></div>
     </div>
 
     <div class="guide-list-wrapper">
@@ -1942,7 +2171,7 @@
         // --- configuraton / konfiguracja ---
         const config = {
             // Ustawienia główne / Main settings
-            version: 'v1.5.8', // Background video addes // Dodano nowe tła video
+            version: 'v1.5.9', // View setting button rebuilt // Przebudowa przycisku widok
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
@@ -1952,7 +2181,7 @@
                 defaultAnimations: true,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 30,
+                bgVideoEndNum: 32,
                 defaultVideoBg: true,
                 defaultLabelsVisible: true, // slideshow labels visibility // widoczność etykiet w pokazie slajdów
 
@@ -2106,6 +2335,7 @@
         let pausedTime = 0;
         let currentBoxWidthIndex = 0;
 
+
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
             searchInput = document.getElementById("search"),
@@ -2134,7 +2364,8 @@
             lightboxFxBtn = document.getElementById('lightbox-fxBtn'),
             viewBtnGroup = document.getElementById('viewBtnGroup'),
             videoBtn = document.getElementById('videoBtn'),
-            lightboxLabelsBtn = document.getElementById('lightbox-labelsBtn');
+            lightboxLabelsBtn = document.getElementById('lightbox-labelsBtn'),
+            displayPanel = document.getElementById("displayPanel");
 
         function initializeTheme() {
             const storedTheme = localStorage.getItem('visudir_theme');
@@ -2569,6 +2800,7 @@
                     });
             }
             initializeNewButtons();
+            initializeDisplayPanel(); 
         };
 
         function toggleMinimizeView() {
@@ -2801,9 +3033,9 @@
             });
         }
 
-       function renderPagination() {
+        function renderPagination() {
             const paginationContainer = document.getElementById('pagination');
-            
+
             // Wyczyść stary kontener i przygotuj nową strukturę
             paginationContainer.innerHTML = `
                 <div class="pagination-controls">
@@ -2881,7 +3113,7 @@
             pageInput.addEventListener('change', () => {
                 goToPage(parseInt(pageInput.value, 10));
             });
-             pageInput.addEventListener('keydown', (e) => {
+            pageInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     goToPage(parseInt(pageInput.value, 10));
@@ -2900,11 +3132,11 @@
                     }
                 });
             }, { root: guideList, threshold: 0.75 });
-            
+
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
             // Inicjalizacja stanu
-            currentPage = 1; 
+            currentPage = 1;
             updateControls(1);
         }
 
@@ -3057,6 +3289,80 @@
                 }
             });
             updateVideoBtnUI();
+        }
+
+        function initializeDisplayPanel() {
+            const viewThemeBtn = document.getElementById('viewThemeBtn');
+            const viewContentBtn = document.getElementById('viewContentBtn');
+            const viewOrientationBtn = document.getElementById('viewOrientationBtn');
+            const sizeSlider = document.getElementById('sizeSlider');
+            const sizeValue = document.getElementById('sizeValue');
+            const rowsSlider = document.getElementById('rowsSlider');
+            const rowsValue = document.getElementById('rowsValue');
+            const viewResetBtn = document.getElementById('viewResetBtn');
+            const viewPlayBtn = document.getElementById('viewPlayBtn');
+
+            // --- INICJALIZACJA STANU PRZYCISKÓW ---
+            // Tryb Ciemny/Jasny
+            const updateThemeIcon = () => {
+                const isDark = document.documentElement.classList.contains('dark-mode');
+                viewThemeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+                viewThemeBtn.classList.toggle('active', isDark);
+            };
+            updateThemeIcon(); // Ustaw na starcie
+
+            // Stan widoku (grafika/tekst)
+            let isImageOnlyView = false; // Domyślnie pokazujemy wszystko
+            const updateContentView = () => {
+                guideList.classList.toggle('view-image-only', isImageOnlyView);
+                viewContentBtn.innerHTML = isImageOnlyView ? '<i class="fas fa-align-left"></i>' : '<i class="fas fa-image"></i>';
+                viewContentBtn.classList.toggle('active', isImageOnlyView);
+                viewContentBtn.title = isImageOnlyView ? "Widok: Tekst (pokaż z opisem)" : "Widok: Grafika (ukryj opisy)";
+            };
+
+            // --- LISTENERY ZDARZEŃ ---
+            viewThemeBtn.addEventListener('click', () => {
+                toggleDarkMode(); // Używamy istniejącej funkcji
+                updateThemeIcon();
+            });
+
+            viewContentBtn.addEventListener('click', () => {
+                isImageOnlyView = !isImageOnlyView;
+                updateContentView();
+            });
+
+            viewOrientationBtn.addEventListener('click', () => {
+                orientationFilterState = orientationFilterState === 'vertical' ? null : 'vertical';
+                viewOrientationBtn.classList.toggle('active', orientationFilterState === 'vertical');
+                renderGuides();
+            });
+
+            sizeSlider.addEventListener('input', () => {
+                const newSize = sizeSlider.value;
+                sizeValue.textContent = `${newSize}%`;
+                const baseWidth = parseInt(config.pageSettings.defaultBoxWidth1, 10);
+                const newWidth = baseWidth * (newSize / 100);
+                guideList.style.setProperty('--box-width', `${newWidth}px`);
+            });
+
+            sizeSlider.addEventListener('change', () => {
+                // Po zwolnieniu suwaka przerysowujemy siatkę, aby zaktualizować liczbę kolumn
+                renderGuides();
+            });
+
+
+            rowsSlider.addEventListener('input', () => {
+                rowsValue.textContent = rowsSlider.value;
+            });
+
+            rowsSlider.addEventListener('change', () => {
+                selectedRowCount = parseInt(rowsSlider.value);
+                saveToLocalStorage('rows', selectedRowCount);
+                renderGuides();
+            });
+
+            viewResetBtn.addEventListener('click', resetView);
+            viewPlayBtn.addEventListener('click', () => startPlayAnimation());
         }
 
         function handleVideoStateChange() {
@@ -3484,6 +3790,8 @@
                 showNewGuide();
             }
         }
+
+
 
         function showMediaPreview(guideFilename) {
             stopPlayAnimation();
