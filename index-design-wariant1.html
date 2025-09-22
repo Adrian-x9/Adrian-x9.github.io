@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Moja Biblioteka Poradników</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./.base-system/gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./.base-system/gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./.base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./.base-system/gfx/favicons/android-icon-192x192.png" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            --color-primary-light: #cc0000;
+            --color-primary-dark: #e53935;
+            --color-primary-rgb-light: 204, 0, 0;
+            --color-primary-rgb-dark: 229, 57, 53;
+            --color-text-light: #333;
+            --color-text-dark: #eee;
+            --color-text-muted-light: #555;
+            --color-text-muted-dark: #aaa;
+            --color-page-bg-light: #e1e1e1;
+            --color-page-bg-dark: #121212;
+            --color-surface-light: #fdfdfd;
+            --color-surface-dark: #000;
+            --color-surface-video-light: rgba(253, 253, 253, 0.85);
+            --color-surface-video-dark: rgba(0, 0, 0, 0.75);
+            --color-panel-light: rgba(255, 255, 255, 0.8);
+            --color-panel-dark: rgba(0, 0, 0, 0.5);
+            --color-border-light: #a00000;
+            --color-border-dark: #a00000;
+            --font-family-base: "Segoe UI", sans-serif;
+            --font-size-base: 16px;
+            --border-radius: 10px;
+            --transition-speed: 0.3s;
+            --shadow-primary-light: 0 0 15px rgba(var(--color-primary-rgb-light), 0.2);
+            --shadow-primary-hover-light: 0 0 20px rgba(var(--color-primary-rgb-light), 0.4);
+            --shadow-primary-dark: 0 0 20px rgba(var(--color-primary-rgb-dark), 0.2);
+            --shadow-primary-hover-dark: 0 0 25px rgba(var(--color-primary-rgb-dark), 0.3);
+        }
+
+        html:not(.dark-mode) {
+            --color-primary: var(--color-primary-light); --color-primary-rgb: var(--color-primary-rgb-light);
+            --color-text: var(--color-text-light); --color-text-muted: var(--color-text-muted-light);
+            --color-page-bg: var(--color-page-bg-light); --color-surface: var(--color-surface-light);
+            --color-surface-video: var(--color-surface-video-light); --color-panel: var(--color-panel-light);
+            --color-border: var(--color-border-light); --shadow-primary: var(--shadow-primary-light);
+            --shadow-primary-hover: var(--shadow-primary-hover-light);
+        }
+
+        html.dark-mode {
+            --color-primary: var(--color-primary-dark); --color-primary-rgb: var(--color-primary-rgb-dark);
+            --color-text: var(--color-text-dark); --color-text-muted: var(--color-text-muted-dark);
+            --color-page-bg: var(--color-page-bg-dark); --color-surface: var(--color-surface-dark);
+            --color-surface-video: var(--color-surface-video-dark); --color-panel: var(--color-panel-dark);
+            --color-border: var(--color-border-dark); --shadow-primary: var(--shadow-primary-dark);
+            --shadow-primary-hover: var(--shadow-primary-hover-dark);
+        }
+        
+        html { font-size: var(--font-size-base); scroll-behavior: smooth; }
+        body { font-family: var(--font-family-base); margin: 0; padding: 20px; background-color: var(--color-page-bg); color: var(--color-text); transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; }
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 10000; display: flex; justify-content: center; align-items: center; background-color: var(--color-page-bg); transition: opacity 0.5s ease; }
+        .spinner { width: 50px; height: 50px; border-radius: 50%; border: 5px solid rgba(128,128,128,0.2); border-top: 5px solid var(--color-primary); animation: spin 1s linear infinite; }
+        #preloader.fade-out { opacity: 0; pointer-events: none; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        #bg-video { position: fixed; right: 0; bottom: 0; min-width: 100%; min-height: 100%; object-fit: cover; z-index: -1; display: none; }
+        body.video-ready { background-color: transparent !important; }
+
+        .top-header { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; text-align: center; }
+        .header-logo { max-height: 42px; }
+        .top-header .title { font-size: 1.8em; font-weight: 600; }
+        .title-red { color: var(--color-primary); }
+        
+        .controls, .display-panel, .pagination-controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; padding: 8px; border-radius: var(--border-radius); border: 1px solid var(--color-border); background-color: var(--color-panel); box-shadow: var(--shadow-primary); max-width: 900px; margin: 0 auto 20px auto; }
+        input, select, button, .dir-db-btn { height: 42px; padding: 0 15px; border-radius: var(--border-radius); font-family: inherit; font-size: 0.95em; border: 1px solid var(--color-border); background-color: var(--color-surface); color: var(--color-text); transition: all var(--transition-speed) ease; }
+        button, .dir-db-btn { cursor: pointer; color: var(--color-primary); font-weight: bold; box-shadow: var(--shadow-primary); }
+        button:hover, .dir-db-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-primary-hover); }
+        html:not(.dark-mode) button:hover, html:not(.dark-mode) .dir-db-btn:hover { background-color: #f0f0f0; }
+        html.dark-mode button:hover, html.dark-mode .dir-db-btn:hover { background-color: #111; }
+        input:focus, select:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.2); }
+        
+        .display-panel-group { display: flex; align-items: center; gap: 5px; background-color: rgba(128,128,128,0.1); padding: 5px; border-radius: 8px; }
+        .display-panel button { background-color: transparent; border: 1px solid transparent; width: 42px; height: 42px; color: var(--color-text); }
+        .display-panel button:hover { border-color: var(--color-primary); }
+        .display-panel button.active { background-color: var(--color-primary); color: white; }
+        html.dark-mode .display-panel button.active { color: black; }
+        .play-accent { animation: pulse-red 2s infinite; }
+        @keyframes pulse-red { 0%, 100% { box-shadow: var(--shadow-primary); } 50% { box-shadow: var(--shadow-primary-hover); } }
+        
+        .guide-list-wrapper { width: 95%; max-width: 1920px; margin: 20px auto; }
+        .guide-list { display: flex; overflow-x: scroll; scroll-snap-type: x mandatory; scrollbar-width: none; -ms-overflow-style: none; }
+        .guide-list::-webkit-scrollbar { display: none; }
+        .guide-page { box-sizing: border-box; flex: 0 0 100%; scroll-snap-align: start; display: grid; gap: 20px; padding: 2px; grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 256px), 1fr)); grid-template-rows: repeat(var(--grid-rows, 2), 1fr); }
+        .guide { background: var(--color-surface); border-radius: var(--border-radius); box-shadow: var(--shadow-primary); transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease; display: flex; flex-direction: column; text-align: center; padding: 10px 20px; }
+        .guide:hover { transform: translateY(-5px); box-shadow: var(--shadow-primary-hover); }
+        body.video-ready .guide { background-color: var(--color-surface-video); }
+        .guide-cover { width: 100%; border-radius: var(--border-radius); border: 2px solid var(--color-primary); box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.5); }
+        .guide-title { font-size: 1.2em; font-weight: bold; margin-top: 7px; }
+        .guide-info { font-size: 0.9em; color: var(--color-text-muted); padding: 10px 0; }
+        a { color: var(--color-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* --- CHANGE 2: PAGINATION AESTHETIC UPGRADE (JS UNTOUCHED) --- */
+        .pagination { margin: 20px auto; }
+        .pagination-controls button { width: 42px; }
+        .pagination-center { flex-grow: 1; display: flex; align-items: center; gap: 10px; padding: 0 10px; }
+        .page-input { width: 60px; text-align: center; font-weight: bold; }
+        .page-slider { width: 100%; -webkit-appearance: none; appearance: none; height: 8px; background: rgba(128,128,128,0.2); border-radius: 4px; outline: none; cursor: pointer; }
+        .page-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--color-primary); cursor: pointer; border: 3px solid var(--color-surface); box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+        .page-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--color-primary); cursor: pointer; border: 3px solid var(--color-surface); box-shadow: 0 0 5px rgba(0,0,0,0.2); }
+        
+        .footer { text-align: center; padding: 20px; font-size: 0.9em; color: var(--color-text-muted); }
+        .backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; justify-content: center; align-items: center; z-index: 999; opacity: 0; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px); transition: opacity 0.5s ease; }
+        .backdrop.visible { display: flex; opacity: 1; }
+        .play-guide-container img, .play-guide-container video { max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: var(--border-radius); box-shadow: 0 0 60px rgba(0, 0, 0, 0.5); animation: zoomInImage 0.5s ease; }
+        @keyframes zoomInImage { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        /* --- CHANGE 1: LIGHTBOX CAPTION POSITION --- */
+        .play-caption {
+            position: fixed;
+            /* Changed from 'top' to 'bottom' as requested */
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 15px; border-radius: var(--border-radius); font-size: 1.2em;
+            background-color: var(--color-panel); color: var(--color-text); box-shadow: var(--shadow-primary);
+            max-width: 80%;
+        }
+
+        #lightbox-controls { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 1000; flex-wrap: wrap; justify-content: center; }
+        .lightbox-control-group { display: flex; border-radius: var(--border-radius); overflow: hidden; background-color: var(--color-panel); border: 1px solid rgba(128,128,128,0.2); box-shadow: var(--shadow-primary); }
+        #lightbox-controls button { background: none; border: none; cursor: pointer; color: var(--color-text); padding: 10px 12px; transition: all 0.2s ease; }
+        #lightbox-controls button:hover { background-color: rgba(128,128,128,0.15); color: var(--color-primary); }
+        
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .controls, .display-panel, .pagination-controls { flex-direction: column; }
+            #lightbox-controls { bottom: 15px; }
+            .play-caption { bottom: auto; top: 15px; width: calc(100% - 30px); }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="preloader"><div class="spinner"></div></div>
+    <video id="bg-video" autoplay loop muted playsinline><source id="bg-video-source" src="" type="video/mp4" /></video>
+    <div class="top-header">
+        <div id="guideCountDisplay" class="counter"><b>0</b> / 0 pozycji</div>
+        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer"><img id="header-logo" src="" alt="Logo" class="header-logo" /></a>
+        <div id="pageTitle" class="title">Poradniki do Gier</div>
+        <a id="visuDirBtn" class="dir-db-btn" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span></a>
+        <a id="langBtn" class="dir-db-btn" href="index-en.html" title="Switch to English"><i class="fas fa-globe"></i></a>
+        <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i> Wstecz</a>
+    </div>
+    <div class="controls">
+        <label for="fileInput" id="fileInputLabel" class="dir-db-btn"><i class="fas fa-upload"></i> Załaduj...</label>
+        <input type="file" id="fileInput" style="display:none" accept=".txt" />
+        <input type="text" id="search" placeholder="Szukaj pozycji..." />
+        <select id="formatFilter"><option value="">Wszystko</option></select>
+        <select id="sortSelector"><option value="">Sortuj...</option><option value="shuffle">Wymieszaj</option><option value="nameAsc">Nazwa A–Z</option><option value="nameDesc">Nazwa Z–A</option><option value="dateAsc">Data ↑</option><option value="dateDesc">Data ↓</option><option value="sizeAsc">Rozmiar ↑</option><option value="sizeDesc">Rozmiar ↓</option></select>
+        <select id="randomSelector"><option value="" disabled selected>Losuj...</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>
+        <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs"><i class="fas fa-chevron-up"></i></button>
+    </div>
+    <div class="display-panel" id="displayPanel">
+        <div class="display-panel-group">
+            <button id="viewContentBtn" title="Widok: Grafika / Tekst"><i class="fas fa-image"></i></button>
+            <button id="viewOrientationBtn" title="Filtruj orientację okładek"><i class="fas fa-images"></i></button>
+            <button id="viewThemeBtn" title="Tryb Ciemny / Jasny"><i class="fas fa-moon"></i></button>
+        </div>
+        <div class="display-panel-group">
+            <i class="fas fa-th-large" title="Wielkość miniaturek"></i>
+            <input type="range" id="sizeSlider" min="50" max="150" value="100" step="1" style="width:100px;">
+            <span id="sizeValue">100%</span>
+        </div>
+        <div class="display-panel-group">
+            <i class="fas fa-grip-lines" title="Liczba wierszy"></i>
+            <input type="range" id="rowsSlider" min="1" max="10" value="2" step="1" style="width:100px;">
+            <span id="rowsValue">2</span>
+        </div>
+        <div class="display-panel-group">
+            <button id="viewResetBtn" title="Resetuj widok"><i class="fas fa-sync-alt"></i></button>
+            <button id="viewCarouselBtn" title="Przewijaj automatycznie"><i class="fas fa-dolly"></i></button>
+            <button id="viewPlayBtn" class="play-accent" title="Rozpocznij pokaz"><i class="fas fa-play"></i></button>
+        </div>
+    </div>
+    <div class="guide-list-wrapper"><div class="guide-list" id="guideList"></div></div>
+    <div class="pagination" id="pagination"></div>
+    <div class="action-controls" id="actionControls" style="margin-top:20px; justify-content:center; display:flex;">
+        <button id="videoBtn" class="dir-db-btn" style="display:none;"><i class="fas fa-video"></i> Wideo</button>
+    </div>
+    <div class="footer">
+        <div><strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span class="version-suffix">Dir <span class="version-display"></span></span></a></strong> © 2025-09-17 | <a href="https://www.ade.pl" target="_blank">Adrian Ulbrych</a> <strong>tel.</strong> <a href="tel:601190330">601 190 330</a></div>
+        <div class="privacy-notice">Szanujemy Twoją prywatność. Żadnych ciasteczek ani śledzenia.</div>
+    </div>
+    <div id="backdrop" class="backdrop">
+        <div id="play-caption" class="play-caption"></div>
+        <button id="fullscreenBtnLightbox" style="position:fixed; top: 15px; right: 69px; z-index:1001; background:none;border:none;color:white;font-size:1.5em;cursor:pointer;"><i class="fas fa-expand"></i></button>
+        <button id="playCloseBtn" style="position:fixed; top: 15px; right: 15px; z-index:1001; background:none;border:none;color:white;font-size:1.5em;cursor:pointer;"><i class="fas fa-times"></i></button>
+        <div id="play-guide-container" class="play-guide-container"></div>
+        <div id="lightbox-controls">
+            <div class="lightbox-control-group">
+                <button id="slideshow-first" title="Pierwszy"><i class="fas fa-fast-backward"></i></button>
+                <button id="slideshow-prev" title="Poprzedni"><i class="fas fa-step-backward"></i></button>
+                <button id="slideshow-play" title="Play/Pauza"><i class="fas fa-play"></i></button>
+                <button id="slideshow-shuffle" title="Losuj"><i class="fas fa-random"></i></button>
+                <button id="slideshow-next" title="Następny"><i class="fas fa-step-forward"></i></button>
+                <button id="slideshow-last" title="Ostatni"><i class="fas fa-fast-forward"></i></button>
+                <button id="slideshow-stop" title="Zatrzymaj"><i class="fas fa-stop"></i></button>
+            </div>
+            <div class="lightbox-control-group">
+                <button id="lightbox-darkModeBtn" title="Tryb Ciemny/Jasny"><i class="fas fa-moon"></i></button>
+                <button id="lightbox-labelsBtn" title="Etykiety"><i class="fas fa-tags"></i></button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ===================================================================================
+        // JAVASCRIPT LOGIC - THIS IS YOUR ORIGINAL, UNTOUCHED SCRIPT
+        // ===================================================================================
+        const config = {
+            version: 'v1.8.0',
+            global: { defaultTheme: 'light', defaultLanguage: 'pl' },
+            pageSettings: {
+                defaultBgVideo: 1, bgVideoStartNum: 1, bgVideoEndNum: 32, defaultVideoBg: true, defaultLabelsVisible: true,
+                pageKey: 'indexMaxi', pageTitle: "START ▪ maxi MENU ▪", showMiniLogo: true, showVisuDirButton: true,
+                showBackButton: false, showLanguageButton: false, defaultSort: 'nameAsc', defaultRows: 2,
+                defaultSizePercent: 100, baseBoxWidth: 256, defaultViewMode: 'full',
+                hoverOverlayColor: 'rgba(204, 0, 0, 0.7)', hoverTextColor: '#FFFFFF', defaultVideoExpanded: false,
+                predefinedFilters: [ { label: "ADE", search: "ade" }, { label: "E-booki", search: "e-book" }, { label: "Galerie", search: "galeri" }, { label: "Hiszpania", search: "Hiszpania" }, { label: "Niemcy", search: "Niemcy" }, { label: "Polska", search: "Polska" }, { label: "Poradniki", search: "Poradniki" }, ],
+            },
+            logoRotator: { enabled: true, interval: 4500, logos: [ { srcLight: ".base-system/gfx/interface/VisuDir_small_light.png", srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png", href: ".base-system/about.html", alt: "Logo VisuDir" }, { srcLight: ".base-system/gfx/interface/ADE_small_light.png", srcDark: ".base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" } ] },
+            paths: { url404: ".base-system/404.html", urlAbout: ".base-system/about.html", urlFallback: ".base-system/soon.html", videoBgLightUrlBase: ".base-system/video-bg/bg-light", videoBgDarkUrlBase: ".base-system/video-bg/bg-dark", urlEnglishVersion: "index-en.html", databaseFileName: ".base-system/db.txt", dataFolderName: ".base-system/files", coversFolderName: ".base-system/preview", previewHdFolderName: ".base-system/preview-hd" }
+        };
+        const dataFromFile = `
+17.09.2025  20:19                 0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
+17.09.2025  19:00                 0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
+17.09.2025  19:00                 0 .#.base-system#contact.html$$15 Kontakt$$Masz pytania, uwagi - skontaktuj sie!.link
+17.09.2025  20:21                 0 .#adeDesk#index.html$$33 ade Desk$$Oprogramowanie do pracy zdalnej i nadzoru.link
+17.09.2025  20:26                 0 .#adeINFO#index.html$$35 ade INFO$$Twoje IP i kilka dodatkowych informacji.link
+17.09.2025  20:26                 0 .#adePages#index.html$$36 ade Pages$$Projekty witryn internetowych.link
+17.09.2025  20:26                 0 .#adeSync#index.html$$34 ade Sync$$System do codziennych kopii zapasowych.link
+17.09.2025  22:51                 0 .#AI#index.html$$71 AI$$71 Informacje dotyczace Sztucznej Inteligencji, AI.link
+17.09.2025  19:59                 0 .#Certificates#index.html$$37 Certyfikaty$$Zobacz nasze certyfikaty.link
+17.09.2025  22:50                 0 .#Cyprus#index.html$$66 Cypr$$Galeria fotografii z Cypru.link
+17.09.2025  22:50                 0 .#Czechia#index.html$$60 Czechy$$Galeria fotografii z Czech.link
+17.09.2025  22:50                 0 .#Czechia#index.html&&search=Ostrava$$61 Ostrava$$Galeria fotografii z Ostravy, Czechy.link
+17.09.2025  22:50                 0 .#Czechia#index.html&&search=Praga$$62 Praga$$Galeria fotografii z Pragi, Czechy.link
+17.09.2025  22:51                 0 .#e-books#index.html$$72 e-booki$$Przyklad uzycia VisuDir - biblioteka ksiazek informatycznych, ebooks.link
+17.09.2025  22:51                 0 .#GameGuides#index.html$$73 Poradniki do Gier$$Przyklad uzycia VisuDir - biblioteka poradnikow do gier.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=GryOnline$$74 Poradniki Gry-Online$$Przyklad uzycia VisuDir - biblioteka poradnikow GryOnline.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=Instrukcje$$76 Instrukcje do Gier$$Przyklad uzycia VisuDir - biblioteka instrukcji do Gier.link
+17.09.2025  22:51                 0 .#GameGuides#index.html&&search=PrzygodoMania$$75 Poradniki PrzygodoMania$$Przyklad uzycia VisuDir - biblioteka poradnikow PrzygodoMania.link
+17.09.2025  22:10                 0 .#Germany#index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
+17.09.2025  22:50                 0 .#Germany#index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
+17.09.2025  22:49                 0 .#Germany#index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
+17.09.2025  18:41                 0 .#index-midi.html$$12 midi MENU$$Otworz srednie MENU.link
+17.09.2025  19:57                 0 .#index-mini.html$$13 mini MENU$$Otworz MENU minimalne.link
+17.09.2025  19:58                 0 .#index-portfolio.html$$16 Portfolio$$Obejrzyj nasze portfolio.link
+17.09.2025  20:37                 0 .#index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
+17.09.2025  18:40                 0 .#index.html$$11 maxi MENU$$Otworz MENU standardowe.link
+17.09.2025  21:41                 0 .#Poland#index.html$$52 Polska$$Galeria fotografii z Polski.link
+17.09.2025  21:47                 0 .#Poland#index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
+17.09.2025  22:10                 0 .#Poland#index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
+17.09.2025  22:10                 0 .#Poland#index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
+17.09.2025  22:50                 0 .#Spain#index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
+17.09.2025  22:50                 0 .#Spain#index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
+17.09.2025  22:50                 0 .#Spain#index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
+17.09.2025  20:20                 0 .#VisuKeys#index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
+17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
+        `;
+        let videoBgState, areLabelsVisible, guides = [], filteredGuides = [], slideshowSourceGuides = [], playGuidesQueue = [];
+        let currentSort, selectedRowCount, currentPage = 1, totalPages = 1, pagesCache = [], preloadQueue = new Set(), isInitialLoad = true, lazyLoadObserver;
+        let playAnimationTimeout = null, slideshowIsPlaying = false, slideshowIsRandom = false, playCurrentIndex = 0, orientationFilterState = null;
+        let lastPlayedGuide = null, currentLogoIndex = 0, logoInterval, autoShuffleInterval = null, carouselInterval = null, isMinimized = false, isLightboxMinimized = false;
+        let guideDimensionsCache = {}, pausedTime = 0;
+        const fileInput=document.getElementById("fileInput"),fileInputLabel=document.getElementById("fileInputLabel"),searchInput=document.getElementById("search"),formatFilter=document.getElementById("formatFilter"),guideList=document.getElementById("guideList"),pagination=document.getElementById("pagination"),sortSelector=document.getElementById("sortSelector"),randomSelector=document.getElementById("randomSelector"),backdrop=document.getElementById("backdrop"),playGuideContainer=document.getElementById("play-guide-container"),playCaption=document.getElementById("play-caption"),playCloseBtn=document.getElementById("playCloseBtn"),fullscreenBtnLightbox=document.getElementById("fullscreenBtnLightbox"),lightboxControls=document.getElementById("lightbox-controls"),slideshowPlayBtn=document.getElementById("slideshow-play"),headerLogo=document.getElementById("header-logo"),logoLink=document.getElementById("logoLink"),bgVideo=document.getElementById("bg-video"),bgVideoSource=document.getElementById("bg-video-source"),videoBtn=document.getElementById("videoBtn"),lightboxLabelsBtn=document.getElementById("lightbox-labelsBtn"),displayPanel=document.getElementById("displayPanel");
+        function initializeTheme(){const storedTheme=localStorage.getItem("visudir_theme"),theme=storedTheme||config.global.defaultTheme,isDark="dark"===theme;document.documentElement.classList.toggle("dark-mode",isDark),storedTheme||localStorage.setItem("visudir_theme",theme);return theme}
+        function initializeBackgroundVideo(theme){const pageKey=config.pageSettings.pageKey,storageKey=`visudir_bg_video_${pageKey}`,storedVideoNum=localStorage.getItem(storageKey);let videoNum=parseInt(storedVideoNum)||config.pageSettings.defaultBgVideo;(videoNum<config.pageSettings.bgVideoStartNum||videoNum>config.pageSettings.bgVideoEndNum)&&(videoNum=config.pageSettings.defaultBgVideo),bgVideo&&bgVideoSource&&(bgVideoSource.src=`${"light"===theme?config.paths.videoBgLightUrlBase:config.paths.videoBgDarkUrlBase}${videoNum}.mp4`,bgVideo.load(),bgVideo.addEventListener("canplay",()=>document.body.classList.add("video-ready"),{once:!0})),(!storedVideoNum||parseInt(storedVideoNum)!==videoNum)&&localStorage.setItem(storageKey,videoNum)}
+        function updateBackgroundVideoVisibility(forceShow=!1){"off"!==videoBgState?(!bgVideo.style.display||forceShow)&&(bgVideo.style.display="block",initializeBackgroundVideo(currentTheme)):(bgVideo.style.display="none",document.body.classList.remove("video-ready"))}
+        function saveToLocalStorage(key,value){try{localStorage.setItem(`visudir_${key}`,value)}catch(e){console.error("Error saving to localStorage",e)}}
+        function getFromLocalStorage(key){try{return localStorage.getItem(`visudir_${key}`)}catch(e){console.error("Error reading from localStorage",e);return null}}
+        function loadUiSettings(){currentSort=getFromLocalStorage("sort")||config.pageSettings.defaultSort,selectedRowCount=parseInt(getFromLocalStorage("rows"))||config.pageSettings.defaultRows;const savedSizePercent=getFromLocalStorage("size_percent"),sizePercent=null!==savedSizePercent?parseInt(savedSizePercent):config.pageSettings.defaultSizePercent;document.getElementById("rowsSlider").value=selectedRowCount,document.getElementById("rowsValue").textContent=selectedRowCount,document.getElementById("sizeSlider").value=sizePercent,document.getElementById("sizeValue").textContent=`${sizePercent}%`;const savedVideoState=getFromLocalStorage("video_bg_state");videoBgState=savedVideoState||(config.pageSettings.defaultVideoBg?"playing":"off");const videoExpanded=JSON.parse(getFromLocalStorage("video_expanded"))||config.pageSettings.defaultVideoExpanded;videoBtn.classList.toggle("expanded",videoExpanded);const savedLabels=getFromLocalStorage("labels_visible");areLabelsVisible=null!==savedLabels?JSON.parse(savedLabels):config.pageSettings.defaultLabelsVisible;const savedSlideshowPlaying=getFromLocalStorage("slideshow_playing");slideshowIsPlaying=null!==savedSlideshowPlaying?JSON.parse(savedSlideshowPlaying):!0,pausedTime=parseFloat(getFromLocalStorage("video_paused_time"))||0;const videoShuffle=JSON.parse(getFromLocalStorage("video_shuffle_enabled"))||!1;videoShuffle&&"playing"===videoBgState&&toggleAutoShuffle(!0);const hoverOverlay=getFromLocalStorage("hover_overlay_color")||config.pageSettings.hoverOverlayColor,hoverText=getFromLocalStorage("hover_text_color")||config.pageSettings.hoverTextColor;document.documentElement.style.setProperty("--hover-overlay-color",hoverOverlay),document.documentElement.style.setProperty("--hover-text-color",hoverText)}
+        function getFileExtension(filename){return filename.slice((filename.lastIndexOf(".")-1>>>0)+2).toLowerCase()}
+        function normalizeUrl(url){const trimmedUrl=url.trim();return trimmedUrl.startsWith("http://")||trimmedUrl.startsWith("https://")||trimmedUrl.startsWith("./")||trimmedUrl.startsWith("../")||trimmedUrl.startsWith("/")?trimmedUrl:`https://${trimmedUrl}`}
+        function decodeUrlFromFilename(filename){let urlPart=filename.split("$$")[0];return urlPart=urlPart.replace(/\.link$/i,"").replace(/#/g,"/").replace(/&&/g,"?"),normalizeUrl(urlPart)}
+        function parseGuideTitle(filename){const baseName=filename.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i,"").trim(),parts=baseName.split("$$");if("link"===getFileExtension(filename)&&parts.length>1)return{title:decodeURIComponent(parts[1]||""),offlineDesc:decodeURIComponent(parts[2]||null)};const title=decodeURIComponent(parts[0].replace(/_/g," ").replace(/-/g," ")).replace(/\s*-\s*Poradnik(?:_do_gry)?\s*(?:GRY-OnLine|Gry-OnLine)?\s*/i,"").trim();return{title:title,offlineDesc:null}}
+        function createDateFromStrings(dateStr,timeStr){const[day,month,year]=dateStr.split(".").map(Number),[hours,minutes]=timeStr.split(":").map(Number);return new Date(year,month-1,day,hours,minutes)}
+        function shuffleArray(array){for(let i=array.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[array[i],array[j]]=[array[j],array[i]]}}
+        function applySort(sortType,array){switch(currentSort=sortType,sortType){case"shuffle":shuffleArray(array);break;case"nameAsc":array.sort((a,b)=>a.title.localeCompare(b.title));break;case"nameDesc":array.sort((a,b)=>b.title.localeCompare(a.title));break;case"dateAsc":array.sort((a,b)=>a.timestamp-b.timestamp);break;case"dateDesc":array.sort((a,b)=>b.timestamp-a.timestamp);break;case"sizeAsc":array.sort((a,b)=>parseFloat(a.sizeMB)-parseFloat(b.sizeMB));break;case"sizeDesc":array.sort((a,b)=>parseFloat(b.sizeMB)-parseFloat(a.sizeMB))}}
+        function getGuideOrientation(guide){return new Promise(resolve=>{const f=guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i,"").split("$$")[0],coverUrl=`${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;if(guideDimensionsCache[coverUrl])return guide.orientation=guideDimensionsCache[coverUrl],void resolve();const img=new Image;img.onload=()=>{guide.orientation=img.naturalHeight>img.naturalWidth?"vertical":"horizontal",guideDimensionsCache[coverUrl]=guide.orientation,resolve()},img.onerror=()=>{guide.orientation="unknown",guideDimensionsCache[coverUrl]="unknown",resolve()},img.src=coverUrl})}
+        async function processData(text){const lines=text.split(/\r?\n/);guides=[];for(const line of lines){const match=line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i);if(match){const[,date,time,sizeOrDir,filename]=match,format=getFileExtension(filename);let sizeBytes="<DIR>"!==sizeOrDir?parseInt(sizeOrDir):0;if(0===sizeBytes&&"link"!==format)continue;const sizeMB=(sizeBytes/1048576).toFixed(2),{title:title,offlineDesc:offlineDesc}=parseGuideTitle(filename);let linkData={description:offlineDesc};if("link"===format&&"file:"!==location.protocol)try{const response=await fetch(`${config.paths.dataFolderName}/${filename}`);response.ok?linkData.description=await response.text():offlineDesc||(linkData.description="Błąd wczytywania opisu.")}catch(e){offlineDesc||(linkData.description="Błąd wczytywania opisu.")}guides.push({title:title,format:format,file:filename,sizeMB:sizeMB,date:date,time:time,timestamp:createDateFromStrings(date,time).getTime(),linkData:linkData,orientation:"pending"})}}await Promise.all(guides.filter(guide=>["jpg","png","link","mp4","avi"].includes(guide.format)).map(guide=>getGuideOrientation(guide)))}
+        function updateFormatFilter(){const formats=[...new Set(guides.map(g=>g.format.toUpperCase()))].sort();formatFilter.innerHTML='<option value="">Wszystko</option>',formats.forEach(t=>{const o=document.createElement("option");o.value=t.toLowerCase(),o.textContent=t,formatFilter.appendChild(o)}),config.pageSettings.predefinedFilters.some(p=>p.label&&p.search)&&(s=document.createElement("option"),s.disabled=!0,s.textContent="──────────",formatFilter.appendChild(s)),config.pageSettings.predefinedFilters.forEach(p=>{if(p.label&&p.search){const o=document.createElement("option");o.value=`search:${p.search}`,o.textContent=p.label,formatFilter.appendChild(o)}})}
+        function loadAndParseFile(file){const r=new FileReader;r.onload=e=>init(e.target.result),r.readAsText(file,"utf-8"),fileInput.value=null}
+        function applyFilters(){let search=searchInput.value.toLowerCase();const formatValue=formatFilter.value;let format=formatValue;formatValue.startsWith("search:")&&(search=formatValue.substring(7).toLowerCase(),format=""),filteredGuides=guides.filter(g=>{const inTitle=g.title.toLowerCase().includes(search),inDescription=g.linkData.description&&g.linkData.description.toLowerCase().includes(search),searchMatch=inTitle||inDescription,formatMatch=!format||g.format===format,orientationMatch=!orientationFilterState||g.orientation===orientationFilterState;return searchMatch&&formatMatch&&orientationMatch}),slideshowSourceGuides=filteredGuides,stopCarousel()}
+        async function init(data){fileInputLabel.style.display="none",await processData(data),updateFormatFilter(),applySort(currentSort,guides);const urlParams=new URLSearchParams(window.location.search),searchQuery=urlParams.get("search");searchQuery&&(searchInput.value=decodeURIComponent(searchQuery));const defaultFormat=config.pageSettings.defaultFormat||"";formatFilter.value=(getFromLocalStorage("format")||defaultFormat).toLowerCase(),applyFilters(),renderGuides();const preloader=document.getElementById("preloader");preloader&&preloader.classList.add("fade-out")}
+        function startLogoRotator(){const initialLogo=config.logoRotator.logos[currentLogoIndex];if(!initialLogo)return;const isDark=document.documentElement.classList.contains("dark-mode");headerLogo.src=isDark?initialLogo.srcDark:initialLogo.srcLight,logoLink.href=initialLogo.href,headerLogo.alt=initialLogo.alt,config.logoRotator&&config.logoRotator.enabled&&config.logoRotator.logos.length>=2&&(clearInterval(logoInterval),logoInterval=setInterval(()=>{headerLogo.style.transform="rotateY(90deg)",setTimeout(()=>{currentLogoIndex=(currentLogoIndex+1)%config.logoRotator.logos.length;const newLogo=config.logoRotator.logos[currentLogoIndex],isDarkNow=document.documentElement.classList.contains("dark-mode");headerLogo.src=isDarkNow?newLogo.srcDark:newLogo.srcLight,headerLogo.alt=newLogo.alt,logoLink.href=newLogo.href,headerLogo.style.transform="rotateY(0deg)"},300)},config.logoRotator.interval))}
+        window.onload=function(){fileInputLabel.style.display="none",document.querySelectorAll(".version-display").forEach(el=>el.textContent=config.version),document.getElementById("pageTitle").textContent=config.pageSettings.pageTitle,document.title=config.pageSettings.pageTitle,document.getElementById("aboutLinkFooter").href=config.paths.urlAbout,document.getElementById("visuDirBtn").href=config.paths.urlAbout,currentTheme=initializeTheme(),config.pageSettings.showMiniLogo?startLogoRotator():document.getElementById("logoLink").style.display="none",config.pageSettings.showLanguageButton||(document.getElementById("langBtn").style.display="none"),config.pageSettings.showVisuDirButton||(document.getElementById("visuDirBtn").style.display="none"),document.getElementById("backButton").style.display=config.pageSettings.showBackButton?"flex":"none",loadUiSettings(),updateBackgroundVideoVisibility(!0),"paused"===videoBgState&&bgVideo.addEventListener("canplay",()=>{bgVideo.currentTime=pausedTime,bgVideo.pause()},{once:!0}),document.getElementById("minimizeBtn").addEventListener("click",toggleMinimizeView),document.getElementById("langBtn").addEventListener("click",function(e){e.preventDefault();try{localStorage.setItem("visudir_lang","en")}catch(err){}window.location.href=this.href}),dataFromFile&&dataFromFile.trim().length>0?init(dataFromFile):fetch(config.paths.databaseFileName).then(r=>r.ok?r.text():Promise.reject(r.statusText)).then(t=>init(t)).catch(e=>{console.error(`Automatyczne ładowanie pliku '${config.paths.databaseFileName}' nie powiodło się. Błąd:`,e),fileInputLabel.style.display="flex";const preloader=document.getElementById("preloader");preloader&&preloader.classList.add("fade-out")}),initializeNewButtons(),initializeDisplayPanel()};
+        function toggleMinimizeView(){const controls=document.querySelector(".controls"),minimizeBtn=document.getElementById("minimizeBtn"),minimizeIcon=minimizeBtn.querySelector("i");isMinimized=!isMinimized,controls.classList.toggle("minimized-view",isMinimized),minimizeBtn.title=isMinimized?"Przywróć interfejs":"Minimalizuj interfejs",minimizeIcon.className=isMinimized?"fas fa-chevron-down":"fas fa-chevron-up";const topHeader=document.querySelector(".top-header"),footer=document.querySelector(".footer");topHeader.classList.toggle("minimized-header",isMinimized),footer.classList.toggle("minimized-footer",isMinimized)}
+        function resetView(){stopPlayAnimation(),stopCarousel(),searchInput.value="",formatFilter.value="",sortSelector.value="",applySort(config.pageSettings.defaultSort,guides),saveToLocalStorage("sort",config.pageSettings.defaultSort),guideList&&guideList.scrollTo({left:0,behavior:"smooth"}),orientationFilterState=null,selectedRowCount=config.pageSettings.defaultRows;const sizePercent=config.pageSettings.defaultSizePercent;document.getElementById("rowsSlider").value=selectedRowCount,document.getElementById("rowsValue").textContent=selectedRowCount,document.getElementById("sizeSlider").value=sizePercent,document.getElementById("sizeValue").textContent=`${sizePercent}%`,saveToLocalStorage("rows",selectedRowCount),saveToLocalStorage("size_percent",sizePercent);const isImageOnly=guideList.classList.contains("view-image-only");("full"===config.pageSettings.defaultViewMode&&isImageOnly||"image-only"===config.pageSettings.defaultViewMode&&!isImageOnly)&&document.getElementById("viewContentBtn").click(),renderGuides()}
+        function checkFileAndOpen(targetUrl,fallbackUrl,isLink=!1){if(targetUrl.startsWith("http"))return void window.open(targetUrl,"_blank");const[filePath]=targetUrl.split("?"),isLocalHtml=filePath.endsWith(".html");if(isLink&&isLocalHtml)return"file:"===window.location.protocol?void(window.location.href=targetUrl):void fetch(filePath,{method:"HEAD"}).then(response=>window.location.href=response.ok?targetUrl:fallbackUrl).catch(()=>window.location.href=fallbackUrl);const http=new XMLHttpRequest;http.open("HEAD",filePath,!0),http.timeout=2e3,http.onload=function(){200!==this.status&&0!==this.status?window.location.href=fallbackUrl:window.open(targetUrl,"_blank")},http.onerror=http.ontimeout=function(){window.location.href=fallbackUrl},http.send()}
+        function createGuideHtml(guide){const f=guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i,"").split("$$")[0],u=`${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,c=`${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;let h="",i="",a="",w="";let d=guide.title;"link"===guide.format&&/^\d{2}\s*/.test(d)&&(d=d.replace(/^\d{2}\s*/,""));const mediaTypes=["jpg","png","mp4","avi"];if("link"===guide.format){const t=decodeUrlFromFilename(guide.file),clickAction=`checkFileAndOpen('${t.replace(/'/g,"\\'")}', '${config.paths.urlFallback}', true); return false;`;h=`<div class="guide-title"><a href="${t}" onclick="${clickAction}">${d}</a></div>`,i=`<div class="guide-info">${guide.linkData.description||""}</div>`,a=`<a href="${t}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> Otwórz</a>`}else mediaTypes.includes(guide.format)?(clickAction=`startSlideshowFrom('${guide.file.replace(/'/g,"\\'")}'); return false;`,h=`<div class="guide-title"><a href="#" onclick="${clickAction}">${d}</a></div>`,i=`<div class="guide-info">${guide.date} ${guide.time} | ${guide.format.toUpperCase()} | ${guide.sizeMB} MB</div>`,a=`<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> Otwórz</a>`):(h=`<div class="guide-title"><a href="${u}" onclick="checkFileAndOpen('${u.replace(/'/g,"\\'")}', '${config.paths.urlFallback}'); return false;">${d}</a></div>`,i=`<div class="guide-info">${guide.date} ${guide.time} | ${guide.format.toUpperCase()} | ${guide.sizeMB} MB</div>`,a=`<a href="${u}" onclick="checkFileAndOpen('${u.replace(/'/g,"\\'")}', '${config.paths.urlFallback}'); return false;"><i class="fas fa-eye"></i> Otwórz</a>`);const k=document.documentElement.classList.contains("dark-mode")?".base-system/gfx/no_cover_dark.png":".base-system/gfx/no_cover_light.png";return`<a href="#" onclick="${a.includes("startSlideshowFrom")?a.split('onclick="')[1].split('"')[0]:a.split('onclick="')[1].split('"')[0]}"><img src="${c}" alt="Okładka: ${d}" class="guide-cover" loading="lazy" onerror="this.onerror=null;this.src='${k}';"></a><div class="guide-content-bottom">${h}${i}${a}</div>`}
+        const goToPage=pageNum=>{pageNum=Math.max(1,Math.min(totalPages,pageNum));const targetScrollLeft=guideList.clientWidth*(pageNum-1);guideList.scrollTo({left:targetScrollLeft,behavior:"smooth"})};
+        function renderGuides(){guideList.classList.remove("random-draw"),applyFilters(),guideList.innerHTML="",lazyLoadObserver&&lazyLoadObserver.disconnect();const sizePercent=document.getElementById("sizeSlider").value,newWidth=config.pageSettings.baseBoxWidth*sizePercent/100;guideList.style.setProperty("--grid-rows",selectedRowCount),guideList.style.setProperty("--box-width",`${newWidth}px`);const itemWidth=newWidth,columns=Math.floor((guideList.clientWidth+20)/(itemWidth+20))||1,itemsPerPage=columns*selectedRowCount;if(pagesCache=[],itemsPerPage>0)for(let i=0;i<filteredGuides.length;i+=itemsPerPage)pagesCache.push(filteredGuides.slice(i,i+itemsPerPage));else filteredGuides.length>0&&pagesCache.push(filteredGuides);totalPages=pagesCache.length||1,pagesCache.forEach((pageItems,pageIndex)=>{const pageDiv=document.createElement("div");if(pageDiv.className="guide-page",pageDiv.dataset.pageNumber=pageIndex+1,0===pageIndex)pageItems.forEach(guide=>{const div=document.createElement("div");div.className="guide",div.dataset.title=guide.title,div.innerHTML=createGuideHtml(guide),pageDiv.appendChild(div)});guideList.appendChild(pageDiv)}),setupLazyLoading(pagesCache),renderPagination(),document.getElementById("guideCountDisplay").innerHTML=`<b>${filteredGuides.length}</b> / ${guides.length} pozycji`,isInitialLoad&&(isInitialLoad=!1,preloadNextPageImages())}
+        function setupLazyLoading(pages){lazyLoadObserver&&lazyLoadObserver.disconnect(),lazyLoadObserver=new IntersectionObserver((entries,observer)=>{entries.forEach(entry=>{if(entry.isIntersecting){const pageDiv=entry.target,pageNum=parseInt(pageDiv.dataset.pageNumber,10);if(0===pageDiv.childElementCount&&pageNum>1){const pageItems=pages[pageNum-1];pageItems&&requestAnimationFrame(()=>{pageItems.forEach(guide=>{const div=document.createElement("div");div.className="guide",div.dataset.title=guide.title,div.innerHTML=createGuideHtml(guide),pageDiv.appendChild(div)})})}observer.unobserve(pageDiv)}})},{root:guideList,rootMargin:"0px 300px 0px 300px"}),document.querySelectorAll(".guide-page").forEach(page=>{lazyLoadObserver.observe(page)})}
+        function renderPagination(){const paginationContainer=document.getElementById("pagination");if(totalPages<=1)return void(paginationContainer.innerHTML="");paginationContainer.innerHTML='<div class="pagination-controls">...</div>';const controls=paginationContainer.querySelector(".pagination-controls");controls.innerHTML=`
+                <button id="firstPageBtn" title="Pierwsza strona"><i class="fas fa-fast-backward"></i></button>
+                <button id="prevPageBtn" title="Poprzednia strona"><i class="fas fa-chevron-left"></i></button>
+                <div class="pagination-center">
+                    <input type="number" id="pageInput" min="1" max="${totalPages}" value="${currentPage}" class="page-input">
+                    <span id="pageInfoText">/ ${totalPages}</span>
+                    <input type="range" id="pageSlider" min="1" max="${totalPages}" value="${currentPage}" class="page-slider">
+                </div>
+                <button id="nextPageBtn" title="Następna strona"><i class="fas fa-chevron-right"></i></button>
+                <button id="lastPageBtn" title="Ostatnia strona"><i class="fas fa-fast-forward"></i></button>`;const firstPageBtn=document.getElementById("firstPageBtn"),prevPageBtn=document.getElementById("prevPageBtn"),nextPageBtn=document.getElementById("nextPageBtn"),lastPageBtn=document.getElementById("lastPageBtn"),pageInput=document.getElementById("pageInput"),pageSlider=document.getElementById("pageSlider"),updateControls=pageNum=>{pageInput.value=pageNum,pageSlider.value=pageNum,firstPageBtn.disabled=prevPageBtn.disabled=pageNum<=1,lastPageBtn.disabled=nextPageBtn.disabled=pageNum>=totalPages,preloadNextPageImages()};firstPageBtn.onclick=()=>{stopCarousel(),goToPage(1)},prevPageBtn.onclick=()=>{stopCarousel(),goToPage(currentPage-1)},nextPageBtn.onclick=()=>{stopCarousel(),goToPage(currentPage+1)},lastPageBtn.onclick=()=>{stopCarousel(),goToPage(totalPages)},pageSlider.addEventListener("input",()=>{pageInput.value=pageSlider.value}),pageSlider.addEventListener("change",()=>goToPage(parseInt(pageSlider.value,10))),pageInput.addEventListener("change",()=>goToPage(parseInt(pageInput.value,10))),pageInput.addEventListener("keydown",e=>{"Enter"===e.key&&(e.preventDefault(),goToPage(parseInt(pageInput.value,10)),pageInput.blur())});const paginationObserver=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){currentPage=parseInt(entry.target.dataset.pageNumber,10);updateControls(currentPage)}})},{root:guideList,threshold:.75});document.querySelectorAll(".guide-page").forEach(page=>paginationObserver.observe(page)),updateControls(currentPage)}
+        function preloadNextPageImages(){const nextPage=currentPage+1;if(!(nextPage>totalPages||!pagesCache[nextPage-1])){pagesCache[nextPage-1].forEach(guide=>{const baseFilename=guide.file.split("$$")[0].replace(/\.[^/.]+$/, ""),thumbnailUrl=`${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;if(!preloadQueue.has(thumbnailUrl)){const img=new Image;img.src=thumbnailUrl,preloadQueue.add(thumbnailUrl)}})}}
+        function drawRandomGuides(){stopPlayAnimation(),stopCarousel();const count=parseInt(randomSelector.value);if(!count)return;const source=filteredGuides.length>0?filteredGuides:guides;if(0===source.length)return alert("Brak pozycji do wylosowania!"),void(randomSelector.value="");guideList.innerHTML="",pagination.innerHTML="",guideList.classList.add("random-draw");const randomGuides=[...source].sort(()=>.5-Math.random()).slice(0,count);slideshowSourceGuides=randomGuides,document.getElementById("guideCountDisplay").innerHTML=`<b>${randomGuides.length}</b> / ${source.length} wylosowano`,randomGuides.forEach(guide=>{const div=document.createElement("div");div.className="guide",div.dataset.title=guide.title,div.innerHTML=createGuideHtml(guide),guideList.appendChild(div)}),randomSelector.value=""}
+        function initializeNewButtons(){videoBtn.addEventListener("click",e=>{const target=e.target.closest("span");if(target)switch(target.id){case"videoBtn-main":saveToLocalStorage("video_expanded",videoBtn.classList.toggle("expanded"));break;case"videoBtn-play":handleVideoStateChange();break;case"videoBtn-shuffle":toggleAutoShuffle();break;case"videoBtn-prev":changeBackgroundVideo(-1);break;case"videoBtn-next":changeBackgroundVideo(1);break;case"videoBtn-reset":resetVideoSettings()}}),updateVideoBtnUI()}
+        function initializeDisplayPanel(){const viewThemeBtn=document.getElementById("viewThemeBtn"),viewContentBtn=document.getElementById("viewContentBtn"),viewOrientationBtn=document.getElementById("viewOrientationBtn"),sizeSlider=document.getElementById("sizeSlider"),rowsSlider=document.getElementById("rowsSlider"),viewResetBtn=document.getElementById("viewResetBtn"),viewPlayBtn=document.getElementById("viewPlayBtn"),viewCarouselBtn=document.getElementById("viewCarouselBtn"),updateThemeIcon=()=>{const isDark=document.documentElement.classList.contains("dark-mode");viewThemeBtn.innerHTML=isDark?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>',document.getElementById("lightbox-darkModeBtn").innerHTML=isDark?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>'};updateThemeIcon();const updateContentView=()=>{const isImageOnly=guideList.classList.contains("view-image-only");viewContentBtn.innerHTML=isImageOnly?'<i class="fas fa-align-left"></i>':'<i class="fas fa-image"></i>',viewContentBtn.classList.toggle("active",isImageOnly),saveToLocalStorage("view_mode",isImageOnly?"image-only":"full")};const savedViewMode=getFromLocalStorage("view_mode")||config.pageSettings.defaultViewMode;"image-only"===savedViewMode&&guideList.classList.add("view-image-only"),updateContentView(),viewThemeBtn.addEventListener("click",()=>{toggleDarkMode(),updateThemeIcon()}),viewContentBtn.addEventListener("click",()=>{guideList.classList.toggle("view-image-only"),updateContentView()}),viewOrientationBtn.addEventListener("click",()=>{null===orientationFilterState?orientationFilterState="vertical":"vertical"===orientationFilterState?orientationFilterState="horizontal":orientationFilterState=null,viewOrientationBtn.classList.toggle("active",null!==orientationFilterState),renderGuides()}),sizeSlider.addEventListener("input",debounce(()=>{document.getElementById("sizeValue").textContent=`${sizeSlider.value}%`,renderGuides()},50)),sizeSlider.addEventListener("change",()=>saveToLocalStorage("size_percent",sizeSlider.value)),rowsSlider.addEventListener("input",()=>{document.getElementById("rowsValue").textContent=rowsSlider.value}),rowsSlider.addEventListener("change",()=>{selectedRowCount=parseInt(rowsSlider.value),saveToLocalStorage("rows",selectedRowCount),renderGuides()}),viewResetBtn.addEventListener("click",resetView),viewPlayBtn.addEventListener("click",()=>startPlayAnimation()),viewCarouselBtn.addEventListener("click",toggleCarousel)}
+        function handleVideoStateChange(){"off"===videoBgState?videoBgState="playing":"playing"===videoBgState?(videoBgState="paused",pausedTime=bgVideo.currentTime,saveToLocalStorage("video_paused_time",pausedTime)):videoBgState="off","playing"===videoBgState?bgVideo.play():bgVideo.pause(),updateBackgroundVideoVisibility(),saveToLocalStorage("video_bg_state",videoBgState),updateVideoBtnUI()}
+        function updateVideoBtnUI(){const btn=document.getElementById("videoBtn-play");btn&&("playing"===videoBgState?(btn.innerHTML='<i class="fas fa-pause"></i>',btn.classList.add("active-play")):"paused"===videoBgState?(btn.innerHTML='<i class="fas fa-stop"></i>',btn.classList.add("active-play")):(btn.innerHTML='<i class="fas fa-play"></i>',btn.classList.remove("active-play")),document.getElementById("videoBtn-shuffle")?.classList.toggle("active-play",null!==autoShuffleInterval))}
+        function shuffleBackgroundVideo(){const{pageKey:pageKey,bgVideoStartNum:bgVideoStartNum,bgVideoEndNum:bgVideoEndNum,defaultBgVideo:defaultBgVideo}=config.pageSettings,storageKey=`visudir_bg_video_${pageKey}`,range=bgVideoEndNum-bgVideoStartNum;if(!(range<1)){const currentVideoNum=parseInt(localStorage.getItem(storageKey))||defaultBgVideo;let newVideoNum;do{newVideoNum=Math.floor(Math.random()*(range+1))+bgVideoStartNum}while(newVideoNum===currentVideoNum);localStorage.setItem(storageKey,newVideoNum),initializeBackgroundVideo(currentTheme)}}
+        function changeBackgroundVideo(direction){if("off"!==videoBgState){if(autoShuffleInterval)return void shuffleBackgroundVideo();const{pageKey:pageKey,bgVideoStartNum:bgVideoStartNum,bgVideoEndNum:bgVideoEndNum}=config.pageSettings;if(!(bgVideoEndNum-bgVideoStartNum<1)){let currentVideoNum=parseInt(localStorage.getItem(`visudir_bg_video_${pageKey}`))||bgVideoStartNum;currentVideoNum+=direction,currentVideoNum>bgVideoEndNum&&(currentVideoNum=bgVideoStartNum),currentVideoNum<bgVideoStartNum&&(currentVideoNum=bgVideoEndNum),localStorage.setItem(`visudir_bg_video_${pageKey}`,currentVideoNum),initializeBackgroundVideo(currentTheme)}}}
+        function toggleAutoShuffle(forceStart=!1){forceStart&&"playing"!==videoBgState||(autoShuffleInterval?(clearInterval(autoShuffleInterval),autoShuffleInterval=null,saveToLocalStorage("video_shuffle_enabled",!1)):(bgVideo.paused&&bgVideo.play(),shuffleBackgroundVideo(),autoShuffleInterval=setInterval(shuffleBackgroundVideo,2e4),saveToLocalStorage("video_shuffle_enabled",!0)),updateVideoBtnUI())}
+        function resetVideoSettings(){localStorage.setItem(`visudir_bg_video_${config.pageSettings.pageKey}`,config.pageSettings.defaultBgVideo),autoShuffleInterval&&(clearInterval(autoShuffleInterval),autoShuffleInterval=null),saveToLocalStorage("video_shuffle_enabled",!1),"paused"===videoBgState&&(videoBgState="playing"),updateBackgroundVideoVisibility(!0),updateVideoBtnUI()}
+        function toggleDarkMode(){document.documentElement.classList.toggle("dark-mode");const isDark=document.documentElement.classList.contains("dark-mode");localStorage.setItem("visudir_theme",isDark?"dark":"light"),currentTheme=isDark?"dark":"light";const currentLogoData=config.logoRotator.logos[currentLogoIndex];config.pageSettings.showMiniLogo&&currentLogoData&&(headerLogo.src=isDark?currentLogoData.srcDark:currentLogoData.srcLight),"off"!==videoBgState&&initializeBackgroundVideo(currentTheme)}
+        function startSlideshowFrom(guideFilename){const startIndex=filteredGuides.findIndex(g=>g.file===guideFilename);-1!==startIndex&&startPlayAnimation(startIndex,!0)}
+        playCloseBtn.addEventListener("click",stopPlayAnimation);
+        function toggleSlideshowPlayPause(){slideshowIsPlaying=!slideshowIsPlaying,saveToLocalStorage("slideshow_playing",slideshowIsPlaying);const btn=document.getElementById("slideshow-play");slideshowIsPlaying?playGuidesQueue.length<2||(btn.innerHTML='<i class="fas fa-pause"></i>',btn.classList.add("active-play"),scheduleNext()):(clearTimeout(playAnimationTimeout),btn.innerHTML='<i class="fas fa-play"></i>',btn.classList.remove("active-play"))}
+        function toggleSlideshowShuffle(){slideshowIsRandom=!slideshowIsRandom,document.getElementById("slideshow-shuffle").classList.toggle("active-play",slideshowIsRandom)}
+        function startPlayAnimation(startIndex=0,forcePause=!1){const source=slideshowSourceGuides.length>0?slideshowSourceGuides:guides;if(0===source.length)return;playGuidesQueue=[...source],playCurrentIndex=startIndex,document.body.classList.add("play-mode-active"),backdrop.style.display="flex",setTimeout(()=>backdrop.classList.add("visible"),10),slideshowIsPlaying=forcePause?!1:!1!==JSON.parse(getFromLocalStorage("slideshow_playing"));const playBtn=document.getElementById("slideshow-play");playBtn.innerHTML=slideshowIsPlaying?'<i class="fas fa-pause"></i>':'<i class="fas fa-play"></i>',playBtn.classList.toggle("active-play",slideshowIsPlaying),lightboxLabelsBtn.classList.toggle("active-play",areLabelsVisible),displayRandomGuide(playGuidesQueue[playCurrentIndex])}
+        function stopPlayAnimation(){if(playAnimationTimeout)clearTimeout(playAnimationTimeout);const media=playGuideContainer.querySelector("img, video");media&&(media.style.animation="zoomOutImage 0.4s ease-in forwards"),backdrop.classList.remove("visible"),setTimeout(()=>{document.body.classList.remove("play-mode-active"),backdrop.style.display="none",playGuideContainer.innerHTML="",playCaption.innerHTML=""},400)}
+        function scheduleNext(isNav=!1){if(playAnimationTimeout)clearTimeout(playAnimationTimeout);if(!isNav&&!slideshowIsPlaying)return;if(slideshowIsRandom){let newIndex;do{newIndex=Math.floor(Math.random()*playGuidesQueue.length)}while(playGuidesQueue.length>1&&newIndex===playCurrentIndex);playCurrentIndex=newIndex}else isNav||(playCurrentIndex=(playCurrentIndex+1)%playGuidesQueue.length);displayRandomGuide(playGuidesQueue[playCurrentIndex])}
+        function displayRandomGuide(guide){const container=playGuideContainer,showNewGuide=()=>{const baseFilename=guide.file.split("$$")[0].replace(/\.[^/.]+$/, ""),hdPath=config.paths.previewHdFolderName?`${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg`:null,sdPath=`${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`,isVideo=["mp4","avi"].includes(guide.format),element=document.createElement(isVideo?"video":"img");element.src=isVideo?`${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`:hdPath||sdPath,isVideo&&(element.autoplay=!0,element.controls=!0),element.onerror=()=>{isVideo||(element.src=sdPath)};const link=document.createElement("a");link.href="link"===guide.format?decodeUrlFromFilename(guide.file):`${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,link.target="_blank",link.appendChild(element),container.innerHTML="",container.appendChild(link),playCaption.innerHTML=guide.title,slideshowIsPlaying&&!isVideo&&(playAnimationTimeout=setTimeout(()=>scheduleNext(),4e3))};container.firstChild?(container.firstChild.style.animation="zoomOutImage 0.4s ease-in forwards",setTimeout(showNewGuide,400)):showNewGuide()}
+        function setupLightboxListeners(){fullscreenBtnLightbox.addEventListener("click",()=>document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()),document.addEventListener("fullscreenchange",()=>{fullscreenBtnLightbox.querySelector("i").className=document.fullscreenElement?"fas fa-compress":"fas fa-expand"}),document.getElementById("lightbox-darkModeBtn").addEventListener("click",toggleDarkMode),document.getElementById("lightbox-labelsBtn").addEventListener("click",()=>{areLabelsVisible=!areLabelsVisible,saveToLocalStorage("labels_visible",areLabelsVisible),lightboxLabelsBtn.classList.toggle("active-play",areLabelsVisible)}),slideshowPlayBtn.addEventListener("click",toggleSlideshowPlayPause),document.getElementById("slideshow-shuffle").addEventListener("click",toggleSlideshowShuffle),document.getElementById("slideshow-stop").addEventListener("click",stopPlayAnimation),document.getElementById("slideshow-next").addEventListener("click",()=>{slideshowIsRandom||(playCurrentIndex=(playCurrentIndex+1)%playGuidesQueue.length),scheduleNext(!0)}),document.getElementById("slideshow-prev").addEventListener("click",()=>{slideshowIsRandom||(playCurrentIndex=(playCurrentIndex-1+playGuidesQueue.length)%playGuidesQueue.length),scheduleNext(!0)}),document.getElementById("slideshow-first").addEventListener("click",()=>{playCurrentIndex=0,scheduleNext(!0)}),document.getElementById("slideshow-last").addEventListener("click",()=>{playCurrentIndex=playGuidesQueue.length-1,scheduleNext(!0)})}setupLightboxListeners(),backdrop.addEventListener("click",e=>{e.target===backdrop&&stopPlayAnimation()});
+        function debounce(func,wait){let timeout;return function(...args){clearTimeout(timeout),timeout=setTimeout(()=>func.apply(this,args),wait)}}
+        window.addEventListener("resize",debounce(renderGuides,250)),searchInput.addEventListener("input",debounce(renderGuides,300)),formatFilter.addEventListener("change",()=>{"search:"===formatFilter.value.substring(0,7)?searchInput.value=formatFilter.value.substring(7):saveToLocalStorage("format",formatFilter.value),renderGuides()}),sortSelector.addEventListener("change",e=>{e.target.value&&(applySort(e.target.value,guides),saveToLocalStorage("sort",e.target.value),renderGuides()),e.target.value=""}),randomSelector.addEventListener("change",drawRandomGuides),fileInput.addEventListener("change",function(){this.files[0]&&loadAndParseFile(this.files[0])});
+        function stopCarousel(){carouselInterval&&(clearInterval(carouselInterval),carouselInterval=null,document.getElementById("viewCarouselBtn").classList.remove("active"))}
+        function toggleCarousel(){const btn=document.getElementById("viewCarouselBtn");carouselInterval?stopCarousel():totalPages<=1||(btn.classList.add("active"),carouselInterval=setInterval(()=>{const nextPage=currentPage%totalPages+1;goToPage(nextPage)},5e3))}
+    </script>
+</body>
+</html>
