@@ -1,0 +1,120 @@
++---------+ Skrypt ".\base-system\.tools\.update-systems.py" +---------+ 
+
+"""
+<!-- Do not remove these comments.
+
+============================  
+🔸 WERSJA POLSKA  
+============================  
+.update-systems.py v1.0.0 (2025-09-22)
+
++---> System kaskadowej aktualizacji. <---+
+Aktualizacja systemu skopiowanego w podfolderach.
+
+Krótki opis:
+Przykładowy system składa się z Systemu \VisuDir oraz podfolderów: \Poland, \GameGuides \e-books.
+Każdy podfolder to kopia systemu ze zaktualizowaną sekcją konfiguracji, bazy danych, języka.
+Aplikacja pobiera "index.html" z głównego folderu - aktualna wersja - oraz go aktualizuje
+
+Skrypt pobiera aktualny index.html z katalogu głównego aplikacji i wykonuje update.
+Aktualizacja polega na wymianie starej konfiguracji z index.html na nową konfigurację
+z folderów opisanych niżej. Każdy subfolder, jak "Poland\.base-system\.tools",
+zawiera pliki: ".config.txt", ".db-secure.txt", ".lang-en.txt", "lang-de.txt", itd.
+System pobiera z nich konfigurację, aktualizuje plik bazowy index.html i umieszcza jego zaktualizowaną
+wersję w subfolderze ".\Poland", czyli tworzy pliki: "index.html, index-en.html, itd..."
+
+Historia wersji:
+v1.0.0 (2025-09-22) Pierwsza wersja skryptu
+
+Autor: Adrian Ulbrych  
+Lokalizacja: Gliwice, Śląsk, Polska  
+Kontakt: +48 601 190 330  
+
+Wszystkie prawa zastrzeżone.  
+Użycie i modyfikacja kodu wymaga zgody autora.
+
+Projekt zawiera komentarze w pliku .py
+z historią wersji i informacją o autorze.  
+Nie usuwaj ich!
+
+============================
+
+Uproszczona struktura kaskadowego VisuDir
+(Czyli kopia systemu VisuDir w folderach…):
+
+VisuDir\
+| index.html --- baza do pracy - aktualna wersja, tu podmienimy .config, .db-secure i jeden język
+| .base-system\
+| | .tools\
+| | | .update-systems.py --- ten skrypt Python, aktualizujący cały system w sposób inteligentny
+| Poland\
+| | index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | index-en.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | index-de.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | … i tak dalej dla kolejnych języków z konfiguracji
+| | .base-system\ 
+| | | .tools\
+| | | | .config.txt --- konfig do podmiany, jeśli jest ustawiona ścieżka w .update-systems.py
+| | | | .db-secure.txt --- baza danych do podmiany, jak wyżej.
+| | | | .lang-pl.txt --- plik językowy, jak wyżej.
+| | | | .lang-en.txt --- jak wyżej…
+| | | | .lang-de.txt --- …
+| | | | …
+| GameGuides\
+| | index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | index-en.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | index-de.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | …
+| e-books\
+| | index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | index-en.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | index-de.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | …
+| | … i tak dalej, to foldery z kopią systemu VisuDir.
+
+============================
+
+⠀⠀⠀⠀⠀⠀⠘⢄⠀⢰⠁⠀⢀⣠⠜  
+⠀⠀⠀⠀⠀⠀⠀⠀⡆⢸⠀⠀⡏  
+⠀⠀⠀⠀⠀⠀⠀⠀⢇⠀⠃⠀⢈  
+⠀⠀⠀⢀⣤⣶⠾⠿⠛⠛⠛⠛⠛⠿⠿⣶⣤⣀  
+⠀⣠⡾⠋⠁⠀⠀⠀⢀⣠⣤⠤⢤⣤⣄⠀⠈⠙⢿⣦  
+⣸⡏⠀⠀⠀⣀⣤⠾⠋⠁⠀⠀⠀⣸⠟⠀⠀⠀⠀⠹⣷  
+⣿⣇⠀⠀⠀⠙⠳⢦⣄⡀⠀⠀⠈⢳⣦⠀⠀⠀⠀⣰⣿  
+⢹⣿⣶⣤⣀⠀⠀⠀⠈⠙⠳⠶⠶⠿⠋⠀⢀⣤⣾⣿⣿⣶⣶⣦⡀  
+⠘⣿⣿⣿⣿⣿⣶⣶⣦⣤⣤⣤⣤⣶⣶⣿⣿⣿⣿⣿⠋⠉⠙⣿⣧  
+⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⠀⠀⢠⣿⡿  
+⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣶⣶⣿⡿  
+⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠈⠉⠉⠁  
+⠀⠀⠀⠀⠀⠈⠛⠻⢿⣿⣿⣿⡿⠿⠛⠁  
+
+© 2025 Adrian Ulbrych – All rights reserved  
+Project page: https://adrian-x9.github.io/ 
+
+Do not remove these comments. -->
+
+# dalsza część skryptu
+# …
+"""
+
+Koniec skryptu ".\base-system\.tools\.update-systems.py" 
+
+Konfiguracja - górna część skryptu:
+
+  base: np: "..\..\VisuDir\index.html" - plik bazowy, konfiguracja do podmiany.
+  systems: ".\Poland", ".\GameGuides", ".\e-books", itd.
+  cfg: ".config.txt" - nazwa pliku który wstawimy do index.html
+  db: ".db-secure.txt" - jak wyżej
+  lang: "index-en", "..\index-it", ".\Poland\index-de.txt", itp. # tutaj lista
+  # Nie ustawiona stała, czyli "", oznacza - nie dotykaj tej sekcji, czyli zostaw
+  z oryginalnego index.html
+
+
++---------+ Podsumowanie i zadanie +---------+
+1. Zrecenzuj mój pomysł na aktualizację systemu, który jest w wielu folderach, a każdy subfolder, to po prostu kopia systemu dla innego tematu, np. poradniki, e-booki, galerie-zdjęć, itp..
+2. Napisz skrypt .update-systems.py
+3. Daj działający kod .update-systems.py do testów.
+
+
+
+

@@ -2076,20 +2076,21 @@
     </div>
 
     <script>
-        // --- configuraton / konfiguracja ---
         const config = {
-            version: 'v1.10.0', // i18n Refactor, UI/Bug Fixes, languages module refactor, lot of changes, pre-alfa
+            version: 'v1.11.0', // UI refactor, bug fixes, language module remake, lot of changes, pre-alfa
             language: {
                 current: 'pl',
                 files: {
                     en: 'index-en.html',
-                    // de: 'index-de.html'
+                    de: 'index-de.html',
                 }
             },
+            
+            /// COPY HERE <cfg> // configuration / konfiguracja
             pageSettings: {
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 32,
+                bgVideoEndNum: 35,
                 defaultVideoBg: true,
                 defaultLabelsVisible: true, 
                 slideshowAnimations: true,
@@ -2166,9 +2167,11 @@
                 previewHdFolderName: ".base-system/preview-hd"
             }
         };
-        // --- Configuration end ---
+    
+        /// COPY HERE <cfg> // configuration end / koniec konfiguracji
 
-        // --- File database ---
+
+        /// COPY HERE <db> // database - txt file / baza danych - plik txt
         const dataFromFile = `
 17.09.2025  20:19                 0 .#.base-system#about.html$$31 VisuDir$$Oprogramowanie do wizualizacji zawartosci katalogow.link
 17.09.2025  19:00                 0 .#.base-system#author.html$$17 Autor$$Adrian Ulbrych. Informacje o autorze.link
@@ -2207,9 +2210,9 @@
 17.09.2025  20:27                 0 github.com#Adrian-x9$$38 Nasz GitHub$$Autorskie projekty na GitHub.link
 
         `;
-        // --- Database end ---
+        /// COPY HERE <db> // database end / koniec bazy danych
         
-        // --- Language file ---
+        /// COPY HERE <lang> // language file / plik językowy
         const languageStrings = {
             pl: {
                 // General
@@ -2219,48 +2222,48 @@
                 // Header
                 btnBack: "Wstecz",
                 // Controls
-                btnLoad: "Załaduj...",
+                btnLoad: "ZaĹ‚aduj...",
                 searchPlaceholder: "Szukaj pozycji...",
                 filterAll: "Wszystko",
                 sortLabel: "Sortuj...",
                 sortShuffle: "Wymieszaj",
-                sortNameAsc: "Nazwa A–Z",
-                sortNameDesc: "Nazwa Z–A",
-                sortDateAsc: "Data ↑",
-                sortDateDesc: "Data ↓",
-                sortSizeAsc: "Rozmiar ↑",
-                sortSizeDesc: "Rozmiar ↓",
+                sortNameAsc: "Nazwa Aâ€“Z",
+                sortNameDesc: "Nazwa Zâ€“A",
+                sortDateAsc: "Data â†‘",
+                sortDateDesc: "Data â†“",
+                sortSizeAsc: "Rozmiar â†‘",
+                sortSizeDesc: "Rozmiar â†“",
                 generatorLabel: "Generator...",
                 generatorItem: "Pozycji: {count}",
-                generatorModeAll: "Generator: cała pula",
+                generatorModeAll: "Generator: caĹ‚a pula",
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
-                maximizeBtn: "Przywróć interfejs",
+                maximizeBtn: "PrzywrĂłÄ‡ interfejs",
                 // Display Panel
-                viewModeFull: "Widok: Okładki i tekst",
-                viewModeImage: "Widok: Tylko okładki",
+                viewModeFull: "Widok: OkĹ‚adki i tekst",
+                viewModeImage: "Widok: Tylko okĹ‚adki",
                 viewModeText: "Widok: Tylko tekst",
-                orientationFilterAll: "Pokaż wszystkie",
-                orientationFilterVert: "Pokaż tylko pionowe",
-                orientationFilterHoriz: "Pokaż tylko poziome",
+                orientationFilterAll: "PokaĹĽ wszystkie",
+                orientationFilterVert: "PokaĹĽ tylko pionowe",
+                orientationFilterHoriz: "PokaĹĽ tylko poziome",
                 themeBtn: "Tryb Ciemny / Jasny",
-                sizeLabel: "Wielkość miniaturek",
+                sizeLabel: "WielkoĹ›Ä‡ miniaturek",
                 rowsLabel: "Liczba wierszy",
                 playBtn: "Rozpocznij pokaz",
                 // Guide Items
                 guideInfoDate: "Data",
                 guideInfoFormat: "Format",
                 guideInfoSize: "Rozmiar",
-                guideBtnOpen: "Otwórz",
+                guideBtnOpen: "OtwĂłrz",
                 guideBtnView: "Zobacz",
                 guideBtnDownload: "Pobierz",
                 // Pagination
                 paginationFirst: "Pierwsza strona",
                 paginationPrev: "Poprzednia strona",
-                paginationNext: "Następna strona",
+                paginationNext: "NastÄ™pna strona",
                 paginationLast: "Ostatnia strona",
-                paginationReset: "Przejdź do pierwszej strony",
-                paginationCarouselStart: "Włącz automatyczne przewijanie",
+                paginationReset: "PrzejdĹş do pierwszej strony",
+                paginationCarouselStart: "WĹ‚Ä…cz automatyczne przewijanie",
                 paginationCarouselStop: "Zatrzymaj automatyczne przewijanie",
                 // Footer Controls
                 mainResetBtn: "Resetuj widok",
@@ -2268,33 +2271,36 @@
                 videoBtnPrev: "Poprzednie wideo",
                 videoBtnPlay: "Odtwarzaj",
                 videoBtnPause: "Pauza",
-                videoBtnOff: "Wyłącz wideo",
-                videoBtnShuffle: "Losowe wideo Wł/Wył",
-                videoBtnNext: "Następne wideo",
+                videoBtnOff: "WyĹ‚Ä…cz wideo",
+                videoBtnShuffle: "Losowe wideo WĹ‚/WyĹ‚",
+                videoBtnNext: "NastÄ™pne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
                 // Footer
-                footerDate: "© 2025-09-17",
-                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
-                privacyTitle: "Szanujemy Twoją prywatność",
-                privacyDesc: "Żadnych ciasteczek ani śledzenia.",
+                footerDate: "Â© 2025-09-17",
+                footerDesc: "do katalogowania, zarzÄ…dzania i prezentacji plikĂłw i folderĂłw",
+                privacyTitle: "Szanujemy TwojÄ… prywatnoĹ›Ä‡",
+                privacyDesc: "Ĺ»adnych ciasteczek ani Ĺ›ledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
                 // Lightbox
-                fullscreenBtn: "Pełny ekran",
-                fullscreenExitBtn: "Wyjdź z pełnego ekranu",
+                fullscreenBtn: "PeĹ‚ny ekran",
+                fullscreenExitBtn: "WyjdĹş z peĹ‚nego ekranu",
                 closeBtn: "Zamknij",
-                lightboxFxBtn: "Animacje przejść Wł/Wył",
-                lightboxVideoOptions: "Rozwiń opcje wideo",
-                lightboxLabelsBtn: "Pokaż/ukryj etykiety",
+                lightboxFxBtn: "Animacje przejĹ›Ä‡ WĹ‚/WyĹ‚",
+                lightboxVideoOptions: "RozwiĹ„ opcje wideo",
+                lightboxLabelsBtn: "PokaĹĽ/ukryj etykiety",
                 slideshowFirst: "Pierwszy",
                 slideshowPrev: "Poprzedni",
                 slideshowStop: "Zatrzymaj",
                 slideshowPlayPause: "Play/Pauza",
-                slideshowShuffle: "Losowe slajdy Wł/Wył",
-                slideshowNext: "Następny",
+                slideshowShuffle: "Losowe slajdy WĹ‚/WyĹ‚",
+                slideshowNext: "NastÄ™pny",
                 slideshowLast: "Ostatni",
             }
         };
-        // --- Language end ---
+        /// COPY HERE <lang> // language end / koniec języka
+
+
+
 
         let videoBgState;
         let areLabelsVisible;
