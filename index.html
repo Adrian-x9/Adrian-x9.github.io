@@ -102,27 +102,6 @@
             overscroll-behavior-y: contain;
         }
 
-        body.no-animation .guide.animate-in,
-        body.no-animation .guide.flip-animate {
-            animation: none !important;
-            transform: none !important;
-            opacity: 1 !important;
-        }
-
-        body.no-animation .guide-cover,
-        body.no-animation .top-header,
-        body.no-animation .footer {
-            transition: none !important;
-        }
-
-        body.no-animation .multi-button,
-        body.no-animation .multi-button-child,
-        body.no-animation .dir-db-btn,
-        body.no-animation .btn-text {
-            transition: none !important;
-        }
-
-        /* +++ ZMIANA: Dodano .display-panel do listy elementów ukrywanych w trybie pokazu slajdów +++ */
         body.play-mode-active>.top-header,
         body.play-mode-active>.controls,
         body.play-mode-active>.display-panel,
@@ -130,7 +109,8 @@
         body.play-mode-active>.filter-controls,
         body.play-mode-active>.pagination,
         body.play-mode-active>.footer,
-        body.play-mode-active>#fullscreenBtn {
+        body.play-mode-active>#fullscreenBtn,
+        body.play-mode-active>#actionControls {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -325,16 +305,13 @@
             font-size: 1.6em;
         }
 
-        /* NOWE STYLE DLA NAGŁÓWKA */
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
             background: none;
             font-weight: 600;
-            /* kompensacja optyczna dla stroke */
             color: black;
             -webkit-text-stroke: 0.5px gray;
             text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
-            /* fallback dla Firefox */
         }
 
         body.dark-mode .top-header .title,
@@ -377,9 +354,18 @@
             margin-top: 20px;
         }
 
-        .controls {
+        .controls, .display-panel, .action-controls, .footer, .pagination {
             opacity: 0;
-            transform: translateY(-20px);
+            transform: translateY(20px);
+        }
+
+        .top-header, .controls, .display-panel {
+             transform: translateY(-20px);
+        }
+        
+        /* +++ ZMIANA: Płynna animacja stopki +++ */
+        .pagination, .action-controls, .footer {
+            transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s, margin 0.5s, padding 0.5s;
         }
 
         input,
@@ -555,33 +541,13 @@
         .dark-mode .action-controls .btn-text {
             color: #eee;
         }
-
-        .action-controls .multi-button.expanded,
-        #fxBtn.active {
+        
+        .action-controls .multi-button.expanded {
             background: #fff;
         }
 
-        .dark-mode .action-controls .multi-button.expanded,
-        .dark-mode #fxBtn.active {
+        .dark-mode .action-controls .multi-button.expanded {
             background: #111;
-        }
-
-        .action-controls .multi-button:not(.expanded),
-        #fxBtn:not(.active) {
-            font-weight: normal;
-        }
-
-        #fxBtn.active .fa-cog,
-        #lightbox-fxBtn.active .fa-cog {
-            animation: spin 2s linear infinite;
-        }
-
-        #lightbox-fxBtn.active i {
-            color: #e53935;
-        }
-
-        .dark-mode #lightbox-fxBtn.active i {
-            color: #ff8a80;
         }
 
         .multi-button-child:hover {
@@ -657,7 +623,7 @@
             scroll-snap-stop: always;
             display: grid;
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-            grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 257px), 1fr));
+            grid-template-columns: repeat(auto-fill, var(--box-width, 256px));
             justify-content: center;
             gap: 20px;
             padding: 2px;
@@ -757,16 +723,8 @@
             text-align: center;
             box-sizing: border-box;
             position: relative;
-            /* Potrzebne dla nowego efektu hover */
             overflow: hidden;
-            /* Potrzebne dla nowego efektu hover */
         }
-
-        /* --- USUNIĘTO STARY EFEKT HOVER ---
-        .guide:hover {
-            transform: translateY(-5px);
-        }
-        */
 
         .guide-content-bottom {
             flex-grow: 1;
@@ -811,9 +769,6 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.5s ease-out, transform 0.5s ease-out, max-height 0.5s, margin 0.5s, padding 0.5s;
             max-height: 0;
             overflow: hidden;
             margin: 0;
@@ -893,11 +848,8 @@
             padding: 20px;
             padding-top: 10px;
             font-size: 0.9em;
-            opacity: 1;
-            transform: translateY(0);
             max-height: 200px;
             overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out, opacity 0.5s ease-out, margin 0.5s ease-out, transform 0.5s ease-out;
         }
 
         .footer.minimized-footer {
@@ -984,10 +936,6 @@
             display: block;
             background-color: rgba(255, 255, 255, 0.67);
             box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
-        }
-
-        body:not(.no-animation) .play-guide-container>a>img,
-        body:not(.no-animation) .play-guide-container>a>video {
             animation: zoomInImage 0.5s ease-out;
         }
 
@@ -1257,27 +1205,21 @@
         }
 
         .animated-header,
-        .controls,
-        /* Animate all control groups */
-        .action-controls,
-        .animated-footer,
-        .animated-pagination {
-            animation-fill-mode: forwards;
-        }
-
-        .animated-header,
-        .controls {
+        .animated-controls,
+        .animated-display-panel {
             animation-name: fadeInDown;
             animation-duration: 0.6s;
             animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
         }
-
-        .action-controls,
+        
+        .animated-action-controls,
         .animated-footer,
         .animated-pagination {
             animation-name: fadeInUp;
             animation-duration: 0.8s;
             animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
         }
 
         .controls.minimized-view .dir-db-btn i,
@@ -1333,20 +1275,8 @@
             }
 
             .controls.minimized-view>#sortSelector,
-            .controls.minimized-view>#randomSelector,
-            .controls.minimized-view>#itemsPerPageSelector {
+            .controls.minimized-view>#randomSelector {
                 display: none;
-            }
-
-            .action-controls {
-                flex-direction: column;
-            }
-
-            .action-controls .action-row {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 10px;
             }
         }
 
@@ -1361,15 +1291,10 @@
             padding: 0;
         }
 
-        /* --- Style dla mobilnego widoku slideshow --- */
         @media (max-width: 1024px) {
             #fullscreenBtnLightbox {
                 display: none !important;
             }
-        }
-
-        #lightbox-controls #lightbox-fxBtn {
-            order: 1;
         }
 
         #lightbox-controls #lightbox-videoBtn {
@@ -1475,7 +1400,6 @@
             }
         }
 
-        /* --- EASTER EGG: Clear Screen Close Button --- */
         #clear-close-btn {
             position: fixed;
             top: 15px;
@@ -1503,7 +1427,6 @@
             border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- Nowoczesne style paginacji --- */
         .pagination-controls {
             display: flex;
             align-items: center;
@@ -1514,11 +1437,12 @@
             margin: 0 auto;
             padding: 8px 15px;
             border-radius: 12px;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 1px solid;
             box-sizing: border-box;
             transition: background-color 0.3s, border-color 0.3s;
         }
 
+        /* +++ ZMIANA: Przywrócenie stylów dla trybu jasnego i ciemnego +++ */
         body:not(.dark-mode) .pagination-controls {
             background-color: rgba(255, 255, 255, 0.8);
             border-color: #a00000;
@@ -1528,6 +1452,7 @@
         .dark-mode .pagination-controls {
             background-color: rgba(0, 0, 0, 0.5);
             border-color: #a00000;
+            box-shadow: 0 0 15px rgba(229, 57, 53, 0.3);
         }
 
         .pagination-controls button {
@@ -1538,7 +1463,6 @@
             flex-shrink: 0;
         }
         
-        /* +++ ZMIANA: Ukrywanie przycisków na wąskich ekranach +++ */
         @media (max-width: 480px) {
             #firstPageBtn, #lastPageBtn {
                 display: none;
@@ -1614,7 +1538,6 @@
             background: rgba(255, 255, 255, 0.2);
         }
 
-        /* --- Styl suwaka dla Chrome/Safari/Opera --- */
         .page-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -1637,7 +1560,6 @@
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
 
-        /* --- Styl suwaka dla Firefox --- */
         .page-slider::-moz-range-thumb {
             width: 18px;
             height: 18px;
@@ -1658,7 +1580,6 @@
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
         }
 
-        /* +++ NOWE, POPRAWIONE STYLE DLA PANELU WYŚWIETLANIA +++ */
         .display-panel {
             display: flex;
             align-items: center;
@@ -1671,18 +1592,21 @@
             padding: 8px;
             border-radius: 12px;
             box-sizing: border-box;
-            transition: background-color 0.3s, border-color 0.3s;
+            border: 1px solid;
+            transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
 
+        /* +++ ZMIANA: Przywrócenie stylów dla trybu jasnego i ciemnego +++ */
         body:not(.dark-mode) .display-panel {
             background-color: rgba(255, 255, 255, 0.8);
-            border: 1px solid #a00000;
+            border-color: #a00000;
             box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
         }
 
         .dark-mode .display-panel {
             background-color: rgba(0, 0, 0, 0.5);
-            border: 1px solid #a00000;
+            border-color: #a00000;
+            box-shadow: 0 0 15px rgba(229, 57, 53, 0.3);
         }
 
         .display-panel-group {
@@ -1700,12 +1624,12 @@
         
         .display-panel-group.slider-group {
              flex-grow: 1;
-             min-width: 200px; /* Zapobiega zbytniej kompresji */
+             min-width: 200px;
         }
         
         .display-panel button {
-            background-color: transparent; /* ZMIANA */
-            color: #333; /* ZMIANA */
+            background-color: transparent;
+            color: #333;
             width: 42px;
             height: 42px;
             font-size: 1.1em;
@@ -1716,15 +1640,17 @@
         }
         
         .dark-mode .display-panel button {
-             color: #eee; /* ZMIANA */
+             color: #eee;
         }
 
         .display-panel button:hover {
             border-color: #cc0000;
+            background-color: rgba(0,0,0,0.05);
         }
 
         .dark-mode .display-panel button:hover {
             border-color: #e53935;
+            background-color: rgba(255,255,255,0.1);
         }
 
         .display-panel button.active {
@@ -1827,7 +1753,6 @@
             text-align: right;
         }
         
-        /* ZMIANA: Lepsze zachowanie suwaków na wąskich ekranach */
         @media (max-width: 768px) {
             .slider-control {
                 flex-direction: column;
@@ -1841,12 +1766,10 @@
             }
             .slider-control input[type="range"] {
                 width: 100%;
-                order: 2; /* Suwak pod etykietą */
+                order: 2;
             }
         }
 
-
-        /* +++ NOWY EFEKT HOVER DLA TRYBU "TYLKO GRAFIKA" +++ */
         .guide-list.view-image-only .guide {
             position: relative;
             overflow: hidden;
@@ -1867,10 +1790,10 @@
         }
         
         .guide-list.view-image-only .guide:hover .guide-cover {
-            transform: scale(1.05); /* Lekkie powiększenie tła */
+            transform: scale(1.05);
         }
         
-        /* Czerwona kurtyna z góry */
+        /* +++ ZMIANA: Użycie zmiennych CSS dla kolorów hovera +++ */
         .guide-list.view-image-only .guide::before {
             content: '';
             position: absolute;
@@ -1878,27 +1801,22 @@
             left: 0;
             right: 0;
             height: 100%;
-            background: rgba(204, 0, 0, 0.6);
+            background: var(--hover-overlay-color, rgba(204, 0, 0, 0.7));
             transform: translateY(-100%);
             transition: transform 0.35s ease-out;
             z-index: 1;
-        }
-        
-        .dark-mode .guide-list.view-image-only .guide::before {
-             background: rgba(229, 57, 53, 0.6);
         }
 
         .guide-list.view-image-only .guide:hover::before {
             transform: translateY(0);
         }
         
-        /* Tytuł pojawiający się na kurtynie */
         .guide-list.view-image-only .guide .guide-title {
             position: absolute;
             top: 50%;
             left: 10px;
             right: 10px;
-            color: white;
+            color: var(--hover-text-color, #FFFFFF);
             padding: 10px;
             opacity: 0;
             max-height: none;
@@ -2008,13 +1926,6 @@
             <option value="9">Pozycje: 9</option>
             <option value="10">Pozycje: 10</option>
         </select>
-        <select id="itemsPerPageSelector"></select>
-        <button id="resetButton" title="Resetuj widok" class="dir-db-btn">
-            <i class="fas fa-sync"></i><span class="btn-text"> Reset</span>
-        </button>
-        <button id="playButton" title="Losuj animacją" class="dir-db-btn">
-            <i class="fas fa-play"></i><span class="btn-text"> Play</span>
-        </button>
         <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs">
             <i class="fas fa-chevron-up"></i>
         </button>
@@ -2022,10 +1933,9 @@
 
     <div class="display-panel" id="displayPanel">
         <div class="display-panel-group">
-            <button id="viewThemeBtn" title="Tryb Ciemny / Jasny"><i class="fas fa-sun"></i></button>
             <button id="viewContentBtn" title="Widok: Grafika / Tekst"><i class="fas fa-image"></i></button>
-            <button id="viewOrientationBtn" title="Filtruj orientację okładek"><i
-                    class="fas fa-image"></i></button>
+            <button id="viewOrientationBtn" title="Filtruj orientację okładek"><i class="fas fa-images"></i></button>
+            <button id="viewThemeBtn" title="Tryb Ciemny / Jasny"><i class="fas fa-moon"></i></button>
         </div>
 
         <div class="display-panel-group slider-group">
@@ -2047,6 +1957,7 @@
 
         <div class="display-panel-group">
             <button id="viewResetBtn" title="Resetuj widok"><i class="fas fa-sync-alt"></i></button>
+            <button id="viewCarouselBtn" title="Przewijaj automatycznie"><i class="fas fa-dolly"></i></button>
             <button id="viewPlayBtn" class="play-accent" title="Rozpocznij pokaz"><i class="fas fa-play"></i></button>
         </div>
     </div>
@@ -2074,29 +1985,20 @@
     </div>
 
     <div class="action-controls" id="actionControls">
-        <div class="action-row">
-            <button id="fxBtn" class="dir-db-btn" title="Włącz/wyłącz animacje interfejsu">
-                <i class="fas fa-cog"></i><span class="btn-text"> Animacje</span>
-            </button>
-            <button id="darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i><span class="btn-text">
-                    Ciemny</span></button>
-        </div>
-        <div class="action-row">
-            <button id="videoBtn" class="dir-db-btn multi-button">
-                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
-                        Wideo</span></span>
-                <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
-                        class="fas fa-chevron-left"></i></span>
-                <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
-                        class="fas fa-play"></i></span>
-                <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
-                        class="fas fa-random"></i></span>
-                <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
-                        class="fas fa-chevron-right"></i></span>
-                <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
-                        class="fas fa-undo"></i></span>
-            </button>
-            </div>
+         <button id="videoBtn" class="dir-db-btn multi-button">
+            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text">
+                    Wideo</span></span>
+            <span id="videoBtn-prev" class="multi-button-child" title="Poprzednie wideo"><i
+                    class="fas fa-chevron-left"></i></span>
+            <span id="videoBtn-play" class="multi-button-child" title="Odtwarzaj / Pauza"><i
+                    class="fas fa-play"></i></span>
+            <span id="videoBtn-shuffle" class="multi-button-child" title="Losowe wideo Wł/Wył"><i
+                    class="fas fa-random"></i></span>
+            <span id="videoBtn-next" class="multi-button-child" title="Następne wideo"><i
+                    class="fas fa-chevron-right"></i></span>
+            <span id="videoBtn-reset" class="multi-button-child" title="Resetuj ustawienia wideo"><i
+                    class="fas fa-undo"></i></span>
+        </button>
     </div>
 
     <div class="footer">
@@ -2127,9 +2029,6 @@
         <div id="play-guide-container" class="play-guide-container"></div>
 
         <div id="lightbox-controls">
-            <button id="lightbox-fxBtn" class="dir-db-btn" title="Animacje interfejsu Wł/Wył"><i
-                    class="fas fa-cog"></i></button>
-
             <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
                     class="multi-button-main" title="Rozwiń opcje wideo"><i class="fas fa-video"></i></span>
                 <span id="lightbox-video-prev" class="multi-button-child" title="Poprzednie wideo"><i
@@ -2206,8 +2105,7 @@
          * EASTER EGG: Funkcja czyszcząca ekran i pokazująca tylko przycisk zamknięcia.
          */
         function clearScreen() {
-             // +++ ZMIANA: Dodano '.display-panel' do listy elementów do ukrycia +++
-            const elementsToToggle = ['.top-header', '.controls', '.display-panel', '.guide-list-wrapper', '.filter-controls', '.pagination', '.footer'];
+            const elementsToToggle = ['.top-header', '.controls', '.display-panel', '.guide-list-wrapper', '.filter-controls', '.pagination', '.footer', '#actionControls'];
             elementsToToggle.forEach(selector => {
                 const el = document.querySelector(selector);
                 if (el) el.style.display = 'none';
@@ -2238,20 +2136,18 @@
         // --- configuraton / konfiguracja ---
         const config = {
             // Ustawienia główne / Main settings
-            // +++ ZMIANA: Nowy numer wersji +++
-            version: 'v1.6.0', // Display panel rebuilt, new hover effect // Przebudowa panelu widoku, nowy efekt hover
+            version: 'v1.8.0', // Style fixes, carousel feature, hover config, footer animation
             global: {
                 defaultTheme: 'light',
                 defaultLanguage: 'pl'
             },
             pageSettings: {
                 // Video & animations settings // Ustawienia wideo i animacji
-                defaultAnimations: true,
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
                 bgVideoEndNum: 32,
                 defaultVideoBg: true,
-                defaultLabelsVisible: true, // slideshow labels visibility // widoczność etykiet w pokazie slajdów
+                defaultLabelsVisible: true, 
 
                 // Setting for header line // Ustawienia dla linii nagłówka
                 pageKey: 'indexMaxi',
@@ -2262,16 +2158,16 @@
                 showLanguageButton: false,
 
                 // Settings for miniatures grid // Ustawienia dla siatki miniaturek
-                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
-                // --- USUNIĘTO: defaultBoxWidth1/2/3 - teraz steruje tym suwak ---
+                defaultSort: 'nameAsc',
                 defaultRows: 2,
-                // +++ DODANO: Domyślne wartości dla nowych suwaków +++
-                defaultSizePercent: 100, // Domyślna wartość (w procentach) dla suwaka rozmiaru
-                baseBoxWidth: 256, // Bazowa szerokość kafelka w px przy 100%
+                defaultSizePercent: 100, 
+                baseBoxWidth: 256, 
                 
-                defaultShowCovers: true,
-                defaultShowText: true,
-                defaultViewExpanded: false, // To ustawienie jest już nieużywane, ale zostawiam dla kompatybilności
+                defaultViewMode: 'full', // 'full' or 'image-only'
+                // +++ ZMIANA: Konfigurowalne kolory dla efektu hover +++
+                hoverOverlayColor: 'rgba(204, 0, 0, 0.7)',
+                hoverTextColor: '#FFFFFF',
+
                 defaultVideoExpanded: false,
                 predefinedFilters: [{
                     label: "ADE",
@@ -2302,7 +2198,6 @@
                 enabled: true,
                 interval: 4500,
                 logos: [{
-                    // Global for multiple systems // Globalne dla wielu systemów
                     srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
                     srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
                     href: ".base-system/about.html",
@@ -2395,20 +2290,15 @@
             slideshowIsRandom = false;
 
         let playCurrentIndex = 0;
-        
-        // ZMIANA: Stan filtra orientacji przechowuje teraz 'vertical', 'horizontal' lub null
         let orientationFilterState = null; 
         
         let lastPlayedGuide = null;
         let currentLogoIndex = 0;
-        let logoInterval, autoShuffleInterval = null;
+        let logoInterval, autoShuffleInterval = null, carouselInterval = null;
         let isMinimized = false,
             isLightboxMinimized = false;
         let guideDimensionsCache = {};
         let pausedTime = 0;
-        
-        // --- USUNIĘTO: currentBoxWidthIndex nie jest już potrzebny ---
-
 
         const fileInput = document.getElementById("fileInput"),
             fileInputLabel = document.getElementById("fileInputLabel"),
@@ -2416,12 +2306,8 @@
             formatFilter = document.getElementById("formatFilter"),
             guideList = document.getElementById("guideList"),
             pagination = document.getElementById("pagination"),
-            darkModeBtn = document.getElementById("darkModeBtn"),
             sortSelector = document.getElementById("sortSelector"),
-            itemsPerPageSelector = document.getElementById("itemsPerPageSelector"),
             randomSelector = document.getElementById("randomSelector"),
-            playButton = document.getElementById("playButton"),
-            resetButton = document.getElementById("resetButton"),
             backdrop = document.getElementById("backdrop"),
             playGuideContainer = document.getElementById("play-guide-container"),
             playCaption = document.getElementById("play-caption"),
@@ -2434,9 +2320,6 @@
             logoLink = document.getElementById("logoLink"),
             bgVideo = document.getElementById("bg-video"),
             bgVideoSource = document.getElementById("bg-video-source"),
-            fxBtn = document.getElementById('fxBtn'),
-            lightboxFxBtn = document.getElementById('lightbox-fxBtn'),
-            // --- USUNIĘTO: Referencja do starego przycisku widoku ---
             videoBtn = document.getElementById('videoBtn'),
             lightboxLabelsBtn = document.getElementById('lightbox-labelsBtn'),
             displayPanel = document.getElementById("displayPanel");
@@ -2446,34 +2329,12 @@
             const theme = storedTheme || config.global.defaultTheme;
             const isDark = theme === 'dark';
             document.documentElement.classList.toggle('dark-mode', isDark);
-            if (isDark) {
-                document.body.classList.add('dark-mode');
-            } else {
-                document.body.classList.remove('dark-mode');
-            }
             if (!storedTheme) {
                 localStorage.setItem('visudir_theme', theme);
             }
-            updateDarkModeButtonUI();
             return theme;
         }
-
-        function updateDarkModeButtonUI() {
-            const isDark = document.documentElement.classList.contains('dark-mode');
-            const btnIcon = darkModeBtn.querySelector('i');
-            const btnText = darkModeBtn.querySelector('.btn-text');
-            const lightboxBtnIcon = document.getElementById('lightbox-darkModeBtn').querySelector('i');
-            if (isDark) {
-                if (btnIcon) btnIcon.className = 'fas fa-sun';
-                if (lightboxBtnIcon) lightboxBtnIcon.className = 'fas fa-sun';
-                if (btnText) btnText.textContent = ' Jasny';
-            } else {
-                if (btnIcon) btnIcon.className = 'fas fa-moon';
-                if (lightboxBtnIcon) lightboxBtnIcon.className = 'fas fa-moon';
-                if (btnText) btnText.textContent = ' Ciemny';
-            }
-        }
-
+        
         function initializeBackgroundVideo(theme) {
             const pageKey = config.pageSettings.pageKey;
             const storageKey = `visudir_bg_video_${pageKey}`;
@@ -2531,39 +2392,38 @@
         function loadUiSettings() {
             currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
             
-            // +++ ZMIANA: Wczytywanie ustawień dla suwaków +++
             selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
             const savedSizePercent = getFromLocalStorage('size_percent');
             const sizePercent = savedSizePercent !== null ? parseInt(savedSizePercent) : config.pageSettings.defaultSizePercent;
             
-            // Ustawienie wartości w suwakach
             document.getElementById('rowsSlider').value = selectedRowCount;
             document.getElementById('rowsValue').textContent = selectedRowCount;
             document.getElementById('sizeSlider').value = sizePercent;
             document.getElementById('sizeValue').textContent = `${sizePercent}%`;
             
-            const savedFx = getFromLocalStorage('animations_enabled');
-            const animationsEnabled = savedFx !== null ? JSON.parse(savedFx) : config.pageSettings.defaultAnimations;
-            document.body.classList.toggle('no-animation', !animationsEnabled);
-            fxBtn.classList.toggle('active', animationsEnabled);
-            lightboxFxBtn.classList.toggle('active', animationsEnabled);
-
             const savedVideoState = getFromLocalStorage('video_bg_state');
-            if (savedVideoState) {
-                videoBgState = savedVideoState;
-            } else {
-                videoBgState = config.pageSettings.defaultVideoBg ? 'playing' : 'off';
-            }
+            videoBgState = savedVideoState || (config.pageSettings.defaultVideoBg ? 'playing' : 'off');
 
-            // --- USUNIĘTO: Logika dla starego przycisku 'viewBtnGroup' ---
             const videoExpanded = JSON.parse(getFromLocalStorage('video_expanded')) || config.pageSettings.defaultVideoExpanded;
             videoBtn.classList.toggle('expanded', videoExpanded);
 
             const savedLabels = getFromLocalStorage('labels_visible');
             areLabelsVisible = savedLabels !== null ? JSON.parse(savedLabels) : config.pageSettings.defaultLabelsVisible;
+            
+            const savedSlideshowPlaying = getFromLocalStorage('slideshow_playing');
+            slideshowIsPlaying = savedSlideshowPlaying !== null ? JSON.parse(savedSlideshowPlaying) : true;
+            
             pausedTime = parseFloat(getFromLocalStorage('video_paused_time')) || 0;
             
-            // --- USUNIĘTO: Logika wczytywania 'currentBoxWidthIndex' ---
+            const videoShuffle = JSON.parse(getFromLocalStorage('video_shuffle_enabled')) || false;
+            if(videoShuffle && videoBgState === 'playing') {
+                toggleAutoShuffle(true); 
+            }
+
+            const hoverOverlay = getFromLocalStorage('hover_overlay_color') || config.pageSettings.hoverOverlayColor;
+            const hoverText = getFromLocalStorage('hover_text_color') || config.pageSettings.hoverTextColor;
+            document.documentElement.style.setProperty('--hover-overlay-color', hoverOverlay);
+            document.documentElement.style.setProperty('--hover-text-color', hoverText);
         }
 
         function getFileExtension(filename) {
@@ -2766,27 +2626,17 @@
                 const inDescription = g.linkData.description && g.linkData.description.toLowerCase().includes(search);
                 const searchMatch = inTitle || inDescription;
                 const formatMatch = !format || g.format === format;
-                 // ZMIANA: Logika dopasowania orientacji
                 const orientationMatch = !orientationFilterState || g.orientation === orientationFilterState;
                 return searchMatch && formatMatch && orientationMatch;
             });
             slideshowSourceGuides = filteredGuides;
+            stopCarousel();
         }
 
         async function init(data) {
             fileInputLabel.style.display = "none";
             await processData(data);
             updateFormatFilter();
-
-            const rowOptions = [1, 2, 3, 4, 5, 10, 20];
-            itemsPerPageSelector.innerHTML = `<option value="" disabled>Wiersze...</option>`;
-            rowOptions.forEach(r => {
-                const opt = document.createElement('option');
-                opt.value = r;
-                opt.textContent = `Wierszy: ${r}`;
-                itemsPerPageSelector.appendChild(opt);
-            });
-            itemsPerPageSelector.value = selectedRowCount;
 
             applySort(currentSort, guides);
             const urlParams = new URLSearchParams(window.location.search);
@@ -2858,7 +2708,7 @@
             }
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
-            darkModeBtn.addEventListener('click', toggleDarkMode);
+            
             document.getElementById('langBtn').addEventListener('click', function (e) {
                 e.preventDefault();
                 try {
@@ -2882,7 +2732,8 @@
                     });
             }
             initializeNewButtons();
-            initializeDisplayPanel(); 
+            initializeDisplayPanel();
+            initializeFooterAnimation();
         };
 
         function toggleMinimizeView() {
@@ -2912,6 +2763,7 @@
 
         function resetView() {
             stopPlayAnimation();
+            stopCarousel();
             searchInput.value = "";
             formatFilter.value = "";
             sortSelector.value = "";
@@ -2922,10 +2774,8 @@
 
             orientationFilterState = null;
             
-            // Reset suwaków do wartości domyślnych
             selectedRowCount = config.pageSettings.defaultRows;
             const sizePercent = config.pageSettings.defaultSizePercent;
-            itemsPerPageSelector.value = selectedRowCount;
             document.getElementById('rowsSlider').value = selectedRowCount;
             document.getElementById('rowsValue').textContent = selectedRowCount;
             document.getElementById('sizeSlider').value = sizePercent;
@@ -2934,10 +2784,9 @@
             saveToLocalStorage('rows', selectedRowCount);
             saveToLocalStorage('size_percent', sizePercent);
 
-            // Reset stanu widoku (obraz/tekst)
-            const viewContentBtn = document.getElementById('viewContentBtn');
-            if (viewContentBtn.classList.contains('active')) {
-                 viewContentBtn.click(); // Symuluje kliknięcie, by przywrócić domyślny widok
+            const isImageOnly = guideList.classList.contains('view-image-only');
+            if ((config.pageSettings.defaultViewMode === 'full' && isImageOnly) || (config.pageSettings.defaultViewMode === 'image-only' && !isImageOnly)) {
+                 document.getElementById('viewContentBtn').click();
             }
 
             renderGuides();
@@ -3028,16 +2877,21 @@
             const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
+        
+        const goToPage = (pageNum) => {
+            pageNum = Math.max(1, Math.min(totalPages, pageNum));
+            const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
+            guideList.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+        };
+
 
         function renderGuides() {
             guideList.classList.remove('random-draw');
-            const animationsOn = !document.body.classList.contains('no-animation');
 
             applyFilters();
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
-            // +++ ZMIANA: Obliczanie szerokości kafelka na podstawie suwaka +++
             const sizePercent = document.getElementById('sizeSlider').value;
             const newWidth = config.pageSettings.baseBoxWidth * (sizePercent / 100);
             
@@ -3068,7 +2922,7 @@
                     pageItems.forEach((guide, index) => {
                         const div = document.createElement("div");
                         div.className = "guide";
-                        if (animationsOn && isInitialLoad) {
+                        if (isInitialLoad) {
                             div.classList.add("animate-in");
                             div.style.animationDelay = `${index * 0.04}s`;
                         }
@@ -3162,12 +3016,6 @@
             const pageSlider = document.getElementById('pageSlider');
             const pageInfoText = document.getElementById('pageInfoText');
 
-            const goToPage = (pageNum) => {
-                pageNum = Math.max(1, Math.min(totalPages, pageNum));
-                const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
-                guideList.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
-            };
-
             const updateControls = (pageNum) => {
                 pageInfoText.textContent = `/ ${totalPages}`;
                 pageInput.value = pageNum;
@@ -3181,24 +3029,24 @@
                 preloadNextPageImages();
             };
 
-            firstPageBtn.onclick = () => goToPage(1);
-            prevPageBtn.onclick = () => goToPage(currentPage - 1);
-            nextPageBtn.onclick = () => goToPage(currentPage + 1);
-            lastPageBtn.onclick = () => goToPage(totalPages);
+            firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
+            prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
+            nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
+            lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
 
             pageSlider.addEventListener('input', () => {
+                stopCarousel();
                 pageInput.value = pageSlider.value;
             });
-
-            pageSlider.addEventListener('change', () => {
-                goToPage(parseInt(pageSlider.value, 10));
-            });
+            pageSlider.addEventListener('change', () => goToPage(parseInt(pageSlider.value, 10)));
 
             pageInput.addEventListener('change', () => {
+                stopCarousel();
                 goToPage(parseInt(pageInput.value, 10));
             });
             pageInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
+                    stopCarousel();
                     e.preventDefault();
                     goToPage(parseInt(pageInput.value, 10));
                     pageInput.blur();
@@ -3241,6 +3089,7 @@
 
         function drawRandomGuides() {
             stopPlayAnimation();
+            stopCarousel();
             const count = parseInt(randomSelector.value);
             if (!count) return;
             const source = filteredGuides.length > 0 ? filteredGuides : guides;
@@ -3261,39 +3110,21 @@
             slideshowSourceGuides = randomGuides;
             document.getElementById("guideCountDisplay").innerHTML = `<b>${randomGuides.length}</b> / ${source.length} wylosowano`;
 
-            const animationsOn = !document.body.classList.contains('no-animation');
             randomGuides.forEach((guide, index) => {
                 const div = document.createElement("div");
                 div.className = "guide";
                 div.innerHTML = createGuideHtml(guide);
                 guideList.appendChild(div);
-                if (animationsOn) {
-                    div.style.opacity = 0;
-                    setTimeout(() => {
-                        div.classList.add("animate-in");
-                        div.style.animationDelay = `${index * 0.05}s`;
-                    }, 20);
-                }
+                div.style.opacity = 0;
+                setTimeout(() => {
+                    div.classList.add("animate-in");
+                    div.style.animationDelay = `${index * 0.05}s`;
+                }, 20);
             });
             randomSelector.value = "";
         }
 
-        // --- USUNIĘTO: Funkcja cycleBoxWidth() ---
-
-        function toggleFx() {
-            const isActive = fxBtn.classList.toggle('active');
-            lightboxFxBtn.classList.toggle('active', isActive);
-            document.body.classList.toggle('no-animation', !isActive);
-            saveToLocalStorage('animations_enabled', isActive);
-        }
-
-        // --- USUNIĘTO: Funkcja applyView(), jej logika jest teraz w initializeDisplayPanel() i renderGuides() ---
-
         function initializeNewButtons() {
-            fxBtn.addEventListener('click', toggleFx);
-            
-            // --- USUNIĘTO: Listener dla starego #viewBtnGroup ---
-
             videoBtn.addEventListener('click', (e) => {
                 const target = e.target.closest('.multi-button-main, .multi-button-child');
                 if (!target) return;
@@ -3332,6 +3163,7 @@
             const rowsValue = document.getElementById('rowsValue');
             const viewResetBtn = document.getElementById('viewResetBtn');
             const viewPlayBtn = document.getElementById('viewPlayBtn');
+            const viewCarouselBtn = document.getElementById('viewCarouselBtn');
 
             const updateThemeIcon = () => {
                 const isDark = document.documentElement.classList.contains('dark-mode');
@@ -3340,13 +3172,19 @@
             };
             updateThemeIcon();
 
-            let isImageOnlyView = false;
             const updateContentView = () => {
-                guideList.classList.toggle('view-image-only', isImageOnlyView);
-                viewContentBtn.innerHTML = isImageOnlyView ? '<i class="fas fa-align-left"></i>' : '<i class="fas fa-image"></i>';
-                viewContentBtn.classList.toggle('active', isImageOnlyView);
-                viewContentBtn.title = isImageOnlyView ? "Widok: Pełny (pokaż opisy)" : "Widok: Graficzny (ukryj opisy)";
+                const isImageOnly = guideList.classList.contains('view-image-only');
+                viewContentBtn.innerHTML = isImageOnly ? '<i class="fas fa-align-left"></i>' : '<i class="fas fa-image"></i>';
+                viewContentBtn.classList.toggle('active', isImageOnly);
+                viewContentBtn.title = isImageOnly ? "Widok: Pełny (pokaż opisy)" : "Widok: Graficzny (ukryj opisy)";
+                saveToLocalStorage('view_mode', isImageOnly ? 'image-only' : 'full');
             };
+
+            const savedViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
+            if (savedViewMode === 'image-only') {
+                 guideList.classList.add('view-image-only');
+            }
+            updateContentView();
 
             viewThemeBtn.addEventListener('click', () => {
                 toggleDarkMode();
@@ -3354,11 +3192,10 @@
             });
 
             viewContentBtn.addEventListener('click', () => {
-                isImageOnlyView = !isImageOnlyView;
+                guideList.classList.toggle('view-image-only');
                 updateContentView();
             });
 
-            // +++ ZMIANA: Logika trójstanowego przycisku orientacji +++
             viewOrientationBtn.addEventListener('click', () => {
                 if (orientationFilterState === null) {
                     orientationFilterState = 'vertical';
@@ -3370,14 +3207,13 @@
                     viewOrientationBtn.title = "Pokaż tylko poziome";
                 } else {
                     orientationFilterState = null;
-                    viewOrientationBtn.innerHTML = '<i class="fas fa-image"></i>';
+                    viewOrientationBtn.innerHTML = '<i class="fas fa-images"></i>';
                     viewOrientationBtn.title = "Pokaż wszystkie";
                 }
                 viewOrientationBtn.classList.toggle('active', orientationFilterState !== null);
                 renderGuides();
             });
             
-            // +++ ZMIANA: Ulepszona obsługa suwaków +++
             sizeSlider.addEventListener('input', () => {
                 const newSize = sizeSlider.value;
                 sizeValue.textContent = `${newSize}%`;
@@ -3387,9 +3223,8 @@
 
             sizeSlider.addEventListener('change', () => {
                 saveToLocalStorage('size_percent', sizeSlider.value);
-                renderGuides(); // Przerenderuj, aby dostosować liczbę kolumn
+                renderGuides();
             });
-
 
             rowsSlider.addEventListener('input', () => {
                 rowsValue.textContent = rowsSlider.value;
@@ -3403,6 +3238,7 @@
 
             viewResetBtn.addEventListener('click', resetView);
             viewPlayBtn.addEventListener('click', () => startPlayAnimation());
+            viewCarouselBtn.addEventListener('click', toggleCarousel);
         }
 
         function handleVideoStateChange() {
@@ -3523,27 +3359,19 @@
             updateVideoBtnUI();
         }
 
-        function toggleAutoShuffle() {
-            if (videoBgState !== 'playing') return;
+        function toggleAutoShuffle(forceStart = false) {
+             if (!forceStart && videoBgState !== 'playing') return;
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
+                saveToLocalStorage('video_shuffle_enabled', false);
             } else {
-                if (bgVideo.paused) {
+                if (bgVideo.paused && videoBgState === 'playing') {
                     bgVideo.play();
                 }
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
-            }
-            updateVideoBtnUI();
-        }
-
-        function toggleBackgroundVideoPlayback() {
-            if (videoBgState === 'off') return;
-            if (bgVideo.paused) {
-                bgVideo.play();
-            } else {
-                bgVideo.pause();
+                 saveToLocalStorage('video_shuffle_enabled', true);
             }
             updateVideoBtnUI();
         }
@@ -3558,10 +3386,12 @@
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
+                saveToLocalStorage('video_shuffle_enabled', false);
             }
 
             if (videoBgState === 'paused') {
                 videoBgState = 'playing';
+                 saveToLocalStorage('video_bg_state', videoBgState);
             }
 
             if (videoBgState !== 'off') {
@@ -3573,13 +3403,12 @@
 
         function toggleDarkMode() {
             document.documentElement.classList.toggle("dark-mode");
-            document.body.classList.toggle("dark-mode");
             const isDark = document.documentElement.classList.contains("dark-mode");
             localStorage.setItem('visudir_theme', isDark ? 'dark' : 'light');
             currentTheme = isDark ? 'dark' : 'light';
-            updateDarkModeButtonUI();
-            if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
-                const currentLogoData = config.logoRotator.logos[currentLogoIndex];
+            
+            const currentLogoData = config.logoRotator.logos[currentLogoIndex];
+            if (config.pageSettings.showMiniLogo && config.logoRotator.enabled && currentLogoData) {
                 headerLogo.src = currentTheme === 'dark' ? currentLogoData.srcDark : currentLogoData.srcLight;
             }
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
@@ -3611,30 +3440,23 @@
                 console.error("Nie znaleziono elementu w przefiltrowanej liście.");
                 return;
             }
-
-            startPlayAnimation(startIndex);
+            startPlayAnimation(startIndex, true); 
         }
 
-        playButton.addEventListener('click', () => startPlayAnimation());
         playCloseBtn.addEventListener('click', stopPlayAnimation);
 
-        function togglePlayAnimation() {
-            if (playAnimationTimeout || slideshowIsPlaying) stopPlayAnimation();
-            else startPlayAnimation();
-        }
-
         function toggleSlideshowPlayPause() {
+            slideshowIsPlaying = !slideshowIsPlaying;
+            saveToLocalStorage('slideshow_playing', slideshowIsPlaying);
             if (slideshowIsPlaying) {
-                slideshowIsPlaying = false;
-                clearTimeout(playAnimationTimeout);
-                slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-                slideshowPlayBtn.classList.remove('active-play');
-            } else {
                 if (playGuidesQueue.length < 2) return;
-                slideshowIsPlaying = true;
                 slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 slideshowPlayBtn.classList.add('active-play');
                 scheduleNext();
+            } else {
+                clearTimeout(playAnimationTimeout);
+                slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                slideshowPlayBtn.classList.remove('active-play');
             }
         }
 
@@ -3643,7 +3465,7 @@
             document.getElementById('slideshow-shuffle').classList.toggle('active-play', slideshowIsRandom);
         }
 
-        function startPlayAnimation(startIndex = 0) {
+        function startPlayAnimation(startIndex = 0, forcePause = false) {
             const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
             if (source.length === 0) return alert("Brak pozycji do wyświetlenia!");
 
@@ -3651,18 +3473,24 @@
             playCurrentIndex = startIndex;
 
             document.body.classList.add("play-mode-active");
-            playButton.querySelector('.btn-text').textContent = ' Stop';
-            if (!document.body.classList.contains('no-animation')) {
-                setTimeout(() => {
-                    backdrop.classList.add("visible");
-                }, 10);
-            } else {
+            
+            setTimeout(() => {
                 backdrop.classList.add("visible");
-            }
+            }, 10);
+            
             updateBackgroundVideoVisibility();
-            slideshowIsPlaying = true;
-            slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            slideshowPlayBtn.classList.add('active-play');
+            
+            const lastPlayState = JSON.parse(getFromLocalStorage('slideshow_playing'));
+            slideshowIsPlaying = forcePause ? false : (lastPlayState !== null ? lastPlayState : true);
+
+            if (slideshowIsPlaying) {
+                slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                slideshowPlayBtn.classList.add('active-play');
+            } else {
+                 slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                slideshowPlayBtn.classList.remove('active-play');
+            }
+
             lightboxLabelsBtn.classList.toggle('active-play', areLabelsVisible);
 
             displayRandomGuide(playGuidesQueue[playCurrentIndex]);
@@ -3671,27 +3499,23 @@
         function stopPlayAnimation() {
             if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
             playAnimationTimeout = null;
-            slideshowIsPlaying = false;
-            const animationsOn = !document.body.classList.contains('no-animation');
+
             const container = playGuideContainer;
             const media = container.querySelector('img, video');
-            if (media && animationsOn) {
+            if (media) {
                 media.style.animation = 'zoomOutImage 0.4s ease-in forwards';
             }
-            const timeout = animationsOn ? 400 : 0;
+            
             setTimeout(() => {
                 document.body.classList.remove("play-mode-active");
                 backdrop.classList.remove("visible", "preview-active");
                 if (media) media.style.animation = '';
                 playGuideContainer.innerHTML = "";
                 if (playCaption) playCaption.innerHTML = "";
-            }, timeout);
+            }, 400);
+            
             slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
             slideshowPlayBtn.classList.remove('active-play');
-            if (playButton) {
-                const btnText = playButton.querySelector('.btn-text');
-                if (btnText) btnText.textContent = ' Play';
-            }
             updateBackgroundVideoVisibility();
         }
 
@@ -3798,105 +3622,35 @@
                 const descriptionText = guide.linkData.description || "";
                 let titleText = guide.title.replace(/^\d{2}\s*/, "");
                 playCaption.innerHTML = `<div class="caption-title-highlight">${counterText} ${titleText}</div><div class="caption-description">${descriptionText}</div>`;
-                const animationsOn = !document.body.classList.contains('no-animation');
+
                 if (areLabelsVisible) {
-                    if (animationsOn) {
-                        setTimeout(() => playCaption.classList.add('visible'), 1000);
-                    } else {
-                        playCaption.classList.add('visible');
-                    }
+                    setTimeout(() => playCaption.classList.add('visible'), 1000);
                 }
                 if (slideshowIsPlaying && !isVideo) {
                     preloadNextGuide();
                     const slideDuration = 4000;
                     playAnimationTimeout = setTimeout(() => {
-                        if (areLabelsVisible && animationsOn) {
+                        if (areLabelsVisible) {
                             playCaption.classList.remove('visible');
                             setTimeout(scheduleNext, 500);
                         } else {
                             scheduleNext();
                         }
-                    }, animationsOn ? slideDuration - 500 : slideDuration);
+                    }, slideDuration - 500);
                 }
             };
             if (existingContent) {
                 if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
                 const mediaElement = existingContent.querySelector ? existingContent.querySelector('img, video') : existingContent;
-                if (mediaElement && !document.body.classList.contains('no-animation')) {
+                if (mediaElement) {
                     mediaElement.style.animation = 'zoomOutImage 0.4s ease-in forwards';
                 }
-                setTimeout(showNewGuide, document.body.classList.contains('no-animation') ? 0 : 400);
+                setTimeout(showNewGuide, 400);
             } else {
                 showNewGuide();
             }
         }
-
-
-
-        function showMediaPreview(guideFilename) {
-            stopPlayAnimation();
-            backdrop.classList.add("visible", "preview-active");
-            const guideFormat = getFileExtension(guideFilename);
-            const isVideo = ['mp4', 'avi'].includes(guideFormat);
-            const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png|mp4|avi)$/i, "");
-            const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
-            const directPath = `${config.paths.dataFolderName}/${encodeURIComponent(guideFilename)}`;
-            const fallbackCover = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
-            const mediaElement = document.createElement(isVideo ? 'video' : 'img');
-            mediaElement.className = "preview-media";
-            if (isVideo) {
-                mediaElement.src = directPath;
-                mediaElement.controls = true;
-                mediaElement.autoplay = true;
-            } else {
-                mediaElement.alt = "Podgląd obrazu";
-                if (hdPath) {
-                    mediaElement.src = hdPath;
-                    mediaElement.onerror = () => {
-                        mediaElement.src = directPath;
-                        mediaElement.onerror = () => {
-                            mediaElement.src = fallbackCover;
-                            mediaElement.onerror = null;
-                        };
-                    };
-                } else {
-                    mediaElement.src = directPath;
-                    mediaElement.onerror = () => {
-                        mediaElement.src = fallbackCover;
-                        mediaElement.onerror = null;
-                    };
-                }
-            }
-            const link = document.createElement('a');
-            link.href = directPath;
-            link.target = '_blank';
-            link.appendChild(mediaElement);
-            playGuideContainer.innerHTML = "";
-            playGuideContainer.appendChild(link);
-            playCaption.innerHTML = "";
-            document.getElementById('lightbox-controls').style.display = 'none';
-            document.getElementById('lightbox-minimizeBtn').style.display = 'none';
-            document.getElementById('fullscreenBtnLightbox').style.display = 'none';
-            const close = () => {
-                backdrop.classList.remove("visible", "preview-active");
-                playGuideContainer.innerHTML = "";
-                document.getElementById('lightbox-controls').style.display = 'flex';
-                document.getElementById('lightbox-minimizeBtn').style.display = 'flex';
-                document.getElementById('fullscreenBtnLightbox').style.display = 'flex';
-            };
-            const backdropClose = (e) => {
-                if (e.target === backdrop) close();
-            };
-            playCloseBtn.addEventListener("click", close, {
-                once: true
-            });
-            setTimeout(() => {
-                backdrop.addEventListener("click", backdropClose, {
-                    once: true
-                });
-            }, 0);
-        }
-
+        
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -3929,8 +3683,11 @@
             fullscreenBtn.addEventListener('click', toggleFullScreen);
             fullscreenBtnLightbox.addEventListener('click', toggleFullScreen);
             document.addEventListener('fullscreenchange', updateFullscreenIcon);
-            document.getElementById('lightbox-fxBtn').addEventListener('click', toggleFx);
-            document.getElementById('lightbox-darkModeBtn').addEventListener('click', toggleDarkMode);
+            document.getElementById('lightbox-darkModeBtn').addEventListener('click', () => {
+                toggleDarkMode();
+                document.getElementById('viewThemeBtn').click(); 
+            });
+
             lightboxLabelsBtn.addEventListener('click', () => {
                 areLabelsVisible = !areLabelsVisible;
                 saveToLocalStorage('labels_visible', areLabelsVisible);
@@ -4015,16 +3772,21 @@
             }
         });
         document.addEventListener("DOMContentLoaded", () => {
-             // +++ ZMIANA: Dodano .display-panel do animacji +++
-            [".top-header", ".controls", ".display-panel", ".pagination", ".footer"].forEach(
-                (sel, i) => {
-                    const el = document.querySelector(sel);
-                    if (el) {
-                        el.style.animationDelay = `${0.2 + i * 0.15}s`;
-                        el.classList.add(i < 3 ? "animated-header" : "animated-pagination");
-                    }
+            [
+                { selector: ".top-header", class: "animated-header", delay: 0.2 },
+                { selector: ".controls", class: "animated-controls", delay: 0.3 },
+                { selector: ".display-panel", class: "animated-display-panel", delay: 0.4 },
+                { selector: ".pagination", class: "animated-pagination", delay: 0.5 },
+                { selector: "#actionControls", class: "animated-action-controls", delay: 0.6 },
+                { selector: ".footer", class: "animated-footer", delay: 0.7 }
+            ].forEach(item => {
+                const el = document.querySelector(item.selector);
+                if (el) {
+                    el.style.animationDelay = `${item.delay}s`;
+                    el.classList.add(item.class);
                 }
-            );
+            });
+
             bgVideo.addEventListener('play', updateVideoBtnUI);
             bgVideo.addEventListener('pause', updateVideoBtnUI);
             bgVideo.addEventListener('error', () => {
@@ -4033,6 +3795,61 @@
                 document.body.classList.remove('video-ready');
             });
         });
+
+        function stopCarousel() {
+            if (carouselInterval) {
+                clearInterval(carouselInterval);
+                carouselInterval = null;
+                document.getElementById('viewCarouselBtn').classList.remove('active');
+            }
+        }
+
+        function toggleCarousel() {
+            const btn = document.getElementById('viewCarouselBtn');
+            if (carouselInterval) {
+                stopCarousel();
+            } else {
+                if (totalPages <= 1) return;
+                btn.classList.add('active');
+                carouselInterval = setInterval(() => {
+                    const nextPage = (currentPage % totalPages) + 1;
+                    goToPage(nextPage);
+                }, 5000);
+            }
+        }
+
+        function initializeFooterAnimation() {
+            let previousWrapperHeight = 0;
+            const elementsToMove = [document.getElementById('pagination'), document.getElementById('actionControls'), document.querySelector('.footer')];
+
+            const wrapperObserver = new ResizeObserver(entries => {
+                const newHeight = entries[0].contentRect.height;
+                if (previousWrapperHeight === 0 || Math.abs(newHeight - previousWrapperHeight) < 2) {
+                    previousWrapperHeight = newHeight;
+                    return;
+                }
+                
+                const deltaY = previousWrapperHeight - newHeight;
+                
+                for(const el of elementsToMove) {
+                    if(!el) continue;
+                    el.style.transition = 'none';
+                    el.style.transform = `translateY(${deltaY}px)`;
+                }
+
+                requestAnimationFrame(() => {
+                    for(const el of elementsToMove) {
+                        if(!el) continue;
+                        el.style.transition = ''; 
+                        el.style.transform = 'translateY(0px)';
+                    }
+                });
+
+                previousWrapperHeight = newHeight;
+            });
+            
+            wrapperObserver.observe(document.querySelector('.guide-list-wrapper'));
+        }
 
         searchInput.addEventListener("input", () => {
             const query = searchInput.value.toLowerCase().trim();
@@ -4072,14 +3889,6 @@
             e.target.value = "";
         });
 
-        itemsPerPageSelector.addEventListener("change", (e) => {
-            if (!e.target.value) return;
-            selectedRowCount = parseInt(e.target.value);
-            saveToLocalStorage('rows', selectedRowCount);
-            renderGuides();
-            stopPlayAnimation();
-        });
-
         randomSelector.addEventListener("change", drawRandomGuides);
         fileInput.addEventListener("change", function () {
             if (this.files[0]) {
@@ -4088,8 +3897,8 @@
             }
         });
 
-        resetButton.addEventListener('click', resetView);
     </script>
 </body>
 
 </html>
+}
