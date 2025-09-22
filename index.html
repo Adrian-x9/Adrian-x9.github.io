@@ -432,12 +432,10 @@
             width: 42px;
             margin-right: -5px; 
         }
-
         #generatorModeBtn i {
             margin-right: 0;
         }
         
-        /* +++ ZMIANA: Kolor aktywnego przycisku filtra +++ */
         body:not(.dark-mode) #generatorModeBtn.active {
             color: #cc0000;
         }
@@ -658,6 +656,7 @@
             justify-content: center;
             gap: 20px;
             padding: 2px;
+            transition: grid-template-columns 0.5s ease; /* Płynna zmiana rozmiaru */
         }
 
         .guide-list.random-draw {
@@ -927,6 +926,7 @@
             width: 100%;
             height: 100%;
             display: none;
+            flex-direction: column; /* ZMIANA DLA MOBILNEGO LAYOUTU */
             justify-content: center;
             align-items: center;
             z-index: 999;
@@ -950,6 +950,7 @@
             align-items: center;
             width: 90vw;
             height: 90vh;
+            flex-grow: 1; /* ZMIANA DLA MOBILNEGO LAYOUTU */
         }
 
         .play-guide-container>a {
@@ -1167,11 +1168,14 @@
             color: #e53935;
         }
         
-        #lightbox-fxBtn.active {
-            color: #e53935;
+        #lightbox-fxBtn.active i {
+            animation: spin 2s linear infinite;
+        }
+        body:not(.dark-mode) #lightbox-fxBtn.active {
+            color: #cc0000;
         }
         body.dark-mode #lightbox-fxBtn.active {
-            color: #ff8a80;
+            color: #e53935;
         }
 
         body.dark-mode #lightbox-controls button:hover,
@@ -1321,54 +1325,33 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
-        @media (max-width: 768px) {
+        #lightbox-main-controls {
+            margin-bottom: 10px;
+        }
 
+        @media (max-width: 768px) {
             .controls.minimized-view>#search,
-            .controls.minimized-view>#formatFilter {
-                display: flex;
-            }
-
+            .controls.minimized-view>#formatFilter { display: flex; }
             .controls.minimized-view>#sortSelector,
-            .controls.minimized-view .generator-group {
-                display: none;
-            }
-            .action-controls {
-                flex-direction: column;
-            }
+            .controls.minimized-view .generator-group { display: none; }
+            .action-controls { flex-direction: column; }
+            
+            .backdrop { justify-content: flex-end; }
+            #lightbox-controls { flex-direction: column; }
+            #play-caption { position: relative; top: auto; left: auto; transform: none; margin-bottom: 15px; }
+            #play-guide-container { height: auto; }
         }
 
-
-        @media (max-width: 768px) {
-            #lightbox-controls {
-                padding-bottom: 65px;
-            }
-        }
-
-        #lightbox-controls .multi-button {
-            padding: 0;
-        }
 
         @media (max-width: 1024px) {
-            #fullscreenBtnLightbox {
-                display: none !important;
-            }
+            #fullscreenBtnLightbox { display: none !important; }
         }
         
-        #lightbox-controls #lightbox-fxBtn {
-            order: 1;
-        }
-        #lightbox-controls #lightbox-videoBtn {
-            order: 2;
-        }
-        #lightbox-controls #slideshow-controls {
-            order: 3;
-        }
-        #lightbox-controls #lightbox-darkModeBtn {
-            order: 4;
-        }
-        #lightbox-controls #lightbox-labelsBtn {
-            order: 5;
-        }
+        #lightbox-controls #lightbox-fxBtn { order: 1; }
+        #lightbox-controls #lightbox-videoBtn { order: 2; }
+        #lightbox-controls #slideshow-controls { order: 3; }
+        #lightbox-controls #lightbox-darkModeBtn { order: 4; }
+        #lightbox-controls #lightbox-labelsBtn { order: 5; }
 
         /* --- EASTER EGG: CRT Effect Styles --- */
         #crt-overlay {
@@ -1413,49 +1396,9 @@
         }
 
 
-        @keyframes crt-flicker {
-            0% {
-                opacity: 0.95;
-            }
-
-            50% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0.98;
-            }
-        }
-
-        @keyframes crt-scanline {
-            0% {
-                transform: translateY(0);
-            }
-
-            100% {
-                transform: translateY(100%);
-            }
-        }
-
-        @keyframes crt-collapse {
-            0% {
-                transform: scale(1, 1);
-            }
-
-            30% {
-                transform: scale(1.05, 1);
-            }
-
-            80% {
-                transform: scale(0.001, 1);
-                opacity: 1;
-            }
-
-            100% {
-                transform: scale(0.001, 0);
-                opacity: 0;
-            }
-        }
+        @keyframes crt-flicker { 0% { opacity: 0.95; } 50% { opacity: 1; } 100% { opacity: 0.98; } }
+        @keyframes crt-scanline { 0% { transform: translateY(0); } 100% { transform: translateY(100%); } }
+        @keyframes crt-collapse { 0% { transform: scale(1, 1); } 30% { transform: scale(1.05, 1); } 80% { transform: scale(0.001, 1); opacity: 1; } 100% { transform: scale(0.001, 0); opacity: 0; } }
 
         #clear-close-btn {
             position: fixed;
@@ -1690,9 +1633,10 @@
         
         .display-panel-group.slider-group {
              flex-grow: 1;
-             min-width: 200px;
-             padding: 8px 12px;
+             min-width: 250px;
+             padding: 5px 12px;
              gap: 8px;
+             flex-direction: column;
         }
         
         .display-panel button {
@@ -1744,23 +1688,11 @@
             animation: pulse-red 1s infinite;
         }
 
-        @keyframes pulse-red {
-            0% {
-                box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-            }
+        @keyframes pulse-red { 0% { box-shadow: 0 0 15px rgba(255,0,0,0.5); } 50% { box-shadow: 0 0 25px rgba(255,0,0,0.8); } 100% { box-shadow: 0 0 15px rgba(255,0,0,0.5); } }
 
-            50% {
-                box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
-            }
-
-            100% {
-                box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
-            }
-        }
-
-        /* +++ ZMIANA: Nowy layout dla suwaków +++ */
         .slider-control {
-            display: flex;
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
             gap: 10px;
             width: 100%;
@@ -1777,7 +1709,6 @@
         }
 
         .slider-control input[type="range"] {
-            flex-grow: 1;
             -webkit-appearance: none;
             appearance: none;
             height: 6px;
@@ -2077,7 +2008,7 @@
 
     <script>
         const config = {
-            version: 'v1.11.0', // UI refactor, bug fixes, language module remake, lot of changes, pre-alfa
+            version: 'v1.11.1', // UI refactor, bug fixes, language module remake, lot of changes, pre-alfa
             language: {
                 current: 'pl',
                 files: {
@@ -2167,7 +2098,7 @@
                 previewHdFolderName: ".base-system/preview-hd"
             }
         };
-    
+
         /// COPY HERE <cfg> // configuration end / koniec konfiguracji
 
 
@@ -2227,15 +2158,15 @@
                 filterAll: "Wszystko",
                 sortLabel: "Sortuj...",
                 sortShuffle: "Wymieszaj",
-                sortNameAsc: "Nazwa Aâ€“Z",
-                sortNameDesc: "Nazwa Zâ€“A",
-                sortDateAsc: "Data â†‘",
-                sortDateDesc: "Data â†“",
-                sortSizeAsc: "Rozmiar â†‘",
-                sortSizeDesc: "Rozmiar â†“",
+                sortNameAsc: "Nazwa A–Z",
+                sortNameDesc: "Nazwa Z–A",
+                sortDateAsc: "Data ↑",
+                sortDateDesc: "Data ↓",
+                sortSizeAsc: "Rozmiar ↑",
+                sortSizeDesc: "Rozmiar ↓",
                 generatorLabel: "Generator...",
                 generatorItem: "Pozycji: {count}",
-                generatorModeAll: "Generator: caĹ‚a pula",
+                generatorModeAll: "Generator: cała pula",
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
                 maximizeBtn: "PrzywrĂłÄ‡ interfejs",
@@ -2243,27 +2174,27 @@
                 viewModeFull: "Widok: OkĹ‚adki i tekst",
                 viewModeImage: "Widok: Tylko okĹ‚adki",
                 viewModeText: "Widok: Tylko tekst",
-                orientationFilterAll: "PokaĹĽ wszystkie",
-                orientationFilterVert: "PokaĹĽ tylko pionowe",
-                orientationFilterHoriz: "PokaĹĽ tylko poziome",
+                orientationFilterAll: "Pokaż wszystkie",
+                orientationFilterVert: "Pokaż tylko pionowe",
+                orientationFilterHoriz: "Pokaż tylko poziome",
                 themeBtn: "Tryb Ciemny / Jasny",
-                sizeLabel: "WielkoĹ›Ä‡ miniaturek",
+                sizeLabel: "Wielkość miniaturek",
                 rowsLabel: "Liczba wierszy",
                 playBtn: "Rozpocznij pokaz",
                 // Guide Items
                 guideInfoDate: "Data",
                 guideInfoFormat: "Format",
                 guideInfoSize: "Rozmiar",
-                guideBtnOpen: "OtwĂłrz",
+                guideBtnOpen: "Otwórz",
                 guideBtnView: "Zobacz",
                 guideBtnDownload: "Pobierz",
                 // Pagination
                 paginationFirst: "Pierwsza strona",
                 paginationPrev: "Poprzednia strona",
-                paginationNext: "NastÄ™pna strona",
+                paginationNext: "Następna strona",
                 paginationLast: "Ostatnia strona",
-                paginationReset: "PrzejdĹş do pierwszej strony",
-                paginationCarouselStart: "WĹ‚Ä…cz automatyczne przewijanie",
+                paginationReset: "Przejdź do pierwszej strony",
+                paginationCarouselStart: "Włącz automatyczne przewijanie",
                 paginationCarouselStop: "Zatrzymaj automatyczne przewijanie",
                 // Footer Controls
                 mainResetBtn: "Resetuj widok",
@@ -2271,9 +2202,9 @@
                 videoBtnPrev: "Poprzednie wideo",
                 videoBtnPlay: "Odtwarzaj",
                 videoBtnPause: "Pauza",
-                videoBtnOff: "WyĹ‚Ä…cz wideo",
-                videoBtnShuffle: "Losowe wideo WĹ‚/WyĹ‚",
-                videoBtnNext: "NastÄ™pne wideo",
+                videoBtnOff: "Wyłącz wideo",
+                videoBtnShuffle: "Losowe wideo Wł/Wył",
+                videoBtnNext: "Następne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
                 // Footer
                 footerDate: "Â© 2025-09-17",
@@ -2285,15 +2216,15 @@
                 fullscreenBtn: "PeĹ‚ny ekran",
                 fullscreenExitBtn: "WyjdĹş z peĹ‚nego ekranu",
                 closeBtn: "Zamknij",
-                lightboxFxBtn: "Animacje przejĹ›Ä‡ WĹ‚/WyĹ‚",
-                lightboxVideoOptions: "RozwiĹ„ opcje wideo",
-                lightboxLabelsBtn: "PokaĹĽ/ukryj etykiety",
+                lightboxFxBtn: "Animacje przejść Wł/Wył",
+                lightboxVideoOptions: "Rozwiń opcje wideo",
+                lightboxLabelsBtn: "Pokaż/ukryj etykiety",
                 slideshowFirst: "Pierwszy",
                 slideshowPrev: "Poprzedni",
                 slideshowStop: "Zatrzymaj",
                 slideshowPlayPause: "Play/Pauza",
-                slideshowShuffle: "Losowe slajdy WĹ‚/WyĹ‚",
-                slideshowNext: "NastÄ™pny",
+                slideshowShuffle: "Losowe slajdy Wł/Wył",
+                slideshowNext: "Następny",
                 slideshowLast: "Ostatni",
             }
         };
@@ -2701,6 +2632,7 @@
             const defaultSortOption = sortSelect.querySelector(`[value="${config.pageSettings.defaultSort}"]`);
             if(defaultSortOption) defaultSortOption.style.fontWeight = 'bold';
 
+
             applySort(currentSort, guides);
             const urlParams = new URLSearchParams(window.location.search);
             const searchQuery = urlParams.get('search');
@@ -2756,7 +2688,7 @@
                 if (lang[key]) el.title = lang[key];
             });
             document.title = lang.pageTitle;
-            document.getElementById('pageTitle').textContent = lang.pageTitle; // Ustawienie tytułu strony z configu językowego
+            document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
         }
 
         window.onload = function () {
@@ -2780,7 +2712,6 @@
             } else {
                 document.getElementById("logoLink").style.display = "none";
             }
-            langBtn.style.display = config.language.files.en ? 'flex' : 'none';
             document.getElementById("backButton").style.display = config.pageSettings.showBackButton ? "flex" : "none";
             loadUiSettings();
             
@@ -3813,7 +3744,7 @@
             });
             document.getElementById('lightbox-darkModeBtn').addEventListener('click', () => {
                 toggleDarkMode();
-                document.getElementById('viewThemeBtn').click(); 
+                document.getElementById('viewThemeBtn').classList.toggle('active', document.body.classList.contains('dark-mode'));
             });
 
             lightboxLabelsBtn.addEventListener('click', () => {
@@ -4025,7 +3956,7 @@
                 if(sortValue === 'shuffle') {
                     let source = (generatorMode === 'visible' && generatedGuides) || filteredGuides;
                     shuffleArray(source);
-                    generatedGuides = source; // Nadpisz, aby kolejne "Wymieszaj" działało na tej samej, przemieszanej liście
+                    generatedGuides = source;
                     renderGuides(source);
                 } else {
                     applySort(sortValue, guides);
