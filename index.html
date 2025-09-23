@@ -1951,7 +1951,7 @@
         }
     </style>
     <script>
-        (function () {
+        (function() {
             const langConfig = {
                 defaultLanguage: 'pl',
                 englishUrl: 'index-en.html'
@@ -1968,7 +1968,7 @@
             } catch (e) { /* Ignore storage errors */ }
         })();
 
-        (function () {
+        (function() {
             try {
                 const theme = localStorage.getItem('visudir_theme');
                 const defaultTheme = 'light';
@@ -2136,7 +2136,7 @@
 
     <script>
         // --- System Initialization ---
-        (function () {
+        (function() {
             // Self-healing and timeout mechanism
             try {
                 const isRetry = sessionStorage.getItem('visudir_load_retry');
@@ -2162,7 +2162,9 @@
                     sessionStorage.removeItem('visudir_load_retry');
                 });
 
-            } catch (e) { console.error("Critical error in startup safety mechanism.", e); }
+            } catch (e) {
+                console.error("Critical error in startup safety mechanism.", e);
+            }
 
             // Initial theme setup (SAFE VERSION)
             try {
@@ -2180,7 +2182,7 @@
         // --- configuraton / konfiguracja ---
 
         const config = {
-            version: 'v1.11.2', // Bug fixes / Poprawki błędów
+            version: 'v1.11.3', // Bug fixes / Poprawki błędów
             language: {
                 current: 'pl',
                 files: {
@@ -2214,8 +2216,8 @@
                 baseBoxWidth: 256,
                 estimatedItemHeight: 380,
                 defaultViewMode: 'full',
-                hoverOverlayColor: 'rgba(204, 0, 0, 0.7)',
-                hoverTextColor: '#FFFFFF',
+                hoverOverlayColor: 'rgba(204, 0, 0, 0.3)',
+                hoverTextColor: '#ffffff',
 
                 defaultGeneratorMode: 'visible',
                 defaultGeneratorCount: 5,
@@ -2243,7 +2245,7 @@
                 }, {
                     label: "Poradniki",
                     search: "Poradniki"
-                },],
+                }, ],
             },
 
             logoRotator: {
@@ -2858,7 +2860,7 @@
             document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
         }
 
-        window.onload = function () {
+        window.onload = function() {
             applyLanguage();
             fileInputLabel.style.display = "none";
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
@@ -2948,7 +2950,10 @@
             applySort(config.pageSettings.defaultSort, guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort);
 
-            if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
+            if (guideList) guideList.scrollTo({
+                left: 0,
+                behavior: 'smooth'
+            });
 
             orientationFilterState = null;
 
@@ -2989,8 +2994,8 @@
                     return;
                 }
                 fetch(filePath, {
-                    method: 'HEAD'
-                })
+                        method: 'HEAD'
+                    })
                     .then(response => {
                         window.location.href = response.ok ? targetUrl : fallbackUrl;
                     })
@@ -3003,14 +3008,14 @@
             const http = new XMLHttpRequest();
             http.open('HEAD', filePath, true);
             http.timeout = 2000;
-            http.onload = function () {
+            http.onload = function() {
                 if (this.status === 200 || this.status === 0) {
                     window.open(targetUrl, '_blank');
                 } else {
                     window.location.href = fallbackUrl;
                 }
             };
-            http.onerror = http.ontimeout = function () {
+            http.onerror = http.ontimeout = function() {
                 window.location.href = fallbackUrl;
             };
             http.send();
@@ -3063,7 +3068,10 @@
         const goToPage = (pageNum) => {
             pageNum = Math.max(1, Math.min(totalPages, pageNum));
             const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
-            guideList.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
+            guideList.scrollTo({
+                left: targetScrollLeft,
+                behavior: 'smooth'
+            });
         };
 
 
@@ -3083,13 +3091,14 @@
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
             const sizePercent = document.getElementById('sizeSlider').value;
-            const newWidth = config.pageSettings.baseBoxWidth * (sizePercent / 100);
+            const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100)); // FIX: Round down to prevent wrapping issues on wide screens.
 
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
 
-            const containerMinHeight = (selectedRowCount * config.pageSettings.estimatedItemHeight) + ((selectedRowCount - 1) * 20);
-            guideList.style.minHeight = `${containerMinHeight}px`;
+            // FIX: Removed dynamic min-height calculation to prevent vertical stretching of items.
+            // const containerMinHeight = (selectedRowCount * config.pageSettings.estimatedItemHeight) + ((selectedRowCount - 1) * 20);
+            // guideList.style.minHeight = `${containerMinHeight}px`;
 
             if (sourceArray) {
                 source.forEach((guide, index) => {
@@ -3223,7 +3232,10 @@
             const pageInput = document.getElementById('pageInput');
             const pageSlider = document.getElementById('pageSlider');
             const pageInfoText = document.getElementById('pageInfoText');
-            document.getElementById('paginationResetBtn').onclick = () => { stopCarousel(); goToPage(1); };
+            document.getElementById('paginationResetBtn').onclick = () => {
+                stopCarousel();
+                goToPage(1);
+            };
             document.getElementById('paginationCarouselBtn').onclick = toggleCarousel;
 
             const updateControls = (pageNum) => {
@@ -3239,10 +3251,22 @@
                 preloadNextPageImages();
             };
 
-            firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
-            prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
-            nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
-            lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
+            firstPageBtn.onclick = () => {
+                stopCarousel();
+                goToPage(1);
+            };
+            prevPageBtn.onclick = () => {
+                stopCarousel();
+                goToPage(currentPage - 1);
+            };
+            nextPageBtn.onclick = () => {
+                stopCarousel();
+                goToPage(currentPage + 1);
+            };
+            lastPageBtn.onclick = () => {
+                stopCarousel();
+                goToPage(totalPages);
+            };
 
             pageSlider.addEventListener('input', () => {
                 stopCarousel();
@@ -3271,7 +3295,10 @@
                         updateControls(pageNum);
                     }
                 });
-            }, { root: guideList, threshold: 0.75 });
+            }, {
+                root: guideList,
+                threshold: 0.75
+            });
 
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
@@ -3303,9 +3330,9 @@
             const count = parseInt(generator.value);
             if (!count) return;
 
-            const source = (generatorMode === 'visible')
-                ? (generatedGuides || filteredGuides)
-                : guides;
+            const source = (generatorMode === 'visible') ?
+                (generatedGuides || filteredGuides) :
+                guides;
 
             if (source.length === 0) {
                 alert(lang.alertNoItems);
@@ -3972,7 +3999,7 @@
 
         function debounce(func, wait) {
             let timeout;
-            return function (...args) {
+            return function(...args) {
                 const later = () => {
                     clearTimeout(timeout);
                     func.apply(this, args);
@@ -3991,21 +4018,38 @@
         }, 250);
         window.addEventListener("resize", debouncedRender);
 
-        window.addEventListener("pageshow", function (event) {
+        window.addEventListener("pageshow", function(event) {
             if (event.persisted) {
                 applyFilters();
                 renderGuides();
             }
         });
         document.addEventListener("DOMContentLoaded", () => {
-            [
-                { selector: ".top-header", class: "animated-header", delay: 0.2 },
-                { selector: ".controls", class: "animated-controls", delay: 0.3 },
-                { selector: ".display-panel", class: "animated-display-panel", delay: 0.4 },
-                { selector: ".pagination", class: "animated-pagination", delay: 0.5 },
-                { selector: "#actionControls", class: "animated-action-controls", delay: 0.6 },
-                { selector: ".footer", class: "animated-footer", delay: 0.7 }
-            ].forEach(item => {
+            [{
+                selector: ".top-header",
+                class: "animated-header",
+                delay: 0.2
+            }, {
+                selector: ".controls",
+                class: "animated-controls",
+                delay: 0.3
+            }, {
+                selector: ".display-panel",
+                class: "animated-display-panel",
+                delay: 0.4
+            }, {
+                selector: ".pagination",
+                class: "animated-pagination",
+                delay: 0.5
+            }, {
+                selector: "#actionControls",
+                class: "animated-action-controls",
+                delay: 0.6
+            }, {
+                selector: ".footer",
+                class: "animated-footer",
+                delay: 0.7
+            }].forEach(item => {
                 const el = document.querySelector(item.selector);
                 if (el) {
                     el.style.animationDelay = `${item.delay}s`;
@@ -4144,13 +4188,12 @@
         updateGeneratorModeBtn();
 
 
-        fileInput.addEventListener("change", function () {
+        fileInput.addEventListener("change", function() {
             if (this.files[0]) {
                 loadAndParseFile(this.files[0]);
                 stopPlayAnimation();
             }
         });
-
     </script>
 </body>
 
