@@ -3164,6 +3164,13 @@
 
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
+            // FIX: Dynamiczne ustawianie wysokości kontenera dla płynnych animacji layoutu
+            const wrapper = document.querySelector('.guide-list-wrapper');
+            const guideGap = 20;
+            // Używamy wartości z konfiguracji jako podstawy do obliczeń
+            const estimatedItemHeight = config.pageSettings.estimatedItemHeight; 
+            const wrapperHeight = (selectedRowCount * estimatedItemHeight) + ((selectedRowCount - 1) * guideGap);
+            wrapper.style.height = `${wrapperHeight}px`;    
 
             if (sourceArray) {
                 source.forEach((guide, index) => {
@@ -3182,7 +3189,6 @@
                 return;
             }
 
-            const guideGap = 20;
             const itemWidth = newWidth;
             const columns = Math.floor(((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) + 0.0001) || 1;
             const itemsPerPage = columns * selectedRowCount;
