@@ -659,6 +659,7 @@
             max-width: 1920px;
             margin: 0 auto;
             overflow: hidden;
+            transition: height 0.5s ease-in-out;
         }
 
         .guide-list {
@@ -690,6 +691,8 @@
             gap: 20px;
             padding: 2px;
             transition: grid-template-columns 0.5s ease;
+            align-content: start;
+            /* Dodana linia zapobiegająca rozciąganiu wierszy */
         }
 
         .guide-list.random-draw {
