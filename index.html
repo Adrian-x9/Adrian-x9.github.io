@@ -177,14 +177,18 @@
 
         body:not(.dark-mode) .guide,
         body:not(.dark-mode) .display-panel,
-        body:not(.dark-mode) .pagination-controls {
+        body:not(.dark-mode) .pagination-controls,
+        body:not(.dark-mode) .action-controls .multi-button.expanded,
+        body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
             background: #fdfdfd;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
 
         body.video-ready:not(.dark-mode) .guide,
         body.video-ready:not(.dark-mode) .display-panel,
-        body.video-ready:not(.dark-mode) .pagination-controls {
+        body.video-ready:not(.dark-mode) .pagination-controls,
+        body.video-ready:not(.dark-mode) .action-controls .multi-button,
+        body.video-ready:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
             background: rgba(253, 253, 253, 0.85);
         }
 
@@ -225,17 +229,21 @@
 
         body.dark-mode .guide,
         body.dark-mode .display-panel,
-        body.dark-mode .pagination-controls {
+        body.dark-mode .pagination-controls,
+        body.dark-mode .action-controls .multi-button.expanded,
+        body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
             background: #000;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
         }
 
         body.video-ready.dark-mode .guide,
         body.video-ready.dark-mode .display-panel,
-        body.video-ready.dark-mode .pagination-controls {
+        body.video-ready.dark-mode .pagination-controls,
+        body.video-ready.dark-mode .action-controls .multi-button,
+        body.video-ready.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
             background: rgba(0, 0, 0, 0.5);
         }
-
+        
         body.dark-mode .guide:hover {
             box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
         }
@@ -311,12 +319,12 @@
 
         .top-header .title {
             font-size: 1.6em;
+            font-weight: 600; /* Przywrócenie grubości czcionki */
         }
 
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
             background: none;
-            font-weight: 600;
             color: black;
             -webkit-text-stroke: 0.5px gray;
             text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
@@ -325,7 +333,6 @@
         body.dark-mode .top-header .title,
         body.dark-mode .top-header .counter {
             background: none;
-            font-weight: 600;
             color: white;
             -webkit-text-stroke: 0.5px #ccc;
             text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
@@ -418,9 +425,11 @@
             font-size: 1em;
             cursor: pointer;
         }
-
+        
+        /* +++ ZMIANA: Nowy, subtelny efekt hover +++ */
         .dir-db-btn:hover {
-            transform: translateY(-5px);
+            box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.2), 0 0 20px rgba(255, 0, 0, 0.2);
+            transform: scale(1.02);
         }
 
         .dir-db-btn i {
@@ -456,6 +465,7 @@
         .multi-button {
             padding: 0;
             overflow: hidden;
+            transition: background 0.3s ease; /* Płynna zmiana tła dla panelu wideo */
         }
 
         .multi-button>span {
@@ -535,14 +545,6 @@
             font-weight: bold;
         }
 
-        .controls .dir-db-btn:hover,
-        .controls button:hover,
-        .action-controls .dir-db-btn:hover,
-        .action-controls button:hover,
-        .top-header .dir-db-btn:hover {
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-        }
-
         body:not(.dark-mode) .controls .dir-db-btn,
         body:not(.dark-mode) .controls button,
         body:not(.dark-mode) .action-controls .dir-db-btn,
@@ -569,14 +571,6 @@
         body.dark-mode .controls .btn-text,
         body.dark-mode .action-controls .btn-text {
             color: #eee;
-        }
-        
-        .action-controls .multi-button.expanded {
-            background: #fff;
-        }
-
-        body.dark-mode .action-controls .multi-button.expanded {
-            background: #111;
         }
 
         .multi-button-child:hover {
@@ -620,6 +614,16 @@
             color: #ff8a80;
             text-shadow: none !important;
         }
+        
+        #lightbox-videoBtn.active-play {
+            animation: pulse-red-border 1.5s infinite;
+        }
+
+        @keyframes pulse-red-border {
+          0% { border-color: rgba(229, 57, 53, 0.7); }
+          50% { border-color: rgba(229, 57, 53, 1); }
+          100% { border-color: rgba(229, 57, 53, 0.7); }
+        }
 
         .guide-list-wrapper {
             width: 90%;
@@ -656,7 +660,7 @@
             justify-content: center;
             gap: 20px;
             padding: 2px;
-            transition: grid-template-columns 0.5s ease; /* Płynna zmiana rozmiaru */
+            transition: grid-template-columns 0.5s ease;
         }
 
         .guide-list.random-draw {
@@ -926,7 +930,7 @@
             width: 100%;
             height: 100%;
             display: none;
-            flex-direction: column; /* ZMIANA DLA MOBILNEGO LAYOUTU */
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 999;
@@ -950,7 +954,7 @@
             align-items: center;
             width: 90vw;
             height: 90vh;
-            flex-grow: 1; /* ZMIANA DLA MOBILNEGO LAYOUTU */
+            flex-grow: 1;
         }
 
         .play-guide-container>a {
@@ -2008,7 +2012,7 @@
 
     <script>
         const config = {
-            version: 'v1.11.1', // UI refactor, bug fixes, language module remake, lot of changes, pre-alfa
+            version: 'v1.11.2', // Bug fixes / Poprawki błędów
             language: {
                 current: 'pl',
                 files: {
@@ -2151,13 +2155,10 @@
         /// COPY HERE <lang> // language file / plik językowy
         const languageStrings = {
             pl: {
-                // General
                 pageTitle: "START ▪ maxi MENU ▪",
                 guideCounter: "<b>{count}</b> / {total} pozycji",
                 alertNoItems: "Brak pozycji do wygenerowania!",
-                // Header
                 btnBack: "Wstecz",
-                // Controls
                 btnLoad: "Załaduj...",
                 searchPlaceholder: "Szukaj pozycji...",
                 filterAll: "Wszystko",
@@ -2175,7 +2176,6 @@
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
                 maximizeBtn: "PrzywrĂłÄ‡ interfejs",
-                // Display Panel
                 viewModeFull: "Widok: Okładki i tekst",
                 viewModeImage: "Widok: Tylko okładki",
                 viewModeText: "Widok: Tylko tekst",
@@ -2186,14 +2186,11 @@
                 sizeLabel: "Wielkość miniaturek",
                 rowsLabel: "Liczba wierszy",
                 playBtn: "Rozpocznij pokaz",
-                // Guide Items
-                guideInfoDate: "Data",
                 guideInfoFormat: "Format",
                 guideInfoSize: "Rozmiar",
                 guideBtnOpen: "Otwórz",
                 guideBtnView: "Zobacz",
                 guideBtnDownload: "Pobierz",
-                // Pagination
                 paginationFirst: "Pierwsza strona",
                 paginationPrev: "Poprzednia strona",
                 paginationNext: "Następna strona",
@@ -2201,7 +2198,6 @@
                 paginationReset: "Przejdź do pierwszej strony",
                 paginationCarouselStart: "Włącz automatyczne przewijanie",
                 paginationCarouselStop: "Zatrzymaj automatyczne przewijanie",
-                // Footer Controls
                 mainResetBtn: "Resetuj widok",
                 btnVideo: "Wideo",
                 videoBtnPrev: "Poprzednie wideo",
@@ -2211,13 +2207,11 @@
                 videoBtnShuffle: "Losowe wideo Wł/Wył",
                 videoBtnNext: "Następne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
-                // Footer
                 footerDate: "© 2025-09-17",
                 footerDesc: "do katalogowania, zarzÄ…dzania i prezentacji plikĂłw i folderĂłw",
                 privacyTitle: "Szanujemy TwojÄ… prywatność",
                 privacyDesc: "Żadnych ciasteczek ani śledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
-                // Lightbox
                 fullscreenBtn: "Pełny ekran",
                 fullscreenExitBtn: "Wyjdź z pełnego ekranu",
                 closeBtn: "Zamknij",
@@ -2692,7 +2686,7 @@
                 const key = el.dataset.langTitle;
                 if (lang[key]) el.title = lang[key];
             });
-            document.title = lang.pageTitle;
+            document.title = config.pageSettings.pageTitle || lang.pageTitle;
             document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
         }
 
