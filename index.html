@@ -791,12 +791,171 @@
             pointer-events: none;
         }
 
-        .guide-list.view-image-only .guide {
-            padding: 10px;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+        /* --- NOWY EFEKT HOVER v2 "WOW" - (POPRAWIONY KROK 2) - START --- */
+
+        /* Definicja animacji płynnej zmiany koloru (Hue) dla maski */
+        @keyframes hue-cycle {
+            0% {
+                background-color: hsla(0, 65%, 50%, var(--mask-opacity, 0.7));
+            }
+
+            16% {
+                background-color: hsla(300, 65%, 50%, var(--mask-opacity, 0.7));
+            }
+
+            33% {
+                background-color: hsla(240, 65%, 50%, var(--mask-opacity, 0.7));
+            }
+
+            50% {
+                background-color: hsla(180, 65%, 50%, var(--mask-opacity, 0.7));
+            }
+
+            66% {
+                background-color: hsla(120, 65%, 50%, var(--mask-opacity, 0.7));
+            }
+
+            83% {
+                background-color: hsla(60, 65%, 50%, var(--mask-opacity, 0.7));
+            }
+
+            100% {
+                background-color: hsla(0, 65%, 50%, var(--mask-opacity, 0.7));
+            }
         }
+
+        /* Ogólne ustawienia dla kafelka w trybie "tylko obrazki" */
+        .guide-list.view-image-only .guide {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            border-radius: 10px;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+        }
+
+        /* Styl okładki */
+        .guide-list.view-image-only .guide .guide-cover {
+            margin: 0;
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
+        }
+
+        /* Maska z animacją koloru */
+        .guide-list.view-image-only .guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            /* >>> ZMIANA: Przyspieszenie animacji o 20% (z 20s na 16s) <<< */
+            animation: hue-cycle 16s linear infinite;
+            animation-play-state: paused;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+            --mask-opacity: 0.7;
+        }
+
+        /* Tytuł z efektem "kurtyny" */
+        .guide-list.view-image-only .guide .guide-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px 15px 40px 15px;
+            /* Zwiększony padding na opis */
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(2px);
+            z-index: 2;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+            font-size: var(--dynamic-font-size, 1em);
+            /* >>> ZMIANA: Zwiększenie grubości fontu dla lepszego efektu z obramowaniem <<< */
+            font-weight: 800;
+        }
+
+        /* Link wewnątrz tytułu */
+        .guide-list.view-image-only .guide .guide-title a {
+            color: var(--hover-text-color, #FFFFFF);
+            text-decoration: none;
+        }
+
+        /* Styl dla Opisu */
+        .guide-list.view-image-only .guide .guide-info {
+            position: absolute;
+            bottom: 15px;
+            left: 0;
+            width: 100%;
+            padding: 0 15px;
+            box-sizing: border-box;
+            z-index: 2;
+            text-align: center;
+            font-weight: normal;
+            color: var(--hover-text-color, #FFFFFF);
+            font-size: calc(var(--dynamic-font-size, 1em) * 0.8);
+            opacity: 0;
+            /* FIX: Ustawienie max-height na 0, aby respektować styl bazowy (zostanie nadpisane na hover) */
+            max-height: 0;
+            overflow: hidden;
+            transform: translateY(30px);
+            /* Dodajemy max-height do animowanych właściwości */
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s, max-height 0.4s ease 0.1s;
+        }
+
+        /* >>> ZMIANA: Dodanie "włosowego" obramowania liter <<< */
+        .guide-list.view-image-only .guide .guide-title a,
+        .guide-list.view-image-only .guide .guide-info {
+            -webkit-text-stroke-width: 0.5px;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+            /* Fallback i poprawa czytelności */
+        }
+
+        body:not(.dark-mode) .guide-list.view-image-only .guide .guide-title a,
+        body:not(.dark-mode) .guide-list.view-image-only .guide .guide-info {
+            -webkit-text-stroke-color: rgba(80, 80, 80, 0.5);
+            /* Obramowanie dla trybu jasnego */
+        }
+
+        body.dark-mode .guide-list.view-image-only .guide .guide-title a,
+        body.dark-mode .guide-list.view-image-only .guide .guide-info {
+            -webkit-text-stroke-color: rgba(20, 20, 20, 0.7);
+            /* Obramowanie dla trybu ciemnego */
+        }
+
+        /* --- AKCJA HOVER / MOBILE TAP --- */
+        .guide-list.view-image-only .guide:hover .guide-cover,
+        .guide-list.view-image-only .guide.mobile-hover .guide-cover {
+            transform: scale(1.1);
+            filter: brightness(0.6);
+        }
+
+        .guide-list.view-image-only .guide:hover::before,
+        .guide-list.view-image-only .guide.mobile-hover::before {
+            opacity: 1;
+            animation-play-state: running;
+        }
+
+        .guide-list.view-image-only .guide:hover .guide-title,
+        .guide-list.view-image-only .guide.mobile-hover .guide-title {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .guide-list.view-image-only .guide:hover .guide-info,
+        .guide-list.view-image-only .guide.mobile-hover .guide-info {
+            opacity: 1;
+            /* FIX: Nadpisanie max-height, aby opis stał się widoczny */
+            max-height: 5.4em;
+            transform: translateY(0);
+        }
+
+        /* --- NOWY EFEKT HOVER v2 "WOW" - (POPRAWIONY KROK 2) - KONIEC --- */
 
         .guide-list.view-image-only .guide-cover {
             margin: 0;
@@ -1986,7 +2145,8 @@
         .guide-list.view-image-only .guide:hover .guide-title a {
             opacity: 1;
             transform: translateY(-50%) translateY(0);
-            color: var(--hover-text-color, #FFFFFF);  !important;
+            color: var(--hover-text-color, #FFFFFF);
+            !important;
         }
 
         /* Styl dla nowego kontenera i przycisku Reset */
@@ -2053,6 +2213,52 @@
                 }
             } catch (e) { /* Ignore */ }
         })();
+
+        function initializeMobileHover() {
+            // Nasłuchuj dotknięć na całej liście okładek
+            guideList.addEventListener('touchend', function (e) {
+                const tappedItem = e.target.closest('.guide');
+
+                // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
+                if (!tappedItem) {
+                    if (tappedGuide) {
+                        tappedGuide.classList.remove('mobile-hover');
+                        tappedGuide = null;
+                    }
+                    return;
+                }
+
+                // Zatrzymaj domyślną akcję (np. nawigację), aby obsłużyć ją ręcznie
+                e.preventDefault();
+
+                if (tappedGuide === tappedItem) {
+                    // DRUGIE dotknięcie tego samego kafelka: wykonaj akcję kliknięcia
+                    const link = tappedItem.querySelector('a');
+                    if (link) {
+                        link.click();
+                    }
+                    tappedGuide.classList.remove('mobile-hover');
+                    tappedGuide = null;
+                } else {
+                    // PIERWSZE dotknięcie lub dotknięcie innego kafelka
+                    // Zdejmij hover ze starego kafelka, jeśli istniał
+                    if (tappedGuide) {
+                        tappedGuide.classList.remove('mobile-hover');
+                    }
+                    // Ustaw hover na nowym kafelku
+                    tappedItem.classList.add('mobile-hover');
+                    tappedGuide = tappedItem;
+                }
+            });
+
+            // Dodajmy też reset po kliknięciu gdziekolwiek indziej na stronie
+            document.addEventListener('touchstart', function (e) {
+                if (!e.target.closest('.guide') && tappedGuide) {
+                    tappedGuide.classList.remove('mobile-hover');
+                    tappedGuide = null;
+                }
+            });
+        }       
     </script>
 </head>
 
@@ -2518,6 +2724,7 @@
             isLightboxMinimized = false;
         let guideDimensionsCache = {};
         let pausedTime = 0;
+        let tappedGuide = null;
 
         const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -3007,6 +3214,7 @@
             }
             initializeNewButtons();
             initializeDisplayPanel();
+            initializeMobileHover(); // <-- Dodaj tę linię
             // FIX: Usunięcie funkcji powodującej problemy z animacją paginacji
             // initializeFooterAnimation();
         };
@@ -3179,7 +3387,11 @@
 
             const sizePercent = document.getElementById('sizeSlider').value;
             const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100));
-
+            const minSlider = 50, maxSlider = 150;
+            const minFont = 0.8, maxFont = 1.3; // w jednostkach 'em'
+            const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
+            const dynamicFontSize = minFont + (percent * (maxFont - minFont));
+            guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}em`);
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
             // FIX: Dynamiczne ustawianie wysokości kontenera dla płynnych animacji layoutu
