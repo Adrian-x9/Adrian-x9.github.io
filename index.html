@@ -454,11 +454,12 @@
         #generatorModeBtn i {
             margin-right: 0;
         }
-		
+
         /* FIX: Poprawka koloru przycisku filtrującego */
         body:not(.dark-mode) #generatorModeBtn:not(.active) {
             color: #333;
         }
+
         body.dark-mode #generatorModeBtn:not(.active) {
             color: #eee;
         }
@@ -1305,7 +1306,7 @@
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
-        
+
         /* FIX: Usunięcie podwójnej animacji paginacji */
         .animated-action-controls,
         .animated-footer {
@@ -1314,9 +1315,9 @@
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
-        
+
         .pagination.visible.animated-pagination {
-             animation-name: fadeInUp;
+            animation-name: fadeInUp;
             animation-duration: 0.8s;
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
@@ -1959,16 +1960,53 @@
             margin: 0;
             font-size: 1em;
         }
-        
+
         /* FIX: Poprawka koloru tekstu na okładce */
         .guide-list.view-image-only .guide:hover .guide-title {
             opacity: 1;
             transform: translateY(-50%) translateY(0);
             color: var(--hover-text-color, #FFFFFF);
         }
+
+        /* Styl dla nowego kontenera i przycisku Reset */
+        .reset-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        #mainResetBtn {
+            background: none;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            padding: 10px;
+            font-size: 1.4em;
+            /* Zmniejszona ikona */
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+
+        #mainResetBtn:hover {
+            transform: rotate(90deg);
+        }
+
+        body:not(.dark-mode) #mainResetBtn {
+            color: #888;
+        }
+
+        body:not(.dark-mode) #mainResetBtn:hover {
+            color: #cc0000;
+        }
+
+        body.dark-mode #mainResetBtn {
+            color: #aaa;
+        }
+
+        body.dark-mode #mainResetBtn:hover {
+            color: #e53935;
+        }
     </style>
     <script>
-        (function() {
+        (function () {
             const langConfig = {
                 defaultLanguage: 'pl',
                 englishUrl: 'index-en.html'
@@ -1985,7 +2023,7 @@
             } catch (e) { /* Ignore storage errors */ }
         })();
 
-        (function() {
+        (function () {
             try {
                 const theme = localStorage.getItem('visudir_theme');
                 const defaultTheme = 'light';
@@ -2085,8 +2123,6 @@
     <div class="pagination" id="pagination"></div>
 
     <div class="action-controls" id="actionControls">
-        <button id="mainResetBtn" class="dir-db-btn"><i class="fas fa-sync"></i><span class="btn-text"
-                data-lang="btnReset"></span></button>
         <button id="videoBtn" class="dir-db-btn multi-button">
             <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"
                     data-lang="btnVideo"></span></span>
@@ -2096,6 +2132,10 @@
             <span id="videoBtn-next" class="multi-button-child"><i class="fas fa-chevron-right"></i></span>
             <span id="videoBtn-reset" class="multi-button-child"><i class="fas fa-undo"></i></span>
         </button>
+    </div>
+
+    <div class="reset-container animated-footer">
+        <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
     </div>
 
     <div class="footer">
@@ -2153,7 +2193,7 @@
 
     <script>
         // --- System Initialization ---
-        (function() {
+        (function () {
             // Self-healing and timeout mechanism
             try {
                 const isRetry = sessionStorage.getItem('visudir_load_retry');
@@ -2199,7 +2239,7 @@
         // --- configuraton / konfiguracja ---
 
         const config = {
-            version: 'v1.11.3', // Bug fixes / Poprawki błędów
+            version: 'v1.11.4', // Ux corrections
             language: {
                 current: 'pl',
                 files: {
@@ -2262,7 +2302,7 @@
                 }, {
                     label: "Poradniki",
                     search: "Poradniki"
-                }, ],
+                },],
             },
 
             logoRotator: {
@@ -2596,7 +2636,7 @@
             // FIX: Zapobieganie AbortError przez oczekiwanie na gotowość wideo
             if (videoShuffle && videoBgState === 'playing') {
                 bgVideo.addEventListener('canplay', () => {
-                     toggleAutoShuffle(true);
+                    toggleAutoShuffle(true);
                 }, { once: true });
             }
 
@@ -2893,7 +2933,7 @@
             document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
         }
 
-        window.onload = function() {
+        window.onload = function () {
             applyLanguage();
             fileInputLabel.style.display = "none";
             document.querySelectorAll('.version-display').forEach(el => el.textContent = config.version);
@@ -3029,13 +3069,13 @@
 
             // Obsługa trybu online
             const [filePath] = targetUrl.split('?');
-            
+
             fetch(filePath, { method: 'HEAD', cache: 'no-store' })
                 .then(response => {
                     // Serwer odpowiedział, ale może to być strona błędu, która zwraca 200 OK.
                     // Dla plików .html i .link, ufamy statusowi. Dla innych, moglibyśmy dodać więcej sprawdzeń.
                     if (response.ok) {
-                         window.open(targetUrl, '_blank');
+                        window.open(targetUrl, '_blank');
                     } else {
                         // Jeśli serwer zwrócił błąd (np. 404), użyj fallback
                         window.location.href = fallbackUrl;
@@ -3121,7 +3161,7 @@
 
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
-            
+
             if (sourceArray) {
                 source.forEach((guide, index) => {
                     const div = document.createElement("div");
@@ -4025,7 +4065,7 @@
 
         function debounce(func, wait) {
             let timeout;
-            return function(...args) {
+            return function (...args) {
                 const later = () => {
                     clearTimeout(timeout);
                     func.apply(this, args);
@@ -4044,7 +4084,7 @@
         }, 250);
         window.addEventListener("resize", debouncedRender);
 
-        window.addEventListener("pageshow", function(event) {
+        window.addEventListener("pageshow", function (event) {
             if (event.persisted) {
                 applyFilters();
                 renderGuides();
@@ -4071,6 +4111,10 @@
                 selector: "#actionControls",
                 class: "animated-action-controls",
                 delay: 0.6
+            }, {
+                selector: ".reset-container",
+                class: "animated-footer",
+                delay: 0.65
             }, {
                 selector: ".footer",
                 class: "animated-footer",
@@ -4181,7 +4225,7 @@
         updateGeneratorModeBtn();
 
 
-        fileInput.addEventListener("change", function() {
+        fileInput.addEventListener("change", function () {
             if (this.files[0]) {
                 loadAndParseFile(this.files[0]);
                 stopPlayAnimation();
