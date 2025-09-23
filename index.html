@@ -128,6 +128,7 @@
 
         a:hover {
             text-decoration: none;
+            text-shadow: #222;
         }
 
         .top-header a.dir-db-btn:hover {
@@ -755,6 +756,22 @@
                 opacity: 1;
                 transform: scale(1);
             }
+        }
+
+        @keyframes fadeOutSlideOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            to {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        .guide.animate-out {
+            animation: fadeOutSlideOut 0.3s ease-in forwards;
         }
 
         .guide-title,
@@ -1965,10 +1982,11 @@
         }
 
         /* FIX: Poprawka koloru tekstu na okładce */
-        .guide-list.view-image-only .guide:hover .guide-title {
+        .guide-list.view-image-only .guide:hover .guide-title,
+        .guide-list.view-image-only .guide:hover .guide-title a {
             opacity: 1;
             transform: translateY(-50%) translateY(0);
-            color: var(--hover-text-color, #FFFFFF);
+            color: var(--hover-text-color, #FFFFFF);  !important;
         }
 
         /* Styl dla nowego kontenera i przycisku Reset */
@@ -2276,7 +2294,7 @@
                 baseBoxWidth: 256,
                 estimatedItemHeight: 380,
                 defaultViewMode: 'full',
-                hoverOverlayColor: 'rgba(204, 0, 0, 0.3)',
+                hoverOverlayColor: 'rgba(204, 0, 0, 0.7)',
                 hoverTextColor: '#ffffff',
 
                 defaultGeneratorMode: 'visible',
@@ -3168,9 +3186,9 @@
             const wrapper = document.querySelector('.guide-list-wrapper');
             const guideGap = 20;
             // Używamy wartości z konfiguracji jako podstawy do obliczeń
-            const estimatedItemHeight = config.pageSettings.estimatedItemHeight; 
+            const estimatedItemHeight = config.pageSettings.estimatedItemHeight;
             const wrapperHeight = (selectedRowCount * estimatedItemHeight) + ((selectedRowCount - 1) * guideGap);
-            wrapper.style.height = `${wrapperHeight}px`;    
+            wrapper.style.height = `${wrapperHeight}px`;
 
             if (sourceArray) {
                 source.forEach((guide, index) => {
