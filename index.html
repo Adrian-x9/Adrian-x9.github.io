@@ -791,7 +791,7 @@
             pointer-events: none;
         }
 
-        /* --- NOWY EFEKT HOVER v2 "WOW" - (POPRAWIONY KROK 2) - START --- */
+        /* --- NOWY EFEKT HOVER v2 "WOW" - (WERSJA OSTATECZNA POPRAWIONA) - START --- */
 
         /* Definicja animacji płynnej zmiany koloru (Hue) dla maski */
         @keyframes hue-cycle {
@@ -851,7 +851,6 @@
             width: 100%;
             height: 100%;
             opacity: 0;
-            /* >>> ZMIANA: Przyspieszenie animacji o 20% (z 20s na 16s) <<< */
             animation: hue-cycle 16s linear infinite;
             animation-play-state: paused;
             transition: opacity 0.4s ease;
@@ -862,21 +861,20 @@
         /* Tytuł z efektem "kurtyny" */
         .guide-list.view-image-only .guide .guide-title {
             position: absolute;
-            bottom: 0;
-            left: 0;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -100%);
             width: 100%;
-            padding: 15px 15px 40px 15px;
-            /* Zwiększony padding na opis */
+            /* >>> POPRAWKA: Zwiększony pionowy padding dla większej maski i lepszego dopasowania tekstu <<< */
+            padding: 20px 15px 25px;
             box-sizing: border-box;
             background: rgba(0, 0, 0, 0.4);
             backdrop-filter: blur(2px);
             z-index: 2;
             text-align: center;
             opacity: 0;
-            transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
-            font-size: var(--dynamic-font-size, 1em);
-            /* >>> ZMIANA: Zwiększenie grubości fontu dla lepszego efektu z obramowaniem <<< */
+            font-size: var(--dynamic-font-size, 1rem) !important;
             font-weight: 800;
         }
 
@@ -889,8 +887,10 @@
         /* Styl dla Opisu */
         .guide-list.view-image-only .guide .guide-info {
             position: absolute;
-            bottom: 15px;
-            left: 0;
+            /* >>> FIX: Obniżenie pozycji opisu, aby pasował do nowego paddingu <<< */
+            bottom: 10px;
+            left: 50%;
+            transform: translate(-50%, 30px);
             width: 100%;
             padding: 0 15px;
             box-sizing: border-box;
@@ -898,41 +898,36 @@
             text-align: center;
             font-weight: normal;
             color: var(--hover-text-color, #FFFFFF);
-            font-size: calc(var(--dynamic-font-size, 1em) * 0.8);
+            /* >>> FIX: Użycie !important do wymuszenia dynamicznego rozmiaru <<< */
+            font-size: calc(var(--dynamic-font-size, 1rem) * 0.8) !important;
             opacity: 0;
-            /* FIX: Ustawienie max-height na 0, aby respektować styl bazowy (zostanie nadpisane na hover) */
             max-height: 0;
             overflow: hidden;
-            transform: translateY(30px);
-            /* Dodajemy max-height do animowanych właściwości */
             transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s, max-height 0.4s ease 0.1s;
         }
 
-        /* >>> ZMIANA: Dodanie "włosowego" obramowania liter <<< */
+        /* Obramowanie liter */
         .guide-list.view-image-only .guide .guide-title a,
         .guide-list.view-image-only .guide .guide-info {
             -webkit-text-stroke-width: 0.5px;
             text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
-            /* Fallback i poprawa czytelności */
         }
 
         body:not(.dark-mode) .guide-list.view-image-only .guide .guide-title a,
         body:not(.dark-mode) .guide-list.view-image-only .guide .guide-info {
             -webkit-text-stroke-color: rgba(80, 80, 80, 0.5);
-            /* Obramowanie dla trybu jasnego */
         }
 
         body.dark-mode .guide-list.view-image-only .guide .guide-title a,
         body.dark-mode .guide-list.view-image-only .guide .guide-info {
             -webkit-text-stroke-color: rgba(20, 20, 20, 0.7);
-            /* Obramowanie dla trybu ciemnego */
         }
 
         /* --- AKCJA HOVER / MOBILE TAP --- */
         .guide-list.view-image-only .guide:hover .guide-cover,
         .guide-list.view-image-only .guide.mobile-hover .guide-cover {
             transform: scale(1.1);
-            filter: brightness(0.6);
+            filter: brightness(0.8);
         }
 
         .guide-list.view-image-only .guide:hover::before,
@@ -944,18 +939,18 @@
         .guide-list.view-image-only .guide:hover .guide-title,
         .guide-list.view-image-only .guide.mobile-hover .guide-title {
             opacity: 1;
-            transform: translateY(0);
+            transform: translate(-50%, 0);
+            pointer-events: auto;
         }
 
         .guide-list.view-image-only .guide:hover .guide-info,
         .guide-list.view-image-only .guide.mobile-hover .guide-info {
             opacity: 1;
-            /* FIX: Nadpisanie max-height, aby opis stał się widoczny */
             max-height: 5.4em;
-            transform: translateY(0);
+            transform: translate(-50%, 0);
         }
 
-        /* --- NOWY EFEKT HOVER v2 "WOW" - (POPRAWIONY KROK 2) - KONIEC --- */
+        /* --- NOWY EFEKT HOVER v2 "WOW" - (WERSJA OSTATECZNA POPRAWIONA) - KONIEC --- */
 
         .guide-list.view-image-only .guide-cover {
             margin: 0;
@@ -2082,72 +2077,6 @@
             flex-shrink: 0;
         }
 
-        .guide-list.view-image-only .guide {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .guide-list.view-image-only .guide .guide-title,
-        .guide-list.view-image-only .guide .guide-info,
-        .guide-list.view-image-only .guide .guide-content-bottom>a:not(.cover-link) {
-            opacity: 0;
-            max-height: 0;
-            margin: 0;
-            padding: 0;
-            pointer-events: none;
-        }
-
-        .guide-list.view-image-only .guide .guide-cover {
-            transition: transform 0.3s ease-out;
-        }
-
-        .guide-list.view-image-only .guide:hover .guide-cover {
-            transform: scale(1.05);
-        }
-
-        .guide-list.view-image-only .guide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 100%;
-            background: var(--hover-overlay-color, rgba(204, 0, 0, 0.7));
-            transform: translateY(-100%);
-            transition: transform 0.35s ease-out;
-            z-index: 1;
-        }
-
-        .guide-list.view-image-only .guide:hover::before {
-            transform: translateY(0);
-        }
-
-        .guide-list.view-image-only .guide .guide-title {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            right: 10px;
-            padding: 10px;
-            opacity: 0;
-            max-height: none;
-            transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
-            pointer-events: auto;
-            border-radius: 0;
-            z-index: 2;
-            background: none;
-            transform: translateY(-50%) translateY(20px);
-            margin: 0;
-            font-size: 1em;
-        }
-
-        /* FIX: Poprawka koloru tekstu na okładce */
-        .guide-list.view-image-only .guide:hover .guide-title,
-        .guide-list.view-image-only .guide:hover .guide-title a {
-            opacity: 1;
-            transform: translateY(-50%) translateY(0);
-            color: var(--hover-text-color, #FFFFFF);
-            !important;
-        }
 
         /* Styl dla nowego kontenera i przycisku Reset */
         .reset-container {
@@ -3321,10 +3250,7 @@
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-            let h = "",
-                i = "",
-                a = "",
-                w = "";
+            let h = "", i = "", a = "", w = "";
             let d = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(d))
                 d = d.replace(/^\d{2}\s*/, "");
@@ -3357,7 +3283,12 @@
                 }
             }
             const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
-            return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
+
+            // Zmiana: opakowanie 'h' i 'i' w nowy kontener '.hover-text-content'
+            const hoverContent = `<div class="hover-text-content">${h}</div>`;
+            const bottomContent = `<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
+
+            return `${hoverContent}${bottomContent}`;
         }
 
         const goToPage = (pageNum) => {
@@ -3368,7 +3299,6 @@
                 behavior: 'smooth'
             });
         };
-
 
         function renderGuides(sourceArray = null) {
             stopCarousel();
@@ -3388,16 +3318,21 @@
             const sizePercent = document.getElementById('sizeSlider').value;
             const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100));
             const minSlider = 50, maxSlider = 150;
-            const minFont = 0.8, maxFont = 1.3; // w jednostkach 'em'
+            const minFont = 0.8, maxFont = 1.3;
+
+            // ==================================================================
+            // TUTAJ BYŁ BŁĄD: (maxSlider - minFont) zamiast (maxSlider - minSlider)
+            // Poprawiona formuła:
             const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
+            // ==================================================================
+
             const dynamicFontSize = minFont + (percent * (maxFont - minFont));
-            guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}em`);
+            guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
-            // FIX: Dynamiczne ustawianie wysokości kontenera dla płynnych animacji layoutu
+
             const wrapper = document.querySelector('.guide-list-wrapper');
             const guideGap = 20;
-            // Używamy wartości z konfiguracji jako podstawy do obliczeń
             const estimatedItemHeight = config.pageSettings.estimatedItemHeight;
             const wrapperHeight = (selectedRowCount * estimatedItemHeight) + ((selectedRowCount - 1) * guideGap);
             wrapper.style.height = `${wrapperHeight}px`;
@@ -3410,7 +3345,6 @@
                     div.innerHTML = createGuideHtml(guide);
                     guideList.appendChild(div);
                 });
-                // FIX: Wymuszenie odświeżenia layoutu po wylosowaniu elementów
                 requestAnimationFrame(() => {
                     void guideList.offsetWidth;
                 });
