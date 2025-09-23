@@ -454,6 +454,14 @@
         #generatorModeBtn i {
             margin-right: 0;
         }
+		
+        /* FIX: Poprawka koloru przycisku filtrującego */
+        body:not(.dark-mode) #generatorModeBtn:not(.active) {
+            color: #333;
+        }
+        body.dark-mode #generatorModeBtn:not(.active) {
+            color: #eee;
+        }
 
         body:not(.dark-mode) #generatorModeBtn.active {
             color: #cc0000;
@@ -1297,15 +1305,23 @@
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
-
+        
+        /* FIX: Usunięcie podwójnej animacji paginacji */
         .animated-action-controls,
-        .animated-footer,
-        .animated-pagination {
+        .animated-footer {
             animation-name: fadeInUp;
             animation-duration: 0.8s;
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
+        
+        .pagination.visible.animated-pagination {
+             animation-name: fadeInUp;
+            animation-duration: 0.8s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
+        }
+
 
         .controls.minimized-view .dir-db-btn i,
         #lightbox-controls .dir-db-btn i {
@@ -1931,7 +1947,6 @@
             top: 50%;
             left: 10px;
             right: 10px;
-            color: var(--hover-text-color, #FFFFFF);
             padding: 10px;
             opacity: 0;
             max-height: none;
@@ -1944,10 +1959,12 @@
             margin: 0;
             font-size: 1em;
         }
-
+        
+        /* FIX: Poprawka koloru tekstu na okładce */
         .guide-list.view-image-only .guide:hover .guide-title {
             opacity: 1;
             transform: translateY(-50%) translateY(0);
+            color: var(--hover-text-color, #FFFFFF);
         }
     </style>
     <script>
@@ -2401,6 +2418,8 @@
 
 
 
+        // FIX: Zmienna globalna do sprawdzania trybu offline
+        const isOffline = window.location.protocol === 'file:';
 
         let videoBgState;
         let areLabelsVisible;
@@ -2469,7 +2488,8 @@
 
         function initializeTheme() {
             const storedTheme = localStorage.getItem('visudir_theme');
-            const theme = storedTheme || config.global.defaultTheme;
+            // FIX: Usunięcie odwołania do nieistniejącego config.global
+            const theme = storedTheme || 'light';
             const isDark = theme === 'dark';
             document.documentElement.classList.toggle('dark-mode', isDark);
             document.body.classList.toggle('dark-mode', isDark);
@@ -2491,7 +2511,17 @@
                 const videoUrlBase = theme === 'light' ? config.paths.videoBgLightUrlBase : config.paths.videoBgDarkUrlBase;
                 const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
                 bgVideoSource.src = videoSrc;
+                // FIX: Zmiana load() na play() i obsługa błędu AbortError
                 bgVideo.load();
+                const playPromise = bgVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        if (error.name !== 'AbortError') {
+                            console.error("Błąd odtwarzania wideo:", error);
+                        }
+                    });
+                }
+
                 bgVideo.addEventListener("canplay", () => {
                     document.body.classList.add("video-ready");
                 }, {
@@ -2563,8 +2593,11 @@
             pausedTime = parseFloat(getFromLocalStorage('video_paused_time')) || 0;
 
             const videoShuffle = JSON.parse(getFromLocalStorage('video_shuffle_enabled')) || false;
+            // FIX: Zapobieganie AbortError przez oczekiwanie na gotowość wideo
             if (videoShuffle && videoBgState === 'playing') {
-                toggleAutoShuffle(true);
+                bgVideo.addEventListener('canplay', () => {
+                     toggleAutoShuffle(true);
+                }, { once: true });
             }
 
             const hoverOverlay = getFromLocalStorage('hover_overlay_color') || config.pageSettings.hoverOverlayColor;
@@ -2699,7 +2732,7 @@
                     let linkData = {
                         description: offlineDesc
                     };
-                    if (format === 'link' && location.protocol !== 'file:') {
+                    if (format === 'link' && !isOffline) {
                         try {
                             const response = await fetch(`${config.paths.dataFolderName}/${filename}`);
                             if (response.ok) {
@@ -2913,7 +2946,8 @@
             }
             initializeNewButtons();
             initializeDisplayPanel();
-            initializeFooterAnimation();
+            // FIX: Usunięcie funkcji powodującej problemy z animacją paginacji
+            // initializeFooterAnimation();
         };
 
         function toggleMinimizeView() {
@@ -2979,46 +3013,38 @@
             renderGuides();
         }
 
+        // FIX: Poprawiona funkcja do otwierania plików i linków (online/offline + fallback)
         function checkFileAndOpen(targetUrl, fallbackUrl, isLink = false) {
+            // Bezpośrednie otwieranie linków zewnętrznych
             if (targetUrl.startsWith('http')) {
                 window.open(targetUrl, '_blank');
                 return;
             }
 
-            const [filePath] = targetUrl.split('?');
-            const isLocalHtml = filePath.endsWith('.html');
-
-            if (isLink && isLocalHtml) {
-                if (window.location.protocol === 'file:') {
-                    window.location.href = targetUrl;
-                    return;
-                }
-                fetch(filePath, {
-                        method: 'HEAD'
-                    })
-                    .then(response => {
-                        window.location.href = response.ok ? targetUrl : fallbackUrl;
-                    })
-                    .catch(() => {
-                        window.location.href = fallbackUrl;
-                    });
+            // Obsługa trybu offline (file://) - otwieramy bezpośrednio
+            if (isOffline) {
+                window.open(targetUrl, '_blank');
                 return;
             }
 
-            const http = new XMLHttpRequest();
-            http.open('HEAD', filePath, true);
-            http.timeout = 2000;
-            http.onload = function() {
-                if (this.status === 200 || this.status === 0) {
-                    window.open(targetUrl, '_blank');
-                } else {
+            // Obsługa trybu online
+            const [filePath] = targetUrl.split('?');
+            
+            fetch(filePath, { method: 'HEAD', cache: 'no-store' })
+                .then(response => {
+                    // Serwer odpowiedział, ale może to być strona błędu, która zwraca 200 OK.
+                    // Dla plików .html i .link, ufamy statusowi. Dla innych, moglibyśmy dodać więcej sprawdzeń.
+                    if (response.ok) {
+                         window.open(targetUrl, '_blank');
+                    } else {
+                        // Jeśli serwer zwrócił błąd (np. 404), użyj fallback
+                        window.location.href = fallbackUrl;
+                    }
+                })
+                .catch(() => {
+                    // Błąd sieciowy, użyj fallback
                     window.location.href = fallbackUrl;
-                }
-            };
-            http.onerror = http.ontimeout = function() {
-                window.location.href = fallbackUrl;
-            };
-            http.send();
+                });
         }
 
 
@@ -3091,15 +3117,11 @@
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
             const sizePercent = document.getElementById('sizeSlider').value;
-            const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100)); // FIX: Round down to prevent wrapping issues on wide screens.
+            const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100));
 
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
-
-            // FIX: Removed dynamic min-height calculation to prevent vertical stretching of items.
-            // const containerMinHeight = (selectedRowCount * config.pageSettings.estimatedItemHeight) + ((selectedRowCount - 1) * 20);
-            // guideList.style.minHeight = `${containerMinHeight}px`;
-
+            
             if (sourceArray) {
                 source.forEach((guide, index) => {
                     const div = document.createElement("div");
@@ -3107,6 +3129,10 @@
                     div.style.animationDelay = `${index * 0.04}s`;
                     div.innerHTML = createGuideHtml(guide);
                     guideList.appendChild(div);
+                });
+                // FIX: Wymuszenie odświeżenia layoutu po wylosowaniu elementów
+                requestAnimationFrame(() => {
+                    void guideList.offsetWidth;
                 });
                 pagination.classList.remove('visible');
                 document.getElementById("guideCountDisplay").innerHTML = lang.guideCounter.replace('{count}', source.length).replace('{total}', guides.length);
@@ -3222,7 +3248,7 @@
                 return;
             }
 
-            paginationContainer.classList.add('visible');
+            paginationContainer.classList.add('visible', 'animated-pagination');
             controls.style.display = 'flex';
 
             const firstPageBtn = document.getElementById('firstPageBtn');
@@ -4037,11 +4063,11 @@
                 selector: ".display-panel",
                 class: "animated-display-panel",
                 delay: 0.4
-            }, {
+            }, /*{ // Usunięte by naprawić podwójną animację
                 selector: ".pagination",
                 class: "animated-pagination",
                 delay: 0.5
-            }, {
+            },*/ {
                 selector: "#actionControls",
                 class: "animated-action-controls",
                 delay: 0.6
@@ -4091,39 +4117,6 @@
                     goToPage(nextPage);
                 }, 5000);
             }
-        }
-
-        function initializeFooterAnimation() {
-            let previousWrapperHeight = 0;
-            const elementsToMove = [document.getElementById('pagination'), document.getElementById('actionControls'), document.querySelector('.footer')];
-
-            const wrapperObserver = new ResizeObserver(entries => {
-                const newHeight = entries[0].contentRect.height;
-                if (previousWrapperHeight === 0 || Math.abs(newHeight - previousWrapperHeight) < 2) {
-                    previousWrapperHeight = newHeight;
-                    return;
-                }
-
-                const deltaY = previousWrapperHeight - newHeight;
-
-                for (const el of elementsToMove) {
-                    if (!el) continue;
-                    el.style.transition = 'none';
-                    el.style.transform = `translateY(${deltaY}px)`;
-                }
-
-                requestAnimationFrame(() => {
-                    for (const el of elementsToMove) {
-                        if (!el) continue;
-                        el.style.transition = '';
-                        el.style.transform = 'translateY(0px)';
-                    }
-                });
-
-                previousWrapperHeight = newHeight;
-            });
-
-            wrapperObserver.observe(document.querySelector('.guide-list-wrapper'));
         }
 
         searchInput.addEventListener("input", () => {
