@@ -802,7 +802,8 @@
             flex-direction: column;
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
-            transition: transform 0.1s ease-out; /* Płynny powrót */
+            transition: transform 0.1s ease-out;
+            /* Płynny powrót */
         }
 
         /* Poświata dla efektu 3D */
@@ -916,27 +917,49 @@
         .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid) .guide:hover .guide-cover {
             transform: scale(1.05);
         }
-        
-        /* --- WIDOK SIATKA (GRID) v1.0 - START --- */
-        
-        /* Ustawienia ogólne dla kafelka w tym trybie */
+
+        /* --- WIDOK SIATKA (GRID) v1.0 - START (z nowymi poprawkami) --- */
+
+        /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
+        .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid):not(.view-masonry) .guide:hover .guide-cover {
+            transform: scale(1.05);
+        }
+
+        /* 1. Kontener staje się "niewidzialny" - bez tła i cienia */
         .guide-list.view-grid .guide {
             padding: 0;
-            display: block;
+            display: flex;
+            /* Używamy flexboxa do idealnego wyśrodkowania zdjęcia */
+            justify-content: center;
+            align-items: center;
             position: relative;
             overflow: hidden;
-            aspect-ratio: 1 / 1; /* Ustawia kwadratowe proporcje */
+            aspect-ratio: 1 / 1;
+            background: transparent;
+            box-shadow: none;
         }
-        
-        /* Dedykowana klasa dla obrazka w widoku siatki */
+
+        /* 2. Zdjęcie nie jest przycinane i ma teraz ramkę, cień i subtelne tło */
         .guide-cover-grid {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
+            /* <-- NAJWAŻNIEJSZA ZMIANA: bez przycinania */
             transition: transform 0.3s ease-out;
+            border-radius: 8px;
+            /* Zaokrąglone rogi na zdjęciu */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            /* Delikatny cień */
+            background-color: rgba(0, 0, 0, 0.03);
+            /* Subtelne tło dla pustej przestrzeni */
         }
 
-        /* Nakładka z tytułem, domyślnie ukryta */
+        body.dark-mode .guide-cover-grid {
+            background-color: rgba(255, 255, 255, 0.05);
+            /* Tło w trybie ciemnym */
+        }
+
+        /* 3. Płynne pojawianie się nakładki */
         .guide-list.view-grid .grid-overlay {
             position: absolute;
             top: 0;
@@ -951,26 +974,36 @@
             text-align: center;
             opacity: 0;
             transition: opacity 0.3s ease-out;
+            /* <-- Płynne przejście */
             padding: 15px;
             box-sizing: border-box;
+            border-radius: 8px;
+            /* Dopasowujemy zaokrąglenie do zdjęcia */
         }
-        
-        /* Styl tekstu tytułu na nakładce */
+
+        /* 4. Nowy styl dla tekstu z otoczką (stroke) */
         .grid-overlay .grid-title-text a {
             color: #fff;
             font-size: 1.2em;
-            font-weight: bold;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            font-weight: 800;
+            /* Zwiększona grubość */
             text-decoration: none;
+            -webkit-text-stroke: 1px black;
+            /* "Włosowa" otoczka */
+            paint-order: stroke fill;
+            /* Gwarantuje, że otoczka jest pod tekstem */
         }
-        
-        /* Efekt hover */
+
+        /* 5. Efekty po najechaniu myszką */
         .guide-list.view-grid .guide:hover .grid-overlay {
             opacity: 1;
         }
-        
+
         .guide-list.view-grid .guide:hover .guide-cover-grid {
-            transform: scale(1.05);
+            transform: scale(1.03);
+            /* Delikatne powiększenie zdjęcia */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            /* Mocniejszy cień */
         }
 
         /* --- WIDOK SIATKA (GRID) v1.0 - KONIEC --- */
@@ -2423,7 +2456,7 @@
             },
 
             /// COPY HERE <cfg> // configuration / konfiguracja
-pageSettings: {
+            pageSettings: {
                 pageKey: 'polska',
 
                 defaultBgVideo: 1,
@@ -2432,7 +2465,7 @@ pageSettings: {
                 defaultVideoBg: true,
                 defaultLabelsVisible: true,
                 slideshowAnimations: true,
-                
+
                 pageKey: 'polska',
                 pageTitle: "Polska ▪ galeria zdjęć ▪",
                 showMiniLogo: true,
@@ -2455,7 +2488,7 @@ pageSettings: {
                 generatorOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 25, 50, 100],
 
                 defaultVideoExpanded: false,
-                predefinedFilters: [                    
+                predefinedFilters: [
                     { label: "Polska", search: "Polska" },
                     { label: "Gliwice", search: "Gliwice" },
                     { label: "Warszawa", search: "Warszawa" },
@@ -2489,14 +2522,14 @@ pageSettings: {
                 databaseFileName: ".base-system/db.txt",
                 dataFolderName: ".base-system/files",
                 coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/preview-hd"
+                previewHdFolderName: ".base-system/files"
             }
         };
-/// COPY HERE <cfg> // configuration end / koniec konfiguracji
+        /// COPY HERE <cfg> // configuration end / koniec konfiguracji
 
 
         /// COPY HERE <db> // database - txt file / baza danych - plik txt
-const dataFromFile = `
+        const dataFromFile = `
 06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
 06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
 06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
@@ -2540,7 +2573,7 @@ const dataFromFile = `
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
 `;
-/// COPY HERE <db> // database end / koniec bazy danych
+        /// COPY HERE <db> // database end / koniec bazy danych
 
         /// COPY HERE <lang> // language file / plik językowy
         const languageStrings = {
@@ -3231,9 +3264,9 @@ const dataFromFile = `
             const [filePath] = targetUrl.split('?');
 
             fetch(filePath, {
-                    method: 'HEAD',
-                    cache: 'no-store'
-                })
+                method: 'HEAD',
+                cache: 'no-store'
+            })
                 .then(response => {
                     if (response.ok) {
                         window.open(targetUrl, '_blank');

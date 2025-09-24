@@ -828,11 +828,18 @@
         }
 
 
-        /* Kontener na obrazek */
         .guide-list.view-image-only .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
+            display: flex;
+            /* Używamy flexboxa do wyśrodkowania */
+            align-items: center;
+            /* Wyrównanie w pionie */
+            justify-content: center;
+            /* Wyrównanie w poziomie */
+            background-color: rgba(0, 0, 0, 0.03);
+            /* Subtelne tło dla pustej przestrzeni */
         }
 
         /* Styl dla linku-nakładki w widoku eleganckim */
@@ -1079,6 +1086,8 @@
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
+            font-size: var(--dynamic-font-size, 1rem);
+            /* <-- DODAJ TĘ LINIĘ */
         }
 
         .guide-content-bottom {
@@ -3883,10 +3892,23 @@
             });
 
             sizeSlider.addEventListener('input', () => {
-                const newSize = sizeSlider.value;
-                sizeValue.textContent = `${newSize}%`;
-                const newWidth = config.pageSettings.baseBoxWidth * (newSize / 100);
+                const sliderValue = parseInt(sizeSlider.value, 10);
+                sizeValue.textContent = `${sliderValue}%`;
+
+                // Istniejąca logika skalowania szerokości kafelka
+                const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
                 guideList.style.setProperty('--box-width', `${newWidth}px`);
+
+                // --- NOWA LOGIKA SKALOWANIA CZCIONKI ---
+                const minFontSize = 0.85; // w jednostkach rem
+                const maxFontSize = 1.25; // w jednostkach rem
+                // Przeliczamy wartość suwaka [50, 150] na zakres [0, 1]
+                const normalizedValue = (sliderValue - 50) / 100;
+                // Mapujemy znormalizowaną wartość na nasz docelowy zakres rozmiaru czcionki
+                const dynamicFontSize = minFontSize + (normalizedValue * (maxFontSize - minFontSize));
+
+                // Ustawiamy zmienną CSS, której użyjemy do ostylowania tekstu
+                guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
             });
 
             sizeSlider.addEventListener('change', () => {
