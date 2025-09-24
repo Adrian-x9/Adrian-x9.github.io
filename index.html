@@ -989,6 +989,7 @@
             /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
             position: absolute;
             transition: top 0.4s ease-out, left 0.4s ease-out;
+            width: var(--box-width, 256px);
         }
 
         /* --- WIDOK MASONRY v1.0 - KONIEC --- */
@@ -2222,6 +2223,42 @@
 
         body.dark-mode #mainResetBtn:hover {
             color: #e53935;
+        }
+
+        /* Poprawka dla przycisku zmiany widoku */
+        #viewContentBtn .view-icon {
+            display: inline-block;
+            /* Zapewnia widoczność ikony */
+            transition: opacity 0.2s ease;
+        }
+
+        #viewContentBtn .view-number {
+            display: none;
+            /* Domyślnie ukrywa numer */
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #viewContentBtn:hover .view-icon {
+            display: none;
+            /* Ukrywa ikonę po najechaniu */
+        }
+
+        #viewContentBtn:hover .view-number {
+            display: inline-block;
+            /* Pokazuje numer po najechaniu */
+        }
+
+        /* Dodaje czerwone tło dla przycisku widoku w stanie hover, dla spójności z panelem */
+        .display-panel button#viewContentBtn:hover {
+            background-color: #cc0000;
+            color: white;
+        }
+
+        body.dark-mode .display-panel button#viewContentBtn:hover {
+            background-color: #e53935;
+            color: black;
         }
     </style>
     <script>
@@ -3781,6 +3818,39 @@
             const rowsValue = document.getElementById('rowsValue');
             const viewPlayBtn = document.getElementById('viewPlayBtn');
 
+            // --- START NOWEJ POPRAWIONEJ LOGIKI ---
+
+            const viewModes = ['text-only', 'full', 'image-only', 'grid', 'masonry'];
+
+            // 1. Tworzymy na stałe strukturę HTML w przycisku
+            viewContentBtn.innerHTML = `
+    <i class="fas fa-layer-group view-icon"></i>
+    <span class="view-number"></span>
+`;
+            const viewNumberSpan = viewContentBtn.querySelector('.view-number');
+
+            // Funkcja pomocnicza do aktualizacji numeru
+            const updateViewNumber = () => {
+                const viewNumber = viewModes.indexOf(currentViewMode) + 1;
+                viewNumberSpan.textContent = viewNumber;
+            };
+
+            // 2. Ustawiamy stan początkowy
+            currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
+            viewContentBtn.title = "Zmień tryb widoku";
+            updateViewNumber(); // Od razu ustawiamy poprawny numer
+
+            // 3. Logika kliknięcia: zmienia tryb i OD RAZU aktualizuje numer
+            viewContentBtn.addEventListener('click', () => {
+                const currentIndex = viewModes.indexOf(currentViewMode);
+                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
+                saveToLocalStorage('view_mode', currentViewMode);
+                updateViewNumber(); // Aktualizujemy cyfrę natychmiast po kliknięciu
+                renderGuides();
+            });
+
+            // --- KONIEC NOWEJ POPRAWIONEJ LOGIKI ---
+
             const updateThemeIcon = () => {
                 const isDark = document.documentElement.classList.contains('dark-mode');
                 viewThemeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
@@ -3788,49 +3858,9 @@
             };
             updateThemeIcon();
 
-            const updateContentView = () => {
-                let iconClass, title;
-                switch (currentViewMode) {
-                    case 'text-only':
-                        iconClass = 'fa-align-left';
-                        title = lang.viewModeText;
-                        break;
-                    case 'full':
-                        iconClass = 'fa-file-image';
-                        title = lang.viewModeFull;
-                        break;
-                    case 'image-only':
-                        iconClass = 'fa-th-large';
-                        title = 'Widok: Elegancki';
-                        break;
-                    case 'grid':
-                        iconClass = 'fa-th';
-                        title = 'Widok: Siatka';
-                        break;
-                    case 'masonry':
-                        iconClass = 'fa-grip-vertical';
-                        title = 'Widok: Masonry';
-                        break;
-                }
-                viewContentBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
-                viewContentBtn.title = title;
-                saveToLocalStorage('view_mode', currentViewMode);
-                renderGuides();
-            };
-
-            currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
-            updateContentView();
-
             viewThemeBtn.addEventListener('click', () => {
                 toggleDarkMode();
                 updateThemeIcon();
-            });
-
-            viewContentBtn.addEventListener('click', () => {
-                const viewModes = ['text-only', 'full', 'image-only', 'grid', 'masonry'];
-                const currentIndex = viewModes.indexOf(currentViewMode);
-                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
-                updateContentView();
             });
 
             viewOrientationBtn.addEventListener('click', () => {
