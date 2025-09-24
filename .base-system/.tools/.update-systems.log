@@ -1,18 +1,18 @@
-[12:15:07] Starting the cascade update process...
-[12:15:07] Base template file loaded successfully.
-[12:15:07] Scanning for system folders in: C:\Users\adrian\OneDrive\Documents\.www\VisuDir
-[12:15:07] Found system: 'Cyprus'
-[12:15:07] Found system: 'GameGuides'
-[12:15:07] Found system: 'Poland'
-[12:15:07] --- Processing system: 'Cyprus' ---
-[12:15:07] File '.db-secure.txt' is not UTF-8, attempting to read as UTF-16.
-[12:15:07] No language files found, generating default index.html.
-[12:15:07] Backup created: index-bck.html
-[12:15:07] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Cyprus\index.html
-[12:15:07] --- Processing system: 'GameGuides' ---
-[12:15:07] CRITICAL ERROR while processing system 'GameGuides': [WinError 3] System nie może odnaleźć określonej ścieżki: 'C:\\Users\\adrian\\OneDrive\\Documents\\.www\\VisuDir\\GameGuides\\.base-system\\.tools'
-[12:15:07] --- Processing system: 'Poland' ---
-[12:15:07] No language files found, generating default index.html.
-[12:15:08] Backup created: index-bck.html
-[12:15:08] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poland\index.html
-[12:15:08] --- Update process finished. ---
+[21:01:15] Starting the cascade update process...
+[21:01:15] Base template file loaded successfully.
+[21:01:15] Scanning for system folders in: C:\Users\adrian\OneDrive\Documents\.www\VisuDir
+[21:01:15] Found system: 'Cyprus'
+[21:01:15] Found system: 'GameGuides'
+[21:01:15] Found system: 'Poland'
+[21:01:15] --- Processing system: 'Cyprus' ---
+[21:01:15] File '.db-secure.txt' is not UTF-8, attempting to read as UTF-16.
+[21:01:15] No language files found, generating default index.html.
+[21:01:15] Backup created: index-bck.html
+[21:01:15] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Cyprus\index.html
+[21:01:15] --- Processing system: 'GameGuides' ---
+[21:01:15] CRITICAL ERROR while processing system 'GameGuides': [WinError 3] System nie może odnaleźć określonej ścieżki: 'C:\\Users\\adrian\\OneDrive\\Documents\\.www\\VisuDir\\GameGuides\\.base-system\\.tools'
+[21:01:15] --- Processing system: 'Poland' ---
+[21:01:15] No language files found, generating default index.html.
+[21:01:15] Backup created: index-bck.html
+[21:01:15] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poland\index.html
+[21:01:15] --- Update process finished. ---

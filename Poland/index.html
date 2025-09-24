@@ -792,9 +792,11 @@
             overflow: hidden;
         }
 
-        /* --- WIDOK ELEGANCKI v3.0 --- */
+        /* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
 
         /* Ustawienia ogólne dla kafelka w tym trybie */
+        /* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
+
         .guide-list.view-image-only .guide {
             padding: 0;
             overflow: hidden;
@@ -803,6 +805,8 @@
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
             transition: transform 0.1s ease-out;
+            border-radius: 20px;
+            /* <-- Zwiększone zaokrąglenie */
             /* Płynny powrót */
         }
 
@@ -828,11 +832,27 @@
         }
 
 
-        /* Kontener na obrazek */
+        /* .guide-list.view-image-only .guide-cover-wrapper {
+            height: 65%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.03);
+            Subtelne tło dla pustej przestrzeni
+        } */
+
+        /* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
         .guide-list.view-image-only .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
+        }
+
+        /* Usuwamy niepotrzebne tło dla trybu ciemnego */
+        body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
+            background-color: transparent;
         }
 
         /* Styl dla linku-nakładki w widoku eleganckim */
@@ -846,12 +866,26 @@
         }
 
         /* Dedykowana klasa dla obrazka w widoku eleganckim */
+        /* 3. Przywracamy rozciągnięcie obrazu, aby wypełniał kontener (zamiast się w nim mieścić) */
         .guide-cover-elegant {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            /* <-- Kluczowa zmiana: wypełnij i przytnij */
             transition: transform 0.4s ease-out;
+            /* Usuwamy stylizację z samego obrazka, bo ramką jest teraz cały kafelek */
+            border-radius: 0;
+            box-shadow: none;
+            /* display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.4s ease-out;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
         }
 
         /* Kontener na tekst pod obrazkiem */
@@ -867,6 +901,7 @@
 
         body.dark-mode .guide-list.view-image-only .guide-text-content {
             border-top: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .guide-list.view-image-only .guide-info {
@@ -913,53 +948,32 @@
             opacity: 1;
         }
 
-        /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
-        .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid) .guide:hover .guide-cover {
-            transform: scale(1.05);
-        }
-
-        /* --- WIDOK SIATKA (GRID) v1.0 - START (z nowymi poprawkami) --- */
+        /* --- WIDOK SIATKA (GRID) v1.0 - START --- */
 
         /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
         .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid):not(.view-masonry) .guide:hover .guide-cover {
             transform: scale(1.05);
         }
 
-        /* 1. Kontener staje się "niewidzialny" - bez tła i cienia */
+        /* Ustawienia ogólne dla kafelka w tym trybie */
         .guide-list.view-grid .guide {
             padding: 0;
-            display: flex;
-            /* Używamy flexboxa do idealnego wyśrodkowania zdjęcia */
-            justify-content: center;
-            align-items: center;
+            display: block;
             position: relative;
             overflow: hidden;
             aspect-ratio: 1 / 1;
-            background: transparent;
-            box-shadow: none;
+            /* Ustawia kwadratowe proporcje */
         }
 
-        /* 2. Zdjęcie nie jest przycinane i ma teraz ramkę, cień i subtelne tło */
+        /* Dedykowana klasa dla obrazka w widoku siatki */
         .guide-cover-grid {
             width: 100%;
             height: 100%;
-            object-fit: contain;
-            /* <-- NAJWAŻNIEJSZA ZMIANA: bez przycinania */
+            object-fit: cover;
             transition: transform 0.3s ease-out;
-            border-radius: 8px;
-            /* Zaokrąglone rogi na zdjęciu */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            /* Delikatny cień */
-            background-color: rgba(0, 0, 0, 0.03);
-            /* Subtelne tło dla pustej przestrzeni */
         }
 
-        body.dark-mode .guide-cover-grid {
-            background-color: rgba(255, 255, 255, 0.05);
-            /* Tło w trybie ciemnym */
-        }
-
-        /* 3. Płynne pojawianie się nakładki */
+        /* Nakładka z tytułem, domyślnie ukryta */
         .guide-list.view-grid .grid-overlay {
             position: absolute;
             top: 0;
@@ -974,40 +988,120 @@
             text-align: center;
             opacity: 0;
             transition: opacity 0.3s ease-out;
-            /* <-- Płynne przejście */
             padding: 15px;
             box-sizing: border-box;
-            border-radius: 8px;
-            /* Dopasowujemy zaokrąglenie do zdjęcia */
         }
 
-        /* 4. Nowy styl dla tekstu z otoczką (stroke) */
+        /* Styl tekstu tytułu na nakładce */
         .grid-overlay .grid-title-text a {
             color: #fff;
             font-size: 1.2em;
-            font-weight: 800;
-            /* Zwiększona grubość */
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
             text-decoration: none;
-            -webkit-text-stroke: 1px black;
-            /* "Włosowa" otoczka */
-            paint-order: stroke fill;
-            /* Gwarantuje, że otoczka jest pod tekstem */
         }
 
-        /* 5. Efekty po najechaniu myszką */
+        /* Efekt hover */
         .guide-list.view-grid .guide:hover .grid-overlay {
             opacity: 1;
         }
 
         .guide-list.view-grid .guide:hover .guide-cover-grid {
-            transform: scale(1.03);
-            /* Delikatne powiększenie zdjęcia */
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-            /* Mocniejszy cień */
+            transform: scale(1.05);
+        }
+
+
+        /* --- WIDOK MASONRY v1.0 - START --- */
+
+        .guide-list.view-masonry .guide-page {
+            display: block;
+            /* Wyłączamy grid */
+            position: relative;
+            /* Niezbędne do pozycjonowania kafelków */
+        }
+
+        .guide-list.view-masonry .guide {
+            /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
+            position: absolute;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+            width: var(--box-width, 256px);
+        }
+
+        /* --- WIDOK MASONRY v1.0 - KONIEC --- */
+
+        /* Ustawienia ogólne dla kafelka w tym trybie */
+        .guide-list.view-grid .guide {
+            padding: 0;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            /* Ustawia kwadratowe proporcje */
+        }
+
+        /* Dedykowana klasa dla obrazka w widoku siatki */
+        .guide-cover-grid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Nakładka z tytułem, domyślnie ukryta */
+        .guide-list.view-grid .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Styl tekstu tytułu na nakładce */
+        .grid-overlay .grid-title-text a {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+        }
+
+        /* Efekt hover */
+        .guide-list.view-grid .guide:hover .grid-overlay {
+            opacity: 1;
+        }
+
+        .guide-list.view-grid .guide:hover .guide-cover-grid {
+            transform: scale(1.05);
         }
 
         /* --- WIDOK SIATKA (GRID) v1.0 - KONIEC --- */
 
+        /* --- WIDOK MASONRY v1.0 - START --- */
+
+        .guide-list.view-masonry .guide-page {
+            display: block;
+            /* Wyłączamy grid */
+            position: relative;
+            /* Niezbędne do pozycjonowania kafelków */
+        }
+
+        .guide-list.view-masonry .guide {
+            /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
+            position: absolute;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+        }
+
+        /* --- WIDOK MASONRY v1.0 - KONIEC --- */
 
         .guide {
             padding: 0 20px 10px;
@@ -1020,6 +1114,8 @@
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
+            font-size: var(--dynamic-font-size, 1rem);
+            /* <-- DODAJ TĘ LINIĘ */
         }
 
         .guide-content-bottom {
@@ -2165,6 +2261,42 @@
         body.dark-mode #mainResetBtn:hover {
             color: #e53935;
         }
+
+        /* Poprawka dla przycisku zmiany widoku */
+        #viewContentBtn .view-icon {
+            display: inline-block;
+            /* Zapewnia widoczność ikony */
+            transition: opacity 0.2s ease;
+        }
+
+        #viewContentBtn .view-number {
+            display: none;
+            /* Domyślnie ukrywa numer */
+            font-weight: bold;
+            font-size: 1.2em;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #viewContentBtn:hover .view-icon {
+            display: none;
+            /* Ukrywa ikonę po najechaniu */
+        }
+
+        #viewContentBtn:hover .view-number {
+            display: inline-block;
+            /* Pokazuje numer po najechaniu */
+        }
+
+        /* Dodaje czerwone tło dla przycisku widoku w stanie hover, dla spójności z panelem */
+        .display-panel button#viewContentBtn:hover {
+            background-color: #cc0000;
+            color: white;
+        }
+
+        body.dark-mode .display-panel button#viewContentBtn:hover {
+            background-color: #e53935;
+            color: black;
+        }
     </style>
     <script>
         (function () {
@@ -2238,7 +2370,7 @@
                     tappedGuide = null;
                 }
             });
-        }       
+        }
     </script>
 </head>
 
@@ -2456,7 +2588,7 @@
             },
 
             /// COPY HERE <cfg> // configuration / konfiguracja
-            pageSettings: {
+pageSettings: {
                 pageKey: 'polska',
 
                 defaultBgVideo: 1,
@@ -2465,7 +2597,7 @@
                 defaultVideoBg: true,
                 defaultLabelsVisible: true,
                 slideshowAnimations: true,
-
+                
                 pageKey: 'polska',
                 pageTitle: "Polska ▪ galeria zdjęć ▪",
                 showMiniLogo: true,
@@ -2488,7 +2620,7 @@
                 generatorOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 25, 50, 100],
 
                 defaultVideoExpanded: false,
-                predefinedFilters: [
+                predefinedFilters: [                    
                     { label: "Polska", search: "Polska" },
                     { label: "Gliwice", search: "Gliwice" },
                     { label: "Warszawa", search: "Warszawa" },
@@ -2525,11 +2657,11 @@
                 previewHdFolderName: ".base-system/files"
             }
         };
-        /// COPY HERE <cfg> // configuration end / koniec konfiguracji
+/// COPY HERE <cfg> // configuration end / koniec konfiguracji
 
 
         /// COPY HERE <db> // database - txt file / baza danych - plik txt
-        const dataFromFile = `
+const dataFromFile = `
 06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
 06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
 06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
@@ -2573,7 +2705,7 @@
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
 `;
-        /// COPY HERE <db> // database end / koniec bazy danych
+/// COPY HERE <db> // database end / koniec bazy danych
 
         /// COPY HERE <lang> // language file / plik językowy
         const languageStrings = {
@@ -3286,8 +3418,7 @@
             let titleHtml = "",
                 infoHtml = "",
                 actionLinkHtml = "",
-                coverLinkHtml = "",
-                titleTextOnly = "";
+                coverLinkHtml = "";
             let titleText = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
                 titleText = titleText.replace(/^\d{2}\s*/, "");
@@ -3301,14 +3432,12 @@
                 infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
                 actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
                 coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
-                titleTextOnly = `<a href="${targetUrl}" onclick="${clickAction}">${titleText}</a>`;
             } else if (mediaTypes.includes(guide.format)) {
                 const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
                 titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
                 infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
                 actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
                 coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-                titleTextOnly = `<a href="#" onclick="${clickAction}">${titleText}</a>`;
             } else {
                 const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
                 titleHtml = `<div class="guide-title">${titleText}</div>`;
@@ -3316,11 +3445,9 @@
                 if (guide.format === "pdf") {
                     actionLinkHtml = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
                     coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-                    titleTextOnly = `<a href="#" onclick="${clickAction}">${titleText}</a>`;
                 } else {
                     actionLinkHtml = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
                     coverLinkHtml = `<a href="${u}" download class="cover-link"></a>`;
-                    titleTextOnly = `<a href="${u}" download>${titleText}</a>`;
                 }
             }
 
@@ -3338,17 +3465,20 @@
                         <div class="guide-action-link">${actionLinkHtml}</div>
                     </div>
                 `;
-            } else if (currentViewMode === 'grid') { // NOWA STRUKTURA HTML DLA SIATKI
+            } else if (currentViewMode === 'grid') {
                 const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+                const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || '';
+                const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || '#';
+
                 return `
-                    <a href="#" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ''}">
+                    <a href="${hrefAction}" onclick="${onclickAction}">
                         ${gridCoverImgHtml}
                         <div class="grid-overlay">
-                            <span class="grid-title-text">${titleTextOnly}</span>
+                            <span class="grid-title-text">${titleText}</span>
                         </div>
                     </a>
                 `;
-            } else {
+            } else { // Obejmuje widok 'full', 'text-only' i 'masonry'
                 const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
                 return `
                     ${titleHtml}
@@ -3381,6 +3511,7 @@
 
             guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
             guideList.classList.toggle('view-grid', currentViewMode === 'grid');
+            guideList.classList.toggle('view-masonry', currentViewMode === 'masonry');
             guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
 
             guideList.innerHTML = "";
@@ -3462,6 +3593,12 @@
                 isInitialLoad = false;
                 preloadNextPageImages();
             }
+
+            if (currentViewMode === 'masonry') {
+                setTimeout(() => applyMasonryLayout(), 100);
+            }
+
+            updateWrapperHeightForPage(1);
         }
 
         function setupLazyLoading(pages) {
@@ -3483,6 +3620,10 @@
                                         div.innerHTML = createGuideHtml(guide);
                                         pageDiv.appendChild(div);
                                     });
+                                    // Uruchomienie Masonry dla nowo załadowanej strony
+                                    if (currentViewMode === 'masonry' && pageNum > 1) {
+                                        setTimeout(() => applyMasonryLayout(pageNum), 50);
+                                    }
                                 });
                             }
                         }
@@ -3599,6 +3740,7 @@
                         const pageNum = parseInt(entry.target.dataset.pageNumber, 10);
                         currentPage = pageNum;
                         updateControls(pageNum);
+                        updateWrapperHeightForPage(pageNum);
                     }
                 });
             }, {
@@ -3702,6 +3844,39 @@
             const rowsValue = document.getElementById('rowsValue');
             const viewPlayBtn = document.getElementById('viewPlayBtn');
 
+            // --- START NOWEJ POPRAWIONEJ LOGIKI ---
+
+            const viewModes = ['text-only', 'full', 'image-only', 'grid', 'masonry'];
+
+            // 1. Tworzymy na stałe strukturę HTML w przycisku
+            viewContentBtn.innerHTML = `
+    <i class="fas fa-layer-group view-icon"></i>
+    <span class="view-number"></span>
+`;
+            const viewNumberSpan = viewContentBtn.querySelector('.view-number');
+
+            // Funkcja pomocnicza do aktualizacji numeru
+            const updateViewNumber = () => {
+                const viewNumber = viewModes.indexOf(currentViewMode) + 1;
+                viewNumberSpan.textContent = viewNumber;
+            };
+
+            // 2. Ustawiamy stan początkowy
+            currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
+            viewContentBtn.title = "Zmień tryb widoku";
+            updateViewNumber(); // Od razu ustawiamy poprawny numer
+
+            // 3. Logika kliknięcia: zmienia tryb i OD RAZU aktualizuje numer
+            viewContentBtn.addEventListener('click', () => {
+                const currentIndex = viewModes.indexOf(currentViewMode);
+                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
+                saveToLocalStorage('view_mode', currentViewMode);
+                updateViewNumber(); // Aktualizujemy cyfrę natychmiast po kliknięciu
+                renderGuides();
+            });
+
+            // --- KONIEC NOWEJ POPRAWIONEJ LOGIKI ---
+
             const updateThemeIcon = () => {
                 const isDark = document.documentElement.classList.contains('dark-mode');
                 viewThemeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
@@ -3709,45 +3884,9 @@
             };
             updateThemeIcon();
 
-            const updateContentView = () => {
-                let iconClass, title;
-                switch (currentViewMode) {
-                    case 'text-only':
-                        iconClass = 'fa-align-left';
-                        title = lang.viewModeText;
-                        break;
-                    case 'full':
-                        iconClass = 'fa-file-image';
-                        title = lang.viewModeFull;
-                        break;
-                    case 'image-only':
-                        iconClass = 'fa-th-large';
-                        title = 'Widok: Elegancki';
-                        break;
-                    case 'grid':
-                        iconClass = 'fa-th';
-                        title = 'Widok: Siatka';
-                        break;
-                }
-                viewContentBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
-                viewContentBtn.title = title;
-                saveToLocalStorage('view_mode', currentViewMode);
-                renderGuides();
-            };
-
-            currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
-            updateContentView();
-
             viewThemeBtn.addEventListener('click', () => {
                 toggleDarkMode();
                 updateThemeIcon();
-            });
-
-            viewContentBtn.addEventListener('click', () => {
-                const viewModes = ['text-only', 'full', 'image-only', 'grid'];
-                const currentIndex = viewModes.indexOf(currentViewMode);
-                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
-                updateContentView();
             });
 
             viewOrientationBtn.addEventListener('click', () => {
@@ -3770,10 +3909,23 @@
             });
 
             sizeSlider.addEventListener('input', () => {
-                const newSize = sizeSlider.value;
-                sizeValue.textContent = `${newSize}%`;
-                const newWidth = config.pageSettings.baseBoxWidth * (newSize / 100);
+                const sliderValue = parseInt(sizeSlider.value, 10);
+                sizeValue.textContent = `${sliderValue}%`;
+
+                // Istniejąca logika skalowania szerokości kafelka
+                const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
                 guideList.style.setProperty('--box-width', `${newWidth}px`);
+
+                // --- NOWA LOGIKA SKALOWANIA CZCIONKI ---
+                const minFontSize = 0.85; // w jednostkach rem
+                const maxFontSize = 1.25; // w jednostkach rem
+                // Przeliczamy wartość suwaka [50, 150] na zakres [0, 1]
+                const normalizedValue = (sliderValue - 50) / 100;
+                // Mapujemy znormalizowaną wartość na nasz docelowy zakres rozmiaru czcionki
+                const dynamicFontSize = minFontSize + (normalizedValue * (maxFontSize - minFontSize));
+
+                // Ustawiamy zmienną CSS, której użyjemy do ostylowania tekstu
+                guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
             });
 
             sizeSlider.addEventListener('change', () => {
@@ -4533,50 +4685,69 @@
             guideList.addEventListener('mousemove', onMouseMove, true);
         }
 
-        function initializeMobileHover() {
-            // Nasłuchuj dotknięć na całej liście okładek
-            guideList.addEventListener('touchend', function (e) {
-                const tappedItem = e.target.closest('.guide');
+        function applyMasonryLayout(pageNum = 1) {
+            const guidePage = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
+            if (!guidePage) return;
 
-                // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
-                if (!tappedItem) {
-                    if (tappedGuide) {
-                        tappedGuide.classList.remove('mobile-hover');
-                        tappedGuide = null;
-                    }
-                    return;
-                }
+            const items = Array.from(guidePage.children);
+            if (items.length === 0) return;
 
-                // Zatrzymaj domyślną akcję (np. nawigację), aby obsłużyć ją ręcznie
-                e.preventDefault();
+            const gap = 20;
+            const itemWidth = items[0].offsetWidth;
+            if (itemWidth === 0) return;
 
-                if (tappedGuide === tappedItem) {
-                    // DRUGIE dotknięcie tego samego kafelka: wykonaj akcję kliknięcia
-                    const link = tappedItem.querySelector('a');
-                    if (link) {
-                        link.click();
-                    }
-                    tappedGuide.classList.remove('mobile-hover');
-                    tappedGuide = null;
+            const containerWidth = guidePage.offsetWidth;
+            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
+
+            guidePage.style.position = 'relative';
+            guidePage.style.height = '';
+
+            const columnHeights = Array(numColumns).fill(0);
+
+            items.forEach(item => {
+                const minHeight = Math.min(...columnHeights);
+                const columnIndex = columnHeights.indexOf(minHeight);
+
+                item.style.position = 'absolute';
+                item.style.top = `${minHeight}px`;
+                item.style.left = `${columnIndex * (itemWidth + gap)}px`;
+
+                columnHeights[columnIndex] += item.offsetHeight + gap;
+            });
+
+            const maxHeight = Math.max(...columnHeights);
+            guidePage.style.height = `${maxHeight}px`;
+        }
+
+        function updateWrapperHeightForPage(pageNum) {
+            const wrapper = document.querySelector('.guide-list-wrapper');
+            const pageElement = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
+            if (!wrapper || !pageElement) return;
+
+            setTimeout(() => {
+                let targetHeight = 0;
+                if (currentViewMode === 'masonry') {
+                    targetHeight = pageElement.offsetHeight;
                 } else {
-                    // PIERWSZE dotknięcie lub dotknięcie innego kafelka
-                    // Zdejmij hover ze starego kafelka, jeśli istniał
-                    if (tappedGuide) {
-                        tappedGuide.classList.remove('mobile-hover');
-                    }
-                    // Ustaw hover na nowym kafelku
-                    tappedItem.classList.add('mobile-hover');
-                    tappedGuide = tappedItem;
-                }
-            });
+                    const items = pageElement.querySelectorAll('.guide');
+                    if (items.length > 0) {
+                        const gap = 20;
+                        const itemHeight = items[0].offsetHeight;
 
-            // Dodajmy też reset po kliknięciu gdziekolwiek indziej na stronie
-            document.addEventListener('touchstart', function (e) {
-                if (!e.target.closest('.guide') && tappedGuide) {
-                    tappedGuide.classList.remove('mobile-hover');
-                    tappedGuide = null;
+                        if (itemHeight > 0) {
+                            const itemWidth = items[0].offsetWidth;
+                            const containerWidth = pageElement.offsetWidth;
+                            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
+                            const numRows = Math.ceil(items.length / numColumns);
+                            targetHeight = (numRows * itemHeight) + ((numRows - 1) * gap);
+                        }
+                    }
                 }
-            });
+
+                if (targetHeight > 0 && wrapper.offsetHeight !== targetHeight) {
+                    wrapper.style.height = `${targetHeight}px`;
+                }
+            }, 150);
         }
     </script>
 </body>

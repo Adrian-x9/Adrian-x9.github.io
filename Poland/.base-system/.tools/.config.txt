@@ -65,7 +65,7 @@
                 databaseFileName: ".base-system/db.txt",
                 dataFolderName: ".base-system/files",
                 coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/preview-hd"
+                previewHdFolderName: ".base-system/files"
             }
         };
 

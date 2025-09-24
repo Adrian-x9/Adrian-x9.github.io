@@ -792,9 +792,11 @@
             overflow: hidden;
         }
 
-        /* --- WIDOK ELEGANCKI v3.0 --- */
+        /* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
 
         /* Ustawienia ogólne dla kafelka w tym trybie */
+        /* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
+
         .guide-list.view-image-only .guide {
             padding: 0;
             overflow: hidden;
@@ -803,6 +805,8 @@
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
             transition: transform 0.1s ease-out;
+            border-radius: 20px;
+            /* <-- Zwiększone zaokrąglenie */
             /* Płynny powrót */
         }
 
@@ -828,18 +832,27 @@
         }
 
 
-        .guide-list.view-image-only .guide-cover-wrapper {
+        /* .guide-list.view-image-only .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
             display: flex;
-            /* Używamy flexboxa do wyśrodkowania */
             align-items: center;
-            /* Wyrównanie w pionie */
             justify-content: center;
-            /* Wyrównanie w poziomie */
             background-color: rgba(0, 0, 0, 0.03);
-            /* Subtelne tło dla pustej przestrzeni */
+            Subtelne tło dla pustej przestrzeni
+        } */
+
+        /* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
+        .guide-list.view-image-only .guide-cover-wrapper {
+            height: 65%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Usuwamy niepotrzebne tło dla trybu ciemnego */
+        body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
+            background-color: transparent;
         }
 
         /* Styl dla linku-nakładki w widoku eleganckim */
@@ -853,12 +866,26 @@
         }
 
         /* Dedykowana klasa dla obrazka w widoku eleganckim */
+        /* 3. Przywracamy rozciągnięcie obrazu, aby wypełniał kontener (zamiast się w nim mieścić) */
         .guide-cover-elegant {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
+            /* <-- Kluczowa zmiana: wypełnij i przytnij */
             transition: transform 0.4s ease-out;
+            /* Usuwamy stylizację z samego obrazka, bo ramką jest teraz cały kafelek */
+            border-radius: 0;
+            box-shadow: none;
+            /* display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.4s ease-out;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
         }
 
         /* Kontener na tekst pod obrazkiem */
@@ -874,6 +901,7 @@
 
         body.dark-mode .guide-list.view-image-only .guide-text-content {
             border-top: 1px solid rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .guide-list.view-image-only .guide-info {
