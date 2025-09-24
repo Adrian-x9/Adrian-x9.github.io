@@ -806,8 +806,7 @@
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
             transition: transform 0.1s ease-out;
             border-radius: 20px;
-            /* <-- Zwiększone zaokrąglenie */
-            /* Płynny powrót */
+            align-self: start;
         }
 
         /* Poświata dla efektu 3D */
@@ -960,20 +959,19 @@
             overflow: hidden;
             aspect-ratio: 1 / 1;
             background: transparent !important;
-            /* Używamy !important, by mieć pewność */
             box-shadow: none !important;
-            /* że żadna inna reguła go nie nadpisze */
             border: none !important;
         }
 
         /* 2. Zdjęcie otrzymuje własną ramkę, cień i nie jest przycinane */
         .guide-cover-grid {
-            /* Zamiast wymuszać 100% wymiarów, pozwalamy obrazkowi się skalować */
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            /* <-- POPRAWKA: Zdjęcia nie są przycinane */
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            border-radius: 8px;
+            border-radius: 12px;
+            /* Zwiększone zaokrąglenie dla lepszego wyglądu */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             background-color: rgba(0, 0, 0, 0.03);
         }

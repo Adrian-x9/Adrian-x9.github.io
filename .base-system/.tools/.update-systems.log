@@ -106,3 +106,39 @@
 [22:03:13] Backup created: index-bck.html
 [22:03:13] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poland\index.html
 [22:03:13] --- Update process finished. ---
+[22:34:21] Starting the cascade update process...
+[22:34:21] Base template file loaded successfully.
+[22:34:21] Scanning for system folders in: C:\Users\adrian\OneDrive\Documents\.www\VisuDir
+[22:34:21] Found system: 'Cyprus'
+[22:34:21] Found system: 'GameGuides'
+[22:34:21] Found system: 'Poland'
+[22:34:21] --- Processing system: 'Cyprus' ---
+[22:34:21] File '.db-secure.txt' is not UTF-8, attempting to read as UTF-16.
+[22:34:21] No language files found, generating default index.html.
+[22:34:21] Backup created: index-bck.html
+[22:34:21] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Cyprus\index.html
+[22:34:21] --- Processing system: 'GameGuides' ---
+[22:34:21] CRITICAL ERROR while processing system 'GameGuides': [WinError 3] System nie może odnaleźć określonej ścieżki: 'C:\\Users\\adrian\\OneDrive\\Documents\\.www\\VisuDir\\GameGuides\\.base-system\\.tools'
+[22:34:21] --- Processing system: 'Poland' ---
+[22:34:21] No language files found, generating default index.html.
+[22:34:21] Backup created: index-bck.html
+[22:34:21] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poland\index.html
+[22:34:21] --- Update process finished. ---
+[23:52:27] Starting the cascade update process...
+[23:52:27] Base template file loaded successfully.
+[23:52:27] Scanning for system folders in: C:\Users\adrian\OneDrive\Documents\.www\VisuDir
+[23:52:27] Found system: 'Cyprus'
+[23:52:27] Found system: 'GameGuides'
+[23:52:27] Found system: 'Poland'
+[23:52:27] --- Processing system: 'Cyprus' ---
+[23:52:27] File '.db-secure.txt' is not UTF-8, attempting to read as UTF-16.
+[23:52:27] No language files found, generating default index.html.
+[23:52:27] Backup created: index-bck.html
+[23:52:27] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Cyprus\index.html
+[23:52:27] --- Processing system: 'GameGuides' ---
+[23:52:27] CRITICAL ERROR while processing system 'GameGuides': [WinError 3] System nie może odnaleźć określonej ścieżki: 'C:\\Users\\adrian\\OneDrive\\Documents\\.www\\VisuDir\\GameGuides\\.base-system\\.tools'
+[23:52:27] --- Processing system: 'Poland' ---
+[23:52:27] No language files found, generating default index.html.
+[23:52:27] Backup created: index-bck.html
+[23:52:27] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poland\index.html
+[23:52:27] --- Update process finished. ---
