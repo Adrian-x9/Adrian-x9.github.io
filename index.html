@@ -1044,7 +1044,7 @@
             width: var(--box-width, 256px);
         }
 
-        
+
 
         .guide {
             padding: 0 20px 10px;
@@ -3467,6 +3467,10 @@
         const goToPage = (pageNum) => {
             pageNum = Math.max(1, Math.min(totalPages, pageNum));
             const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
+
+            // FIX: Natychmiastowe wywołanie zmiany wysokości, aby zsynchronizować animację pionową z poziomą.
+            updateWrapperHeightForPage(pageNum);
+
             guideList.scrollTo({
                 left: targetScrollLeft,
                 behavior: 'smooth'
@@ -4697,30 +4701,38 @@
             const pageElement = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
             if (!wrapper || !pageElement) return;
 
+            // Opóźnienie jest konieczne, aby dać przeglądarce czas na pełne wyrenderowanie layoutu
             setTimeout(() => {
-                let targetHeight = 0;
-                if (currentViewMode === 'masonry') {
-                    targetHeight = pageElement.offsetHeight;
-                } else {
-                    const items = pageElement.querySelectorAll('.guide');
-                    if (items.length > 0) {
-                        const gap = 20;
-                        const itemHeight = items[0].offsetHeight;
+                const items = pageElement.querySelectorAll('.guide');
+                if (items.length === 0) {
+                    wrapper.style.height = '0px';
+                    return;
+                }
 
-                        if (itemHeight > 0) {
-                            const itemWidth = items[0].offsetWidth;
-                            const containerWidth = pageElement.offsetWidth;
-                            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
-                            const numRows = Math.ceil(items.length / numColumns);
-                            targetHeight = (numRows * itemHeight) + ((numRows - 1) * gap);
-                        }
+                // 1. Znajdź pozycję startową (górną krawędź) całego kontenera z listą
+                const listTop = guideList.getBoundingClientRect().top;
+                
+                // 2. Znajdź najniżej położony element na stronie
+                //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (bottom) jest najdalej
+                let maxBottom = 0;
+                items.forEach(item => {
+                    const itemBottom = item.getBoundingClientRect().bottom;
+                    if (itemBottom > maxBottom) {
+                        maxBottom = itemBottom;
                     }
+                });
+
+                // 3. Oblicz precyzyjną wysokość jako różnicę między dolną krawędzią najniższego
+                //    elementu a górną krawędzią całej listy.
+                const preciseHeight = maxBottom - listTop;
+
+                // 4. Ustaw wysokość kontenera na tę precyzyjną, zmierzoną wartość.
+                //    Bez żadnych buforów i zgadywania.
+                if (preciseHeight > 0) {
+                    wrapper.style.height = `${preciseHeight}px`;
                 }
 
-                if (targetHeight > 0 && wrapper.offsetHeight !== targetHeight) {
-                    wrapper.style.height = `${targetHeight}px`;
-                }
-            }, 150);
+            }, 200); // Lekko zwiększony timeout dla pewności pełnego renderu
         }
     </script>
 </body>

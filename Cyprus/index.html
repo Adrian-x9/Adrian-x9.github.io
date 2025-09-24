@@ -1044,7 +1044,7 @@
             width: var(--box-width, 256px);
         }
 
-        
+
 
         .guide {
             padding: 0 20px 10px;
@@ -3516,6 +3516,10 @@ const dataFromFile = `
         const goToPage = (pageNum) => {
             pageNum = Math.max(1, Math.min(totalPages, pageNum));
             const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
+
+            // FIX: Natychmiastowe wywołanie zmiany wysokości, aby zsynchronizować animację pionową z poziomą.
+            updateWrapperHeightForPage(pageNum);
+
             guideList.scrollTo({
                 left: targetScrollLeft,
                 behavior: 'smooth'
@@ -4766,8 +4770,9 @@ const dataFromFile = `
                     }
                 }
 
-                if (targetHeight > 0 && wrapper.offsetHeight !== targetHeight) {
-                    wrapper.style.height = `${targetHeight}px`;
+                if (targetHeight > 0) {
+                    // FIX: Dodano 1px bufora, aby zapobiec obcinaniu dolnej krawędzi.
+                    wrapper.style.height = `${targetHeight + 1}px`;
                 }
             }, 150);
         }

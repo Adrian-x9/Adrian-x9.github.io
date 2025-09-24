@@ -806,7 +806,8 @@
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
             transition: transform 0.1s ease-out;
             border-radius: 20px;
-            align-self: start;
+            /* <-- Zwiększone zaokrąglenie */
+            /* Płynny powrót */
         }
 
         /* Poświata dla efektu 3D */
@@ -959,7 +960,9 @@
             overflow: hidden;
             aspect-ratio: 1 / 1;
             background: transparent !important;
+            /* Używamy !important, by mieć pewność */
             box-shadow: none !important;
+            /* że żadna inna reguła go nie nadpisze */
             border: none !important;
         }
 
@@ -968,10 +971,8 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            /* <-- POPRAWKA: Zdjęcia nie są przycinane */
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
             border-radius: 12px;
-            /* Zwiększone zaokrąglenie dla lepszego wyglądu */
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             background-color: rgba(0, 0, 0, 0.03);
         }
@@ -1041,6 +1042,8 @@
             transition: top 0.4s ease-out, left 0.4s ease-out;
             width: var(--box-width, 256px);
         }
+
+
 
         .guide {
             padding: 0 20px 10px;
@@ -2254,6 +2257,28 @@
         /* Poprawka przyklejająca przycisk "Otwórz" do dołu w widoku pełnym i tekstowym */
         .guide:not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-content-bottom>a:not(.cover-link) {
             margin-top: auto;
+        }
+
+        /* --- PRECYZYJNA POPRAWKA POZYCJONOWANIA TYLKO DLA WIDOKU PEŁNEGO --- */
+
+        /* Ta reguła zadziała tylko wtedy, gdy NIE JEST aktywny żaden inny tryb */
+        .guide-list:not(.view-image-only):not(.view-grid):not(.view-masonry):not(.view-text-only) .guide-content-bottom {
+            justify-content: flex-start;
+            /* Zmieniamy wyrównanie z dołu na górę */
+        }
+
+        /* Ta reguła również zadziała tylko w domyślnym widoku pełnym */
+        .guide-list:not(.view-image-only):not(.view-grid):not(.view-masonry):not(.view-text-only) .guide-info-container {
+            flex-grow: 1;
+            /* Pozwalamy kontenerowi z opisem rosnąć i wypychać resztę w dół */
+        }
+
+        /*
+ * This patch restores the margin between the image and the "Otwórz" button 
+ * in Full View (Mode 2) and Masonry View (Mode 5).
+*/
+        .guide-list:not(.view-image-only):not(.view-grid) .cover-link {
+            margin-top: 10px;
         }
     </style>
     <script>
