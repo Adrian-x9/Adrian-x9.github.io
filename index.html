@@ -802,7 +802,8 @@
             flex-direction: column;
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
-            transition: none;
+            transition: transform 0.1s ease-out;
+            /* Płynny powrót */
         }
 
         /* Poświata dla efektu 3D */
@@ -912,12 +913,159 @@
             opacity: 1;
         }
 
+        /* --- WIDOK SIATKA (GRID) v1.0 - START --- */
+
         /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
-        .guide-list:not(.view-image-only):not(.view-text-only) .guide:hover .guide-cover {
+        .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid):not(.view-masonry) .guide:hover .guide-cover {
             transform: scale(1.05);
         }
 
-        /* Usunięta zbędna reguła hover */
+        /* Ustawienia ogólne dla kafelka w tym trybie */
+        .guide-list.view-grid .guide {
+            padding: 0;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            /* Ustawia kwadratowe proporcje */
+        }
+
+        /* Dedykowana klasa dla obrazka w widoku siatki */
+        .guide-cover-grid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Nakładka z tytułem, domyślnie ukryta */
+        .guide-list.view-grid .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Styl tekstu tytułu na nakładce */
+        .grid-overlay .grid-title-text a {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+        }
+
+        /* Efekt hover */
+        .guide-list.view-grid .guide:hover .grid-overlay {
+            opacity: 1;
+        }
+
+        .guide-list.view-grid .guide:hover .guide-cover-grid {
+            transform: scale(1.05);
+        }
+
+
+        /* --- WIDOK MASONRY v1.0 - START --- */
+
+        .guide-list.view-masonry .guide-page {
+            display: block;
+            /* Wyłączamy grid */
+            position: relative;
+            /* Niezbędne do pozycjonowania kafelków */
+        }
+
+        .guide-list.view-masonry .guide {
+            /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
+            position: absolute;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+        }
+
+        /* --- WIDOK MASONRY v1.0 - KONIEC --- */
+
+        /* Ustawienia ogólne dla kafelka w tym trybie */
+        .guide-list.view-grid .guide {
+            padding: 0;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            /* Ustawia kwadratowe proporcje */
+        }
+
+        /* Dedykowana klasa dla obrazka w widoku siatki */
+        .guide-cover-grid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Nakładka z tytułem, domyślnie ukryta */
+        .guide-list.view-grid .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Styl tekstu tytułu na nakładce */
+        .grid-overlay .grid-title-text a {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+        }
+
+        /* Efekt hover */
+        .guide-list.view-grid .guide:hover .grid-overlay {
+            opacity: 1;
+        }
+
+        .guide-list.view-grid .guide:hover .guide-cover-grid {
+            transform: scale(1.05);
+        }
+
+        /* --- WIDOK SIATKA (GRID) v1.0 - KONIEC --- */
+
+        /* --- WIDOK MASONRY v1.0 - START --- */
+
+        .guide-list.view-masonry .guide-page {
+            display: block;
+            /* Wyłączamy grid */
+            position: relative;
+            /* Niezbędne do pozycjonowania kafelków */
+        }
+
+        .guide-list.view-masonry .guide {
+            /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
+            position: absolute;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+        }
+
+        /* --- WIDOK MASONRY v1.0 - KONIEC --- */
 
         .guide {
             padding: 0 20px 10px;
@@ -2148,7 +2296,7 @@
                     tappedGuide = null;
                 }
             });
-        }       
+        }
     </script>
 </head>
 
@@ -3185,9 +3333,9 @@
             const [filePath] = targetUrl.split('?');
 
             fetch(filePath, {
-                    method: 'HEAD',
-                    cache: 'no-store'
-                })
+                method: 'HEAD',
+                cache: 'no-store'
+            })
                 .then(response => {
                     if (response.ok) {
                         window.open(targetUrl, '_blank');
@@ -3254,7 +3402,20 @@
                         <div class="guide-action-link">${actionLinkHtml}</div>
                     </div>
                 `;
-            } else {
+            } else if (currentViewMode === 'grid') {
+                const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+                const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || '';
+                const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || '#';
+
+                return `
+                    <a href="${hrefAction}" onclick="${onclickAction}">
+                        ${gridCoverImgHtml}
+                        <div class="grid-overlay">
+                            <span class="grid-title-text">${titleText}</span>
+                        </div>
+                    </a>
+                `;
+            } else { // Obejmuje widok 'full', 'text-only' i 'masonry'
                 const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
                 return `
                     ${titleHtml}
@@ -3286,6 +3447,8 @@
             }
 
             guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
+            guideList.classList.toggle('view-grid', currentViewMode === 'grid');
+            guideList.classList.toggle('view-masonry', currentViewMode === 'masonry');
             guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
 
             guideList.innerHTML = "";
@@ -3367,6 +3530,12 @@
                 isInitialLoad = false;
                 preloadNextPageImages();
             }
+
+            if (currentViewMode === 'masonry') {
+                setTimeout(() => applyMasonryLayout(), 100);
+            }
+
+            updateWrapperHeightForPage(1);
         }
 
         function setupLazyLoading(pages) {
@@ -3388,6 +3557,10 @@
                                         div.innerHTML = createGuideHtml(guide);
                                         pageDiv.appendChild(div);
                                     });
+                                    // Uruchomienie Masonry dla nowo załadowanej strony
+                                    if (currentViewMode === 'masonry' && pageNum > 1) {
+                                        setTimeout(() => applyMasonryLayout(pageNum), 50);
+                                    }
                                 });
                             }
                         }
@@ -3504,6 +3677,7 @@
                         const pageNum = parseInt(entry.target.dataset.pageNumber, 10);
                         currentPage = pageNum;
                         updateControls(pageNum);
+                        updateWrapperHeightForPage(pageNum);
                     }
                 });
             }, {
@@ -3615,26 +3789,33 @@
             updateThemeIcon();
 
             const updateContentView = () => {
-                renderGuides();
                 let iconClass, title;
                 switch (currentViewMode) {
-                    case 'image-only': // Nasz nowy widok "Elegancki"
-                        iconClass = 'fa-th-large'; // Ikona siatki
-                        title = 'Widok: Elegancki'; // Nowa etykieta
-                        break;
                     case 'text-only':
                         iconClass = 'fa-align-left';
                         title = lang.viewModeText;
                         break;
-                    default: // 'full'
+                    case 'full':
                         iconClass = 'fa-file-image';
                         title = lang.viewModeFull;
+                        break;
+                    case 'image-only':
+                        iconClass = 'fa-th-large';
+                        title = 'Widok: Elegancki';
+                        break;
+                    case 'grid':
+                        iconClass = 'fa-th';
+                        title = 'Widok: Siatka';
+                        break;
+                    case 'masonry':
+                        iconClass = 'fa-grip-vertical';
+                        title = 'Widok: Masonry';
                         break;
                 }
                 viewContentBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
                 viewContentBtn.title = title;
-                viewContentBtn.classList.add('active');
                 saveToLocalStorage('view_mode', currentViewMode);
+                renderGuides();
             };
 
             currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
@@ -3646,13 +3827,9 @@
             });
 
             viewContentBtn.addEventListener('click', () => {
-                if (currentViewMode === 'full') {
-                    currentViewMode = 'image-only';
-                } else if (currentViewMode === 'image-only') {
-                    currentViewMode = 'text-only';
-                } else {
-                    currentViewMode = 'full';
-                }
+                const viewModes = ['text-only', 'full', 'image-only', 'grid', 'masonry'];
+                const currentIndex = viewModes.indexOf(currentViewMode);
+                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
                 updateContentView();
             });
 
@@ -4404,9 +4581,7 @@
 
                 cancelAnimationFrame(animationFrameId);
                 animationFrameId = requestAnimationFrame(() => {
-                    // --- POCZĄTEK POPRAWKI ---
-                    if (!currentGuide) return; // Ten warunek rozwiązuje problem
-                    // --- KONIEC POPRAWKI ---
+                    if (!currentGuide) return; // FIX for race condition
                     currentGuide.style.setProperty('--rotate-x', `${rotateX}deg`);
                     currentGuide.style.setProperty('--rotate-y', `${rotateY}deg`);
                     currentGuide.style.setProperty('--glow-x', `${glowX}%`);
@@ -4417,6 +4592,7 @@
             guideList.addEventListener('mouseenter', (e) => {
                 const guide = e.target.closest('.guide-list.view-image-only .guide');
                 if (guide) {
+                    guide.style.transition = 'none'; // Bezpośrednie sterowanie
                     currentGuide = guide;
                 }
             }, true);
@@ -4425,17 +4601,84 @@
                 const guideTarget = e.target.closest('.guide-list.view-image-only .guide');
                 if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
                     cancelAnimationFrame(animationFrameId);
+                    currentGuide.style.transition = 'transform 0.4s ease-out'; // Przywrócenie transition
                     requestAnimationFrame(() => {
-                        if(currentGuide) { // Dodatkowe zabezpieczenie
-                           currentGuide.style.setProperty('--rotate-x', '0deg');
-                           currentGuide.style.setProperty('--rotate-y', '0deg');
+                        if (currentGuide) {
+                            currentGuide.style.setProperty('--rotate-x', '0deg');
+                            currentGuide.style.setProperty('--rotate-y', '0deg');
                         }
                     });
                     currentGuide = null;
                 }
             }, true);
 
+
             guideList.addEventListener('mousemove', onMouseMove, true);
+        }
+
+        function applyMasonryLayout(pageNum = 1) {
+            const guidePage = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
+            if (!guidePage) return;
+
+            const items = Array.from(guidePage.children);
+            if (items.length === 0) return;
+
+            const gap = 20;
+            const itemWidth = items[0].offsetWidth;
+            if (itemWidth === 0) return;
+
+            const containerWidth = guidePage.offsetWidth;
+            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
+
+            guidePage.style.position = 'relative';
+            guidePage.style.height = '';
+
+            const columnHeights = Array(numColumns).fill(0);
+
+            items.forEach(item => {
+                const minHeight = Math.min(...columnHeights);
+                const columnIndex = columnHeights.indexOf(minHeight);
+
+                item.style.position = 'absolute';
+                item.style.top = `${minHeight}px`;
+                item.style.left = `${columnIndex * (itemWidth + gap)}px`;
+
+                columnHeights[columnIndex] += item.offsetHeight + gap;
+            });
+
+            const maxHeight = Math.max(...columnHeights);
+            guidePage.style.height = `${maxHeight}px`;
+        }
+
+        function updateWrapperHeightForPage(pageNum) {
+            const wrapper = document.querySelector('.guide-list-wrapper');
+            const pageElement = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
+            if (!wrapper || !pageElement) return;
+
+            setTimeout(() => {
+                let targetHeight = 0;
+                if (currentViewMode === 'masonry') {
+                    targetHeight = pageElement.offsetHeight;
+                } else {
+                    const items = pageElement.querySelectorAll('.guide');
+                    if (items.length > 0) {
+                        const gap = 20;
+                        const itemHeight = items[0].offsetHeight;
+
+                        if (itemHeight > 0) {
+                            const itemWidth = items[0].offsetWidth;
+                            const containerWidth = pageElement.offsetWidth;
+                            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
+                            const numRows = Math.ceil(items.length / numColumns);
+                            targetHeight = (numRows * itemHeight) + ((numRows - 1) * gap);
+                        }
+                    }
+                }
+
+                if (targetHeight > 0 && wrapper.offsetHeight !== targetHeight) {
+                    wrapper.style.height = `${targetHeight}px`;
+                }
+            }, 150);
         }
     </script>
 </body>

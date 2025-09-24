@@ -185,12 +185,18 @@
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
 
-        body.video-ready:not(.dark-mode) .guide,
+        /* Zachowujemy oryginalny styl dla paneli */
         body.video-ready:not(.dark-mode) .display-panel,
         body.video-ready:not(.dark-mode) .pagination-controls,
-        body.video-ready:not(.dark-mode) .action-controls .multi-button,
+        body.video-ready:not(.dark-mode) .action-controls .multi-button.expanded,
         body.video-ready:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
             background: rgba(253, 253, 253, 0.85);
+        }
+
+        /* A dla samych kafelków ustawiamy nowe, inne tło, jeśli trzeba */
+        body.video-ready:not(.dark-mode) .guide {
+            background: rgba(253, 253, 253, 0.85);
+            /* Możemy tu ustawić inną wartość, jeśli chcemy */
         }
 
         body:not(.dark-mode) .guide-cover {
@@ -234,15 +240,20 @@
         body.dark-mode .action-controls .multi-button.expanded,
         body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
             background: #000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
-        body.video-ready.dark-mode .guide,
+        /* Zachowujemy oryginalny styl dla paneli */
         body.video-ready.dark-mode .display-panel,
         body.video-ready.dark-mode .pagination-controls,
-        body.video-ready.dark-mode .action-controls .multi-button,
+        body.video-ready.dark-mode .action-controls .multi-button.expanded,
         body.video-ready.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* A dla samych kafelków ustawiamy nowe, mocniejsze krycie */
+        body.video-ready.dark-mode .guide {
+            background: rgba(0, 0, 0, 0.8);
         }
 
         body.dark-mode .guide:hover {
@@ -781,68 +792,20 @@
             overflow: hidden;
         }
 
-        .guide-list.view-image-only .guide-title,
-        .guide-list.view-image-only .guide-info,
-        .guide-list.view-image-only .guide-content-bottom>a:not(.cover-link) {
-            opacity: 0;
-            max-height: 0;
-            margin: 0;
-            padding: 0;
-            pointer-events: none;
-        }
+        /* --- WIDOK ELEGANCKI v3.0 --- */
 
-        /* --- NOWY EFEKT HOVER v2 "WOW" - (WERSJA OSTATECZNA POPRAWIONA) - START --- */
-
-        /* Definicja animacji płynnej zmiany koloru (Hue) dla maski */
-        @keyframes hue-cycle {
-            0% {
-                background-color: hsla(0, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-
-            16% {
-                background-color: hsla(300, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-
-            33% {
-                background-color: hsla(240, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-
-            50% {
-                background-color: hsla(180, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-
-            66% {
-                background-color: hsla(120, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-
-            83% {
-                background-color: hsla(60, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-
-            100% {
-                background-color: hsla(0, 65%, 50%, var(--mask-opacity, 0.7));
-            }
-        }
-
-        /* Ogólne ustawienia dla kafelka w trybie "tylko obrazki" */
+        /* Ustawienia ogólne dla kafelka w tym trybie */
         .guide-list.view-image-only .guide {
-            position: relative;
-            overflow: hidden;
             padding: 0;
-            border-radius: 10px;
-            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+            transition: transform 0.1s ease-out; /* Płynny powrót */
         }
 
-        /* Styl okładki */
-        .guide-list.view-image-only .guide .guide-cover {
-            margin: 0;
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.4s ease;
-        }
-
-        /* Maska z animacją koloru */
+        /* Poświata dla efektu 3D */
         .guide-list.view-image-only .guide::before {
             content: '';
             position: absolute;
@@ -850,114 +813,168 @@
             left: 0;
             width: 100%;
             height: 100%;
+            background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
+                    rgba(229, 57, 53, 0.3),
+                    transparent 40%);
             opacity: 0;
-            animation: hue-cycle 16s linear infinite;
-            animation-play-state: paused;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-            --mask-opacity: 0.7;
+            transition: opacity 0.3s ease-out;
+            z-index: 3;
+            pointer-events: none;
         }
 
-        /* Tytuł z efektem "kurtyny" */
-        .guide-list.view-image-only .guide .guide-title {
+        .guide-list.view-image-only .guide:hover::before {
+            opacity: 1;
+        }
+
+
+        /* Kontener na obrazek */
+        .guide-list.view-image-only .guide-cover-wrapper {
+            height: 65%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Styl dla linku-nakładki w widoku eleganckim */
+        .guide-list.view-image-only .guide-cover-wrapper .cover-link {
             position: absolute;
             top: 0;
-            left: 50%;
-            transform: translate(-50%, -100%);
+            left: 0;
             width: 100%;
-            /* >>> POPRAWKA: Zwiększony pionowy padding dla większej maski i lepszego dopasowania tekstu <<< */
-            padding: 20px 15px 25px;
-            box-sizing: border-box;
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(2px);
-            z-index: 2;
-            text-align: center;
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
-            font-size: var(--dynamic-font-size, 1rem) !important;
-            font-weight: 800;
+            height: 100%;
+            z-index: 1;
         }
 
-        /* Link wewnątrz tytułu */
-        .guide-list.view-image-only .guide .guide-title a {
-            color: var(--hover-text-color, #FFFFFF);
+        /* Dedykowana klasa dla obrazka w widoku eleganckim */
+        .guide-cover-elegant {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease-out;
+        }
+
+        /* Kontener na tekst pod obrazkiem */
+        .guide-list.view-image-only .guide-text-content {
+            height: 35%;
+            padding: 12px 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-top: 1px solid rgba(128, 128, 128, 0.2);
+        }
+
+        body.dark-mode .guide-list.view-image-only .guide-text-content {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .guide-list.view-image-only .guide-info {
+            display: none;
+        }
+
+        .guide-list.view-image-only .guide-title {
+            font-size: 1.05em;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.4;
+            text-align: left;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            overflow: hidden;
+        }
+
+        .guide-list.view-image-only .guide-title a {
             text-decoration: none;
         }
 
-        /* Styl dla Opisu */
-        .guide-list.view-image-only .guide .guide-info {
-            position: absolute;
-            /* >>> FIX: Obniżenie pozycji opisu, aby pasował do nowego paddingu <<< */
-            bottom: 10px;
-            left: 50%;
-            transform: translate(-50%, 30px);
-            width: 100%;
-            padding: 0 15px;
-            box-sizing: border-box;
-            z-index: 2;
-            text-align: center;
-            font-weight: normal;
-            color: var(--hover-text-color, #FFFFFF);
-            /* >>> FIX: Użycie !important do wymuszenia dynamicznego rozmiaru <<< */
-            font-size: calc(var(--dynamic-font-size, 1rem) * 0.8) !important;
-            opacity: 0;
-            max-height: 0;
+        body:not(.dark-mode) .guide-list.view-image-only .guide-title a {
+            color: #333;
+        }
+
+        body.dark-mode .guide-list.view-image-only .guide-title a {
+            color: #eee;
+        }
+
+        .guide-list.view-image-only .guide-action-link {
+            text-align: right;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+
+        .guide-list.view-image-only .guide-action-link a {
+            text-decoration: none;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .guide-list.view-image-only .guide-action-link a:hover {
+            opacity: 1;
+        }
+
+        /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
+        .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid) .guide:hover .guide-cover {
+            transform: scale(1.05);
+        }
+        
+        /* --- WIDOK SIATKA (GRID) v1.0 - START --- */
+        
+        /* Ustawienia ogólne dla kafelka w tym trybie */
+        .guide-list.view-grid .guide {
+            padding: 0;
+            display: block;
+            position: relative;
             overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.1s, opacity 0.3s ease 0.1s, max-height 0.4s ease 0.1s;
+            aspect-ratio: 1 / 1; /* Ustawia kwadratowe proporcje */
+        }
+        
+        /* Dedykowana klasa dla obrazka w widoku siatki */
+        .guide-cover-grid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
         }
 
-        /* Obramowanie liter */
-        .guide-list.view-image-only .guide .guide-title a,
-        .guide-list.view-image-only .guide .guide-info {
-            -webkit-text-stroke-width: 0.5px;
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+        /* Nakładka z tytułem, domyślnie ukryta */
+        .guide-list.view-grid .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            padding: 15px;
+            box-sizing: border-box;
         }
-
-        body:not(.dark-mode) .guide-list.view-image-only .guide .guide-title a,
-        body:not(.dark-mode) .guide-list.view-image-only .guide .guide-info {
-            -webkit-text-stroke-color: rgba(80, 80, 80, 0.5);
+        
+        /* Styl tekstu tytułu na nakładce */
+        .grid-overlay .grid-title-text a {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+            text-decoration: none;
         }
-
-        body.dark-mode .guide-list.view-image-only .guide .guide-title a,
-        body.dark-mode .guide-list.view-image-only .guide .guide-info {
-            -webkit-text-stroke-color: rgba(20, 20, 20, 0.7);
-        }
-
-        /* --- AKCJA HOVER / MOBILE TAP --- */
-        .guide-list.view-image-only .guide:hover .guide-cover,
-        .guide-list.view-image-only .guide.mobile-hover .guide-cover {
-            transform: scale(1.1);
-            filter: brightness(0.8);
-        }
-
-        .guide-list.view-image-only .guide:hover::before,
-        .guide-list.view-image-only .guide.mobile-hover::before {
+        
+        /* Efekt hover */
+        .guide-list.view-grid .guide:hover .grid-overlay {
             opacity: 1;
-            animation-play-state: running;
+        }
+        
+        .guide-list.view-grid .guide:hover .guide-cover-grid {
+            transform: scale(1.05);
         }
 
-        .guide-list.view-image-only .guide:hover .guide-title,
-        .guide-list.view-image-only .guide.mobile-hover .guide-title {
-            opacity: 1;
-            transform: translate(-50%, 0);
-            pointer-events: auto;
-        }
+        /* --- WIDOK SIATKA (GRID) v1.0 - KONIEC --- */
 
-        .guide-list.view-image-only .guide:hover .guide-info,
-        .guide-list.view-image-only .guide.mobile-hover .guide-info {
-            opacity: 1;
-            max-height: 5.4em;
-            transform: translate(-50%, 0);
-        }
-
-        /* --- NOWY EFEKT HOVER v2 "WOW" - (WERSJA OSTATECZNA POPRAWIONA) - KONIEC --- */
-
-        .guide-list.view-image-only .guide-cover {
-            margin: 0;
-            border: none !important;
-            opacity: 1;
-            transform: scale(1);
-        }
 
         .guide {
             padding: 0 20px 10px;
@@ -1091,7 +1108,8 @@
         .footer {
             text-align: center;
             padding: 20px;
-            padding-top: 10px;
+            padding-top: 20px;
+            padding-down: 0px;
             font-size: 0.9em;
             max-height: 200px;
             overflow: hidden;
@@ -2089,7 +2107,7 @@
             border: none;
             box-shadow: none;
             cursor: pointer;
-            padding: 10px;
+            padding: 0px;
             font-size: 1.4em;
             /* Zmniejszona ikona */
             transition: color 0.2s ease, transform 0.2s ease;
@@ -2290,10 +2308,6 @@
         </button>
     </div>
 
-    <div class="reset-container animated-footer">
-        <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
-    </div>
-
     <div class="footer">
         <div>
             <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
@@ -2310,6 +2324,10 @@
             <span data-lang="privacyDesc"></span>
             <strong data-lang="privacySafe"></strong>
         </div>
+    </div>
+
+    <div class="reset-container animated-footer">
+        <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
     </div>
 
     <button id="fullscreenBtn" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
@@ -3132,9 +3150,8 @@ const dataFromFile = `
             }
             initializeNewButtons();
             initializeDisplayPanel();
-            initializeMobileHover(); // <-- Dodaj tę linię
-            // FIX: Usunięcie funkcji powodującej problemy z animacją paginacji
-            // initializeFooterAnimation();
+            initializeMobileHover();
+            initialize3dHoverEffect();
         };
 
         function toggleMinimizeView() {
@@ -3200,84 +3217,115 @@ const dataFromFile = `
             renderGuides();
         }
 
-        // FIX: Poprawiona funkcja do otwierania plików i linków (online/offline + fallback)
         function checkFileAndOpen(targetUrl, fallbackUrl, isLink = false) {
-            // Bezpośrednie otwieranie linków zewnętrznych
             if (targetUrl.startsWith('http')) {
                 window.open(targetUrl, '_blank');
                 return;
             }
 
-            // Obsługa trybu offline (file://) - otwieramy bezpośrednio
             if (isOffline) {
                 window.open(targetUrl, '_blank');
                 return;
             }
 
-            // Obsługa trybu online
             const [filePath] = targetUrl.split('?');
 
-            fetch(filePath, { method: 'HEAD', cache: 'no-store' })
+            fetch(filePath, {
+                    method: 'HEAD',
+                    cache: 'no-store'
+                })
                 .then(response => {
-                    // Serwer odpowiedział, ale może to być strona błędu, która zwraca 200 OK.
-                    // Dla plików .html i .link, ufamy statusowi. Dla innych, moglibyśmy dodać więcej sprawdzeń.
                     if (response.ok) {
                         window.open(targetUrl, '_blank');
                     } else {
-                        // Jeśli serwer zwrócił błąd (np. 404), użyj fallback
                         window.location.href = fallbackUrl;
                     }
                 })
                 .catch(() => {
-                    // Błąd sieciowy, użyj fallback
                     window.location.href = fallbackUrl;
                 });
         }
-
 
         function createGuideHtml(guide) {
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-            let h = "", i = "", a = "", w = "";
-            let d = guide.title;
-            if (guide.format === "link" && /^\d{2}\s*/.test(d))
-                d = d.replace(/^\d{2}\s*/, "");
+            let titleHtml = "",
+                infoHtml = "",
+                actionLinkHtml = "",
+                coverLinkHtml = "",
+                titleTextOnly = "";
+            let titleText = guide.title;
+            if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
+                titleText = titleText.replace(/^\d{2}\s*/, "");
 
             const mediaTypes = ["jpg", "png", "mp4", "avi"];
 
             if (guide.format === "link") {
-                const t = decodeUrlFromFilename(guide.file);
-                const clickAction = `checkFileAndOpen('${t.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
-                h = `<div class="guide-title"><a href="${t}" onclick="${clickAction}">${d}</a></div>`;
-                i = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
-                a = `<a href="${t}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
-                w = `<a href="${t}" onclick="${clickAction}" class="cover-link">`;
+                const targetUrl = decodeUrlFromFilename(guide.file);
+                const clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
+                titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
+                infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
+                actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
+                coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
+                titleTextOnly = `<a href="${targetUrl}" onclick="${clickAction}">${titleText}</a>`;
             } else if (mediaTypes.includes(guide.format)) {
                 const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
-                h = `<div class="guide-title"><a href="#" onclick="${clickAction}">${d}</a></div>`;
-                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-                a = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
-                w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
+                titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
+                infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+                actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
+                coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+                titleTextOnly = `<a href="#" onclick="${clickAction}">${titleText}</a>`;
             } else {
-                h = `<div class="guide-title">${d}</div>`;
-                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
                 const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
+                titleHtml = `<div class="guide-title">${titleText}</div>`;
+                infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
                 if (guide.format === "pdf") {
-                    a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
-                    w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
+                    actionLinkHtml = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
+                    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+                    titleTextOnly = `<a href="#" onclick="${clickAction}">${titleText}</a>`;
                 } else {
-                    a = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
-                    w = `<a href="${u}" download class="cover-link">`;
+                    actionLinkHtml = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
+                    coverLinkHtml = `<a href="${u}" download class="cover-link"></a>`;
+                    titleTextOnly = `<a href="${u}" download>${titleText}</a>`;
                 }
             }
-            const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
 
-            // Zmiana: opakowanie 'h' i 'i' w nowy kontener '.hover-text-content'
-            const hoverContent = `<div class="hover-text-content">${h}</div>`;
-            const bottomContent = `<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
+            const noCoverImg = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
 
-            return `${hoverContent}${bottomContent}`;
+            if (currentViewMode === 'image-only') {
+                const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+                return `
+                    <div class="guide-cover-wrapper">
+                        ${elegantCoverImgHtml}
+                        ${coverLinkHtml} 
+                    </div>
+                    <div class="guide-text-content">
+                        ${titleHtml}
+                        <div class="guide-action-link">${actionLinkHtml}</div>
+                    </div>
+                `;
+            } else if (currentViewMode === 'grid') { // NOWA STRUKTURA HTML DLA SIATKI
+                const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+                return `
+                    <a href="#" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ''}">
+                        ${gridCoverImgHtml}
+                        <div class="grid-overlay">
+                            <span class="grid-title-text">${titleTextOnly}</span>
+                        </div>
+                    </a>
+                `;
+            } else {
+                const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
+                return `
+                    ${titleHtml}
+                    <div class="guide-content-bottom">
+                        <div class="guide-info-container">${infoHtml}</div>
+                        <a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ''}">${defaultCoverImgHtml}</a>
+                        ${actionLinkHtml}
+                    </div>
+                `;
+            }
         }
 
         const goToPage = (pageNum) => {
@@ -3299,6 +3347,7 @@ const dataFromFile = `
             }
 
             guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
+            guideList.classList.toggle('view-grid', currentViewMode === 'grid');
             guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
 
             guideList.innerHTML = "";
@@ -3306,14 +3355,12 @@ const dataFromFile = `
 
             const sizePercent = document.getElementById('sizeSlider').value;
             const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100));
-            const minSlider = 50, maxSlider = 150;
-            const minFont = 0.8, maxFont = 1.3;
+            const minSlider = 50,
+                maxSlider = 150;
+            const minFont = 0.8,
+                maxFont = 1.3;
 
-            // ==================================================================
-            // TUTAJ BYŁ BŁĄD: (maxSlider - minFont) zamiast (maxSlider - minSlider)
-            // Poprawiona formuła:
             const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
-            // ==================================================================
 
             const dynamicFontSize = minFont + (percent * (maxFont - minFont));
             guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
@@ -3323,8 +3370,6 @@ const dataFromFile = `
             const wrapper = document.querySelector('.guide-list-wrapper');
             const guideGap = 20;
             const estimatedItemHeight = config.pageSettings.estimatedItemHeight;
-            const wrapperHeight = (selectedRowCount * estimatedItemHeight) + ((selectedRowCount - 1) * guideGap);
-            wrapper.style.height = `${wrapperHeight}px`;
 
             if (sourceArray) {
                 source.forEach((guide, index) => {
@@ -3632,20 +3677,29 @@ const dataFromFile = `
             updateThemeIcon();
 
             const updateContentView = () => {
-                renderGuides();
-                let iconClass = 'fa-file-image';
-                let title = lang.viewModeFull;
-                if (currentViewMode === 'image-only') {
-                    iconClass = 'fa-image';
-                    title = lang.viewModeImage;
-                } else if (currentViewMode === 'text-only') {
-                    iconClass = 'fa-align-left';
-                    title = lang.viewModeText;
+                let iconClass, title;
+                switch (currentViewMode) {
+                    case 'text-only':
+                        iconClass = 'fa-align-left';
+                        title = lang.viewModeText;
+                        break;
+                    case 'full':
+                        iconClass = 'fa-file-image';
+                        title = lang.viewModeFull;
+                        break;
+                    case 'image-only':
+                        iconClass = 'fa-th-large';
+                        title = 'Widok: Elegancki';
+                        break;
+                    case 'grid':
+                        iconClass = 'fa-th';
+                        title = 'Widok: Siatka';
+                        break;
                 }
                 viewContentBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
                 viewContentBtn.title = title;
-                viewContentBtn.classList.add('active');
                 saveToLocalStorage('view_mode', currentViewMode);
+                renderGuides();
             };
 
             currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
@@ -3657,13 +3711,9 @@ const dataFromFile = `
             });
 
             viewContentBtn.addEventListener('click', () => {
-                if (currentViewMode === 'full') {
-                    currentViewMode = 'image-only';
-                } else if (currentViewMode === 'image-only') {
-                    currentViewMode = 'text-only';
-                } else {
-                    currentViewMode = 'full';
-                }
+                const viewModes = ['text-only', 'full', 'image-only', 'grid'];
+                const currentIndex = viewModes.indexOf(currentViewMode);
+                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
                 updateContentView();
             });
 
@@ -4265,11 +4315,7 @@ const dataFromFile = `
                 selector: ".display-panel",
                 class: "animated-display-panel",
                 delay: 0.4
-            }, /*{ // Usunięte by naprawić podwójną animację
-                selector: ".pagination",
-                class: "animated-pagination",
-                delay: 0.5
-            },*/ {
+            }, {
                 selector: "#actionControls",
                 class: "animated-action-controls",
                 delay: 0.6
@@ -4393,6 +4439,112 @@ const dataFromFile = `
                 stopPlayAnimation();
             }
         });
+
+        function initialize3dHoverEffect() {
+            const guideList = document.getElementById('guideList');
+            if (!guideList) return;
+
+            let currentGuide = null;
+            let animationFrameId = null;
+
+            const onMouseMove = (e) => {
+                if (!currentGuide) return;
+
+                const rect = currentGuide.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((centerY - y) / centerY) * -12;
+                const rotateY = ((x - centerX) / centerX) * 12;
+
+                const glowX = (x / rect.width) * 100;
+                const glowY = (y / rect.height) * 100;
+
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = requestAnimationFrame(() => {
+                    if (!currentGuide) return; // FIX for race condition
+                    currentGuide.style.setProperty('--rotate-x', `${rotateX}deg`);
+                    currentGuide.style.setProperty('--rotate-y', `${rotateY}deg`);
+                    currentGuide.style.setProperty('--glow-x', `${glowX}%`);
+                    currentGuide.style.setProperty('--glow-y', `${glowY}%`);
+                });
+            };
+
+            guideList.addEventListener('mouseenter', (e) => {
+                const guide = e.target.closest('.guide-list.view-image-only .guide');
+                if (guide) {
+                    guide.style.transition = 'none'; // Bezpośrednie sterowanie
+                    currentGuide = guide;
+                }
+            }, true);
+
+            guideList.addEventListener('mouseleave', (e) => {
+                const guideTarget = e.target.closest('.guide-list.view-image-only .guide');
+                if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
+                    cancelAnimationFrame(animationFrameId);
+                    currentGuide.style.transition = 'transform 0.4s ease-out'; // Przywrócenie transition
+                    requestAnimationFrame(() => {
+                        if (currentGuide) {
+                            currentGuide.style.setProperty('--rotate-x', '0deg');
+                            currentGuide.style.setProperty('--rotate-y', '0deg');
+                        }
+                    });
+                    currentGuide = null;
+                }
+            }, true);
+
+
+            guideList.addEventListener('mousemove', onMouseMove, true);
+        }
+
+        function initializeMobileHover() {
+            // Nasłuchuj dotknięć na całej liście okładek
+            guideList.addEventListener('touchend', function (e) {
+                const tappedItem = e.target.closest('.guide');
+
+                // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
+                if (!tappedItem) {
+                    if (tappedGuide) {
+                        tappedGuide.classList.remove('mobile-hover');
+                        tappedGuide = null;
+                    }
+                    return;
+                }
+
+                // Zatrzymaj domyślną akcję (np. nawigację), aby obsłużyć ją ręcznie
+                e.preventDefault();
+
+                if (tappedGuide === tappedItem) {
+                    // DRUGIE dotknięcie tego samego kafelka: wykonaj akcję kliknięcia
+                    const link = tappedItem.querySelector('a');
+                    if (link) {
+                        link.click();
+                    }
+                    tappedGuide.classList.remove('mobile-hover');
+                    tappedGuide = null;
+                } else {
+                    // PIERWSZE dotknięcie lub dotknięcie innego kafelka
+                    // Zdejmij hover ze starego kafelka, jeśli istniał
+                    if (tappedGuide) {
+                        tappedGuide.classList.remove('mobile-hover');
+                    }
+                    // Ustaw hover na nowym kafelku
+                    tappedItem.classList.add('mobile-hover');
+                    tappedGuide = tappedItem;
+                }
+            });
+
+            // Dodajmy też reset po kliknięciu gdziekolwiek indziej na stronie
+            document.addEventListener('touchstart', function (e) {
+                if (!e.target.closest('.guide') && tappedGuide) {
+                    tappedGuide.classList.remove('mobile-hover');
+                    tappedGuide = null;
+                }
+            });
+        }
     </script>
 </body>
 
