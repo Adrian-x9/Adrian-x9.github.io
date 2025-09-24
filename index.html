@@ -792,7 +792,7 @@
             overflow: hidden;
         }
 
-        /* --- WIDOK ELEGANCKI v2.2 (LEKKOŚĆ I BALANS) - START --- */
+        /* --- WIDOK ELEGANCKI v3.0 --- */
 
         /* Ustawienia ogólne dla kafelka w tym trybie */
         .guide-list.view-image-only .guide {
@@ -800,7 +800,32 @@
             overflow: hidden;
             display: flex;
             flex-direction: column;
+            transform-style: preserve-3d;
+            transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+            transition: none;
         }
+
+        /* Poświata dla efektu 3D */
+        .guide-list.view-image-only .guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
+                    rgba(229, 57, 53, 0.3),
+                    transparent 40%);
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .guide-list.view-image-only .guide:hover::before {
+            opacity: 1;
+        }
+
 
         /* Kontener na obrazek */
         .guide-list.view-image-only .guide-cover-wrapper {
@@ -817,16 +842,14 @@
             width: 100%;
             height: 100%;
             z-index: 1;
-            /* Umieszcza link nad obrazkiem, ale pod ewentualnym tekstem */
         }
 
-        /* NOWA, DEDYKOWANA KLASA DLA OBRAZKA W WIDOKU ELEGANCKIM */
+        /* Dedykowana klasa dla obrazka w widoku eleganckim */
         .guide-cover-elegant {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* Teraz ta właściwość zadziała bez konfliktów */
             transition: transform 0.4s ease-out;
         }
 
@@ -838,21 +861,17 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            /* KLUCZOWA ZMIANA: Tytuł do góry, link do dołu */
             border-top: 1px solid rgba(128, 128, 128, 0.2);
-            /* WAŻNE: Tło jest teraz dziedziczone z .guide, nie ma własnego koloru */
         }
 
         body.dark-mode .guide-list.view-image-only .guide-text-content {
             border-top: 1px solid rgba(255, 255, 255, 0.15);
         }
 
-        /* Ukrywamy oryginalne elementy, których nie chcemy w tym widoku */
         .guide-list.view-image-only .guide-info {
             display: none;
         }
 
-        /* Tytuł w widoku eleganckim */
         .guide-list.view-image-only .guide-title {
             font-size: 1.05em;
             font-weight: 600;
@@ -862,7 +881,6 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             -webkit-line-clamp: 2;
-            /* Zmniejszamy do 2 linii, by zrobić miejsce na link */
             overflow: hidden;
         }
 
@@ -878,11 +896,8 @@
             color: #eee;
         }
 
-
-        /* NOWY ELEMENT: Link akcji na dole kafelka */
         .guide-list.view-image-only .guide-action-link {
             text-align: right;
-            /* Wyrównanie do prawej */
             font-size: 0.85em;
             font-weight: bold;
         }
@@ -897,14 +912,12 @@
             opacity: 1;
         }
 
-
-        /* --- WIDOK ELEGANCKI v2.2 (LEKKOŚĆ I BALANS) - KONIEC --- */
-
-
-
-        .guide-list.view-image-only .guide:hover .guide-cover-elegant {
+        /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
+        .guide-list:not(.view-image-only):not(.view-text-only) .guide:hover .guide-cover {
             transform: scale(1.05);
         }
+
+        /* Usunięta zbędna reguła hover */
 
         .guide {
             padding: 0 20px 10px;
@@ -3091,9 +3104,8 @@
             }
             initializeNewButtons();
             initializeDisplayPanel();
-            initializeMobileHover(); // <-- Dodaj tę linię
-            // FIX: Usunięcie funkcji powodującej problemy z animacją paginacji
-            // initializeFooterAnimation();
+            initializeMobileHover();
+            initialize3dHoverEffect();
         };
 
         function toggleMinimizeView() {
@@ -3159,53 +3171,49 @@
             renderGuides();
         }
 
-        // FIX: Poprawiona funkcja do otwierania plików i linków (online/offline + fallback)
         function checkFileAndOpen(targetUrl, fallbackUrl, isLink = false) {
-            // Bezpośrednie otwieranie linków zewnętrznych
             if (targetUrl.startsWith('http')) {
                 window.open(targetUrl, '_blank');
                 return;
             }
 
-            // Obsługa trybu offline (file://) - otwieramy bezpośrednio
             if (isOffline) {
                 window.open(targetUrl, '_blank');
                 return;
             }
 
-            // Obsługa trybu online
             const [filePath] = targetUrl.split('?');
 
-            fetch(filePath, { method: 'HEAD', cache: 'no-store' })
+            fetch(filePath, {
+                    method: 'HEAD',
+                    cache: 'no-store'
+                })
                 .then(response => {
-                    // Serwer odpowiedział, ale może to być strona błędu, która zwraca 200 OK.
-                    // Dla plików .html i .link, ufamy statusowi. Dla innych, moglibyśmy dodać więcej sprawdzeń.
                     if (response.ok) {
                         window.open(targetUrl, '_blank');
                     } else {
-                        // Jeśli serwer zwrócił błąd (np. 404), użyj fallback
                         window.location.href = fallbackUrl;
                     }
                 })
                 .catch(() => {
-                    // Błąd sieciowy, użyj fallback
                     window.location.href = fallbackUrl;
                 });
         }
-
 
         function createGuideHtml(guide) {
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-            let titleHtml = "", infoHtml = "", actionLinkHtml = "", coverLinkHtml = "";
+            let titleHtml = "",
+                infoHtml = "",
+                actionLinkHtml = "",
+                coverLinkHtml = "";
             let titleText = guide.title;
             if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
                 titleText = titleText.replace(/^\d{2}\s*/, "");
 
             const mediaTypes = ["jpg", "png", "mp4", "avi"];
 
-            // Ta sekcja pozostaje bez zmian - budujemy komponenty
             if (guide.format === "link") {
                 const targetUrl = decodeUrlFromFilename(guide.file);
                 const clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
@@ -3235,7 +3243,6 @@
             const noCoverImg = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
 
             if (currentViewMode === 'image-only') {
-                // POPRAWIONA ARCHITEKTURA HTML
                 const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
                 return `
                     <div class="guide-cover-wrapper">
@@ -3248,7 +3255,6 @@
                     </div>
                 `;
             } else {
-                // Struktura domyślna pozostaje bez zmian
                 const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
                 return `
                     ${titleHtml}
@@ -3287,14 +3293,12 @@
 
             const sizePercent = document.getElementById('sizeSlider').value;
             const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100));
-            const minSlider = 50, maxSlider = 150;
-            const minFont = 0.8, maxFont = 1.3;
+            const minSlider = 50,
+                maxSlider = 150;
+            const minFont = 0.8,
+                maxFont = 1.3;
 
-            // ==================================================================
-            // TUTAJ BYŁ BŁĄD: (maxSlider - minFont) zamiast (maxSlider - minSlider)
-            // Poprawiona formuła:
             const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
-            // ==================================================================
 
             const dynamicFontSize = minFont + (percent * (maxFont - minFont));
             guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
@@ -3304,8 +3308,6 @@
             const wrapper = document.querySelector('.guide-list-wrapper');
             const guideGap = 20;
             const estimatedItemHeight = config.pageSettings.estimatedItemHeight;
-            // const wrapperHeight = (selectedRowCount * estimatedItemHeight) + ((selectedRowCount - 1) * guideGap);
-            // wrapper.style.height = `${wrapperHeight}px`;
 
             if (sourceArray) {
                 source.forEach((guide, index) => {
@@ -4252,11 +4254,7 @@
                 selector: ".display-panel",
                 class: "animated-display-panel",
                 delay: 0.4
-            }, /*{ // Usunięte by naprawić podwójną animację
-                selector: ".pagination",
-                class: "animated-pagination",
-                delay: 0.5
-            },*/ {
+            }, {
                 selector: "#actionControls",
                 class: "animated-action-controls",
                 delay: 0.6
@@ -4380,6 +4378,65 @@
                 stopPlayAnimation();
             }
         });
+
+        function initialize3dHoverEffect() {
+            const guideList = document.getElementById('guideList');
+            if (!guideList) return;
+
+            let currentGuide = null;
+            let animationFrameId = null;
+
+            const onMouseMove = (e) => {
+                if (!currentGuide) return;
+
+                const rect = currentGuide.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((centerY - y) / centerY) * -12;
+                const rotateY = ((x - centerX) / centerX) * 12;
+
+                const glowX = (x / rect.width) * 100;
+                const glowY = (y / rect.height) * 100;
+
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = requestAnimationFrame(() => {
+                    // --- POCZĄTEK POPRAWKI ---
+                    if (!currentGuide) return; // Ten warunek rozwiązuje problem
+                    // --- KONIEC POPRAWKI ---
+                    currentGuide.style.setProperty('--rotate-x', `${rotateX}deg`);
+                    currentGuide.style.setProperty('--rotate-y', `${rotateY}deg`);
+                    currentGuide.style.setProperty('--glow-x', `${glowX}%`);
+                    currentGuide.style.setProperty('--glow-y', `${glowY}%`);
+                });
+            };
+
+            guideList.addEventListener('mouseenter', (e) => {
+                const guide = e.target.closest('.guide-list.view-image-only .guide');
+                if (guide) {
+                    currentGuide = guide;
+                }
+            }, true);
+
+            guideList.addEventListener('mouseleave', (e) => {
+                const guideTarget = e.target.closest('.guide-list.view-image-only .guide');
+                if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
+                    cancelAnimationFrame(animationFrameId);
+                    requestAnimationFrame(() => {
+                        if(currentGuide) { // Dodatkowe zabezpieczenie
+                           currentGuide.style.setProperty('--rotate-x', '0deg');
+                           currentGuide.style.setProperty('--rotate-y', '0deg');
+                        }
+                    });
+                    currentGuide = null;
+                }
+            }, true);
+
+            guideList.addEventListener('mousemove', onMouseMove, true);
+        }
     </script>
 </body>
 
