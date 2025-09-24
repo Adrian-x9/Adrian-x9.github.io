@@ -1,60 +1,3 @@
-        // --- Copy starting from here to configure VisuDir / Skopiuj od tego miejsca, by skonfigurować VisuDir ---
-        // --- KONFIGURACJA ---
-        const config = {
-            version: 'v1.3.3',
-            global: {
-                defaultTheme: 'light',
-                defaultLanguage: 'pl'
-            },
-            logoRotator: {
-                enabled: true,
-                interval: 4500,
-                logos: [
-                    { srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png", href: "../.base-system/about.html", alt: "Logo VisuDir" },
-                    { srcLight: "../.base-system/gfx/interface/ADE_small_light.png", srcDark: "../.base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
-                ]
-            },
-            pageSettings: {
-                pageKey: 'polska',
-                pageTitle: "Polska ▪ galeria zdjęć ▪",
-                showMiniLogo: true,
-                showVisuDirButton: true,
-                showBackButton: true,
-                showLanguageButton: false,
-                defaultBgVideo: 1,
-                bgVideoStartNum: 1,
-                bgVideoEndNum: 23,
-                defaultAnimation: 2,
-                defaultView: 2,
-                defaultFormat: "jpg",
-                defaultSort: "shuffle",
-                defaultRows: 3,
-                predefinedFilters: [
-                    { label: "Polska", search: "Polska" },
-                    { label: "Gliwice", search: "Gliwice" },
-                    { label: "Warszawa", search: "Warszawa" },
-                    { label: "Morze bałtyckie", search: "morze" },
-                ],
-            }, 
-            paths: {
-                url404: "../.base-system/404.html",
-                urlAbout: "../.base-system/about.html",
-                urlFallback: "../.base-system/soon.html",
-                databaseFileName: "../.base-system/db.txt",
-                dataFolderName: ".base-system/files",
-                coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/files",
-                videoBgLightUrlBase: "../.base-system/video-bg/bg-light",
-                videoBgDarkUrlBase: "../.base-system/video-bg/bg-dark",
-                urlEnglishVersion: "../index-en.html"
-            }
-        };
-        // --- KONIEC KONFIGURACJI ---// --- KONFIGURACJA ---
-       
-        // --- Configuration end ---
-
-        // --- File database ---
-        const dataFromFile = `
 06.09.2025  07:23            665916 Gdansk-Stary-Port_Polska_1044857_1920.jpg
 06.09.2025  06:59            643088 Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg
 06.09.2025  06:58            931208 Gdansk_Polska_7227096_1920.jpg
@@ -97,7 +40,3 @@
 06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
-
-        `;
-        // --- Database end ---
-        // --- End of copying / Kopiuj do tego miejsca ---

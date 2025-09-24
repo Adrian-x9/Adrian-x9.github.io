@@ -1,0 +1,18 @@
+[00:52:49] Starting the cascade update process...
+[00:52:49] Base template file loaded successfully.
+[00:52:49] Scanning for system folders in: C:\Users\adrian\OneDrive\Documents\.www\VisuDir
+[00:52:49] Found system: 'Cyprus'
+[00:52:49] Found system: 'GameGuides'
+[00:52:49] Found system: 'Poland'
+[00:52:49] --- Processing system: 'Cyprus' ---
+[00:52:49] File '.db-secure.txt' is not UTF-8, attempting to read as UTF-16.
+[00:52:49] No language files found, generating default index.html.
+[00:52:49] Backup created: index-bck.html
+[00:52:49] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Cyprus\index.html
+[00:52:49] --- Processing system: 'GameGuides' ---
+[00:52:49] CRITICAL ERROR while processing system 'GameGuides': [WinError 3] System nie może odnaleźć określonej ścieżki: 'C:\\Users\\adrian\\OneDrive\\Documents\\.www\\VisuDir\\GameGuides\\.base-system\\.tools'
+[00:52:49] --- Processing system: 'Poland' ---
+[00:52:49] No language files found, generating default index.html.
+[00:52:49] Backup created: index-bck.html
+[00:52:49] File saved: C:\Users\adrian\OneDrive\Documents\.www\VisuDir\Poland\index.html
+[00:52:49] --- Update process finished. ---

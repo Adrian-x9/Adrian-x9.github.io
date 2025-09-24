@@ -1,0 +1,92 @@
+        // --- configuraton / konfiguracja ---
+        const config = {
+            // Ustawienia główne / Main settings
+            version: 'v1.5.7', // Pagination rebuilt // Przebudowano paginację
+            global: {
+                defaultTheme: 'light',
+                defaultLanguage: 'pl'
+            },
+            pageSettings: {
+                // Video & animations settings // Ustawienia wideo i animacji
+                defaultAnimations: true,
+                defaultBgVideo: 1,
+                bgVideoStartNum: 1,
+                bgVideoEndNum: 26,
+                defaultVideoBg: true,
+                defaultLabelsVisible: true, // slideshow labels visibility // widoczność etykiet w pokazie slajdów
+
+                // Setting for header line // Ustawienia dla linii nagłówka
+                pageKey: 'indexMaxi',
+                pageTitle: "START ▪ maxi MENU ▪",
+                showMiniLogo: true,
+                showVisuDirButton: true,
+                showBackButton: false,
+                showLanguageButton: false,
+
+                // Settings for miniatures grid // Ustawienia dla siatki miniaturek
+                defaultSort: 'nameAsc', // nameAsc, nameDesc, dateAsc, dateDesc, sizeAsc, sizeDesc, shuffle
+                defaultBoxWidth1: '256px',
+                defaultBoxWidth2: '197px',
+                defaultBoxWidth3: '137px',
+                defaultRows: 2,
+                defaultShowCovers: true,
+                defaultShowText: true,
+                defaultViewExpanded: false,
+                defaultVideoExpanded: false,
+                predefinedFilters: [{
+                    label: "ADE",
+                    search: "ade"
+                }, {
+                    label: "E-booki",
+                    search: "e-book"
+                }, {
+                    label: "Galerie",
+                    search: "galeri"
+                }, {
+                    label: "Hiszpania",
+                    search: "Hiszpania"
+                }, {
+                    label: "Niemcy",
+                    search: "Niemcy"
+                }, {
+                    label: "Polska",
+                    search: "Polska"
+                }, {
+                    label: "Poradniki",
+                    search: "Poradniki"
+                },],
+            },
+
+            // Paths and logos // Ścieżki i loga
+            logoRotator: {
+                enabled: true,
+                interval: 4500,
+                logos: [{
+                    // Global for multiple systems // Globalne dla wielu systemów
+                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
+                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
+                    href: ".base-system/about.html",
+                    alt: "Logo VisuDir"
+                }, {
+                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
+                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
+                    href: "https://www.ade.pl",
+                    alt: "Logo ADE"
+                }]
+            },
+
+            paths: {
+                url404: ".base-system/404.html",
+                urlAbout: ".base-system/about.html",
+                urlFallback: ".base-system/soon.html",
+                videoBgLightUrlBase: ".base-system/video-bg/bg-light",
+                videoBgDarkUrlBase: ".base-system/video-bg/bg-dark",
+                urlEnglishVersion: "index-en.html",
+
+                databaseFileName: ".base-system/db.txt",
+                dataFolderName: ".base-system/files",
+                coversFolderName: ".base-system/preview",
+                previewHdFolderName: ".base-system/preview-hd"
+            }
+        };
+        // --- Configuration end ---
