@@ -2263,80 +2263,106 @@
 
         /* --- START: Finalny, spójny styl paska statusu v4.0 --- */
 
-/* Główny kontener paska, stylizowany na wzór .display-panel */
-#statusBar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1em;
-    margin: 10px auto; /* Równe marginesy dla symetrii */
-    padding: 6px 15px;
-    width: fit-content;
-    border-radius: 12px; /* Zaokrąglenie identyczne jak w .display-panel */
-    border: 1px solid #a00000; /* Kolor ramki identyczny jak w .display-panel */
-    transition: all 0.3s ease;
-}
+        /* Główny kontener paska, stylizowany na wzór .display-panel */
+        #statusBar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+            margin: 10px auto;
+            /* Równe marginesy dla symetrii */
+            padding: 6px 15px;
+            width: fit-content;
+            border-radius: 12px;
+            /* Zaokrąglenie identyczne jak w .display-panel */
+            border: 1px solid #a00000;
+            /* Kolor ramki identyczny jak w .display-panel */
+            transition: all 0.3s ease;
+        }
 
-/* Styl dla trybu jasnego, spójny z resztą UI */
-body:not(.dark-mode) #statusBar {
-    background: rgba(253, 253, 253, 0.85); /* Tło skopiowane z .guide */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); /* Cień skopiowany z .guide */
-}
+        /* Styl dla trybu jasnego, spójny z resztą UI */
+        body:not(.dark-mode) #statusBar {
+            background: rgba(253, 253, 253, 0.85);
+            /* Tło skopiowane z .guide */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+            /* Cień skopiowany z .guide */
+        }
 
-/* Styl dla trybu ciemnego, spójny z resztą UI */
-body.dark-mode #statusBar {
-    background: rgba(0, 0, 0, 0.7); /* Tło skopiowane z .display-panel */
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); /* Cień skopiowany z .guide */
-}
+        /* Styl dla trybu ciemnego, spójny z resztą UI */
+        body.dark-mode #statusBar {
+            background: rgba(0, 0, 0, 0.7);
+            /* Tło skopiowane z .display-panel */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            /* Cień skopiowany z .guide */
+        }
 
-/* Efekt "szkła" na wideo, identyczny jak w innych panelach */
-body.video-ready #statusBar {
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-}
+        /* Efekt "szkła" na wideo, identyczny jak w innych panelach */
+        body.video-ready #statusBar {
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
 
-/* STYL TEKSTU: Solidny, bez obrysu - tak jak na przyciskach i w panelach */
-#statusBar span {
-    font-size: 0.9em;
-    font-weight: 600;
-    white-space: nowrap;
-    text-shadow: none; /* Usunięcie text-shadow dla czystości */
-}
+        /* STYL TEKSTU: Solidny, bez obrysu - tak jak na przyciskach i w panelach */
+        #statusBar span {
+            font-size: 0.9em;
+            font-weight: 600;
+            white-space: nowrap;
+            text-shadow: none;
+            /* Usunięcie text-shadow dla czystości */
+        }
 
-/* Kolorystyka tekstu, dopasowana do reszty interfejsu */
-body:not(.dark-mode) #statusBar span {
-    color: #333;
-}
-body.dark-mode #statusBar span {
-    color: #eee;
-}
+        /* Kolorystyka tekstu, dopasowana do reszty interfejsu */
+        body:not(.dark-mode) #statusBar span {
+            color: #333;
+        }
 
-/* Hierarchia wizualna informacji */
-#guideCountDisplay b, .session-time {
-    font-weight: 800; /* Kluczowe informacje są pogrubione */
-}
-.idle-time, #langDisplay {
-    opacity: 0.7; /* Mniej ważne informacje są lekko stonowane */
-}
+        body.dark-mode #statusBar span {
+            color: #eee;
+        }
 
-/* SEPARATORY: Dyskretne linie, stylizowane jak w przyciskach .multi-button */
-.status-separator {
-    width: 1px;
-    height: 16px;
-    margin: 0 -0.2em;
-}
-body:not(.dark-mode) .status-separator {
-    background: rgba(0, 0, 0, 0.15);
-}
-body.dark-mode .status-separator {
-    background: rgba(255, 255, 255, 0.2);
-}
-.time-separator {
-    opacity: 0.5;
-    margin: 0 0.3em;
-}
+        /* Hierarchia wizualna informacji */
+        #guideCountDisplay b,
+        .session-time {
+            font-weight: 800;
+            /* Kluczowe informacje są pogrubione */
+        }
 
-/* --- END: Finalny, spójny styl paska statusu v4.0 --- */
+        .idle-time,
+        #langDisplay {
+            opacity: 0.7;
+            /* Mniej ważne informacje są lekko stonowane */
+        }
+
+        /* DYSKRETNY SEPARATOR: Wypełniony okrąg zamiast linii */
+        .status-separator {
+            width: 5px;
+            /* Mała średnica dla dyskretnego efektu */
+            height: 5px;
+            border-radius: 50%;
+            /* Tworzy idealny okrąg */
+            margin: 0 0.2em;
+            /* Dopasowanie marginesów bocznych */
+
+            /* Wyrównanie w pionie jest teraz idealne dzięki `align-items: center`
+       w głównym kontenerze #statusBar i małym wymiarom separatora */
+        }
+
+        /* Kolor separatora dla trybu jasnego */
+        body:not(.dark-mode) .status-separator {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        /* Kolor separatora dla trybu ciemnego */
+        body.dark-mode .status-separator {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .time-separator {
+            opacity: 0.5;
+            margin: 0 0.3em;
+        }
+
+        /* --- END: Finalny, spójny styl paska statusu v4.0 --- */
     </style>
     <script>
         (function () {
