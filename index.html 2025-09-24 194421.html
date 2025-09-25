@@ -212,16 +212,8 @@
             color: #555;
         }
 
-        /* Nowa reguła dla głównego bloku tekstowego */
-        .footer-main-text p {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Poprawiona reguła dla notki o prywatności, aby pasowała do nowej struktury */
-        .footer .privacy-notice {
-            margin-top: 10px;
-            font-size: 0.9em;
+        body:not(.dark-mode) .privacy-notice {
+            color: #bbb;
         }
 
         body.dark-mode {
@@ -325,40 +317,23 @@
         }
 
         .header-logo-link {
-            position: fixed;
-            top: 15px;
-            left: 17px;
-            /* Optyczna korekta marginesu */
-            z-index: 998;
-            width: 44px;
-            height: 44px;
-            display: block;
-            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            perspective: 1000px;
         }
 
         .header-logo {
-            max-height: 100%;
+            max-height: 42px;
             width: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: clip-path 1.4s cubic-bezier(0.8, 0, 0.2, 1);
-            clip-path: inset(0 50% 0 50%);
-            /* Start: niewidoczny */
-        }
-
-        .header-logo.active {
-            clip-path: inset(0 0 0 0);
-            /* End: widoczny */
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
         }
 
         .top-header .title {
             font-size: 1.6em;
-            font-weight: 700;
+            font-weight: 600;
             /* Przywrócenie grubości czcionki */
         }
-
 
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
@@ -723,8 +698,7 @@
             scroll-snap-stop: always;
             display: grid;
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-            grid-template-columns: repeat(auto-fit, minmax(var(--box-width, 256px), 1fr));
-            /* KLUCZOWA ZMIANA */
+            grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 256px), 1fr));
             justify-content: center;
             gap: 20px;
             padding: 2px;
@@ -818,11 +792,9 @@
             overflow: hidden;
         }
 
-        /* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
+        /* --- WIDOK ELEGANCKI v3.0 --- */
 
         /* Ustawienia ogólne dla kafelka w tym trybie */
-        /* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
-
         .guide-list.view-image-only .guide {
             padding: 0;
             overflow: hidden;
@@ -831,8 +803,6 @@
             transform-style: preserve-3d;
             transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
             transition: transform 0.1s ease-out;
-            border-radius: 20px;
-            /* <-- Zwiększone zaokrąglenie */
             /* Płynny powrót */
         }
 
@@ -858,27 +828,11 @@
         }
 
 
-        /* .guide-list.view-image-only .guide-cover-wrapper {
-            height: 65%;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: rgba(0, 0, 0, 0.03);
-            Subtelne tło dla pustej przestrzeni
-        } */
-
-        /* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
+        /* Kontener na obrazek */
         .guide-list.view-image-only .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
-        }
-
-        /* Usuwamy niepotrzebne tło dla trybu ciemnego */
-        body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
-            background-color: transparent;
         }
 
         /* Styl dla linku-nakładki w widoku eleganckim */
@@ -892,26 +846,12 @@
         }
 
         /* Dedykowana klasa dla obrazka w widoku eleganckim */
-        /* 3. Przywracamy rozciągnięcie obrazu, aby wypełniał kontener (zamiast się w nim mieścić) */
         .guide-cover-elegant {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            /* <-- Kluczowa zmiana: wypełnij i przytnij */
             transition: transform 0.4s ease-out;
-            /* Usuwamy stylizację z samego obrazka, bo ramką jest teraz cały kafelek */
-            border-radius: 0;
-            box-shadow: none;
-            /* display: block;
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            transition: transform 0.4s ease-out;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
         }
 
         /* Kontener na tekst pod obrazkiem */
@@ -927,7 +867,6 @@
 
         body.dark-mode .guide-list.view-image-only .guide-text-content {
             border-top: 1px solid rgba(255, 255, 255, 0.15);
-            background-color: rgba(255, 255, 255, 0.05);
         }
 
         .guide-list.view-image-only .guide-info {
@@ -974,41 +913,32 @@
             opacity: 1;
         }
 
-        /* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA --- */
+        /* --- WIDOK SIATKA (GRID) v1.0 - START --- */
 
-        /* 1. Kontener ".guide" staje się całkowicie przezroczysty i niewidoczny */
+        /* --- Przeniesienie efektu ZOOM do widoku PEŁNEGO --- */
+        .guide-list:not(.view-image-only):not(.view-text-only):not(.view-grid):not(.view-masonry) .guide:hover .guide-cover {
+            transform: scale(1.05);
+        }
+
+        /* Ustawienia ogólne dla kafelka w tym trybie */
         .guide-list.view-grid .guide {
             padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: block;
             position: relative;
             overflow: hidden;
             aspect-ratio: 1 / 1;
-            background: transparent !important;
-            /* Używamy !important, by mieć pewność */
-            box-shadow: none !important;
-            /* że żadna inna reguła go nie nadpisze */
-            border: none !important;
+            /* Ustawia kwadratowe proporcje */
         }
 
-        /* 2. Zdjęcie otrzymuje własną ramkę, cień i nie jest przycinane */
+        /* Dedykowana klasa dla obrazka w widoku siatki */
         .guide-cover-grid {
-            /* Zamiast wymuszać 100% wymiarów, pozwalamy obrazkowi się skalować */
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            background-color: rgba(0, 0, 0, 0.03);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
         }
 
-        body.dark-mode .guide-cover-grid {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        /* 3. Nakładka z tekstem ma płynne przejście i zaokrąglone rogi pasujące do zdjęcia */
+        /* Nakładka z tytułem, domyślnie ukryta */
         .guide-list.view-grid .grid-overlay {
             position: absolute;
             top: 0;
@@ -1025,33 +955,25 @@
             transition: opacity 0.3s ease-out;
             padding: 15px;
             box-sizing: border-box;
-            border-radius: 8px;
-            /* Dopasowanie do rogów zdjęcia */
-            pointer-events: none;
-            /* Nakładka nie przechwytuje zdarzeń myszy */
         }
 
-        /* 4. Tekst na nakładce ma pogrubienie i otoczkę */
+        /* Styl tekstu tytułu na nakładce */
         .grid-overlay .grid-title-text a {
             color: #fff;
             font-size: 1.2em;
-            font-weight: 800;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
             text-decoration: none;
-            -webkit-text-stroke: 1px black;
-            paint-order: stroke fill;
         }
 
-        /* 5. Efekt HOVER działa teraz na całym obszarze kafelka, ale wizualnie dotyczy zdjęcia */
+        /* Efekt hover */
         .guide-list.view-grid .guide:hover .grid-overlay {
             opacity: 1;
         }
 
         .guide-list.view-grid .guide:hover .guide-cover-grid {
-            transform: scale(1.03);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
         }
-
-        /* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA - KONIEC --- */
 
 
         /* --- WIDOK MASONRY v1.0 - START --- */
@@ -1070,7 +992,81 @@
             width: var(--box-width, 256px);
         }
 
+        /* --- WIDOK MASONRY v1.0 - KONIEC --- */
 
+        /* Ustawienia ogólne dla kafelka w tym trybie */
+        .guide-list.view-grid .guide {
+            padding: 0;
+            display: block;
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            /* Ustawia kwadratowe proporcje */
+        }
+
+        /* Dedykowana klasa dla obrazka w widoku siatki */
+        .guide-cover-grid {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease-out;
+        }
+
+        /* Nakładka z tytułem, domyślnie ukryta */
+        .guide-list.view-grid .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-out;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        /* Styl tekstu tytułu na nakładce */
+        .grid-overlay .grid-title-text a {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+            text-decoration: none;
+        }
+
+        /* Efekt hover */
+        .guide-list.view-grid .guide:hover .grid-overlay {
+            opacity: 1;
+        }
+
+        .guide-list.view-grid .guide:hover .guide-cover-grid {
+            transform: scale(1.05);
+        }
+
+        /* --- WIDOK SIATKA (GRID) v1.0 - KONIEC --- */
+
+        /* --- WIDOK MASONRY v1.0 - START --- */
+
+        .guide-list.view-masonry .guide-page {
+            display: block;
+            /* Wyłączamy grid */
+            position: relative;
+            /* Niezbędne do pozycjonowania kafelków */
+        }
+
+        .guide-list.view-masonry .guide {
+            /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
+            position: absolute;
+            transition: top 0.4s ease-out, left 0.4s ease-out;
+        }
+
+        /* --- WIDOK MASONRY v1.0 - KONIEC --- */
 
         .guide {
             padding: 0 20px 10px;
@@ -1078,25 +1074,22 @@
             transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
-            /* justify-content: space-between; */
+            justify-content: space-between;
             text-align: center;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
-            font-size: var(--dynamic-font-size, 1rem);
-            /* <-- DODAJ TĘ LINIĘ */
         }
 
         .guide-content-bottom {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            /* To jest kluczowa zmiana */
+            justify-content: flex-end;
         }
 
         .guide-info-container {
-            /* flex-grow: 1; */
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1110,8 +1103,6 @@
         .guide a.cover-link {
             margin-top: 0;
             display: block;
-            margin-bottom: 10px;
-            /* Dodaje stały odstęp pod obrazkiem */
         }
 
         .guide-info {
@@ -2269,339 +2260,6 @@
             background-color: #e53935;
             color: black;
         }
-
-        /* Poprawka koloru maski dla trybu jasnego w widoku siatki */
-        body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
-            background: rgba(255, 255, 255, 0.7);
-            /* Biała, półprzezroczysta maska */
-        }
-
-        /* Zmiana koloru tekstu na masce, aby był czytelny w trybie jasnym */
-        body:not(.dark-mode) .grid-overlay .grid-title-text a {
-            color: #000;
-            /* Czarny tekst */
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
-            /* Biała otoczka dla kontrastu */
-        }
-
-        /* Poprawka przyklejająca przycisk "Otwórz" do dołu w widoku pełnym i tekstowym */
-        .guide:not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-content-bottom>a:not(.cover-link) {
-            margin-top: auto;
-        }
-
-        /* --- START: Ostateczna, ujednolicona wersja paska statusu --- */
-
-        /* STYL PODSTAWOWY - spójny z resztą interfejsu */
-        #statusBar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 15px auto;
-            padding: 6px 15px;
-            /* Padding spójny z przyciskami */
-            width: fit-content;
-            border-radius: 10px;
-            /* Zaokrąglenie jak w przyciskach */
-            border: 1px solid #a00000;
-            /* Kolor ramki jak w przyciskach */
-            /* Usunięto 'gap' w celu precyzyjnej kontroli przez margines separatora */
-        }
-
-        /* Zagnieżdżone kontenery */
-        #guideCountDisplay,
-        #timeDisplay {
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-        }
-
-        /* SEPARATOR - generowany w CSS, niezależny od HTML */
-        /* Ta reguła dodaje separator PRZED każdym segmentem, oprócz pierwszego */
-        .status-segment:not(:first-child)::before {
-            content: '';
-            display: inline-block;
-            width: 1px;
-            height: 0.8em;
-            /* Mocno zmniejszona, dyskretna wysokość */
-            background-color: rgba(0, 0, 0, 0.2);
-            margin: 0 0.8em;
-            /* Symetryczny margines dla równych odstępów */
-            vertical-align: middle;
-            position: relative;
-            top: -0.1em;
-            /* Korekta dla idealnego wyśrodkowania */
-        }
-
-        body.dark-mode .status-segment:not(:first-child)::before {
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-
-        /* Poprawiona reguła dla timerów, aby miały odstęp od tekstu powyżej */
-        .footer-timers {
-            margin-top: 15px;
-            font-size: 0.9em;
-            opacity: 0.7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5em;
-        }
-
-        /* Nowoczesny, dyskretny separator między licznikami */
-        .footer-timers>span+span::before {
-            content: '•';
-            opacity: 0.5;
-            margin-right: 0.5em;
-            font-size: 1.2em;
-            vertical-align: middle;
-            line-height: 1;
-        }
-
-        /* Poprawione pozycjonowanie i wygląd przycisku reset */
-        .reset-container {
-            text-align: center;
-            margin: 10px 0 0 0;
-            /* Zmniejszony, spójny odstęp */
-        }
-
-        /* HIERARCHIA WIZUALNA TEKSTU */
-        #statusBar span {
-            font-size: 0.9em;
-            font-weight: 600;
-            white-space: nowrap;
-            text-shadow: none;
-        }
-
-        #guideCountDisplay b,
-        .session-time {
-            font-weight: 800;
-        }
-
-        .total-count,
-        .idle-time {
-            opacity: 0.6;
-        }
-
-        /* TŁA I CIENIE - spójne z resztą interfejsu */
-        .top-header {
-            margin-bottom: 0;
-            /* Zachowujemy dla spójności layoutu */
-        }
-
-        /* TRYB JASNY */
-        body:not(.dark-mode) #statusBar {
-            background: #fdfdfd;
-            /* Tło jak w przyciskach */
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-        }
-
-        /* TRYB CIEMNY */
-        body.dark-mode #statusBar {
-            background: #000;
-            /* Tło jak w przyciskach */
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-        }
-
-        /* TRYB WIDEO W TLE - zachowujemy półprzezroczystość */
-        body.video-ready:not(.dark-mode) #statusBar {
-            background: rgba(253, 253, 253, 0.85);
-        }
-
-        body.video-ready.dark-mode #statusBar {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        body.video-ready #statusBar {
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-
-        /* KOLORY TEKSTU */
-        body:not(.dark-mode) #statusBar span {
-            color: #333;
-        }
-
-        body.dark-mode #statusBar span {
-            color: #eee;
-        }
-
-        /* --- START: Ostateczna poprawka wyrównania OBRAZKÓW dla widoku nr 2 --- */
-        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide .guide-info-container {
-            flex-grow: 1;
-            /* Kluczowa reguła: każe blokowi z tekstem rozciągnąć się i wypchnąć wszystko pod nim w dół */
-            display: flex;
-            /* Poniższe reguły ładnie centrują tekst w dostępnej przestrzeni */
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- END: Ostateczna poprawka --- */
-        /* --- START: Ostateczna poprawka wyrównania dla WIDOKU NR 2 --- */
-
-        /* Ten selektor działa TYLKO w widoku nr 2 (domyślnym) */
-        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-info-container {
-            margin-bottom: auto;
-            /* Kluczowa reguła: tworzy elastyczny odstęp POD tekstem, spychając obraz i przycisk na dół */
-        }
-
-        /* --- END: Ostateczna poprawka --- */
-
-        .time-date-group {
-            display: flex;
-            align-items: center;
-            gap: 0.6em;
-            /* Odstęp między zegarem a księżycem */
-        }
-
-        /* --- START: ŁATKA KROK 1 - Integracja Paska Statusu --- */
-
-        /* 1. Upewniamy się, że główny kontener .controls odpowiednio rozciąga elementy */
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* 2. Nowy kontener dla zintegrowanego paska statusu */
-        #statusBarIntegrated {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            /* Usunięto 'gap', aby precyzyjnie kontrolować margines przez separator */
-            margin-left: auto;
-            /* KLUCZOWA REGULA: Przesuwa ten element na prawą krawędź */
-            padding-left: 20px;
-            /* Dodaje bezpieczny odstęp od przycisków po lewej */
-        }
-
-        /* 3. Dostosowujemy wygląd tekstu i separatorów (style przeniesione z #statusBar) */
-        #statusBarIntegrated span {
-            font-size: 0.9em;
-            font-weight: 600;
-            white-space: nowrap;
-            text-shadow: none;
-        }
-
-        #statusBarIntegrated .status-segment:not(:first-child)::before {
-            content: '';
-            display: inline-block;
-            width: 1px;
-            height: 0.8em;
-            background-color: rgba(0, 0, 0, 0.2);
-            margin: 0 0.8em;
-            vertical-align: middle;
-            position: relative;
-            top: -0.1em;
-        }
-
-        body.dark-mode #statusBarIntegrated .status-segment:not(:first-child)::before {
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-
-        body:not(.dark-mode) #statusBarIntegrated span {
-            color: #555;
-            /* Lekko przyciemniony tekst dla lepszego dopasowania */
-        }
-
-        body.dark-mode #statusBarIntegrated span {
-            color: #aaa;
-            /* Lekko rozjaśniony tekst dla lepszego dopasowania */
-        }
-
-        #guideCountDisplay b,
-        .session-time {
-            font-weight: 800;
-        }
-
-        .total-count,
-        .idle-time {
-            opacity: 0.6;
-        }
-
-        /* 4. Usuwamy style starego, osobnego paska #statusBar */
-        #statusBar {
-            display: none;
-            /* Całkowicie ukrywamy stary element */
-        }
-
-        /* --- END: ŁATKA KROK 1 --- */
-
-        /* --- START: ŁATKA KROK 2 - Ujednolicenie paneli --- */
-
-        /* 1. NOWA WSPÓLNA KLASA dla obu paneli sterowania */
-        .control-panel {
-            border: 1px solid;
-            border-radius: 12px;
-            padding: 8px;
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        body:not(.dark-mode) .control-panel {
-            background: #fdfdfd;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-            border-color: #a00000;
-        }
-
-        body.dark-mode .control-panel {
-            background: #000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-            border-color: #a00000;
-        }
-
-        body.video-ready:not(.dark-mode) .control-panel {
-            background: rgba(253, 253, 253, 0.85);
-        }
-
-        body.video-ready.dark-mode .control-panel {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-
-        /* 2. AKTUALIZACJA istniejących reguł, aby usunąć z nich duplikaty */
-        .controls {
-            /* Wszystkie style tła, cienia i ramek są teraz w .control-panel */
-            /* Pozostawiamy tylko to, co specyficzne dla tego kontenera: */
-            margin-bottom: 20px;
-        }
-
-        .display-panel {
-            /* Wszystkie style tła, cienia i ramek są teraz w .control-panel */
-            /* Pozostawiamy tylko to, co specyficzne dla tego kontenera: */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-
-        /* 3. UJEDNOLICENIE WYGLĄDU PÓL input i select w górnym panelu */
-        .controls input[type="text"],
-        .controls select {
-            border-color: #a00000;
-            /* Taki sam kolor ramki jak przyciski */
-            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
-            /* Taki sam cień jak przyciski */
-        }
-
-        body:not(.dark-mode) .controls input[type="text"],
-        body:not(.dark-mode) .controls select {
-            background-color: #fdfdfd;
-        }
-
-        body.dark-mode .controls input[type="text"],
-        body.dark-mode .controls select {
-            background-color: #000;
-        }
-
-        /* --- END: ŁATKA KROK 2 --- */
     </style>
     <script>
         (function () {
@@ -2634,7 +2292,7 @@
         function initializeMobileHover() {
             // Nasłuchuj dotknięć na całej liście okładek
             guideList.addEventListener('touchend', function (e) {
-                LanguagetappedItem = e.target.closest('.guide');
+                const tappedItem = e.target.closest('.guide');
 
                 // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
                 if (!tappedItem) {
@@ -2688,18 +2346,14 @@
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
 
-    <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-        <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
-        <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
-    </a>
-
     <div class="top-header">
+        <div class="header-logo-group">
+            <div id="guideCountDisplay" class="counter"></div>
+            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+                <img id="header-logo" src="" alt="Logo" class="header-logo" />
+            </a>
+        </div>
         <div id="pageTitle" class="title"></div>
-
-        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-            <img id="header-logo" src="" alt="Logo" class="header-logo" />
-        </a>
-
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span
@@ -2711,12 +2365,7 @@
         </div>
     </div>
 
-    <div id="statusBar">
-
-    </div>
-
-    <div class="controls control-panel">
-
+    <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text" data-lang="btnLoad"></span></label>
         <input type="file" id="fileInput" accept=".txt" />
@@ -2742,19 +2391,9 @@
             <button id="generatorModeBtn" class="dir-db-btn"><i class="fas fa-filter"></i></button>
         </div>
         <button id="minimizeBtn" class="dir-db-btn"><i class="fas fa-chevron-up"></i></button>
-
-        <div id="statusBarIntegrated">
-            <span id="guideCountDisplay" class="status-segment">
-                <b></b>
-                <span class="total-count"></span>
-            </span>
-            <span id="currentTimeDisplay" class="status-segment"></span>
-            <span id="moonPhaseDisplay" class="status-segment"></span>
-            <span id="langDisplay" class="status-segment"></span>
-        </div>
     </div>
 
-    <div class="display-panel control-panel" id="displayPanel">
+    <div class="display-panel" id="displayPanel">
         <div class="display-panel-group">
             <button id="viewContentBtn"><i class="fas fa-file-image"></i></button>
             <button id="viewOrientationBtn"><i class="fas fa-images"></i></button>
@@ -2798,33 +2437,25 @@
     </div>
 
     <div class="footer">
-        <div class="footer-main-text">
-            <p>
-                <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                            class="version-suffix">Dir
-                            <span class="version-display"></span></span></a></strong>
-                <span data-lang="footerDate"></span>
-                <span data-lang="footerDesc"></span> |
-                <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
-                        Ulbrych
-                    </a></span>
-                <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
-            </p>
-            <p class="privacy-notice">
-                <strong data-lang="privacyTitle"></strong>.
-                <span data-lang="privacyDesc"></span>
-                <strong data-lang="privacySafe"></strong>
-            </p>
+        <div>
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                        class="version-suffix">Dir
+                        <span class="version-display"></span></span></a></strong>
+            <span data-lang="footerDate"></span>
+            <span data-lang="footerDesc"></span> |
+            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
+                </a></span>
+            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
         </div>
+        <div class="privacy-notice">
+            <strong data-lang="privacyTitle"></strong>.
+            <span data-lang="privacyDesc"></span>
+            <strong data-lang="privacySafe"></strong>
+        </div>
+    </div>
 
-        <div id="timeDisplay" class="footer-timers">
-            <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
-            <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
-        </div>
-
-        <div class="reset-container">
-            <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
-        </div>
+    <div class="reset-container animated-footer">
+        <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
     </div>
 
     <button id="fullscreenBtn" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
@@ -3055,7 +2686,6 @@
             pl: {
                 pageTitle: "START ▪ maxi MENU ▪",
                 guideCounter: "<b>{count}</b> / {total} pozycji",
-                statusBarSeparator: "|",
                 alertNoItems: "Brak pozycji do wygenerowania!",
                 btnBack: "Wstecz",
                 btnLoad: "Załaduj...",
@@ -3074,7 +2704,7 @@
                 generatorModeAll: "Generator: cała pula",
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
-                maximizeBtn: "Przywróć interfejs",
+                maximizeBtn: "PrzywrĂłÄ‡ interfejs",
                 viewModeFull: "Widok: Okładki i tekst",
                 viewModeImage: "Widok: Tylko okładki",
                 viewModeText: "Widok: Tylko tekst",
@@ -3107,10 +2737,8 @@
                 videoBtnNext: "Następne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
                 footerDate: "© 2025-09-17",
-                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
-                footerIdleTime: "Bezczynność",
-                footerSessionTime: "Sesja",
-                privacyTitle: "Szanujemy Twoją prywatność",
+                footerDesc: "do katalogowania, zarzÄ…dzania i prezentacji plikĂłw i folderĂłw",
+                privacyTitle: "Szanujemy TwojÄ… prywatność",
                 privacyDesc: "Żadnych ciasteczek ani śledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
                 fullscreenBtn: "Pełny ekran",
@@ -3143,8 +2771,6 @@
             generatedGuides = null,
             slideshowSourceGuides = [],
             playGuidesQueue = [];
-
-        let sessionStartTime, lastActivityTime;
 
         let currentSort,
             selectedRowCount;
@@ -3215,111 +2841,6 @@
             }
             return theme;
         }
-
-        // --- START: Logika liczników czasu i bezczynności ---
-
-        /**
-                 * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
-                 * @param {number} ms - Czas w milisekundach.
-                 * @returns {string} Sformatowany czas.
-                 */
-        function formatTime(ms) {
-            if (ms < 0) ms = 0;
-            const totalSeconds = Math.floor(ms / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            const pad = (num) => num.toString().padStart(2, '0');
-            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-        }
-
-        /**
-         * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).
-         * @param {number} count - Aktualna (filtrowana) liczba pozycji.
-         * @param {number} total - Całkowita liczba pozycji.
-         */
-        function updateGuideCount(count, total) {
-            try {
-                const displayEl = document.getElementById('guideCountDisplay');
-                if (displayEl) {
-                    const counterTemplate = lang.guideCounter || "<b>{count}</b> / {total} pozycji";
-                    displayEl.innerHTML = counterTemplate.replace('{count}', count).replace('{total}', total);
-                }
-            } catch (e) {
-                console.error("Błąd krytyczny w updateGuideCount:", e);
-            }
-        }
-
-        /**
-         * Resetuje znacznik czasu ostatniej aktywności użytkownika.
-         * Ta funkcja jest wywoływana przez ruch myszy, kliknięcie lub naciśnięcie klawisza.
-         */
-        function resetIdleTimer() {
-            lastActivityTime = new Date();
-        }
-
-        /**
-                     * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
-                     */
-        function updateTimers() {
-            const now = new Date();
-            const sessionDuration = now - sessionStartTime;
-            const idleDuration = now - lastActivityTime;
-
-            const idleTimeEl = document.querySelector('#timeDisplay .idle-time');
-            const sessionTimeEl = document.querySelector('#timeDisplay .session-time');
-
-            // Aktualizuje tylko wartości czasu; etykiety są w HTML i tłumaczeniach
-            if (idleTimeEl && sessionTimeEl) {
-                idleTimeEl.textContent = formatTime(idleDuration);
-                sessionTimeEl.textContent = formatTime(sessionDuration);
-            }
-        }
-        // --- END: Logika liczników czasu i bezczynności ---
-        function getMoonPhase(date = new Date()) {
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-
-            // Prosty i skuteczny algorytm astronomiczny
-            let r = year % 100;
-            r %= 19;
-            if (r > 9) {
-                r -= 19;
-            }
-            r = ((r * 11) % 30) + month + day;
-            if (month < 3) {
-                r += 2;
-            }
-            r -= ((year < 2000) ? 4 : 8.3);
-            r = Math.floor(r + 0.5) % 30;
-            const phaseIndex = Math.floor((r < 0 ? r + 30 : r) / 3.7);
-            return phaseIndex;
-        }
-
-        function updateRealTimeClock() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-
-            // Update Clock
-            const clockEl = document.getElementById('currentTimeDisplay');
-            if (clockEl) {
-                clockEl.innerHTML = `<b>${hours}:${minutes}</b> ${year}-${month}-${day}`;
-            }
-
-            // NOWA CZĘŚĆ: Aktualizacja fazy księżyca
-            const moonPhaseEl = document.getElementById('moonPhaseDisplay');
-            if (moonPhaseEl) {
-                const moonPhases = ['🌑\uFE0E', '🌒\uFE0E', '🌓\uFE0E', '🌔\uFE0E', '🌕\uFE0E', '🌖\uFE0E', '🌗\uFE0E', '🌘\uFE0E']; // Wymuszenie wariantu tekstowego (monochromatycznego)
-                const phaseIndex = getMoonPhase(now);
-                moonPhaseEl.textContent = moonPhases[phaseIndex];
-            }
-        }
-
 
         function initializeBackgroundVideo(theme) {
             const pageKey = config.pageSettings.pageKey;
@@ -3419,9 +2940,7 @@
             if (videoShuffle && videoBgState === 'playing') {
                 bgVideo.addEventListener('canplay', () => {
                     toggleAutoShuffle(true);
-                }, {
-                    once: true
-                });
+                }, { once: true });
             }
 
             const hoverOverlay = getFromLocalStorage('hover_overlay_color') || config.pageSettings.hoverOverlayColor;
@@ -3535,7 +3054,6 @@
         async function processData(text) {
             const lines = text.split(/\r?\n/);
             guides = [];
-            updateGuideCount(guides.length, guides.length); // Aktualizuje licznik po wczytaniu danych
             for (const line of lines) {
                 const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i);
                 if (match) {
@@ -3586,19 +3104,6 @@
                 .filter(guide => ['jpg', 'png', 'link', 'mp4', 'avi'].includes(guide.format))
                 .map(guide => getGuideOrientation(guide));
             await Promise.all(orientationPromises);
-
-            // --- POCZĄTEK NOWEGO FRAGMENTU ---
-            try {
-                // Aktualizuje całkowitą liczbę pozycji zaraz po ich zliczeniu
-                const guideCountDisplay = document.getElementById('guideCountDisplay');
-                if (guideCountDisplay) {
-                    const currentCount = (filteredGuides && filteredGuides.length) || 0;
-                    guideCountDisplay.innerHTML = lang.guideCounter.replace('{count}', currentCount).replace('{total}', guides.length);
-                }
-            } catch (e) {
-                console.error("Błąd aktualizacji licznika po przetworzeniu danych:", e);
-            }
-            // --- KONIEC NOWEGO FRAGMENTU ---
         }
 
         function updateFormatFilter() {
@@ -3690,52 +3195,31 @@
         }
 
         function startLogoRotator() {
-            const logoImg1 = document.getElementById('logo-img-1');
-            const logoImg2 = document.getElementById('logo-img-2');
-            if (!logoImg1 || !logoImg2) return;
-
-            let activeImg = logoImg1;
-            let nextImg = logoImg2;
-
-            const updateLogo = () => {
-                const isDark = document.documentElement.classList.contains('dark-mode');
-                const newLogoData = config.logoRotator.logos[currentLogoIndex];
-
-                // Ustawia nowe logo w ukrytym tagu i aktualizuje link
-                nextImg.src = isDark ? newLogoData.srcDark : newLogoData.srcLight;
-                nextImg.alt = newLogoData.alt;
-                logoLink.href = newLogoData.href;
-
-                // Zamienia klasy, aby wykonać animację
-                activeImg.classList.remove('active');
-                nextImg.classList.add('active');
-
-                // Przygotowuje na następną iterację
-                [activeImg, nextImg] = [nextImg, activeImg];
-            };
-
-            // Ustawienie początkowe
-            currentLogoIndex = 0;
             const initialLogo = config.logoRotator.logos[currentLogoIndex];
-            const isDarkInitial = document.documentElement.classList.contains('dark-mode');
-            activeImg.src = isDarkInitial ? initialLogo.srcDark : initialLogo.srcLight;
-            activeImg.alt = initialLogo.alt;
+            if (!initialLogo) return;
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            headerLogo.src = isDark ? initialLogo.srcDark : initialLogo.srcLight;
             logoLink.href = initialLogo.href;
-            activeImg.classList.add('active'); // Ustawia pierwsze logo jako widoczne
-
+            headerLogo.alt = initialLogo.alt;
             if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
                 return;
             }
-
             clearInterval(logoInterval);
             logoInterval = setInterval(() => {
-                currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
-                updateLogo();
+                headerLogo.style.transform = 'rotateY(90deg)';
+                setTimeout(() => {
+                    currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
+                    const newLogo = config.logoRotator.logos[currentLogoIndex];
+                    const isDarkNow = document.documentElement.classList.contains('dark-mode');
+                    headerLogo.src = isDarkNow ? newLogo.srcDark : newLogo.srcLight;
+                    headerLogo.alt = newLogo.alt;
+                    logoLink.href = newLogo.href;
+                    headerLogo.style.transform = 'rotateY(0deg)';
+                }, 300);
             }, config.logoRotator.interval);
         }
 
         function applyLanguage() {
-            updateGuideCount(0, 0); // Ustawia stan początkowy licznika
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.dataset.lang;
                 if (lang[key]) el.textContent = lang[key];
@@ -3750,16 +3234,6 @@
             });
             document.title = config.pageSettings.pageTitle || lang.pageTitle;
             document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
-
-            // --- POCZĄTEK FINALNEGO FRAGMENTU DLA applyLanguage ---
-            try {
-                const langText = config.language.current.toUpperCase();
-                const langEl = document.getElementById('langDisplay');
-                if (langEl) langEl.textContent = langText;
-            } catch (e) {
-                console.error("Błąd podczas ustawiania paska statusu:", e);
-            }
-            // --- KONIEC FINALNEGO FRAGMENTU ---
         }
 
         window.onload = function () {
@@ -3817,21 +3291,6 @@
             initializeDisplayPanel();
             initializeMobileHover();
             initialize3dHoverEffect();
-            // --- POCZĄTEK NOWEGO FRAGMENTU ---
-
-            // Ustawienie początkowego czasu dla obu liczników
-            sessionStartTime = new Date();
-            lastActivityTime = new Date();
-
-            // Uruchomienie cyklicznej aktualizacji co sekundę
-            setInterval(updateTimers, 1000);
-
-            // Nasłuchiwanie na aktywność użytkownika w celu resetowania licznika bezczynności
-            ['mousedown', 'mousemove', 'keydown', 'touchstart'].forEach(event =>
-                window.addEventListener(event, resetIdleTimer)
-            );
-
-            // --- KONIEC NOWEGO FRAGMENTU ---
         };
 
         function toggleMinimizeView() {
@@ -4009,10 +3468,6 @@
         const goToPage = (pageNum) => {
             pageNum = Math.max(1, Math.min(totalPages, pageNum));
             const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
-
-            // FIX: Natychmiastowe wywołanie zmiany wysokości, aby zsynchronizować animację pionową z poziomą.
-            updateWrapperHeightForPage(pageNum);
-
             guideList.scrollTo({
                 left: targetScrollLeft,
                 behavior: 'smooth'
@@ -4106,7 +3561,7 @@
 
             setupLazyLoading(pagesCache);
             renderPagination();
-            updateGuideCount(source.length, guides.length); // Aktualizuje licznik po każdym filtrowaniu/renderowaniu
+            document.getElementById("guideCountDisplay").innerHTML = lang.guideCounter.replace('{count}', source.length).replace('{total}', guides.length);
 
             if (isInitialLoad) {
                 isInitialLoad = false;
@@ -4428,23 +3883,10 @@
             });
 
             sizeSlider.addEventListener('input', () => {
-                const sliderValue = parseInt(sizeSlider.value, 10);
-                sizeValue.textContent = `${sliderValue}%`;
-
-                // Istniejąca logika skalowania szerokości kafelka
-                const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
+                const newSize = sizeSlider.value;
+                sizeValue.textContent = `${newSize}%`;
+                const newWidth = config.pageSettings.baseBoxWidth * (newSize / 100);
                 guideList.style.setProperty('--box-width', `${newWidth}px`);
-
-                // --- NOWA LOGIKA SKALOWANIA CZCIONKI ---
-                const minFontSize = 0.85; // w jednostkach rem
-                const maxFontSize = 1.25; // w jednostkach rem
-                // Przeliczamy wartość suwaka [50, 150] na zakres [0, 1]
-                const normalizedValue = (sliderValue - 50) / 100;
-                // Mapujemy znormalizowaną wartość na nasz docelowy zakres rozmiaru czcionki
-                const dynamicFontSize = minFontSize + (normalizedValue * (maxFontSize - minFontSize));
-
-                // Ustawiamy zmienną CSS, której użyjemy do ostylowania tekstu
-                guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
             });
 
             sizeSlider.addEventListener('change', () => {
@@ -5243,42 +4685,31 @@
             const pageElement = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
             if (!wrapper || !pageElement) return;
 
-            // Opóźnienie jest konieczne, aby dać przeglądarce czas na pełne wyrenderowanie layoutu
             setTimeout(() => {
-                const items = pageElement.querySelectorAll('.guide');
-                if (items.length === 0) {
-                    wrapper.style.height = '0px';
-                    return;
-                }
+                let targetHeight = 0;
+                if (currentViewMode === 'masonry') {
+                    targetHeight = pageElement.offsetHeight;
+                } else {
+                    const items = pageElement.querySelectorAll('.guide');
+                    if (items.length > 0) {
+                        const gap = 20;
+                        const itemHeight = items[0].offsetHeight;
 
-                // 1. Znajdź pozycję startową (górną krawędź) całego kontenera z listą
-                const listTop = guideList.getBoundingClientRect().top;
-
-                // 2. Znajdź najniżej położony element na stronie
-                //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (bottom) jest najdalej
-                let maxBottom = 0;
-                items.forEach(item => {
-                    const itemBottom = item.getBoundingClientRect().bottom;
-                    if (itemBottom > maxBottom) {
-                        maxBottom = itemBottom;
+                        if (itemHeight > 0) {
+                            const itemWidth = items[0].offsetWidth;
+                            const containerWidth = pageElement.offsetWidth;
+                            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
+                            const numRows = Math.ceil(items.length / numColumns);
+                            targetHeight = (numRows * itemHeight) + ((numRows - 1) * gap);
+                        }
                     }
-                });
-
-                // 3. Oblicz precyzyjną wysokość jako różnicę między dolną krawędzią najniższego
-                //    elementu a górną krawędzią całej listy.
-                const preciseHeight = maxBottom - listTop;
-
-                // 4. Ustaw wysokość kontenera na tę precyzyjną, zmierzoną wartość.
-                //    Bez żadnych buforów i zgadywania.
-                if (preciseHeight > 0) {
-                    wrapper.style.height = `${preciseHeight}px`;
                 }
 
-            }, 200); // Lekko zwiększony timeout dla pewności pełnego renderu
+                if (targetHeight > 0 && wrapper.offsetHeight !== targetHeight) {
+                    wrapper.style.height = `${targetHeight}px`;
+                }
+            }, 150);
         }
-        // Uruchomienie zegara czasu rzeczywistego
-        updateRealTimeClock();
-        setInterval(updateRealTimeClock, 30000); // Odświeżanie co 30 sekund
     </script>
 </body>
 

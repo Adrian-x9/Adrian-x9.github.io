@@ -3,12 +3,12 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>VisuDir | My Media Library</title>
+    <title>Moja Biblioteka Poradników</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./.base-system/.gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./.base-system/.gfx/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./.base-system/gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./.base-system/gfx/favicons/favicon-32x32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./.base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./.base-system/.gfx/favicons/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./.base-system/gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -101,7 +101,7 @@
             box-sizing: border-box;
             overscroll-behavior-y: contain;
         }
-
+        
         body.play-mode-active>.top-header,
         body.play-mode-active>.controls,
         body.play-mode-active>.display-panel,
@@ -128,7 +128,6 @@
 
         a:hover {
             text-decoration: none;
-            text-shadow: #222;
         }
 
         .top-header a.dir-db-btn:hover {
@@ -178,25 +177,15 @@
 
         body:not(.dark-mode) .guide,
         body:not(.dark-mode) .display-panel,
-        body:not(.dark-mode) .pagination-controls,
-        body:not(.dark-mode) .action-controls .multi-button.expanded,
-        body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
+        body:not(.dark-mode) .pagination-controls {
             background: #fdfdfd;
             box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
         }
 
-        /* Zachowujemy oryginalny styl dla paneli */
+        body.video-ready:not(.dark-mode) .guide,
         body.video-ready:not(.dark-mode) .display-panel,
-        body.video-ready:not(.dark-mode) .pagination-controls,
-        body.video-ready:not(.dark-mode) .action-controls .multi-button.expanded,
-        body.video-ready:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
+        body.video-ready:not(.dark-mode) .pagination-controls {
             background: rgba(253, 253, 253, 0.85);
-        }
-
-        /* A dla samych kafelków ustawiamy nowe, inne tło, jeśli trzeba */
-        body.video-ready:not(.dark-mode) .guide {
-            background: rgba(253, 253, 253, 0.85);
-            /* Możemy tu ustawić inną wartość, jeśli chcemy */
         }
 
         body:not(.dark-mode) .guide-cover {
@@ -212,16 +201,8 @@
             color: #555;
         }
 
-        /* Nowa reguła dla głównego bloku tekstowego */
-        .footer-main-text p {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Poprawiona reguła dla notki o prywatności, aby pasowała do nowej struktury */
-        .footer .privacy-notice {
-            margin-top: 10px;
-            font-size: 0.9em;
+        body:not(.dark-mode) .privacy-notice {
+            color: #bbb;
         }
 
         body.dark-mode {
@@ -244,24 +225,15 @@
 
         body.dark-mode .guide,
         body.dark-mode .display-panel,
-        body.dark-mode .pagination-controls,
-        body.dark-mode .action-controls .multi-button.expanded,
-        body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
+        body.dark-mode .pagination-controls {
             background: #000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
         }
 
-        /* Zachowujemy oryginalny styl dla paneli */
+        body.video-ready.dark-mode .guide,
         body.video-ready.dark-mode .display-panel,
-        body.video-ready.dark-mode .pagination-controls,
-        body.video-ready.dark-mode .action-controls .multi-button.expanded,
-        body.video-ready.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        /* A dla samych kafelków ustawiamy nowe, mocniejsze krycie */
-        body.video-ready.dark-mode .guide {
-            background: rgba(0, 0, 0, 0.8);
+        body.video-ready.dark-mode .pagination-controls {
+            background: rgba(0, 0, 0, 0.5);
         }
 
         body.dark-mode .guide:hover {
@@ -325,44 +297,26 @@
         }
 
         .header-logo-link {
-            position: fixed;
-            top: 15px;
-            left: 17px;
-            /* Optyczna korekta marginesu */
-            z-index: 998;
-            width: 44px;
-            height: 44px;
-            display: block;
-            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            perspective: 1000px;
         }
 
         .header-logo {
-            max-height: 100%;
+            max-height: 42px;
             width: auto;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            transition: clip-path 1.4s cubic-bezier(0.8, 0, 0.2, 1);
-            clip-path: inset(0 50% 0 50%);
-            /* Start: niewidoczny */
-        }
-
-        .header-logo.active {
-            clip-path: inset(0 0 0 0);
-            /* End: widoczny */
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
         }
 
         .top-header .title {
             font-size: 1.6em;
-            font-weight: 700;
-            /* Przywrócenie grubości czcionki */
         }
-
 
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
             background: none;
+            font-weight: 600;
             color: black;
             -webkit-text-stroke: 0.5px gray;
             text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
@@ -371,6 +325,7 @@
         body.dark-mode .top-header .title,
         body.dark-mode .top-header .counter {
             background: none;
+            font-weight: 600;
             color: white;
             -webkit-text-stroke: 0.5px #ccc;
             text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
@@ -398,7 +353,7 @@
             align-items: center;
             gap: 10px;
         }
-
+        
         .generator-group {
             display: flex;
             align-items: center;
@@ -413,24 +368,16 @@
             margin-top: 20px;
         }
 
-        .controls,
-        .display-panel,
-        .action-controls,
-        .footer,
-        .pagination {
+        .controls, .display-panel, .action-controls, .footer, .pagination {
             opacity: 0;
             transform: translateY(20px);
         }
 
-        .top-header,
-        .controls,
-        .display-panel {
-            transform: translateY(-20px);
+        .top-header, .controls, .display-panel {
+             transform: translateY(-20px);
         }
-
-        .pagination,
-        .action-controls,
-        .footer {
+        
+        .pagination, .action-controls, .footer {
             transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s, margin 0.5s, padding 0.5s;
         }
 
@@ -472,39 +419,28 @@
             cursor: pointer;
         }
 
-        /* +++ ZMIANA: Nowy, subtelny efekt hover +++ */
         .dir-db-btn:hover {
-            box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.2), 0 0 20px rgba(255, 0, 0, 0.2);
-            transform: scale(1.02);
+            transform: translateY(-5px);
         }
 
         .dir-db-btn i {
             margin-right: 5px;
         }
-
+        
         #generatorModeBtn {
             padding: 10px;
             width: 42px;
-            margin-right: -5px;
+            margin-right: -5px; 
         }
 
         #generatorModeBtn i {
             margin-right: 0;
         }
-
-        /* FIX: Poprawka koloru przycisku filtrującego */
-        body:not(.dark-mode) #generatorModeBtn:not(.active) {
-            color: #333;
-        }
-
-        body.dark-mode #generatorModeBtn:not(.active) {
-            color: #eee;
-        }
-
+        
+        /* +++ ZMIANA: Kolor aktywnego przycisku filtra +++ */
         body:not(.dark-mode) #generatorModeBtn.active {
             color: #cc0000;
         }
-
         body.dark-mode #generatorModeBtn.active {
             color: #e53935;
         }
@@ -522,8 +458,6 @@
         .multi-button {
             padding: 0;
             overflow: hidden;
-            transition: background 0.3s ease;
-            /* Płynna zmiana tła dla panelu wideo */
         }
 
         .multi-button>span {
@@ -603,6 +537,14 @@
             font-weight: bold;
         }
 
+        .controls .dir-db-btn:hover,
+        .controls button:hover,
+        .action-controls .dir-db-btn:hover,
+        .action-controls button:hover,
+        .top-header .dir-db-btn:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
         body:not(.dark-mode) .controls .dir-db-btn,
         body:not(.dark-mode) .controls button,
         body:not(.dark-mode) .action-controls .dir-db-btn,
@@ -629,6 +571,14 @@
         body.dark-mode .controls .btn-text,
         body.dark-mode .action-controls .btn-text {
             color: #eee;
+        }
+        
+        .action-controls .multi-button.expanded {
+            background: #fff;
+        }
+
+        body.dark-mode .action-controls .multi-button.expanded {
+            background: #111;
         }
 
         .multi-button-child:hover {
@@ -673,30 +623,11 @@
             text-shadow: none !important;
         }
 
-        #lightbox-videoBtn.active-play {
-            animation: pulse-red-border 1.5s infinite;
-        }
-
-        @keyframes pulse-red-border {
-            0% {
-                border-color: rgba(229, 57, 53, 0.7);
-            }
-
-            50% {
-                border-color: rgba(229, 57, 53, 1);
-            }
-
-            100% {
-                border-color: rgba(229, 57, 53, 0.7);
-            }
-        }
-
         .guide-list-wrapper {
             width: 90%;
             max-width: 1920px;
             margin: 0 auto;
             overflow: hidden;
-            transition: height 0.5s ease-in-out;
         }
 
         .guide-list {
@@ -723,14 +654,10 @@
             scroll-snap-stop: always;
             display: grid;
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-            grid-template-columns: repeat(auto-fit, minmax(var(--box-width, 256px), 1fr));
-            /* KLUCZOWA ZMIANA */
+            grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 256px), 1fr));
             justify-content: center;
             gap: 20px;
             padding: 2px;
-            transition: grid-template-columns 0.5s ease;
-            align-content: start;
-            /* Dodana linia zapobiegająca rozciąganiu wierszy */
         }
 
         .guide-list.random-draw {
@@ -754,7 +681,7 @@
             opacity: 1;
             transform: scale(1);
         }
-
+        
         .guide-list.view-text-only .guide-cover,
         .guide-list.hide-covers .guide-cover {
             opacity: 0;
@@ -769,11 +696,10 @@
         }
 
         .guide-list.view-text-only .guide {
-            padding-top: 10px;
+             padding-top: 10px;
         }
-
         .guide-list.view-text-only .guide .guide-title {
-            margin-top: 0;
+             margin-top: 0;
         }
 
         .guide-page:not(.only-covers) .guide.animate-in .guide-cover {
@@ -795,22 +721,6 @@
             }
         }
 
-        @keyframes fadeOutSlideOut {
-            from {
-                opacity: 1;
-                transform: translateY(0);
-            }
-
-            to {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-        }
-
-        .guide.animate-out {
-            animation: fadeOutSlideOut 0.3s ease-in forwards;
-        }
-
         .guide-title,
         .guide-info,
         .guide-content-bottom>a:not(.cover-link) {
@@ -818,259 +728,29 @@
             overflow: hidden;
         }
 
-        /* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
-
-        /* Ustawienia ogólne dla kafelka w tym trybie */
-        /* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
+        .guide-list.view-image-only .guide-title,
+        .guide-list.view-image-only .guide-info,
+        .guide-list.view-image-only .guide-content-bottom>a:not(.cover-link) {
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
 
         .guide-list.view-image-only .guide {
-            padding: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            transform-style: preserve-3d;
-            transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
-            transition: transform 0.1s ease-out;
-            border-radius: 20px;
-            /* <-- Zwiększone zaokrąglenie */
-            /* Płynny powrót */
-        }
-
-        /* Poświata dla efektu 3D */
-        .guide-list.view-image-only .guide::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at var(--glow-x, 50%) var(--glow-y, 50%),
-                    rgba(229, 57, 53, 0.3),
-                    transparent 40%);
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-            z-index: 3;
-            pointer-events: none;
-        }
-
-        .guide-list.view-image-only .guide:hover::before {
-            opacity: 1;
-        }
-
-
-        /* .guide-list.view-image-only .guide-cover-wrapper {
-            height: 65%;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            align-items: center;
+            padding: 10px;
             justify-content: center;
-            background-color: rgba(0, 0, 0, 0.03);
-            Subtelne tło dla pustej przestrzeni
-        } */
-
-        /* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
-        .guide-list.view-image-only .guide-cover-wrapper {
-            height: 65%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        /* Usuwamy niepotrzebne tło dla trybu ciemnego */
-        body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
-            background-color: transparent;
-        }
-
-        /* Styl dla linku-nakładki w widoku eleganckim */
-        .guide-list.view-image-only .guide-cover-wrapper .cover-link {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
+            align-items: center;
             height: 100%;
-            z-index: 1;
         }
 
-        /* Dedykowana klasa dla obrazka w widoku eleganckim */
-        /* 3. Przywracamy rozciągnięcie obrazu, aby wypełniał kontener (zamiast się w nim mieścić) */
-        .guide-cover-elegant {
-            display: block;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            /* <-- Kluczowa zmiana: wypełnij i przytnij */
-            transition: transform 0.4s ease-out;
-            /* Usuwamy stylizację z samego obrazka, bo ramką jest teraz cały kafelek */
-            border-radius: 0;
-            box-shadow: none;
-            /* display: block;
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            transition: transform 0.4s ease-out;
-            border-radius: 6px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
-        }
-
-        /* Kontener na tekst pod obrazkiem */
-        .guide-list.view-image-only .guide-text-content {
-            height: 35%;
-            padding: 12px 15px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border-top: 1px solid rgba(128, 128, 128, 0.2);
-        }
-
-        body.dark-mode .guide-list.view-image-only .guide-text-content {
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        .guide-list.view-image-only .guide-info {
-            display: none;
-        }
-
-        .guide-list.view-image-only .guide-title {
-            font-size: 1.05em;
-            font-weight: 600;
+        .guide-list.view-image-only .guide-cover {
             margin: 0;
-            line-height: 1.4;
-            text-align: left;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            overflow: hidden;
-        }
-
-        .guide-list.view-image-only .guide-title a {
-            text-decoration: none;
-        }
-
-        body:not(.dark-mode) .guide-list.view-image-only .guide-title a {
-            color: #333;
-        }
-
-        body.dark-mode .guide-list.view-image-only .guide-title a {
-            color: #eee;
-        }
-
-        .guide-list.view-image-only .guide-action-link {
-            text-align: right;
-            font-size: 0.85em;
-            font-weight: bold;
-        }
-
-        .guide-list.view-image-only .guide-action-link a {
-            text-decoration: none;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
-
-        .guide-list.view-image-only .guide-action-link a:hover {
-            opacity: 1;
-        }
-
-        /* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA --- */
-
-        /* 1. Kontener ".guide" staje się całkowicie przezroczysty i niewidoczny */
-        .guide-list.view-grid .guide {
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            aspect-ratio: 1 / 1;
-            background: transparent !important;
-            /* Używamy !important, by mieć pewność */
-            box-shadow: none !important;
-            /* że żadna inna reguła go nie nadpisze */
             border: none !important;
-        }
-
-        /* 2. Zdjęcie otrzymuje własną ramkę, cień i nie jest przycinane */
-        .guide-cover-grid {
-            /* Zamiast wymuszać 100% wymiarów, pozwalamy obrazkowi się skalować */
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            background-color: rgba(0, 0, 0, 0.03);
-        }
-
-        body.dark-mode .guide-cover-grid {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
-
-        /* 3. Nakładka z tekstem ma płynne przejście i zaokrąglone rogi pasujące do zdjęcia */
-        .guide-list.view-grid .grid-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.65);
-            backdrop-filter: blur(2px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.3s ease-out;
-            padding: 15px;
-            box-sizing: border-box;
-            border-radius: 8px;
-            /* Dopasowanie do rogów zdjęcia */
-            pointer-events: none;
-            /* Nakładka nie przechwytuje zdarzeń myszy */
-        }
-
-        /* 4. Tekst na nakładce ma pogrubienie i otoczkę */
-        .grid-overlay .grid-title-text a {
-            color: #fff;
-            font-size: 1.2em;
-            font-weight: 800;
-            text-decoration: none;
-            -webkit-text-stroke: 1px black;
-            paint-order: stroke fill;
-        }
-
-        /* 5. Efekt HOVER działa teraz na całym obszarze kafelka, ale wizualnie dotyczy zdjęcia */
-        .guide-list.view-grid .guide:hover .grid-overlay {
             opacity: 1;
+            transform: scale(1);
         }
-
-        .guide-list.view-grid .guide:hover .guide-cover-grid {
-            transform: scale(1.03);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA - KONIEC --- */
-
-
-        /* --- WIDOK MASONRY v1.0 - START --- */
-
-        .guide-list.view-masonry .guide-page {
-            display: block;
-            /* Wyłączamy grid */
-            position: relative;
-            /* Niezbędne do pozycjonowania kafelków */
-        }
-
-        .guide-list.view-masonry .guide {
-            /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
-            position: absolute;
-            transition: top 0.4s ease-out, left 0.4s ease-out;
-            width: var(--box-width, 256px);
-        }
-
-
 
         .guide {
             padding: 0 20px 10px;
@@ -1078,25 +758,22 @@
             transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
             display: flex;
             flex-direction: column;
-            /* justify-content: space-between; */
+            justify-content: space-between;
             text-align: center;
             box-sizing: border-box;
             position: relative;
             overflow: hidden;
-            font-size: var(--dynamic-font-size, 1rem);
-            /* <-- DODAJ TĘ LINIĘ */
         }
 
         .guide-content-bottom {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            /* To jest kluczowa zmiana */
+            justify-content: flex-end;
         }
 
         .guide-info-container {
-            /* flex-grow: 1; */
+            flex-grow: 1;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1110,8 +787,6 @@
         .guide a.cover-link {
             margin-top: 0;
             display: block;
-            margin-bottom: 10px;
-            /* Dodaje stały odstęp pod obrazkiem */
         }
 
         .guide-info {
@@ -1209,8 +884,7 @@
         .footer {
             text-align: center;
             padding: 20px;
-            padding-top: 20px;
-            padding-down: 0px;
+            padding-top: 10px;
             font-size: 0.9em;
             max-height: 200px;
             overflow: hidden;
@@ -1253,7 +927,6 @@
             width: 100%;
             height: 100%;
             display: none;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 999;
@@ -1277,7 +950,6 @@
             align-items: center;
             width: 90vw;
             height: 90vh;
-            flex-grow: 1;
         }
 
         .play-guide-container>a {
@@ -1334,7 +1006,7 @@
             transform: translateX(-50%) scale(1);
             opacity: 1;
         }
-
+        
         body.slideshow-no-animation .play-caption {
             transition: none;
         }
@@ -1494,17 +1166,12 @@
             background-color: rgba(0, 0, 0, 0.1);
             color: #e53935;
         }
-
-        #lightbox-fxBtn.active i {
-            animation: spin 2s linear infinite;
-        }
-
-        body:not(.dark-mode) #lightbox-fxBtn.active {
-            color: #cc0000;
-        }
-
-        body.dark-mode #lightbox-fxBtn.active {
+        
+        #lightbox-fxBtn.active {
             color: #e53935;
+        }
+        body.dark-mode #lightbox-fxBtn.active {
+            color: #ff8a80;
         }
 
         body.dark-mode #lightbox-controls button:hover,
@@ -1599,23 +1266,15 @@
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
-
-        /* FIX: Usunięcie podwójnej animacji paginacji */
+        
         .animated-action-controls,
-        .animated-footer {
+        .animated-footer,
+        .animated-pagination {
             animation-name: fadeInUp;
             animation-duration: 0.8s;
             animation-timing-function: ease-out;
             animation-fill-mode: forwards;
         }
-
-        .pagination.visible.animated-pagination {
-            animation-name: fadeInUp;
-            animation-duration: 0.8s;
-            animation-timing-function: ease-out;
-            animation-fill-mode: forwards;
-        }
-
 
         .controls.minimized-view .dir-db-btn i,
         #lightbox-controls .dir-db-btn i {
@@ -1662,10 +1321,6 @@
             border-left-color: rgba(255, 255, 255, 0.2);
         }
 
-        #lightbox-main-controls {
-            margin-bottom: 10px;
-        }
-
         @media (max-width: 768px) {
 
             .controls.minimized-view>#search,
@@ -1677,55 +1332,40 @@
             .controls.minimized-view .generator-group {
                 display: none;
             }
-
             .action-controls {
                 flex-direction: column;
             }
+        }
 
-            .backdrop {
-                justify-content: flex-end;
-            }
 
+        @media (max-width: 768px) {
             #lightbox-controls {
-                flex-direction: column;
-            }
-
-            #play-caption {
-                position: relative;
-                top: auto;
-                left: auto;
-                transform: none;
-                margin-bottom: 15px;
-            }
-
-            #play-guide-container {
-                height: auto;
+                padding-bottom: 65px;
             }
         }
 
+        #lightbox-controls .multi-button {
+            padding: 0;
+        }
 
         @media (max-width: 1024px) {
             #fullscreenBtnLightbox {
                 display: none !important;
             }
         }
-
+        
         #lightbox-controls #lightbox-fxBtn {
             order: 1;
         }
-
         #lightbox-controls #lightbox-videoBtn {
             order: 2;
         }
-
         #lightbox-controls #slideshow-controls {
             order: 3;
         }
-
         #lightbox-controls #lightbox-darkModeBtn {
             order: 4;
         }
-
         #lightbox-controls #lightbox-labelsBtn {
             order: 5;
         }
@@ -1874,7 +1514,7 @@
             font-size: 1em;
             flex-shrink: 0;
         }
-
+        
         .pagination-controls .pagination-action-btn {
             width: 32px;
             height: 32px;
@@ -1884,26 +1524,20 @@
             box-shadow: none;
             color: #888;
         }
-
         body.dark-mode .pagination-controls .pagination-action-btn {
-            color: #aaa;
+             color: #aaa;
         }
-
         .pagination-controls .pagination-action-btn:hover {
             color: #cc0000;
         }
-
         body.dark-mode .pagination-controls .pagination-action-btn:hover {
             color: #e53935;
         }
-
+        
         @media (max-width: 480px) {
-
-            #firstPageBtn,
-            #lastPageBtn {
+            #firstPageBtn, #lastPageBtn {
                 display: none;
             }
-
             .pagination-controls {
                 gap: 5px;
                 padding: 8px;
@@ -2032,14 +1666,13 @@
             border: 1px solid;
             transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
-
+        
         body:not(.dark-mode) .display-panel {
             border-color: #a00000;
         }
-
         body.dark-mode .display-panel {
-            border-color: #a00000;
-            box-shadow: 0 0 15px rgba(229, 57, 53, 0.3);
+             border-color: #a00000;
+             box-shadow: 0 0 15px rgba(229, 57, 53, 0.3);
         }
 
         .display-panel-group {
@@ -2054,15 +1687,14 @@
         body.dark-mode .display-panel-group {
             background-color: rgba(255, 255, 255, 0.1);
         }
-
+        
         .display-panel-group.slider-group {
-            flex-grow: 1;
-            min-width: 250px;
-            padding: 5px 12px;
-            gap: 8px;
-            flex-direction: column;
+             flex-grow: 1;
+             min-width: 200px;
+             padding: 8px 12px;
+             gap: 8px;
         }
-
+        
         .display-panel button {
             background-color: transparent;
             color: #333;
@@ -2074,19 +1706,19 @@
             cursor: pointer;
             transition: background-color 0.2s, color 0.2s, border-color 0.2s;
         }
-
+        
         body.dark-mode .display-panel button {
-            color: #eee;
+             color: #eee;
         }
 
         .display-panel button:hover {
             border-color: #cc0000;
-            background-color: rgba(0, 0, 0, 0.05);
+            background-color: rgba(0,0,0,0.05);
         }
 
         body.dark-mode .display-panel button:hover {
             border-color: #e53935;
-            background-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(255,255,255,0.1);
         }
 
         .display-panel button.active {
@@ -2126,9 +1758,9 @@
             }
         }
 
+        /* +++ ZMIANA: Nowy layout dla suwaków +++ */
         .slider-control {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
+            display: flex;
             align-items: center;
             gap: 10px;
             width: 100%;
@@ -2145,6 +1777,7 @@
         }
 
         .slider-control input[type="range"] {
+            flex-grow: 1;
             -webkit-appearance: none;
             appearance: none;
             height: 6px;
@@ -2185,9 +1818,9 @@
 
         body.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
             background: #e53935;
-            border: 2px solid #000;
+             border: 2px solid #000;
         }
-
+        
         .slider-control span {
             font-weight: bold;
             min-width: 45px;
@@ -2195,413 +1828,70 @@
             font-size: 0.9em;
             flex-shrink: 0;
         }
-
-
-        /* Styl dla nowego kontenera i przycisku Reset */
-        .reset-container {
-            text-align: center;
-            margin: 20px 0;
+        
+        .guide-list.view-image-only .guide {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .guide-list.view-image-only .guide .guide-title,
+        .guide-list.view-image-only .guide .guide-info,
+        .guide-list.view-image-only .guide .guide-content-bottom>a:not(.cover-link) {
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            padding: 0;
+            pointer-events: none;
+        }
+        
+        .guide-list.view-image-only .guide .guide-cover {
+            transition: transform 0.3s ease-out;
+        }
+        
+        .guide-list.view-image-only .guide:hover .guide-cover {
+            transform: scale(1.05);
+        }
+        
+        .guide-list.view-image-only .guide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: var(--hover-overlay-color, rgba(204, 0, 0, 0.7));
+            transform: translateY(-100%);
+            transition: transform 0.35s ease-out;
+            z-index: 1;
         }
 
-        #mainResetBtn {
+        .guide-list.view-image-only .guide:hover::before {
+            transform: translateY(0);
+        }
+        
+        .guide-list.view-image-only .guide .guide-title {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            right: 10px;
+            color: var(--hover-text-color, #FFFFFF);
+            padding: 10px;
+            opacity: 0;
+            max-height: none;
+            transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
+            pointer-events: auto;
+            border-radius: 0;
+            z-index: 2;
             background: none;
-            border: none;
-            box-shadow: none;
-            cursor: pointer;
-            padding: 0px;
-            font-size: 1.4em;
-            /* Zmniejszona ikona */
-            transition: color 0.2s ease, transform 0.2s ease;
+            transform: translateY(-50%) translateY(20px);
+            margin: 0;
+            font-size: 1em;
         }
-
-        #mainResetBtn:hover {
-            transform: rotate(90deg);
+        
+        .guide-list.view-image-only .guide:hover .guide-title {
+            opacity: 1;
+            transform: translateY(-50%) translateY(0);
         }
-
-        body:not(.dark-mode) #mainResetBtn {
-            color: #888;
-        }
-
-        body:not(.dark-mode) #mainResetBtn:hover {
-            color: #cc0000;
-        }
-
-        body.dark-mode #mainResetBtn {
-            color: #aaa;
-        }
-
-        body.dark-mode #mainResetBtn:hover {
-            color: #e53935;
-        }
-
-        /* Poprawka dla przycisku zmiany widoku */
-        #viewContentBtn .view-icon {
-            display: inline-block;
-            /* Zapewnia widoczność ikony */
-            transition: opacity 0.2s ease;
-        }
-
-        #viewContentBtn .view-number {
-            display: none;
-            /* Domyślnie ukrywa numer */
-            font-weight: bold;
-            font-size: 1.2em;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        #viewContentBtn:hover .view-icon {
-            display: none;
-            /* Ukrywa ikonę po najechaniu */
-        }
-
-        #viewContentBtn:hover .view-number {
-            display: inline-block;
-            /* Pokazuje numer po najechaniu */
-        }
-
-        /* Dodaje czerwone tło dla przycisku widoku w stanie hover, dla spójności z panelem */
-        .display-panel button#viewContentBtn:hover {
-            background-color: #cc0000;
-            color: white;
-        }
-
-        body.dark-mode .display-panel button#viewContentBtn:hover {
-            background-color: #e53935;
-            color: black;
-        }
-
-        /* Poprawka koloru maski dla trybu jasnego w widoku siatki */
-        body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
-            background: rgba(255, 255, 255, 0.7);
-            /* Biała, półprzezroczysta maska */
-        }
-
-        /* Zmiana koloru tekstu na masce, aby był czytelny w trybie jasnym */
-        body:not(.dark-mode) .grid-overlay .grid-title-text a {
-            color: #000;
-            /* Czarny tekst */
-            -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
-            /* Biała otoczka dla kontrastu */
-        }
-
-        /* Poprawka przyklejająca przycisk "Otwórz" do dołu w widoku pełnym i tekstowym */
-        .guide:not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-content-bottom>a:not(.cover-link) {
-            margin-top: auto;
-        }
-
-        /* --- START: Ostateczna, ujednolicona wersja paska statusu --- */
-
-        /* STYL PODSTAWOWY - spójny z resztą interfejsu */
-        #statusBar {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 15px auto;
-            padding: 6px 15px;
-            /* Padding spójny z przyciskami */
-            width: fit-content;
-            border-radius: 10px;
-            /* Zaokrąglenie jak w przyciskach */
-            border: 1px solid #a00000;
-            /* Kolor ramki jak w przyciskach */
-            /* Usunięto 'gap' w celu precyzyjnej kontroli przez margines separatora */
-        }
-
-        /* Zagnieżdżone kontenery */
-        #guideCountDisplay,
-        #timeDisplay {
-            display: flex;
-            align-items: center;
-            gap: 0.4em;
-        }
-
-        /* SEPARATOR - generowany w CSS, niezależny od HTML */
-        /* Ta reguła dodaje separator PRZED każdym segmentem, oprócz pierwszego */
-        .status-segment:not(:first-child)::before {
-            content: '';
-            display: inline-block;
-            width: 1px;
-            height: 0.8em;
-            /* Mocno zmniejszona, dyskretna wysokość */
-            background-color: rgba(0, 0, 0, 0.2);
-            margin: 0 0.8em;
-            /* Symetryczny margines dla równych odstępów */
-            vertical-align: middle;
-            position: relative;
-            top: -0.1em;
-            /* Korekta dla idealnego wyśrodkowania */
-        }
-
-        body.dark-mode .status-segment:not(:first-child)::before {
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-
-        /* Poprawiona reguła dla timerów, aby miały odstęp od tekstu powyżej */
-        .footer-timers {
-            margin-top: 15px;
-            font-size: 0.9em;
-            opacity: 0.7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0.5em;
-        }
-
-        /* Nowoczesny, dyskretny separator między licznikami */
-        .footer-timers>span+span::before {
-            content: '•';
-            opacity: 0.5;
-            margin-right: 0.5em;
-            font-size: 1.2em;
-            vertical-align: middle;
-            line-height: 1;
-        }
-
-        /* Poprawione pozycjonowanie i wygląd przycisku reset */
-        .reset-container {
-            text-align: center;
-            margin: 10px 0 0 0;
-            /* Zmniejszony, spójny odstęp */
-        }
-
-        /* HIERARCHIA WIZUALNA TEKSTU */
-        #statusBar span {
-            font-size: 0.9em;
-            font-weight: 600;
-            white-space: nowrap;
-            text-shadow: none;
-        }
-
-        #guideCountDisplay b,
-        .session-time {
-            font-weight: 800;
-        }
-
-        .total-count,
-        .idle-time {
-            opacity: 0.6;
-        }
-
-        /* TŁA I CIENIE - spójne z resztą interfejsu */
-        .top-header {
-            margin-bottom: 0;
-            /* Zachowujemy dla spójności layoutu */
-        }
-
-        /* TRYB JASNY */
-        body:not(.dark-mode) #statusBar {
-            background: #fdfdfd;
-            /* Tło jak w przyciskach */
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-        }
-
-        /* TRYB CIEMNY */
-        body.dark-mode #statusBar {
-            background: #000;
-            /* Tło jak w przyciskach */
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-        }
-
-        /* TRYB WIDEO W TLE - zachowujemy półprzezroczystość */
-        body.video-ready:not(.dark-mode) #statusBar {
-            background: rgba(253, 253, 253, 0.85);
-        }
-
-        body.video-ready.dark-mode #statusBar {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-        body.video-ready #statusBar {
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-
-        /* KOLORY TEKSTU */
-        body:not(.dark-mode) #statusBar span {
-            color: #333;
-        }
-
-        body.dark-mode #statusBar span {
-            color: #eee;
-        }
-
-        /* --- START: Ostateczna poprawka wyrównania OBRAZKÓW dla widoku nr 2 --- */
-        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide .guide-info-container {
-            flex-grow: 1;
-            /* Kluczowa reguła: każe blokowi z tekstem rozciągnąć się i wypchnąć wszystko pod nim w dół */
-            display: flex;
-            /* Poniższe reguły ładnie centrują tekst w dostępnej przestrzeni */
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- END: Ostateczna poprawka --- */
-        /* --- START: Ostateczna poprawka wyrównania dla WIDOKU NR 2 --- */
-
-        /* Ten selektor działa TYLKO w widoku nr 2 (domyślnym) */
-        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-info-container {
-            margin-bottom: auto;
-            /* Kluczowa reguła: tworzy elastyczny odstęp POD tekstem, spychając obraz i przycisk na dół */
-        }
-
-        /* --- END: Ostateczna poprawka --- */
-
-        .time-date-group {
-            display: flex;
-            align-items: center;
-            gap: 0.6em;
-            /* Odstęp między zegarem a księżycem */
-        }
-
-        /* --- START: ŁATKA KROK 1 - Integracja Paska Statusu --- */
-
-        /* 1. Upewniamy się, że główny kontener .controls odpowiednio rozciąga elementy */
-        .controls {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* 2. Nowy kontener dla zintegrowanego paska statusu */
-        #statusBarIntegrated {
-            display: flex;
-            align-items: center;
-            gap: 0;
-            /* Usunięto 'gap', aby precyzyjnie kontrolować margines przez separator */
-            margin-left: auto;
-            /* KLUCZOWA REGULA: Przesuwa ten element na prawą krawędź */
-            padding-left: 20px;
-            /* Dodaje bezpieczny odstęp od przycisków po lewej */
-        }
-
-        /* 3. Dostosowujemy wygląd tekstu i separatorów (style przeniesione z #statusBar) */
-        #statusBarIntegrated span {
-            font-size: 0.9em;
-            font-weight: 600;
-            white-space: nowrap;
-            text-shadow: none;
-        }
-
-        #statusBarIntegrated .status-segment:not(:first-child)::before {
-            content: '';
-            display: inline-block;
-            width: 1px;
-            height: 0.8em;
-            background-color: rgba(0, 0, 0, 0.2);
-            margin: 0 0.8em;
-            vertical-align: middle;
-            position: relative;
-            top: -0.1em;
-        }
-
-        body.dark-mode #statusBarIntegrated .status-segment:not(:first-child)::before {
-            background-color: rgba(255, 255, 255, 0.25);
-        }
-
-        body:not(.dark-mode) #statusBarIntegrated span {
-            color: #555;
-            /* Lekko przyciemniony tekst dla lepszego dopasowania */
-        }
-
-        body.dark-mode #statusBarIntegrated span {
-            color: #aaa;
-            /* Lekko rozjaśniony tekst dla lepszego dopasowania */
-        }
-
-        #guideCountDisplay b,
-        .session-time {
-            font-weight: 800;
-        }
-
-        .total-count,
-        .idle-time {
-            opacity: 0.6;
-        }
-
-        /* 4. Usuwamy style starego, osobnego paska #statusBar */
-        #statusBar {
-            display: none;
-            /* Całkowicie ukrywamy stary element */
-        }
-
-        /* --- END: ŁATKA KROK 1 --- */
-
-        /* --- START: ŁATKA KROK 2 - Ujednolicenie paneli --- */
-
-        /* 1. NOWA WSPÓLNA KLASA dla obu paneli sterowania */
-        .control-panel {
-            border: 1px solid;
-            border-radius: 12px;
-            padding: 8px;
-            box-sizing: border-box;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        body:not(.dark-mode) .control-panel {
-            background: #fdfdfd;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-            border-color: #a00000;
-        }
-
-        body.dark-mode .control-panel {
-            background: #000;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-            border-color: #a00000;
-        }
-
-        body.video-ready:not(.dark-mode) .control-panel {
-            background: rgba(253, 253, 253, 0.85);
-        }
-
-        body.video-ready.dark-mode .control-panel {
-            background: rgba(0, 0, 0, 0.7);
-        }
-
-
-        /* 2. AKTUALIZACJA istniejących reguł, aby usunąć z nich duplikaty */
-        .controls {
-            /* Wszystkie style tła, cienia i ramek są teraz w .control-panel */
-            /* Pozostawiamy tylko to, co specyficzne dla tego kontenera: */
-            margin-bottom: 20px;
-        }
-
-        .display-panel {
-            /* Wszystkie style tła, cienia i ramek są teraz w .control-panel */
-            /* Pozostawiamy tylko to, co specyficzne dla tego kontenera: */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-
-        /* 3. UJEDNOLICENIE WYGLĄDU PÓL input i select w górnym panelu */
-        .controls input[type="text"],
-        .controls select {
-            border-color: #a00000;
-            /* Taki sam kolor ramki jak przyciski */
-            box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
-            /* Taki sam cień jak przyciski */
-        }
-
-        body:not(.dark-mode) .controls input[type="text"],
-        body:not(.dark-mode) .controls select {
-            background-color: #fdfdfd;
-        }
-
-        body.dark-mode .controls input[type="text"],
-        body.dark-mode .controls select {
-            background-color: #000;
-        }
-
-        /* --- END: ŁATKA KROK 2 --- */
     </style>
     <script>
         (function () {
@@ -2630,52 +1920,6 @@
                 }
             } catch (e) { /* Ignore */ }
         })();
-
-        function initializeMobileHover() {
-            // Nasłuchuj dotknięć na całej liście okładek
-            guideList.addEventListener('touchend', function (e) {
-                LanguagetappedItem = e.target.closest('.guide');
-
-                // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
-                if (!tappedItem) {
-                    if (tappedGuide) {
-                        tappedGuide.classList.remove('mobile-hover');
-                        tappedGuide = null;
-                    }
-                    return;
-                }
-
-                // Zatrzymaj domyślną akcję (np. nawigację), aby obsłużyć ją ręcznie
-                e.preventDefault();
-
-                if (tappedGuide === tappedItem) {
-                    // DRUGIE dotknięcie tego samego kafelka: wykonaj akcję kliknięcia
-                    const link = tappedItem.querySelector('a');
-                    if (link) {
-                        link.click();
-                    }
-                    tappedGuide.classList.remove('mobile-hover');
-                    tappedGuide = null;
-                } else {
-                    // PIERWSZE dotknięcie lub dotknięcie innego kafelka
-                    // Zdejmij hover ze starego kafelka, jeśli istniał
-                    if (tappedGuide) {
-                        tappedGuide.classList.remove('mobile-hover');
-                    }
-                    // Ustaw hover na nowym kafelku
-                    tappedItem.classList.add('mobile-hover');
-                    tappedGuide = tappedItem;
-                }
-            });
-
-            // Dodajmy też reset po kliknięciu gdziekolwiek indziej na stronie
-            document.addEventListener('touchstart', function (e) {
-                if (!e.target.closest('.guide') && tappedGuide) {
-                    tappedGuide.classList.remove('mobile-hover');
-                    tappedGuide = null;
-                }
-            });
-        }
     </script>
 </head>
 
@@ -2688,18 +1932,14 @@
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
 
-    <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-        <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
-        <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
-    </a>
-
     <div class="top-header">
+        <div class="header-logo-group">
+            <div id="guideCountDisplay" class="counter"></div>
+            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+                <img id="header-logo" src="" alt="Logo" class="header-logo" />
+            </a>
+        </div>
         <div id="pageTitle" class="title"></div>
-
-        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-            <img id="header-logo" src="" alt="Logo" class="header-logo" />
-        </a>
-
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span
@@ -2711,12 +1951,7 @@
         </div>
     </div>
 
-    <div id="statusBar">
-
-    </div>
-
-    <div class="controls control-panel">
-
+    <div class="controls">
         <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
             <span class="btn-text" data-lang="btnLoad"></span></label>
         <input type="file" id="fileInput" accept=".txt" />
@@ -2742,26 +1977,16 @@
             <button id="generatorModeBtn" class="dir-db-btn"><i class="fas fa-filter"></i></button>
         </div>
         <button id="minimizeBtn" class="dir-db-btn"><i class="fas fa-chevron-up"></i></button>
-
-        <div id="statusBarIntegrated">
-            <span id="guideCountDisplay" class="status-segment">
-                <b></b>
-                <span class="total-count"></span>
-            </span>
-            <span id="currentTimeDisplay" class="status-segment"></span>
-            <span id="moonPhaseDisplay" class="status-segment"></span>
-            <span id="langDisplay" class="status-segment"></span>
-        </div>
     </div>
 
-    <div class="display-panel control-panel" id="displayPanel">
+    <div class="display-panel" id="displayPanel">
         <div class="display-panel-group">
             <button id="viewContentBtn"><i class="fas fa-file-image"></i></button>
             <button id="viewOrientationBtn"><i class="fas fa-images"></i></button>
         </div>
 
         <div class="display-panel-group slider-group">
-            <div class="slider-control">
+             <div class="slider-control">
                 <i class="fas fa-th-large" data-lang-title="sizeLabel"></i>
                 <input type="range" id="sizeSlider" min="50" max="150" value="100" step="1">
                 <span id="sizeValue">100%</span>
@@ -2778,7 +2003,7 @@
             <button id="viewPlayBtn" class="play-accent"><i class="fas fa-play"></i></button>
         </div>
     </div>
-
+    
     <div class="guide-list-wrapper">
         <div class="guide-list" id="guideList"></div>
     </div>
@@ -2786,9 +2011,9 @@
     <div class="pagination" id="pagination"></div>
 
     <div class="action-controls" id="actionControls">
-        <button id="videoBtn" class="dir-db-btn multi-button">
-            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"
-                    data-lang="btnVideo"></span></span>
+         <button id="mainResetBtn" class="dir-db-btn"><i class="fas fa-sync"></i><span class="btn-text" data-lang="btnReset"></span></button>
+         <button id="videoBtn" class="dir-db-btn multi-button">
+            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text" data-lang="btnVideo"></span></span>
             <span id="videoBtn-prev" class="multi-button-child"><i class="fas fa-chevron-left"></i></span>
             <span id="videoBtn-play" class="multi-button-child"><i class="fas fa-play"></i></span>
             <span id="videoBtn-shuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
@@ -2798,32 +2023,20 @@
     </div>
 
     <div class="footer">
-        <div class="footer-main-text">
-            <p>
-                <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                            class="version-suffix">Dir
-                            <span class="version-display"></span></span></a></strong>
-                <span data-lang="footerDate"></span>
-                <span data-lang="footerDesc"></span> |
-                <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
-                        Ulbrych
-                    </a></span>
-                <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
-            </p>
-            <p class="privacy-notice">
-                <strong data-lang="privacyTitle"></strong>.
-                <span data-lang="privacyDesc"></span>
-                <strong data-lang="privacySafe"></strong>
-            </p>
+        <div>
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                        class="version-suffix">Dir
+                        <span class="version-display"></span></span></a></strong>
+            <span data-lang="footerDate"></span>
+            <span data-lang="footerDesc"></span> |
+            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
+                </a></span>
+            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
         </div>
-
-        <div id="timeDisplay" class="footer-timers">
-            <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
-            <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
-        </div>
-
-        <div class="reset-container">
-            <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+        <div class="privacy-notice">
+            <strong data-lang="privacyTitle"></strong>.
+            <span data-lang="privacyDesc"></span>
+            <strong data-lang="privacySafe"></strong>
         </div>
     </div>
 
@@ -2863,93 +2076,41 @@
     </div>
 
     <script>
-        // --- System Initialization ---
-        (function () {
-            // Self-healing and timeout mechanism
-            try {
-                const isRetry = sessionStorage.getItem('visudir_load_retry');
-
-                const loadTimeout = setTimeout(() => {
-                    if (isRetry) {
-                        // Second failure: inform user
-                        document.getElementById('preloader').innerHTML = 'Aplikacja nie może się załadować.<br>Proszę spróbować wyczyścić dane przeglądarki lub skontaktować się z administratorem.';
-                    } else {
-                        // First failure: clear storage and retry
-                        sessionStorage.setItem('visudir_load_retry', 'true');
-                        Object.keys(localStorage).forEach(key => {
-                            if (key.startsWith('visudir_')) {
-                                localStorage.removeItem(key);
-                            }
-                        });
-                        location.reload();
-                    }
-                }, 8000); // 8-second timeout
-
-                window.addEventListener('load', () => {
-                    clearTimeout(loadTimeout);
-                    sessionStorage.removeItem('visudir_load_retry');
-                });
-
-            } catch (e) {
-                console.error("Critical error in startup safety mechanism.", e);
-            }
-
-            // Initial theme setup (SAFE VERSION)
-            try {
-                const theme = localStorage.getItem('visudir_theme');
-                // Use a safe, hardcoded default. The full config is not yet available.
-                const defaultTheme = 'light';
-                if ((theme === 'dark') || (!theme && defaultTheme === 'dark')) {
-                    document.documentElement.classList.add('dark-mode');
-                }
-            } catch (e) { /* Ignore */ }
-        })();
-        // --- End System Initialization ---
-
-
-        // --- configuraton / konfiguracja ---
-
+        /// COPY HERE <cfg> // configuration / konfiguracja
         const config = {
-            version: 'v1.11.4', // Ux corrections
+            version: 'v1.10.0', // i18n Refactor, UI/Bug Fixes, languages module refactor, lot of changes, pre-alfa
             language: {
                 current: 'pl',
                 files: {
                     en: 'index-en.html',
-                    de: 'index-de.html',
+                    // de: 'index-de.html'
                 }
             },
-
-            /// COPY HERE <cfg> // configuration / konfiguracja
             pageSettings: {
-                pageKey: 'indexMaxi',
-
                 defaultBgVideo: 1,
                 bgVideoStartNum: 1,
-                bgVideoEndNum: 35,
+                bgVideoEndNum: 32,
                 defaultVideoBg: true,
-                defaultLabelsVisible: true,
+                defaultLabelsVisible: true, 
                 slideshowAnimations: true,
 
                 pageKey: 'indexMaxi',
-                pageTitle: "START ▪ maxi MENU ▪",
                 showMiniLogo: true,
                 showVisuDirButton: true,
                 showBackButton: false,
-                showLanguageButton: false,
-
-
+                
                 defaultSort: 'nameAsc',
                 defaultRows: 2,
-                defaultSizePercent: 100,
+                defaultSizePercent: 100, 
                 baseBoxWidth: 256,
                 estimatedItemHeight: 380,
-                defaultViewMode: 'full',
+                defaultViewMode: 'full', 
                 hoverOverlayColor: 'rgba(204, 0, 0, 0.7)',
-                hoverTextColor: '#ffffff',
-
+                hoverTextColor: '#FFFFFF',
+                
                 defaultGeneratorMode: 'visible',
                 defaultGeneratorCount: 5,
-                generatorOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 25, 50, 100],
+                generatorOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 
                 defaultVideoExpanded: false,
                 predefinedFilters: [{
@@ -2975,7 +2136,7 @@
                     search: "Poradniki"
                 },],
             },
-
+            
             logoRotator: {
                 enabled: true,
                 interval: 4500,
@@ -3005,7 +2166,7 @@
                 previewHdFolderName: ".base-system/preview-hd"
             }
         };
-
+    
         /// COPY HERE <cfg> // configuration end / koniec konfiguracji
 
 
@@ -3049,82 +2210,89 @@
 
         `;
         /// COPY HERE <db> // database end / koniec bazy danych
-
+        
         /// COPY HERE <lang> // language file / plik językowy
         const languageStrings = {
             pl: {
-                pageTitle: "START ▪ maxi MENU ▪",
+                // General
+                pageTitle: "Poradniki do Gier",
                 guideCounter: "<b>{count}</b> / {total} pozycji",
-                statusBarSeparator: "|",
                 alertNoItems: "Brak pozycji do wygenerowania!",
+                // Header
                 btnBack: "Wstecz",
-                btnLoad: "Załaduj...",
+                // Controls
+                btnLoad: "ZaĹ‚aduj...",
                 searchPlaceholder: "Szukaj pozycji...",
                 filterAll: "Wszystko",
                 sortLabel: "Sortuj...",
                 sortShuffle: "Wymieszaj",
-                sortNameAsc: "Nazwa A - Z",
-                sortNameDesc: "Nazwa Z - A",
-                sortDateAsc: "Data ↑",
-                sortDateDesc: "Data ↓",
-                sortSizeAsc: "Rozmiar ↑",
-                sortSizeDesc: "Rozmiar ↓",
+                sortNameAsc: "Nazwa Aâ€“Z",
+                sortNameDesc: "Nazwa Zâ€“A",
+                sortDateAsc: "Data â†‘",
+                sortDateDesc: "Data â†“",
+                sortSizeAsc: "Rozmiar â†‘",
+                sortSizeDesc: "Rozmiar â†“",
                 generatorLabel: "Generator...",
                 generatorItem: "Pozycji: {count}",
-                generatorModeAll: "Generator: cała pula",
+                generatorModeAll: "Generator: caĹ‚a pula",
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
-                maximizeBtn: "Przywróć interfejs",
-                viewModeFull: "Widok: Okładki i tekst",
-                viewModeImage: "Widok: Tylko okładki",
+                maximizeBtn: "PrzywrĂłÄ‡ interfejs",
+                // Display Panel
+                viewModeFull: "Widok: OkĹ‚adki i tekst",
+                viewModeImage: "Widok: Tylko okĹ‚adki",
                 viewModeText: "Widok: Tylko tekst",
-                orientationFilterAll: "Pokaż wszystkie",
-                orientationFilterVert: "Pokaż tylko pionowe",
-                orientationFilterHoriz: "Pokaż tylko poziome",
+                orientationFilterAll: "PokaĹĽ wszystkie",
+                orientationFilterVert: "PokaĹĽ tylko pionowe",
+                orientationFilterHoriz: "PokaĹĽ tylko poziome",
                 themeBtn: "Tryb Ciemny / Jasny",
-                sizeLabel: "Wielkość miniaturek",
+                sizeLabel: "WielkoĹ›Ä‡ miniaturek",
                 rowsLabel: "Liczba wierszy",
                 playBtn: "Rozpocznij pokaz",
+                // Guide Items
+                guideInfoDate: "Data",
                 guideInfoFormat: "Format",
                 guideInfoSize: "Rozmiar",
-                guideBtnOpen: "Otwórz",
+                guideBtnOpen: "OtwĂłrz",
                 guideBtnView: "Zobacz",
                 guideBtnDownload: "Pobierz",
+                // Pagination
                 paginationFirst: "Pierwsza strona",
                 paginationPrev: "Poprzednia strona",
-                paginationNext: "Następna strona",
+                paginationNext: "NastÄ™pna strona",
                 paginationLast: "Ostatnia strona",
-                paginationReset: "Przejdź do pierwszej strony",
-                paginationCarouselStart: "Włącz automatyczne przewijanie",
+                paginationReset: "PrzejdĹş do pierwszej strony",
+                paginationCarouselStart: "WĹ‚Ä…cz automatyczne przewijanie",
                 paginationCarouselStop: "Zatrzymaj automatyczne przewijanie",
+                // Footer Controls
                 mainResetBtn: "Resetuj widok",
                 btnVideo: "Wideo",
                 videoBtnPrev: "Poprzednie wideo",
                 videoBtnPlay: "Odtwarzaj",
                 videoBtnPause: "Pauza",
-                videoBtnOff: "Wyłącz wideo",
-                videoBtnShuffle: "Losowe wideo Wł/Wył",
-                videoBtnNext: "Następne wideo",
+                videoBtnOff: "WyĹ‚Ä…cz wideo",
+                videoBtnShuffle: "Losowe wideo WĹ‚/WyĹ‚",
+                videoBtnNext: "NastÄ™pne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
-                footerDate: "© 2025-09-17",
-                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
-                footerIdleTime: "Bezczynność",
-                footerSessionTime: "Sesja",
-                privacyTitle: "Szanujemy Twoją prywatność",
-                privacyDesc: "Żadnych ciasteczek ani śledzenia.",
+                // Footer
+                footerDate: "Â© 2025-09-17",
+                footerDesc: "do katalogowania, zarzÄ…dzania i prezentacji plikĂłw i folderĂłw",
+                privacyTitle: "Szanujemy TwojÄ… prywatnoĹ›Ä‡",
+                privacyDesc: "Ĺ»adnych ciasteczek ani Ĺ›ledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
-                fullscreenBtn: "Pełny ekran",
-                fullscreenExitBtn: "Wyjdź z pełnego ekranu",
+                // Lightbox
+                fullscreenBtn: "PeĹ‚ny ekran",
+                fullscreenExitBtn: "WyjdĹş z peĹ‚nego ekranu",
                 closeBtn: "Zamknij",
-                lightboxFxBtn: "Animacje przejść Wł/Wył",
-                lightboxVideoOptions: "Rozwiń opcje wideo",
-                lightboxLabelsBtn: "Pokaż/ukryj etykiety",
+                lightboxFxBtn: "Animacje przejĹ›Ä‡ WĹ‚/WyĹ‚",
+                lightboxVideoOptions: "RozwiĹ„ opcje wideo",
+                lightboxLabelsBtn: "PokaĹĽ/ukryj etykiety",
                 slideshowFirst: "Pierwszy",
                 slideshowPrev: "Poprzedni",
                 slideshowStop: "Zatrzymaj",
                 slideshowPlayPause: "Play/Pauza",
-                slideshowShuffle: "Losowe slajdy Wł/Wył",
-                slideshowNext: "Następny",
+                slideshowShuffle: "Losowe slajdy WĹ‚/WyĹ‚",
+                slideshowNext: "NastÄ™pny",
                 slideshowLast: "Ostatni",
             }
         };
@@ -3132,25 +2300,21 @@
 
 
 
-        // FIX: Zmienna globalna do sprawdzania trybu offline
-        const isOffline = window.location.protocol === 'file:';
 
         let videoBgState;
         let areLabelsVisible;
         let slideshowAnimationsEnabled;
         let guides = [],
             filteredGuides = [],
-            generatedGuides = null,
+            generatedGuides = null, 
             slideshowSourceGuides = [],
             playGuidesQueue = [];
 
-        let sessionStartTime, lastActivityTime;
-
         let currentSort,
             selectedRowCount;
-
-        let currentViewMode;
-        let generatorMode;
+        
+        let currentViewMode; 
+        let generatorMode; 
 
         let currentPage = 1;
         let totalPages = 1;
@@ -3164,8 +2328,8 @@
             slideshowIsRandom = false;
 
         let playCurrentIndex = 0;
-        let orientationFilterState = null;
-
+        let orientationFilterState = null; 
+        
         let lastPlayedGuide = null;
         let currentLogoIndex = 0;
         let logoInterval, autoShuffleInterval = null, carouselInterval = null;
@@ -3173,7 +2337,6 @@
             isLightboxMinimized = false;
         let guideDimensionsCache = {};
         let pausedTime = 0;
-        let tappedGuide = null;
 
         const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -3205,8 +2368,7 @@
 
         function initializeTheme() {
             const storedTheme = localStorage.getItem('visudir_theme');
-            // FIX: Usunięcie odwołania do nieistniejącego config.global
-            const theme = storedTheme || 'light';
+            const theme = storedTheme || config.global.defaultTheme;
             const isDark = theme === 'dark';
             document.documentElement.classList.toggle('dark-mode', isDark);
             document.body.classList.toggle('dark-mode', isDark);
@@ -3215,112 +2377,7 @@
             }
             return theme;
         }
-
-        // --- START: Logika liczników czasu i bezczynności ---
-
-        /**
-                 * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
-                 * @param {number} ms - Czas w milisekundach.
-                 * @returns {string} Sformatowany czas.
-                 */
-        function formatTime(ms) {
-            if (ms < 0) ms = 0;
-            const totalSeconds = Math.floor(ms / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            const pad = (num) => num.toString().padStart(2, '0');
-            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-        }
-
-        /**
-         * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).
-         * @param {number} count - Aktualna (filtrowana) liczba pozycji.
-         * @param {number} total - Całkowita liczba pozycji.
-         */
-        function updateGuideCount(count, total) {
-            try {
-                const displayEl = document.getElementById('guideCountDisplay');
-                if (displayEl) {
-                    const counterTemplate = lang.guideCounter || "<b>{count}</b> / {total} pozycji";
-                    displayEl.innerHTML = counterTemplate.replace('{count}', count).replace('{total}', total);
-                }
-            } catch (e) {
-                console.error("Błąd krytyczny w updateGuideCount:", e);
-            }
-        }
-
-        /**
-         * Resetuje znacznik czasu ostatniej aktywności użytkownika.
-         * Ta funkcja jest wywoływana przez ruch myszy, kliknięcie lub naciśnięcie klawisza.
-         */
-        function resetIdleTimer() {
-            lastActivityTime = new Date();
-        }
-
-        /**
-                     * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
-                     */
-        function updateTimers() {
-            const now = new Date();
-            const sessionDuration = now - sessionStartTime;
-            const idleDuration = now - lastActivityTime;
-
-            const idleTimeEl = document.querySelector('#timeDisplay .idle-time');
-            const sessionTimeEl = document.querySelector('#timeDisplay .session-time');
-
-            // Aktualizuje tylko wartości czasu; etykiety są w HTML i tłumaczeniach
-            if (idleTimeEl && sessionTimeEl) {
-                idleTimeEl.textContent = formatTime(idleDuration);
-                sessionTimeEl.textContent = formatTime(sessionDuration);
-            }
-        }
-        // --- END: Logika liczników czasu i bezczynności ---
-        function getMoonPhase(date = new Date()) {
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1;
-            const day = date.getDate();
-
-            // Prosty i skuteczny algorytm astronomiczny
-            let r = year % 100;
-            r %= 19;
-            if (r > 9) {
-                r -= 19;
-            }
-            r = ((r * 11) % 30) + month + day;
-            if (month < 3) {
-                r += 2;
-            }
-            r -= ((year < 2000) ? 4 : 8.3);
-            r = Math.floor(r + 0.5) % 30;
-            const phaseIndex = Math.floor((r < 0 ? r + 30 : r) / 3.7);
-            return phaseIndex;
-        }
-
-        function updateRealTimeClock() {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = (now.getMonth() + 1).toString().padStart(2, '0');
-            const day = now.getDate().toString().padStart(2, '0');
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-
-            // Update Clock
-            const clockEl = document.getElementById('currentTimeDisplay');
-            if (clockEl) {
-                clockEl.innerHTML = `<b>${hours}:${minutes}</b> ${year}-${month}-${day}`;
-            }
-
-            // NOWA CZĘŚĆ: Aktualizacja fazy księżyca
-            const moonPhaseEl = document.getElementById('moonPhaseDisplay');
-            if (moonPhaseEl) {
-                const moonPhases = ['🌑\uFE0E', '🌒\uFE0E', '🌓\uFE0E', '🌔\uFE0E', '🌕\uFE0E', '🌖\uFE0E', '🌗\uFE0E', '🌘\uFE0E']; // Wymuszenie wariantu tekstowego (monochromatycznego)
-                const phaseIndex = getMoonPhase(now);
-                moonPhaseEl.textContent = moonPhases[phaseIndex];
-            }
-        }
-
-
+        
         function initializeBackgroundVideo(theme) {
             const pageKey = config.pageSettings.pageKey;
             const storageKey = `visudir_bg_video_${pageKey}`;
@@ -3333,17 +2390,7 @@
                 const videoUrlBase = theme === 'light' ? config.paths.videoBgLightUrlBase : config.paths.videoBgDarkUrlBase;
                 const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
                 bgVideoSource.src = videoSrc;
-                // FIX: Zmiana load() na play() i obsługa błędu AbortError
                 bgVideo.load();
-                const playPromise = bgVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        if (error.name !== 'AbortError') {
-                            console.error("Błąd odtwarzania wideo:", error);
-                        }
-                    });
-                }
-
                 bgVideo.addEventListener("canplay", () => {
                     document.body.classList.add("video-ready");
                 }, {
@@ -3387,16 +2434,16 @@
 
         function loadUiSettings() {
             currentSort = getFromLocalStorage('sort') || config.pageSettings.defaultSort;
-
+            
             selectedRowCount = parseInt(getFromLocalStorage('rows')) || config.pageSettings.defaultRows;
             const savedSizePercent = getFromLocalStorage('size_percent');
             const sizePercent = savedSizePercent !== null ? parseInt(savedSizePercent) : config.pageSettings.defaultSizePercent;
-
+            
             document.getElementById('rowsSlider').value = selectedRowCount;
             document.getElementById('rowsValue').textContent = selectedRowCount;
             document.getElementById('sizeSlider').value = sizePercent;
             document.getElementById('sizeValue').textContent = `${sizePercent}%`;
-
+            
             const savedVideoState = getFromLocalStorage('video_bg_state');
             videoBgState = savedVideoState || (config.pageSettings.defaultVideoBg ? 'playing' : 'off');
 
@@ -3405,30 +2452,25 @@
 
             const savedLabels = getFromLocalStorage('labels_visible');
             areLabelsVisible = savedLabels !== null ? JSON.parse(savedLabels) : config.pageSettings.defaultLabelsVisible;
-
+            
             const savedSlideshowPlaying = getFromLocalStorage('slideshow_playing');
             slideshowIsPlaying = savedSlideshowPlaying !== null ? JSON.parse(savedSlideshowPlaying) : true;
-
+            
             const savedSlideshowFx = getFromLocalStorage('slideshow_fx');
             slideshowAnimationsEnabled = savedSlideshowFx !== null ? JSON.parse(savedSlideshowFx) : config.pageSettings.slideshowAnimations;
-
+            
             pausedTime = parseFloat(getFromLocalStorage('video_paused_time')) || 0;
-
+            
             const videoShuffle = JSON.parse(getFromLocalStorage('video_shuffle_enabled')) || false;
-            // FIX: Zapobieganie AbortError przez oczekiwanie na gotowość wideo
-            if (videoShuffle && videoBgState === 'playing') {
-                bgVideo.addEventListener('canplay', () => {
-                    toggleAutoShuffle(true);
-                }, {
-                    once: true
-                });
+            if(videoShuffle && videoBgState === 'playing') {
+                toggleAutoShuffle(true); 
             }
 
             const hoverOverlay = getFromLocalStorage('hover_overlay_color') || config.pageSettings.hoverOverlayColor;
             const hoverText = getFromLocalStorage('hover_text_color') || config.pageSettings.hoverTextColor;
             document.documentElement.style.setProperty('--hover-overlay-color', hoverOverlay);
             document.documentElement.style.setProperty('--hover-text-color', hoverText);
-
+            
             generatorMode = getFromLocalStorage('generator_mode') || config.pageSettings.defaultGeneratorMode;
         }
 
@@ -3535,7 +2577,6 @@
         async function processData(text) {
             const lines = text.split(/\r?\n/);
             guides = [];
-            updateGuideCount(guides.length, guides.length); // Aktualizuje licznik po wczytaniu danych
             for (const line of lines) {
                 const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i);
                 if (match) {
@@ -3557,7 +2598,7 @@
                     let linkData = {
                         description: offlineDesc
                     };
-                    if (format === 'link' && !isOffline) {
+                    if (format === 'link' && location.protocol !== 'file:') {
                         try {
                             const response = await fetch(`${config.paths.dataFolderName}/${filename}`);
                             if (response.ok) {
@@ -3586,19 +2627,6 @@
                 .filter(guide => ['jpg', 'png', 'link', 'mp4', 'avi'].includes(guide.format))
                 .map(guide => getGuideOrientation(guide));
             await Promise.all(orientationPromises);
-
-            // --- POCZĄTEK NOWEGO FRAGMENTU ---
-            try {
-                // Aktualizuje całkowitą liczbę pozycji zaraz po ich zliczeniu
-                const guideCountDisplay = document.getElementById('guideCountDisplay');
-                if (guideCountDisplay) {
-                    const currentCount = (filteredGuides && filteredGuides.length) || 0;
-                    guideCountDisplay.innerHTML = lang.guideCounter.replace('{count}', currentCount).replace('{total}', guides.length);
-                }
-            } catch (e) {
-                console.error("Błąd aktualizacji licznika po przetworzeniu danych:", e);
-            }
-            // --- KONIEC NOWEGO FRAGMENTU ---
         }
 
         function updateFormatFilter() {
@@ -3634,7 +2662,7 @@
         }
 
         function applyFilters() {
-            generatedGuides = null;
+            generatedGuides = null; 
             let search = searchInput.value.toLowerCase();
             const formatValue = formatFilter.value;
             let format = formatValue;
@@ -3658,7 +2686,7 @@
             fileInputLabel.style.display = "none";
             await processData(data);
             updateFormatFilter();
-
+            
             const generatorSelect = document.getElementById('generator');
             config.pageSettings.generatorOptions.forEach(num => {
                 const option = document.createElement('option');
@@ -3667,11 +2695,10 @@
                 generatorSelect.appendChild(option);
             });
             generatorSelect.value = config.pageSettings.defaultGeneratorCount;
-
+            
             const sortSelect = document.getElementById('sortSelector');
             const defaultSortOption = sortSelect.querySelector(`[value="${config.pageSettings.defaultSort}"]`);
-            if (defaultSortOption) defaultSortOption.style.fontWeight = 'bold';
-
+            if(defaultSortOption) defaultSortOption.style.fontWeight = 'bold';
 
             applySort(currentSort, guides);
             const urlParams = new URLSearchParams(window.location.search);
@@ -3690,52 +2717,31 @@
         }
 
         function startLogoRotator() {
-            const logoImg1 = document.getElementById('logo-img-1');
-            const logoImg2 = document.getElementById('logo-img-2');
-            if (!logoImg1 || !logoImg2) return;
-
-            let activeImg = logoImg1;
-            let nextImg = logoImg2;
-
-            const updateLogo = () => {
-                const isDark = document.documentElement.classList.contains('dark-mode');
-                const newLogoData = config.logoRotator.logos[currentLogoIndex];
-
-                // Ustawia nowe logo w ukrytym tagu i aktualizuje link
-                nextImg.src = isDark ? newLogoData.srcDark : newLogoData.srcLight;
-                nextImg.alt = newLogoData.alt;
-                logoLink.href = newLogoData.href;
-
-                // Zamienia klasy, aby wykonać animację
-                activeImg.classList.remove('active');
-                nextImg.classList.add('active');
-
-                // Przygotowuje na następną iterację
-                [activeImg, nextImg] = [nextImg, activeImg];
-            };
-
-            // Ustawienie początkowe
-            currentLogoIndex = 0;
             const initialLogo = config.logoRotator.logos[currentLogoIndex];
-            const isDarkInitial = document.documentElement.classList.contains('dark-mode');
-            activeImg.src = isDarkInitial ? initialLogo.srcDark : initialLogo.srcLight;
-            activeImg.alt = initialLogo.alt;
+            if (!initialLogo) return;
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            headerLogo.src = isDark ? initialLogo.srcDark : initialLogo.srcLight;
             logoLink.href = initialLogo.href;
-            activeImg.classList.add('active'); // Ustawia pierwsze logo jako widoczne
-
+            headerLogo.alt = initialLogo.alt;
             if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
                 return;
             }
-
             clearInterval(logoInterval);
             logoInterval = setInterval(() => {
-                currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
-                updateLogo();
+                headerLogo.style.transform = 'rotateY(90deg)';
+                setTimeout(() => {
+                    currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
+                    const newLogo = config.logoRotator.logos[currentLogoIndex];
+                    const isDarkNow = document.documentElement.classList.contains('dark-mode');
+                    headerLogo.src = isDarkNow ? newLogo.srcDark : newLogo.srcLight;
+                    headerLogo.alt = newLogo.alt;
+                    logoLink.href = newLogo.href;
+                    headerLogo.style.transform = 'rotateY(0deg)';
+                }, 300);
             }, config.logoRotator.interval);
         }
 
         function applyLanguage() {
-            updateGuideCount(0, 0); // Ustawia stan początkowy licznika
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.dataset.lang;
                 if (lang[key]) el.textContent = lang[key];
@@ -3748,18 +2754,8 @@
                 const key = el.dataset.langTitle;
                 if (lang[key]) el.title = lang[key];
             });
-            document.title = config.pageSettings.pageTitle || lang.pageTitle;
-            document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
-
-            // --- POCZĄTEK FINALNEGO FRAGMENTU DLA applyLanguage ---
-            try {
-                const langText = config.language.current.toUpperCase();
-                const langEl = document.getElementById('langDisplay');
-                if (langEl) langEl.textContent = langText;
-            } catch (e) {
-                console.error("Błąd podczas ustawiania paska statusu:", e);
-            }
-            // --- KONIEC FINALNEGO FRAGMENTU ---
+            document.title = lang.pageTitle;
+            document.getElementById('pageTitle').textContent = lang.pageTitle; // Ustawienie tytułu strony z configu językowego
         }
 
         window.onload = function () {
@@ -3771,21 +2767,22 @@
 
             const langBtn = document.getElementById('langBtn');
             const nextLang = Object.keys(config.language.files)[0] || '#';
-            if (nextLang !== '#') {
+            if(nextLang !== '#') {
                 langBtn.href = config.language.files[nextLang];
             } else {
                 langBtn.style.display = 'none';
             }
-
+            
             currentTheme = initializeTheme();
             if (config.pageSettings.showMiniLogo) {
                 startLogoRotator();
             } else {
                 document.getElementById("logoLink").style.display = "none";
             }
+            langBtn.style.display = config.language.files.en ? 'flex' : 'none';
             document.getElementById("backButton").style.display = config.pageSettings.showBackButton ? "flex" : "none";
             loadUiSettings();
-
+            
             updateBackgroundVideoVisibility(true);
             if (videoBgState === 'paused') {
                 bgVideo.addEventListener('canplay', () => {
@@ -3797,7 +2794,7 @@
             }
             document.getElementById('minimizeBtn').addEventListener('click', toggleMinimizeView);
             document.getElementById('lightbox-minimizeBtn').addEventListener('click', toggleLightboxMinimize);
-
+            
             if (dataFromFile && dataFromFile.trim().length > 0) {
                 init(dataFromFile);
             } else {
@@ -3815,23 +2812,7 @@
             }
             initializeNewButtons();
             initializeDisplayPanel();
-            initializeMobileHover();
-            initialize3dHoverEffect();
-            // --- POCZĄTEK NOWEGO FRAGMENTU ---
-
-            // Ustawienie początkowego czasu dla obu liczników
-            sessionStartTime = new Date();
-            lastActivityTime = new Date();
-
-            // Uruchomienie cyklicznej aktualizacji co sekundę
-            setInterval(updateTimers, 1000);
-
-            // Nasłuchiwanie na aktywność użytkownika w celu resetowania licznika bezczynności
-            ['mousedown', 'mousemove', 'keydown', 'touchstart'].forEach(event =>
-                window.addEventListener(event, resetIdleTimer)
-            );
-
-            // --- KONIEC NOWEGO FRAGMENTU ---
+            initializeFooterAnimation();
         };
 
         function toggleMinimizeView() {
@@ -3868,26 +2849,23 @@
             applySort(config.pageSettings.defaultSort, guides);
             saveToLocalStorage('sort', config.pageSettings.defaultSort);
 
-            if (guideList) guideList.scrollTo({
-                left: 0,
-                behavior: 'smooth'
-            });
+            if (guideList) guideList.scrollTo({ left: 0, behavior: 'smooth' });
 
             orientationFilterState = null;
-
+            
             selectedRowCount = config.pageSettings.defaultRows;
             const sizePercent = config.pageSettings.defaultSizePercent;
             document.getElementById('rowsSlider').value = selectedRowCount;
             document.getElementById('rowsValue').textContent = selectedRowCount;
             document.getElementById('sizeSlider').value = sizePercent;
             document.getElementById('sizeValue').textContent = `${sizePercent}%`;
-
+            
             saveToLocalStorage('rows', selectedRowCount);
             saveToLocalStorage('size_percent', sizePercent);
 
             currentViewMode = config.pageSettings.defaultViewMode;
             saveToLocalStorage('view_mode', currentViewMode);
-
+            
             generator.value = config.pageSettings.defaultGeneratorCount;
             generatorMode = config.pageSettings.defaultGeneratorMode;
             saveToLocalStorage('generator_mode', generatorMode);
@@ -3903,121 +2881,92 @@
                 return;
             }
 
-            if (isOffline) {
-                window.open(targetUrl, '_blank');
+            const [filePath] = targetUrl.split('?');
+            const isLocalHtml = filePath.endsWith('.html');
+
+            if (isLink && isLocalHtml) {
+                if (window.location.protocol === 'file:') {
+                    window.location.href = targetUrl;
+                    return;
+                }
+                fetch(filePath, {
+                    method: 'HEAD'
+                })
+                    .then(response => {
+                        window.location.href = response.ok ? targetUrl : fallbackUrl;
+                    })
+                    .catch(() => {
+                        window.location.href = fallbackUrl;
+                    });
                 return;
             }
 
-            const [filePath] = targetUrl.split('?');
-
-            fetch(filePath, {
-                method: 'HEAD',
-                cache: 'no-store'
-            })
-                .then(response => {
-                    if (response.ok) {
-                        window.open(targetUrl, '_blank');
-                    } else {
-                        window.location.href = fallbackUrl;
-                    }
-                })
-                .catch(() => {
+            const http = new XMLHttpRequest();
+            http.open('HEAD', filePath, true);
+            http.timeout = 2000;
+            http.onload = function () {
+                if (this.status === 200 || this.status === 0) {
+                    window.open(targetUrl, '_blank');
+                } else {
                     window.location.href = fallbackUrl;
-                });
+                }
+            };
+            http.onerror = http.ontimeout = function () {
+                window.location.href = fallbackUrl;
+            };
+            http.send();
         }
+
 
         function createGuideHtml(guide) {
             const f = guide.file.replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "").split("$$")[0],
                 u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
                 c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-            let titleHtml = "",
-                infoHtml = "",
-                actionLinkHtml = "",
-                coverLinkHtml = "";
-            let titleText = guide.title;
-            if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
-                titleText = titleText.replace(/^\d{2}\s*/, "");
+            let h = "",
+                i = "",
+                a = "",
+                w = "";
+            let d = guide.title;
+            if (guide.format === "link" && /^\d{2}\s*/.test(d))
+                d = d.replace(/^\d{2}\s*/, "");
 
             const mediaTypes = ["jpg", "png", "mp4", "avi"];
 
             if (guide.format === "link") {
-                const targetUrl = decodeUrlFromFilename(guide.file);
-                const clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
-                titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
-                infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
-                actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
-                coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
+                const t = decodeUrlFromFilename(guide.file);
+                const clickAction = `checkFileAndOpen('${t.replace(/'/g, "\\'")}', '${config.paths.urlFallback}', true); return false;`;
+                h = `<div class="guide-title"><a href="${t}" onclick="${clickAction}">${d}</a></div>`;
+                i = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
+                a = `<a href="${t}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
+                w = `<a href="${t}" onclick="${clickAction}" class="cover-link">`;
             } else if (mediaTypes.includes(guide.format)) {
                 const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
-                titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
-                infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-                actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
-                coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+                h = `<div class="guide-title"><a href="#" onclick="${clickAction}">${d}</a></div>`;
+                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+                a = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
+                w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
             } else {
+                h = `<div class="guide-title">${d}</div>`;
+                i = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
                 const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
-                titleHtml = `<div class="guide-title">${titleText}</div>`;
-                infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
                 if (guide.format === "pdf") {
-                    actionLinkHtml = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
-                    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+                    a = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
+                    w = `<a href="#" onclick="${clickAction}" class="cover-link">`;
                 } else {
-                    actionLinkHtml = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
-                    coverLinkHtml = `<a href="${u}" download class="cover-link"></a>`;
+                    a = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
+                    w = `<a href="${u}" download class="cover-link">`;
                 }
             }
-
-            const noCoverImg = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
-
-            if (currentViewMode === 'image-only') {
-                const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-                return `
-                    <div class="guide-cover-wrapper">
-                        ${elegantCoverImgHtml}
-                        ${coverLinkHtml} 
-                    </div>
-                    <div class="guide-text-content">
-                        ${titleHtml}
-                        <div class="guide-action-link">${actionLinkHtml}</div>
-                    </div>
-                `;
-            } else if (currentViewMode === 'grid') {
-                const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-                const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || '';
-                const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || '#';
-
-                return `
-                    <a href="${hrefAction}" onclick="${onclickAction}">
-                        ${gridCoverImgHtml}
-                        <div class="grid-overlay">
-                            <span class="grid-title-text">${titleText}</span>
-                        </div>
-                    </a>
-                `;
-            } else { // Obejmuje widok 'full', 'text-only' i 'masonry'
-                const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
-                return `
-                    ${titleHtml}
-                    <div class="guide-content-bottom">
-                        <div class="guide-info-container">${infoHtml}</div>
-                        <a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ''}">${defaultCoverImgHtml}</a>
-                        ${actionLinkHtml}
-                    </div>
-                `;
-            }
+            const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+            return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
-
+        
         const goToPage = (pageNum) => {
             pageNum = Math.max(1, Math.min(totalPages, pageNum));
             const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
-
-            // FIX: Natychmiastowe wywołanie zmiany wysokości, aby zsynchronizować animację pionową z poziomą.
-            updateWrapperHeightForPage(pageNum);
-
-            guideList.scrollTo({
-                left: targetScrollLeft,
-                behavior: 'smooth'
-            });
+            guideList.scrollTo({ left: targetScrollLeft, behavior: 'smooth' });
         };
+
 
         function renderGuides(sourceArray = null) {
             stopCarousel();
@@ -4025,36 +2974,25 @@
 
             guideList.classList.remove('random-draw');
             if (sourceArray) {
-                guideList.classList.add('random-draw');
+                 guideList.classList.add('random-draw');
             }
-
+            
             guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
-            guideList.classList.toggle('view-grid', currentViewMode === 'grid');
-            guideList.classList.toggle('view-masonry', currentViewMode === 'masonry');
             guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
 
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
             const sizePercent = document.getElementById('sizeSlider').value;
-            const newWidth = Math.floor(config.pageSettings.baseBoxWidth * (sizePercent / 100));
-            const minSlider = 50,
-                maxSlider = 150;
-            const minFont = 0.8,
-                maxFont = 1.3;
-
-            const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
-
-            const dynamicFontSize = minFont + (percent * (maxFont - minFont));
-            guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
+            const newWidth = config.pageSettings.baseBoxWidth * (sizePercent / 100);
+            
             guideList.style.setProperty('--grid-rows', selectedRowCount);
             guideList.style.setProperty('--box-width', `${newWidth}px`);
+            
+            const containerMinHeight = (selectedRowCount * config.pageSettings.estimatedItemHeight) + ((selectedRowCount - 1) * 20);
+            guideList.style.minHeight = `${containerMinHeight}px`;
 
-            const wrapper = document.querySelector('.guide-list-wrapper');
-            const guideGap = 20;
-            const estimatedItemHeight = config.pageSettings.estimatedItemHeight;
-
-            if (sourceArray) {
+            if (sourceArray) { 
                 source.forEach((guide, index) => {
                     const div = document.createElement("div");
                     div.className = "guide animate-in";
@@ -4062,14 +3000,12 @@
                     div.innerHTML = createGuideHtml(guide);
                     guideList.appendChild(div);
                 });
-                requestAnimationFrame(() => {
-                    void guideList.offsetWidth;
-                });
                 pagination.classList.remove('visible');
                 document.getElementById("guideCountDisplay").innerHTML = lang.guideCounter.replace('{count}', source.length).replace('{total}', guides.length);
                 return;
             }
-
+            
+            const guideGap = 20;
             const itemWidth = newWidth;
             const columns = Math.floor(((guideList.clientWidth + guideGap) / (itemWidth + guideGap)) + 0.0001) || 1;
             const itemsPerPage = columns * selectedRowCount;
@@ -4106,18 +3042,12 @@
 
             setupLazyLoading(pagesCache);
             renderPagination();
-            updateGuideCount(source.length, guides.length); // Aktualizuje licznik po każdym filtrowaniu/renderowaniu
+            document.getElementById("guideCountDisplay").innerHTML = lang.guideCounter.replace('{count}', source.length).replace('{total}', guides.length);
 
             if (isInitialLoad) {
                 isInitialLoad = false;
                 preloadNextPageImages();
             }
-
-            if (currentViewMode === 'masonry') {
-                setTimeout(() => applyMasonryLayout(), 100);
-            }
-
-            updateWrapperHeightForPage(1);
         }
 
         function setupLazyLoading(pages) {
@@ -4139,10 +3069,6 @@
                                         div.innerHTML = createGuideHtml(guide);
                                         pageDiv.appendChild(div);
                                     });
-                                    // Uruchomienie Masonry dla nowo załadowanej strony
-                                    if (currentViewMode === 'masonry' && pageNum > 1) {
-                                        setTimeout(() => applyMasonryLayout(pageNum), 50);
-                                    }
                                 });
                             }
                         }
@@ -4188,7 +3114,7 @@
                 return;
             }
 
-            paginationContainer.classList.add('visible', 'animated-pagination');
+            paginationContainer.classList.add('visible');
             controls.style.display = 'flex';
 
             const firstPageBtn = document.getElementById('firstPageBtn');
@@ -4198,10 +3124,7 @@
             const pageInput = document.getElementById('pageInput');
             const pageSlider = document.getElementById('pageSlider');
             const pageInfoText = document.getElementById('pageInfoText');
-            document.getElementById('paginationResetBtn').onclick = () => {
-                stopCarousel();
-                goToPage(1);
-            };
+            document.getElementById('paginationResetBtn').onclick = () => { stopCarousel(); goToPage(1); };
             document.getElementById('paginationCarouselBtn').onclick = toggleCarousel;
 
             const updateControls = (pageNum) => {
@@ -4217,22 +3140,10 @@
                 preloadNextPageImages();
             };
 
-            firstPageBtn.onclick = () => {
-                stopCarousel();
-                goToPage(1);
-            };
-            prevPageBtn.onclick = () => {
-                stopCarousel();
-                goToPage(currentPage - 1);
-            };
-            nextPageBtn.onclick = () => {
-                stopCarousel();
-                goToPage(currentPage + 1);
-            };
-            lastPageBtn.onclick = () => {
-                stopCarousel();
-                goToPage(totalPages);
-            };
+            firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
+            prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
+            nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
+            lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
 
             pageSlider.addEventListener('input', () => {
                 stopCarousel();
@@ -4259,13 +3170,9 @@
                         const pageNum = parseInt(entry.target.dataset.pageNumber, 10);
                         currentPage = pageNum;
                         updateControls(pageNum);
-                        updateWrapperHeightForPage(pageNum);
                     }
                 });
-            }, {
-                root: guideList,
-                threshold: 0.75
-            });
+            }, { root: guideList, threshold: 0.75 });
 
             document.querySelectorAll('.guide-page').forEach(page => paginationObserver.observe(page));
 
@@ -4297,18 +3204,18 @@
             const count = parseInt(generator.value);
             if (!count) return;
 
-            const source = (generatorMode === 'visible') ?
-                (generatedGuides || filteredGuides) :
-                guides;
-
+            const source = (generatorMode === 'visible')
+                ? (generatedGuides || filteredGuides)
+                : guides;
+            
             if (source.length === 0) {
                 alert(lang.alertNoItems);
                 generator.value = config.pageSettings.defaultGeneratorCount;
                 return;
             }
-
+            
             let result;
-            if (count >= source.length) {
+            if(count >= source.length) {
                 result = [...source].sort(() => 0.5 - Math.random());
             } else {
                 result = [...source]
@@ -4318,7 +3225,7 @@
 
             generatedGuides = result;
             slideshowSourceGuides = result;
-
+            
             renderGuides(result);
             generator.value = config.pageSettings.defaultGeneratorCount;
         }
@@ -4363,39 +3270,6 @@
             const rowsValue = document.getElementById('rowsValue');
             const viewPlayBtn = document.getElementById('viewPlayBtn');
 
-            // --- START NOWEJ POPRAWIONEJ LOGIKI ---
-
-            const viewModes = ['text-only', 'full', 'image-only', 'grid', 'masonry'];
-
-            // 1. Tworzymy na stałe strukturę HTML w przycisku
-            viewContentBtn.innerHTML = `
-    <i class="fas fa-layer-group view-icon"></i>
-    <span class="view-number"></span>
-`;
-            const viewNumberSpan = viewContentBtn.querySelector('.view-number');
-
-            // Funkcja pomocnicza do aktualizacji numeru
-            const updateViewNumber = () => {
-                const viewNumber = viewModes.indexOf(currentViewMode) + 1;
-                viewNumberSpan.textContent = viewNumber;
-            };
-
-            // 2. Ustawiamy stan początkowy
-            currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
-            viewContentBtn.title = "Zmień tryb widoku";
-            updateViewNumber(); // Od razu ustawiamy poprawny numer
-
-            // 3. Logika kliknięcia: zmienia tryb i OD RAZU aktualizuje numer
-            viewContentBtn.addEventListener('click', () => {
-                const currentIndex = viewModes.indexOf(currentViewMode);
-                currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
-                saveToLocalStorage('view_mode', currentViewMode);
-                updateViewNumber(); // Aktualizujemy cyfrę natychmiast po kliknięciu
-                renderGuides();
-            });
-
-            // --- KONIEC NOWEJ POPRAWIONEJ LOGIKI ---
-
             const updateThemeIcon = () => {
                 const isDark = document.documentElement.classList.contains('dark-mode');
                 viewThemeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
@@ -4403,9 +3277,40 @@
             };
             updateThemeIcon();
 
+            const updateContentView = () => {
+                renderGuides(); 
+                let iconClass = 'fa-file-image';
+                let title = lang.viewModeFull;
+                if(currentViewMode === 'image-only') {
+                    iconClass = 'fa-image';
+                    title = lang.viewModeImage;
+                } else if(currentViewMode === 'text-only') {
+                    iconClass = 'fa-align-left';
+                    title = lang.viewModeText;
+                }
+                viewContentBtn.innerHTML = `<i class="fas ${iconClass}"></i>`;
+                viewContentBtn.title = title;
+                viewContentBtn.classList.add('active');
+                saveToLocalStorage('view_mode', currentViewMode);
+            };
+
+            currentViewMode = getFromLocalStorage('view_mode') || config.pageSettings.defaultViewMode;
+            updateContentView();
+
             viewThemeBtn.addEventListener('click', () => {
                 toggleDarkMode();
                 updateThemeIcon();
+            });
+
+            viewContentBtn.addEventListener('click', () => {
+                if (currentViewMode === 'full') {
+                    currentViewMode = 'image-only';
+                } else if (currentViewMode === 'image-only') {
+                    currentViewMode = 'text-only';
+                } else {
+                    currentViewMode = 'full';
+                }
+                updateContentView();
             });
 
             viewOrientationBtn.addEventListener('click', () => {
@@ -4426,25 +3331,12 @@
                 applyFilters();
                 renderGuides();
             });
-
+            
             sizeSlider.addEventListener('input', () => {
-                const sliderValue = parseInt(sizeSlider.value, 10);
-                sizeValue.textContent = `${sliderValue}%`;
-
-                // Istniejąca logika skalowania szerokości kafelka
-                const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
+                const newSize = sizeSlider.value;
+                sizeValue.textContent = `${newSize}%`;
+                const newWidth = config.pageSettings.baseBoxWidth * (newSize / 100);
                 guideList.style.setProperty('--box-width', `${newWidth}px`);
-
-                // --- NOWA LOGIKA SKALOWANIA CZCIONKI ---
-                const minFontSize = 0.85; // w jednostkach rem
-                const maxFontSize = 1.25; // w jednostkach rem
-                // Przeliczamy wartość suwaka [50, 150] na zakres [0, 1]
-                const normalizedValue = (sliderValue - 50) / 100;
-                // Mapujemy znormalizowaną wartość na nasz docelowy zakres rozmiaru czcionki
-                const dynamicFontSize = minFontSize + (normalizedValue * (maxFontSize - minFontSize));
-
-                // Ustawiamy zmienną CSS, której użyjemy do ostylowania tekstu
-                guideList.style.setProperty('--dynamic-font-size', `${dynamicFontSize.toFixed(2)}rem`);
             });
 
             sizeSlider.addEventListener('change', () => {
@@ -4461,7 +3353,7 @@
                 saveToLocalStorage('rows', selectedRowCount);
                 renderGuides();
             });
-
+            
             viewPlayBtn.addEventListener('click', () => startPlayAnimation());
         }
 
@@ -4584,7 +3476,7 @@
         }
 
         function toggleAutoShuffle(forceStart = false) {
-            if (!forceStart && videoBgState !== 'playing') return;
+             if (!forceStart && videoBgState !== 'playing') return;
             if (autoShuffleInterval) {
                 clearInterval(autoShuffleInterval);
                 autoShuffleInterval = null;
@@ -4595,7 +3487,7 @@
                 }
                 shuffleBackgroundVideo();
                 autoShuffleInterval = setInterval(shuffleBackgroundVideo, 20000);
-                saveToLocalStorage('video_shuffle_enabled', true);
+                 saveToLocalStorage('video_shuffle_enabled', true);
             }
             updateVideoBtnUI();
         }
@@ -4615,7 +3507,7 @@
 
             if (videoBgState === 'paused') {
                 videoBgState = 'playing';
-                saveToLocalStorage('video_bg_state', videoBgState);
+                 saveToLocalStorage('video_bg_state', videoBgState);
             }
 
             if (videoBgState !== 'off') {
@@ -4631,7 +3523,7 @@
             const isDark = document.documentElement.classList.contains("dark-mode");
             localStorage.setItem('visudir_theme', isDark ? 'dark' : 'light');
             currentTheme = isDark ? 'dark' : 'light';
-
+            
             const currentLogoData = config.logoRotator.logos[currentLogoIndex];
             if (config.pageSettings.showMiniLogo && config.logoRotator.enabled && currentLogoData) {
                 headerLogo.src = currentTheme === 'dark' ? currentLogoData.srcDark : currentLogoData.srcLight;
@@ -4665,7 +3557,7 @@
                 console.error("Nie znaleziono elementu w przefiltrowanej liście.");
                 return;
             }
-            startPlayAnimation(startIndex, true);
+            startPlayAnimation(startIndex, true); 
         }
 
         playCloseBtn.addEventListener('click', stopPlayAnimation);
@@ -4699,13 +3591,13 @@
 
             document.body.classList.add("play-mode-active");
             document.body.classList.toggle("slideshow-no-animation", !slideshowAnimationsEnabled);
-
+            
             setTimeout(() => {
                 backdrop.classList.add("visible");
             }, 10);
-
+            
             updateBackgroundVideoVisibility();
-
+            
             const lastPlayState = JSON.parse(getFromLocalStorage('slideshow_playing'));
             slideshowIsPlaying = forcePause ? false : (lastPlayState !== null ? lastPlayState : true);
 
@@ -4713,7 +3605,7 @@
                 slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
                 slideshowPlayBtn.classList.add('active-play');
             } else {
-                slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+                 slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
                 slideshowPlayBtn.classList.remove('active-play');
             }
 
@@ -4732,7 +3624,7 @@
             if (media && slideshowAnimationsEnabled) {
                 media.style.animation = 'zoomOutImage 0.4s ease-in forwards';
             }
-
+            
             setTimeout(() => {
                 document.body.classList.remove("play-mode-active");
                 backdrop.classList.remove("visible", "preview-active");
@@ -4740,7 +3632,7 @@
                 playGuideContainer.innerHTML = "";
                 if (playCaption) playCaption.innerHTML = "";
             }, slideshowAnimationsEnabled ? 400 : 0);
-
+            
             slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
             slideshowPlayBtn.classList.remove('active-play');
             updateBackgroundVideoVisibility();
@@ -4879,7 +3771,7 @@
                 showNewGuide();
             }
         }
-
+        
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
@@ -4913,14 +3805,14 @@
             fullscreenBtnLightbox.addEventListener('click', toggleFullScreen);
             document.addEventListener('fullscreenchange', updateFullscreenIcon);
             lightboxFxBtn.addEventListener('click', () => {
-                slideshowAnimationsEnabled = !slideshowAnimationsEnabled;
-                saveToLocalStorage('slideshow_fx', slideshowAnimationsEnabled);
-                lightboxFxBtn.classList.toggle('active', slideshowAnimationsEnabled);
-                document.body.classList.toggle("slideshow-no-animation", !slideshowAnimationsEnabled);
+                 slideshowAnimationsEnabled = !slideshowAnimationsEnabled;
+                 saveToLocalStorage('slideshow_fx', slideshowAnimationsEnabled);
+                 lightboxFxBtn.classList.toggle('active', slideshowAnimationsEnabled);
+                 document.body.classList.toggle("slideshow-no-animation", !slideshowAnimationsEnabled);
             });
             document.getElementById('lightbox-darkModeBtn').addEventListener('click', () => {
                 toggleDarkMode();
-                document.getElementById('viewThemeBtn').classList.toggle('active', document.body.classList.contains('dark-mode'));
+                document.getElementById('viewThemeBtn').click(); 
             });
 
             lightboxLabelsBtn.addEventListener('click', () => {
@@ -5007,31 +3899,14 @@
             }
         });
         document.addEventListener("DOMContentLoaded", () => {
-            [{
-                selector: ".top-header",
-                class: "animated-header",
-                delay: 0.2
-            }, {
-                selector: ".controls",
-                class: "animated-controls",
-                delay: 0.3
-            }, {
-                selector: ".display-panel",
-                class: "animated-display-panel",
-                delay: 0.4
-            }, {
-                selector: "#actionControls",
-                class: "animated-action-controls",
-                delay: 0.6
-            }, {
-                selector: ".reset-container",
-                class: "animated-footer",
-                delay: 0.65
-            }, {
-                selector: ".footer",
-                class: "animated-footer",
-                delay: 0.7
-            }].forEach(item => {
+            [
+                { selector: ".top-header", class: "animated-header", delay: 0.2 },
+                { selector: ".controls", class: "animated-controls", delay: 0.3 },
+                { selector: ".display-panel", class: "animated-display-panel", delay: 0.4 },
+                { selector: ".pagination", class: "animated-pagination", delay: 0.5 },
+                { selector: "#actionControls", class: "animated-action-controls", delay: 0.6 },
+                { selector: ".footer", class: "animated-footer", delay: 0.7 }
+            ].forEach(item => {
                 const el = document.querySelector(item.selector);
                 if (el) {
                     el.style.animationDelay = `${item.delay}s`;
@@ -5075,6 +3950,39 @@
             }
         }
 
+        function initializeFooterAnimation() {
+            let previousWrapperHeight = 0;
+            const elementsToMove = [document.getElementById('pagination'), document.getElementById('actionControls'), document.querySelector('.footer')];
+
+            const wrapperObserver = new ResizeObserver(entries => {
+                const newHeight = entries[0].contentRect.height;
+                if (previousWrapperHeight === 0 || Math.abs(newHeight - previousWrapperHeight) < 2) {
+                    previousWrapperHeight = newHeight;
+                    return;
+                }
+                
+                const deltaY = previousWrapperHeight - newHeight;
+                
+                for(const el of elementsToMove) {
+                    if(!el) continue;
+                    el.style.transition = 'none';
+                    el.style.transform = `translateY(${deltaY}px)`;
+                }
+
+                requestAnimationFrame(() => {
+                    for(const el of elementsToMove) {
+                        if(!el) continue;
+                        el.style.transition = ''; 
+                        el.style.transform = 'translateY(0px)';
+                    }
+                });
+
+                previousWrapperHeight = newHeight;
+            });
+            
+            wrapperObserver.observe(document.querySelector('.guide-list-wrapper'));
+        }
+
         searchInput.addEventListener("input", () => {
             const query = searchInput.value.toLowerCase().trim();
             if (query === 'reset' || query === 'clear') {
@@ -5103,7 +4011,7 @@
             applyFilters();
             renderGuides();
         });
-
+        
         function updateGeneratorModeBtn() {
             const btn = document.getElementById('generatorModeBtn');
             btn.classList.toggle('active', generatorMode === 'visible');
@@ -5113,10 +4021,10 @@
         sortSelector.addEventListener("change", (e) => {
             const sortValue = e.target.value;
             if (sortValue) {
-                if (sortValue === 'shuffle') {
+                if(sortValue === 'shuffle') {
                     let source = (generatorMode === 'visible' && generatedGuides) || filteredGuides;
                     shuffleArray(source);
-                    generatedGuides = source;
+                    generatedGuides = source; // Nadpisz, aby kolejne "Wymieszaj" działało na tej samej, przemieszanej liście
                     renderGuides(source);
                 } else {
                     applySort(sortValue, guides);
@@ -5144,141 +4052,6 @@
             }
         });
 
-        function initialize3dHoverEffect() {
-            const guideList = document.getElementById('guideList');
-            if (!guideList) return;
-
-            let currentGuide = null;
-            let animationFrameId = null;
-
-            const onMouseMove = (e) => {
-                if (!currentGuide) return;
-
-                const rect = currentGuide.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-
-                const rotateX = ((centerY - y) / centerY) * -12;
-                const rotateY = ((x - centerX) / centerX) * 12;
-
-                const glowX = (x / rect.width) * 100;
-                const glowY = (y / rect.height) * 100;
-
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = requestAnimationFrame(() => {
-                    if (!currentGuide) return; // FIX for race condition
-                    currentGuide.style.setProperty('--rotate-x', `${rotateX}deg`);
-                    currentGuide.style.setProperty('--rotate-y', `${rotateY}deg`);
-                    currentGuide.style.setProperty('--glow-x', `${glowX}%`);
-                    currentGuide.style.setProperty('--glow-y', `${glowY}%`);
-                });
-            };
-
-            guideList.addEventListener('mouseenter', (e) => {
-                const guide = e.target.closest('.guide-list.view-image-only .guide');
-                if (guide) {
-                    guide.style.transition = 'none'; // Bezpośrednie sterowanie
-                    currentGuide = guide;
-                }
-            }, true);
-
-            guideList.addEventListener('mouseleave', (e) => {
-                const guideTarget = e.target.closest('.guide-list.view-image-only .guide');
-                if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
-                    cancelAnimationFrame(animationFrameId);
-                    currentGuide.style.transition = 'transform 0.4s ease-out'; // Przywrócenie transition
-                    requestAnimationFrame(() => {
-                        if (currentGuide) {
-                            currentGuide.style.setProperty('--rotate-x', '0deg');
-                            currentGuide.style.setProperty('--rotate-y', '0deg');
-                        }
-                    });
-                    currentGuide = null;
-                }
-            }, true);
-
-
-            guideList.addEventListener('mousemove', onMouseMove, true);
-        }
-
-        function applyMasonryLayout(pageNum = 1) {
-            const guidePage = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
-            if (!guidePage) return;
-
-            const items = Array.from(guidePage.children);
-            if (items.length === 0) return;
-
-            const gap = 20;
-            const itemWidth = items[0].offsetWidth;
-            if (itemWidth === 0) return;
-
-            const containerWidth = guidePage.offsetWidth;
-            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
-
-            guidePage.style.position = 'relative';
-            guidePage.style.height = '';
-
-            const columnHeights = Array(numColumns).fill(0);
-
-            items.forEach(item => {
-                const minHeight = Math.min(...columnHeights);
-                const columnIndex = columnHeights.indexOf(minHeight);
-
-                item.style.position = 'absolute';
-                item.style.top = `${minHeight}px`;
-                item.style.left = `${columnIndex * (itemWidth + gap)}px`;
-
-                columnHeights[columnIndex] += item.offsetHeight + gap;
-            });
-
-            const maxHeight = Math.max(...columnHeights);
-            guidePage.style.height = `${maxHeight}px`;
-        }
-
-        function updateWrapperHeightForPage(pageNum) {
-            const wrapper = document.querySelector('.guide-list-wrapper');
-            const pageElement = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
-            if (!wrapper || !pageElement) return;
-
-            // Opóźnienie jest konieczne, aby dać przeglądarce czas na pełne wyrenderowanie layoutu
-            setTimeout(() => {
-                const items = pageElement.querySelectorAll('.guide');
-                if (items.length === 0) {
-                    wrapper.style.height = '0px';
-                    return;
-                }
-
-                // 1. Znajdź pozycję startową (górną krawędź) całego kontenera z listą
-                const listTop = guideList.getBoundingClientRect().top;
-
-                // 2. Znajdź najniżej położony element na stronie
-                //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (bottom) jest najdalej
-                let maxBottom = 0;
-                items.forEach(item => {
-                    const itemBottom = item.getBoundingClientRect().bottom;
-                    if (itemBottom > maxBottom) {
-                        maxBottom = itemBottom;
-                    }
-                });
-
-                // 3. Oblicz precyzyjną wysokość jako różnicę między dolną krawędzią najniższego
-                //    elementu a górną krawędzią całej listy.
-                const preciseHeight = maxBottom - listTop;
-
-                // 4. Ustaw wysokość kontenera na tę precyzyjną, zmierzoną wartość.
-                //    Bez żadnych buforów i zgadywania.
-                if (preciseHeight > 0) {
-                    wrapper.style.height = `${preciseHeight}px`;
-                }
-
-            }, 200); // Lekko zwiększony timeout dla pewności pełnego renderu
-        }
-        // Uruchomienie zegara czasu rzeczywistego
-        updateRealTimeClock();
-        setInterval(updateRealTimeClock, 30000); // Odświeżanie co 30 sekund
     </script>
 </body>
 

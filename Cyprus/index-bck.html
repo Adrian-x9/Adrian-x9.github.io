@@ -325,16 +325,32 @@
         }
 
         .header-logo-link {
-            display: flex;
-            align-items: center;
-            perspective: 1000px;
+            position: fixed;
+            top: 15px;
+            left: 17px;
+            /* Optyczna korekta marginesu */
+            z-index: 998;
+            width: 44px;
+            height: 44px;
+            display: block;
+            box-sizing: border-box;
         }
 
         .header-logo {
-            max-height: 42px;
+            max-height: 100%;
             width: auto;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: clip-path 1.4s cubic-bezier(0.8, 0, 0.2, 1);
+            clip-path: inset(0 50% 0 50%);
+            /* Start: niewidoczny */
+        }
+
+        .header-logo.active {
+            clip-path: inset(0 0 0 0);
+            /* End: widoczny */
         }
 
         .top-header .title {
@@ -707,7 +723,8 @@
             scroll-snap-stop: always;
             display: grid;
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-            grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 256px), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(var(--box-width, 256px), 1fr));
+            /* KLUCZOWA ZMIANA */
             justify-content: center;
             gap: 20px;
             padding: 2px;
@@ -2428,6 +2445,13 @@
         }
 
         /* --- END: Ostateczna poprawka --- */
+
+        .time-date-group {
+            display: flex;
+            align-items: center;
+            gap: 0.6em;
+            /* Odstęp między zegarem a księżycem */
+        }
     </style>
     <script>
         (function () {
@@ -2514,6 +2538,11 @@
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
 
+    <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+        <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
+        <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
+    </a>
+
     <div class="top-header">
         <div id="pageTitle" class="title"></div>
 
@@ -2534,8 +2563,11 @@
 
     <div id="statusBar">
         <span id="guideCountDisplay" class="status-segment">
+            <b></b>
+            <span class="total-count"></span>
         </span>
         <span id="currentTimeDisplay" class="status-segment"></span>
+        <span id="moonPhaseDisplay" class="status-segment"></span>
         <span id="langDisplay" class="status-segment"></span>
     </div>
 
@@ -3138,6 +3170,27 @@ const dataFromFile = `
             }
         }
         // --- END: Logika liczników czasu i bezczynności ---
+        function getMoonPhase(date = new Date()) {
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1;
+            const day = date.getDate();
+
+            // Prosty i skuteczny algorytm astronomiczny
+            let r = year % 100;
+            r %= 19;
+            if (r > 9) {
+                r -= 19;
+            }
+            r = ((r * 11) % 30) + month + day;
+            if (month < 3) {
+                r += 2;
+            }
+            r -= ((year < 2000) ? 4 : 8.3);
+            r = Math.floor(r + 0.5) % 30;
+            const phaseIndex = Math.floor((r < 0 ? r + 30 : r) / 3.7);
+            return phaseIndex;
+        }
+
         function updateRealTimeClock() {
             const now = new Date();
             const year = now.getFullYear();
@@ -3146,9 +3199,18 @@ const dataFromFile = `
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
 
+            // Update Clock
             const clockEl = document.getElementById('currentTimeDisplay');
             if (clockEl) {
-                clockEl.textContent = `${hours}:${minutes} ${year}-${month}-${day}`;
+                clockEl.innerHTML = `<b>${hours}:${minutes}</b> ${year}-${month}-${day}`;
+            }
+
+            // NOWA CZĘŚĆ: Aktualizacja fazy księżyca
+            const moonPhaseEl = document.getElementById('moonPhaseDisplay');
+            if (moonPhaseEl) {
+                const moonPhases = ['🌑\uFE0E', '🌒\uFE0E', '🌓\uFE0E', '🌔\uFE0E', '🌕\uFE0E', '🌖\uFE0E', '🌗\uFE0E', '🌘\uFE0E']; // Wymuszenie wariantu tekstowego (monochromatycznego)
+                const phaseIndex = getMoonPhase(now);
+                moonPhaseEl.textContent = moonPhases[phaseIndex];
             }
         }
 
@@ -3522,27 +3584,47 @@ const dataFromFile = `
         }
 
         function startLogoRotator() {
+            const logoImg1 = document.getElementById('logo-img-1');
+            const logoImg2 = document.getElementById('logo-img-2');
+            if (!logoImg1 || !logoImg2) return;
+
+            let activeImg = logoImg1;
+            let nextImg = logoImg2;
+
+            const updateLogo = () => {
+                const isDark = document.documentElement.classList.contains('dark-mode');
+                const newLogoData = config.logoRotator.logos[currentLogoIndex];
+
+                // Ustawia nowe logo w ukrytym tagu i aktualizuje link
+                nextImg.src = isDark ? newLogoData.srcDark : newLogoData.srcLight;
+                nextImg.alt = newLogoData.alt;
+                logoLink.href = newLogoData.href;
+
+                // Zamienia klasy, aby wykonać animację
+                activeImg.classList.remove('active');
+                nextImg.classList.add('active');
+
+                // Przygotowuje na następną iterację
+                [activeImg, nextImg] = [nextImg, activeImg];
+            };
+
+            // Ustawienie początkowe
+            currentLogoIndex = 0;
             const initialLogo = config.logoRotator.logos[currentLogoIndex];
-            if (!initialLogo) return;
-            const isDark = document.documentElement.classList.contains('dark-mode');
-            headerLogo.src = isDark ? initialLogo.srcDark : initialLogo.srcLight;
+            const isDarkInitial = document.documentElement.classList.contains('dark-mode');
+            activeImg.src = isDarkInitial ? initialLogo.srcDark : initialLogo.srcLight;
+            activeImg.alt = initialLogo.alt;
             logoLink.href = initialLogo.href;
-            headerLogo.alt = initialLogo.alt;
+            activeImg.classList.add('active'); // Ustawia pierwsze logo jako widoczne
+
             if (!config.logoRotator || !config.logoRotator.enabled || config.logoRotator.logos.length < 2) {
                 return;
             }
+
             clearInterval(logoInterval);
             logoInterval = setInterval(() => {
-                headerLogo.style.transform = 'rotateY(90deg)';
-                setTimeout(() => {
-                    currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
-                    const newLogo = config.logoRotator.logos[currentLogoIndex];
-                    const isDarkNow = document.documentElement.classList.contains('dark-mode');
-                    headerLogo.src = isDarkNow ? newLogo.srcDark : newLogo.srcLight;
-                    headerLogo.alt = newLogo.alt;
-                    logoLink.href = newLogo.href;
-                    headerLogo.style.transform = 'rotateY(0deg)';
-                }, 300);
+                currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
+                updateLogo();
             }, config.logoRotator.interval);
         }
 
