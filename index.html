@@ -107,9 +107,10 @@
         body.play-mode-active>.display-panel,
         body.play-mode-active>.guide-list-wrapper,
         body.play-mode-active>.filter-controls,
-        body.play-mode-active>#bottom-controls-wrapper,
-        /* <-- POPRAWKA */
-        body.play-mode-active>#fullscreenBtn {
+        body.play-mode-active>.pagination,
+        body.play-mode-active>.footer,
+        body.play-mode-active>#fullscreenBtn,
+        body.play-mode-active>#actionControls {
             opacity: 0;
             visibility: hidden;
             pointer-events: none;
@@ -670,8 +671,7 @@
             max-width: 1920px;
             margin: 0 auto;
             overflow: hidden;
-            /* transition: height 0.5s ease-in-out; */
-            /* <-- USUNIĘTE */
+            transition: height 0.5s ease-in-out;
         }
 
         .guide-list {
@@ -2421,41 +2421,35 @@
         <div class="guide-list" id="guideList"></div>
     </div>
 
-    <div id="bottom-controls-wrapper">
-        <div class="pagination" id="pagination"></div>
+    <div class="pagination" id="pagination"></div>
 
-        <div class="action-controls" id="actionControls">
-            <button id="videoBtn" class="dir-db-btn multi-button">
-                <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"
-                        data-lang="btnVideo"></span></span>
-                <span id="videoBtn-prev" class="multi-button-child"><i class="fas fa-chevron-left"></i></span>
-                <span id="videoBtn-play" class="multi-button-child"><i class="fas fa-play"></i></span>
-                <span id="videoBtn-shuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
-                <span id="videoBtn-next" class="multi-button-child"><i class="fas fa-chevron-right"></i></span>
-                <span id="videoBtn-reset" class="multi-button-child"><i class="fas fa-undo"></i></span>
-            </button>
+    <div class="action-controls" id="actionControls">
+        <button id="videoBtn" class="dir-db-btn multi-button">
+            <span id="videoBtn-main" class="multi-button-main"><i class="fas fa-video"></i><span class="btn-text"
+                    data-lang="btnVideo"></span></span>
+            <span id="videoBtn-prev" class="multi-button-child"><i class="fas fa-chevron-left"></i></span>
+            <span id="videoBtn-play" class="multi-button-child"><i class="fas fa-play"></i></span>
+            <span id="videoBtn-shuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
+            <span id="videoBtn-next" class="multi-button-child"><i class="fas fa-chevron-right"></i></span>
+            <span id="videoBtn-reset" class="multi-button-child"><i class="fas fa-undo"></i></span>
+        </button>
+    </div>
+
+    <div class="footer">
+        <div>
+            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                        class="version-suffix">Dir
+                        <span class="version-display"></span></span></a></strong>
+            <span data-lang="footerDate"></span>
+            <span data-lang="footerDesc"></span> |
+            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
+                </a></span>
+            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
         </div>
-
-        <div class="footer">
-            <div>
-                <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                            class="version-suffix">Dir
-                            <span class="version-display"></span></span></a></strong>
-                <span data-lang="footerDate"></span>
-                <span data-lang="footerDesc"></span> |
-                <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
-                    </a></span>
-                <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
-            </div>
-            <div class="privacy-notice">
-                <strong data-lang="privacyTitle"></strong>.
-                <span data-lang="privacyDesc"></span>
-                <strong data-lang="privacySafe"></strong>
-            </div>
-        </div>
-
-        <div class="reset-container animated-footer">
-            <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+        <div class="privacy-notice">
+            <strong data-lang="privacyTitle"></strong>.
+            <span data-lang="privacyDesc"></span>
+            <strong data-lang="privacySafe"></strong>
         </div>
     </div>
 
@@ -4717,9 +4711,9 @@
 
                 // 1. Znajdź pozycję startową (górną krawędź) całego kontenera z listą
                 const listTop = guideList.getBoundingClientRect().top;
-
+                
                 // 2. Znajdź najniżej położony element na stronie
-                //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (`) jest najdalej
+                //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (bottom) jest najdalej
                 let maxBottom = 0;
                 items.forEach(item => {
                     const itemBottom = item.getBoundingClientRect().bottom;
