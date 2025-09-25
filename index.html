@@ -2405,7 +2405,26 @@
             color: #eee;
         }
 
-        /* --- END: Ostateczna, ujednolicona wersja paska statusu --- */
+        /* --- START: Ostateczna poprawka wyrównania OBRAZKÓW dla widoku nr 2 --- */
+        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide .guide-info-container {
+            flex-grow: 1;
+            /* Kluczowa reguła: każe blokowi z tekstem rozciągnąć się i wypchnąć wszystko pod nim w dół */
+            display: flex;
+            /* Poniższe reguły ładnie centrują tekst w dostępnej przestrzeni */
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- END: Ostateczna poprawka --- */
+        /* --- START: Ostateczna poprawka wyrównania dla WIDOKU NR 2 --- */
+
+        /* Ten selektor działa TYLKO w widoku nr 2 (domyślnym) */
+        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-info-container {
+            margin-bottom: auto;
+            /* Kluczowa reguła: tworzy elastyczny odstęp POD tekstem, spychając obraz i przycisk na dół */
+        }
+
+        /* --- END: Ostateczna poprawka --- */
     </style>
     <script>
         (function () {
@@ -3009,20 +3028,20 @@
 
         // --- START: Logika liczników czasu i bezczynności ---
 
-/**
-         * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
-         * @param {number} ms - Czas w milisekundach.
-         * @returns {string} Sformatowany czas.
-         */
-        function formatTime(ms) {
-            if (ms < 0) ms = 0;
-            const totalSeconds = Math.floor(ms / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-            const pad = (num) => num.toString().padStart(2, '0');
-            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-        }
+        /**
+                 * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
+                 * @param {number} ms - Czas w milisekundach.
+                 * @returns {string} Sformatowany czas.
+                 */
+        function formatTime(ms) {
+            if (ms < 0) ms = 0;
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const pad = (num) => num.toString().padStart(2, '0');
+            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        }
 
         /**
          * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).

@@ -212,8 +212,16 @@
             color: #555;
         }
 
-        body:not(.dark-mode) .privacy-notice {
-            color: #bbb;
+        /* Nowa reguła dla głównego bloku tekstowego */
+        .footer-main-text p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Poprawiona reguła dla notki o prywatności, aby pasowała do nowej struktury */
+        .footer .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.9em;
         }
 
         body.dark-mode {
@@ -331,9 +339,10 @@
 
         .top-header .title {
             font-size: 1.6em;
-            font-weight: 600;
+            font-weight: 700;
             /* Przywrócenie grubości czcionki */
         }
+
 
         body:not(.dark-mode) .top-header .title,
         body:not(.dark-mode) .top-header .counter {
@@ -2259,6 +2268,155 @@
         .guide:not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-content-bottom>a:not(.cover-link) {
             margin-top: auto;
         }
+
+        /* --- START: Ostateczna, ujednolicona wersja paska statusu --- */
+
+        /* STYL PODSTAWOWY - spójny z resztą interfejsu */
+        #statusBar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px auto;
+            padding: 6px 15px;
+            /* Padding spójny z przyciskami */
+            width: fit-content;
+            border-radius: 10px;
+            /* Zaokrąglenie jak w przyciskach */
+            border: 1px solid #a00000;
+            /* Kolor ramki jak w przyciskach */
+            /* Usunięto 'gap' w celu precyzyjnej kontroli przez margines separatora */
+        }
+
+        /* Zagnieżdżone kontenery */
+        #guideCountDisplay,
+        #timeDisplay {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
+        }
+
+        /* SEPARATOR - generowany w CSS, niezależny od HTML */
+        /* Ta reguła dodaje separator PRZED każdym segmentem, oprócz pierwszego */
+        .status-segment:not(:first-child)::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 0.8em;
+            /* Mocno zmniejszona, dyskretna wysokość */
+            background-color: rgba(0, 0, 0, 0.2);
+            margin: 0 0.8em;
+            /* Symetryczny margines dla równych odstępów */
+            vertical-align: middle;
+            position: relative;
+            top: -0.1em;
+            /* Korekta dla idealnego wyśrodkowania */
+        }
+
+        body.dark-mode .status-segment:not(:first-child)::before {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Poprawiona reguła dla timerów, aby miały odstęp od tekstu powyżej */
+        .footer-timers {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5em;
+        }
+
+        /* Nowoczesny, dyskretny separator między licznikami */
+        .footer-timers>span+span::before {
+            content: '•';
+            opacity: 0.5;
+            margin-right: 0.5em;
+            font-size: 1.2em;
+            vertical-align: middle;
+            line-height: 1;
+        }
+
+        /* Poprawione pozycjonowanie i wygląd przycisku reset */
+        .reset-container {
+            text-align: center;
+            margin: 10px 0 0 0;
+            /* Zmniejszony, spójny odstęp */
+        }
+
+        /* HIERARCHIA WIZUALNA TEKSTU */
+        #statusBar span {
+            font-size: 0.9em;
+            font-weight: 600;
+            white-space: nowrap;
+            text-shadow: none;
+        }
+
+        #guideCountDisplay b,
+        .session-time {
+            font-weight: 800;
+        }
+
+        .total-count,
+        .idle-time {
+            opacity: 0.6;
+        }
+
+        /* TŁA I CIENIE - spójne z resztą interfejsu */
+        .top-header {
+            margin-bottom: 0;
+            /* Zachowujemy dla spójności layoutu */
+        }
+
+        /* TRYB JASNY */
+        body:not(.dark-mode) #statusBar {
+            background: #fdfdfd;
+            /* Tło jak w przyciskach */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        /* TRYB CIEMNY */
+        body.dark-mode #statusBar {
+            background: #000;
+            /* Tło jak w przyciskach */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        /* TRYB WIDEO W TLE - zachowujemy półprzezroczystość */
+        body.video-ready:not(.dark-mode) #statusBar {
+            background: rgba(253, 253, 253, 0.85);
+        }
+
+        body.video-ready.dark-mode #statusBar {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        body.video-ready #statusBar {
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* KOLORY TEKSTU */
+        body:not(.dark-mode) #statusBar span {
+            color: #333;
+        }
+
+        body.dark-mode #statusBar span {
+            color: #eee;
+        }
+
+        /* --- START: Ostateczna poprawka wyrównania OBRAZKÓW dla widoku nr 2 --- */
+
+        .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(.view-masonry) .guide .guide-info-container {
+            flex-grow: 1;
+            /* Kluczowa reguła: każe blokowi z tekstem rozciągnąć się i wypchnąć wszystko pod nim w dół */
+            display: flex;
+            /* Poniższe reguły ładnie centrują tekst w dostępnej przestrzeni */
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- END: Ostateczna poprawka --- */
     </style>
     <script>
         (function () {
@@ -2291,7 +2449,7 @@
         function initializeMobileHover() {
             // Nasłuchuj dotknięć na całej liście okładek
             guideList.addEventListener('touchend', function (e) {
-                const tappedItem = e.target.closest('.guide');
+                LanguagetappedItem = e.target.closest('.guide');
 
                 // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
                 if (!tappedItem) {
@@ -2346,13 +2504,12 @@
     </video>
 
     <div class="top-header">
-        <div class="header-logo-group">
-            <div id="guideCountDisplay" class="counter"></div>
-            <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-                <img id="header-logo" src="" alt="Logo" class="header-logo" />
-            </a>
-        </div>
         <div id="pageTitle" class="title"></div>
+
+        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+            <img id="header-logo" src="" alt="Logo" class="header-logo" />
+        </a>
+
         <div class="header-group">
             <a id="visuDirBtn" class="dir-db-btn" href="#">
                 <span class="title-red">Visu</span><span class="version-suffix">Dir <span
@@ -2362,6 +2519,13 @@
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
                 <span class="btn-text" data-lang="btnBack"></span></a>
         </div>
+    </div>
+
+    <div id="statusBar">
+        <span id="guideCountDisplay" class="status-segment">
+        </span>
+        <span id="currentTimeDisplay" class="status-segment"></span>
+        <span id="langDisplay" class="status-segment"></span>
     </div>
 
     <div class="controls">
@@ -2436,25 +2600,33 @@
     </div>
 
     <div class="footer">
-        <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                        class="version-suffix">Dir
-                        <span class="version-display"></span></span></a></strong>
-            <span data-lang="footerDate"></span>
-            <span data-lang="footerDesc"></span> |
-            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
-                </a></span>
-            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+        <div class="footer-main-text">
+            <p>
+                <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                            class="version-suffix">Dir
+                            <span class="version-display"></span></span></a></strong>
+                <span data-lang="footerDate"></span>
+                <span data-lang="footerDesc"></span> |
+                <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
+                        Ulbrych
+                    </a></span>
+                <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+            </p>
+            <p class="privacy-notice">
+                <strong data-lang="privacyTitle"></strong>.
+                <span data-lang="privacyDesc"></span>
+                <strong data-lang="privacySafe"></strong>
+            </p>
         </div>
-        <div class="privacy-notice">
-            <strong data-lang="privacyTitle"></strong>.
-            <span data-lang="privacyDesc"></span>
-            <strong data-lang="privacySafe"></strong>
-        </div>
-    </div>
 
-    <div class="reset-container animated-footer">
-        <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+        <div id="timeDisplay" class="footer-timers">
+            <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
+            <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
+        </div>
+
+        <div class="reset-container">
+            <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+        </div>
     </div>
 
     <button id="fullscreenBtn" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
@@ -2674,6 +2846,7 @@ const dataFromFile = `
             pl: {
                 pageTitle: "START ▪ maxi MENU ▪",
                 guideCounter: "<b>{count}</b> / {total} pozycji",
+                statusBarSeparator: "|",
                 alertNoItems: "Brak pozycji do wygenerowania!",
                 btnBack: "Wstecz",
                 btnLoad: "Załaduj...",
@@ -2692,7 +2865,7 @@ const dataFromFile = `
                 generatorModeAll: "Generator: cała pula",
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
-                maximizeBtn: "PrzywrĂłÄ‡ interfejs",
+                maximizeBtn: "Przywróć interfejs",
                 viewModeFull: "Widok: Okładki i tekst",
                 viewModeImage: "Widok: Tylko okładki",
                 viewModeText: "Widok: Tylko tekst",
@@ -2725,8 +2898,10 @@ const dataFromFile = `
                 videoBtnNext: "Następne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
                 footerDate: "© 2025-09-17",
-                footerDesc: "do katalogowania, zarzÄ…dzania i prezentacji plikĂłw i folderĂłw",
-                privacyTitle: "Szanujemy TwojÄ… prywatność",
+                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
+                footerIdleTime: "Bezczynność",
+                footerSessionTime: "Sesja",
+                privacyTitle: "Szanujemy Twoją prywatność",
                 privacyDesc: "Żadnych ciasteczek ani śledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
                 fullscreenBtn: "Pełny ekran",
@@ -2759,6 +2934,8 @@ const dataFromFile = `
             generatedGuides = null,
             slideshowSourceGuides = [],
             playGuidesQueue = [];
+
+        let sessionStartTime, lastActivityTime;
 
         let currentSort,
             selectedRowCount;
@@ -2829,6 +3006,81 @@ const dataFromFile = `
             }
             return theme;
         }
+
+        // --- START: Logika liczników czasu i bezczynności ---
+
+        /**
+                 * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
+                 * @param {number} ms - Czas w milisekundach.
+                 * @returns {string} Sformatowany czas.
+                 */
+        function formatTime(ms) {
+            if (ms < 0) ms = 0;
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const pad = (num) => num.toString().padStart(2, '0');
+            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        }
+
+        /**
+         * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).
+         * @param {number} count - Aktualna (filtrowana) liczba pozycji.
+         * @param {number} total - Całkowita liczba pozycji.
+         */
+        function updateGuideCount(count, total) {
+            try {
+                const displayEl = document.getElementById('guideCountDisplay');
+                if (displayEl) {
+                    const counterTemplate = lang.guideCounter || "<b>{count}</b> / {total} pozycji";
+                    displayEl.innerHTML = counterTemplate.replace('{count}', count).replace('{total}', total);
+                }
+            } catch (e) {
+                console.error("Błąd krytyczny w updateGuideCount:", e);
+            }
+        }
+
+        /**
+         * Resetuje znacznik czasu ostatniej aktywności użytkownika.
+         * Ta funkcja jest wywoływana przez ruch myszy, kliknięcie lub naciśnięcie klawisza.
+         */
+        function resetIdleTimer() {
+            lastActivityTime = new Date();
+        }
+
+        /**
+                     * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
+                     */
+        function updateTimers() {
+            const now = new Date();
+            const sessionDuration = now - sessionStartTime;
+            const idleDuration = now - lastActivityTime;
+
+            const idleTimeEl = document.querySelector('#timeDisplay .idle-time');
+            const sessionTimeEl = document.querySelector('#timeDisplay .session-time');
+
+            // Aktualizuje tylko wartości czasu; etykiety są w HTML i tłumaczeniach
+            if (idleTimeEl && sessionTimeEl) {
+                idleTimeEl.textContent = formatTime(idleDuration);
+                sessionTimeEl.textContent = formatTime(sessionDuration);
+            }
+        }
+        // --- END: Logika liczników czasu i bezczynności ---
+        function updateRealTimeClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+
+            const clockEl = document.getElementById('currentTimeDisplay');
+            if (clockEl) {
+                clockEl.textContent = `${hours}:${minutes} ${year}-${month}-${day}`;
+            }
+        }
+
 
         function initializeBackgroundVideo(theme) {
             const pageKey = config.pageSettings.pageKey;
@@ -2928,7 +3180,9 @@ const dataFromFile = `
             if (videoShuffle && videoBgState === 'playing') {
                 bgVideo.addEventListener('canplay', () => {
                     toggleAutoShuffle(true);
-                }, { once: true });
+                }, {
+                    once: true
+                });
             }
 
             const hoverOverlay = getFromLocalStorage('hover_overlay_color') || config.pageSettings.hoverOverlayColor;
@@ -3042,6 +3296,7 @@ const dataFromFile = `
         async function processData(text) {
             const lines = text.split(/\r?\n/);
             guides = [];
+            updateGuideCount(guides.length, guides.length); // Aktualizuje licznik po wczytaniu danych
             for (const line of lines) {
                 const match = line.match(/^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i);
                 if (match) {
@@ -3092,6 +3347,19 @@ const dataFromFile = `
                 .filter(guide => ['jpg', 'png', 'link', 'mp4', 'avi'].includes(guide.format))
                 .map(guide => getGuideOrientation(guide));
             await Promise.all(orientationPromises);
+
+            // --- POCZĄTEK NOWEGO FRAGMENTU ---
+            try {
+                // Aktualizuje całkowitą liczbę pozycji zaraz po ich zliczeniu
+                const guideCountDisplay = document.getElementById('guideCountDisplay');
+                if (guideCountDisplay) {
+                    const currentCount = (filteredGuides && filteredGuides.length) || 0;
+                    guideCountDisplay.innerHTML = lang.guideCounter.replace('{count}', currentCount).replace('{total}', guides.length);
+                }
+            } catch (e) {
+                console.error("Błąd aktualizacji licznika po przetworzeniu danych:", e);
+            }
+            // --- KONIEC NOWEGO FRAGMENTU ---
         }
 
         function updateFormatFilter() {
@@ -3208,6 +3476,7 @@ const dataFromFile = `
         }
 
         function applyLanguage() {
+            updateGuideCount(0, 0); // Ustawia stan początkowy licznika
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.dataset.lang;
                 if (lang[key]) el.textContent = lang[key];
@@ -3222,6 +3491,16 @@ const dataFromFile = `
             });
             document.title = config.pageSettings.pageTitle || lang.pageTitle;
             document.getElementById('pageTitle').textContent = config.pageSettings.pageTitle || lang.pageTitle;
+
+            // --- POCZĄTEK FINALNEGO FRAGMENTU DLA applyLanguage ---
+            try {
+                const langText = config.language.current.toUpperCase();
+                const langEl = document.getElementById('langDisplay');
+                if (langEl) langEl.textContent = langText;
+            } catch (e) {
+                console.error("Błąd podczas ustawiania paska statusu:", e);
+            }
+            // --- KONIEC FINALNEGO FRAGMENTU ---
         }
 
         window.onload = function () {
@@ -3279,6 +3558,21 @@ const dataFromFile = `
             initializeDisplayPanel();
             initializeMobileHover();
             initialize3dHoverEffect();
+            // --- POCZĄTEK NOWEGO FRAGMENTU ---
+
+            // Ustawienie początkowego czasu dla obu liczników
+            sessionStartTime = new Date();
+            lastActivityTime = new Date();
+
+            // Uruchomienie cyklicznej aktualizacji co sekundę
+            setInterval(updateTimers, 1000);
+
+            // Nasłuchiwanie na aktywność użytkownika w celu resetowania licznika bezczynności
+            ['mousedown', 'mousemove', 'keydown', 'touchstart'].forEach(event =>
+                window.addEventListener(event, resetIdleTimer)
+            );
+
+            // --- KONIEC NOWEGO FRAGMENTU ---
         };
 
         function toggleMinimizeView() {
@@ -3553,7 +3847,7 @@ const dataFromFile = `
 
             setupLazyLoading(pagesCache);
             renderPagination();
-            document.getElementById("guideCountDisplay").innerHTML = lang.guideCounter.replace('{count}', source.length).replace('{total}', guides.length);
+            updateGuideCount(source.length, guides.length); // Aktualizuje licznik po każdym filtrowaniu/renderowaniu
 
             if (isInitialLoad) {
                 isInitialLoad = false;
@@ -4690,32 +4984,42 @@ const dataFromFile = `
             const pageElement = guideList.querySelector(`.guide-page[data-page-number="${pageNum}"]`);
             if (!wrapper || !pageElement) return;
 
+            // Opóźnienie jest konieczne, aby dać przeglądarce czas na pełne wyrenderowanie layoutu
             setTimeout(() => {
-                let targetHeight = 0;
-                if (currentViewMode === 'masonry') {
-                    targetHeight = pageElement.offsetHeight;
-                } else {
-                    const items = pageElement.querySelectorAll('.guide');
-                    if (items.length > 0) {
-                        const gap = 20;
-                        const itemHeight = items[0].offsetHeight;
+                const items = pageElement.querySelectorAll('.guide');
+                if (items.length === 0) {
+                    wrapper.style.height = '0px';
+                    return;
+                }
 
-                        if (itemHeight > 0) {
-                            const itemWidth = items[0].offsetWidth;
-                            const containerWidth = pageElement.offsetWidth;
-                            const numColumns = Math.max(1, Math.floor((containerWidth + gap) / (itemWidth + gap)));
-                            const numRows = Math.ceil(items.length / numColumns);
-                            targetHeight = (numRows * itemHeight) + ((numRows - 1) * gap);
-                        }
+                // 1. Znajdź pozycję startową (górną krawędź) całego kontenera z listą
+                const listTop = guideList.getBoundingClientRect().top;
+
+                // 2. Znajdź najniżej położony element na stronie
+                //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (bottom) jest najdalej
+                let maxBottom = 0;
+                items.forEach(item => {
+                    const itemBottom = item.getBoundingClientRect().bottom;
+                    if (itemBottom > maxBottom) {
+                        maxBottom = itemBottom;
                     }
+                });
+
+                // 3. Oblicz precyzyjną wysokość jako różnicę między dolną krawędzią najniższego
+                //    elementu a górną krawędzią całej listy.
+                const preciseHeight = maxBottom - listTop;
+
+                // 4. Ustaw wysokość kontenera na tę precyzyjną, zmierzoną wartość.
+                //    Bez żadnych buforów i zgadywania.
+                if (preciseHeight > 0) {
+                    wrapper.style.height = `${preciseHeight}px`;
                 }
 
-                if (targetHeight > 0) {
-                    // FIX: Dodano 1px bufora, aby zapobiec obcinaniu dolnej krawędzi.
-                    wrapper.style.height = `${targetHeight + 1}px`;
-                }
-            }, 150);
+            }, 200); // Lekko zwiększony timeout dla pewności pełnego renderu
         }
+        // Uruchomienie zegara czasu rzeczywistego
+        updateRealTimeClock();
+        setInterval(updateRealTimeClock, 30000); // Odświeżanie co 30 sekund
     </script>
 </body>
 

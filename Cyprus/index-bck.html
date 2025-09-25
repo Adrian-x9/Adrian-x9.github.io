@@ -968,11 +968,12 @@
 
         /* 2. Zdjęcie otrzymuje własną ramkę, cień i nie jest przycinane */
         .guide-cover-grid {
+            /* Zamiast wymuszać 100% wymiarów, pozwalamy obrazkowi się skalować */
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
             transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
-            border-radius: 12px;
+            border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             background-color: rgba(0, 0, 0, 0.03);
         }
@@ -2258,28 +2259,6 @@
         .guide:not(.view-image-only):not(.view-grid):not(.view-masonry) .guide-content-bottom>a:not(.cover-link) {
             margin-top: auto;
         }
-
-        /* --- PRECYZYJNA POPRAWKA POZYCJONOWANIA TYLKO DLA WIDOKU PEŁNEGO --- */
-
-        /* Ta reguła zadziała tylko wtedy, gdy NIE JEST aktywny żaden inny tryb */
-        .guide-list:not(.view-image-only):not(.view-grid):not(.view-masonry):not(.view-text-only) .guide-content-bottom {
-            justify-content: flex-start;
-            /* Zmieniamy wyrównanie z dołu na górę */
-        }
-
-        /* Ta reguła również zadziała tylko w domyślnym widoku pełnym */
-        .guide-list:not(.view-image-only):not(.view-grid):not(.view-masonry):not(.view-text-only) .guide-info-container {
-            flex-grow: 1;
-            /* Pozwalamy kontenerowi z opisem rosnąć i wypychać resztę w dół */
-        }
-
-        /*
- * This patch restores the margin between the image and the "Otwórz" button 
- * in Full View (Mode 2) and Masonry View (Mode 5).
-*/
-        .guide-list:not(.view-image-only):not(.view-grid) .cover-link {
-            margin-top: 10px;
-        }
     </style>
     <script>
         (function () {
@@ -3537,6 +3516,10 @@ const dataFromFile = `
         const goToPage = (pageNum) => {
             pageNum = Math.max(1, Math.min(totalPages, pageNum));
             const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
+
+            // FIX: Natychmiastowe wywołanie zmiany wysokości, aby zsynchronizować animację pionową z poziomą.
+            updateWrapperHeightForPage(pageNum);
+
             guideList.scrollTo({
                 left: targetScrollLeft,
                 behavior: 'smooth'
@@ -4787,8 +4770,9 @@ const dataFromFile = `
                     }
                 }
 
-                if (targetHeight > 0 && wrapper.offsetHeight !== targetHeight) {
-                    wrapper.style.height = `${targetHeight}px`;
+                if (targetHeight > 0) {
+                    // FIX: Dodano 1px bufora, aby zapobiec obcinaniu dolnej krawędzi.
+                    wrapper.style.height = `${targetHeight + 1}px`;
                 }
             }, 150);
         }
