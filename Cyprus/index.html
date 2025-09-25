@@ -707,7 +707,8 @@
             scroll-snap-stop: always;
             display: grid;
             grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-            grid-template-columns: repeat(auto-fill, minmax(var(--box-width, 256px), 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(var(--box-width, 256px), 1fr));
+            /* KLUCZOWA ZMIANA */
             justify-content: center;
             gap: 20px;
             padding: 2px;
@@ -2513,6 +2514,10 @@
     <video id="bg-video" autoplay loop muted playsinline>
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
+
+    <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+        <img id="header-logo" src="" alt="Logo" class="header-logo" />
+    </a>
 
     <div class="top-header">
         <div id="pageTitle" class="title"></div>
