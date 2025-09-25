@@ -2261,57 +2261,132 @@
             margin-top: auto;
         }
 
-        /* --- START: Finalny, spójny styl paska statusu v4.0 --- */
+        /* --- START: Ostateczna, ujednolicona wersja paska statusu --- */
 
-        /* Główny kontener paska, stylizowany na wzór .display-panel */
+        /* STYL PODSTAWOWY - spójny z resztą interfejsu */
         #statusBar {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 1em;
-            margin: 10px auto;
-            /* Równe marginesy dla symetrii */
+            margin: 15px auto;
             padding: 6px 15px;
+            /* Padding spójny z przyciskami */
             width: fit-content;
-            border-radius: 12px;
-            /* Zaokrąglenie identyczne jak w .display-panel */
+            border-radius: 10px;
+            /* Zaokrąglenie jak w przyciskach */
             border: 1px solid #a00000;
-            /* Kolor ramki identyczny jak w .display-panel */
-            transition: all 0.3s ease;
+            /* Kolor ramki jak w przyciskach */
+            gap: 1em;
+            /* Używamy 'gap' do stworzenia równych odstępów */
         }
 
-        /* Styl dla trybu jasnego, spójny z resztą UI */
-        body:not(.dark-mode) #statusBar {
-            background: rgba(253, 253, 253, 0.85);
-            /* Tło skopiowane z .guide */
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
-            /* Cień skopiowany z .guide */
+        /* Zagnieżdżone kontenery */
+        #guideCountDisplay,
+        #timeDisplay {
+            display: flex;
+            align-items: center;
+            gap: 0.4em;
         }
 
-        /* Styl dla trybu ciemnego, spójny z resztą UI */
-        body.dark-mode #statusBar {
-            background: rgba(0, 0, 0, 0.7);
-            /* Tło skopiowane z .display-panel */
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-            /* Cień skopiowany z .guide */
+        /* SEPARATOR - generowany w CSS, niezależny od HTML */
+    /* Ta reguła dodaje separator PRZED każdym segmentem, oprócz pierwszego */
+.status-segment:not(:first-child)::before {
+        content: '';
+        display: inline-block;
+        width: 1px;
+        height: 0.8em; /* Mocno zmniejszona, dyskretna wysokość */
+        background-color: rgba(0, 0, 0, 0.2);
+        margin-right: 0.5em;
+        vertical-align: middle;
+        position: relative;
+        top: -0.1em; /* Korekta dla idealnego wyśrodkowania */
+    }
+
+        body.dark-mode .status-segment:not(:first-child)::before {
+            background-color: rgba(255, 255, 255, 0.25);
         }
 
-        /* Efekt "szkła" na wideo, identyczny jak w innych panelach */
-        body.video-ready #statusBar {
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+        /* Styl dla liczników czasu w stopce */
+        .footer-timers {
+            margin-top: 15px;
+            font-size: 0.9em;
+            opacity: 0.7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5em;
         }
 
-        /* STYL TEKSTU: Solidny, bez obrysu - tak jak na przyciskach i w panelach */
+        /* Nowoczesny, dyskretny separator między licznikami */
+        .footer-timers>span+span::before {
+            content: '•';
+            opacity: 0.5;
+            margin-right: 0.5em;
+            font-size: 1.2em;
+            vertical-align: middle;
+            line-height: 1;
+        }
+
+        /* Poprawione pozycjonowanie i wygląd przycisku reset */
+        .reset-container {
+            text-align: center;
+            margin: 10px 0 0 0;
+            /* Zmniejszony, spójny odstęp */
+        }
+
+        /* HIERARCHIA WIZUALNA TEKSTU */
         #statusBar span {
             font-size: 0.9em;
             font-weight: 600;
             white-space: nowrap;
             text-shadow: none;
-            /* Usunięcie text-shadow dla czystości */
         }
 
-        /* Kolorystyka tekstu, dopasowana do reszty interfejsu */
+        #guideCountDisplay b,
+        .session-time {
+            font-weight: 800;
+        }
+
+        .total-count,
+        .idle-time {
+            opacity: 0.6;
+        }
+
+        /* TŁA I CIENIE - spójne z resztą interfejsu */
+        .top-header {
+            margin-bottom: 0;
+            /* Zachowujemy dla spójności layoutu */
+        }
+
+        /* TRYB JASNY */
+        body:not(.dark-mode) #statusBar {
+            background: #fdfdfd;
+            /* Tło jak w przyciskach */
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+        }
+
+        /* TRYB CIEMNY */
+        body.dark-mode #statusBar {
+            background: #000;
+            /* Tło jak w przyciskach */
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+        }
+
+        /* TRYB WIDEO W TLE - zachowujemy półprzezroczystość */
+        body.video-ready:not(.dark-mode) #statusBar {
+            background: rgba(253, 253, 253, 0.85);
+        }
+
+        body.video-ready.dark-mode #statusBar {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        body.video-ready #statusBar {
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* KOLORY TEKSTU */
         body:not(.dark-mode) #statusBar span {
             color: #333;
         }
@@ -2320,49 +2395,7 @@
             color: #eee;
         }
 
-        /* Hierarchia wizualna informacji */
-        #guideCountDisplay b,
-        .session-time {
-            font-weight: 800;
-            /* Kluczowe informacje są pogrubione */
-        }
-
-        .idle-time,
-        #langDisplay {
-            opacity: 0.7;
-            /* Mniej ważne informacje są lekko stonowane */
-        }
-
-        /* DYSKRETNY SEPARATOR: Wypełniony okrąg zamiast linii */
-        .status-separator {
-            width: 5px;
-            /* Mała średnica dla dyskretnego efektu */
-            height: 5px;
-            border-radius: 50%;
-            /* Tworzy idealny okrąg */
-            margin: 0 0.2em;
-            /* Dopasowanie marginesów bocznych */
-
-            /* Wyrównanie w pionie jest teraz idealne dzięki `align-items: center`
-       w głównym kontenerze #statusBar i małym wymiarom separatora */
-        }
-
-        /* Kolor separatora dla trybu jasnego */
-        body:not(.dark-mode) .status-separator {
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        /* Kolor separatora dla trybu ciemnego */
-        body.dark-mode .status-separator {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .time-separator {
-            opacity: 0.5;
-            margin: 0 0.3em;
-        }
-
-        /* --- END: Finalny, spójny styl paska statusu v4.0 --- */
+        /* --- END: Ostateczna, ujednolicona wersja paska statusu --- */
     </style>
     <script>
         (function () {
@@ -2467,12 +2500,12 @@
         </div>
     </div>
 
-    <div id="statusBar" class="status-bar-v3">
-        <span id="guideCountDisplay" class="status-segment"></span>
-        <span id="timeDisplay" class="status-segment">
-            <span class="idle-time"></span>
-            <span class="session-time"></span>
+    <div id="statusBar">
+        <span id="guideCountDisplay" class="status-segment">
+            <b></b>
+            <span class="total-count"></span>
         </span>
+        <span id="currentTimeDisplay" class="status-segment"></span>
         <span id="langDisplay" class="status-segment"></span>
     </div>
 
@@ -2563,10 +2596,13 @@
             <span data-lang="privacyDesc"></span>
             <strong data-lang="privacySafe"></strong>
         </div>
-    </div>
-
-    <div class="reset-container animated-footer">
-        <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+        <div id="timeDisplay" class="footer-timers">
+            <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
+            <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
+        </div>
+        <div class="reset-container">
+            <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+        </div>
     </div>
 
     <button id="fullscreenBtn" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
@@ -2654,7 +2690,7 @@
         const config = {
             version: 'v1.11.4', // Ux corrections
             language: {
-                current: 'de',
+                current: 'pl',
                 files: {
                     en: 'index-en.html',
                     de: 'index-de.html',
@@ -2849,8 +2885,10 @@
                 videoBtnNext: "Następne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
                 footerDate: "© 2025-09-17",
-                footerDesc: "do katalogowania, zarzÄ…dzania i prezentacji plikĂłw i folderĂłw",
-                privacyTitle: "Szanujemy TwojÄ… prywatność",
+                footerIdleTime: "Bezczynność",
+                footerSessionTime: "Sesja",
+                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
+                privacyTitle: "Szanujemy Twoją… prywatność",
                 privacyDesc: "Żadnych ciasteczek ani śledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
                 fullscreenBtn: "Pełny ekran",
@@ -2966,30 +3004,30 @@
         function formatTime(ms) {
             if (ms < 0) ms = 0;
             const totalSeconds = Math.floor(ms / 1000);
-            const hours = Math.floor(totalSeconds / 3600);
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
             const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const seconds = totalSeconds % 60;
-
             const pad = (num) => num.toString().padStart(2, '0');
-
-            if (hours > 0) {
-                return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
-            }
-            return `${pad(minutes)}:${pad(seconds)}`;
+            // Zawsze zwraca spójny format DNI:GG:MM, nawet jeśli dni jest 0
+            return `${days}:${pad(hours)}:${pad(minutes)}`;
         }
 
         /**
-         * Centralna funkcja do niezawodnej aktualizacji licznika pozycji.
-         * @param {number} count - Aktualna (filtrowana) liczba pozycji.
-         * @param {number} total - Całkowita liczba pozycji.
-         */
+                 * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v2).
+                 * @param {number} count - Aktualna (filtrowana) liczba pozycji.
+                 * @param {number} total - Całkowita liczba pozycji.
+                 */
         function updateGuideCount(count, total) {
             try {
-                const guideCountDisplay = document.getElementById('guideCountDisplay');
-                if (guideCountDisplay) {
-                    guideCountDisplay.innerHTML = lang.guideCounter
-                        .replace('{count}', count)
-                        .replace('{total}', total);
+                const countEl = document.querySelector('#guideCountDisplay b');
+                const totalEl = document.querySelector('#guideCountDisplay .total-count');
+
+                if (countEl && totalEl) {
+                    const counterTemplate = lang.guideCounter || "<b>{count}</b> / {total} pozycji";
+                    const totalText = counterTemplate.substring(counterTemplate.indexOf('/')).replace('{total}', total);
+
+                    countEl.textContent = count;
+                    totalEl.textContent = totalText;
                 }
             } catch (e) {
                 console.error("Błąd krytyczny w updateGuideCount:", e);
@@ -3005,7 +3043,7 @@
         }
 
         /**
-                 * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v2).
+                 * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
                  */
         function updateTimers() {
             const now = new Date();
@@ -3015,13 +3053,27 @@
             const idleTimeEl = document.querySelector('#timeDisplay .idle-time');
             const sessionTimeEl = document.querySelector('#timeDisplay .session-time');
 
+            // Aktualizuje tylko wartości czasu; etykiety są w HTML i tłumaczeniach
             if (idleTimeEl && sessionTimeEl) {
                 idleTimeEl.textContent = formatTime(idleDuration);
                 sessionTimeEl.textContent = formatTime(sessionDuration);
             }
         }
-
         // --- END: Logika liczników czasu i bezczynności ---
+        function updateRealTimeClock() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0');
+            const day = now.getDate().toString().padStart(2, '0');
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+
+            const clockEl = document.getElementById('currentTimeDisplay');
+            if (clockEl) {
+                clockEl.textContent = `${hours}:${minutes} ${year}-${month}-${day}`;
+            }
+        }
+
 
         function initializeBackgroundVideo(theme) {
             const pageKey = config.pageSettings.pageKey;
@@ -3432,16 +3484,6 @@
             // --- POCZĄTEK FINALNEGO FRAGMENTU DLA applyLanguage ---
             try {
                 const langText = config.language.current.toUpperCase();
-
-                // Używamy ikon Font Awesome jako separatorów
-                const separatorIconHtml = '<i class="fa-solid fa-grip-lines-vertical fa-sm"></i>';
-
-                const sep1 = document.getElementById('statusBarSeparator1');
-                if (sep1) sep1.innerHTML = separatorIconHtml;
-
-                const sep2 = document.getElementById('statusBarSeparator2');
-                if (sep2) sep2.innerHTML = separatorIconHtml;
-
                 const langEl = document.getElementById('langDisplay');
                 if (langEl) langEl.textContent = langText;
             } catch (e) {
@@ -4964,6 +5006,9 @@
 
             }, 200); // Lekko zwiększony timeout dla pewności pełnego renderu
         }
+        // Uruchomienie zegara czasu rzeczywistego
+        updateRealTimeClock();
+        setInterval(updateRealTimeClock, 30000); // Odświeżanie co 30 sekund
     </script>
 </body>
 
