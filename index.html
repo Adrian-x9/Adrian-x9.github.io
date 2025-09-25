@@ -212,8 +212,16 @@
             color: #555;
         }
 
-        body:not(.dark-mode) .privacy-notice {
-            color: #bbb;
+        /* Nowa reguła dla głównego bloku tekstowego */
+        .footer-main-text p {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Poprawiona reguła dla notki o prywatności, aby pasowała do nowej struktury */
+        .footer .privacy-notice {
+            margin-top: 10px;
+            font-size: 0.9em;
         }
 
         body.dark-mode {
@@ -2308,7 +2316,7 @@
             background-color: rgba(255, 255, 255, 0.25);
         }
 
-        /* Styl dla liczników czasu w stopce */
+        /* Poprawiona reguła dla timerów, aby miały odstęp od tekstu powyżej */
         .footer-timers {
             margin-top: 15px;
             font-size: 0.9em;
@@ -2581,25 +2589,30 @@
     </div>
 
     <div class="footer">
-        <div>
-            <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
-                        class="version-suffix">Dir
-                        <span class="version-display"></span></span></a></strong>
-            <span data-lang="footerDate"></span>
-            <span data-lang="footerDesc"></span> |
-            <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian Ulbrych
-                </a></span>
-            <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+        <div class="footer-main-text">
+            <p>
+                <strong>System <a id="aboutLinkFooter" href="#"><span class="title-red">Visu</span><span
+                            class="version-suffix">Dir
+                            <span class="version-display"></span></span></a></strong>
+                <span data-lang="footerDate"></span>
+                <span data-lang="footerDesc"></span> |
+                <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
+                        Ulbrych
+                    </a></span>
+                <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+            </p>
+            <p class="privacy-notice">
+                <strong data-lang="privacyTitle"></strong>.
+                <span data-lang="privacyDesc"></span>
+                <strong data-lang="privacySafe"></strong>
+            </p>
         </div>
-        <div class="privacy-notice">
-            <strong data-lang="privacyTitle"></strong>.
-            <span data-lang="privacyDesc"></span>
-            <strong data-lang="privacySafe"></strong>
-        </div>
+
         <div id="timeDisplay" class="footer-timers">
             <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
             <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
         </div>
+
         <div class="reset-container">
             <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
         </div>
@@ -2996,21 +3009,20 @@
 
         // --- START: Logika liczników czasu i bezczynności ---
 
-        /**
-         * Formatuje czas podany w milisekundach do czytelnego formatu MM:SS lub HH:MM:SS.
-         * @param {number} ms - Czas w milisekundach.
-         * @returns {string} Sformatowany czas.
-         */
-        function formatTime(ms) {
-            if (ms < 0) ms = 0;
-            const totalSeconds = Math.floor(ms / 1000);
-            const days = Math.floor(totalSeconds / 86400);
-            const hours = Math.floor((totalSeconds % 86400) / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-            const pad = (num) => num.toString().padStart(2, '0');
-            // Zawsze zwraca spójny format DNI:GG:MM, nawet jeśli dni jest 0
-            return `${days}:${pad(hours)}:${pad(minutes)}`;
-        }
+/**
+         * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
+         * @param {number} ms - Czas w milisekundach.
+         * @returns {string} Sformatowany czas.
+         */
+        function formatTime(ms) {
+            if (ms < 0) ms = 0;
+            const totalSeconds = Math.floor(ms / 1000);
+            const hours = Math.floor(totalSeconds / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+            const seconds = totalSeconds % 60;
+            const pad = (num) => num.toString().padStart(2, '0');
+            return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        }
 
         /**
          * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).
