@@ -2289,18 +2289,20 @@
         }
 
         /* SEPARATOR - generowany w CSS, niezależny od HTML */
-    /* Ta reguła dodaje separator PRZED każdym segmentem, oprócz pierwszego */
-.status-segment:not(:first-child)::before {
-        content: '';
-        display: inline-block;
-        width: 1px;
-        height: 0.8em; /* Mocno zmniejszona, dyskretna wysokość */
-        background-color: rgba(0, 0, 0, 0.2);
-        margin-right: 0.5em;
-        vertical-align: middle;
-        position: relative;
-        top: -0.1em; /* Korekta dla idealnego wyśrodkowania */
-    }
+        /* Ta reguła dodaje separator PRZED każdym segmentem, oprócz pierwszego */
+        .status-segment:not(:first-child)::before {
+            content: '';
+            display: inline-block;
+            width: 1px;
+            height: 0.8em;
+            /* Mocno zmniejszona, dyskretna wysokość */
+            background-color: rgba(0, 0, 0, 0.2);
+            margin-right: 0.5em;
+            vertical-align: middle;
+            position: relative;
+            top: -0.1em;
+            /* Korekta dla idealnego wyśrodkowania */
+        }
 
         body.dark-mode .status-segment:not(:first-child)::before {
             background-color: rgba(255, 255, 255, 0.25);
@@ -2852,7 +2854,7 @@
                 generatorModeAll: "Generator: cała pula",
                 generatorModeVisible: "Generator: tylko widoczne",
                 minimizeBtn: "Minimalizuj interfejs",
-                maximizeBtn: "PrzywrĂłÄ‡ interfejs",
+                maximizeBtn: "Przywróć interfejs",
                 viewModeFull: "Widok: Okładki i tekst",
                 viewModeImage: "Widok: Tylko okładki",
                 viewModeText: "Widok: Tylko tekst",
@@ -2885,10 +2887,10 @@
                 videoBtnNext: "Następne wideo",
                 videoBtnReset: "Resetuj ustawienia wideo",
                 footerDate: "© 2025-09-17",
+                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
                 footerIdleTime: "Bezczynność",
                 footerSessionTime: "Sesja",
-                footerDesc: "do katalogowania, zarządzania i prezentacji plików i folderów",
-                privacyTitle: "Szanujemy Twoją… prywatność",
+                privacyTitle: "Szanujemy Twoją prywatność",
                 privacyDesc: "Żadnych ciasteczek ani śledzenia.",
                 privacySafe: "Czysty i bezpieczny kod!",
                 fullscreenBtn: "Pełny ekran",
@@ -3013,10 +3015,10 @@
         }
 
         /**
-                 * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v2).
-                 * @param {number} count - Aktualna (filtrowana) liczba pozycji.
-                 * @param {number} total - Całkowita liczba pozycji.
-                 */
+                     * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v2).
+                     * @param {number} count - Aktualna (filtrowana) liczba pozycji.
+                     * @param {number} total - Całkowita liczba pozycji.
+                     */
         function updateGuideCount(count, total) {
             try {
                 const countEl = document.querySelector('#guideCountDisplay b');
@@ -3043,8 +3045,8 @@
         }
 
         /**
-                 * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
-                 */
+                     * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
+                     */
         function updateTimers() {
             const now = new Date();
             const sessionDuration = now - sessionStartTime;
@@ -3173,7 +3175,9 @@
             if (videoShuffle && videoBgState === 'playing') {
                 bgVideo.addEventListener('canplay', () => {
                     toggleAutoShuffle(true);
-                }, { once: true });
+                }, {
+                    once: true
+                });
             }
 
             const hoverOverlay = getFromLocalStorage('hover_overlay_color') || config.pageSettings.hoverOverlayColor;
@@ -3347,7 +3351,9 @@
                     const currentCount = (filteredGuides && filteredGuides.length) || 0;
                     guideCountDisplay.innerHTML = lang.guideCounter.replace('{count}', currentCount).replace('{total}', guides.length);
                 }
-            } catch (e) { console.error("Błąd aktualizacji licznika po przetworzeniu danych:", e); }
+            } catch (e) {
+                console.error("Błąd aktualizacji licznika po przetworzeniu danych:", e);
+            }
             // --- KONIEC NOWEGO FRAGMENTU ---
         }
 
