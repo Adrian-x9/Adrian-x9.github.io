@@ -2276,8 +2276,7 @@
             /* Zaokrąglenie jak w przyciskach */
             border: 1px solid #a00000;
             /* Kolor ramki jak w przyciskach */
-            gap: 1em;
-            /* Używamy 'gap' do stworzenia równych odstępów */
+            /* Usunięto 'gap' w celu precyzyjnej kontroli przez margines separatora */
         }
 
         /* Zagnieżdżone kontenery */
@@ -2297,7 +2296,8 @@
             height: 0.8em;
             /* Mocno zmniejszona, dyskretna wysokość */
             background-color: rgba(0, 0, 0, 0.2);
-            margin-right: 0.5em;
+            margin: 0 0.8em;
+            /* Symetryczny margines dla równych odstępów */
             vertical-align: middle;
             position: relative;
             top: -0.1em;
@@ -2504,8 +2504,6 @@
 
     <div id="statusBar">
         <span id="guideCountDisplay" class="status-segment">
-            <b></b>
-            <span class="total-count"></span>
         </span>
         <span id="currentTimeDisplay" class="status-segment"></span>
         <span id="langDisplay" class="status-segment"></span>
@@ -3015,21 +3013,16 @@
         }
 
         /**
-                     * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v2).
-                     * @param {number} count - Aktualna (filtrowana) liczba pozycji.
-                     * @param {number} total - Całkowita liczba pozycji.
-                     */
+         * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).
+         * @param {number} count - Aktualna (filtrowana) liczba pozycji.
+         * @param {number} total - Całkowita liczba pozycji.
+         */
         function updateGuideCount(count, total) {
             try {
-                const countEl = document.querySelector('#guideCountDisplay b');
-                const totalEl = document.querySelector('#guideCountDisplay .total-count');
-
-                if (countEl && totalEl) {
+                const displayEl = document.getElementById('guideCountDisplay');
+                if (displayEl) {
                     const counterTemplate = lang.guideCounter || "<b>{count}</b> / {total} pozycji";
-                    const totalText = counterTemplate.substring(counterTemplate.indexOf('/')).replace('{total}', total);
-
-                    countEl.textContent = count;
-                    totalEl.textContent = totalText;
+                    displayEl.innerHTML = counterTemplate.replace('{count}', count).replace('{total}', total);
                 }
             } catch (e) {
                 console.error("Błąd krytyczny w updateGuideCount:", e);
