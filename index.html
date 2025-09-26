@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pl">
 
 <head>
@@ -2602,6 +2603,450 @@
         }
 
         /* --- END: ŁATKA KROK 2 --- */
+        /* --- START: ŁATKA KROK 3 - Układ i Stylizacja --- */
+
+        /* 1. Ustawia główny kontener jako elastyczny i pozwala na zawijanie wierszy */
+        .display-panel {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            /* Układamy elementy od lewej */
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 2. Stylizuje górną sekcję kontrolek */
+        .controls {
+            display: contents;
+            /* Traktuje elementy wewnątrz jakby były bezpośrednio w display-panel */
+        }
+
+        /* 3. Trik: Używamy paska statusu jako elementu łamiącego wiersz i jako wizualnego separatora */
+        #statusBarIntegrated {
+            order: 98;
+            /* Ustawia go jako ostatni element w wirtualnym pierwszym wierszu */
+            flex-basis: 100%;
+            /* Rozciąga go na 100% szerokości, co łamie wiersz */
+            height: 0;
+            /* Ukrywamy oryginalną wysokość */
+            margin-bottom: 10px;
+            /* Tworzy odstęp pod linią */
+            padding-bottom: 10px;
+            /* Daje miejsce na linię */
+            border-bottom: 2px solid;
+            /* Tworzy czerwoną linię */
+        }
+
+        /* Kolor linii w zależności od motywu */
+        body:not(.dark-mode) #statusBarIntegrated {
+            border-color: #cc0000;
+        }
+
+        body.dark-mode #statusBarIntegrated {
+            border-color: #e53935;
+        }
+
+        /* 4. Zapewnia, że dolne grupy kontrolek rozciągną się prawidłowo */
+        .display-panel .display-panel-group {
+            order: 99;
+            /* Wszystkie grupy dolnego panelu lądują w drugim wierszu */
+        }
+
+        /* Wyrównuje grupę suwaków, aby wypełniła dostępną przestrzeń */
+        .display-panel .slider-group {
+            flex-grow: 1;
+        }
+
+        /* Wyrównuje ostatnią grupę przycisków do prawej */
+        .display-panel .display-panel-group:last-child {
+            margin-left: auto;
+        }
+
+        /* --- END: ŁATKA KROK 3 --- */
+        /* --- START: ŁATKA KROK 2 - Układ i Styl Kurtyny --- */
+
+        /* 1. Ustawia główny kontener na tryb elastyczny, z wierszami ułożonymi jeden pod drugim */
+        .display-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            /* Odstęp między górnym a dolnym wierszem */
+        }
+
+        /* 2. Tworzy układ siatki (grid) dla górnego wiersza */
+        .deck-top-row {
+            display: grid;
+            /* Definiujemy trzy kolumny: Filtry (min. 300px, domyślnie 40%) | Kurtyna (20px) | Status (reszta wolnego miejsca) */
+            grid-template-columns: minmax(300px, 40%) 20px 1fr;
+            gap: 10px;
+            width: 100%;
+            align-items: center;
+        }
+
+        /* 3. Stylizacja sekcji filtrów i statusu */
+        .filter-section,
+        .status-section {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            /* Pozwala elementom wewnątrz się zawijać, gdy brakuje miejsca */
+            gap: 10px;
+        }
+
+        .status-section {
+            justify-content: flex-end;
+            /* Wyrównuje elementy statusu do prawej krawędzi */
+        }
+
+        /* 4. Stylizacja uchwytu "kurtyny" */
+        .curtain-handle {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            cursor: pointer;
+            position: relative;
+        }
+
+        /* Tworzy pionową linię wewnątrz uchwytu */
+        .curtain-handle::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1px;
+            height: 80%;
+            /* Wysokość linii separatora */
+        }
+
+        /* Kolory linii dla obu motywów */
+        body:not(.dark-mode) .curtain-handle::before {
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .curtain-handle::before {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        /* Stylizacja przycisku wewnątrz uchwytu */
+        #curtain-toggle-btn {
+            background: rgba(128, 128, 128, 0.2);
+            border: none;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            color: #fff;
+            z-index: 1;
+            /* Aby przycisk był nad linią separatora */
+        }
+
+        #curtain-toggle-btn i {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* 5. Ustawienie układu dla dolnego, "świętego" wiersza */
+        .deck-bottom-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .deck-bottom-row .slider-group {
+            flex-grow: 1;
+            /* Suwaki rozciągają się, by wypełnić przestrzeń */
+        }
+
+        /* --- END: ŁATKA KROK 2 --- */
+
+        /* --- START: ŁATKA KROK 3 - Style Animacji Kurtyny --- */
+
+        /* 1. Dodajemy płynne przejścia (transition) do sekcji i strzałki */
+        .filter-section,
+        .status-section {
+            transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+            /* Płynna animacja dla zmiany szerokości */
+        }
+
+        #curtain-toggle-btn i {
+            transition: transform 0.4s cubic-bezier(0.2, 0, 0, 1);
+            /* Płynna animacja dla obrotu strzałki */
+        }
+
+        /* 2. Definiujemy, jak ma wyglądać panel w stanie ROZSZERZONYM */
+        .deck-top-row.filters-expanded {
+            /* Zmieniamy proporcje siatki: Filtry zajmują 70%, Status resztę */
+            grid-template-columns: minmax(400px, 70%) 20px 1fr;
+        }
+
+        /* 3. Obracamy strzałkę w stanie rozszerzonym */
+        .deck-top-row.filters-expanded #curtain-toggle-btn i {
+            transform: rotate(180deg);
+        }
+
+        /* 4. Ukrywamy mniej ważne elementy statusu w stanie rozszerzonym */
+        .deck-top-row.filters-expanded #currentTimeDisplay,
+        .deck-top-row.filters-expanded #moonPhaseDisplay {
+            display: none;
+        }
+
+        /* --- END: ŁATKA KROK 3 --- */
+        /* --- START: FINAŁ - Pełna Stylizacja Panelu Sterowania --- */
+
+        /* 1. Główny kontener i czerwona poświata */
+        .display-panel.control-panel {
+            border: 2px solid transparent;
+            /* Przygotowanie pod poświatę */
+            background-clip: padding-box;
+            /* Ważne dla poprawnego działania cienia */
+            position: relative;
+        }
+
+        body:not(.dark-mode) .display-panel.control-panel {
+            background-color: #f0f0f0;
+            box-shadow: 0 0 0 2px #cc0000, 0 5px 20px rgba(204, 0, 0, 0.3);
+        }
+
+        body.dark-mode .display-panel.control-panel {
+            background-color: #1a1a1a;
+            box-shadow: 0 0 0 2px #e53935, 0 0 25px rgba(229, 57, 53, 0.5);
+        }
+
+        /* 2. Stylizacja górnego wiersza z kurtyną */
+        .deck-top-row {
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid;
+        }
+
+        body:not(.dark-mode) .deck-top-row {
+            border-color: rgba(0, 0, 0, 0.15);
+        }
+
+        body.dark-mode .deck-top-row {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        /* 3. Stylizacja pól input i select w sekcji filtrów */
+        .filter-section input,
+        .filter-section select {
+            border-radius: 8px;
+            border: 1px solid;
+            height: 38px;
+        }
+
+        body:not(.dark-mode) .filter-section input,
+        body:not(.dark-mode) .filter-section select {
+            background-color: #fff;
+            border-color: #ccc;
+            color: #333;
+        }
+
+        body.dark-mode .filter-section input,
+        body.dark-mode .filter-section select {
+            background-color: #2c2c2c;
+            border-color: #555;
+            color: #eee;
+        }
+
+        /* 4. Stylizacja paska statusu */
+        .status-section #statusBarIntegrated span {
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        body:not(.dark-mode) .status-section #statusBarIntegrated span {
+            color: #333;
+        }
+
+        body.dark-mode .status-section #statusBarIntegrated span {
+            color: #ccc;
+        }
+
+        #statusBarIntegrated b {
+            font-weight: 700;
+        }
+
+        body:not(.dark-mode) #statusBarIntegrated b {
+            color: #000;
+        }
+
+        body.dark-mode #statusBarIntegrated b {
+            color: #fff;
+        }
+
+        /* 5. Stylizacja dolnego wiersza i jego grup */
+        .deck-bottom-row {
+            gap: 12px;
+        }
+
+        .deck-bottom-row .display-panel-group {
+            padding: 6px;
+        }
+
+        /* Czerwone przyciski po lewej */
+        .deck-bottom-row .display-panel-group:first-child {
+            background: none;
+            padding: 0;
+            gap: 8px;
+        }
+
+        .deck-bottom-row .display-panel-group:first-child button {
+            width: 48px;
+            height: 48px;
+            font-size: 1.2em;
+            font-weight: bold;
+            background-color: #cc0000;
+            color: white;
+            border: none;
+        }
+
+        body.dark-mode .deck-bottom-row .display-panel-group:first-child button {
+            background-color: #e53935;
+            color: #111;
+        }
+
+        /* Przyciski po prawej */
+        .deck-bottom-row .display-panel-group:last-child {
+            padding: 4px;
+        }
+
+        /* --- END: FINAŁ --- */
+
+        /* --- START: ŁATKA KROK 1 - Naprawa zawijania --- */
+
+        /* Wymusza, aby elementy w sekcji filtrów (wyszukiwarka, sortowanie itd.)
+   zawsze pozostawały w jednej linii i nie psuły układu. */
+        .filter-section {
+            flex-wrap: nowrap;
+            /* Zapobiega zawijaniu się elementów */
+            overflow: hidden;
+            /* Ukrywa elementy, które się nie mieszczą */
+        }
+
+        /* --- END: ŁATKA KROK 1 --- */
+
+        /* --- START: ŁATKA KROK 2 - Stylizacja kompaktowych przycisków --- */
+
+        /* Zmniejsza wysokość wszystkich pól i przycisków w sekcji filtrów,
+   aby nadać im bardziej zwarty, "pokładowy" wygląd. */
+        .filter-section input,
+        .filter-section select,
+        .filter-section .dir-db-btn {
+            height: 38px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        /* Specjalna poprawka dla przycisku z samą ikoną (filtr generatora),
+   aby zachował kwadratowe proporcje. */
+        .filter-section #generatorModeBtn {
+            width: 38px;
+        }
+
+        /* --- END: ŁATKA KROK 2 --- */
+        /* --- START: ŁATKA KROK 3 (FINAŁ) - Finalizacja Animacji Kurtyny --- */
+
+        /* 1. [POPRAWKA] Zmieniamy krzywą animacji na 'ease-in-out' dla bardziej
+      symetrycznego i eleganckiego ruchu w obie strony. */
+        .deck-top-row {
+            transition: grid-template-columns 0.4s ease-in-out;
+        }
+
+        #curtain-toggle-btn i {
+            transition: transform 0.4s ease-in-out;
+        }
+
+        /* 2. [POPRAWKA] Definiujemy bazowy stan i animację dla elementów statusu,
+      aby ich pojawianie się (przy zwijaniu) również było płynne. */
+        #currentTimeDisplay,
+        #moonPhaseDisplay {
+            transition: opacity 0.2s ease-in-out;
+            opacity: 1;
+            /* Stan domyślny: w pełni widoczne */
+        }
+
+        /* ---
+   Poniższe reguły dla stanu rozwiniętego pozostają prawie bez zmian,
+   usuwamy z nich tylko zbędną już deklarację 'transition'.
+--- */
+
+        .deck-top-row.filters-expanded {
+            grid-template-columns: minmax(400px, 70%) 20px 1fr;
+        }
+
+        .deck-top-row.filters-expanded #curtain-toggle-btn i {
+            transform: rotate(180deg);
+        }
+
+        /* Ukrywamy elementy statusu w stanie rozszerzonym.
+   'transition' jest już zdefiniowane wyżej, więc tu tylko zmieniamy 'opacity'. */
+        .deck-top-row.filters-expanded #currentTimeDisplay,
+        .deck-top-row.filters-expanded #moonPhaseDisplay {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* --- END: ŁATKA KROK 3 (FINAŁ) --- */
+
+        /* --- START: ŁATKA KROK 3 (Wydajność) - Naprawa zacinania animacji --- */
+
+        /* Ten trik zapobiega "zgniataniu" i przeliczaniu się elementów
+   podczas animacji zwijania. Nakazujemy każdemu elementowi w sekcji
+   filtrów, aby nigdy się nie kurczył (flex-shrink: 0). */
+        .filter-section>* {
+            flex-shrink: 0;
+        }
+
+        /* --- END: ŁATKA KROK 3 (Wydajność) --- */
+
+        /* --- START: ŁATKA KROK 1 - Naprawa zawijania --- */
+
+        /* Wymusza, aby elementy w sekcji filtrów (wyszukiwarka, sortowanie itd.)
+   zawsze pozostawały w jednej linii i nie psuły układu. */
+        .filter-section {
+            flex-wrap: nowrap;
+            /* Zapobiega zawijaniu się elementów */
+            overflow: hidden;
+            /* Ukrywa elementy, które się nie mieszczą */
+        }
+
+        /* --- END: ŁATKA KROK 1 --- */
+
+        /* --- START: ŁATKA KROK 3 (Wydajność) - Naprawa zacinania animacji --- */
+
+        /* Ten trik zapobiega "zgniataniu" i przeliczaniu się elementów
+   podczas animacji zwijania. Nakazujemy każdemu elementowi w sekcji
+   filtrów, aby nigdy się nie kurczył (flex-shrink: 0). */
+        .filter-section>* {
+            flex-shrink: 0;
+        }
+
+        /* --- END: ŁATKA KROK 3 (Wydajność) --- */
+
+        /* --- START: ŁATKA KROK 2 - Stylizacja kompaktowych przycisków --- */
+
+        /* Zmniejsza wysokość wszystkich pól i przycisków w sekcji filtrów,
+   aby nadać im bardziej zwarty, "pokładowy" wygląd. */
+        .filter-section input,
+        .filter-section select,
+        .filter-section .dir-db-btn {
+            height: 38px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        /* Specjalna poprawka dla przycisku z samą ikoną (filtr generatora),
+   aby zachował kwadratowe proporcje. */
+        .filter-section #generatorModeBtn {
+            width: 38px;
+        }
+
+        /* --- END: ŁATKA KROK 2 --- */
     </style>
     <script>
         (function () {
@@ -2715,67 +3160,73 @@
 
     </div>
 
-    <div class="controls control-panel">
-
-        <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i class="fas fa-upload"></i>
-            <span class="btn-text" data-lang="btnLoad"></span></label>
-        <input type="file" id="fileInput" accept=".txt" />
-        <input type="text" id="search" data-lang-placeholder="searchPlaceholder" />
-        <select id="formatFilter">
-            <option value="" data-lang="filterAll"></option>
-        </select>
-        <select id="sortSelector">
-            <option value="" disabled data-lang="sortLabel"></option>
-            <option value="shuffle" data-lang="sortShuffle"></option>
-            <option disabled>──────────</option>
-            <option value="nameAsc" data-lang="sortNameAsc"></option>
-            <option value="nameDesc" data-lang="sortNameDesc"></option>
-            <option value="dateAsc" data-lang="sortDateAsc"></option>
-            <option value="dateDesc" data-lang="sortDateDesc"></option>
-            <option value="sizeAsc" data-lang="sortSizeAsc"></option>
-            <option value="sizeDesc" data-lang="sortSizeDesc"></option>
-        </select>
-        <div class="generator-group">
-            <select id="generator">
-                <option value="" disabled data-lang="generatorLabel"></option>
-            </select>
-            <button id="generatorModeBtn" class="dir-db-btn"><i class="fas fa-filter"></i></button>
-        </div>
-        <button id="minimizeBtn" class="dir-db-btn"><i class="fas fa-chevron-up"></i></button>
-
-        <div id="statusBarIntegrated">
-            <span id="guideCountDisplay" class="status-segment">
-                <b></b>
-                <span class="total-count"></span>
-            </span>
-            <span id="currentTimeDisplay" class="status-segment"></span>
-            <span id="moonPhaseDisplay" class="status-segment"></span>
-            <span id="langDisplay" class="status-segment"></span>
-        </div>
-    </div>
-
     <div class="display-panel control-panel" id="displayPanel">
-        <div class="display-panel-group">
-            <button id="viewContentBtn"><i class="fas fa-file-image"></i></button>
-            <button id="viewOrientationBtn"><i class="fas fa-images"></i></button>
+        <div class="deck-top-row">
+            <div class="filter-section">
+                <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label"><i
+                        class="fas fa-upload"></i>
+                    <span class="btn-text" data-lang="btnLoad"></span></label>
+                <input type="file" id="fileInput" accept=".txt" />
+                <input type="text" id="search" data-lang-placeholder="searchPlaceholder" />
+                <select id="formatFilter">
+                    <option value="" data-lang="filterAll"></option>
+                </select>
+                <select id="sortSelector">
+                    <option value="" disabled data-lang="sortLabel"></option>
+                    <option value="shuffle" data-lang="sortShuffle"></option>
+                    <option disabled>──────────</option>
+                    <option value="nameAsc" data-lang="sortNameAsc"></option>
+                    <option value="nameDesc" data-lang="sortNameDesc"></option>
+                    <option value="dateAsc" data-lang="sortDateAsc"></option>
+                    <option value="dateDesc" data-lang="sortDateDesc"></option>
+                    <option value="sizeAsc" data-lang="sortSizeAsc"></option>
+                    <option value="sizeDesc" data-lang="sortSizeDesc"></option>
+                </select>
+                <div class="generator-group">
+                    <select id="generator">
+                        <option value="" disabled data-lang="generatorLabel"></option>
+                    </select>
+                    <button id="generatorModeBtn" class="dir-db-btn"><i class="fas fa-filter"></i></button>
+                </div>
+                <button id="minimizeBtn" class="dir-db-btn"><i class="fas fa-chevron-up"></i></button>
+            </div>
+            <div class="curtain-handle">
+                <button id="curtain-toggle-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="status-section">
+                <div id="statusBarIntegrated">
+                    <span id="guideCountDisplay" class="status-segment">
+                        <b></b>
+                        <span class="total-count"></span>
+                    </span>
+                    <span id="currentTimeDisplay" class="status-segment"></span>
+                    <span id="moonPhaseDisplay" class="status-segment"></span>
+                    <span id="langDisplay" class="status-segment"></span>
+                </div>
+            </div>
         </div>
 
-        <div class="display-panel-group slider-group">
-            <div class="slider-control">
-                <i class="fas fa-th-large" data-lang-title="sizeLabel"></i>
-                <input type="range" id="sizeSlider" min="50" max="150" value="100" step="1">
-                <span id="sizeValue">100%</span>
+        <div class="deck-bottom-row">
+            <div class="display-panel-group">
+                <button id="viewContentBtn"><i class="fas fa-file-image"></i></button>
+                <button id="viewOrientationBtn"><i class="fas fa-images"></i></button>
             </div>
-            <div class="slider-control">
-                <i class="fas fa-grip-lines" data-lang-title="rowsLabel"></i>
-                <input type="range" id="rowsSlider" min="1" max="10" value="2" step="1">
-                <span id="rowsValue">2</span>
+            <div class="display-panel-group slider-group">
+                <div class="slider-control">
+                    <i class="fas fa-th-large" data-lang-title="sizeLabel"></i>
+                    <input type="range" id="sizeSlider" min="50" max="150" value="100" step="1">
+                    <span id="sizeValue">100%</span>
+                </div>
+                <div class="slider-control">
+                    <i class="fas fa-grip-lines" data-lang-title="rowsLabel"></i>
+                    <input type="range" id="rowsSlider" min="1" max="10" value="2" step="1">
+                    <span id="rowsValue">2</span>
+                </div>
             </div>
-        </div>
-
-        <div class="display-panel-group">
-            <button id="viewThemeBtn"><i class="fas fa-moon"></i></button>
-            <button id="viewPlayBtn" class="play-accent"><i class="fas fa-play"></i></button>
+            <div class="display-panel-group">
+                <button id="viewThemeBtn"><i class="fas fa-moon"></i></button>
+                <button id="viewPlayBtn" class="play-accent"><i class="fas fa-play"></i></button>
+            </div>
         </div>
     </div>
 
@@ -2910,7 +3361,7 @@
         // --- configuraton / konfiguracja ---
 
         const config = {
-            version: 'v1.11.4', // Ux corrections
+            version: 'v1.12.0', // 2025-09-25 Fresh start snapshot - preparation for v2.0.0
             language: {
                 current: 'pl',
                 files: {
@@ -5279,7 +5730,24 @@
         // Uruchomienie zegara czasu rzeczywistego
         updateRealTimeClock();
         setInterval(updateRealTimeClock, 30000); // Odświeżanie co 30 sekund
-    </script>
+
+        // --- START: ŁATKA KROK 3 - Interaktywność Kurtyny ---
+
+        // --- START: ŁATKA KROK 3 - Interaktywność Kurtyny ---
+
+        const curtainToggleBtn = document.getElementById('curtain-toggle-btn');
+        const topRow = document.querySelector('.deck-top-row');
+
+        if (curtainToggleBtn && topRow) {
+            curtainToggleBtn.addEventListener('click', () => {
+                // Po kliknięciu, dodajemy lub usuwamy klasę 'filters-expanded' z całego górnego wiersza
+                topRow.classList.toggle('filters-expanded');
+            });
+        }
+
+        // --- END: ŁATKA KROK 3 ---
+
+     </script>
 </body>
 
 </html>
