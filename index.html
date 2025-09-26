@@ -2694,8 +2694,12 @@
         }
 
         .status-section {
-            justify-content: flex-end;
-            /* Wyrównuje elementy statusu do prawej krawędzi */
+            display: flex;
+            flex-direction: column;
+            /* <-- KLUCZOWA ZMIANA: Układ pionowy */
+            align-items: flex-end;
+            /* <-- ZMIANA: Wyrównuje całą zawartość do prawej */
+            justify-content: center;
         }
 
         /* 4. Stylizacja uchwytu "kurtyny" */
@@ -2991,9 +2995,42 @@
             pointer-events: none;
         }
 
+        /* --- END: ŁATKA KROK 3 (FINAŁ) --- */
 
+        /* --- START: ŁATKA KROK 3 (Wydajność) - Naprawa zacinania animacji --- */
 
+        /* Ten trik zapobiega "zgniataniu" i przeliczaniu się elementów
+   podczas animacji zwijania. Nakazujemy każdemu elementowi w sekcji
+   filtrów, aby nigdy się nie kurczył (flex-shrink: 0). */
+        .filter-section>* {
+            flex-shrink: 0;
+        }
 
+        /* --- END: ŁATKA KROK 3 (Wydajność) --- */
+
+        /* --- START: ŁATKA KROK 1 - Naprawa zawijania --- */
+
+        /* Wymusza, aby elementy w sekcji filtrów (wyszukiwarka, sortowanie itd.)
+   zawsze pozostawały w jednej linii i nie psuły układu. */
+        .filter-section {
+            flex-wrap: nowrap;
+            /* Zapobiega zawijaniu się elementów */
+            overflow: hidden;
+            /* Ukrywa elementy, które się nie mieszczą */
+        }
+
+        /* --- END: ŁATKA KROK 1 --- */
+
+        /* --- START: ŁATKA KROK 3 (Wydajność) - Naprawa zacinania animacji --- */
+
+        /* Ten trik zapobiega "zgniataniu" i przeliczaniu się elementów
+   podczas animacji zwijania. Nakazujemy każdememu elementowi w sekcji
+   filtrów, aby nigdy się nie kurczył (flex-shrink: 0). */
+        .filter-section>* {
+            flex-shrink: 0;
+        }
+
+        /* --- END: ŁATKA KROK 3 (Wydajność) --- */
 
         /* --- START: ŁATKA KROK 2 - Stylizacja kompaktowych przycisków --- */
 
@@ -3016,7 +3053,50 @@
         /* --- END: ŁATKA KROK 2 --- */
 
 
+        /* --- START: ŁATKA KROK 3 (FINAŁ) - Finalizacja Animacji Kurtyny --- */
 
+        /* 1. [POPRAWKA] Zmieniamy krzywą animacji na 'ease-in-out' dla bardziej
+      symetrycznego i eleganckiego ruchu w obie strony. */
+        .deck-top-row {
+            transition: grid-template-columns 0.4s ease-in-out;
+        }
+
+        #curtain-toggle-btn i {
+            transition: transform 0.4s ease-in-out;
+        }
+
+        /* 2. [POPRAWKA] Definiujemy bazowy stan i animację dla elementów statusu,
+      aby ich pojawianie się (przy zwijaniu) również było płynne. */
+        #currentTimeDisplay,
+        #moonPhaseDisplay {
+            transition: opacity 0.2s ease-in-out;
+            opacity: 1;
+            /* Stan domyślny: w pełni widoczne */
+        }
+
+        /* ---
+   Poniższe reguły dla stanu rozwiniętego pozostają prawie bez zmian,
+   usuwamy z nich tylko zbędną już deklarację 'transition'.
+--- */
+
+        .deck-top-row.filters-expanded {
+            grid-template-columns: minmax(400px, 70%) 20px 1fr;
+        }
+
+        .deck-top-row.filters-expanded #curtain-toggle-btn i {
+            transform: rotate(180deg);
+        }
+
+        /* Ukrywamy elementy statusu w stanie rozszerzonym.
+   'transition' jest już zdefiniowane wyżej, więc tu tylko zmieniamy 'opacity'. */
+        .deck-top-row.filters-expanded #currentTimeDisplay,
+        .deck-top-row.filters-expanded #moonPhaseDisplay {
+            opacity: 0;
+            pointer-events: none;
+            /* Zapobiega interakcji z ukrytymi elementami */
+        }
+
+        /* --- END: ŁATKA KROK 3 (FINAŁ) --- */
 
         /* --- START: FINAŁ - Pełna Stylizacja Panelu Sterowania --- */
 
@@ -3143,9 +3223,35 @@
 
         /* --- END: FINAŁ --- */
 
+        /* --- START: ŁATKA - Opóźnienie animacji statusu --- */
 
+        /* Celuje w cały kontener statusu wewnątrz głównego nagłówka */
+        .top-header #statusBarIntegrated {
+            /* Ukrywamy, gdy nagłówek jest zwinięty */
+            opacity: 0;
+            /* Definiujemy animację: szybkie znikanie (0.1s), ale opóźnione pojawianie się (delay 0.3s) */
+            transition: opacity 0.2s ease-in-out 0.3s;
+        }
 
-   
+        /* Gdy nagłówek NIE jest zwinięty, pasek staje się widoczny */
+        .top-header:not(.minimized-header) #statusBarIntegrated {
+            opacity: 1;
+            /* Usuwamy opóźnienie przy znikaniu, aby było natychmiastowe */
+            transition-delay: 0s;
+        }
+
+        /* --- END: ŁATKA --- */
+
+        /* --- START: NOWA, RÓWNOLEGŁA ANIMACJA MINIMALIZACJI v3 --- */
+
+        /* 1. Podstawa animacji ikony - płynny obrót */
+        #minimizeBtn i {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #minimizeBtn.minimized i {
+            transform: rotate(180deg);
+        }
 
         /* 2. Nowa, zsynchronizowana animacja paska statusu */
 
@@ -3167,6 +3273,183 @@
         }
 
         /* --- END: NOWA, RÓWNOLEGŁA ANIMACJA --- */
+
+        /* ### START PATCH 1 ### */
+        .filter-section #sortSelector,
+        .filter-section #generator {
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        /* ### END PATCH 1 ### */
+
+
+        /* --- START: ŁATKA #2 (POPRAWIONA) - Panel Informacyjny --- */
+        #statusBarIntegrated {
+            padding-bottom: 7px;
+            border-bottom: 1px solid rgba(204, 0, 0, 0.5);
+        }
+
+        .status-section-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding-top: 7px;
+        }
+
+        .system-info {
+            font-size: 0.9em;
+            font-weight: 600;
+            opacity: 1;
+            transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+            transform: translateX(0);
+        }
+
+        .status-icons {
+            display: flex;
+            gap: 12px;
+            transition: transform 0.4s ease-in-out;
+            transform: translateX(0);
+        }
+
+        .status-icon-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            opacity: 0.7;
+            cursor: pointer;
+            font-size: 1.1em;
+            padding: 5px;
+            transition: opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .status-icon-btn:hover {
+            opacity: 1;
+            color: #cc0000;
+        }
+
+        body.dark-mode .status-icon-btn:hover {
+            color: #e53935;
+        }
+
+        /* Logika warunkowa dla stanu rozwiniętego */
+        .deck-top-row.filters-expanded .system-info {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateX(-10px);
+        }
+
+        .deck-top-row.filters-expanded .status-icons {
+            transform: translateX(-50%);
+            margin-left: 50%;
+        }
+
+        /* --- END: ŁATKA #2 (POPRAWIONA) --- */
+
+
+
+        /* --- START: ŁATKA #6 - OSTATECZNA NAPRAWA PANELU STATUSU --- */
+
+        /* 1. Główny kontener po prawej stronie - ustawia wszystko w kolumnie */
+        .status-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            /* Wszystko co w środku, równa do prawej */
+            gap: 5px;
+            /* Odstęp między górnym a dolnym wierszem */
+        }
+
+        /* 2. Górny wiersz (licznik, zegar) - przywrócenie oryginalnego wyglądu */
+        #statusBarIntegrated {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            /* Odstępy kontroluje separator */
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        body:not(.dark-mode) #statusBarIntegrated span {
+            color: #333;
+            font-weight: 600;
+        }
+
+        body.dark-mode #statusBarIntegrated span {
+            color: #ccc;
+            font-weight: 600;
+        }
+
+        #statusBarIntegrated b {
+            font-weight: 800;
+        }
+
+        /* 3. Dolny wiersz (System Info i Ikony) - nowe, poprawne style */
+        .status-section-bottom {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            /* Odstęp między tekstem "System..." a ikonami */
+            padding-top: 5px;
+            border-top: 1px solid rgba(204, 0, 0, 0.5);
+            /* Czerwona linia */
+            width: 100%;
+            justify-content: flex-end;
+            /* Równanie do prawej */
+        }
+
+        .system-info {
+            font-size: 0.9em;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .status-icons {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-icon-btn {
+            background: none;
+            border: none;
+            color: inherit;
+            opacity: 0.7;
+            cursor: pointer;
+            font-size: 1.1em;
+            padding: 0;
+            transition: opacity 0.2s ease, color 0.2s ease;
+        }
+
+        .status-icon-btn:hover {
+            opacity: 1;
+            color: #cc0000;
+        }
+
+        body.dark-mode .status-icon-btn:hover {
+            color: #e53935;
+        }
+
+        /* 4. Logika warunkowa - co się dzieje po rozwinięciu kurtyny */
+        .deck-top-row.filters-expanded #statusBarIntegrated,
+        .deck-top-row.filters-expanded .system-info {
+            opacity: 0;
+            pointer-events: none;
+            height: 0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .deck-top-row.filters-expanded .status-section-bottom {
+            border-top: none;
+            /* Ukrywamy linię, gdy nie ma nad nią tekstu */
+            justify-content: center;
+            /* centrujemy same ikony */
+            width: auto;
+        }
+
+        /* --- END: ŁATKA #6 --- */
     </style>
     <script>
         (function () {
@@ -3292,7 +3575,7 @@
                     <option value="" data-lang="filterAll"></option>
                 </select>
                 <select id="sortSelector">
-                    <option value="" disabled data-lang="sortLabel"></option>
+                    <option value="" disabled selected data-lang="sortLabel"></option>
                     <option value="shuffle" data-lang="sortShuffle"></option>
                     <option disabled>──────────</option>
                     <option value="nameAsc" data-lang="sortNameAsc"></option>
@@ -3304,7 +3587,7 @@
                 </select>
                 <div class="generator-group">
                     <select id="generator">
-                        <option value="" disabled data-lang="generatorLabel"></option>
+                        <option value="" disabled selected data-lang="generatorLabel"></option>
                     </select>
                     <button id="generatorModeBtn" class="dir-db-btn"><i class="fas fa-filter"></i></button>
                 </div>
@@ -3322,6 +3605,22 @@
                     <span id="currentTimeDisplay" class="status-segment"></span>
                     <span id="moonPhaseDisplay" class="status-segment"></span>
                     <span id="langDisplay" class="status-segment"></span>
+                </div>
+                <div class="status-section-bottom">
+                    <div class="system-info">
+                        System <span class="title-red">Visu</span><span class="version-suffix">Dir <span
+                                class="version-display"></span></span>
+                    </div>
+                    <div class="status-icons">
+                        <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i
+                                class="fas fa-info-circle"></i></a>
+                        <a id="statusLangBtn" class="status-icon-btn" title="Zmień język"><i
+                                class="fas fa-globe"></i></a>
+                        <button id="statusMuteBtn" class="status-icon-btn" title="Wycisz/Włącz wideo"><i
+                                class="fas fa-volume-mute"></i></button>
+                        <button id="statusFullscreenBtn" class="status-icon-btn" title="Pełny ekran"><i
+                                class="fas fa-expand"></i></button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -3631,8 +3930,8 @@
                 btnBack: "Wstecz",
                 btnLoad: "Załaduj...",
                 searchPlaceholder: "Szukaj pozycji...",
-                filterAll: "Wszystko",
-                sortLabel: "Sortuj...",
+                filterAll: "FILTR",
+                sortLabel: "SORTUJ",
                 sortShuffle: "Wymieszaj",
                 sortNameAsc: "Nazwa A - Z",
                 sortNameDesc: "Nazwa Z - A",
@@ -3640,7 +3939,7 @@
                 sortDateDesc: "Data ↓",
                 sortSizeAsc: "Rozmiar ↑",
                 sortSizeDesc: "Rozmiar ↓",
-                generatorLabel: "Generator...",
+                generatorLabel: "LOSUJ",
                 generatorItem: "Pozycji: {count}",
                 generatorModeAll: "Generator: cała pula",
                 generatorModeVisible: "Generator: tylko widoczne",
@@ -4892,7 +5191,7 @@
             slideshowSourceGuides = result;
 
             renderGuides(result);
-            generator.value = config.pageSettings.defaultGeneratorCount;
+            generator.selectedIndex = 0; // Wizualny reset
         }
 
         function initializeNewButtons() {
@@ -4923,6 +5222,12 @@
             });
             updateVideoBtnUI();
             mainResetBtn.addEventListener('click', resetView);
+
+            // Inicjalizacja nowych przycisków w panelu statusu
+            document.getElementById('statusInfoBtn').href = config.paths.urlAbout;
+            document.getElementById('statusLangBtn').href = (Object.values(config.language.files)[0] || '#');
+            document.getElementById('statusMuteBtn').addEventListener('click', handleVideoStateChange);
+            document.getElementById('statusFullscreenBtn').addEventListener('click', toggleFullScreen);
         }
 
         function initializeDisplayPanel() {
@@ -5061,6 +5366,7 @@
         }
 
         function updateVideoBtnUI() {
+            const statusMuteBtn = document.getElementById('statusMuteBtn');
             const buttons = [{
                 play: document.getElementById('videoBtn-play')
             }, {
@@ -5073,16 +5379,19 @@
                         btnSet.play.innerHTML = '<i class="fas fa-pause"></i>';
                         btnSet.play.title = lang.videoBtnPause;
                         btnSet.play.classList.add('active-play');
+                        if (statusMuteBtn) statusMuteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
                         break;
                     case 'paused':
                         btnSet.play.innerHTML = '<i class="fas fa-stop"></i>';
                         btnSet.play.title = lang.videoBtnOff;
                         btnSet.play.classList.add('active-play');
+                        if (statusMuteBtn) statusMuteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
                         break;
                     case 'off':
                         btnSet.play.innerHTML = '<i class="fas fa-play"></i>';
                         btnSet.play.title = lang.videoBtnPlay;
                         btnSet.play.classList.remove('active-play');
+                        if (statusMuteBtn) statusMuteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
                         break;
                 }
             });
@@ -5467,14 +5776,18 @@
         function updateFullscreenIcon() {
             const icon = fullscreenBtn.querySelector('i');
             const iconLightbox = fullscreenBtnLightbox.querySelector('i');
+            const iconStatus = document.getElementById('statusFullscreenBtn')?.querySelector('i');
+
             if (document.fullscreenElement) {
-                icon.className = 'fas fa-compress';
-                iconLightbox.className = 'fas fa-compress';
+                if (icon) icon.className = 'fas fa-compress';
+                if (iconLightbox) iconLightbox.className = 'fas fa-compress';
+                if (iconStatus) iconStatus.className = 'fas fa-compress';
                 fullscreenBtn.title = lang.fullscreenExitBtn;
                 fullscreenBtnLightbox.title = lang.fullscreenExitBtn;
             } else {
-                icon.className = 'fas fa-expand';
-                iconLightbox.className = 'fas fa-expand';
+                if (icon) icon.className = 'fas fa-expand';
+                if (iconLightbox) iconLightbox.className = 'fas fa-expand';
+                if (iconStatus) iconStatus.className = 'fas fa-expand';
                 fullscreenBtn.title = lang.fullscreenBtn;
                 fullscreenBtnLightbox.title = lang.fullscreenBtn;
             }
@@ -5664,7 +5977,7 @@
             renderGuides();
         });
 
-        formatFilter.addEventListener("change", () => {
+        formatFilter.addEventListener("change", (e) => {
             const value = formatFilter.value;
             orientationFilterState = null;
             if (value.startsWith("search:")) {
@@ -5674,6 +5987,7 @@
             }
             applyFilters();
             renderGuides();
+            e.target.selectedIndex = 0; // Wizualny reset
         });
 
         function updateGeneratorModeBtn() {
@@ -5697,7 +6011,7 @@
                     renderGuides();
                 }
             }
-            e.target.value = "";
+            e.target.value = ""; // Wizualny reset
         });
 
         generator.addEventListener("change", generateGuides);
