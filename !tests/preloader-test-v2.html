@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VisuDir Preloader Test</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    .preloader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      animation: bgCycle 8s infinite linear;
+      background-color: #ffffff;
+    }
+
+    @keyframes bgCycle {
+      0%   { background-color: #ffffff; }
+      10%  { background-color: #dddddd; }
+      30%  { background-color: #222222; }
+      70%  { background-color: #222222; }
+      90%  { background-color: #dddddd; }
+      100% { background-color: #ffffff; }
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 20px);
+      grid-gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .grid div {
+      width: 20px;
+      height: 20px;
+      background-color: #e53935;
+      animation: pulse 1.2s infinite ease-in-out;
+    }
+
+    .grid div:nth-child(odd) {
+      animation-delay: 0.2s;
+    }
+
+    .grid div:nth-child(even) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.4); }
+    }
+
+    .caption {
+      font-size: 1.6rem;
+      font-weight: bold;
+      display: flex;
+      gap: 6px;
+      align-items: baseline;
+    }
+
+    .caption .visu {
+      color: #e53935;
+    }
+
+    .caption .dir {
+      color: #000000;
+    }
+
+    .caption .version {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .caption .dir {
+        color: #ffffff;
+      }
+      .caption .version {
+        color: #ffffff;
+      }
+    }
+
+    @media (prefers-color-scheme: light) {
+      .caption .dir {
+        color: #000000;
+      }
+      .caption .version {
+        color: #000000;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader">
+    <div class="grid">
+      <div></div><div></div><div></div>
+      <div></div><div></div><div></div>
+      <div></div><div></div><div></div>
+    </div>
+    <div class="caption">
+      <span class="visu">Visu</span><span class="dir">Dir</span><span class="version">v1.12.1</span>
+    </div>
+  </div>
+</body>
+</html>
