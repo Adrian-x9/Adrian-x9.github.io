@@ -253,7 +253,7 @@ class CascadeUpdater:
             # Step 2: Automatically discover all system folders
             self.logger.log(f"Scanning for system folders in: {self.project_root}", "info")
             systems = [os.path.join(self.project_root, i) for i in os.listdir(self.project_root) if
-                       os.path.isdir(os.path.join(self.project_root, i, ".base-system"))]
+                       os.path.isdir(os.path.join(self.project_root, i, "ade-base-system"))]
 
             if not systems:
                 self.logger.log("ERROR: No system folders found to process.", "error")
@@ -271,7 +271,7 @@ class CascadeUpdater:
                     system_name = os.path.basename(system_path)
                     self.logger.log(f"--- Processing system: '{system_name}' ---", "header")
 
-                    tools_path = os.path.join(system_path, ".base-system", ".tools")
+                    tools_path = os.path.join(system_path, "ade-base-system", ".tools")
 
                     # Start with a fresh copy of the base template for this system
                     system_base_content = base_content

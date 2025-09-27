@@ -5,10 +5,10 @@
     <meta charset="UTF-8" />
     <title>Moja Biblioteka Poradników</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./.base-system/gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./.base-system/gfx/favicons/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./.base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./.base-system/gfx/favicons/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./ade-base-system/gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./ade-base-system/gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./ade-base-system/ade-gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./ade-base-system/gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -1766,13 +1766,13 @@
                 enabled: true,
                 interval: 4500,
                 logos: [{
-                    srcLight: ".base-system/gfx/interface/VisuDir_small_light.png",
-                    srcDark: ".base-system/gfx/interface/VisuDir_small_dark.png",
-                    href: ".base-system/about.html",
+                    srcLight: "ade-base-system/gfx/interface/VisuDir_small_light.png",
+                    srcDark: "ade-base-system/gfx/interface/VisuDir_small_dark.png",
+                    href: "ade-base-system/about.html",
                     alt: "Logo VisuDir"
                 }, {
-                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
-                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
+                    srcLight: "ade-base-system/gfx/interface/ADE_small_light.png",
+                    srcDark: "ade-base-system/gfx/interface/ADE_small_dark.png",
                     href: "https://www.ade.pl",
                     alt: "Logo ADE"
                 }]
@@ -1823,15 +1823,15 @@
                 },],
             },
             paths: {
-                url404: ".base-system/404.html",
-                urlAbout: ".base-system/about.html",
-                urlFallback: ".base-system/soon.html",
-                databaseFileName: ".base-system/db.txt",
-                dataFolderName: ".base-system/files",
-                coversFolderName: ".base-system/preview",
-                previewHdFolderName: ".base-system/preview-hd",
-                videoBgLightUrlBase: ".base-system/video-bg/bg-light",
-                videoBgDarkUrlBase: ".base-system/video-bg/bg-dark",
+                url404: "ade-base-system/404.html",
+                urlAbout: "ade-base-system/about.html",
+                urlFallback: "ade-base-system/soon.html",
+                databaseFileName: "ade-base-system/db.txt",
+                dataFolderName: "ade-base-system/files",
+                coversFolderName: "ade-base-system/preview",
+                previewHdFolderName: "ade-base-system/preview-hd",
+                videoBgLightUrlBase: "ade-base-system/video-bg/bg-light",
+                videoBgDarkUrlBase: "ade-base-system/video-bg/bg-dark",
                 urlEnglishVersion: "index-en.html"
             }
         };
@@ -6217,7 +6217,7 @@
                     }
                 }
             }
-            const k = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+            const k = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
 
@@ -6678,7 +6678,7 @@
                 headerLogo.src = currentTheme === 'dark' ? currentLogoData.srcDark : currentLogoData.srcLight;
             }
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
-                img.src = currentTheme === 'dark' ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+                img.src = currentTheme === 'dark' ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
             });
 
             if (videoBgState !== 'off') {
@@ -6827,7 +6827,7 @@
             const showNewGuide = () => {
                 container.innerHTML = "";
                 playCaption.classList.remove('visible');
-                const fallbackCover = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+                const fallbackCover = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
                 const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "");
                 const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
                 const sdPath = `${config.paths.coversFolderName}/${encodeURIComponent(baseFilename)}.jpg`;
@@ -6921,7 +6921,7 @@
             const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png|mp4|avi)$/i, "");
             const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
             const directPath = `${config.paths.dataFolderName}/${encodeURIComponent(guideFilename)}`;
-            const fallbackCover = document.documentElement.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+            const fallbackCover = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
             const mediaElement = document.createElement(isVideo ? 'video' : 'img');
             mediaElement.className = "preview-media";
             if (isVideo) {

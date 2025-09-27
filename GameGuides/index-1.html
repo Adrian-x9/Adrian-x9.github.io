@@ -5,10 +5,10 @@
     <meta charset="UTF-8" />
     <title>Moja Biblioteka Poradników</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" sizes="16x16" href="./.base-system/.gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./.base-system/.gfx/favicons/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./.base-system/.gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./.base-system/.gfx/favicons/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./ade-base-system/ade-gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./ade-base-system/ade-gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./ade-base-system/ade-gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./ade-base-system/ade-gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -303,8 +303,8 @@
                 enabled: true,
                 interval: 4500,
                 logos: [
-                    { srcLight: "../.base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../.base-system/gfx/interface/VisuDir_small_dark.png", href: "../.base-system/about.html", alt: "Logo VisuDir" },
-                    { srcLight: "../.base-system/gfx/interface/ADE_small_light.png", srcDark: "../.base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
+                    { srcLight: "../ade-base-system/gfx/interface/VisuDir_small_light.png", srcDark: "../ade-base-system/gfx/interface/VisuDir_small_dark.png", href: "../ade-base-system/about.html", alt: "Logo VisuDir" },
+                    { srcLight: "../ade-base-system/gfx/interface/ADE_small_light.png", srcDark: "../ade-base-system/gfx/interface/ADE_small_dark.png", href: "https://www.ade.pl", alt: "Logo ADE" }
                 ]
             },
             pageSettings: {
@@ -328,15 +328,15 @@
                 showBackButton: true,
             }, 
             paths: {
-                url404: "../.base-system/404.html",
-                urlAbout: "../.base-system/about.html",
-                databaseFileName: ".base-system/db.txt",
-                dataFolderName: ".base-system/files",
-                coversFolderName: ".base-system/preview",
-                previewFolderName: ".base-system/files",
-                previewHdFolderName: ".base-system/files",
-                videoBgLightUrlBase: "../.base-system/video/bg_light",
-                videoBgDarkUrlBase: "../.base-system/video/bg_dark",
+                url404: "../ade-base-system/404.html",
+                urlAbout: "../ade-base-system/about.html",
+                databaseFileName: "ade-base-system/db.txt",
+                dataFolderName: "ade-base-system/files",
+                coversFolderName: "ade-base-system/preview",
+                previewFolderName: "ade-base-system/files",
+                previewHdFolderName: "ade-base-system/files",
+                videoBgLightUrlBase: "../ade-base-system/video/bg_light",
+                videoBgDarkUrlBase: "../ade-base-system/video/bg_dark",
             }
         };
         // --- KONIEC KONFIGURACJI ---
@@ -346,13 +346,13 @@
  Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\.base-system\files
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\ade-base-system\files
 
 11.09.2025  21:05    <DIR>          .
 11.09.2025  18:50    <DIR>          ..
 06.09.2025  20:30                 0 .#ai#index.html$$11 AI$$Sztuczna inteligencja.link
 06.09.2025  20:31                 0 .#Autor#index.html$$03 Autor$$Informacje o autorze.link
-06.09.2025  19:59                 0 .#.base-system#soon.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
+06.09.2025  19:59                 0 .#ade-base-system#soon.html$$04 Certyfikaty$$Zobacz moje certyfikaty.link
 06.09.2025  20:33                 0 .#index-mini.html$$01 MENU mini$$01 Mini menu.link
 06.09.2025  20:32                 0 .#index.html$$01 MENU pelne$$Pelne menu.link
 06.09.2025  20:01                 0 .#Polska#index-baltyk.html$$54 Polska$$Galeria zdjec.link
@@ -943,7 +943,7 @@
                         } class="cover-link">`;
                 }
             }
-            const k = document.body.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+            const k = document.body.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
             return `${h}<div class="guide-content-bottom"><div class="guide-info-container">${i}</div>${w}<img src="${c}" alt="Okładka: ${d}" class="guide-cover" onerror="this.onerror=null;this.src='${k}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';"></a>${a}</div>`;
         }
         function renderGuides() {
@@ -1217,7 +1217,7 @@
             }
             
             document.querySelectorAll(".placeholder-cover").forEach((img) => {
-                img.src = currentTheme === 'dark' ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+                img.src = currentTheme === 'dark' ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
             });
             updateBackgroundVideoVisibility();
         }
@@ -1312,7 +1312,7 @@
 
             const showNewGuide = () => {
                 container.innerHTML = "";
-                const fallbackCover = document.body.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+                const fallbackCover = document.body.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
                 
                 const baseFilename = guide.file.split("$$")[0].replace(/\.(pdf|epub|mobi|link|jpg|png)$/i, "");
                 const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
@@ -1387,7 +1387,7 @@
             const baseFilename = guideFilename.split("$$")[0].replace(/\.(jpg|png)$/i, "");
             const hdPath = config.paths.previewHdFolderName ? `${config.paths.previewHdFolderName}/${encodeURIComponent(baseFilename)}.jpg` : null;
             const directPath = `${config.paths.dataFolderName}/${encodeURIComponent(guideFilename)}`;
-            const fallbackCover = document.body.classList.contains("dark-mode") ? ".base-system/gfx/no_cover_dark.png" : ".base-system/gfx/no_cover_light.png";
+            const fallbackCover = document.body.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
 
             const img = document.createElement('img');
             img.className = "preview-image";

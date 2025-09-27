@@ -4,14 +4,14 @@
             showVisuDirButton: true,
             showMiniLogo: false,
 
-            dataFolderName: '.base-system/files',
-            coversFolderName: '.base-system/mini',
-            coversHDFolderName: '.base-system/mini-HD',
-            databaseFileName: '.base-system/db.txt',
-            faviconsFolderUrl: ".base-system/gfx/favicons",
-            logoUrl: '.base-system/gfx/logo-mini.png',
-            url404: ".base-system/404.html",
-            urlAbout: ".base-system/about.html",
+            dataFolderName: 'ade-base-system/files',
+            coversFolderName: 'ade-base-system/mini',
+            coversHDFolderName: 'ade-base-system/mini-HD',
+            databaseFileName: 'ade-base-system/db.txt',
+            faviconsFolderUrl: "ade-base-system/gfx/favicons",
+            logoUrl: 'ade-base-system/gfx/logo-mini.png',
+            url404: "ade-base-system/404.html",
+            urlAbout: "ade-base-system/about.html",
 
             pageTitle: 'Menu Główne',
                      
@@ -32,7 +32,7 @@
  Volume in drive C has no label.
  Volume Serial Number is 64E4-665E
 
- Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\.base-system\files
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\ade-base-system\files
 
 07.09.2025  07:59    <DIR>          .
 07.09.2025  07:33    <DIR>          ..
