@@ -20,7 +20,7 @@
 
 
 
-    
+
     <script>
         (function () {
             const langConfig = {
@@ -98,9 +98,24 @@
 </head>
 
 <body>
+    <!-- patch#1 -->
     <div id="preloader">
-        <div class="spinner"></div>
+        <div class="grid">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="caption">
+            <span class="visu">Visu</span><span class="dir">Dir</span><span class="version version-display"></span>
+        </div>
     </div>
+    <!-- patch#1 -->
 
     <video id="bg-video" autoplay loop muted playsinline>
         <source id="bg-video-source" src="" type="video/mp4" />
