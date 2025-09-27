@@ -2064,22 +2064,6 @@ body.dark-mode .page-slider::-moz-range-thumb {
   box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
-.display-panel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto 20px auto;
-  padding: 8px;
-  border-radius: 12px;
-  box-sizing: border-box;
-  border: 1px solid;
-  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
-}
-
 body:not(.dark-mode) .display-panel {
   border-color: #a00000;
 }
@@ -2720,6 +2704,7 @@ body.dark-mode #statusBarIntegrated {
 /* 1. Ustawia główny kontener na tryb elastyczny, z wierszami ułożonymi jeden pod drugim */
 .display-panel {
   display: flex;
+  margin-top: 15px;
   flex-direction: column;
   gap: 10px;
   /* Odstęp między górnym a dolnym wierszem */
