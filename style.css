@@ -3355,6 +3355,7 @@ body.dark-mode #statusBarIntegrated span {
 
 /* 3. Dolny wiersz (System Info i Ikony) */
 .status-section-bottom {
+  order: 99;
   display: flex;
   align-items: center;
   gap: 15px;
@@ -3365,6 +3366,8 @@ body.dark-mode #statusBarIntegrated span {
   width: 100%;
   justify-content: flex-end;
   /* Równanie do prawej */
+  backdrop-filter: blur(5px); 
+  /* --- patch #2 --- */
 }
 
 .system-info {
