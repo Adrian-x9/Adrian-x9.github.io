@@ -1,10 +1,10 @@
 const config = {
-            version: 'v1.12.1', // New panel VIEW ready
+            version: "v1.12.2", // New panel View needs rework on upper panel
             language: {
                 current: 'en',
                 files: {
-                    en: 'index-en.html',
-                    de: 'index-de.html',
+                    en: 'index-en.html', // >>delete-it<< te linijki do usunięcia po aktualizacji kodu
+                    de: 'index-de.html', // >>delete-it<< te linijki do usunięcia po aktualizacji kodu
                 }
             },
 
@@ -22,7 +22,7 @@ const config = {
                 pageKey: 'indexMaxi',
                 pageTitle: "ade ▪ maxi MENU",
                 showMiniLogo: true,
-                showVisuDirButton: true,
+                showVisuDirButton: false,
                 showBackButton: false,
                 showLanguageButton: false,
 
@@ -70,7 +70,7 @@ const config = {
                 interval: 4500,
                 logos: [{
                     srcLight: "ade-base-system/gfx/interface/logo-VisuDir-light-480px.png",
-                    srcDark: "ade-base-system/gfx/interface/logo-VisuDir-light-240px.png",
+                    srcDark: "ade-base-system/gfx/interface/logo-VisuDir-dark-480px.png",
                     href: "ade-base-system/about.html",
                     alt: "Logo VisuDir"
                 }, {

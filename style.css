@@ -1433,7 +1433,7 @@ body.dark-mode .caption-title-highlight {
 
 #fullscreenBtn {
   position: fixed;
-  top: 15px;
+  top: 10px;
   right: 15px;
   z-index: 998;
 }
@@ -2704,7 +2704,9 @@ body.dark-mode #statusBarIntegrated {
 /* 1. Ustawia główny kontener na tryb elastyczny, z wierszami ułożonymi jeden pod drugim */
 .display-panel {
   display: flex;
-  margin-top: 15px;
+  /* --- patch #1 --- */
+  margin-top: 70px;
+  z-index: 995;
   flex-direction: column;
   gap: 10px;
   /* Odstęp między górnym a dolnym wierszem */
@@ -3421,3 +3423,46 @@ body.dark-mode .status-icon-btn:hover {
 }
 
 /* --- END: ŁATKA #6 --- */
+
+
+
+
+/* === ŁATKA: Stały, przezroczysty nagłówek === */
+.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* Szerokość na cały ekran */
+    padding-top: 12px;
+    padding-bottom: 12px;
+    z-index: 990; /* Ustawia go pod innymi stałymi elementami */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* Wsparcie dla Safari */
+    transition: background-color 0.3s ease; /* Płynna zmiana motywu */
+    border-bottom: 1px solid #80808040;
+}
+
+/* Tło dla trybu jasnego */
+html:not(.dark-mode) .top-header {
+    background-color: rgba(0, 0, 0, 0.05); /* 85% przezroczystości */
+}
+
+/* Tło dla trybu ciemnego */
+html.dark-mode .top-header {
+    background-color: rgba(255, 255, 255, 0.05); /* 85% przezroczystości */
+}
+
+/* === ŁATKA: Aktywny (czerwony) przycisk Mute === */
+#statusMuteBtn.active-red {
+    opacity: 1; /* Zapewnia pełną widoczność, jak przy najechaniu myszą */
+}
+
+/* Kolor czerwony dla trybu jasnego */
+html:not(.dark-mode) #statusMuteBtn.active-red {
+    color: #cc0000;
+}
+
+/* Kolor czerwony dla trybu ciemnego */
+html.dark-mode #statusMuteBtn.active-red {
+    color: #e53935;
+}
