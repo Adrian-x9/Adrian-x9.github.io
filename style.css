@@ -1,57 +1,72 @@
 /* patch#1 */
 /* Preloader Styles */
+/* === VisuDir Preloader v2 === */
 #preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.5s ease;
-}
-
-.spinner {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-html:not(.dark-mode) #preloader {
-  background-color: #e1e1e1;
-}
-
-html:not(.dark-mode) .spinner {
-  border: 5px solid #f3f3f3;
-  border-top: 5px solid #cc0000;
-}
-
-html.dark-mode #preloader {
-  background-color: #121212;
-}
-
-html.dark-mode .spinner {
-  border: 5px solid #333;
-  border-top: 5px solid #e53935;
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: bgCycle 8s infinite linear;
+    background-color: #ffffff;
+    transition: opacity 0.5s ease;
 }
 
 #preloader.fade-out {
-  opacity: 0;
-  pointer-events: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
+@keyframes bgCycle {
+    0%   { background-color: #ffffff; }
+    10%  { background-color: #dddddd; }
+    30%  { background-color: #222222; }
+    70%  { background-color: #222222; }
+    90%  { background-color: #dddddd; }
+    100% { background-color: #ffffff; }
 }
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 20px);
+    grid-gap: 10px;
+    margin-bottom: 20px;
+}
+
+.grid div {
+    width: 20px;
+    height: 20px;
+    background-color: #e53935;
+    animation: pulse 1.2s infinite ease-in-out;
+}
+
+.grid div:nth-child(odd) { animation-delay: 0.2s; }
+.grid div:nth-child(even) { animation-delay: 0.4s; }
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.4); }
+}
+
+.caption {
+    font-size: 1.6rem;
+    font-weight: bold;
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    font-family: sans-serif;
+}
+
+.caption .visu { color: #e53935; }
+.caption .dir { color: #bbbbbb; } /* Zawsze jasnoszary, widoczny na każdym tle */
+.caption .version { 
+    color: #bbbbbb; /* Zawsze jasnoszary */
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+/* === Koniec Preloadera === */
 /* patch#1 */
 
 html:not(.dark-mode) {

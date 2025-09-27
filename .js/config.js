@@ -74,8 +74,8 @@ const config = {
                     href: ".base-system/about.html",
                     alt: "Logo VisuDir"
                 }, {
-                    srcLight: ".base-system/gfx/interface/ADE_small_light.png",
-                    srcDark: ".base-system/gfx/interface/ADE_small_dark.png",
+                    srcLight: ".base-system/gfx/interface/logo-ade-v1-light-480px.png",
+                    srcDark: ".base-system/gfx/interface/logo-ade-v1-dark-480px.png",
                     href: "https://www.ade.pl",
                     alt: "Logo ADE"
                 }]
