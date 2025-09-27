@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karuzela 3D z Flagami</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .scene {
+            width: 300px; /* Lekko powiększona scena dla lepszego dopasowania */
+            height: 250px;
+            perspective: 1200px;
+        }
+
+        .world {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab;
+        }
+
+        .world.is-dragging {
+            cursor: grabbing;
+        }
+        
+        /* ZAKTUALIZOWANE STYLE DLA NOWEJ STRUKTURY KAFELKA */
+        .item {
+            position: absolute;
+            top: calc(50% - 25px); 
+            left: calc(50% - 60px); /* Dopasowanie pozycji dla szerszego elementu */
+            width: 120px; /* Szerszy kafelek, by zmieścić flagę i tekst */
+            height: 50px;
+            
+            /* Ułożenie flagi i tekstu wewnątrz */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px; /* Odstęp między flagą a tekstem */
+            
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 0 10px; /* Wewnętrzny padding */
+            
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            backface-visibility: hidden;
+            user-select: none;
+        }
+        
+        .item:hover {
+            background-color: rgba(217, 4, 41, 0.6);
+            border-color: rgba(217, 4, 41, 1);
+        }
+
+        /* NOWE STYLE DLA FLAGI */
+        .flag-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%; /* Idealnie okrągłe flagi */
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="world">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const countries = [
+                { code: 'au', name: 'Australia' }, { code: 'br', name: 'Brazylia' },
+                { code: 'ca', name: 'Kanada' }, { code: 'cn', name: 'Chiny' },
+                { code: 'de', name: 'Niemcy' }, { code: 'es', name: 'Hiszpania' },
+                { code: 'fr', name: 'Francja' }, { code: 'gb', name: 'Wielka Brytania' },
+                { code: 'in', name: 'Indie' }, { code: 'it', name: 'Włochy' },
+                { code: 'jp', name: 'Japonia' }, { code: 'mx', name: 'Meksyk' },
+                { code: 'pl', name: 'Polska' }, { code: 'za', name: 'RPA' },
+                { code: 'us', name: 'USA' }
+            ];
+
+            const world = document.querySelector('.world');
+            const totalItems = countries.length;
+            const radius = 220;
+            let hasDragged = false;
+
+            countries.forEach((country, index) => {
+                const item = document.createElement('div');
+                item.className = 'item';
+                // Dodajemy etykietę dla dostępności
+                item.setAttribute('aria-label', `${country.name}, ${country.code.toUpperCase()}`);
+
+                // --- NOWA STRUKTURA WEWNĄTRZ KAFELKA ---
+                // 1. Tworzymy obrazek flagi
+                const flagImg = document.createElement('img');
+                flagImg.className = 'flag-icon';
+                // Używamy darmowego CDN do serwowania okrągłych flag SVG
+                flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${country.code}.svg`;
+                // Pusty alt, bo `aria-label` na rodzicu już opisuje element
+                flagImg.alt = ''; 
+
+                // 2. Tworzymy span dla kodu kraju
+                const codeSpan = document.createElement('span');
+                codeSpan.innerText = country.code.toUpperCase();
+
+                // 3. Dodajemy oba elementy do kafelka
+                item.appendChild(flagImg);
+                item.appendChild(codeSpan);
+                // -----------------------------------------
+
+                const angle = (360 / totalItems) * index;
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+                item.addEventListener('click', () => {
+                    if (!hasDragged) {
+                        alert(`Wybrano kraj: ${country.name} (${country.code.toUpperCase()})`);
+                    }
+                });
+                world.appendChild(item);
+});
+
+            // Logika interakcji z inercją (bez zmian)
+            let currentRotationY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let lastX = 0;
+            let velocity = 0;
+            let animationFrame = null;
+            const friction = 0.95;
+            const rotationSensitivity = 0.4;
+
+            const updateRotation = () => {
+                world.style.transform = `rotateY(${currentRotationY}deg)`;
+            };
+
+            const inertiaAnimate = () => {
+                currentRotationY += velocity;
+                velocity *= friction;
+                updateRotation();
+                if (Math.abs(velocity) > 0.1) {
+                    animationFrame = requestAnimationFrame(inertiaAnimate);
+                } else {
+                    velocity = 0;
+                }
+            };
+
+            const onDragStart = (e) => {
+                e.preventDefault();
+                isDragging = true;
+                hasDragged = false;
+                world.classList.add('is-dragging');
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                    velocity = 0;
+                }
+                startX = e.clientX || e.touches[0].clientX;
+                lastX = startX;
+                window.addEventListener('mousemove', onDragMove);
+                window.addEventListener('mouseup', onDragEnd);
+                window.addEventListener('touchmove', onDragMove);
+                window.addEventListener('touchend', onDragEnd);
+            };
+
+            const onDragMove = (e) => {
+                if (!isDragging) return;
+                const currentX = e.clientX || e.touches[0].clientX;
+                const deltaX = currentX - lastX;
+                if (Math.abs(currentX - startX) > 5) {
+                    hasDragged = true;
+                }
+                velocity = deltaX * rotationSensitivity;
+                currentRotationY += velocity;
+                lastX = currentX;
+                updateRotation();
+            };
+
+            const onDragEnd = () => {
+                isDragging = false;
+                world.classList.remove('is-dragging');
+                window.removeEventListener('mousemove', onDragMove);
+                window.removeEventListener('mouseup', onDragEnd);
+                window.removeEventListener('touchmove', onDragMove);
+                window.removeEventListener('touchend', onDragEnd);
+                if (Math.abs(velocity) > 0.1) {
+                    inertiaAnimate();
+                }
+            };
+
+            world.addEventListener('mousedown', onDragStart);
+            world.addEventListener('touchstart', onDragStart, { passive: true });
+        });
+    </script>
+</body>
+</html>

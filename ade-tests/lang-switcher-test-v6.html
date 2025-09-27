@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karuzela 3D z Inercją</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .scene {
+            width: 250px;
+            height: 250px;
+            perspective: 1200px;
+        }
+
+        .world {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab;
+        }
+
+        .world.is-dragging {
+            cursor: grabbing;
+        }
+
+        .item {
+            position: absolute;
+            top: calc(50% - 25px); 
+            left: calc(50% - 45px);
+            width: 90px;
+            height: 50px;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            backface-visibility: hidden;
+            user-select: none;
+        }
+        
+        /* ZMIANA: Czerwony kolor przy najechaniu */
+        .item:hover {
+            background-color: rgba(217, 4, 41, 0.6);
+            border-color: rgba(217, 4, 41, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="world">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const countries = [
+                { code: 'au', name: 'Australia' }, { code: 'br', name: 'Brazylia' },
+                { code: 'ca', name: 'Kanada' }, { code: 'cn', name: 'Chiny' },
+                { code: 'de', name: 'Niemcy' }, { code: 'es', name: 'Hiszpania' },
+                { code: 'fr', name: 'Francja' }, { code: 'gb', name: 'Wielka Brytania' },
+                { code: 'in', name: 'Indie' }, { code: 'it', name: 'Włochy' },
+                { code: 'jp', name: 'Japonia' }, { code: 'mx', name: 'Meksyk' },
+                { code: 'pl', name: 'Polska' }, { code: 'za', name: 'RPA' },
+                { code: 'us', name: 'USA' }
+            ];
+
+            const world = document.querySelector('.world');
+            const totalItems = countries.length;
+            const radius = 220;
+            let hasDragged = false;
+
+            countries.forEach((country, index) => {
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.innerText = country.code.toUpperCase();
+
+                const angle = (360 / totalItems) * index;
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+                item.addEventListener('click', () => {
+                    if (!hasDragged) {
+                        alert(`Wybrano kraj: ${country.name} (${country.code.toUpperCase()})`);
+                    }
+                });
+                world.appendChild(item);
+            });
+
+            // === NOWA LOGIKA INTERAKCJI Z INERCJĄ ===
+            
+            let currentRotationY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let lastX = 0;
+            let velocity = 0; // Prędkość obrotu
+            let animationFrame = null; // ID klatki animacji
+            const friction = 0.95; // Współczynnik tarcia (im mniejszy, tym szybciej zwalnia)
+            const rotationSensitivity = 0.4; // Czułość przeciągania
+
+            const updateRotation = () => {
+                world.style.transform = `rotateY(${currentRotationY}deg)`;
+            };
+
+            const inertiaAnimate = () => {
+                // Kontynuuj obrót na podstawie aktualnej prędkości
+                currentRotationY += velocity;
+                // Zastosuj tarcie, aby spowolnić ruch
+                velocity *= friction;
+
+                updateRotation();
+
+                // Zatrzymaj animację, gdy ruch będzie minimalny
+                if (Math.abs(velocity) > 0.1) {
+                    animationFrame = requestAnimationFrame(inertiaAnimate);
+                } else {
+                    velocity = 0;
+                }
+            };
+
+            const onDragStart = (e) => {
+                e.preventDefault();
+                isDragging = true;
+                hasDragged = false;
+                world.classList.add('is-dragging');
+                
+                // Zatrzymaj poprzednią animację inercji, jeśli była w toku
+                if (animationFrame) {
+                    cancelAnimationFrame(animationFrame);
+                    velocity = 0;
+                }
+                
+                startX = e.clientX || e.touches[0].clientX;
+                lastX = startX;
+
+                window.addEventListener('mousemove', onDragMove);
+                window.addEventListener('mouseup', onDragEnd);
+                window.addEventListener('touchmove', onDragMove);
+                window.addEventListener('touchend', onDragEnd);
+            };
+
+            const onDragMove = (e) => {
+                if (!isDragging) return;
+
+                const currentX = e.clientX || e.touches[0].clientX;
+                const deltaX = currentX - lastX;
+
+                if (Math.abs(currentX - startX) > 5) {
+                    hasDragged = true;
+                }
+                
+                // Oblicz prędkość i zaktualizuj obrót
+                velocity = deltaX * rotationSensitivity;
+                currentRotationY += velocity;
+                lastX = currentX;
+
+                updateRotation();
+            };
+
+            const onDragEnd = () => {
+                isDragging = false;
+                world.classList.remove('is-dragging');
+                
+                window.removeEventListener('mousemove', onDragMove);
+                window.removeEventListener('mouseup', onDragEnd);
+                window.removeEventListener('touchmove', onDragMove);
+                window.removeEventListener('touchend', onDragEnd);
+
+                // Rozpocznij animację inercji
+                if (Math.abs(velocity) > 0.1) {
+                    inertiaAnimate();
+                }
+            };
+
+            world.addEventListener('mousedown', onDragStart);
+            world.addEventListener('touchstart', onDragStart, { passive: true });
+        });
+    </script>
+</body>
+</html>

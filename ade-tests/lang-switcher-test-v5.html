@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test wdrożeniowy - Karuzela 3D w Vanilla JS</title>
+    <style>
+        /* === RESET I PODSTAWOWE STYLE === */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* === KONTENERY 3D === */
+        .scene {
+            width: 250px;
+            height: 250px;
+            perspective: 1200px;
+        }
+
+        .world {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            cursor: grab; /* Dodajemy kursor wskazujący na możliwość przeciągania */
+        }
+
+        .world.is-dragging {
+            cursor: grabbing; /* Zmieniamy kursor podczas przeciągania */
+        }
+
+        /* === ELEMENTY KARUZELI === */
+        .item {
+            position: absolute;
+            top: calc(50% - 25px); 
+            left: calc(50% - 45px);
+            width: 90px;
+            height: 50px;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            backface-visibility: hidden;
+            user-select: none; /* Zapobiegamy zaznaczaniu tekstu podczas przeciągania */
+        }
+        
+        .item:hover {
+            background-color: rgba(90, 180, 255, 0.6);
+            border-color: rgba(90, 180, 255, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="world">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // === 1. DANE I KONFIGURACJA ===
+            const countries = [
+                { code: 'au', name: 'Australia' }, { code: 'br', name: 'Brazylia' },
+                { code: 'ca', name: 'Kanada' }, { code: 'cn', name: 'Chiny' },
+                { code: 'de', name: 'Niemcy' }, { code: 'es', name: 'Hiszpania' },
+                { code: 'fr', name: 'Francja' }, { code: 'gb', name: 'Wielka Brytania' },
+                { code: 'in', name: 'Indie' }, { code: 'it', name: 'Włochy' },
+                { code: 'jp', name: 'Japonia' }, { code: 'mx', name: 'Meksyk' },
+                { code: 'pl', name: 'Polska' }, { code: 'za', name: 'RPA' },
+                { code: 'us', name: 'USA' }
+            ];
+
+            const world = document.querySelector('.world');
+            const totalItems = countries.length;
+            const radius = 220;
+            let hasDragged = false; // Flaga do odróżnienia przeciągnięcia od kliknięcia
+
+            // === 2. TWORZENIE I ROZMIESZCZANIE ELEMENTÓW ===
+            countries.forEach((country, index) => {
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.innerText = country.code.toUpperCase();
+
+                const angle = (360 / totalItems) * index;
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+                item.addEventListener('click', () => {
+                    // Wywołaj alert tylko jeśli nie było przeciągnięcia
+                    if (!hasDragged) {
+                        alert(`Wybrano kraj: ${country.name} (${country.code.toUpperCase()})`);
+                    }
+                });
+                world.appendChild(item);
+            });
+
+            // === 3. NOWA LOGIKA INTERAKCJI - PRZECIĄGNIJ, ABY OBRÓCIĆ ===
+            
+            let currentRotationY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let lastRotation = 0;
+
+            const onDragStart = (e) => {
+                // Zapobiegaj domyślnym akcjom przeglądarki, np. przeciąganiu obrazka
+                e.preventDefault();
+                
+                isDragging = true;
+                hasDragged = false; // Resetuj flagę na początku każdego przeciąganie/kliknięcia
+                world.classList.add('is-dragging');
+                
+                // Używamy `clientX` dla myszy lub `touches[0].clientX` dla dotyku
+                startX = e.clientX || e.touches[0].clientX;
+                lastRotation = currentRotationY; // Zapisz pozycję startową obrotu
+
+                // Dodaj nasłuchiwacze do całego dokumentu, aby można było kontynuować przeciąganie poza elementem
+                window.addEventListener('mousemove', onDragMove);
+                window.addEventListener('mouseup', onDragEnd);
+                window.addEventListener('touchmove', onDragMove);
+                window.addEventListener('touchend', onDragEnd);
+            };
+
+            const onDragMove = (e) => {
+                if (!isDragging) return;
+
+                const currentX = e.clientX || e.touches[0].clientX;
+                const deltaX = currentX - startX;
+                
+                // Jeśli ruch jest większy niż kilka pikseli, traktujemy go jako przeciągnięcie
+                if (Math.abs(deltaX) > 3) {
+                    hasDragged = true;
+                }
+
+                // Czułość obrotu - mniejsza wartość = wolniejszy obrót
+                const rotationSensitivity = 0.5;
+                currentRotationY = lastRotation + (deltaX * rotationSensitivity);
+
+                world.style.transform = `rotateY(${currentRotationY}deg)`;
+            };
+
+            const onDragEnd = () => {
+                isDragging = false;
+                world.classList.remove('is-dragging');
+
+                // Usuń nasłuchiwacze, aby zatrzymać interakcję po puszczeniu przycisku
+                window.removeEventListener('mousemove', onDragMove);
+                window.removeEventListener('mouseup', onDragEnd);
+                window.removeEventListener('touchmove', onDragMove);
+                window.removeEventListener('touchend', onDragEnd);
+            };
+
+            // Uruchomienie
+            world.addEventListener('mousedown', onDragStart);
+            world.addEventListener('touchstart', onDragStart, { passive: true });
+        });
+    </script>
+</body>
+</html>

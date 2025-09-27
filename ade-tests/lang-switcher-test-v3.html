@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test wdrożeniowy - Karuzela 3D w Vanilla JS</title>
+    <style>
+        /* === RESET I PODSTAWOWE STYLE === */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            /* Poprawia renderowanie czcionek */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* === KONTENERY 3D === */
+
+        /* * .scene - Określa "scenę" i jej perspektywę.
+         * Wartość `perspective` decyduje o "głębi" - im mniejsza, tym bardziej
+         * przerysowany i "głęboki" będzie efekt 3D.
+         */
+        .scene {
+            width: 250px;
+            height: 250px;
+            perspective: 1200px;
+        }
+
+        /* * .world - To jest nasz obracający się kontener.
+         * `transform-style: preserve-3d` jest kluczowe. Mówi przeglądarce,
+         * że elementy wewnątrz tego kontenera powinny być renderowane
+         * we wspólnej przestrzeni 3D, a nie spłaszczane.
+         */
+        .world {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        /* === ELEMENTY KARUZELI === */
+        .item {
+            position: absolute;
+            /* Pozycjonujemy środek elementu na środku kontenera .world */
+            top: calc(50% - 25px); 
+            left: calc(50% - 45px);
+            width: 90px;
+            height: 50px;
+            
+            /* Style wizualne */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            
+            /* Płynne przejścia dla interakcji */
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+            
+            /* Optymalizacja - nie renderuj "tyłu" elementu */
+            backface-visibility: hidden;
+        }
+        
+        .item:hover {
+            background-color: rgba(90, 180, 255, 0.6);
+            border-color: rgba(90, 180, 255, 1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="world">
+            </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // === 1. DANE I KONFIGURACJA ===
+            const countries = [
+                { code: 'au', name: 'Australia' },
+                { code: 'br', name: 'Brazylia' },
+                { code: 'ca', name: 'Kanada' },
+                { code: 'cn', name: 'Chiny' },
+                { code: 'de', name: 'Niemcy' },
+                { code: 'es', name: 'Hiszpania' },
+                { code: 'fr', name: 'Francja' },
+                { code: 'gb', name: 'Wielka Brytania' },
+                { code: 'in', name: 'Indie' },
+                { code: 'it', name: 'Włochy' },
+                { code: 'jp', name: 'Japonia' },
+                { code: 'mx', name: 'Meksyk' },
+                { code: 'pl', name: 'Polska' },
+                { code: 'za', name: 'RPA' },
+                { code: 'us', name: 'USA' }
+            ];
+
+            const world = document.querySelector('.world');
+            const scene = document.querySelector('.scene');
+            const totalItems = countries.length;
+            const radius = 220; // Promień, na którym rozmieszczone są elementy
+
+            // === 2. TWORZENIE I ROZMIESZCZANIE ELEMENTÓW ===
+            countries.forEach((country, index) => {
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.innerText = country.code.toUpperCase();
+
+                // Kluczowa matematyka do rozmieszczenia elementów na okręgu
+                // Dzielimy okrąg (360 stopni) na równe części
+                const angle = (360 / totalItems) * index;
+
+                // Używamy transformacji CSS:
+                // 1. rotateY() - obraca element wokół osi Y o dany kąt.
+                // 2. translateZ() - przesuwa obrócony element "do przodu" o wartość promienia.
+                // To tworzy iluzję okręgu w przestrzeni 3D.
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+                // Dodajemy interakcję po kliknięciu
+                item.addEventListener('click', () => {
+                    alert(`Wybrano kraj: ${country.name} (${country.code.toUpperCase()})`);
+                });
+
+                world.appendChild(item);
+            });
+
+            // === 3. LOGIKA ANIMACJI I INTERAKCJI ===
+            let currentRotationY = 0;
+            let targetRotationY = 0;
+            // "Siła" przyciągania do celu - tworzy efekt płynnego wygładzenia (easing)
+            const easingFactor = 0.05; 
+
+            // Funkcja mapująca pozycję myszy na kąt obrotu
+            const updateRotation = (event) => {
+                // Przeliczamy pozycję X myszy (0 do szerokości okna) na zakres od -180 do 180
+                const mouseX = event.clientX;
+                const windowWidth = window.innerWidth;
+                const rotationRange = 360; // Pełny obrót
+                
+                // (mouseX / windowWidth) daje nam % pozycji myszy (0.0 do 1.0)
+                // Odejmujemy 0.5, aby środek ekranu był punktem 0
+                targetRotationY = (mouseX / windowWidth - 0.5) * rotationRange;
+            };
+
+            // Główna pętla animacji
+            const animate = () => {
+                // Płynnie zbliżamy aktualny kąt do docelowego kąta (ustawianego przez mysz)
+                // To jest istota efektu "easing" lub "smooth follow"
+                const delta = targetRotationY - currentRotationY;
+                currentRotationY += delta * easingFactor;
+
+                world.style.transform = `rotateY(${currentRotationY}deg)`;
+
+                // Prosimy przeglądarkę o wykonanie tej funkcji ponownie przed następnym odświeżeniem
+                requestAnimationFrame(animate);
+            };
+
+            // Uruchomienie
+            window.addEventListener('mousemove', updateRotation);
+            animate();
+        });
+    </script>
+</body>
+</html>

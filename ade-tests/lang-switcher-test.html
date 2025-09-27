@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All-in-One Language Switcher Test</title>
+    
+    <style>
+        /* --- THEMES & GLOBAL STYLES --- */
+        :root {
+            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f4f5f7;
+            --text-color: #172b4d;
+            --popup-bg: #ffffff;
+            --popup-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.2);
+            --item-bg: #e9ecef;
+            --item-text: #495057;
+            --item-active-bg: #0052cc;
+            --item-active-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1d2125;
+            --text-color: #dee2e6;
+            --popup-bg: #282c30;
+            --popup-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4);
+            --item-bg: #343a40;
+            --item-text: #adb5bd;
+            --item-active-bg: #4c9aff;
+            --item-active-text: #1d2125;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: var(--font-family);
+            margin: 0;
+            padding: 2rem;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* --- LANGUAGE SWITCHER COMPONENT --- */
+        #lang-switcher-container {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            z-index: 1000;
+        }
+
+        #lang-switcher-trigger {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color var(--transition-speed);
+        }
+
+        #lang-switcher-trigger:hover,
+        #lang-switcher-trigger:focus-visible {
+            background-color: var(--item-bg);
+        }
+
+        #globe-icon {
+            width: 28px;
+            height: 28px;
+            color: var(--text-color);
+            transition: color var(--transition-speed);
+        }
+
+        /* Wink Animation */
+        @keyframes wink {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.1); }
+        }
+
+        .wink-animation #globe-wink {
+            opacity: 1;
+            animation: wink 0.5s ease-in-out;
+        }
+
+        #lang-switcher-popup {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            width: 300px;
+            background-color: var(--popup-bg);
+            border-radius: 12px;
+            box-shadow: var(--popup-shadow);
+            padding: 1.5rem 0;
+            opacity: 0;
+            transform: translateY(10px) scale(0.95);
+            visibility: hidden;
+            transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, visibility 0s var(--transition-speed);
+            overflow: hidden;
+        }
+
+        #lang-switcher-popup.is-open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            visibility: visible;
+            transition-delay: 0s;
+        }
+
+        .lang-carousel-wrapper {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 1000px; /* Essential for 3D effect */
+        }
+
+        .lang-carousel {
+            position: relative;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            cursor: grab;
+        }
+
+        .lang-carousel.is-dragging {
+            cursor: grabbing;
+        }
+
+        .lang-carousel .lang-item {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            margin: -25px 0 0 -25px;
+            background-color: var(--item-bg);
+            color: var(--item-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1rem;
+            font-weight: 600;
+            user-select: none;
+            -webkit-user-select: none;
+            transition: transform 0.4s ease, background-color var(--transition-speed), color var(--transition-speed);
+            text-decoration: none;
+        }
+
+        .lang-carousel .lang-item.is-active {
+            background-color: var(--item-active-bg);
+            color: var(--item-active-text);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <header>
+        <h1 data-translate-key="greeting">Hello, World!</h1>
+        <div id="lang-switcher-container">
+            <button id="lang-switcher-trigger" aria-haspopup="dialog" aria-expanded="false" aria-label="Open language selector">
+                <svg id="globe-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 12v1c0 1.1.9 2 2 2v2.93zm9.95-2.02c-.23.63-.52 1.21-.85 1.75l-1.95-1.95c.3-.61.5-1.28.58-2h2.95c.03.17.05.33.05.51 0 .93-.2 1.8-.55 2.59zM12 4c1.41 0 2.72.45 3.84 1.22l-1.47 1.47C13.62 6.27 12.85 6 12 6c-1.89 0-3.51 1.03-4.37 2.59L5.43 6.43C7.03 4.98 9.38 4 12 4zm6.57 2.43L16.4 8.59C16.97 9.97 17.5 11.45 17.5 13c0 .74-.09 1.46-.26 2.15l2.23 2.23c.87-1.33 1.39-2.87 1.49-4.48.02-.34.03-.68.03-1.03 0-2.62-.9-5-2.42-6.87zM4.05 13.51c.23-.63.52-1.21.85-1.75l1.95 1.95c-.3.61-.5 1.28-.58 2H3.32c-.03-.17-.05-.33-.05-.51 0-.93.2-1.8.55-2.59zM12 20c-1.41 0-2.72-.45-3.84-1.22l1.47-1.47c.75.42 1.52.69 2.37.69 1.89 0 3.51-1.03 4.37-2.59l2.18 2.18C16.97 19.02 14.62 20 12 20z"/>
+                    <path id="globe-wink" d="M8.5 14c.5 1.5 2 1.5 2.5 0" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" opacity="0"/>
+                </svg>
+            </button>
+            
+            <div id="lang-switcher-popup" role="dialog" aria-modal="true" aria-labelledby="lang-switcher-heading" hidden>
+                <h2 id="lang-switcher-heading" class="visually-hidden">Select a language</h2>
+                <div class="lang-carousel-wrapper">
+                    <ul class="lang-carousel">
+                        <li><a href="?lang=de" lang="de" class="lang-item">DE</a></li>
+                        <li><a href="?lang=en" lang="en" class="lang-item">EN</a></li>
+                        <li><a href="?lang=es" lang="es" class="lang-item">ES</a></li>
+                        <li><a href="?lang=fr" lang="fr" class="lang-item">FR</a></li>
+                        <li><a href="?lang=pl" lang="pl" class="lang-item">PL</a></li>
+                        <li><a href="?lang=ru" lang="ru" class="lang-item">RU</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // --- 1. CONFIGURATION & STATE ---
+
+    const TRANSLATIONS = {
+        en: { greeting: "Hello, World!" },
+        pl: { greeting: "Witaj, Świecie!" },
+        de: { greeting: "Hallo, Welt!" },
+        fr: { greeting: "Bonjour, le Monde!" },
+        es: { greeting: "¡Hola, Mundo!" },
+        ru: { greeting: "Привет, мир!" },
+    };
+    const LANGUAGES = Object.keys(TRANSLATIONS).sort(); // ['de', 'en', 'es', 'fr', 'pl', 'ru']
+
+    let currentLang = 'en';
+    let isPopupOpen = false;
+    let isDragging = false;
+    let startX = 0;
+    let currentAngle = 0;
+    let totalRotation = 0; // For easter egg
+
+    // --- 2. DOM ELEMENT REFERENCES ---
+
+    const container = document.getElementById('lang-switcher-container');
+    const trigger = document.getElementById('lang-switcher-trigger');
+    const popup = document.getElementById('lang-switcher-popup');
+    const carousel = popup.querySelector('.lang-carousel');
+    const globeIcon = document.getElementById('globe-icon');
+
+    // --- 3. CORE FUNCTIONS ---
+
+    /**
+     * Updates the UI text based on the selected language.
+     * @param {string} lang - The language code (e.g., 'en').
+     */
+    const applyTranslations = (lang) => {
+        document.documentElement.lang = lang;
+        document.querySelectorAll('[data-translate-key]').forEach(el => {
+            const key = el.dataset.translateKey;
+            el.textContent = TRANSLATIONS[lang]?.[key] || key;
+        });
+    };
+
+    /**
+     * Toggles the visibility of the language selector popup.
+     */
+    const togglePopup = () => {
+        isPopupOpen = !isPopupOpen;
+        popup.hidden = !isPopupOpen;
+        trigger.setAttribute('aria-expanded', isPopupOpen);
+        if (isPopupOpen) {
+            popup.classList.add('is-open');
+        } else {
+            popup.classList.remove('is-open');
+        }
+    };
+    
+    /**
+     * Calculates the angle for each item and the radius for the carousel.
+     * Duplicates items to create a seamless infinite scroll effect.
+     */
+    const setupCarousel = () => {
+        const originalItems = Array.from(carousel.querySelectorAll('.lang-item'));
+        const anglePerItem = 360 / originalItems.length;
+        // Radius is calculated to provide good spacing. Adjust as needed.
+        const radius = (originalItems.length * 40) / (2 * Math.PI); 
+
+        // Clear existing items and create a duplicated set for infinite loop
+        carousel.innerHTML = '';
+        const itemsToCreate = [...originalItems, ...originalItems];
+
+        itemsToCreate.forEach((itemNode, i) => {
+            const angle = i * anglePerItem;
+            const langCode = itemNode.getAttribute('lang');
+
+            // The list item is the container that gets positioned
+            const li = document.createElement('li');
+            li.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+            // The link/button inside handles interaction
+            const item = document.createElement('a');
+            item.href = `?lang=${langCode}`;
+            item.textContent = langCode.toUpperCase();
+            item.setAttribute('lang', langCode);
+            item.classList.add('lang-item');
+            
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (!isDragging) {
+                    selectLanguage(langCode);
+                }
+            });
+            
+            li.appendChild(item);
+            carousel.appendChild(li);
+        });
+        
+        // Set initial state
+        updateCarousel(true); 
+    };
+
+    /**
+     * Rotates the carousel and updates the active item.
+     * @param {boolean} instant - If true, applies changes without transition.
+     */
+    const updateCarousel = (instant = false) => {
+        if (instant) carousel.style.transition = 'none';
+
+        // Infinite loop logic
+        const numOriginalItems = LANGUAGES.length;
+        const fullCircle = 360;
+        // If we scroll past the first set, instantly jump back by 360 degrees
+        if (currentAngle < -fullCircle) {
+            currentAngle += fullCircle;
+            totalRotation -= fullCircle;
+        } else if (currentAngle > 0) {
+            currentAngle -= fullCircle;
+            totalRotation += fullCircle;
+        }
+        
+        carousel.style.transform = `rotateY(${currentAngle}deg)`;
+        
+        if (instant) {
+            // Force reflow before re-enabling transition
+            carousel.offsetHeight; 
+            carousel.style.transition = '';
+        }
+
+        // Highlight the "active" item (the one closest to the front)
+        const anglePerItem = 360 / numOriginalItems;
+        const activeIndex = Math.round(-currentAngle / anglePerItem) % numOriginalItems;
+        
+        carousel.querySelectorAll('.lang-item').forEach((item, index) => {
+             // We check against both sets of duplicated items
+            if (index % numOriginalItems === activeIndex) {
+                item.classList.add('is-active');
+            } else {
+                item.classList.remove('is-active');
+            }
+        });
+    };
+
+    /**
+     * Selects a language, applies translations, and closes the popup.
+     * @param {string} lang - The selected language code.
+     */
+    const selectLanguage = (lang) => {
+        currentLang = lang;
+        applyTranslations(lang);
+        togglePopup();
+    };
+    
+    /**
+     * Triggers the easter egg animation on the globe icon.
+     */
+    const triggerWink = () => {
+        const winkPath = document.getElementById('globe-wink');
+        winkPath.parentElement.classList.add('wink-animation');
+        winkPath.addEventListener('animationend', () => {
+            winkPath.parentElement.classList.remove('wink-animation');
+        }, { once: true });
+    };
+
+    // --- 4. EVENT HANDLERS ---
+
+    const onDragStart = (e) => {
+        isDragging = true;
+        startX = e.pageX || e.touches[0].pageX;
+        carousel.classList.add('is-dragging');
+        carousel.style.transition = 'none'; // Disable transition while dragging for responsiveness
+    };
+
+    const onDragMove = (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX || e.touches[0].pageX;
+        const deltaX = x - startX;
+        
+        // Adjust sensitivity of dragging
+        const rotationDelta = deltaX * 0.5; 
+        
+        currentAngle += rotationDelta;
+        totalRotation += rotationDelta;
+        
+        // Check for easter egg trigger
+        if (Math.abs(totalRotation) > 720) { // Trigger after two full loops
+            triggerWink();
+            totalRotation = 0; // Reset
+        }
+
+        updateCarousel(true);
+        startX = x;
+    };
+
+    const onDragEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        carousel.classList.remove('is-dragging');
+        carousel.style.transition = ''; // Re-enable transitions for snapping
+
+        // Snap to the nearest language item
+        const anglePerItem = 360 / LANGUAGES.length;
+        const closestIndex = Math.round(currentAngle / anglePerItem);
+        currentAngle = closestIndex * anglePerItem;
+        
+        updateCarousel();
+    };
+    
+    // --- 5. INITIALIZATION ---
+
+    // Setup Event Listeners
+    trigger.addEventListener('click', togglePopup);
+    
+    // Close popup if clicking outside of it
+    document.addEventListener('click', (e) => {
+        if (isPopupOpen && !container.contains(e.target)) {
+            togglePopup();
+        }
+    });
+    
+    // Close popup with Escape key
+    document.addEventListener('keydown', (e) => {
+        if (isPopupOpen && e.key === 'Escape') {
+            togglePopup();
+        }
+    });
+
+    // Drag and Touch events for the carousel
+    carousel.addEventListener('mousedown', onDragStart);
+    document.addEventListener('mousemove', onDragMove);
+    document.addEventListener('mouseup', onDragEnd);
+    
+    carousel.addEventListener('touchstart', onDragStart, { passive: true });
+    document.addEventListener('touchmove', onDragMove);
+    document.addEventListener('touchend', onDragEnd);
+
+    // Initial Setup
+    setupCarousel();
+    applyTranslations(currentLang);
+});
+</script>
+
+</body>
+</html>

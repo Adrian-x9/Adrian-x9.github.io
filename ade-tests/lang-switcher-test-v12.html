@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Czysta Karuzela 3D</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .scene {
+            width: 400px;
+            height: 250px;
+            perspective: 1000px;
+        }
+
+        .world {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-d;
+            cursor: grab;
+        }
+
+        .world.is-dragging {
+            cursor: grabbing;
+        }
+        
+        .item {
+            position: absolute;
+            top: calc(50% - 25px);
+            height: 50px;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            background-color: #2c2c2c;
+            border: 1px solid #444;
+            border-radius: 8px;
+            
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            
+            cursor: pointer;
+            backface-visibility: hidden;
+            user-select: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="scene">
+        <div class="world"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Szerokość kafelka. Zmieniając ją, reszta dopasuje się automatycznie.
+            const tileWidth = 70;
+
+            const countries = [
+                { code: 'AU', name: 'Australia' }, { code: 'BR', name: 'Brazylia' },
+                { code: 'CA', name: 'Kanada' }, { code: 'CN', name: 'Chiny' },
+                { code: 'DE', name: 'Niemcy' }, { code: 'ES', name: 'Hiszpania' },
+                { code: 'FR', name: 'Francja' }, { code: 'GB', name: 'Wielka Brytania' },
+                { code: 'IN', name: 'Indie' }, { code: 'IT', name: 'Włochy' },
+                { code: 'JP', name: 'Japonia' }, { code: 'MX', name: 'Meksyk' },
+                { code: 'PL', name: 'Polska' }, { code: 'ZA', name: 'RPA' },
+                { code: 'US', name: 'USA' }
+            ];
+
+            const world = document.querySelector('.world');
+            const totalItems = countries.length;
+            
+            // Precyzyjne matematyczne obliczenie promienia.
+            // Gwarantuje, że krawędzie kafelków będą się stykać w przestrzeni 3D, tworząc idealny okrąg.
+            const radius = (tileWidth / 2) / Math.tan(Math.PI / totalItems);
+            
+            countries.forEach((country, index) => {
+                const item = document.createElement('div');
+                item.className = 'item';
+                
+                // Ustawienie szerokości i wycentrowania
+                item.style.width = `${tileWidth}px`;
+                item.style.left = `calc(50% - ${tileWidth / 2}px)`;
+
+                // Dodanie samego kodu państwa (bez flagi)
+                item.innerText = country.code;
+                item.setAttribute('aria-label', country.name);
+
+                // Ustawienie każdego elementu na okręgu
+                const angle = (360 / totalItems) * index;
+                item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+                world.appendChild(item);
+            });
+
+            // Logika przeciągania (bez zmian)
+            let currentRotationY = 0;
+            let isDragging = false;
+            let startX = 0;
+            let lastX = 0;
+            let velocity = 0;
+            let animationFrame = null;
+            const friction = 0.95;
+            const rotationSensitivity = 0.4;
+
+            const updateRotation = () => {
+                world.style.transform = `rotateY(${currentRotationY}deg)`;
+            };
+
+            const inertiaAnimate = () => {
+                currentRotationY += velocity;
+                velocity *= friction;
+                updateRotation();
+                if (Math.abs(velocity) > 0.1) {
+                    animationFrame = requestAnimationFrame(inertiaAnimate);
+                }
+            };
+
+            const onDragStart = (e) => {
+                e.preventDefault();
+                isDragging = true;
+                world.classList.add('is-dragging');
+                cancelAnimationFrame(animationFrame);
+                startX = e.clientX || e.touches[0].clientX;
+                lastX = startX;
+                window.addEventListener('mousemove', onDragMove);
+                window.addEventListener('mouseup', onDragEnd);
+                window.addEventListener('touchmove', onDragMove, { passive: false });
+                window.addEventListener('touchend', onDragEnd);
+            };
+
+            const onDragMove = (e) => {
+                if (!isDragging) return;
+                const currentX = e.clientX || e.touches[0].clientX;
+                const deltaX = currentX - lastX;
+                velocity = deltaX * rotationSensitivity;
+                currentRotationY += velocity;
+                lastX = currentX;
+                updateRotation();
+            };
+
+            const onDragEnd = () => {
+                isDragging = false;
+                world.classList.remove('is-dragging');
+                window.removeEventListener('mousemove', onDragMove);
+                window.removeEventListener('mouseup', onDragEnd);
+                window.removeEventListener('touchmove', onDragMove);
+                window.removeEventListener('touchend', onDragEnd);
+                if (Math.abs(velocity) > 0.1) {
+                    inertiaAnimate();
+                }
+            };
+
+            world.addEventListener('mousedown', onDragStart);
+            world.addEventListener('touchstart', onDragStart, { passive: true });
+        });
+    </script>
+</body>
+</html>
