@@ -17,10 +17,14 @@
                             }
                         });
                         location.reload();
-                    }
-                }, 8000); // 8-second timeout
+                        // patch#2
+ 
+                        }
+                    }, 30000); // Zwiększony timeout do 30 sekund
 
-                window.addEventListener('load', () => {
+                    window.addEventListener('load', () => {
+
+                    // #patch#2
                     clearTimeout(loadTimeout);
                     sessionStorage.removeItem('visudir_load_retry');
                 });
