@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karuzela 3D z Inercją</title>
+    <title>3D Carousel with Inertia</title>
     <style>
         body {
             display: flex;
@@ -22,7 +22,16 @@
         .scene {
             width: 250px;
             height: 250px;
-            perspective: 1200px;
+            perspective: 1000px; /* Zmniejszona perspektywa dla lepszego efektu */
+        }
+
+        /* Media query dla mniejszych ekranów (mobilnych) */
+        @media (max-width: 600px) {
+            .scene {
+                width: 220px;
+                height: 220px;
+                perspective: 800px;
+            }
         }
 
         .world {
@@ -85,27 +94,30 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Domyślny język to angielski, lista posortowana alfabetycznie
             const countries = [
-                { code: 'br', name: 'Brazylia (portugalski)' },
-                { code: 'cn', name: 'Chiny (mandaryński)' },
-                { code: 'cz', name: 'Czechy (czeski)' },
-                { code: 'fr', name: 'Francja (francuski)' },
-                { code: 'es', name: 'Hiszpania (hiszpański)' },
-                { code: 'in', name: 'Indie (hindi)' },
-                { code: 'id', name: 'Indonezja (indonezyjski)' },
-                { code: 'jp', name: 'Japonia (japoński)' },
-                { code: 'de', name: 'Niemcy (niemiecki)' },
-                { code: 'pl', name: 'Polska (polski)' },
-                { code: 'sg', name: 'Singapur (angielski)' }, // Dodany Singapur
-                { code: 'sk', name: 'Słowacja (słowacki)' },
-                { code: 'us', name: 'USA (angielski)' },
-                { code: 'ua', name: 'Ukraina (ukraiński)' },
-                { code: 'it', name: 'Włochy (włoski)' }
+                { code: 'br', name: 'Brazil (Portuguese)' },
+                { code: 'cn', name: 'China (Mandarin)' },
+                { code: 'cz', name: 'Czech Republic (Czech)' },
+                { code: 'fr', name: 'France (French)' },
+                { code: 'de', name: 'Germany (German)' },
+                { code: 'in', name: 'India (Hindi)' },
+                { code: 'id', name: 'Indonesia (Indonesian)' },
+                { code: 'it', name: 'Italy (Italian)' },
+                { code: 'jp', name: 'Japan (Japanese)' },
+                { code: 'pl', name: 'Poland (Polish)' },
+                { code: 'sg', name: 'Singapore (English)' },
+                { code: 'sk', name: 'Slovakia (Slovak)' },
+                { code: 'es', name: 'Spain (Spanish)' },
+                { code: 'ua', name: 'Ukraine (Ukrainian)' },
+                { code: 'us', name: 'USA (English)' }
             ];
 
             const world = document.querySelector('.world');
             const totalItems = countries.length;
-            const radius = 220;
+            
+            // Dynamiczny promień karuzeli w zależności od szerokości ekranu
+            const radius = window.innerWidth <= 600 ? 170 : 220;
             let hasDragged = false;
 
             countries.forEach((country, index) => {
@@ -129,7 +141,7 @@
 
                 item.addEventListener('click', () => {
                     if (!hasDragged) {
-                        alert(`Wybrano kraj: ${country.name}`);
+                        alert(`Selected country: ${country.name}`); // Komunikat w języku angielskim
                     }
                 });
                 world.appendChild(item);
