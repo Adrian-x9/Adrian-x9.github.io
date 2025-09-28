@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>VisuDir - Finalna Poprawka</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      padding: 40px;
+      margin: 0;
+    }
+
+    .main-container {
+      position: relative;
+      width: 800px;
+      min-height: 50px;
+    }
+    
+    .panel, .static-panel {
+        min-height: 50px;
+        padding: 12px 20px;
+        border: 1px solid #bbb;
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .panel-wrapper {
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 10;
+    }
+
+    .panel {
+      justify-content: flex-end; 
+      gap: 12px;
+      transition: gap 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .static-panel {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 800px;
+      z-index: 5;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .text-line {
+      font-size: 14px;
+      color: #333;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .visible-text {
+      width: 300px; /* Stała szerokość zapewnia, że tekst się nie rusza */
+    }
+
+    .hide-on-collapse {
+      max-width: 150px; /* Szerokość początkowa */
+      opacity: 1;
+      transition: max-width 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+                  opacity 0.3s ease-out,
+                  margin-right 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .collapsed .panel {
+      gap: 0;
+    }
+
+    .collapsed .hide-on-collapse {
+      max-width: 0;
+      opacity: 0;
+      margin-right: -12px;
+    }
+
+    /* --- POPRAWKA TUTAJ --- */
+    .toggle-button {
+      position: absolute;
+      top: 50%;
+      /* Usunięto 'left: 0' i zastąpiono stałą pozycją od prawej strony.
+         Przycisk jest teraz zakotwiczony względem statycznej prawej krawędzi,
+         a nie ruchomej lewej. */
+      right: 502px; /* 150px (tekst) + 12px (gap) + 300px (tekst) + 20px*2 (padding) */
+      transform: translate(50%, -50%); /* Poprawiony transform dla pozycjonowania 'right' */
+      
+      background: #fff;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1000;
+      padding: 0;
+      border: 1px solid #bbb;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+    }
+
+    .arrow {
+      transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      font-weight: bold;
+      color: #333;
+      line-height: 1;
+      font-size: 20px;
+    }
+
+    .collapsed .arrow {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    
+    <div class="panel-wrapper" id="wrapper">
+      <div class="panel" id="panel">
+        <span class="text-line hide-on-collapse">
+          Ta część znika,
+        </span>
+        <span class="text-line visible-text">
+          a ta część tekstu stoi w miejscu.
+        </span>
+      </div>
+      <button class="toggle-button" onclick="togglePanel()">
+        <span class="arrow">&#x276F;</span>
+      </button>
+    </div>
+
+    <div class="static-panel">
+      Ten panel jest pod spodem i jest całkowicie nieruchomy.
+    </div>
+  </div>
+
+  <script>
+    function togglePanel() {
+      document.getElementById('wrapper').classList.toggle('collapsed');
+    }
+  </script>
+
+</body>
+</html>

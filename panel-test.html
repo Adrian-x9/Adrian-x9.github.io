@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel Test</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background: #1a1a1a;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .wrapper {
+      position: relative;
+      width: 900px;
+      height: 200px;
+    }
+
+    .panel-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 900px;
+      background: #2c2c2c;
+      color: white;
+      transition: width 0.4s ease;
+      z-index: 2;
+      overflow: hidden;
+    }
+
+    .panel-left.collapsed {
+      width: 600px;
+    }
+
+    .panel-right {
+      position: absolute;
+      top: 0;
+      left: 600px;
+      height: 100%;
+      width: 900px;
+      background: #444;
+      color: white;
+      z-index: 1;
+      overflow: hidden;
+      padding: 20px;
+    }
+
+    .content-left {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 900px;
+      height: 100%;
+      padding: 20px;
+      pointer-events: none;
+    }
+
+    .toggle-arrow {
+      position: absolute;
+      top: 50%;
+      right: -20px; /* wystaje poza panel */
+      transform: translateY(-50%) rotate(180deg); /* domyślnie < */
+      width: 40px;
+      height: 40px;
+      background: white;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="8,5 16,12 8,19" fill="black"/></svg>') center/contain no-repeat;
+      -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><polygon points="8,5 16,12 8,19" fill="black"/></svg>') center/contain no-repeat;
+      cursor: pointer;
+      transition: transform 0.4s ease;
+      z-index: 3;
+    }
+
+    .panel-left.collapsed .toggle-arrow {
+      transform: translateY(-50%) rotate(0deg); /* po zwinięciu > */
+    }
+
+    .content-right {
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="panel-right">
+      <div class="content-right">
+        <h2>Prawy panel</h2>
+        <p>
+          Ten panel jest częściowo zasłonięty przez lewy panel. Po jego zwinięciu odsłania się w całości. Zawiera dużo treści, aby pokazać efekt zasłaniania.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
+          Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.
+        </p>
+      </div>
+    </div>
+
+    <div class="panel-left" id="panelLeft">
+      <div class="content-left">
+        <h2>Lewy panel</h2>
+        <p>
+          Ten panel zasłania 33% prawego. Kliknij strzałkę po prawej stronie, aby go zwinąć. Zawartość pozostaje stała — nie łamie się ani nie rozpycha.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor.
+          Cras elementum ultrices diam. Maecenas ligula massa, varius a, semper congue, euismod non, mi.
+        </p>
+      </div>
+      <div class="toggle-arrow" title="Zwiń/Rozwiń"></div>
+    </div>
+  </div>
+
+  <script>
+    const panel = document.getElementById('panelLeft');
+    const arrow = panel.querySelector('.toggle-arrow');
+
+    arrow.addEventListener('click', () => {
+      panel.classList.toggle('collapsed');
+    });
+  </script>
+</body>
+</html>
