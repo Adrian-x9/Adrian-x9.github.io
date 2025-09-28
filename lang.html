@@ -22,16 +22,7 @@
         .scene {
             width: 250px;
             height: 250px;
-            perspective: 1000px; /* Zmniejszona perspektywa dla lepszego efektu */
-        }
-
-        /* Media query dla mniejszych ekranów (mobilnych) */
-        @media (max-width: 600px) {
-            .scene {
-                width: 220px;
-                height: 220px;
-                perspective: 800px;
-            }
+            perspective: 1000px;
         }
 
         .world {
@@ -83,6 +74,30 @@
             object-fit: cover;
             flex-shrink: 0;
         }
+
+        /* --- STYLOWANIE MOBILE FIRST --- */
+        @media (max-width: 600px) {
+            .scene {
+                width: 220px;
+                height: 220px;
+                perspective: 700px; /* Zmniejszona perspektywa dla lepszego efektu */
+            }
+
+            /* Skalowanie samych paneli i ich zawartości */
+            .item {
+                width: 80px;
+                height: 42px;
+                top: calc(50% - 21px);  /* Połowa nowej wysokości */
+                left: calc(50% - 40px); /* Połowa nowej szerokości */
+                font-size: 12px;
+                gap: 5px;
+            }
+
+            .flag-icon {
+                width: 16px;
+                height: 16px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -94,7 +109,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Domyślny język to angielski, lista posortowana alfabetycznie
             const countries = [
                 { code: 'br', name: 'Brazil (Portuguese)' },
                 { code: 'cn', name: 'China (Mandarin)' },
@@ -116,8 +130,8 @@
             const world = document.querySelector('.world');
             const totalItems = countries.length;
             
-            // Dynamiczny promień karuzeli w zależności od szerokości ekranu
-            const radius = window.innerWidth <= 600 ? 170 : 220;
+            // Dynamiczny promień, lepiej dopasowany do mniejszej karuzeli
+            const radius = window.innerWidth <= 600 ? 150 : 220;
             let hasDragged = false;
 
             countries.forEach((country, index) => {
@@ -141,7 +155,7 @@
 
                 item.addEventListener('click', () => {
                     if (!hasDragged) {
-                        alert(`Selected country: ${country.name}`); // Komunikat w języku angielskim
+                        alert(`Selected country: ${country.name}`);
                     }
                 });
                 world.appendChild(item);
