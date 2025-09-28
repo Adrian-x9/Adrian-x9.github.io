@@ -93,6 +93,7 @@ let isMinimized = false,
 let guideDimensionsCache = {};
 let pausedTime = 0;
 let tappedGuide = null;
+let currentTheme = 'light';
 
 const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -112,23 +113,18 @@ const fileInput = document.getElementById("fileInput"),
   fullscreenBtnLightbox = document.getElementById("fullscreenBtnLightbox"),
   lightboxControls = document.getElementById("lightbox-controls"),
   slideshowPlayBtn = document.getElementById("slideshow-play"),
-  headerLogo = document.getElementById("header-logo"),
   logoLink = document.getElementById("logoLink"),
   bgVideo = document.getElementById("bg-video"),
   bgVideoSource = document.getElementById("bg-video-source"),
-  videoBtn = document.getElementById("videoBtn"),
   lightboxLabelsBtn = document.getElementById("lightbox-labelsBtn"),
   lightboxFxBtn = document.getElementById("lightbox-fxBtn"),
-  mainResetBtn = document.getElementById("mainResetBtn"),
-  displayPanel = document.getElementById("displayPanel");
+  mainResetBtn = document.getElementById("mainResetBtn");
 
 function initializeTheme() {
   const storedTheme = localStorage.getItem("visudir_theme");
-  // FIX: Usunięcie odwołania do nieistniejącego config.global
   const theme = storedTheme || "light";
   const isDark = theme === "dark";
   document.documentElement.classList.toggle("dark-mode", isDark);
-  document.body.classList.toggle("dark-mode", isDark);
   if (!storedTheme) {
     localStorage.setItem("visudir_theme", theme);
   }
@@ -137,11 +133,6 @@ function initializeTheme() {
 
 // --- START: Logika liczników czasu i bezczynności ---
 
-/**
- * Formatuje czas podany w milisekundach do czytelnego formatu HH:MM:SS.
- * @param {number} ms - Czas w milisekundach.
- * @returns {string} Sformatowany czas.
- */
 function formatTime(ms) {
   if (ms < 0) ms = 0;
   const totalSeconds = Math.floor(ms / 1000);
@@ -152,11 +143,6 @@ function formatTime(ms) {
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-/**
- * Centralna funkcja do niezawodnej aktualizacji licznika pozycji (v3 - Poprawiona).
- * @param {number} count - Aktualna (filtrowana) liczba pozycji.
- * @param {number} total - Całkowita liczba pozycji.
- */
 function updateGuideCount(count, total) {
   try {
     const displayEl = document.getElementById("guideCountDisplay");
@@ -172,17 +158,10 @@ function updateGuideCount(count, total) {
   }
 }
 
-/**
- * Resetuje znacznik czasu ostatniej aktywności użytkownika.
- * Ta funkcja jest wywoływana przez ruch myszy, kliknięcie lub naciśnięcie klawisza.
- */
 function resetIdleTimer() {
   lastActivityTime = new Date();
 }
 
-/**
- * Aktualizuje wyświetlanie liczników czasu sesji i bezczynności (v3).
- */
 function updateTimers() {
   const now = new Date();
   const sessionDuration = now - sessionStartTime;
@@ -191,7 +170,6 @@ function updateTimers() {
   const idleTimeEl = document.querySelector("#timeDisplay .idle-time");
   const sessionTimeEl = document.querySelector("#timeDisplay .session-time");
 
-  // Aktualizuje tylko wartości czasu; etykiety są w HTML i tłumaczeniach
   if (idleTimeEl && sessionTimeEl) {
     idleTimeEl.textContent = formatTime(idleDuration);
     sessionTimeEl.textContent = formatTime(sessionDuration);
@@ -203,7 +181,6 @@ function getMoonPhase(date = new Date()) {
   const month = date.getMonth() + 1;
   const day = date.getDate();
 
-  // Prosty i skuteczny algorytm astronomiczny
   let r = year % 100;
   r %= 19;
   if (r > 9) {
@@ -227,27 +204,18 @@ function updateRealTimeClock() {
   const hours = now.getHours().toString().padStart(2, "0");
   const minutes = now.getMinutes().toString().padStart(2, "0");
 
-  // Update Clock
   const clockEl = document.getElementById("currentTimeDisplay");
   if (clockEl) {
     clockEl.innerHTML = `<b>${hours}:${minutes}</b> ${year}-${month}-${day}`;
   }
 
-  // NOWA CZĘŚĆ: Aktualizacja fazy księżyca
   const moonPhaseEl = document.getElementById("moonPhaseDisplay");
   if (moonPhaseEl) {
     const moonPhases = [
-      "🌑\uFE0E",
-      "🌒\uFE0E",
-      "🌓\uFE0E",
-      "🌔\uFE0E",
-      "🌕\uFE0E",
-      "🌖\uFE0E",
-      "🌗\uFE0E",
-      "🌘\uFE0E",
+      "🌑\uFE0E", "🌒\uFE0E", "🌓\uFE0E", "🌔\uFE0E",
+      "🌕\uFE0E", "🌖\uFE0E", "🌗\uFE0E", "🌘\uFE0E",
     ];
     const phaseIndex = getMoonPhase(now);
-    // NOWA ZMIANA: Dodajemy tekst "Księżyc " przed ikoną
     moonPhaseEl.innerHTML = "Księżyc&nbsp;" + moonPhases[phaseIndex];
   }
 }
@@ -270,8 +238,8 @@ function initializeBackgroundVideo(theme) {
         : config.paths.videoBgDarkUrlBase;
     const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
     bgVideoSource.src = videoSrc;
-    // FIX: Zmiana load() na play() i obsługa błędu AbortError
     bgVideo.load();
+    bgVideo.muted = isAudioMuted; 
     const playPromise = bgVideo.play();
     if (playPromise !== undefined) {
       playPromise.catch((error) => {
@@ -297,17 +265,19 @@ function initializeBackgroundVideo(theme) {
 }
 
 function updateBackgroundVideoVisibility(forceShow = false) {
-  const isVideoVisible = videoBgState !== "off";
-  if (isVideoVisible) {
-    if (bgVideo.style.display !== "block" || forceShow) {
-      bgVideo.style.display = "block";
-      initializeBackgroundVideo(currentTheme);
+    if (!bgVideo) return;
+    const isVideoVisible = videoBgState !== "off";
+    if (isVideoVisible) {
+        if (bgVideo.style.display !== "block" || forceShow) {
+            bgVideo.style.display = "block";
+            initializeBackgroundVideo(currentTheme);
+        }
+    } else {
+        bgVideo.style.display = "none";
+        document.body.classList.remove("video-ready");
     }
-  } else {
-    bgVideo.style.display = "none";
-    document.body.classList.remove("video-ready");
-  }
 }
+
 
 function saveToLocalStorage(key, value) {
   try {
@@ -346,11 +316,6 @@ function loadUiSettings() {
   videoBgState =
     savedVideoState || (config.pageSettings.defaultVideoBg ? "playing" : "off");
 
-  const videoExpanded =
-    JSON.parse(getFromLocalStorage("video_expanded")) ||
-    config.pageSettings.defaultVideoExpanded;
-  videoBtn.classList.toggle("expanded", videoExpanded);
-
   const savedLabels = getFromLocalStorage("labels_visible");
   areLabelsVisible =
     savedLabels !== null
@@ -371,7 +336,6 @@ function loadUiSettings() {
 
   const videoShuffle =
     JSON.parse(getFromLocalStorage("video_shuffle_enabled")) || false;
-  // FIX: Zapobieganie AbortError przez oczekiwanie na gotowość wideo
   if (videoShuffle && videoBgState === "playing") {
     bgVideo.addEventListener(
       "canplay",
@@ -383,18 +347,6 @@ function loadUiSettings() {
       }
     );
   }
-
-  const hoverOverlay =
-    getFromLocalStorage("hover_overlay_color") ||
-    config.pageSettings.hoverOverlayColor;
-  const hoverText =
-    getFromLocalStorage("hover_text_color") ||
-    config.pageSettings.hoverTextColor;
-  document.documentElement.style.setProperty(
-    "--hover-overlay-color",
-    hoverOverlay
-  );
-  document.documentElement.style.setProperty("--hover-text-color", hoverText);
 
   generatorMode =
     getFromLocalStorage("generator_mode") ||
@@ -523,7 +475,7 @@ function getGuideOrientation(guide) {
 async function processData(text) {
   const lines = text.split(/\r?\n/);
   guides = [];
-  updateGuideCount(guides.length, guides.length); // Aktualizuje licznik po wczytaniu danych
+  updateGuideCount(guides.length, guides.length);
   for (const line of lines) {
     const match = line.match(
       /^(\d{2}\.\d{2}\.\d{4})\s+(\d{2}:\d{2})\s+((?:<DIR>)|\d+)\s+(.+)$/i
@@ -578,20 +530,15 @@ async function processData(text) {
     .map((guide) => getGuideOrientation(guide));
   await Promise.all(orientationPromises);
 
-  // --- POCZĄTEK NOWEGO FRAGMENTU ---
   try {
-    // Aktualizuje całkowitą liczbę pozycji zaraz po ich zliczeniu
     const guideCountDisplay = document.getElementById("guideCountDisplay");
     if (guideCountDisplay) {
       const currentCount = (filteredGuides && filteredGuides.length) || 0;
-      guideCountDisplay.innerHTML = lang.guideCounter
-        .replace("{count}", currentCount)
-        .replace("{total}", guides.length);
+      updateGuideCount(currentCount, guides.length);
     }
   } catch (e) {
     console.error("Błąd aktualizacji licznika po przetworzeniu danych:", e);
   }
-  // --- KONIEC NOWEGO FRAGMENTU ---
 }
 
 function updateFormatFilter() {
@@ -653,7 +600,7 @@ function applyFilters() {
 }
 
 async function init(data) {
-  fileInputLabel.style.display = "none";
+  if (fileInputLabel) fileInputLabel.style.display = "none";
   await processData(data);
   updateFormatFilter();
 
@@ -693,7 +640,8 @@ async function init(data) {
 function startLogoRotator() {
   const logoImg1 = document.getElementById("logo-img-1");
   const logoImg2 = document.getElementById("logo-img-2");
-  if (!logoImg1 || !logoImg2) return;
+  const headerLogoLink = document.getElementById("logoLink");
+  if (!logoImg1 || !logoImg2 || !headerLogoLink) return;
 
   let activeImg = logoImg1;
   let nextImg = logoImg2;
@@ -702,28 +650,24 @@ function startLogoRotator() {
     const isDark = document.documentElement.classList.contains("dark-mode");
     const newLogoData = config.logoRotator.logos[currentLogoIndex];
 
-    // Ustawia nowe logo w ukrytym tagu i aktualizuje link
     nextImg.src = isDark ? newLogoData.srcDark : newLogoData.srcLight;
     nextImg.alt = newLogoData.alt;
-    logoLink.href = newLogoData.href;
+    headerLogoLink.href = newLogoData.href;
 
-    // Zamienia klasy, aby wykonać animację
     activeImg.classList.remove("active");
     nextImg.classList.add("active");
 
-    // Przygotowuje na następną iterację
     [activeImg, nextImg] = [nextImg, activeImg];
   };
 
-  // Ustawienie początkowe
   currentLogoIndex = 0;
   const initialLogo = config.logoRotator.logos[currentLogoIndex];
   const isDarkInitial =
     document.documentElement.classList.contains("dark-mode");
   activeImg.src = isDarkInitial ? initialLogo.srcDark : initialLogo.srcLight;
   activeImg.alt = initialLogo.alt;
-  logoLink.href = initialLogo.href;
-  activeImg.classList.add("active"); // Ustawia pierwsze logo jako widoczne
+  headerLogoLink.href = initialLogo.href;
+  activeImg.classList.add("active"); 
 
   if (
     !config.logoRotator ||
@@ -741,7 +685,7 @@ function startLogoRotator() {
 }
 
 function applyLanguage() {
-  updateGuideCount(0, 0); // Ustawia stan początkowy licznika
+  updateGuideCount(0, 0);
   document.querySelectorAll("[data-lang]").forEach((el) => {
     const key = el.dataset.lang;
     if (lang[key]) el.textContent = lang[key];
@@ -758,7 +702,6 @@ function applyLanguage() {
   document.getElementById("pageTitle").textContent =
     config.pageSettings.pageTitle || lang.pageTitle;
 
-  // --- POCZĄTEK FINALNEGO FRAGMENTU DLA applyLanguage ---
   try {
     const langText = config.language.current.toUpperCase();
     const langEl = document.getElementById("langDisplay");
@@ -766,12 +709,23 @@ function applyLanguage() {
   } catch (e) {
     console.error("Błąd podczas ustawiania paska statusu:", e);
   }
-  // --- KONIEC FINALNEGO FRAGMENTU ---
+}
+
+function initializeCurtainControls() {
+    const curtainToggleButton = document.getElementById('curtain-toggle-btn');
+    const topRow = document.querySelector('.deck-top-row');
+
+    if (curtainToggleButton && topRow) {
+        curtainToggleButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        curtainToggleButton.addEventListener('click', () => {
+            topRow.classList.toggle('filters-expanded');
+        });
+    }
 }
 
 window.onload = function () {
   applyLanguage();
-  fileInputLabel.style.display = "none";
+  if(fileInputLabel) fileInputLabel.style.display = "none";
   document
     .querySelectorAll(".version-display")
     .forEach((el) => (el.textContent = config.version));
@@ -787,15 +741,16 @@ window.onload = function () {
   }
 
   currentTheme = initializeTheme();
-  if (config.pageSettings.showMiniLogo) {
+  if (config.pageSettings.showMiniLogo && logoLink) {
     startLogoRotator();
-  } else {
-    document.getElementById("logoLink").style.display = "none";
+  } else if (logoLink) {
+    logoLink.style.display = "none";
   }
-  document.getElementById("backButton").style.display = config.pageSettings
-    .showBackButton
-    ? "flex"
-    : "none";
+  const backButton = document.getElementById("backButton");
+  if(backButton) {
+      backButton.style.display = config.pageSettings.showBackButton ? "flex" : "none";
+  }
+
   loadUiSettings();
 
   updateBackgroundVideoVisibility(true);
@@ -818,7 +773,7 @@ window.onload = function () {
     .getElementById("lightbox-minimizeBtn")
     .addEventListener("click", toggleLightboxMinimize);
 
-  if (dataFromFile && dataFromFile.trim().length > 0) {
+  if (typeof dataFromFile !== 'undefined' && dataFromFile.trim().length > 0) {
     init(dataFromFile);
   } else {
     fetch(config.paths.databaseFileName)
@@ -829,7 +784,7 @@ window.onload = function () {
           `Automatyczne ładowanie pliku '${config.paths.databaseFileName}' nie powiodło się. Błąd:`,
           e
         );
-        fileInputLabel.style.display = "flex";
+        if(fileInputLabel) fileInputLabel.style.display = "flex";
         const preloader = document.getElementById("preloader");
         if (preloader) {
           preloader.classList.add("fade-out");
@@ -840,32 +795,34 @@ window.onload = function () {
   initializeDisplayPanel();
   initializeMobileHover();
   initialize3dHoverEffect();
-  // --- POCZĄTEK NOWEGO FRAGMENTU ---
+  initializeCurtainControls();
 
-  // Ustawienie początkowego czasu dla obu liczników
   sessionStartTime = new Date();
   lastActivityTime = new Date();
 
-  // Uruchomienie cyklicznej aktualizacji co sekundę
   setInterval(updateTimers, 1000);
 
-  // Nasłuchiwanie na aktywność użytkownika w celu resetowania licznika bezczynności
   ["mousedown", "mousemove", "keydown", "touchstart"].forEach((event) =>
     window.addEventListener(event, resetIdleTimer)
   );
 
-  // --- KONIEC NOWEGO FRAGMENTU ---
+  const controlPanel = document.querySelector('.control-panel');
+  if (controlPanel) {
+      controlPanel.classList.add('animated-control-panel');
+  }
 };
+
 function toggleMinimizeView() {
-  const controls = document.querySelector(".controls");
   const minimizeBtn = document.getElementById("minimizeBtn");
   isMinimized = !isMinimized;
 
-  // Przełączamy klasę na samym przycisku. CSS zajmie się resztą.
   minimizeBtn.classList.toggle("minimized", isMinimized);
-
-  controls.classList.toggle("minimized-view", isMinimized);
   minimizeBtn.title = isMinimized ? lang.maximizeBtn : lang.minimizeBtn;
+  const icon = minimizeBtn.querySelector('i');
+  if (icon) {
+      icon.className = isMinimized ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+  }
+
 
   const topHeader = document.querySelector(".top-header");
   const footer = document.querySelector(".footer");
@@ -1047,7 +1004,6 @@ function createGuideHtml(guide) {
                     </a>
                 `;
   } else {
-    // Obejmuje widok 'full', 'text-only' i 'masonry'
     const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
     return `
                     ${titleHtml}
@@ -1067,7 +1023,6 @@ const goToPage = (pageNum) => {
   pageNum = Math.max(1, Math.min(totalPages, pageNum));
   const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
 
-  // FIX: Natychmiastowe wywołanie zmiany wysokości, aby zsynchronizować animację pionową z poziomą.
   updateWrapperHeightForPage(pageNum);
 
   guideList.scrollTo({
@@ -1118,10 +1073,6 @@ function renderGuides(sourceArray = null) {
   guideList.style.setProperty("--grid-rows", selectedRowCount);
   guideList.style.setProperty("--box-width", `${newWidth}px`);
 
-  const wrapper = document.querySelector(".guide-list-wrapper");
-  const guideGap = 20;
-  const estimatedItemHeight = config.pageSettings.estimatedItemHeight;
-
   if (sourceArray) {
     source.forEach((guide, index) => {
       const div = document.createElement("div");
@@ -1134,16 +1085,14 @@ function renderGuides(sourceArray = null) {
       void guideList.offsetWidth;
     });
     pagination.classList.remove("visible");
-    document.getElementById("guideCountDisplay").innerHTML = lang.guideCounter
-      .replace("{count}", source.length)
-      .replace("{total}", guides.length);
+    updateGuideCount(source.length, guides.length);
     return;
   }
 
   const itemWidth = newWidth;
   const columns =
     Math.floor(
-      (guideList.clientWidth + guideGap) / (itemWidth + guideGap) + 0.0001
+      (guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001
     ) || 1;
   const itemsPerPage = columns * selectedRowCount;
 
@@ -1179,7 +1128,7 @@ function renderGuides(sourceArray = null) {
 
   setupLazyLoading(pagesCache);
   renderPagination();
-  updateGuideCount(source.length, guides.length); // Aktualizuje licznik po każdym filtrowaniu/renderowaniu
+  updateGuideCount(source.length, guides.length);
 
   if (isInitialLoad) {
     isInitialLoad = false;
@@ -1213,7 +1162,6 @@ function setupLazyLoading(pages) {
                   div.innerHTML = createGuideHtml(guide);
                   pageDiv.appendChild(div);
                 });
-                // Uruchomienie Masonry dla nowo załadowanej strony
                 if (currentViewMode === "masonry" && pageNum > 1) {
                   setTimeout(() => applyMasonryLayout(pageNum), 50);
                 }
@@ -1236,35 +1184,33 @@ function setupLazyLoading(pages) {
 }
 
 function renderPagination() {
-  const paginationContainer = document.getElementById("pagination");
+  pagination.innerHTML = `
+    <div class="pagination-controls">
+        <button id="firstPageBtn" title="${lang.paginationFirst}"><i class="fas fa-fast-backward"></i></button>
+        <button id="prevPageBtn" title="${lang.paginationPrev}"><i class="fas fa-chevron-left"></i></button>
+        <button id="paginationResetBtn" class="pagination-action-btn" title="${lang.paginationReset}"><i class="fas fa-undo"></i></button>
+        <div class="pagination-center">
+            <div class="page-info">
+                <input type="number" id="pageInput" min="1" value="1" class="page-input">
+                <span id="pageInfoText" class="page-info-text">/ 1</span>
+            </div>
+            <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
+        </div>
+        <button id="paginationCarouselBtn" class="pagination-action-btn" title="${lang.paginationCarouselStart}"><i class="fas fa-play"></i></button>
+        <button id="nextPageBtn" title="${lang.paginationNext}"><i class="fas fa-chevron-right"></i></button>
+        <button id="lastPageBtn" title="${lang.paginationLast}"><i class="fas fa-fast-forward"></i></button>
+    </div>
+  `;
 
-  paginationContainer.innerHTML = `
-                <div class="pagination-controls">
-                    <button id="firstPageBtn" title="${lang.paginationFirst}"><i class="fas fa-fast-backward"></i></button>
-                    <button id="prevPageBtn" title="${lang.paginationPrev}"><i class="fas fa-chevron-left"></i></button>
-                    <button id="paginationResetBtn" class="pagination-action-btn" title="${lang.paginationReset}"><i class="fas fa-undo"></i></button>
-                    <div class="pagination-center">
-                        <div class="page-info">
-                            <input type="number" id="pageInput" min="1" value="1" class="page-input">
-                            <span id="pageInfoText" class="page-info-text">/ 1</span>
-                        </div>
-                        <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
-                    </div>
-                    <button id="paginationCarouselBtn" class="pagination-action-btn" title="${lang.paginationCarouselStart}"><i class="fas fa-play"></i></button>
-                    <button id="nextPageBtn" title="${lang.paginationNext}"><i class="fas fa-chevron-right"></i></button>
-                    <button id="lastPageBtn" title="${lang.paginationLast}"><i class="fas fa-fast-forward"></i></button>
-                </div>
-            `;
-
-  const controls = paginationContainer.querySelector(".pagination-controls");
+  const controls = pagination.querySelector(".pagination-controls");
 
   if (totalPages <= 1) {
-    paginationContainer.classList.remove("visible");
+    pagination.classList.remove("visible");
     controls.style.display = "none";
     return;
   }
 
-  paginationContainer.classList.add("visible", "animated-pagination");
+  pagination.classList.add("visible", "animated-pagination");
   controls.style.display = "flex";
 
   const firstPageBtn = document.getElementById("firstPageBtn");
@@ -1371,8 +1317,7 @@ function preloadNextPageImages() {
     )}.jpg`;
 
     if (!preloadQueue.has(thumbnailUrl)) {
-      const img = new Image();
-      img.src = thumbnailUrl;
+      new Image().src = thumbnailUrl;
       preloadQueue.add(thumbnailUrl);
     }
   });
@@ -1407,44 +1352,22 @@ function generateGuides() {
 }
 
 function initializeNewButtons() {
-  videoBtn.addEventListener("click", (e) => {
-    const target = e.target.closest(".multi-button-main, .multi-button-child");
-    if (!target) return;
-    switch (target.id) {
-      case "videoBtn-main":
-        const isVideoExpanded = videoBtn.classList.toggle("expanded");
-        saveToLocalStorage("video_expanded", isVideoExpanded);
-        break;
-      case "videoBtn-play":
-        handleVideoStateChange();
-        break;
-      case "videoBtn-shuffle":
-        toggleAutoShuffle();
-        break;
-      case "videoBtn-prev":
-        changeBackgroundVideo(-1);
-        break;
-      case "videoBtn-next":
-        changeBackgroundVideo(1);
-        break;
-      case "videoBtn-reset":
-        resetVideoSettings();
-        break;
-    }
-  });
-  updateVideoBtnUI();
-  mainResetBtn.addEventListener("click", resetView);
+    mainResetBtn.addEventListener("click", resetView);
 
-  // Inicjalizacja nowych przycisków w panelu statusu
-  document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
-  const nextLangFile = Object.values(config.language.files)[0] || "#";
-  document.getElementById("statusLangBtn").href = nextLangFile;
-  document
-    .getElementById("statusMuteBtn")
-    .addEventListener("click", toggleAudioMute);
-  document
-    .getElementById("statusFullscreenBtn")
-    .addEventListener("click", toggleFullScreen);
+    document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
+    const nextLangFile = Object.values(config.language.files)[0] || "#";
+    document.getElementById("statusLangBtn").href = nextLangFile;
+    document.getElementById("statusMuteBtn").addEventListener("click", toggleAudioMute);
+    document.getElementById("statusFullscreenBtn").addEventListener("click", toggleFullScreen);
+    
+    // New individual listeners for video controls
+    document.getElementById('videoBtn-play').addEventListener('click', handleVideoStateChange);
+    document.getElementById('videoBtn-shuffle').addEventListener('click', toggleAutoShuffle);
+    document.getElementById('videoBtn-prev').addEventListener('click', () => changeBackgroundVideo(-1));
+    document.getElementById('videoBtn-next').addEventListener('click', () => changeBackgroundVideo(1));
+    document.getElementById('videoBtn-reset').addEventListener('click', resetVideoSettings);
+
+    updateVideoBtnUI();
 }
 
 function initializeDisplayPanel() {
@@ -1457,46 +1380,37 @@ function initializeDisplayPanel() {
   const rowsValue = document.getElementById("rowsValue");
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
-  // --- START NOWEJ POPRAWIONEJ LOGIKI ---
-
   const viewModes = ["text-only", "full", "image-only", "grid", "masonry"];
 
-  // 1. Tworzymy na stałe strukturę HTML w przycisku
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
     <span class="view-number"></span>
-`;
+  `;
   const viewNumberSpan = viewContentBtn.querySelector(".view-number");
 
-  // Funkcja pomocnicza do aktualizacji numeru
   const updateViewNumber = () => {
     const viewNumber = viewModes.indexOf(currentViewMode) + 1;
     viewNumberSpan.textContent = viewNumber;
   };
 
-  // 2. Ustawiamy stan początkowy
   currentViewMode =
     getFromLocalStorage("view_mode") || config.pageSettings.defaultViewMode;
   viewContentBtn.title = "Zmień tryb widoku";
-  updateViewNumber(); // Od razu ustawiamy poprawny numer
+  updateViewNumber();
 
-  // 3. Logika kliknięcia: zmienia tryb i OD RAZU aktualizuje numer
   viewContentBtn.addEventListener("click", () => {
     const currentIndex = viewModes.indexOf(currentViewMode);
     currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
     saveToLocalStorage("view_mode", currentViewMode);
-    updateViewNumber(); // Aktualizujemy cyfrę natychmiast po kliknięciu
+    updateViewNumber();
     renderGuides();
   });
-
-  // --- KONIEC NOWEJ POPRAWIONEJ LOGIKI ---
 
   const updateThemeIcon = () => {
     const isDark = document.documentElement.classList.contains("dark-mode");
     viewThemeBtn.innerHTML = isDark
       ? '<i class="fas fa-sun"></i>'
       : '<i class="fas fa-moon"></i>';
-    viewThemeBtn.classList.toggle("active", isDark);
   };
   updateThemeIcon();
 
@@ -1530,21 +1444,13 @@ function initializeDisplayPanel() {
   sizeSlider.addEventListener("input", () => {
     const sliderValue = parseInt(sizeSlider.value, 10);
     sizeValue.textContent = `${sliderValue}%`;
-
-    // Istniejąca logika skalowania szerokości kafelka
     const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
     guideList.style.setProperty("--box-width", `${newWidth}px`);
-
-    // --- NOWA LOGIKA SKALOWANIA CZCIONKI ---
-    const minFontSize = 0.85; // w jednostkach rem
-    const maxFontSize = 1.25; // w jednostkach rem
-    // Przeliczamy wartość suwaka [50, 150] na zakres [0, 1]
+    const minFontSize = 0.85; 
+    const maxFontSize = 1.25; 
     const normalizedValue = (sliderValue - 50) / 100;
-    // Mapujemy znormalizowaną wartość na nasz docelowy zakres rozmiaru czcionki
     const dynamicFontSize =
       minFontSize + normalizedValue * (maxFontSize - minFontSize);
-
-    // Ustawiamy zmienną CSS, której użyjemy do ostylowania tekstu
     guideList.style.setProperty(
       "--dynamic-font-size",
       `${dynamicFontSize.toFixed(2)}rem`
@@ -1569,56 +1475,28 @@ function initializeDisplayPanel() {
   viewPlayBtn.addEventListener("click", () => startPlayAnimation());
 }
 
-// --- patch #1 ---
-/**
- * Nowa, dedykowana funkcja do włączania/wyłączania dźwięku wideo w tle.
- */
-// NA TĘ NOWĄ WERSJĘ:
-function initializeBackgroundVideo(theme) {
-  const pageKey = config.pageSettings.pageKey;
-  const storageKey = `visudir_bg_video_${pageKey}`;
-  const storedVideoNum = localStorage.getItem(storageKey);
-  let videoNum = parseInt(storedVideoNum) || config.pageSettings.defaultBgVideo;
-  if (
-    videoNum < config.pageSettings.bgVideoStartNum ||
-    videoNum > config.pageSettings.bgVideoEndNum
-  ) {
-    videoNum = config.pageSettings.defaultBgVideo;
-  }
-  if (bgVideo && bgVideoSource) {
-    const videoUrlBase =
-      theme === "light"
-        ? config.paths.videoBgLightUrlBase
-        : config.paths.videoBgDarkUrlBase;
-    const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
-    bgVideoSource.src = videoSrc;
+function toggleAudioMute() {
+    if (!bgVideo) return;
 
-    bgVideo.load();
-    bgVideo.muted = isAudioMuted; // <-- KLUCZOWA DODANA LINIA
+    isAudioMuted = !isAudioMuted;
+    bgVideo.muted = isAudioMuted;
 
-    const playPromise = bgVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((error) => {
-        if (error.name !== "AbortError") {
-          console.error("Błąd odtwarzania wideo:", error);
-        }
-      });
+    if (!isAudioMuted) {
+        bgVideo.play().catch(error => {
+            console.error("Błąd przy próbie odtworzenia wideo z dźwiękiem:", error);
+        });
     }
 
-    bgVideo.addEventListener(
-      "canplay",
-      () => {
-        document.body.classList.add("video-ready");
-      },
-      {
-        once: true,
-      }
-    );
-  }
-  if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
-    localStorage.setItem(storageKey, videoNum);
-  }
+    const muteButton = document.getElementById('statusMuteBtn');
+    if (muteButton) {
+        const muteIcon = muteButton.querySelector('i');
+        if (muteIcon) {
+            muteIcon.className = isAudioMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
+        }
+        muteButton.classList.toggle('active-red', !isAudioMuted);
+    }
 }
+
 function handleVideoStateChange() {
   switch (videoBgState) {
     case "off":
@@ -1643,54 +1521,41 @@ function handleVideoStateChange() {
 }
 
 function updateVideoBtnUI() {
-  const statusMuteBtn = document.getElementById("statusMuteBtn");
-  const buttons = [
-    {
-      play: document.getElementById("videoBtn-play"),
-    },
-    {
-      play: document.getElementById("lightbox-video-toggle"),
-    },
-  ];
-  buttons.forEach((btnSet) => {
-    if (!btnSet.play) return;
-    switch (videoBgState) {
-      case "playing":
-        btnSet.play.innerHTML = '<i class="fas fa-pause"></i>';
-        btnSet.play.title = lang.videoBtnPause;
-        btnSet.play.classList.add("active-play");
-        if (statusMuteBtn)
-          statusMuteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-        break;
-      case "paused":
-        btnSet.play.innerHTML = '<i class="fas fa-stop"></i>';
-        btnSet.play.title = lang.videoBtnOff;
-        btnSet.play.classList.add("active-play");
-        if (statusMuteBtn)
-          statusMuteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-        break;
-      case "off":
-        btnSet.play.innerHTML = '<i class="fas fa-play"></i>';
-        btnSet.play.title = lang.videoBtnPlay;
-        btnSet.play.classList.remove("active-play");
-        if (statusMuteBtn)
-          statusMuteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-        break;
+    const playBtn = document.getElementById("videoBtn-play");
+    const lightboxPlayBtn = document.getElementById("lightbox-video-toggle");
+
+    const updateButton = (btn) => {
+        if (!btn) return;
+        switch (videoBgState) {
+            case "playing":
+                btn.innerHTML = '<i class="fas fa-pause"></i>';
+                btn.title = lang.videoBtnPause;
+                btn.classList.add("active-play");
+                break;
+            case "paused":
+                btn.innerHTML = '<i class="fas fa-stop"></i>';
+                btn.title = lang.videoBtnOff;
+                btn.classList.add("active-play");
+                break;
+            case "off":
+                btn.innerHTML = '<i class="fas fa-play"></i>';
+                btn.title = lang.videoBtnPlay;
+                btn.classList.remove("active-play");
+                break;
+        }
+    };
+    
+    updateButton(playBtn);
+    updateButton(lightboxPlayBtn);
+
+    const shuffleBtn = document.getElementById("videoBtn-shuffle");
+    if (shuffleBtn) {
+        shuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
     }
-  });
-  const shuffleBtn = document.getElementById("videoBtn-shuffle");
-  if (shuffleBtn) {
-    shuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
-  }
-  const lightboxShuffleBtn = document.getElementById(
-    "lightbox-video-autoshuffle"
-  );
-  if (lightboxShuffleBtn) {
-    lightboxShuffleBtn.classList.toggle(
-      "active-play",
-      autoShuffleInterval !== null
-    );
-  }
+    const lightboxShuffleBtn = document.getElementById("lightbox-video-autoshuffle");
+    if (lightboxShuffleBtn) {
+        lightboxShuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
+    }
 }
 
 function shuffleBackgroundVideo() {
@@ -1731,7 +1596,6 @@ function changeBackgroundVideo(direction) {
   localStorage.setItem(storageKey, currentVideoNum);
 
   const wasPaused = videoBgState === "paused";
-
   initializeBackgroundVideo(currentTheme);
 
   if (wasPaused) {
@@ -1746,7 +1610,6 @@ function changeBackgroundVideo(direction) {
       }
     );
   }
-
   updateVideoBtnUI();
 }
 
@@ -1791,22 +1654,20 @@ function resetVideoSettings() {
 
 function toggleDarkMode() {
   document.documentElement.classList.toggle("dark-mode");
-  document.body.classList.toggle("dark-mode");
   const isDark = document.documentElement.classList.contains("dark-mode");
   localStorage.setItem("visudir_theme", isDark ? "dark" : "light");
   currentTheme = isDark ? "dark" : "light";
 
-  const currentLogoData = config.logoRotator.logos[currentLogoIndex];
-  if (
-    config.pageSettings.showMiniLogo &&
-    config.logoRotator.enabled &&
-    currentLogoData
-  ) {
-    headerLogo.src =
-      currentTheme === "dark"
-        ? currentLogoData.srcDark
-        : currentLogoData.srcLight;
+  if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
+    const activeLogoImg = document.querySelector('.header-logo.active');
+    if (activeLogoImg) {
+        const currentLogoData = config.logoRotator.logos[currentLogoIndex];
+        if (currentLogoData) {
+            activeLogoImg.src = currentTheme === "dark" ? currentLogoData.srcDark : currentLogoData.srcLight;
+        }
+    }
   }
+
   document.querySelectorAll(".placeholder-cover").forEach((img) => {
     img.src =
       currentTheme === "dark"
@@ -2158,7 +2019,7 @@ function setupLightboxListeners() {
         .getElementById("viewThemeBtn")
         .classList.toggle(
           "active",
-          document.body.classList.contains("dark-mode")
+          document.documentElement.classList.contains("dark-mode")
         );
     });
 
@@ -2260,54 +2121,6 @@ window.addEventListener("pageshow", function (event) {
     renderGuides();
   }
 });
-document.addEventListener("DOMContentLoaded", () => {
-  [
-    {
-      selector: ".top-header",
-      class: "animated-header",
-      delay: 0.2,
-    },
-    {
-      selector: ".controls",
-      class: "animated-controls",
-      delay: 0.3,
-    },
-    {
-      selector: ".display-panel",
-      class: "animated-display-panel",
-      delay: 0.4,
-    },
-    {
-      selector: "#actionControls",
-      class: "animated-action-controls",
-      delay: 0.6,
-    },
-    {
-      selector: ".reset-container",
-      class: "animated-footer",
-      delay: 0.65,
-    },
-    {
-      selector: ".footer",
-      class: "animated-footer",
-      delay: 0.7,
-    },
-  ].forEach((item) => {
-    const el = document.querySelector(item.selector);
-    if (el) {
-      el.style.animationDelay = `${item.delay}s`;
-      el.classList.add(item.class);
-    }
-  });
-
-  bgVideo.addEventListener("play", updateVideoBtnUI);
-  bgVideo.addEventListener("pause", updateVideoBtnUI);
-  bgVideo.addEventListener("error", () => {
-    console.error("Błąd ładowania wideo tła.");
-    bgVideo.style.display = "none";
-    document.body.classList.remove("video-ready");
-  });
-});
 
 function stopCarousel() {
   if (carouselInterval) {
@@ -2337,18 +2150,6 @@ function toggleCarousel() {
 }
 
 searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase().trim();
-  if (query === "reset" || query === "clear") {
-    const command = query;
-    searchInput.value = "";
-    intro();
-    if (command === "reset") {
-      setTimeout(hardReset, 1300);
-    } else if (command === "clear") {
-      clearScreen();
-    }
-    return;
-  }
   applyFilters();
   renderGuides();
 });
@@ -2363,7 +2164,6 @@ formatFilter.addEventListener("change", (e) => {
   }
   applyFilters();
   renderGuides();
-  e.target.selectedIndex = 0; // Wizualny reset
 });
 
 function updateGeneratorModeBtn() {
@@ -2389,12 +2189,10 @@ sortSelector.addEventListener("change", (e) => {
       renderGuides();
     }
   }
-  e.target.value = ""; // Wizualny reset
 });
 
 generator.addEventListener("change", (e) => {
   generateGuides();
-  e.target.selectedIndex = 0; // Wizualny reset
 });
 
 document.getElementById("generatorModeBtn").addEventListener("click", () => {
@@ -2436,7 +2234,7 @@ function initialize3dHoverEffect() {
 
     cancelAnimationFrame(animationFrameId);
     animationFrameId = requestAnimationFrame(() => {
-      if (!currentGuide) return; // FIX for race condition
+      if (!currentGuide) return;
       currentGuide.style.setProperty("--rotate-x", `${rotateX}deg`);
       currentGuide.style.setProperty("--rotate-y", `${rotateY}deg`);
       currentGuide.style.setProperty("--glow-x", `${glowX}%`);
@@ -2449,7 +2247,7 @@ function initialize3dHoverEffect() {
     (e) => {
       const guide = e.target.closest(".guide-list.view-image-only .guide");
       if (guide) {
-        guide.style.transition = "none"; // Bezpośrednie sterowanie
+        guide.style.transition = "none";
         currentGuide = guide;
       }
     },
@@ -2464,7 +2262,7 @@ function initialize3dHoverEffect() {
       );
       if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
         cancelAnimationFrame(animationFrameId);
-        currentGuide.style.transition = "transform 0.4s ease-out"; // Przywrócenie transition
+        currentGuide.style.transition = "transform 0.4s ease-out";
         requestAnimationFrame(() => {
           if (currentGuide) {
             currentGuide.style.setProperty("--rotate-x", "0deg");
@@ -2526,19 +2324,13 @@ function updateWrapperHeightForPage(pageNum) {
   );
   if (!wrapper || !pageElement) return;
 
-  // Opóźnienie jest konieczne, aby dać przeglądarce czas na pełne wyrenderowanie layoutu
   setTimeout(() => {
     const items = pageElement.querySelectorAll(".guide");
     if (items.length === 0) {
       wrapper.style.height = "0px";
       return;
     }
-
-    // 1. Znajdź pozycję startową (górną krawędź) całego kontenera z listą
     const listTop = guideList.getBoundingClientRect().top;
-
-    // 2. Znajdź najniżej położony element na stronie
-    //    Przechodzimy przez wszystkie i szukamy tego, którego dolna krawędź (bottom) jest najdalej
     let maxBottom = 0;
     items.forEach((item) => {
       const itemBottom = item.getBoundingClientRect().bottom;
@@ -2547,58 +2339,13 @@ function updateWrapperHeightForPage(pageNum) {
       }
     });
 
-    // 3. Oblicz precyzyjną wysokość jako różnicę między dolną krawędzią najniższego
-    //    elementu a górną krawędzią całej listy.
     const preciseHeight = maxBottom - listTop;
 
-    // 4. Ustaw wysokość kontenera na tę precyzyjną, zmierzoną wartość.
-    //    Bez żadnych buforów i zgadywania.
     if (preciseHeight > 0) {
       wrapper.style.height = `${preciseHeight}px`;
     }
-  }, 200); // Lekko zwiększony timeout dla pewności pełnego renderu
+  }, 200);
 }
-// Uruchomienie zegara czasu rzeczywistego
+
 updateRealTimeClock();
-setInterval(updateRealTimeClock, 30000); // Odświeżanie co 30 sekund
-
-// --- START: ŁATKA KROK 3 - Interaktywność Kurtyny ---
-
-// --- START: ŁATKA KROK 3 - Interaktywność Kurtyny ---
-
-const curtainToggleBtn = document.getElementById("curtain-toggle-btn");
-const topRow = document.querySelector(".deck-top-row");
-
-if (curtainToggleBtn && topRow) {
-  curtainToggleBtn.addEventListener("click", () => {
-    // Po kliknięciu, dodajemy lub usuwamy klasę 'filters-expanded' z całego górnego wiersza
-    topRow.classList.toggle("filters-expanded");
-  });
-}
-
-// --- END: ŁATKA KROK 3 ---
-function toggleAudioMute() {
-    const video = document.getElementById('bg-video');
-    if (!video) return;
-
-    isAudioMuted = !isAudioMuted;
-    video.muted = isAudioMuted;
-
-    // ---- POCZĄTEK POPRAWKI ----
-    // Jeśli włączamy dźwięk, ponownie uruchamiamy odtwarzanie.
-    // To "mówi" przeglądarce, że włączenie dźwięku jest celową akcją użytkownika.
-    if (!isAudioMuted) {
-        video.play().catch(error => {
-            console.error("Błąd przy próbie odtworzenia wideo z dźwiękiem:", error);
-        });
-    }
-    // ---- KONIEC POPRAWKI ----
-
-    const muteButton = document.getElementById('statusMuteBtn');
-    const muteIcon = muteButton.querySelector('i');
-    
-    if (muteIcon) {
-        muteIcon.className = isAudioMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
-        muteButton.classList.toggle('active-red', !isAudioMuted);
-    }
-}
+setInterval(updateRealTimeClock, 30000);

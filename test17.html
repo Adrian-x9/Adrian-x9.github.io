@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Kontrolny Finalny</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        :root {
+            /* Kolory dla trybu jasnego */
+            --body-bg-light: #e1e1e1; --panel-bg-light: #f0f0f0; --panel-shadow-light: 0 0 0 2px #cc0000, 0 5px 20px rgba(204, 0, 0, 0.3); --group-bg-light: rgba(0, 0, 0, 0.05); --button-text-light: #333; --slider-icon-light: #888; --slider-track-light: rgba(0, 0, 0, 0.1); --slider-thumb-light: #cc0000; --slider-thumb-border-light: #fff; --button-red-bg-light: #cc0000; --button-red-text-light: white; --separator-light: rgba(0, 0, 0, 0.15); --filter-input-bg-light: #fff; --filter-input-border-light: #ccc; --status-text-light: #333; --status-bold-light: #000;
+            /* Kolory dla trybu ciemnego */
+            --body-bg-dark: #121212; --panel-bg-dark: #1a1a1a; --panel-shadow-dark: 0 0 0 2px #e53935, 0 0 25px rgba(229, 57, 53, 0.5); --group-bg-dark: rgba(255, 255, 255, 0.1); --button-text-dark: #eee; --slider-icon-dark: #aaa; --slider-track-dark: rgba(255, 255, 255, 0.2); --slider-thumb-dark: #e53935; --slider-thumb-border-dark: #000; --button-red-bg-dark: #e53935; --button-red-text-dark: #111; --separator-dark: rgba(255, 255, 255, 0.15); --filter-input-bg-dark: #2c2c2c; --filter-input-border-dark: #555; --status-text-dark: #ccc; --status-bold-dark: #fff;
+        }
+        html { background-color: var(--body-bg-light); font-family: "Segoe UI", sans-serif; transition: background-color 0.5s ease; }
+        html.dark-mode { background-color: var(--body-bg-dark); }
+        body { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; }
+
+        .control-panel {
+            display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 900px; padding: 8px; border: 2px solid transparent; border-radius: 12px;
+            background-clip: padding-box; box-sizing: border-box; background-color: var(--panel-bg-light); box-shadow: var(--panel-shadow-light);
+        }
+        html.dark-mode .control-panel { background-color: var(--panel-bg-dark); box-shadow: var(--panel-shadow-dark); }
+
+        .deck-top-row {
+            display: grid; grid-template-columns: minmax(300px, 40%) 20px 1fr; gap: 10px; width: 100%;
+            padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--separator-light);
+            transition: grid-template-columns 0.4s ease-in-out; min-height: 75px; box-sizing: border-box; align-items: stretch;
+        }
+        html.dark-mode .deck-top-row { border-color: var(--separator-dark); }
+        .deck-top-row.filters-expanded { grid-template-columns: 560px 20px 1fr; }
+
+        .filter-section { display: flex; align-items: center; gap: 10px; flex-wrap: nowrap; overflow: hidden; }
+        .filter-section > * { flex-shrink: 0; }
+        .filter-section input, .filter-section select { height: 38px; padding: 0 10px; border-radius: 8px; border: 1px solid var(--filter-input-border-light); background-color: var(--filter-input-bg-light); color: var(--button-text-light); box-sizing: border-box; }
+        html.dark-mode .filter-section input, html.dark-mode .filter-section select { border-color: var(--filter-input-border-dark); background-color: var(--filter-input-bg-dark); color: var(--button-text-dark); }
+        .filter-section #search { width: 160px; }
+        .generator-group { display: flex; align-items: center; gap: 5px; }
+        
+        /* POPRAWKA 2: Przywrócenie stylu dla przycisków akcji w panelu filtrów */
+        .filter-section .dir-db-btn {
+            height: 38px; padding: 0 10px; border-radius: 8px; box-sizing: border-box;
+            border: 1px solid var(--button-red-bg-light);
+            background-color: var(--filter-input-bg-light);
+            color: var(--button-red-bg-light);
+            font-weight: bold;
+        }
+        html.dark-mode .filter-section .dir-db-btn {
+            border-color: var(--button-red-bg-dark);
+            background-color: var(--filter-input-bg-dark);
+            color: var(--button-red-bg-dark);
+        }
+        .filter-section .dir-db-btn:hover { background-color: var(--group-bg-light); }
+        html.dark-mode .filter-section .dir-db-btn:hover { background-color: var(--group-bg-dark); }
+        #generatorModeBtn, #minimizeBtn { width: 38px; padding: 0; }
+        
+        .curtain-handle { display: flex; justify-content: center; align-items: center; height: 100%; cursor: pointer; }
+        #curtain-toggle-btn { background: rgba(128, 128, 128, 0.2); border: none; border-radius: 50%; width: 20px; height: 20px; padding: 0; color: #fff; z-index: 1; transition: transform 0.4s ease-in-out; }
+        .deck-top-row.filters-expanded #curtain-toggle-btn { transform: rotate(180deg); }
+        #curtain-toggle-btn i { margin: 0; font-size: 16px; line-height: 1; }
+
+        .status-section { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; overflow: hidden; }
+        #statusBarIntegrated { display: flex; align-items: center; white-space: nowrap; color: var(--status-text-light); font-weight: 600; }
+        html.dark-mode #statusBarIntegrated { color: var(--status-text-dark); }
+        #statusBarIntegrated b { font-weight: 800; color: var(--status-bold-light); }
+        html.dark-mode #statusBarIntegrated b { color: var(--status-bold-dark); }
+        
+        /* POPRAWKA 3: Definicja bazowego stanu animacji */
+        .status-segment, .system-info { transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; }
+
+        #statusBarIntegrated .status-text-group + .top-bar-icons::before { content: ""; display: inline-block; width: 1px; height: 1.2em; background-color: var(--separator-light); margin: 0 0.8em; }
+        html.dark-mode #statusBarIntegrated .status-text-group + .top-bar-icons::before { background-color: var(--separator-dark); }
+        
+        .status-section-bottom { display: flex; align-items: center; gap: 15px; border-top: 1px solid rgba(204, 0, 0, 0.5); width: 100%; justify-content: flex-end; color: var(--status-text-light); padding-top: 0; margin-top: 5px; }
+        html.dark-mode .status-section-bottom { color: var(--status-text-dark); }
+        .system-info { font-size: 0.9em; font-weight: 600; white-space: nowrap; margin-right: auto; }
+        .status-icon-btn { background: none; border: none; color: inherit; opacity: 0.7; cursor: pointer; font-size: 1.1em; padding: 0; transition: opacity 0.2s ease, color 0.2s ease; }
+        .status-icon-btn:hover { opacity: 1; color: #cc0000; }
+        html.dark-mode .status-icon-btn:hover { color: #e53935; }
+
+        .deck-top-row.filters-expanded .system-info,
+        .deck-top-row.filters-expanded #statusBarIntegrated .status-segment:nth-of-type(n+3) { opacity: 0; pointer-events: none; transform: translateX(10px); }
+        .deck-top-row.filters-expanded .status-section-bottom { justify-content: center; width: auto; margin-top: 5px; }
+        .deck-top-row.filters-expanded .system-info { opacity: 0; } /* Zmieniono z display:none na opacity dla animacji */
+
+        .deck-bottom-row { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
+        .display-panel-group { display: flex; align-items: center; gap: 8px; background-color: var(--group-bg-light); padding: 6px; border-radius: 8px; }
+        html.dark-mode .display-panel-group { background-color: var(--group-bg-dark); }
+        .display-panel-group.slider-group { flex-grow: 1; flex-direction: column; padding: 5px 12px; min-width: 250px; }
+        .deck-bottom-row button {
+            width: 48px; height: 48px; font-size: 1.2em; border: 1px solid transparent; border-radius: 8px;
+            cursor: pointer; background-color: transparent; color: var(--button-text-light); transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+        html.dark-mode .deck-bottom-row button { color: var(--button-text-dark); }
+        .deck-bottom-row .display-panel-group:not(.slider-group) button:hover { background-color: rgba(0,0,0,0.1); }
+        html.dark-mode .deck-bottom-row .display-panel-group:not(.slider-group) button:hover { background-color: rgba(255,255,255,0.1); }
+        .deck-bottom-row .accent-border { border-color: var(--button-red-bg-light); }
+        html.dark-mode .deck-bottom-row .accent-border { border-color: var(--button-red-bg-dark); }
+        .deck-bottom-row .theme-toggle-btn, .deck-bottom-row .play-accent { background-color: var(--button-red-bg-light); color: var(--button-red-text-light); }
+        html.dark-mode .deck-bottom-row .theme-toggle-btn, html.dark-mode .deck-bottom-row .play-accent { background-color: var(--button-red-bg-dark); color: var(--button-red-text-dark); }
+        .deck-bottom-row .play-accent { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
+        html.dark-mode .deck-bottom-row .play-accent { box-shadow: 0 0 15px rgba(229, 57, 53, 0.6); }
+
+        .subtle-bg-group { display: flex; align-items: center; gap: 12px; padding: 4px 6px; border-radius: 8px; background-color: var(--group-bg-light); }
+        html.dark-mode .subtle-bg-group { background-color: var(--group-bg-dark); }
+        .video-controls-group .video-main-btn { width: auto; padding: 0 8px; }
+        .video-controls-group .video-main-btn i { margin-right: 5px; }
+
+        .slider-control { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; width: 100%; }
+        .slider-control i { font-size: 1.2em; color: var(--slider-icon-light); }
+        html.dark-mode .slider-control i { color: var(--slider-icon-dark); }
+        .slider-control span { font-weight: bold; min-width: 45px; text-align: right; font-size: 0.9em; color: var(--button-text-light); }
+        html.dark-mode .slider-control span { color: var(--button-text-dark); }
+        .slider-control input[type="range"] { -webkit-appearance: none; appearance: none; height: 8px; background: var(--slider-track-light); outline: none; border-radius: 4px; cursor: pointer; }
+        html.dark-mode .slider-control input[type="range"] { background: var(--slider-track-dark); }
+        .slider-control input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--slider-thumb-light); border: 2px solid var(--slider-thumb-border-light); cursor: pointer; }
+        html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb { background: var(--slider-thumb-dark); border-color: var(--slider-thumb-border-dark); }
+        .slider-control input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--slider-thumb-light); border: 2px solid var(--slider-thumb-border-light); cursor: pointer; }
+        html.dark-mode .slider-control input[type="range"]::-moz-range-thumb { background: var(--slider-thumb-dark); border-color: var(--slider-thumb-border-dark); }
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <div class="deck-top-row">
+            <div class="filter-section">
+                <input type="text" id="search" placeholder="Szukaj pozycji..." />
+                <select id="formatFilter"><option value="">FILTR</option></select>
+                <select id="sortSelector"><option value="" disabled selected>SORTUJ</option></select>
+                <div class="generator-group">
+                    <select id="generator"><option value="" disabled selected>LOSUJ</option></select>
+                    <button id="generatorModeBtn" class="dir-db-btn" title="Tryb generatora"><i class="fas fa-filter"></i></button>
+                </div>
+                <button id="minimizeBtn" class="dir-db-btn" title="Minimalizuj interfejs"><i class="fas fa-chevron-up"></i></button>
+            </div>
+            <div class="curtain-handle"><button id="curtain-toggle-btn" title="Pokaż/ukryj filtry"></button></div>
+            <div class="status-section">
+                <div id="statusBarIntegrated">
+                    <div class="status-text-group subtle-bg-group">
+                        <span class="status-segment"><b>35</b> / 35 pozycji</span>
+                        <span class="status-segment">20:07 2025-09-28</span>
+                        <span class="status-segment">Księżyc 🌕︎</span>
+                    </div>
+                    <div class="top-bar-icons subtle-bg-group">
+                        <a class="status-icon-btn" title="Informacje"><i class="fas fa-info-circle"></i></a>
+                        <a class="status-icon-btn" title="Zmień język"><i class="fas fa-globe"></i></a>
+                    </div>
+                </div>
+                <div class="status-section-bottom">
+                    <div class="system-info">System <span style="color: #cc0000;">Visu</span>Dir v1.12.3</div>
+                    <div class="video-controls-group subtle-bg-group">
+                        <button class="status-icon-btn video-main-btn" title="Wideo"><i class="fas fa-video"></i> Video</button>
+                        <button class="status-icon-btn" title="Poprzednie"><i class="fas fa-chevron-left"></i></button>
+                        <button class="status-icon-btn" title="Wycisz/Włącz wideo"><i class="fas fa-volume-mute"></i></button>
+                        <button class="status-icon-btn" title="Play/Pauza"><i class="fas fa-play"></i></button>
+                        <button class="status-icon-btn" title="Losowe"><i class="fas fa-random"></i></button>
+                        <button class="status-icon-btn" title="Następne"><i class="fas fa-chevron-right"></i></button>
+                        <button class="status-icon-btn" title="Resetuj"><i class="fas fa-undo"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="deck-bottom-row">
+             <div class="display-panel-group">
+                <button class="theme-toggle-btn" title="Zmień tryb widoku"><i class="fas fa-layer-group"></i></button>
+                <button class="accent-border" title="Filtruj wg orientacji"><i class="fas fa-images"></i></button>
+            </div>
+            <div class="display-panel-group slider-group">
+                <div class="slider-control">
+                    <i class="fas fa-th-large" title="Wielkość miniaturek"></i>
+                    <input type="range" min="50" max="150" value="100" step="1">
+                    <span>100%</span>
+                </div>
+                <div class="slider-control">
+                    <i class="fas fa-grip-lines" title="Liczba wierszy"></i>
+                    <input type="range" min="1" max="10" value="2" step="1">
+                    <span>2</span>
+                </div>
+            </div>
+            <div class="display-panel-group">
+                <button id="theme-toggle-btn" class="theme-toggle-btn" title="Zmień motyw na ciemny/jasny"><i class="fas fa-moon"></i></button>
+                <button class="play-accent" title="Rozpocznij pokaz slajdów"><i class="fas fa-play"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const curtainToggleButton = document.getElementById('curtain-toggle-btn');
+        const topRow = document.querySelector('.deck-top-row');
+        curtainToggleButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+        curtainToggleButton.addEventListener('click', () => {
+            topRow.classList.toggle('filters-expanded');
+        });
+
+        const themeToggleButton = document.getElementById('theme-toggle-btn');
+        const htmlElement = document.documentElement;
+        themeToggleButton.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark-mode');
+            const isDarkMode = htmlElement.classList.contains('dark-mode');
+            const icon = themeToggleButton.querySelector('i');
+            icon.className = isDarkMode ? 'fas fa-sun' : 'fas fa-moon';
+        });
+    </script>
+
+</body>
+</html>

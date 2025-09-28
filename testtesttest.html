@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Control de Vista</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* --- Estilos Base y de Fondo --- */
+        :root {
+            /* Colores para el modo claro */
+            --body-bg-light: #e1e1e1;
+            --panel-bg-light: #f0f0f0;
+            --panel-shadow-light: 0 0 0 2px #cc0000, 0 5px 20px rgba(204, 0, 0, 0.3);
+            --group-bg-light: rgba(0, 0, 0, 0.05);
+            --button-text-light: #333;
+            --slider-icon-light: #888;
+            --slider-track-light: rgba(0, 0, 0, 0.1);
+            --slider-thumb-light: #cc0000;
+            --slider-thumb-border-light: #fff;
+            --button-red-bg-light: #cc0000;
+            --button-red-text-light: white;
+
+            /* Colores para el modo oscuro */
+            --body-bg-dark: #121212;
+            --panel-bg-dark: #1a1a1a;
+            --panel-shadow-dark: 0 0 0 2px #e53935, 0 0 25px rgba(229, 57, 53, 0.5);
+            --group-bg-dark: rgba(255, 255, 255, 0.1);
+            --button-text-dark: #eee;
+            --slider-icon-dark: #aaa;
+            --slider-track-dark: rgba(255, 255, 255, 0.2);
+            --slider-thumb-dark: #e53935;
+            --slider-thumb-border-dark: #000;
+            --button-red-bg-dark: #e53935;
+            --button-red-text-dark: #111;
+        }
+
+        html {
+            background-color: var(--body-bg-light);
+            font-family: "Segoe UI", sans-serif;
+            transition: background-color 0.5s ease;
+        }
+
+        html.dark-mode {
+            background-color: var(--body-bg-dark);
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* --- Estructura Principal del Panel de Control --- */
+        .control-panel {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            max-width: 800px;
+            padding: 8px;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            background-clip: padding-box;
+            box-sizing: border-box;
+            background-color: var(--panel-bg-light);
+            box-shadow: var(--panel-shadow-light);
+        }
+
+        html.dark-mode .control-panel {
+            background-color: var(--panel-bg-dark);
+            box-shadow: var(--panel-shadow-dark);
+        }
+
+        /* --- Grupos de Botones y Deslizadores --- */
+        .display-panel-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: var(--group-bg-light);
+            padding: 6px;
+            border-radius: 8px;
+        }
+
+        html.dark-mode .display-panel-group {
+            background-color: var(--group-bg-dark);
+        }
+        
+        .display-panel-group.slider-group {
+            flex-grow: 1;
+            flex-direction: column;
+            padding: 5px 12px;
+            min-width: 250px;
+        }
+        
+        /* Elimina el fondo del primer y último grupo para que los botones parezcan flotar */
+        .display-panel-group:first-child,
+        .display-panel-group:last-child {
+            background: none;
+            padding: 0;
+        }
+
+        /* --- Estilo de Botones --- */
+        .control-panel button {
+            width: 48px;
+            height: 48px;
+            font-size: 1.2em;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: transparent;
+            color: var(--button-text-light);
+            transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+        }
+
+        html.dark-mode .control-panel button {
+            color: var(--button-text-dark);
+        }
+
+        /* Botones rojos a la izquierda y el botón Play */
+        .display-panel-group:first-child button,
+        .control-panel button.play-accent {
+            background-color: var(--button-red-bg-light);
+            color: var(--button-red-text-light);
+            font-weight: bold;
+            border: none;
+        }
+
+        html.dark-mode .display-panel-group:first-child button,
+        html.dark-mode .control-panel button.play-accent {
+            background-color: var(--button-red-bg-dark);
+            color: var(--button-red-text-dark);
+        }
+        
+        /* Efecto de resplandor en el botón Play */
+        .control-panel button.play-accent {
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+        }
+        
+        html.dark-mode .control-panel button.play-accent {
+            box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
+        }
+
+        .control-panel button.play-accent:hover {
+            animation: pulse-red 1s infinite;
+        }
+
+        @keyframes pulse-red {
+            50% { box-shadow: 0 0 25px rgba(255, 0, 0, 0.8); }
+        }
+
+        /* --- Estilos de Deslizadores (Sliders) --- */
+        .slider-control {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .slider-control i {
+            font-size: 1.2em;
+            color: var(--slider-icon-light);
+        }
+
+        html.dark-mode .slider-control i {
+            color: var(--slider-icon-dark);
+        }
+
+        .slider-control span {
+            font-weight: bold;
+            min-width: 45px;
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--button-text-light);
+        }
+
+        html.dark-mode .slider-control span {
+            color: var(--button-text-dark);
+        }
+
+        .slider-control input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            background: var(--slider-track-light);
+            outline: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        html.dark-mode .slider-control input[type="range"] {
+            background: var(--slider-track-dark);
+        }
+
+        /* Estilo del "pulgar" o punto rojo del deslizador para Webkit (Chrome, Safari) */
+        .slider-control input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--slider-thumb-light);
+            border: 2px solid var(--slider-thumb-border-light);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
+            background: var(--slider-thumb-dark);
+            border-color: var(--slider-thumb-border-dark);
+        }
+
+        .slider-control input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        /* Estilo del "pulgar" para Firefox */
+        .slider-control input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--slider-thumb-light);
+            border: 2px solid var(--slider-thumb-border-light);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
+            background: var(--slider-thumb-dark);
+            border-color: var(--slider-thumb-border-dark);
+        }
+
+        .slider-control input[type="range"]::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="control-panel">
+        <div class="display-panel-group">
+            <button title="Cambiar modo de vista"><i class="fas fa-layer-group"></i></button>
+            <button title="Filtrar por orientación"><i class="fas fa-images"></i></button>
+        </div>
+        
+        <div class="display-panel-group slider-group">
+            <div class="slider-control">
+                <i class="fas fa-th-large" title="Tamaño de miniaturas"></i>
+                <input type="range" min="50" max="150" value="100" step="1">
+                <span>100%</span>
+            </div>
+            <div class="slider-control">
+                <i class="fas fa-grip-lines" title="Número de filas"></i>
+                <input type="range" min="1" max="10" value="2" step="1">
+                <span>2</span>
+            </div>
+        </div>
+        
+        <div class="display-panel-group">
+            <button id="theme-toggle-btn" title="Cambiar a modo oscuro/claro"><i class="fas fa-moon"></i></button>
+            <button class="play-accent" title="Iniciar presentación"><i class="fas fa-play"></i></button>
+        </div>
+    </div>
+
+    <script>
+        // Obtiene el botón y el elemento <html>
+        const themeToggleButton = document.getElementById('theme-toggle-btn');
+        const htmlElement = document.documentElement;
+
+        // Añade un evento de clic al botón
+        themeToggleButton.addEventListener('click', () => {
+            // Alterna la clase 'dark-mode' en el elemento <html>
+            htmlElement.classList.toggle('dark-mode');
+
+            // Comprueba si el modo oscuro está activo para cambiar el icono
+            const isDarkMode = htmlElement.classList.contains('dark-mode');
+            const icon = themeToggleButton.querySelector('i');
+            
+            if (isDarkMode) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    </script>
+
+</body>
+</html>
