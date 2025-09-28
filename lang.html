@@ -3,25 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Carousel with Inertia (Properly Scaled)</title>
+    <title>3D Carousel with Inertia (Correctly Scaled)</title>
     <style>
         /*
-            Wszystkie sztywne wartości (px) zostały zastąpione zmiennymi CSS (`var(...)`).
-            Wartości tych zmiennych są dynamicznie ustawiane przez JavaScript na podstawie parametru 'scale'.
-            Usunięto blok @media, ponieważ skalowanie jest teraz w pełni dynamiczne.
+            Blok :root został celowo USUNIĘTY.
+            Wszystkie wartości dla zmiennych CSS są teraz w 100% dostarczane przez JavaScript,
+            co eliminuje konflikt i gwarantuje prawidłowe skalowanie.
         */
-        :root {
-            /* Domyślne wartości, które zostaną natychmiast nadpisane przez JS */
-            --scale-factor: 0.5;
-            --scene-size: 250px;
-            --perspective: 1000px;
-            --item-width: 90px;
-            --item-height: 50px;
-            --font-size: 14px;
-            --flag-size: 19px;
-            --gap: 7px;
-        }
-
         body {
             display: flex;
             justify-content: center;
@@ -37,6 +25,7 @@
         }
 
         .scene {
+            /* Wartości zostaną wstrzyknięte tutaj przez JS */
             width: var(--scene-size);
             height: var(--scene-size);
             perspective: var(--perspective);
@@ -56,9 +45,8 @@
 
         .item {
             position: absolute;
-            /* Obliczenia 'top' i 'left' teraz też używają zmiennych dla idealnego centrowania */
-            top: calc(50% - var(--item-height) / 2); 
-            left: calc(50% - var(--item-width) / 2);
+            top: calc(50% - (var(--item-height) / 2));
+            left: calc(50% - (var(--item-width) / 2));
             width: var(--item-width); 
             height: var(--item-height);
             
@@ -102,11 +90,10 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // --- GŁÓWNY PARAMETR SKALOWANIA (TWOJA SUGESTIA) ---
-            // Zmień wartość dla mobile (np. 0.65), aby dostosować wygląd
+            // GŁÓWNY PARAMETR SKALOWANIA
             const scale = window.innerWidth <= 600 ? 0.7 : 1.0; 
 
-            // --- Bazowe wartości (dla skali = 1.0) ---
+            // JEDYNE ŹRÓDŁO PRAWDY o wymiarach (dla skali = 1.0)
             const base = {
                 sceneSize: 250,
                 perspective: 1000,
@@ -118,7 +105,7 @@
                 radius: 220
             };
 
-            // --- Ustawienie dynamicznych zmiennych CSS na podstawie skali ---
+            // Ustawienie dynamicznych zmiennych CSS na podstawie skali
             const root = document.documentElement;
             root.style.setProperty('--scene-size', `${base.sceneSize * scale}px`);
             root.style.setProperty('--perspective', `${base.perspective * scale}px`);
@@ -128,54 +115,38 @@
             root.style.setProperty('--flag-size', `${base.flagSize * scale}px`);
             root.style.setProperty('--gap', `${base.gap * scale}px`);
 
-            // --- Reszta skryptu ---
+            // Reszta skryptu (bez zmian)
             const countries = [
-                { code: 'br', name: 'Brazil (Portuguese)' },
-                { code: 'cn', name: 'China (Mandarin)' },
-                { code: 'cz', name: 'Czech Republic (Czech)' },
-                { code: 'fr', name: 'France (French)' },
-                { code: 'de', name: 'Germany (German)' },
-                { code: 'in', name: 'India (Hindi)' },
-                { code: 'id', name: 'Indonesia (Indonesian)' },
-                { code: 'it', name: 'Italy (Italian)' },
-                { code: 'jp', name: 'Japan (Japanese)' },
-                { code: 'pl', name: 'Poland (Polish)' },
-                { code: 'sg', name: 'Singapore (English)' },
-                { code: 'sk', name: 'Slovakia (Slovak)' },
-                { code: 'es', name: 'Spain (Spanish)' },
-                { code: 'ua', name: 'Ukraine (Ukrainian)' },
+                { code: 'br', name: 'Brazil (Portuguese)' }, { code: 'cn', name: 'China (Mandarin)' },
+                { code: 'cz', name: 'Czech Republic (Czech)' }, { code: 'fr', name: 'France (French)' },
+                { code: 'de', name: 'Germany (German)' }, { code: 'in', name: 'India (Hindi)' },
+                { code: 'id', name: 'Indonesia (Indonesian)' }, { code: 'it', name: 'Italy (Italian)' },
+                { code: 'jp', name: 'Japan (Japanese)' }, { code: 'pl', name: 'Poland (Polish)' },
+                { code: 'sg', name: 'Singapore (English)' }, { code: 'sk', name: 'Slovakia (Slovak)' },
+                { code: 'es', name: 'Spain (Spanish)' }, { code: 'ua', name: 'Ukraine (Ukrainian)' },
                 { code: 'us', name: 'USA (English)' }
             ];
 
             const world = document.querySelector('.world');
             const totalItems = countries.length;
-            const radius = base.radius * scale; // Użycie skalowanego promienia
+            const radius = base.radius * scale;
             let hasDragged = false;
 
             countries.forEach((country, index) => {
                 const item = document.createElement('div');
                 item.className = 'item';
-
                 const flagImg = document.createElement('img');
                 flagImg.className = 'flag-icon';
                 flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${country.code}.svg`;
                 flagImg.alt = '';
                 flagImg.draggable = false;
-
                 const codeSpan = document.createElement('span');
                 codeSpan.innerText = country.code.toUpperCase();
-
                 item.appendChild(flagImg);
                 item.appendChild(codeSpan);
-
                 const angle = (360 / totalItems) * index;
                 item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
-
-                item.addEventListener('click', () => {
-                    if (!hasDragged) {
-                        alert(`Selected country: ${country.name}`);
-                    }
-                });
+                item.addEventListener('click', () => { if (!hasDragged) { alert(`Selected country: ${country.name}`); } });
                 world.appendChild(item);
             });
 
@@ -190,36 +161,22 @@
                 if (Math.abs(velocity) > 0.1) animationFrame = requestAnimationFrame(inertiaAnimate); else velocity = 0;
             };
             const onDragStart = (e) => {
-                e.preventDefault();
-                isDragging = true;
-                hasDragged = false;
-                world.classList.add('is-dragging');
-                if (animationFrame) cancelAnimationFrame(animationFrame);
-                velocity = 0;
-                startX = e.clientX || e.touches[0].clientX;
-                lastX = startX;
-                window.addEventListener('mousemove', onDragMove);
-                window.addEventListener('mouseup', onDragEnd);
-                window.addEventListener('touchmove', onDragMove);
-                window.addEventListener('touchend', onDragEnd);
+                e.preventDefault(); isDragging = true; hasDragged = false; world.classList.add('is-dragging');
+                if (animationFrame) cancelAnimationFrame(animationFrame); velocity = 0;
+                startX = e.clientX || e.touches[0].clientX; lastX = startX;
+                window.addEventListener('mousemove', onDragMove); window.addEventListener('mouseup', onDragEnd);
+                window.addEventListener('touchmove', onDragMove); window.addEventListener('touchend', onDragEnd);
             };
             const onDragMove = (e) => {
                 if (!isDragging) return;
-                const currentX = e.clientX || e.touches[0].clientX;
-                const deltaX = currentX - lastX;
+                const currentX = e.clientX || e.touches[0].clientX; const deltaX = currentX - lastX;
                 if (Math.abs(currentX - startX) > 5) hasDragged = true;
-                velocity = deltaX * rotationSensitivity;
-                currentRotationY += velocity;
-                lastX = currentX;
-                updateRotation();
+                velocity = deltaX * rotationSensitivity; currentRotationY += velocity; lastX = currentX; updateRotation();
             };
             const onDragEnd = () => {
-                isDragging = false;
-                world.classList.remove('is-dragging');
-                window.removeEventListener('mousemove', onDragMove);
-                window.removeEventListener('mouseup', onDragEnd);
-                window.removeEventListener('touchmove', onDragMove);
-                window.removeEventListener('touchend', onDragEnd);
+                isDragging = false; world.classList.remove('is-dragging');
+                window.removeEventListener('mousemove', onDragMove); window.removeEventListener('mouseup', onDragEnd);
+                window.removeEventListener('touchmove', onDragMove); window.removeEventListener('touchend', onDragEnd);
                 if (Math.abs(velocity) > 0.1) inertiaAnimate();
             };
             world.addEventListener('mousedown', onDragStart);
