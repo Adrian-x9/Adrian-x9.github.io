@@ -1,7 +1,7 @@
 const config = {
             version: "v1.13.0", // Full interface rework, before v2.0.0 release
             language: {
-                current: 'en',
+                current: 'es',
                 files: {
                     en: 'index-en.html', // >>delete-it<< te linijki do usunięcia po aktualizacji kodu
                     de: 'index-de.html', // >>delete-it<< te linijki do usunięcia po aktualizacji kodu

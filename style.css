@@ -2503,3 +2503,119 @@ html.dark-mode .slider-control input[type="range"] { background: var(--slider-tr
 html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb { background: var(--slider-thumb-dark); border-color: var(--slider-thumb-border-dark); }
 .slider-control input[type="range"]::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: var(--slider-thumb-light); border: 2px solid var(--slider-thumb-border-light); cursor: pointer; }
 html.dark-mode .slider-control input[type="range"]::-moz-range-thumb { background: var(--slider-thumb-dark); border-color: var(--slider-thumb-border-dark); }
+
+/* #patch #3 */
+/* --- Kontener i tło modala --- */
+.lang-modal-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lang-modal-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+.lang-modal-content {
+    position: relative;
+    z-index: 10001;
+}
+
+.lang-modal-close-btn {
+    position: absolute;
+    top: -30px;
+    right: -10px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 2.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+}
+
+.lang-modal-close-btn:hover {
+    opacity: 1;
+}
+
+/* --- Style karuzeli zaadaptowane do aplikacji --- */
+#lang-modal .scene {
+    width: var(--scene-size);
+    height: var(--scene-size);
+    perspective: var(--perspective);
+}
+
+#lang-modal .world {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: grab;
+}
+
+#lang-modal .world.is-dragging {
+    cursor: grabbing;
+}
+
+#lang-modal .item {
+    position: absolute;
+    top: calc(50% - (var(--item-height) / 2));
+    left: calc(50% - (var(--item-width) / 2));
+    width: var(--item-width);
+    height: var(--item-height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap);
+    border-radius: 6px;
+    font-size: var(--font-size);
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    backface-visibility: hidden;
+    user-select: none;
+}
+
+/* Style dla trybu CIEMNEGO (domyślne w VisuDir) */
+html.dark-mode #lang-modal .item {
+    background-color: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--button-text-dark);
+}
+html.dark-mode #lang-modal .item:hover {
+    background-color: var(--button-red-bg-dark);
+    border-color: var(--button-red-bg-dark);
+    color: var(--button-red-text-dark);
+}
+
+/* Style dla trybu JASNEGO */
+html:not(.dark-mode) #lang-modal .item {
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    color: var(--button-text-light);
+}
+html:not(.dark-mode) #lang-modal .item:hover {
+    background-color: var(--button-red-bg-light);
+    border-color: var(--button-red-bg-light);
+    color: var(--button-red-text-light);
+}
+
+
+#lang-modal .flag-icon {
+    width: var(--flag-size);
+    height: var(--flag-size);
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}

@@ -1,5 +1,41 @@
 // --- System Initialization ---
 (function () {
+  // #patch #1 langueage logic
+  // --- NOWA LOGIKA JĘZYKA ---
+  try {
+    // Definiujemy, jakie języki wspieramy (klucze z pliku lang.js)
+    const availableLangs = ["pl", "en"];
+    const storageKey = "visudir_lang"; // Globalny klucz dla języka
+    let finalLang = "pl"; // Domyślny język "awaryjny"
+
+    // Krok 1: Sprawdź, czy w pamięci jest już zapisany język
+    const storedLang = localStorage.getItem(storageKey);
+
+    if (storedLang && availableLangs.includes(storedLang)) {
+      // Jeśli tak i jest on wspierany, użyj go
+      finalLang = storedLang;
+    } else {
+      // Krok 2: Jeśli nie, sprawdź język przeglądarki
+      const browserLang = navigator.language.slice(0, 2); // Pobieramy tylko dwie pierwsze litery ('pl', 'en', 'de' etc.)
+
+      if (browserLang !== "pl") {
+        finalLang = "en"; // Jeśli język przeglądarki NIE jest polski, ustaw angielski
+      } else {
+        finalLang = "pl"; // W przeciwnym razie ustaw polski
+      }
+
+      // Krok 3: Zapisz ustalony język do pamięci dla przyszłych sesji i innych podsystemów
+      localStorage.setItem(storageKey, finalLang);
+    }
+
+    // Krok 4: Zaktualizuj obiekt config, aby reszta skryptu używała właściwego języka
+    config.language.current = finalLang;
+  } catch (e) {
+    // W razie błędu (np. localStorage jest zablokowane), skrypt i tak ma domyślny język w config.js
+    console.error("Błąd podczas automatycznego ustawiania języka.", e);
+  }
+  // --- KONIEC NOWEJ LOGIKI ---
+
   // Self-healing and timeout mechanism
   try {
     const isRetry = sessionStorage.getItem("visudir_load_retry");
@@ -93,7 +129,7 @@ let isMinimized = false,
 let guideDimensionsCache = {};
 let pausedTime = 0;
 let tappedGuide = null;
-let currentTheme = 'light';
+let currentTheme = "light";
 
 const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -212,8 +248,14 @@ function updateRealTimeClock() {
   const moonPhaseEl = document.getElementById("moonPhaseDisplay");
   if (moonPhaseEl) {
     const moonPhases = [
-      "🌑\uFE0E", "🌒\uFE0E", "🌓\uFE0E", "🌔\uFE0E",
-      "🌕\uFE0E", "🌖\uFE0E", "🌗\uFE0E", "🌘\uFE0E",
+      "🌑\uFE0E",
+      "🌒\uFE0E",
+      "🌓\uFE0E",
+      "🌔\uFE0E",
+      "🌕\uFE0E",
+      "🌖\uFE0E",
+      "🌗\uFE0E",
+      "🌘\uFE0E",
     ];
     const phaseIndex = getMoonPhase(now);
     moonPhaseEl.innerHTML = "Księżyc&nbsp;" + moonPhases[phaseIndex];
@@ -239,7 +281,7 @@ function initializeBackgroundVideo(theme) {
     const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
     bgVideoSource.src = videoSrc;
     bgVideo.load();
-    bgVideo.muted = isAudioMuted; 
+    bgVideo.muted = isAudioMuted;
     const playPromise = bgVideo.play();
     if (playPromise !== undefined) {
       playPromise.catch((error) => {
@@ -265,19 +307,18 @@ function initializeBackgroundVideo(theme) {
 }
 
 function updateBackgroundVideoVisibility(forceShow = false) {
-    if (!bgVideo) return;
-    const isVideoVisible = videoBgState !== "off";
-    if (isVideoVisible) {
-        if (bgVideo.style.display !== "block" || forceShow) {
-            bgVideo.style.display = "block";
-            initializeBackgroundVideo(currentTheme);
-        }
-    } else {
-        bgVideo.style.display = "none";
-        document.body.classList.remove("video-ready");
+  if (!bgVideo) return;
+  const isVideoVisible = videoBgState !== "off";
+  if (isVideoVisible) {
+    if (bgVideo.style.display !== "block" || forceShow) {
+      bgVideo.style.display = "block";
+      initializeBackgroundVideo(currentTheme);
     }
+  } else {
+    bgVideo.style.display = "none";
+    document.body.classList.remove("video-ready");
+  }
 }
-
 
 function saveToLocalStorage(key, value) {
   try {
@@ -667,7 +708,7 @@ function startLogoRotator() {
   activeImg.src = isDarkInitial ? initialLogo.srcDark : initialLogo.srcLight;
   activeImg.alt = initialLogo.alt;
   headerLogoLink.href = initialLogo.href;
-  activeImg.classList.add("active"); 
+  activeImg.classList.add("active");
 
   if (
     !config.logoRotator ||
@@ -712,20 +753,20 @@ function applyLanguage() {
 }
 
 function initializeCurtainControls() {
-    const curtainToggleButton = document.getElementById('curtain-toggle-btn');
-    const topRow = document.querySelector('.deck-top-row');
+  const curtainToggleButton = document.getElementById("curtain-toggle-btn");
+  const topRow = document.querySelector(".deck-top-row");
 
-    if (curtainToggleButton && topRow) {
-        curtainToggleButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
-        curtainToggleButton.addEventListener('click', () => {
-            topRow.classList.toggle('filters-expanded');
-        });
-    }
+  if (curtainToggleButton && topRow) {
+    curtainToggleButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    curtainToggleButton.addEventListener("click", () => {
+      topRow.classList.toggle("filters-expanded");
+    });
+  }
 }
 
 window.onload = function () {
   applyLanguage();
-  if(fileInputLabel) fileInputLabel.style.display = "none";
+  if (fileInputLabel) fileInputLabel.style.display = "none";
   document
     .querySelectorAll(".version-display")
     .forEach((el) => (el.textContent = config.version));
@@ -747,8 +788,10 @@ window.onload = function () {
     logoLink.style.display = "none";
   }
   const backButton = document.getElementById("backButton");
-  if(backButton) {
-      backButton.style.display = config.pageSettings.showBackButton ? "flex" : "none";
+  if (backButton) {
+    backButton.style.display = config.pageSettings.showBackButton
+      ? "flex"
+      : "none";
   }
 
   loadUiSettings();
@@ -773,7 +816,7 @@ window.onload = function () {
     .getElementById("lightbox-minimizeBtn")
     .addEventListener("click", toggleLightboxMinimize);
 
-  if (typeof dataFromFile !== 'undefined' && dataFromFile.trim().length > 0) {
+  if (typeof dataFromFile !== "undefined" && dataFromFile.trim().length > 0) {
     init(dataFromFile);
   } else {
     fetch(config.paths.databaseFileName)
@@ -784,7 +827,7 @@ window.onload = function () {
           `Automatyczne ładowanie pliku '${config.paths.databaseFileName}' nie powiodło się. Błąd:`,
           e
         );
-        if(fileInputLabel) fileInputLabel.style.display = "flex";
+        if (fileInputLabel) fileInputLabel.style.display = "flex";
         const preloader = document.getElementById("preloader");
         if (preloader) {
           preloader.classList.add("fade-out");
@@ -806,9 +849,9 @@ window.onload = function () {
     window.addEventListener(event, resetIdleTimer)
   );
 
-  const controlPanel = document.querySelector('.control-panel');
+  const controlPanel = document.querySelector(".control-panel");
   if (controlPanel) {
-      controlPanel.classList.add('animated-control-panel');
+    controlPanel.classList.add("animated-control-panel");
   }
 };
 
@@ -818,11 +861,10 @@ function toggleMinimizeView() {
 
   minimizeBtn.classList.toggle("minimized", isMinimized);
   minimizeBtn.title = isMinimized ? lang.maximizeBtn : lang.minimizeBtn;
-  const icon = minimizeBtn.querySelector('i');
+  const icon = minimizeBtn.querySelector("i");
   if (icon) {
-      icon.className = isMinimized ? 'fas fa-chevron-down' : 'fas fa-chevron-up';
+    icon.className = isMinimized ? "fas fa-chevron-down" : "fas fa-chevron-up";
   }
-
 
   const topHeader = document.querySelector(".top-header");
   const footer = document.querySelector(".footer");
@@ -1091,9 +1133,7 @@ function renderGuides(sourceArray = null) {
 
   const itemWidth = newWidth;
   const columns =
-    Math.floor(
-      (guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001
-    ) || 1;
+    Math.floor((guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001) || 1;
   const itemsPerPage = columns * selectedRowCount;
 
   pagesCache = [];
@@ -1352,22 +1392,36 @@ function generateGuides() {
 }
 
 function initializeNewButtons() {
-    mainResetBtn.addEventListener("click", resetView);
+  mainResetBtn.addEventListener("click", resetView);
 
-    document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
-    const nextLangFile = Object.values(config.language.files)[0] || "#";
-    document.getElementById("statusLangBtn").href = nextLangFile;
-    document.getElementById("statusMuteBtn").addEventListener("click", toggleAudioMute);
-    document.getElementById("statusFullscreenBtn").addEventListener("click", toggleFullScreen);
-    
-    // New individual listeners for video controls
-    document.getElementById('videoBtn-play').addEventListener('click', handleVideoStateChange);
-    document.getElementById('videoBtn-shuffle').addEventListener('click', toggleAutoShuffle);
-    document.getElementById('videoBtn-prev').addEventListener('click', () => changeBackgroundVideo(-1));
-    document.getElementById('videoBtn-next').addEventListener('click', () => changeBackgroundVideo(1));
-    document.getElementById('videoBtn-reset').addEventListener('click', resetVideoSettings);
+  document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
+  const nextLangFile = Object.values(config.language.files)[0] || "#";
+  document.getElementById("statusLangBtn").href = nextLangFile;
+  document
+    .getElementById("statusMuteBtn")
+    .addEventListener("click", toggleAudioMute);
+  document
+    .getElementById("statusFullscreenBtn")
+    .addEventListener("click", toggleFullScreen);
 
-    updateVideoBtnUI();
+  // New individual listeners for video controls
+  document
+    .getElementById("videoBtn-play")
+    .addEventListener("click", handleVideoStateChange);
+  document
+    .getElementById("videoBtn-shuffle")
+    .addEventListener("click", toggleAutoShuffle);
+  document
+    .getElementById("videoBtn-prev")
+    .addEventListener("click", () => changeBackgroundVideo(-1));
+  document
+    .getElementById("videoBtn-next")
+    .addEventListener("click", () => changeBackgroundVideo(1));
+  document
+    .getElementById("videoBtn-reset")
+    .addEventListener("click", resetVideoSettings);
+
+  updateVideoBtnUI();
 }
 
 function initializeDisplayPanel() {
@@ -1446,8 +1500,8 @@ function initializeDisplayPanel() {
     sizeValue.textContent = `${sliderValue}%`;
     const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
     guideList.style.setProperty("--box-width", `${newWidth}px`);
-    const minFontSize = 0.85; 
-    const maxFontSize = 1.25; 
+    const minFontSize = 0.85;
+    const maxFontSize = 1.25;
     const normalizedValue = (sliderValue - 50) / 100;
     const dynamicFontSize =
       minFontSize + normalizedValue * (maxFontSize - minFontSize);
@@ -1476,25 +1530,27 @@ function initializeDisplayPanel() {
 }
 
 function toggleAudioMute() {
-    if (!bgVideo) return;
+  if (!bgVideo) return;
 
-    isAudioMuted = !isAudioMuted;
-    bgVideo.muted = isAudioMuted;
+  isAudioMuted = !isAudioMuted;
+  bgVideo.muted = isAudioMuted;
 
-    if (!isAudioMuted) {
-        bgVideo.play().catch(error => {
-            console.error("Błąd przy próbie odtworzenia wideo z dźwiękiem:", error);
-        });
+  if (!isAudioMuted) {
+    bgVideo.play().catch((error) => {
+      console.error("Błąd przy próbie odtworzenia wideo z dźwiękiem:", error);
+    });
+  }
+
+  const muteButton = document.getElementById("statusMuteBtn");
+  if (muteButton) {
+    const muteIcon = muteButton.querySelector("i");
+    if (muteIcon) {
+      muteIcon.className = isAudioMuted
+        ? "fas fa-volume-mute"
+        : "fas fa-volume-up";
     }
-
-    const muteButton = document.getElementById('statusMuteBtn');
-    if (muteButton) {
-        const muteIcon = muteButton.querySelector('i');
-        if (muteIcon) {
-            muteIcon.className = isAudioMuted ? 'fas fa-volume-mute' : 'fas fa-volume-up';
-        }
-        muteButton.classList.toggle('active-red', !isAudioMuted);
-    }
+    muteButton.classList.toggle("active-red", !isAudioMuted);
+  }
 }
 
 function handleVideoStateChange() {
@@ -1521,41 +1577,46 @@ function handleVideoStateChange() {
 }
 
 function updateVideoBtnUI() {
-    const playBtn = document.getElementById("videoBtn-play");
-    const lightboxPlayBtn = document.getElementById("lightbox-video-toggle");
+  const playBtn = document.getElementById("videoBtn-play");
+  const lightboxPlayBtn = document.getElementById("lightbox-video-toggle");
 
-    const updateButton = (btn) => {
-        if (!btn) return;
-        switch (videoBgState) {
-            case "playing":
-                btn.innerHTML = '<i class="fas fa-pause"></i>';
-                btn.title = lang.videoBtnPause;
-                btn.classList.add("active-play");
-                break;
-            case "paused":
-                btn.innerHTML = '<i class="fas fa-stop"></i>';
-                btn.title = lang.videoBtnOff;
-                btn.classList.add("active-play");
-                break;
-            case "off":
-                btn.innerHTML = '<i class="fas fa-play"></i>';
-                btn.title = lang.videoBtnPlay;
-                btn.classList.remove("active-play");
-                break;
-        }
-    };
-    
-    updateButton(playBtn);
-    updateButton(lightboxPlayBtn);
+  const updateButton = (btn) => {
+    if (!btn) return;
+    switch (videoBgState) {
+      case "playing":
+        btn.innerHTML = '<i class="fas fa-pause"></i>';
+        btn.title = lang.videoBtnPause;
+        btn.classList.add("active-play");
+        break;
+      case "paused":
+        btn.innerHTML = '<i class="fas fa-stop"></i>';
+        btn.title = lang.videoBtnOff;
+        btn.classList.add("active-play");
+        break;
+      case "off":
+        btn.innerHTML = '<i class="fas fa-play"></i>';
+        btn.title = lang.videoBtnPlay;
+        btn.classList.remove("active-play");
+        break;
+    }
+  };
 
-    const shuffleBtn = document.getElementById("videoBtn-shuffle");
-    if (shuffleBtn) {
-        shuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
-    }
-    const lightboxShuffleBtn = document.getElementById("lightbox-video-autoshuffle");
-    if (lightboxShuffleBtn) {
-        lightboxShuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
-    }
+  updateButton(playBtn);
+  updateButton(lightboxPlayBtn);
+
+  const shuffleBtn = document.getElementById("videoBtn-shuffle");
+  if (shuffleBtn) {
+    shuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
+  }
+  const lightboxShuffleBtn = document.getElementById(
+    "lightbox-video-autoshuffle"
+  );
+  if (lightboxShuffleBtn) {
+    lightboxShuffleBtn.classList.toggle(
+      "active-play",
+      autoShuffleInterval !== null
+    );
+  }
 }
 
 function shuffleBackgroundVideo() {
@@ -1659,12 +1720,15 @@ function toggleDarkMode() {
   currentTheme = isDark ? "dark" : "light";
 
   if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
-    const activeLogoImg = document.querySelector('.header-logo.active');
+    const activeLogoImg = document.querySelector(".header-logo.active");
     if (activeLogoImg) {
-        const currentLogoData = config.logoRotator.logos[currentLogoIndex];
-        if (currentLogoData) {
-            activeLogoImg.src = currentTheme === "dark" ? currentLogoData.srcDark : currentLogoData.srcLight;
-        }
+      const currentLogoData = config.logoRotator.logos[currentLogoIndex];
+      if (currentLogoData) {
+        activeLogoImg.src =
+          currentTheme === "dark"
+            ? currentLogoData.srcDark
+            : currentLogoData.srcLight;
+      }
     }
   }
 
@@ -2349,3 +2413,136 @@ function updateWrapperHeightForPage(pageNum) {
 
 updateRealTimeClock();
 setInterval(updateRealTimeClock, 30000);
+
+// #patch #3
+// =================================================================
+//          LOGIKA KARUZELI JĘZYKOWEJ
+// =================================================================
+function initializeLangCarousel() {
+    const modal = document.getElementById('lang-modal');
+    const overlay = document.getElementById('lang-overlay');
+    const closeBtn = document.getElementById('lang-modal-close-btn');
+    const world = modal.querySelector('.world');
+    const globeBtn = document.getElementById('statusLangBtn'); // Przycisk globusa z panelu
+
+    // Zamiast listy z pliku HTML, definiujemy nasze języki
+    const languages = [
+        { code: 'pl', name: 'Polski', flag: 'pl' },
+        { code: 'en', name: 'English', flag: 'gb' }, // 'gb' dla flagi Wielkiej Brytanii
+        { code: 'de', name: 'Deutsch', flag: 'de' },
+        { code: 'es', name: 'Español', flag: 'es' },
+        { code: 'fr', name: 'Français', flag: 'fr' },
+        { code: 'it', name: 'Italiano', flag: 'it' },
+        { code: 'cz', name: 'Čeština', flag: 'cz' },
+        { code: 'sk', name: 'Slovenčina', flag: 'sk' },
+        { code: 'ua', name: 'Українська', flag: 'ua' }
+    ];
+
+    let resizeTimer;
+    let hasDragged = false;
+
+    const rebuildCarousel = () => {
+        world.innerHTML = '';
+        const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
+        const base = { sceneSize: 250, perspective: 1000, itemWidth: 100, itemHeight: 50, fontSize: 14, flagSize: 22, gap: 10, radius: 220 };
+        
+        const root = document.documentElement;
+        Object.keys(base).forEach(key => {
+            root.style.setProperty(`--${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`, `${base[key] * scale}px`);
+        });
+
+        const totalItems = languages.length;
+        const radius = base.radius * scale;
+
+        languages.forEach((lang, index) => {
+            const item = document.createElement('div');
+            item.className = 'item';
+            
+            const flagImg = document.createElement('img');
+            flagImg.className = 'flag-icon';
+            flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${lang.flag}.svg`;
+            flagImg.alt = '';
+            flagImg.draggable = false;
+            
+            const codeSpan = document.createElement('span');
+            codeSpan.innerText = lang.code.toUpperCase();
+            
+            item.appendChild(flagImg);
+            item.appendChild(codeSpan);
+            
+            const angle = (360 / totalItems) * index;
+            item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+            
+            // KLUCZOWA ZMIANA: Zamiast alertu, zmieniamy język i przeładowujemy stronę
+            item.addEventListener('click', () => {
+                if (!hasDragged) {
+                    localStorage.setItem('visudir_lang', lang.code); // Zapisujemy nowy język
+                    location.reload(); // Przeładowujemy stronę, by zastosować zmiany
+                }
+            });
+            
+            world.appendChild(item);
+        });
+    };
+
+    let currentRotationY = 0, isDragging = false, startX = 0, lastX = 0, velocity = 0, animationFrame = null;
+    const friction = 0.95, rotationSensitivity = 0.4;
+    const updateRotation = () => { world.style.transform = `rotateY(${currentRotationY}deg)`; };
+    const inertiaAnimate = () => {
+        currentRotationY += velocity; velocity *= friction; updateRotation();
+        if (Math.abs(velocity) > 0.1) animationFrame = requestAnimationFrame(inertiaAnimate); else velocity = 0;
+    };
+    const onDragStart = (e) => {
+        e.preventDefault(); isDragging = true; hasDragged = false; world.classList.add('is-dragging');
+        if (animationFrame) cancelAnimationFrame(animationFrame); velocity = 0;
+        startX = e.clientX || e.touches[0].clientX; lastX = startX;
+        window.addEventListener('mousemove', onDragMove); window.addEventListener('mouseup', onDragEnd);
+        window.addEventListener('touchmove', onDragMove); window.addEventListener('touchend', onDragEnd);
+    };
+    const onDragMove = (e) => {
+        if (!isDragging) return;
+        const currentX = e.clientX || e.touches[0].clientX;
+        if (Math.abs(currentX - startX) > 5) { hasDragged = true; } // Jeśli przeciągnięto, zablokuj kliknięcie
+        const deltaX = currentX - lastX;
+        velocity = deltaX * rotationSensitivity; currentRotationY += velocity; lastX = currentX; updateRotation();
+    };
+    const onDragEnd = () => {
+        isDragging = false; world.classList.remove('is-dragging');
+        window.removeEventListener('mousemove', onDragMove); window.removeEventListener('mouseup', onDragEnd);
+        window.removeEventListener('touchmove', onDragMove); window.removeEventListener('touchend', onDragEnd);
+        if (Math.abs(velocity) > 0.1) inertiaAnimate();
+    };
+    
+    world.addEventListener('mousedown', onDragStart);
+    world.addEventListener('touchstart', onDragStart, { passive: true });
+
+    // Funkcje do pokazywania i ukrywania modala
+    const showModal = () => {
+        rebuildCarousel();
+        modal.style.display = 'flex';
+    };
+    const hideModal = () => {
+        modal.style.display = 'none';
+    };
+
+    // Podpięcie eventów
+    globeBtn.addEventListener('click', (e) => {
+        e.preventDefault(); // Zapobiegamy domyślnej akcji linku
+        showModal();
+    });
+    closeBtn.addEventListener('click', hideModal);
+    overlay.addEventListener('click', hideModal);
+    
+    // Zmiana rozmiaru okna z debouncingiem
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (modal.style.display === 'flex') {
+                rebuildCarousel();
+            }
+        }, 150);
+    });
+}
+
+// Wywołaj inicjalizację karuzeli po załadowaniu strony
+initializeLangCarousel();
