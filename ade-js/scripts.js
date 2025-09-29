@@ -1,52 +1,37 @@
 // --- System Initialization ---
 (function () {
-  // #patch #1 langueage logic
-  // --- NOWA LOGIKA JĘZYKA ---
+  // --- LOGIKA JĘZYKA ---
   try {
-    // Definiujemy, jakie języki wspieramy (klucze z pliku lang.js)
-    const availableLangs = ["pl", "en"];
+    const availableLangs = Object.keys(languageStrings); // Dynamicznie pobierz WSZYSTKIE języki
     const storageKey = "visudir_lang"; // Globalny klucz dla języka
     let finalLang = "pl"; // Domyślny język "awaryjny"
 
-    // Krok 1: Sprawdź, czy w pamięci jest już zapisany język
     const storedLang = localStorage.getItem(storageKey);
 
     if (storedLang && availableLangs.includes(storedLang)) {
-      // Jeśli tak i jest on wspierany, użyj go
       finalLang = storedLang;
     } else {
-      // Krok 2: Jeśli nie, sprawdź język przeglądarki
-      const browserLang = navigator.language.slice(0, 2); // Pobieramy tylko dwie pierwsze litery ('pl', 'en', 'de' etc.)
-
+      const browserLang = navigator.language.slice(0, 2);
       if (browserLang !== "pl") {
-        finalLang = "en"; // Jeśli język przeglądarki NIE jest polski, ustaw angielski
+        finalLang = "en";
       } else {
-        finalLang = "pl"; // W przeciwnym razie ustaw polski
+        finalLang = "pl";
       }
-
-      // Krok 3: Zapisz ustalony język do pamięci dla przyszłych sesji i innych podsystemów
       localStorage.setItem(storageKey, finalLang);
     }
-
-    // Krok 4: Zaktualizuj obiekt config, aby reszta skryptu używała właściwego języka
     config.language.current = finalLang;
   } catch (e) {
-    // W razie błędu (np. localStorage jest zablokowane), skrypt i tak ma domyślny język w config.js
     console.error("Błąd podczas automatycznego ustawiania języka.", e);
   }
-  // --- KONIEC NOWEJ LOGIKI ---
 
   // Self-healing and timeout mechanism
   try {
     const isRetry = sessionStorage.getItem("visudir_load_retry");
-
     const loadTimeout = setTimeout(() => {
       if (isRetry) {
-        // Second failure: inform user
         document.getElementById("preloader").innerHTML =
           "Aplikacja nie może się załadować.<br>Proszę spróbować wyczyścić dane przeglądarki lub skontaktować się z administratorem.";
       } else {
-        // First failure: clear storage and retry
         sessionStorage.setItem("visudir_load_retry", "true");
         Object.keys(localStorage).forEach((key) => {
           if (key.startsWith("visudir_")) {
@@ -54,12 +39,10 @@
           }
         });
         location.reload();
-        // patch#2
       }
-    }, 30000); // Zwiększony timeout do 30 sekund
+    }, 30000);
 
     window.addEventListener("load", () => {
-      // #patch#2
       clearTimeout(loadTimeout);
       sessionStorage.removeItem("visudir_load_retry");
     });
@@ -70,7 +53,6 @@
   // Initial theme setup (SAFE VERSION)
   try {
     const theme = localStorage.getItem("visudir_theme");
-    // Use a safe, hardcoded default. The full config is not yet available.
     const defaultTheme = "light";
     if (theme === "dark" || (!theme && defaultTheme === "dark")) {
       document.documentElement.classList.add("dark-mode");
@@ -773,14 +755,6 @@ window.onload = function () {
   document.getElementById("aboutLinkFooter").href = config.paths.urlAbout;
   document.getElementById("visuDirBtn").href = config.paths.urlAbout;
 
-  const langBtn = document.getElementById("langBtn");
-  const nextLang = Object.keys(config.language.files)[0] || "#";
-  if (nextLang !== "#") {
-    langBtn.href = config.language.files[nextLang];
-  } else {
-    langBtn.style.display = "none";
-  }
-
   currentTheme = initializeTheme();
   if (config.pageSettings.showMiniLogo && logoLink) {
     startLogoRotator();
@@ -834,11 +808,6 @@ window.onload = function () {
         }
       });
   }
-  initializeNewButtons();
-  initializeDisplayPanel();
-  initializeMobileHover();
-  initialize3dHoverEffect();
-  initializeCurtainControls();
 
   sessionStartTime = new Date();
   lastActivityTime = new Date();
@@ -1395,8 +1364,9 @@ function initializeNewButtons() {
   mainResetBtn.addEventListener("click", resetView);
 
   document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
-  const nextLangFile = Object.values(config.language.files)[0] || "#";
-  document.getElementById("statusLangBtn").href = nextLangFile;
+
+  // USUNIĘTO DWIE LINIJKI POWODUJĄCE BŁĄD, KTÓRE ODNOSIŁY SIĘ DO STAREJ LOGIKI JĘZYKÓW
+
   document
     .getElementById("statusMuteBtn")
     .addEventListener("click", toggleAudioMute);
@@ -1404,7 +1374,7 @@ function initializeNewButtons() {
     .getElementById("statusFullscreenBtn")
     .addEventListener("click", toggleFullScreen);
 
-  // New individual listeners for video controls
+  // Listenery dla przycisków wideo w panelu statusu
   document
     .getElementById("videoBtn-play")
     .addEventListener("click", handleVideoStateChange);
@@ -2419,130 +2389,191 @@ setInterval(updateRealTimeClock, 30000);
 //          LOGIKA KARUZELI JĘZYKOWEJ
 // =================================================================
 function initializeLangCarousel() {
-    const modal = document.getElementById('lang-modal');
-    const overlay = document.getElementById('lang-overlay');
-    const closeBtn = document.getElementById('lang-modal-close-btn');
-    const world = modal.querySelector('.world');
-    const globeBtn = document.getElementById('statusLangBtn'); // Przycisk globusa z panelu
+  const modal = document.getElementById("lang-modal");
+  const overlay = document.getElementById("lang-overlay");
+  const closeBtn = document.getElementById("lang-modal-close-btn");
+  const world = modal.querySelector(".world");
+  const globeBtn = document.getElementById("statusLangBtn");
 
-    // Zamiast listy z pliku HTML, definiujemy nasze języki
-    const languages = [
-        { code: 'pl', name: 'Polski', flag: 'pl' },
-        { code: 'en', name: 'English', flag: 'gb' }, // 'gb' dla flagi Wielkiej Brytanii
-        { code: 'de', name: 'Deutsch', flag: 'de' },
-        { code: 'es', name: 'Español', flag: 'es' },
-        { code: 'fr', name: 'Français', flag: 'fr' },
-        { code: 'it', name: 'Italiano', flag: 'it' },
-        { code: 'cz', name: 'Čeština', flag: 'cz' },
-        { code: 'sk', name: 'Slovenčina', flag: 'sk' },
-        { code: 'ua', name: 'Українська', flag: 'ua' }
-    ];
+  const langDetails = {
+    pl: { name: "Polski", flag: "pl" },
+    en: { name: "English", flag: "gb" },
+    de: { name: "Deutsch", flag: "de" },
+    es: { name: "Español", flag: "es" },
+    fr: { name: "Français", flag: "fr" },
+    it: { name: "Italiano", flag: "it" },
+    ja: { name: "日本語", flag: "jp" },
+    zh: { name: "中文", flag: "cn" },
+    pt: { name: "Português", flag: "br" },
+    cs: { name: "Čeština", flag: "cz" },
+    sk: { name: "Slovenčina", flag: "sk" },
+    uk: { name: "Українська", flag: "ua" },
+    id: { name: "Bahasa Indonesia", flag: "id" },
+    hi: { name: "हिन्दी", flag: "in" },
+  };
 
-    let resizeTimer;
-    let hasDragged = false;
+  const availableLangCodes = Object.keys(languageStrings);
 
-    const rebuildCarousel = () => {
-        world.innerHTML = '';
-        const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
-        const base = { sceneSize: 250, perspective: 1000, itemWidth: 100, itemHeight: 50, fontSize: 14, flagSize: 22, gap: 10, radius: 220 };
-        
-        const root = document.documentElement;
-        Object.keys(base).forEach(key => {
-            root.style.setProperty(`--${key.replace(/([A-Z])/g, '-$1').toLowerCase()}`, `${base[key] * scale}px`);
-        });
+  const languages = availableLangCodes
+    .map((code) => {
+      if (langDetails[code]) {
+        return {
+          code: code,
+          name: langDetails[code].name,
+          flag: langDetails[code].flag,
+        };
+      }
+      return null;
+    })
+    .filter((lang) => lang);
 
-        const totalItems = languages.length;
-        const radius = base.radius * scale;
+  let resizeTimer;
+  let hasDragged = false;
 
-        languages.forEach((lang, index) => {
-            const item = document.createElement('div');
-            item.className = 'item';
-            
-            const flagImg = document.createElement('img');
-            flagImg.className = 'flag-icon';
-            flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${lang.flag}.svg`;
-            flagImg.alt = '';
-            flagImg.draggable = false;
-            
-            const codeSpan = document.createElement('span');
-            codeSpan.innerText = lang.code.toUpperCase();
-            
-            item.appendChild(flagImg);
-            item.appendChild(codeSpan);
-            
-            const angle = (360 / totalItems) * index;
-            item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
-            
-            // KLUCZOWA ZMIANA: Zamiast alertu, zmieniamy język i przeładowujemy stronę
-            item.addEventListener('click', () => {
-                if (!hasDragged) {
-                    localStorage.setItem('visudir_lang', lang.code); // Zapisujemy nowy język
-                    location.reload(); // Przeładowujemy stronę, by zastosować zmiany
-                }
-            });
-            
-            world.appendChild(item);
-        });
+  const rebuildCarousel = () => {
+    world.innerHTML = "";
+    const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
+    const base = {
+      sceneSize: 250,
+      perspective: 1000,
+      itemWidth: 100,
+      itemHeight: 50,
+      fontSize: 14,
+      flagSize: 22,
+      gap: 10,
+      radius: 220,
     };
 
-    let currentRotationY = 0, isDragging = false, startX = 0, lastX = 0, velocity = 0, animationFrame = null;
-    const friction = 0.95, rotationSensitivity = 0.4;
-    const updateRotation = () => { world.style.transform = `rotateY(${currentRotationY}deg)`; };
-    const inertiaAnimate = () => {
-        currentRotationY += velocity; velocity *= friction; updateRotation();
-        if (Math.abs(velocity) > 0.1) animationFrame = requestAnimationFrame(inertiaAnimate); else velocity = 0;
-    };
-    const onDragStart = (e) => {
-        e.preventDefault(); isDragging = true; hasDragged = false; world.classList.add('is-dragging');
-        if (animationFrame) cancelAnimationFrame(animationFrame); velocity = 0;
-        startX = e.clientX || e.touches[0].clientX; lastX = startX;
-        window.addEventListener('mousemove', onDragMove); window.addEventListener('mouseup', onDragEnd);
-        window.addEventListener('touchmove', onDragMove); window.addEventListener('touchend', onDragEnd);
-    };
-    const onDragMove = (e) => {
-        if (!isDragging) return;
-        const currentX = e.clientX || e.touches[0].clientX;
-        if (Math.abs(currentX - startX) > 5) { hasDragged = true; } // Jeśli przeciągnięto, zablokuj kliknięcie
-        const deltaX = currentX - lastX;
-        velocity = deltaX * rotationSensitivity; currentRotationY += velocity; lastX = currentX; updateRotation();
-    };
-    const onDragEnd = () => {
-        isDragging = false; world.classList.remove('is-dragging');
-        window.removeEventListener('mousemove', onDragMove); window.removeEventListener('mouseup', onDragEnd);
-        window.removeEventListener('touchmove', onDragMove); window.removeEventListener('touchend', onDragEnd);
-        if (Math.abs(velocity) > 0.1) inertiaAnimate();
-    };
-    
-    world.addEventListener('mousedown', onDragStart);
-    world.addEventListener('touchstart', onDragStart, { passive: true });
+    const root = document.documentElement;
+    Object.keys(base).forEach((key) => {
+      root.style.setProperty(
+        `--${key.replace(/([A-Z])/g, "-$1").toLowerCase()}`,
+        `${base[key] * scale}px`
+      );
+    });
 
-    // Funkcje do pokazywania i ukrywania modala
-    const showModal = () => {
+    const totalItems = languages.length;
+    const radius = base.radius * scale;
+
+    languages.forEach((lang, index) => {
+      const item = document.createElement("div");
+      item.className = "item";
+
+      const flagImg = document.createElement("img");
+      flagImg.className = "flag-icon";
+      flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${lang.flag}.svg`;
+      flagImg.alt = "";
+      flagImg.draggable = false;
+
+      const codeSpan = document.createElement("span");
+      codeSpan.innerText = lang.code.toUpperCase();
+
+      item.appendChild(flagImg);
+      item.appendChild(codeSpan);
+
+      const angle = (360 / totalItems) * index;
+      item.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
+
+      item.addEventListener("click", () => {
+        if (!hasDragged) {
+          localStorage.setItem("visudir_lang", lang.code);
+          location.reload();
+        }
+      });
+
+      world.appendChild(item);
+    });
+  };
+
+  let currentRotationY = 0,
+    isDragging = false,
+    startX = 0,
+    lastX = 0,
+    velocity = 0,
+    animationFrame = null;
+  const friction = 0.95,
+    rotationSensitivity = 0.4;
+  const updateRotation = () => {
+    world.style.transform = `rotateY(${currentRotationY}deg)`;
+  };
+  const inertiaAnimate = () => {
+    currentRotationY += velocity;
+    velocity *= friction;
+    updateRotation();
+    if (Math.abs(velocity) > 0.1)
+      animationFrame = requestAnimationFrame(inertiaAnimate);
+    else velocity = 0;
+  };
+  const onDragStart = (e) => {
+    e.preventDefault();
+    isDragging = true;
+    hasDragged = false;
+    world.classList.add("is-dragging");
+    if (animationFrame) cancelAnimationFrame(animationFrame);
+    velocity = 0;
+    startX = e.clientX || e.touches[0].clientX;
+    lastX = startX;
+    window.addEventListener("mousemove", onDragMove);
+    window.addEventListener("mouseup", onDragEnd);
+    window.addEventListener("touchmove", onDragMove);
+    window.addEventListener("touchend", onDragEnd);
+  };
+  const onDragMove = (e) => {
+    if (!isDragging) return;
+    const currentX = e.clientX || e.touches[0].clientX;
+    if (Math.abs(currentX - startX) > 5) {
+      hasDragged = true;
+    }
+    const deltaX = currentX - lastX;
+    velocity = deltaX * rotationSensitivity; // <-- TUTAJ BYŁ BŁĄD, ZOSTAŁ NAPRAWIONY
+    currentRotationY += velocity;
+    lastX = currentX;
+    updateRotation();
+  };
+  const onDragEnd = () => {
+    isDragging = false;
+    world.classList.remove("is-dragging");
+    window.removeEventListener("mousemove", onDragMove);
+    window.removeEventListener("mouseup", onDragEnd);
+    window.removeEventListener("touchmove", onDragMove);
+    window.removeEventListener("touchend", onDragEnd);
+    if (Math.abs(velocity) > 0.1) inertiaAnimate();
+  };
+
+  world.addEventListener("mousedown", onDragStart);
+  world.addEventListener("touchstart", onDragStart, { passive: true });
+
+  const showModal = () => {
+    rebuildCarousel();
+    modal.style.display = "flex";
+  };
+  const hideModal = () => {
+    modal.style.display = "none";
+  };
+
+  globeBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    showModal();
+  });
+  closeBtn.addEventListener("click", hideModal);
+  overlay.addEventListener("click", hideModal);
+
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      if (modal.style.display === "flex") {
         rebuildCarousel();
-        modal.style.display = 'flex';
-    };
-    const hideModal = () => {
-        modal.style.display = 'none';
-    };
-
-    // Podpięcie eventów
-    globeBtn.addEventListener('click', (e) => {
-        e.preventDefault(); // Zapobiegamy domyślnej akcji linku
-        showModal();
-    });
-    closeBtn.addEventListener('click', hideModal);
-    overlay.addEventListener('click', hideModal);
-    
-    // Zmiana rozmiaru okna z debouncingiem
-    window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            if (modal.style.display === 'flex') {
-                rebuildCarousel();
-            }
-        }, 150);
-    });
+      }
+    }, 150);
+  });
 }
 
 // Wywołaj inicjalizację karuzeli po załadowaniu strony
 initializeLangCarousel();
+
+// NOWY BLOK: Wywołaj resztę inicjalizacji UI, aby ożywić panel
+initializeNewButtons();
+initializeDisplayPanel();
+initializeMobileHover();
+initialize3dHoverEffect();
+initializeCurtainControls();
