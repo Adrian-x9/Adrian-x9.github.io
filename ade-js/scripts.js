@@ -788,8 +788,33 @@ window.onload = function () {
     .getElementById("lightbox-minimizeBtn")
     .addEventListener("click", toggleLightboxMinimize);
 
-  if (typeof dataFromFile !== "undefined" && dataFromFile.trim().length > 0) {
-    init(dataFromFile);
+  // --- START: New Database Selection Logic ---
+  const languageDatabases = {
+      en: typeof data_en !== 'undefined' ? data_en : null,
+      de: typeof data_de !== 'undefined' ? data_de : null,
+      es: typeof data_es !== 'undefined' ? data_es : null,
+      fr: typeof data_fr !== 'undefined' ? data_fr : null,
+      it: typeof data_it !== 'undefined' ? data_it : null,
+      ja: typeof data_ja !== 'undefined' ? data_ja : null,
+      zh: typeof data_zh !== 'undefined' ? data_zh : null,
+      pt: typeof data_pt !== 'undefined' ? data_pt : null,
+      cs: typeof data_cs !== 'undefined' ? data_cs : null,
+      sk: typeof data_sk !== 'undefined' ? data_sk : null,
+      uk: typeof data_uk !== 'undefined' ? data_uk : null,
+      id: typeof data_id !== 'undefined' ? data_id : null,
+      hi: typeof data_hi !== 'undefined' ? data_hi : null
+  };
+
+  const currentLang = config.language.current;
+  let selectedData = (typeof dataFromFile !== 'undefined') ? dataFromFile : null; // Default to Polish
+
+  if (currentLang !== 'pl' && languageDatabases[currentLang]) {
+      selectedData = languageDatabases[currentLang];
+  }
+  // --- END: New Database Selection Logic ---
+  
+  if (selectedData && selectedData.trim().length > 0) {
+    init(selectedData);
   } else {
     fetch(config.paths.databaseFileName)
       .then((r) => (r.ok ? r.text() : Promise.reject(r.statusText)))
@@ -821,6 +846,7 @@ window.onload = function () {
     controlPanel.classList.add("animated-control-panel");
   }
 };
+
 
 function toggleMinimizeView() {
   const minimizeBtn = document.getElementById("minimizeBtn");
