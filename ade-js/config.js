@@ -1,5 +1,5 @@
 const config = {
-            version: "v1.12.3", // New panel View needs rework on upper panel
+            version: "v1.13.0", // Full interface rework, before v2.0.0 release
             language: {
                 current: 'en',
                 files: {

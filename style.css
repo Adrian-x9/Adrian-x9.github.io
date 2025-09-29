@@ -2357,29 +2357,51 @@ html.dark-mode #statusMuteBtn.active-red {
 
 /*
 ================================================================
-            NOWE STYLE Z test21.html
+            NOWE STYLE - ŁATKA GENERALNA v2
 ================================================================
 */
 
 :root {
     /* Kolory dla trybu jasnego */
-    --body-bg-light: #e1e1e1; --panel-bg-light: #f0f0f0; --panel-shadow-light: 0 0 0 2px #cc0000, 0 5px 20px rgba(204, 0, 0, 0.3); --group-bg-light: rgba(0, 0, 0, 0.05); --button-text-light: #333; --slider-icon-light: #888; --slider-track-light: rgba(0, 0, 0, 0.1); --slider-thumb-light: #cc0000; --slider-thumb-border-light: #fff; --button-red-bg-light: #cc0000; --button-red-text-light: white; --separator-light: rgba(0, 0, 0, 0.15); --filter-input-bg-light: #fff; --filter-input-border-light: #ccc; --status-text-light: #333; --status-bold-light: #000;
+    --body-bg-light: #e1e1e1; --panel-bg-light: #f0f0f0; --panel-shadow-light: 0 0 0 2px #cc0000, 0 5px 20px rgba(204, 0, 0, 0.3); --group-bg-light: rgba(0, 0, 0, 0.05); --button-text-light: #333; --slider-icon-light: #888; --slider-track-light: rgba(0, 0, 0, 0.1); --slider-thumb-light: #cc0000; --slider-thumb-border-light: #fff; --button-red-bg-light: #cc0000; --button-red-text-light: white; --separator-light: rgba(0, 0, 0, 0.15); --filter-input-bg-light: #fff; --filter-input-border-light: #ccc; --status-text-light: #444; --status-bold-light: #000;
     /* Kolory dla trybu ciemnego */
-    --body-bg-dark: #121212; --panel-bg-dark: #1a1a1a; --panel-shadow-dark: 0 0 0 2px #e53935, 0 0 25px rgba(229, 57, 53, 0.5); --group-bg-dark: rgba(255, 255, 255, 0.1); --button-text-dark: #eee; --slider-icon-dark: #aaa; --slider-track-dark: rgba(255, 255, 255, 0.2); --slider-thumb-dark: #e53935; --slider-thumb-border-dark: #000; --button-red-bg-dark: #e53935; --button-red-text-dark: #111; --separator-dark: rgba(255, 255, 255, 0.15); --filter-input-bg-dark: #2c2c2c; --filter-input-border-dark: #555; --status-text-dark: #ccc; --status-bold-dark: #fff;
+    --body-bg-dark: #121212; --panel-bg-dark: #1a1a1a; --panel-shadow-dark: 0 0 0 2px #e53935, 0 0 25px rgba(229, 57, 53, 0.5); --group-bg-dark: rgba(255, 255, 255, 0.1); --button-text-dark: #eee; --slider-icon-dark: #aaa; --slider-track-dark: rgba(255, 255, 255, 0.2); --slider-thumb-dark: #e53935; --slider-thumb-border-dark: #000; --button-red-bg-dark: #e53935; --button-red-text-dark: #111; --separator-dark: rgba(255, 255, 255, 0.15); --filter-input-bg-dark: #2c2c2c; --filter-input-border-dark: #555; --status-text-dark: #bbb; --status-bold-dark: #fff;
 }
-html { background-color: var(--body-bg-light); font-family: "Segoe UI", sans-serif; transition: background-color 0.5s ease; }
-html.dark-mode { background-color: var(--body-bg-dark); }
+
+/* --- OGÓLNY UKŁAD STRONY --- */
+html { font-family: "Segoe UI", sans-serif; }
 body { 
     display: flex;
-    flex-direction: column; /* <-- TO JEST KLUCZOWA ZMIANA */
-    align-items: center;   /* <-- TO POPRAWIA WYŚRODKOWANIE */
-    padding-top: 80px;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
+.top-header {
+    position: relative; /* Zmienione na relative, aby było częścią przepływu */
+    order: -2; /* Kolejność przed panelem */
+    width: 100%;
+    max-width: 900px;
+}
+.control-panel {
+    order: -1; /* Kolejność po nagłówku, a przed resztą */
+    margin-bottom: 20px;
+}
+.guide-list-wrapper, .pagination {
+    width: 100%;
+}
+.footer {
+    margin-top: auto; /* Wypycha stopkę na dół */
+    width: 100%;
+}
+
+/* --- POPRAWKI STYLÓW PANELI --- */
+html:not(.dark-mode) .top-header { background: none; }
+html.dark-mode .top-header { background: none; }
+.top-header { border-bottom: none; }
 
 .control-panel {
     display: flex; flex-direction: column; gap: 0; width: 100%; max-width: 900px; padding: 8px; border: 2px solid transparent; border-radius: 12px;
     background-clip: padding-box; box-sizing: border-box; background-color: var(--panel-bg-light); box-shadow: var(--panel-shadow-light);
-    margin-bottom: 20px; /* Zastępuje margines ze starego .controls */
 }
 html.dark-mode .control-panel { background-color: var(--panel-bg-dark); box-shadow: var(--panel-shadow-dark); }
 body.video-ready:not(html.dark-mode) .control-panel { background: rgba(240, 240, 240, 0.85); }
@@ -2406,38 +2428,39 @@ html.dark-mode .filter-section input, html.dark-mode .filter-section select { bo
 html.dark-mode .filter-section .dir-db-btn { border-color: var(--button-red-bg-dark); background-color: var(--filter-input-bg-dark); color: var(--button-red-bg-dark); }
 .filter-section .dir-db-btn:hover { background-color: var(--group-bg-light); }
 html.dark-mode .filter-section .dir-db-btn:hover { background-color: var(--group-bg-dark); }
-#generatorModeBtn, #minimizeBtn { width: 38px; padding: 0; }
+#generatorModeBtn { width: 38px; padding: 0; }
 
 .curtain-handle { display: flex; justify-content: center; align-items: center; height: 100%; cursor: pointer; }
-#curtain-toggle-btn { background: rgba(128, 128, 128, 0.2); border: none; border-radius: 50%; width: 20px; height: 20px; padding: 0; color: #fff; z-index: 1; transition: transform 0.4s ease-in-out; }
+#curtain-toggle-btn { background: var(--button-red-bg-light); border: none; border-radius: 50%; width: 20px; height: 20px; padding: 0; color: var(--button-red-text-light); z-index: 1; transition: transform 0.4s ease-in-out, background-color 0.3s; }
+html.dark-mode #curtain-toggle-btn { background-color: var(--button-red-bg-dark); color: var(--button-red-text-dark); }
 .deck-top-row.filters-expanded #curtain-toggle-btn { transform: rotate(180deg); }
 #curtain-toggle-btn i { margin: 0; font-size: 16px; line-height: 1; }
 
+/* --- UJEDNOLICENIE PASKA STATUSU --- */
 .status-section { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; overflow: hidden; }
-#statusBarIntegrated { display: flex; justify-content: flex-end; align-items: center; width: 100%; white-space: nowrap; color: var(--status-text-light); font-weight: 600; }
+#statusBarIntegrated { display: flex; justify-content: flex-end; align-items: center; width: 100%; white-space: nowrap; color: var(--status-text-light); font-weight: 500; font-size: 0.95em; }
 html.dark-mode #statusBarIntegrated { color: var(--status-text-dark); }
-#statusBarIntegrated b { font-weight: 800; color: var(--status-bold-light); }
+#statusBarIntegrated b { font-weight: 700; color: var(--status-bold-light); }
 html.dark-mode #statusBarIntegrated b { color: var(--status-bold-dark); }
+.status-text-group { background: none !important; } /* Usuwa tło z tekstu */
 .status-segment { transition: opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1), max-width 0.4s cubic-bezier(0.42, 0, 0.58, 1); will-change: opacity, max-width; display: inline-block; overflow: hidden; white-space: nowrap; vertical-align: middle; }
 .system-info { transition: opacity 0.3s cubic-bezier(0.42, 0, 0.58, 1), width 0.4s cubic-bezier(0.42, 0, 0.58, 1), margin-right 0.4s cubic-bezier(0.42, 0, 0.58, 1); will-change: opacity, width, margin-right; }
 
 .status-separator { width: 1px; background-color: var(--separator-light); align-self: center; height: 1.2em; margin: 0 0.8em; }
 html.dark-mode .status-separator { background-color: var(--separator-dark); }
 
-.status-section-bottom { display: flex; align-items: center; gap: 15px; width: 100%; justify-content: flex-end; color: var(--status-text-light); 
-    margin-top: 0; padding-top: 5px; 
-}
+.status-section-bottom { display: flex; align-items: center; gap: 10px; width: 100%; justify-content: flex-end; color: var(--status-text-light); margin-top: 0; padding-top: 5px; }
 html.dark-mode .status-section-bottom { color: var(--status-text-dark); }
 .system-info { font-size: 0.9em; font-weight: 600; white-space: nowrap; margin-right: auto; }
 .status-icon-btn { background: none; border: none; color: inherit; opacity: 0.7; cursor: pointer; font-size: 1.1em; padding: 0; transition: opacity 0.2s ease, color 0.2s ease; }
-.status-icon-btn:hover { opacity: 1; color: #cc0000; }
-html.dark-mode .status-icon-btn:hover { color: #e53935; }
+.status-icon-btn:hover { opacity: 1; color: var(--button-red-bg-light); }
+html.dark-mode .status-icon-btn:hover { color: var(--button-red-bg-dark); }
 
-.deck-top-row.filters-expanded .status-text-group .status-segment:nth-of-type(2),
-.deck-top-row.filters-expanded .status-text-group .status-segment:nth-of-type(3) { opacity: 0; max-width: 0; pointer-events: none; }
+.deck-top-row.filters-expanded .status-text-group .status-segment:not(:first-of-type) { opacity: 0; max-width: 0; pointer-events: none; }
 .deck-top-row.filters-expanded .system-info { opacity: 0; width: 0; margin-right: 0; pointer-events: none; overflow: hidden; }
 .deck-top-row.filters-expanded .status-section-bottom { justify-content: flex-end; width: 100%; }
 
+/* --- DOLNY WIERSZ PANELU --- */
 .deck-bottom-row { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; }
 .display-panel-group { display: flex; align-items: center; gap: 8px; background-color: var(--group-bg-light); padding: 6px; border-radius: 8px; }
 html.dark-mode .display-panel-group { background-color: var(--group-bg-dark); }
@@ -2451,22 +2474,24 @@ html.dark-mode .deck-bottom-row button { color: var(--button-text-dark); }
 html.dark-mode .deck-bottom-row .display-panel-group:not(.slider-group) button:hover { background-color: rgba(255,255,255,0.1); }
 .deck-bottom-row .accent-border { border-color: var(--button-red-bg-light); }
 html.dark-mode .deck-bottom-row .accent-border { border-color: var(--button-red-bg-dark); }
-.deck-bottom-row #viewThemeBtn, .deck-bottom-row .play-accent { background-color: var(--button-red-bg-light); color: var(--button-red-text-light); }
-html.dark-mode .deck-bottom-row #viewThemeBtn, html.dark-mode .deck-bottom-row .play-accent { background-color: var(--button-red-bg-dark); color: var(--button-red-text-dark); }
+
+/* Czerwone, ważne przyciski */
+.deck-bottom-row #viewContentBtn, .deck-bottom-row #viewThemeBtn, .deck-bottom-row .play-accent { background-color: var(--button-red-bg-light); color: var(--button-red-text-light); }
+html.dark-mode .deck-bottom-row #viewContentBtn, html.dark-mode .deck-bottom-row #viewThemeBtn, html.dark-mode .deck-bottom-row .play-accent { background-color: var(--button-red-bg-dark); color: var(--button-red-text-dark); }
 .deck-bottom-row .play-accent { box-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
 html.dark-mode .deck-bottom-row .play-accent { box-shadow: 0 0 15px rgba(229, 57, 53, 0.6); }
 
 .subtle-bg-group { display: flex; align-items: center; gap: 12px; padding: 4px 6px; border-radius: 8px; background-color: var(--group-bg-light); }
 html.dark-mode .subtle-bg-group { background-color: var(--group-bg-dark); }
+.video-controls-group, .status-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 .video-controls-group .video-main-btn { width: auto; padding: 0 8px; }
 .video-controls-group .video-main-btn i { margin-right: 5px; }
-.video-controls-group {
-    display: contents; /* Traktuje przyciski wewnątrz jakby były bezpośrednio w kontenerze flex */
-}
-.video-controls-group button {
-    font-size: 1.1em;
-}
 
+/* --- SUWAKI --- */
 .slider-control { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 10px; width: 100%; }
 .slider-control i { font-size: 1.2em; color: var(--slider-icon-light); }
 html.dark-mode .slider-control i { color: var(--slider-icon-dark); }
