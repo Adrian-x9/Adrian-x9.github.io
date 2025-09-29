@@ -358,7 +358,7 @@ body.dark-mode .privacy-notice {
 .header-logo-link {
   position: fixed;
   top: 15px;
-  left: 17px;
+  left: 25px;
   /* Optyczna korekta marginesu */
   z-index: 998;
   width: 44px;
@@ -387,8 +387,9 @@ body.dark-mode .privacy-notice {
 .top-header .title {
   font-size: 1.6em;
   font-weight: 700;
-  /* Przywrócenie grubości czcionki */
+  margin-top: 11px;
 }
+/* Przywrócenie grubości czcionki */
 
 body:not(.dark-mode) .top-header .title,
 body:not(.dark-mode) .top-header .counter {
@@ -2964,7 +2965,7 @@ html:not(.dark-mode) #lang-modal .item:hover {
   border-bottom: none !important;
   padding-top: 0;
   padding-bottom: 0;
-  margin-bottom: 20px; /* Tworzy estetyczny odstęp od nowego panelu */
+  margin-bottom: 0px; /* Tworzy estetyczny odstęp od nowego panelu */
 }
 
 /*
