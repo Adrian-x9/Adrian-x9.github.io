@@ -14,12 +14,13 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="ade-js/config.js" defer></script>
     <script src="ade-js/db.js" defer></script>
     <script src="ade-js/lang.js" defer></script>
-    <script src="ade-js/lang-db.js"></script>
-    <script src="db.js"></script>
     <script src="ade-js/scripts.js" defer></script>
 
     <script>
@@ -172,16 +173,14 @@
             <div class="status-section">
                 <div id="statusBarIntegrated">
                     <div class="status-text-group">
-                        <span id="guideCountDisplay" class="status-segment"><b></b></span>
-                        <span class="status-separator"></span>
-                        <a href="#" id="systemInfoLink" class="system-info status-segment">
-                            <span class="visu-text-red">Visu</span><span class="dir-text-themed">Dir</span> <span
-                                class="version-display"></span>
-                        </a>
-                        <span class="status-separator"></span>
-                        <span id="currentTimeDisplay" class="status-segment"></span>
-                        <span id="moonPhaseDisplay" class="status-segment"></span>
-                        <span id="langDisplay" class="status-segment" style="display: none;"></span>
+                        <span id="guideCountDisplay" class="status-segment"><b></b></span><span
+                            class="status-separator"></span><a href="#" id="systemInfoLink"
+                            class="system-info status-segment"><span class="visu-text-red">Visu</span><span
+                                class="dir-text-themed">Dir</span> <span class="version-display"></span></a><span
+                            class="status-separator"></span><span id="currentTimeDisplay"
+                            class="status-segment"></span><span class="status-separator"></span><span
+                            id="moonPhaseDisplay" class="status-segment"></span><span id="langDisplay"
+                            class="status-segment" style="display: none;"></span>
                     </div>
                     <div class="status-separator"></div>
                     <div class="top-bar-icons subtle-bg-group">
@@ -192,6 +191,8 @@
                     </div>
                 </div>
                 <div class="status-section-bottom">
+                    <div class="system-info">System <span style="color: #cc0000;">Visu</span>Dir <span
+                            class="version-display"></span></div>
                     <div id="actionControls" class="video-controls-group subtle-bg-group">
                         <button id="videoBtn" class="status-icon-btn video-main-btn" title="Wideo"><i
                                 class="fas fa-video"></i> Wideo</button>
@@ -317,6 +318,7 @@
 
 
 
+    <!-- #patch #2     -->
     <div id="lang-modal" class="lang-modal-container" style="display: none;">
         <div id="lang-overlay" class="lang-modal-overlay"></div>
         <div class="lang-modal-content">

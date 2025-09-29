@@ -2402,7 +2402,8 @@ html.dark-mode #statusMuteBtn.active-red {
 
 /* --- KROK 1: GŁÓWNY UKŁAD STRONY --- */
 html {
-  font-family: "Segoe UI", sans-serif;
+  /* font-family: "Segoe UI", sans-serif; */
+  font-family: "Inter", sans-serif; /* <-- DODAJ TĘ LINIĘ */
 }
 body {
   display: flex;
@@ -2991,60 +2992,64 @@ html:not(.dark-mode) #lang-modal .item:hover {
   padding: 0 8px;
 }
 
-
 /* === Finalna Unifikacja Grup Ikon w Pasku Statusu === */
 
 /* 1. Przywrócenie i ujednolicenie tła ("ramki") dla WSZYSTKICH grup */
 .status-section .subtle-bg-group {
-    background-color: var(--group-bg-light);
-    padding: 4px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    gap: 4px; /* Ujednolicony odstęp między ikonami */
+  background-color: var(--group-bg-light);
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Ujednolicony odstęp między ikonami */
 }
 html.dark-mode .status-section .subtle-bg-group {
-    background-color: var(--group-bg-dark);
+  background-color: var(--group-bg-dark);
 }
 
 /* 2. Ujednolicenie STYLU, ROZMIARU i ODSTĘPÓW dla wszystkich ikon w ramkach */
 .status-section .status-icon-btn {
-    font-size: 1.1em; /* Spójny rozmiar ikon */
-    width: 30px;      /* Spójna szerokość */
-    height: 30px;     /* Spójna wysokość */
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--status-text-light); /* Domyślny, stonowany kolor */
-    opacity: 0.8;
-    transition: all 0.2s ease;
+  font-size: 1.1em; /* Spójny rozmiar ikon */
+  width: 30px; /* Spójna szerokość */
+  height: 30px; /* Spójna wysokość */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--status-text-light); /* Domyślny, stonowany kolor */
+  opacity: 0.8;
+  transition: all 0.2s ease;
 }
 html.dark-mode .status-section .status-icon-btn {
-    color: var(--status-text-dark);
+  color: var(--status-text-dark);
 }
 
 /* 3. Spójny efekt HOVER i stan AKTYWNY dla wszystkich ikon */
 .status-section .status-icon-btn:hover {
-    opacity: 1;
-    color: var(--button-red-bg-light); /* Czerwony kolor po najechaniu */
+  opacity: 1;
+  color: var(--button-red-bg-light); /* Czerwony kolor po najechaniu */
 }
 html.dark-mode .status-section .status-icon-btn:hover {
-    color: var(--button-red-bg-dark);
+  color: var(--button-red-bg-dark);
 }
 
 .status-section .status-icon-btn.active-play,
 .status-section .status-icon-btn.active-red {
-    opacity: 1;
-    color: var(--button-red-bg-light); /* Czerwony dla stanu aktywnego */
+  opacity: 1;
+  color: var(--button-red-bg-light); /* Czerwony dla stanu aktywnego */
 }
 html.dark-mode .status-section .status-icon-btn.active-play,
 html.dark-mode .status-section .status-icon-btn.active-red {
-    color: var(--button-red-bg-dark);
+  color: var(--button-red-bg-dark);
 }
 
 /* 4. Wyjątek dla szerszego przycisku "Wideo" */
 .video-controls-group .video-main-btn {
-    width: auto; /* Pozwala mu być szerszym */
-    padding: 0 8px;
-    gap: 6px;
+  width: auto; /* Pozwala mu być szerszym */
+  padding: 0 8px;
+  gap: 6px;
+}
+
+/* Poprawka separatorów - oszczędność miejsca */
+.status-separator {
+  margin: 0 0.5em; /* Zmniejszony margines poziomy */
 }
