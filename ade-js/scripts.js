@@ -753,8 +753,6 @@ window.onload = function () {
     .querySelectorAll(".version-display")
     .forEach((el) => (el.textContent = config.version));
   document.getElementById("aboutLinkFooter").href = config.paths.urlAbout;
-  document.getElementById("visuDirBtn").href = config.paths.urlAbout;
-
   currentTheme = initializeTheme();
   if (config.pageSettings.showMiniLogo && logoLink) {
     startLogoRotator();
@@ -1684,11 +1682,13 @@ function resetVideoSettings() {
 }
 
 function toggleDarkMode() {
-  document.documentElement.classList.toggle("dark-mode");
-  const isDark = document.documentElement.classList.contains("dark-mode");
+  const isDark = document.documentElement.classList.toggle("dark-mode");
+  document.body.classList.toggle("dark-mode", isDark); // Dodajemy/usuwamy klasę także na body
+
   localStorage.setItem("visudir_theme", isDark ? "dark" : "light");
   currentTheme = isDark ? "dark" : "light";
 
+  // Poniższa logika pozostaje bez zmian
   if (config.pageSettings.showMiniLogo && config.logoRotator.enabled) {
     const activeLogoImg = document.querySelector(".header-logo.active");
     if (activeLogoImg) {
@@ -1701,14 +1701,12 @@ function toggleDarkMode() {
       }
     }
   }
-
   document.querySelectorAll(".placeholder-cover").forEach((img) => {
     img.src =
       currentTheme === "dark"
         ? "ade-base-system/gfx/no_cover_dark.png"
         : "ade-base-system/gfx/no_cover_light.png";
   });
-
   if (videoBgState !== "off") {
     const wasPaused = videoBgState === "paused";
     if (wasPaused) {
@@ -1722,9 +1720,7 @@ function toggleDarkMode() {
           bgVideo.currentTime = pausedTime;
           bgVideo.pause();
         },
-        {
-          once: true,
-        }
+        { once: true }
       );
     }
   }
