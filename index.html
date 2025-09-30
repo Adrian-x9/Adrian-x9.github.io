@@ -135,7 +135,7 @@
         </div>
     </div>
 
-    <div class="control-panel">
+    <div class="control-panel ">
         <div class="deck-top-row">
             <div class="filter-section">
                 <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label" style="display: none;"><i
@@ -170,27 +170,7 @@
                 <button id="curtain-toggle-btn" title="Pokaż/ukryj filtry"><i class="fas fa-chevron-right"></i></button>
             </div>
             <div class="status-section">
-                <div id="statusBarIntegrated">
-                    <div class="status-text-group">
-                        <span id="guideCountDisplay" class="status-segment"><b></b></span>
-                        <span class="status-separator"></span>
-                        <a href="#" id="systemInfoLink" class="system-info status-segment">
-                            <span class="visu-text-red">Visu</span><span class="dir-text-themed">Dir</span> <span
-                                class="version-display"></span>
-                        </a>
-                        <span class="status-separator"></span>
-                        <span id="currentTimeDisplay" class="status-segment"></span>
-                        <span id="moonPhaseDisplay" class="status-segment"></span>
-                        <span id="langDisplay" class="status-segment" style="display: none;"></span>
-                    </div>
-                    <div class="status-separator"></div>
-                    <div class="top-bar-icons subtle-bg-group">
-                        <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i
-                                class="fas fa-info-circle"></i></a>
-                        <a id="statusLangBtn" class="status-icon-btn" title="Zmień język"><i
-                                class="fas fa-globe"></i></a>
-                    </div>
-                </div>
+
                 <div class="status-section-bottom">
                     <div id="actionControls" class="video-controls-group subtle-bg-group">
                         <button id="videoBtn" class="status-icon-btn video-main-btn" title="Wideo"><i
@@ -243,6 +223,22 @@
             </div>
         </div>
     </div>
+
+    
+
+    <div class="glass-status" style="margin-bottom: 15px;margin-top: 0px;">
+        <span>📁 <strong><span id="guideCountDisplay"
+                    class="status-segment"><b></b></span></strong>&nbsp;&nbsp;&nbsp;</span>
+        <span>⏰ <strong>10:25</strong> 2025-09-30&nbsp;&nbsp;&nbsp;</span>
+        <span>🌞 <strong>7:00 – 20:00</strong>&nbsp;&nbsp;&nbsp;</span>
+        <span>🌘 Księżyc<strong> </strong>&nbsp;&nbsp;&nbsp;</span>
+        <span><a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i class="fas fa-info-circle"></i></a>&nbsp;<a href="#"
+                id="systemInfoLink" class=""><span class="visu-text-red">Visu</span><span
+                    class="dir-text-themed">Dir</span><span class="version-display"></span></a></span>
+        <span><a id="statusLangBtn" class="status-icon-btn" title="Zmień język"> <i class="fas fa-globe"></i>
+                PL</a>&nbsp;&nbsp;&nbsp;</span>
+    </div>
+
 
     <div class="guide-list-wrapper">
         <div class="guide-list" id="guideList"></div>

@@ -1,5 +1,5 @@
 const config = {
-  version: "v2.0.1-alfa", // Full interface rework, before v2.0.0 release
+  version: "v2.0.3-alfa", // Full interface rework, before v2.0.0 release
   language: {
     current: "pl", // Domyślny język na wypadek awarii skryptu
   },
