@@ -1016,7 +1016,18 @@ function createGuideHtml(guide) {
     ? "ade-base-system/gfx/no_cover_dark.png"
     : "ade-base-system/gfx/no_cover_light.png";
 
-  if (currentViewMode === "image-only") {
+  // --- NOWA LOGIKA ROZRÓŻNIAJĄCA TRYBY ---
+  if (currentViewMode === "text-only" || currentViewMode === "full-text") {
+    // Dla obu trybów tekstowych renderujemy ten sam podstawowy HTML.
+    // Różnicą zajmuje się CSS, który w 'text-only' ukrywa .guide-info-container.
+    return `
+          ${titleHtml}
+          <div class="guide-content-bottom">
+              <div class="guide-info-container">${infoHtml}</div>
+              ${actionLinkHtml}
+          </div>
+      `;
+  } else if (currentViewMode === "image-only") {
     const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     return `
                     <div class="guide-cover-wrapper">
@@ -1043,6 +1054,7 @@ function createGuideHtml(guide) {
                     </a>
                 `;
   } else {
+    // Domyślnie (dla 'full' i 'masonry')
     const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
     return `
                     ${titleHtml}
@@ -1093,6 +1105,7 @@ function renderGuides(sourceArray = null) {
   guideList.classList.toggle("view-grid", currentViewMode === "grid");
   guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
   guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
+  guideList.classList.toggle("view-full-text", currentViewMode === "full-text"); // DODAJ TĘ LINIĘ
 
   guideList.innerHTML = "";
   if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -1282,23 +1295,22 @@ function applyMasonryLayout(pageNum = 1) {
 
     // Używamy clientWidth kontenera przewijania jako odniesienia dla centrowania
     const viewportWidth = guideList.clientWidth;
-    
+
     // Obliczamy liczbę kolumn i faktyczną szerokość siatki
     const numColumns = Math.max(
       1,
       Math.floor((viewportWidth + gap) / (itemWidth + gap))
     );
-    const gridWidth = (numColumns * itemWidth) + ((numColumns - 1) * gap);
+    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
 
     // TWOJA LOGIKA: Obliczamy pustą przestrzeń i jej połowę
     const remainingSpace = viewportWidth - gridWidth;
     const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
-    
+
     // Aplikujemy padding, aby wycentrować siatkę wewnątrz kontenera strony
     guidePage.style.paddingLeft = `${sidePadding}px`;
     guidePage.style.paddingRight = `${sidePadding}px`;
-    guidePage.style.boxSizing = 'border-box';
-
+    guidePage.style.boxSizing = "border-box";
 
     // Pozycjonowanie kafelków pozostaje bez zmian, ale teraz działa wewnątrz wycentrowanej siatki
     guidePage.style.position = "relative";
@@ -1310,7 +1322,7 @@ function applyMasonryLayout(pageNum = 1) {
 
       item.style.position = "absolute";
       item.style.top = `${minHeight}px`;
-      item.style.left = `${(columnIndex * (itemWidth + gap)) + sidePadding}px`; // Dodajemy padding do pozycji
+      item.style.left = `${columnIndex * (itemWidth + gap) + sidePadding}px`; // Dodajemy padding do pozycji
 
       columnHeights[columnIndex] += item.offsetHeight + gap;
     });
@@ -1320,21 +1332,25 @@ function applyMasonryLayout(pageNum = 1) {
     updateWrapperHeightForPage(pageNum);
   };
 
-  const images = Array.from(guidePage.querySelectorAll('.guide-cover, .guide-cover-elegant, .guide-cover-grid'));
+  const images = Array.from(
+    guidePage.querySelectorAll(
+      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
+    )
+  );
   if (images.length === 0) {
-      performLayout();
-      return;
+    performLayout();
+    return;
   }
   let imagesLoaded = 0;
-  images.forEach(img => {
-      if (img.complete) {
-          imagesLoaded++;
-      } else {
-          img.onload = img.onerror = () => {
-              imagesLoaded++;
-              if (imagesLoaded === images.length) performLayout();
-          };
-      }
+  images.forEach((img) => {
+    if (img.complete) {
+      imagesLoaded++;
+    } else {
+      img.onload = img.onerror = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) performLayout();
+      };
+    }
   });
   if (imagesLoaded === images.length) performLayout();
 }
@@ -1598,8 +1614,14 @@ function initializeDisplayPanel() {
   const rowsValue = document.getElementById("rowsValue");
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
-  const viewModes = ["text-only", "full", "image-only", "grid", "masonry"];
-
+  const viewModes = [
+    "text-only",
+    "full-text",
+    "full",
+    "image-only",
+    "grid",
+    "masonry",
+  ];
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
     <span class="view-number"></span>

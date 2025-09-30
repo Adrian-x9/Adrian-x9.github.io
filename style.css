@@ -1177,7 +1177,7 @@ body.dark-mode .guide-cover-grid {
   opacity: 1;
   transform: translateY(0);
   max-height: 200px;
-  margin-top: 20px;
+  margin-top: 25px; /* Zwiększony margines o 5px */
   margin-bottom: 20px;
 }
 
@@ -3023,4 +3023,15 @@ html.dark-mode .glass-status {
    nie powinien pokazywać bloku z opisem. Poniższa reguła go ukrywa. */
 .guide-list.view-text-only .guide-info-container {
   display: none;
+}
+
+/* === ADAPTACJA WIDOKÓW: Nowy Widok nr 3 (Tylko Zdjęcie) === */
+/* Zgodnie z briefem, w tym trybie ukrywamy panel z tekstem pod obrazkiem */
+.guide-list.view-image-only .guide-text-content {
+  display: none;
+}
+
+/* ...i jednocześnie rozciągamy kontener z obrazkiem na 100% wysokości kafelka. */
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 100%;
 }
