@@ -142,7 +142,11 @@ function initializeTheme() {
   const storedTheme = localStorage.getItem("visudir_theme");
   const theme = storedTheme || "light";
   const isDark = theme === "dark";
+
+  // Poprawka: Aplikuj klasę do <html> ORAZ <body>
   document.documentElement.classList.toggle("dark-mode", isDark);
+  document.body.classList.toggle("dark-mode", isDark);
+
   if (!storedTheme) {
     localStorage.setItem("visudir_theme", theme);
   }
