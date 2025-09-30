@@ -56,6 +56,7 @@
     const defaultTheme = "light";
     if (theme === "dark" || (!theme && defaultTheme === "dark")) {
       document.documentElement.classList.add("dark-mode");
+      document.body.classList.add("dark-mode");
     }
   } catch (e) {
     /* Ignore */
@@ -1069,6 +1070,10 @@ const goToPage = (pageNum) => {
   });
 };
 
+// ================================================================
+//          POCZĄTEK BLOKU DO PODMIANY (3 FUNKCJE)
+// ================================================================
+
 function renderGuides(sourceArray = null) {
   stopCarousel();
   const source =
@@ -1112,18 +1117,25 @@ function renderGuides(sourceArray = null) {
   guideList.style.setProperty("--box-width", `${newWidth}px`);
 
   if (sourceArray) {
+    const pageDiv = document.createElement("div");
+    pageDiv.className = "guide-page";
+    pageDiv.dataset.pageNumber = 1;
+
     source.forEach((guide, index) => {
       const div = document.createElement("div");
       div.className = "guide animate-in";
       div.style.animationDelay = `${index * 0.04}s`;
       div.innerHTML = createGuideHtml(guide);
-      guideList.appendChild(div);
+      pageDiv.appendChild(div);
     });
-    requestAnimationFrame(() => {
-      void guideList.offsetWidth;
-    });
+    guideList.appendChild(pageDiv);
+
     pagination.classList.remove("visible");
     updateGuideCount(source.length, guides.length);
+
+    if (currentViewMode === "masonry") {
+      setTimeout(() => applyMasonryLayout(1), 100);
+    }
     return;
   }
 
@@ -1177,6 +1189,159 @@ function renderGuides(sourceArray = null) {
 
   updateWrapperHeightForPage(1);
 }
+
+function applyMasonryLayout(pageNum = 1) {
+  const guidePage = guideList.querySelector(
+    `.guide-page[data-page-number="${pageNum}"]`
+  );
+  if (!guidePage) return;
+
+  const items = Array.from(guidePage.children);
+  if (items.length === 0) return;
+
+  const performLayout = () => {
+    const gap = 20;
+    const itemWidth = items[0].offsetWidth;
+    if (itemWidth === 0) return;
+
+    // Używamy clientWidth kontenera przewijania jako odniesienia dla centrowania
+    const viewportWidth = guideList.clientWidth;
+
+    // Obliczamy liczbę kolumn i faktyczną szerokość siatki
+    const numColumns = Math.max(
+      1,
+      Math.floor((viewportWidth + gap) / (itemWidth + gap))
+    );
+    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
+
+    // TWOJA LOGIKA: Obliczamy pustą przestrzeń i jej połowę
+    const remainingSpace = viewportWidth - gridWidth;
+    const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
+
+    // Aplikujemy padding, aby wycentrować siatkę wewnątrz kontenera strony
+    guidePage.style.paddingLeft = `${sidePadding}px`;
+    guidePage.style.paddingRight = `${sidePadding}px`;
+    guidePage.style.boxSizing = "border-box";
+
+    // Pozycjonowanie kafelków pozostaje bez zmian, ale teraz działa wewnątrz wycentrowanej siatki
+    guidePage.style.position = "relative";
+    const columnHeights = Array(numColumns).fill(0);
+
+    items.forEach((item) => {
+      const minHeight = Math.min(...columnHeights);
+      const columnIndex = columnHeights.indexOf(minHeight);
+
+      item.style.position = "absolute";
+      item.style.top = `${minHeight}px`;
+      item.style.left = `${columnIndex * (itemWidth + gap) + sidePadding}px`; // Dodajemy padding do pozycji
+
+      columnHeights[columnIndex] += item.offsetHeight + gap;
+    });
+
+    const maxHeight = Math.max(...columnHeights);
+    guidePage.style.height = `${maxHeight}px`;
+    updateWrapperHeightForPage(pageNum);
+  };
+
+  const images = Array.from(
+    guidePage.querySelectorAll(
+      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
+    )
+  );
+  if (images.length === 0) {
+    performLayout();
+    return;
+  }
+  let imagesLoaded = 0;
+  images.forEach((img) => {
+    if (img.complete) {
+      imagesLoaded++;
+    } else {
+      img.onload = img.onerror = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) performLayout();
+      };
+    }
+  });
+  if (imagesLoaded === images.length) performLayout();
+}
+
+function applyMasonryLayout(pageNum = 1) {
+  const guidePage = guideList.querySelector(
+    `.guide-page[data-page-number="${pageNum}"]`
+  );
+  if (!guidePage) return;
+
+  const items = Array.from(guidePage.children);
+  if (items.length === 0) return;
+
+  const performLayout = () => {
+    const gap = 20;
+    const itemWidth = items[0].offsetWidth;
+    if (itemWidth === 0) return;
+
+    // Używamy clientWidth kontenera przewijania jako odniesienia dla centrowania
+    const viewportWidth = guideList.clientWidth;
+    
+    // Obliczamy liczbę kolumn i faktyczną szerokość siatki
+    const numColumns = Math.max(
+      1,
+      Math.floor((viewportWidth + gap) / (itemWidth + gap))
+    );
+    const gridWidth = (numColumns * itemWidth) + ((numColumns - 1) * gap);
+
+    // TWOJA LOGIKA: Obliczamy pustą przestrzeń i jej połowę
+    const remainingSpace = viewportWidth - gridWidth;
+    const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
+    
+    // Aplikujemy padding, aby wycentrować siatkę wewnątrz kontenera strony
+    guidePage.style.paddingLeft = `${sidePadding}px`;
+    guidePage.style.paddingRight = `${sidePadding}px`;
+    guidePage.style.boxSizing = 'border-box';
+
+
+    // Pozycjonowanie kafelków pozostaje bez zmian, ale teraz działa wewnątrz wycentrowanej siatki
+    guidePage.style.position = "relative";
+    const columnHeights = Array(numColumns).fill(0);
+
+    items.forEach((item) => {
+      const minHeight = Math.min(...columnHeights);
+      const columnIndex = columnHeights.indexOf(minHeight);
+
+      item.style.position = "absolute";
+      item.style.top = `${minHeight}px`;
+      item.style.left = `${(columnIndex * (itemWidth + gap)) + sidePadding}px`; // Dodajemy padding do pozycji
+
+      columnHeights[columnIndex] += item.offsetHeight + gap;
+    });
+
+    const maxHeight = Math.max(...columnHeights);
+    guidePage.style.height = `${maxHeight}px`;
+    updateWrapperHeightForPage(pageNum);
+  };
+
+  const images = Array.from(guidePage.querySelectorAll('.guide-cover, .guide-cover-elegant, .guide-cover-grid'));
+  if (images.length === 0) {
+      performLayout();
+      return;
+  }
+  let imagesLoaded = 0;
+  images.forEach(img => {
+      if (img.complete) {
+          imagesLoaded++;
+      } else {
+          img.onload = img.onerror = () => {
+              imagesLoaded++;
+              if (imagesLoaded === images.length) performLayout();
+          };
+      }
+  });
+  if (imagesLoaded === images.length) performLayout();
+}
+
+// ================================================================
+//          KONIEC BLOKU DO PODMIANY
+// ================================================================
 
 function setupLazyLoading(pages) {
   if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -2348,34 +2513,65 @@ function applyMasonryLayout(pageNum = 1) {
   const items = Array.from(guidePage.children);
   if (items.length === 0) return;
 
-  const gap = 20;
-  const itemWidth = items[0].offsetWidth;
-  if (itemWidth === 0) return;
+  const performLayout = () => {
+    const gap = 20;
+    const itemWidth = items[0].offsetWidth;
+    if (itemWidth === 0) return;
 
-  const containerWidth = guidePage.offsetWidth;
-  const numColumns = Math.max(
-    1,
-    Math.floor((containerWidth + gap) / (itemWidth + gap))
+    const availableWidth = guideList.offsetWidth;
+    const numColumns = Math.max(
+      1,
+      Math.floor((availableWidth + gap) / (itemWidth + gap))
+    );
+
+    // Obliczamy faktyczną szerokość siatki...
+    const gridWidth = numColumns * (itemWidth + gap) - gap;
+    // ...ustawiamy ją na kontenerze...
+    guidePage.style.width = `${gridWidth}px`;
+    // ...i centrujemy go automatycznie.
+    guidePage.style.margin = "0 auto";
+
+    guidePage.style.position = "relative";
+    const columnHeights = Array(numColumns).fill(0);
+
+    items.forEach((item) => {
+      const minHeight = Math.min(...columnHeights);
+      const columnIndex = columnHeights.indexOf(minHeight);
+
+      item.style.position = "absolute";
+      item.style.top = `${minHeight}px`;
+      item.style.left = `${columnIndex * (itemWidth + gap)}px`;
+
+      columnHeights[columnIndex] += item.offsetHeight + gap;
+    });
+
+    const maxHeight = Math.max(...columnHeights);
+    guidePage.style.height = `${maxHeight}px`;
+    updateWrapperHeightForPage(pageNum);
+  };
+
+  // Czekamy na załadowanie obrazków, aby uniknąć błędów w obliczeniach wysokości
+  const images = Array.from(
+    guidePage.querySelectorAll(
+      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
+    )
   );
-
-  guidePage.style.position = "relative";
-  guidePage.style.height = "";
-
-  const columnHeights = Array(numColumns).fill(0);
-
-  items.forEach((item) => {
-    const minHeight = Math.min(...columnHeights);
-    const columnIndex = columnHeights.indexOf(minHeight);
-
-    item.style.position = "absolute";
-    item.style.top = `${minHeight}px`;
-    item.style.left = `${columnIndex * (itemWidth + gap)}px`;
-
-    columnHeights[columnIndex] += item.offsetHeight + gap;
+  if (images.length === 0) {
+    performLayout();
+    return;
+  }
+  let imagesLoaded = 0;
+  images.forEach((img) => {
+    if (img.complete) {
+      imagesLoaded++;
+    } else {
+      img.onload = img.onerror = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) performLayout();
+      };
+    }
   });
-
-  const maxHeight = Math.max(...columnHeights);
-  guidePage.style.height = `${maxHeight}px`;
+  if (imagesLoaded === images.length) performLayout();
 }
 
 function updateWrapperHeightForPage(pageNum) {
