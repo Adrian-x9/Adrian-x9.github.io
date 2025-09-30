@@ -1016,10 +1016,11 @@ function createGuideHtml(guide) {
     ? "ade-base-system/gfx/no_cover_dark.png"
     : "ade-base-system/gfx/no_cover_light.png";
 
-  // --- NOWA LOGIKA ROZRÓŻNIAJĄCA TRYBY ---
-  if (currentViewMode === "text-only" || currentViewMode === "full-text") {
-    // Dla obu trybów tekstowych renderujemy ten sam podstawowy HTML.
-    // Różnicą zajmuje się CSS, który w 'text-only' ukrywa .guide-info-container.
+  if (
+    currentViewMode === "text-only" ||
+    currentViewMode === "full-text" ||
+    currentViewMode === "text-masonry"
+  ) {
     return `
           ${titleHtml}
           <div class="guide-content-bottom">
@@ -1028,17 +1029,12 @@ function createGuideHtml(guide) {
           </div>
       `;
   } else if (currentViewMode === "image-only") {
+    // === POCZĄTEK ZMIANY ===
     const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return `
-                    <div class="guide-cover-wrapper">
-                        ${elegantCoverImgHtml}
-                        ${coverLinkHtml} 
-                    </div>
-                    <div class="guide-text-content">
-                        ${titleHtml}
-                        <div class="guide-action-link">${actionLinkHtml}</div>
-                    </div>
-                `;
+    // Zgodnie z briefem, renderujemy tylko klikalny obrazek.
+    // Wstrzykujemy obrazek do wnętrza wygenerowanego wcześniej tagu <a>.
+    return coverLinkHtml.replace("</a>", `${elegantCoverImgHtml}</a>`);
+    // === KONIEC ZMIANY ===
   } else if (currentViewMode === "grid") {
     const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
@@ -1106,6 +1102,10 @@ function renderGuides(sourceArray = null) {
   guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
   guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
   guideList.classList.toggle("view-full-text", currentViewMode === "full-text"); // DODAJ TĘ LINIĘ
+  guideList.classList.toggle(
+    "view-text-masonry",
+    currentViewMode === "text-masonry"
+  );
 
   guideList.innerHTML = "";
   if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -1146,8 +1146,8 @@ function renderGuides(sourceArray = null) {
     pagination.classList.remove("visible");
     updateGuideCount(source.length, guides.length);
 
-    if (currentViewMode === "masonry") {
-      setTimeout(() => applyMasonryLayout(1), 100);
+    if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+      setTimeout(() => applyMasonryLayout(), 100);
     }
     return;
   }
@@ -1279,82 +1279,6 @@ function applyMasonryLayout(pageNum = 1) {
   if (imagesLoaded === images.length) performLayout();
 }
 
-function applyMasonryLayout(pageNum = 1) {
-  const guidePage = guideList.querySelector(
-    `.guide-page[data-page-number="${pageNum}"]`
-  );
-  if (!guidePage) return;
-
-  const items = Array.from(guidePage.children);
-  if (items.length === 0) return;
-
-  const performLayout = () => {
-    const gap = 20;
-    const itemWidth = items[0].offsetWidth;
-    if (itemWidth === 0) return;
-
-    // Używamy clientWidth kontenera przewijania jako odniesienia dla centrowania
-    const viewportWidth = guideList.clientWidth;
-
-    // Obliczamy liczbę kolumn i faktyczną szerokość siatki
-    const numColumns = Math.max(
-      1,
-      Math.floor((viewportWidth + gap) / (itemWidth + gap))
-    );
-    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
-
-    // TWOJA LOGIKA: Obliczamy pustą przestrzeń i jej połowę
-    const remainingSpace = viewportWidth - gridWidth;
-    const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
-
-    // Aplikujemy padding, aby wycentrować siatkę wewnątrz kontenera strony
-    guidePage.style.paddingLeft = `${sidePadding}px`;
-    guidePage.style.paddingRight = `${sidePadding}px`;
-    guidePage.style.boxSizing = "border-box";
-
-    // Pozycjonowanie kafelków pozostaje bez zmian, ale teraz działa wewnątrz wycentrowanej siatki
-    guidePage.style.position = "relative";
-    const columnHeights = Array(numColumns).fill(0);
-
-    items.forEach((item) => {
-      const minHeight = Math.min(...columnHeights);
-      const columnIndex = columnHeights.indexOf(minHeight);
-
-      item.style.position = "absolute";
-      item.style.top = `${minHeight}px`;
-      item.style.left = `${columnIndex * (itemWidth + gap) + sidePadding}px`; // Dodajemy padding do pozycji
-
-      columnHeights[columnIndex] += item.offsetHeight + gap;
-    });
-
-    const maxHeight = Math.max(...columnHeights);
-    guidePage.style.height = `${maxHeight}px`;
-    updateWrapperHeightForPage(pageNum);
-  };
-
-  const images = Array.from(
-    guidePage.querySelectorAll(
-      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
-    )
-  );
-  if (images.length === 0) {
-    performLayout();
-    return;
-  }
-  let imagesLoaded = 0;
-  images.forEach((img) => {
-    if (img.complete) {
-      imagesLoaded++;
-    } else {
-      img.onload = img.onerror = () => {
-        imagesLoaded++;
-        if (imagesLoaded === images.length) performLayout();
-      };
-    }
-  });
-  if (imagesLoaded === images.length) performLayout();
-}
-
 // ================================================================
 //          KONIEC BLOKU DO PODMIANY
 // ================================================================
@@ -1379,8 +1303,11 @@ function setupLazyLoading(pages) {
                   div.innerHTML = createGuideHtml(guide);
                   pageDiv.appendChild(div);
                 });
-                if (currentViewMode === "masonry" && pageNum > 1) {
-                  setTimeout(() => applyMasonryLayout(pageNum), 50);
+                if (
+                  currentViewMode === "masonry" ||
+                  currentViewMode === "text-masonry"
+                ) {
+                  setTimeout(() => applyMasonryLayout(1), 100);
                 }
               });
             }
@@ -1617,11 +1544,13 @@ function initializeDisplayPanel() {
   const viewModes = [
     "text-only",
     "full-text",
+    "text-masonry",
     "full",
     "image-only",
     "grid",
     "masonry",
   ];
+  
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
     <span class="view-number"></span>
@@ -1681,26 +1610,30 @@ function initializeDisplayPanel() {
     renderGuides();
   });
 
+  // === POCZĄTEK NOWEJ, POPRAWNEJ LOGIKI SUWAKA ===
+  const debouncedMasonryReflow = debounce(() => applyMasonryLayout(currentPage), 75);
+
   sizeSlider.addEventListener("input", () => {
-    const sliderValue = parseInt(sizeSlider.value, 10);
-    sizeValue.textContent = `${sliderValue}%`;
-    const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
-    guideList.style.setProperty("--box-width", `${newWidth}px`);
-    const minFontSize = 0.85;
-    const maxFontSize = 1.25;
-    const normalizedValue = (sliderValue - 50) / 100;
-    const dynamicFontSize =
-      minFontSize + normalizedValue * (maxFontSize - minFontSize);
-    guideList.style.setProperty(
-      "--dynamic-font-size",
-      `${dynamicFontSize.toFixed(2)}rem`
+    // Krok 1: Zawsze aktualizuj etykietę i zmienną CSS (dla płynnych animacji w trybach grid)
+    sizeValue.textContent = `${sizeSlider.value}%`;
+    const newWidth = Math.floor(
+      config.pageSettings.baseBoxWidth * (sizeSlider.value / 100)
     );
+    guideList.style.setProperty("--box-width", `${newWidth}px`);
+
+    // Krok 2: Logika warunkowa - tylko dla Masonry uruchom dodatkowe przeliczanie
+    if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+      debouncedMasonryReflow();
+    }
   });
 
   sizeSlider.addEventListener("change", () => {
+    // Po puszczeniu suwaka, zapisz wartość i wykonaj pełny render
+    // dla pewności, że np. paginacja się zaktualizowała
     saveToLocalStorage("size_percent", sizeSlider.value);
     renderGuides();
   });
+  // === KONIEC NOWEJ, POPRAWNEJ LOGIKI SUWAKA ===
 
   rowsSlider.addEventListener("input", () => {
     rowsValue.textContent = rowsSlider.value;
@@ -2603,27 +2536,73 @@ function updateWrapperHeightForPage(pageNum) {
   );
   if (!wrapper || !pageElement) return;
 
-  setTimeout(() => {
+  console.log(
+    `%c--- START: Diagnostyka updateWrapperHeight dla strony #${pageNum} ---`,
+    "color: #e53935; font-weight: bold;"
+  );
+
+  requestAnimationFrame(() => {
     const items = pageElement.querySelectorAll(".guide");
+    console.log(`1. Znaleziono ${items.length} kafelków (.guide) na stronie.`);
+
     if (items.length === 0) {
       wrapper.style.height = "0px";
+      console.log("Wynik: Brak kafelków, ustawiam wysokość na 0px i kończę.");
       return;
     }
     const listTop = guideList.getBoundingClientRect().top;
     let maxBottom = 0;
-    items.forEach((item) => {
-      const itemBottom = item.getBoundingClientRect().bottom;
-      if (itemBottom > maxBottom) {
-        maxBottom = itemBottom;
+    console.log(
+      `2. Pozycja 'top' głównego kontenera (.guide-list): ${listTop.toFixed(
+        2
+      )}px`
+    );
+
+    items.forEach((item, index) => {
+      const itemRect = item.getBoundingClientRect();
+      // Logujemy tylko kilka pierwszych, żeby nie zaspamować konsoli
+      if (index < 5) {
+        console.log(
+          `- Kafelka #${index + 1}: top=${itemRect.top.toFixed(
+            2
+          )}, bottom=${itemRect.bottom.toFixed(2)}`
+        );
+      }
+      if (itemRect.bottom > maxBottom) {
+        maxBottom = itemRect.bottom;
       }
     });
 
+    console.log(
+      `3. Najniższy punkt (maxBottom) znaleziony na stronie: ${maxBottom.toFixed(
+        2
+      )}px`
+    );
+
     const preciseHeight = maxBottom - listTop;
+    console.log(
+      `4. Obliczona wysokość (preciseHeight = maxBottom - listTop): ${preciseHeight.toFixed(
+        2
+      )}px`
+    );
 
     if (preciseHeight > 0) {
       wrapper.style.height = `${preciseHeight}px`;
+      console.log(
+        `%cWynik: Ustawiam wysokość wrappera na: ${preciseHeight.toFixed(2)}px`,
+        "color: green; font-weight: bold;"
+      );
+    } else {
+      console.log(
+        `%cWynik: Obliczona wysokość jest <= 0. Nie zmieniam wysokości wrappera.`,
+        "color: orange;"
+      );
     }
-  }, 200);
+    console.log(
+      `%c--- KONIEC: Diagnostyka updateWrapperHeight ---`,
+      "color: #e53935; font-weight: bold;"
+    );
+  });
 }
 
 updateRealTimeClock();

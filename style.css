@@ -3035,3 +3035,16 @@ html.dark-mode .glass-status {
 .guide-list.view-image-only .guide-cover-wrapper {
   height: 100%;
 }
+/* === POPRAWKA DLA TRYBU 'text-masonry' (Wersja bezpieczna) === */
+/* Duplikujemy reguły zamiast je grupować, aby uniknąć potencjalnych błędów parsowania CSS. */
+
+.guide-list.view-text-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-text-masonry .guide {
+  position: absolute;
+  transition: top 0.4s ease-out, left 0.4s ease-out;
+  width: var(--box-width, 256px);
+}
