@@ -3053,3 +3053,152 @@ html.dark-mode .status-section .status-icon-btn.active-red {
 .status-separator {
   margin: 0 0.5em; /* Zmniejszony margines poziomy */
 }
+
+/* === KROK 2: Adaptacja CSS do Nowej Struktury Panelu === */
+
+/* 1. Ustawienie głównego panelu na układ 3-wierszowy z odstępami */
+.control-panel {
+  gap: 8px;
+}
+
+/* 2. Stylowanie NOWEGO PIERWSZEGO WIERSZA (Pasek Statusu) */
+.deck-top-row-status {
+  padding: 4px 8px 12px 8px;
+  border-bottom: 1px solid var(--separator-light);
+  width: 100%;
+}
+html.dark-mode .deck-top-row-status {
+  border-color: var(--separator-dark);
+}
+.deck-top-row-status #statusBarIntegrated {
+  width: 100%;
+}
+
+/* 3. Adaptacja DRUGIEGO WIERSZA (Filtry i Wideo) */
+.deck-top-row {
+  border-bottom: none; /* Usunięcie starej dolnej krawędzi */
+  padding-bottom: 0;
+  margin-bottom: 0;
+  min-height: auto; /* Zresetowanie minimalnej wysokości */
+  align-items: center; /* Lepsze wyrównanie w pionie */
+}
+.deck-top-row .status-section {
+  justify-content: flex-end; /* Wyrównuje przyciski wideo do prawej */
+}
+.deck-top-row .status-section-bottom {
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* 4. Poprawka niespójnego fontu w przycisku "Wideo" */
+.video-main-btn {
+  font-size: 0.9em !important; /* Wymuszenie spójnego rozmiaru fontu */
+  font-weight: 600; /* Ujednolicenie grubości */
+}
+
+
+/* === KRYTYCZNA POPRAWKA: Ujednolicenie stylu WSZYSTKICH grup ikon panelu === */
+
+/* 1. Ujednolicenie KONTENERÓW ("ramek") dla wszystkich grup ikon */
+.deck-top-row-status .subtle-bg-group,
+.deck-top-row .subtle-bg-group {
+    padding: 4px;
+    border-radius: 8px;
+    gap: 4px;
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 2. Ujednolicenie IKON (rozmiar, marginesy) wewnątrz wszystkich kontenerów */
+.deck-top-row-status .status-icon-btn,
+.deck-top-row .status-icon-btn {
+    font-size: 1.1em;
+    width: 32px;
+    height: 32px;
+    margin: 0; /* Resetowanie marginesów */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 3. Wyjątek dla szerszego przycisku "Wideo" */
+.video-controls-group .video-main-btn {
+    width: auto;
+    padding: 0 8px;
+}
+
+/* 4. Korekta wysokości drugiego wiersza (ponieważ teraz zawartość ma poprawny rozmiar) */
+.deck-top-row {
+    min-height: 0;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+/* === POPRAWKA: Prawy margines i linia separatora === */
+
+/* 1. Nowy, inteligentny separator z marginesami */
+.deck-top-row-status {
+    position: relative; /* Wymagane dla pseudo-elementu */
+    border-bottom: none; /* Usuwamy starą linię */
+    padding-bottom: 12px;
+}
+
+.deck-top-row-status::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 8px;  /* Wcięcie od lewej */
+    right: 8px; /* Wcięcie od prawej */
+    height: 1px;
+    background-color: var(--separator-light);
+}
+
+html.dark-mode .deck-top-row-status::after {
+    background-color: var(--separator-dark);
+}
+
+
+/* 2. Dodanie brakującego paddingu w drugim wierszu */
+.deck-top-row {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+/* === FINALNA ARCHITEKTURA GÓRNEGO PANELU === */
+
+/* 1. Definicja głównego kontenera panelu i odstępów między wierszami */
+.control-panel {
+    gap: 8px; 
+}
+
+/* 2. Architektura PIERWSZEGO wiersza (Pasek Statusu) */
+.deck-top-row-status {
+    width: 100%;
+    border-bottom: 1px solid var(--separator-light);
+    padding-bottom: 8px; 
+}
+html.dark-mode .deck-top-row-status {
+    border-color: var(--separator-dark);
+}
+
+/* KLUCZOWA ZMIANA: Rozstawienie elementów na krańce */
+#statusBarIntegrated {
+    width: 100%;
+    display: flex;
+    justify-content: space-between; /* To jest serce tej poprawki */
+    align-items: center;
+}
+
+/* 3. Architektura DRUGIEGO wiersza (Filtry i Wideo) */
+.deck-top-row {
+    border-bottom: none;
+    padding: 4px 8px; /* Spójny, pionowy i poziomy padding */
+    margin-bottom: 0;
+    min-height: 0;
+    align-items: center;
+}
+
+/* 4. Poprawka fontu w przycisku "Wideo" */
+.video-main-btn {
+    font-size: 0.9em !important;
+    font-weight: 600;
+}
