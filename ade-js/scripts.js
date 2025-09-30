@@ -1203,82 +1203,6 @@ function renderGuides(sourceArray = null) {
   updateWrapperHeightForPage(1);
 }
 
-function applyMasonryLayout(pageNum = 1) {
-  const guidePage = guideList.querySelector(
-    `.guide-page[data-page-number="${pageNum}"]`
-  );
-  if (!guidePage) return;
-
-  const items = Array.from(guidePage.children);
-  if (items.length === 0) return;
-
-  const performLayout = () => {
-    const gap = 20;
-    const itemWidth = items[0].offsetWidth;
-    if (itemWidth === 0) return;
-
-    // Używamy clientWidth kontenera przewijania jako odniesienia dla centrowania
-    const viewportWidth = guideList.clientWidth;
-
-    // Obliczamy liczbę kolumn i faktyczną szerokość siatki
-    const numColumns = Math.max(
-      1,
-      Math.floor((viewportWidth + gap) / (itemWidth + gap))
-    );
-    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
-
-    // TWOJA LOGIKA: Obliczamy pustą przestrzeń i jej połowę
-    const remainingSpace = viewportWidth - gridWidth;
-    const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
-
-    // Aplikujemy padding, aby wycentrować siatkę wewnątrz kontenera strony
-    guidePage.style.paddingLeft = `${sidePadding}px`;
-    guidePage.style.paddingRight = `${sidePadding}px`;
-    guidePage.style.boxSizing = "border-box";
-
-    // Pozycjonowanie kafelków pozostaje bez zmian, ale teraz działa wewnątrz wycentrowanej siatki
-    guidePage.style.position = "relative";
-    const columnHeights = Array(numColumns).fill(0);
-
-    items.forEach((item) => {
-      const minHeight = Math.min(...columnHeights);
-      const columnIndex = columnHeights.indexOf(minHeight);
-
-      item.style.position = "absolute";
-      item.style.top = `${minHeight}px`;
-      item.style.left = `${columnIndex * (itemWidth + gap) + sidePadding}px`; // Dodajemy padding do pozycji
-
-      columnHeights[columnIndex] += item.offsetHeight + gap;
-    });
-
-    const maxHeight = Math.max(...columnHeights);
-    guidePage.style.height = `${maxHeight}px`;
-    updateWrapperHeightForPage(pageNum);
-  };
-
-  const images = Array.from(
-    guidePage.querySelectorAll(
-      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
-    )
-  );
-  if (images.length === 0) {
-    performLayout();
-    return;
-  }
-  let imagesLoaded = 0;
-  images.forEach((img) => {
-    if (img.complete) {
-      imagesLoaded++;
-    } else {
-      img.onload = img.onerror = () => {
-        imagesLoaded++;
-        if (imagesLoaded === images.length) performLayout();
-      };
-    }
-  });
-  if (imagesLoaded === images.length) performLayout();
-}
-
 // ================================================================
 //          KONIEC BLOKU DO PODMIANY
 // ================================================================
@@ -2466,25 +2390,32 @@ function applyMasonryLayout(pageNum = 1) {
   if (!guidePage) return;
 
   const items = Array.from(guidePage.children);
-  if (items.length === 0) return;
+  if (items.length === 0) {
+      if (currentPage === pageNum) updateWrapperHeightForPage(pageNum);
+      return;
+  }
 
   const performLayout = () => {
     const gap = 20;
     const itemWidth = items[0].offsetWidth;
     if (itemWidth === 0) return;
 
-    const availableWidth = guideList.offsetWidth;
+    const viewportWidth = guideList.clientWidth;
     const numColumns = Math.max(
       1,
-      Math.floor((availableWidth + gap) / (itemWidth + gap))
+      Math.floor((viewportWidth + gap) / (itemWidth + gap))
     );
+    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
+    const remainingSpace = viewportWidth - gridWidth;
+    const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
 
-    // Obliczamy faktyczną szerokość siatki...
-    const gridWidth = numColumns * (itemWidth + gap) - gap;
-    // ...ustawiamy ją na kontenerze...
-    guidePage.style.width = `${gridWidth}px`;
-    // ...i centrujemy go automatycznie.
-    guidePage.style.margin = "0 auto";
+    guidePage.style.paddingLeft = `${sidePadding}px`;
+    guidePage.style.paddingRight = `${sidePadding}px`;
+    guidePage.style.boxSizing = "border-box";
+    
+    // Resetujemy stare style, na wypadek gdyby zostały w pamięci
+    guidePage.style.width = ''; 
+    guidePage.style.margin = '';
 
     guidePage.style.position = "relative";
     const columnHeights = Array(numColumns).fill(0);
@@ -2495,7 +2426,8 @@ function applyMasonryLayout(pageNum = 1) {
 
       item.style.position = "absolute";
       item.style.top = `${minHeight}px`;
-      item.style.left = `${columnIndex * (itemWidth + gap)}px`;
+      // OSTATECZNA POPRAWKA: Prawidłowa kalkulacja pozycji 'left' bez podwójnego przesunięcia
+      item.style.left = `${columnIndex * (itemWidth + gap)}px`; 
 
       columnHeights[columnIndex] += item.offsetHeight + gap;
     });
@@ -2505,18 +2437,13 @@ function applyMasonryLayout(pageNum = 1) {
     updateWrapperHeightForPage(pageNum);
   };
 
-  // Czekamy na załadowanie obrazków, aby uniknąć błędów w obliczeniach wysokości
-  const images = Array.from(
-    guidePage.querySelectorAll(
-      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
-    )
-  );
+  const images = Array.from(guidePage.querySelectorAll('.guide-cover, .guide-cover-elegant, .guide-cover-grid'));
   if (images.length === 0) {
     performLayout();
     return;
   }
   let imagesLoaded = 0;
-  images.forEach((img) => {
+  images.forEach(img => {
     if (img.complete) {
       imagesLoaded++;
     } else {
