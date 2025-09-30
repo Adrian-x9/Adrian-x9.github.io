@@ -2768,7 +2768,7 @@ html.dark-mode .deck-bottom-row .play-accent {
 .subtle-bg-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  /* gap: 1px; */
   padding: 4px;
   border-radius: 8px;
   background-color: var(--group-bg-light);
