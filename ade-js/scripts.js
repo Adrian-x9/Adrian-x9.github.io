@@ -954,93 +954,7 @@ function checkFileAndOpen(targetUrl, fallbackUrl, isLink = false) {
     });
 }
 
-function createGuideHtml(guide) {
-  const f = guide.file
-      .replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "")
-      .split("$$")[0],
-    u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
-    c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-  let titleHtml = "",
-    infoHtml = "",
-    actionLinkHtml = "",
-    coverLinkHtml = "";
-  let titleText = guide.title;
-  if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
-    titleText = titleText.replace(/^\d{2}\s*/, "");
 
-  const mediaTypes = ["jpg", "png", "mp4", "avi"];
-
-  if (guide.format === "link") {
-    const targetUrl = decodeUrlFromFilename(guide.file);
-    let clickAction;
-
-    if (guide.file.startsWith('_')) {
-      clickAction = `window.location.href = '${targetUrl.replace(/'/g, "\\'")}'; return false;`;
-    } else {
-      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
-    }
-
-    titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
-    actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
-    coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
-
-  } else if (mediaTypes.includes(guide.format)) {
-    const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
-    titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-    actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
-    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-  } else {
-    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
-    titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-    if (guide.format === "pdf") {
-      actionLinkHtml = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
-      coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-    } else {
-      actionLinkHtml = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
-      coverLinkHtml = `<a href="${u}" download class="cover-link"></a>`;
-    }
-  }
-
-  const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
-
-  if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
-    return `
-      ${titleHtml}
-      <div class="guide-content-bottom">
-        <div class="guide-info-container">${infoHtml}</div>
-        ${actionLinkHtml}
-      </div>
-    `;
-  } else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") { // ZMIANA: Zgrupowano dwa tryby
-    const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  } else if (currentViewMode === "grid") {
-    const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
-    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    return `
-      <a href="${hrefAction}" onclick="${onclickAction}">
-        ${gridCoverImgHtml}
-        <div class="grid-overlay">
-          <span class="grid-title-text">${titleText}</span>
-        </div>
-      </a>
-    `;
-  } else {
-    const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
-    return `
-      ${titleHtml}
-      <div class="guide-content-bottom">
-        <div class="guide-info-container">${infoHtml}</div>
-        <a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>
-        ${actionLinkHtml}
-      </div>
-    `;
-  }
-}
 
 const goToPage = (pageNum) => {
   pageNum = Math.max(1, Math.min(totalPages, pageNum));
@@ -1442,17 +1356,17 @@ function initializeDisplayPanel() {
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
   const viewModes = [
-    "text-only",        // 1
-    "full-text",        // 2
-    "text-masonry",     // 3
-    "image-only",       // 4: Grafika proporcjonalna
-    "grid",             // 5: Grafika w kwadracie
-    "image-masonry",    // 6: Masonry graficzne
-    "view-seven",       // 7: "Glass"
-    "full",             // 8: Pełny
-    "masonry",          // 9: Masonry mieszane
+    "text-only", // 1
+    "full-text", // 2
+    "text-masonry", // 3
+    "image-only", // 4: Grafika proporcjonalna
+    "grid", // 5: Grafika w kwadracie
+    "image-masonry", // 6: Masonry graficzne
+    "view-seven", // 7: "Glass"
+    "full", // 8: Pełny
+    "masonry", // 9: Masonry mieszane
   ];
-  
+
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
     <span class="view-number"></span>
@@ -1512,27 +1426,36 @@ function initializeDisplayPanel() {
     renderGuides();
   });
 
-  const debouncedMasonryReflow = debounce(() => applyMasonryLayout(currentPage), 75);
+  const debouncedMasonryReflow = debounce(
+    () => applyMasonryLayout(currentPage),
+    75
+  );
 
   sizeSlider.addEventListener("input", () => {
     const sliderValue = parseInt(sizeSlider.value, 10);
-    
+
     sizeValue.textContent = `${sliderValue}%`;
     const newWidth = Math.floor(
       config.pageSettings.baseBoxWidth * (sliderValue / 100)
     );
     guideList.style.setProperty("--box-width", `${newWidth}px`);
 
-    const minSlider = 50, maxSlider = 150;
-    const minFont = 0.8, maxFont = 1.3;
+    const minSlider = 50,
+      maxSlider = 150;
+    const minFont = 0.8,
+      maxFont = 1.3;
     const percent = (sliderValue - minSlider) / (maxSlider - minSlider);
     const dynamicFontSize = minFont + percent * (maxFont - minFont);
     guideList.style.setProperty(
-        "--dynamic-font-size",
-        `${dynamicFontSize.toFixed(2)}rem`
+      "--dynamic-font-size",
+      `${dynamicFontSize.toFixed(2)}rem`
     );
 
-    if (currentViewMode === "masonry" || currentViewMode === "text-masonry" || currentViewMode === "image-masonry") {
+    if (
+      currentViewMode === "masonry" ||
+      currentViewMode === "text-masonry" ||
+      currentViewMode === "image-masonry"
+    ) {
       debouncedMasonryReflow();
     }
   });
@@ -1579,13 +1502,13 @@ function createGuideHtml(guide) {
     } else {
       clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
     }
-    titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
     infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
     actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
     coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
   } else if (mediaTypes.includes(guide.format)) {
     const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
-    titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
     infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
     actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
     coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
@@ -1601,85 +1524,36 @@ function createGuideHtml(guide) {
 
   if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
-  } else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+  } 
+  
+  else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  } else if (currentViewMode === "grid") {
+  } 
+  
+  else if (currentViewMode === "grid") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
     return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
-  } else if (currentViewMode === "view-seven") {
-      const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-      const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
-      const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-      return `<div class="guide-cover-wrapper-seven"><a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}</a></div><div class="guide-text-content-seven"><div class="guide-title">${titleText}</div>${actionLinkHtml}</div>`;
-  } else { // Domyślnie 'full' i 'masonry'
-    const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
-    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
-  }
-}
-
-function createGuideHtml(guide) {
-  const f = guide.file
-      .replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "")
-      .split("$$")[0],
-    u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
-    c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-  let titleHtml = "",
-    infoHtml = "",
-    actionLinkHtml = "",
-    coverLinkHtml = "";
-  let titleText = guide.title;
-  if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
-    titleText = titleText.replace(/^\d{2}\s*/, "");
-
-  const mediaTypes = ["jpg", "png", "mp4", "avi"];
-
-  if (guide.format === "link") {
-    const targetUrl = decodeUrlFromFilename(guide.file);
-    let clickAction;
-    if (guide.file.startsWith('_')) {
-      clickAction = `window.location.href = '${targetUrl.replace(/'/g, "\\'")}'; return false;`;
-    } else {
-      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
-    }
-    titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
-    actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
-    coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
-  } else if (mediaTypes.includes(guide.format)) {
-    const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
-    titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-    actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
-    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-  } else {
-    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
-    titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-    actionLinkHtml = `<a href="${u}" onclick="${(guide.format === 'pdf' ? clickAction : '')}" ${ (guide.format !== 'pdf' ? 'download' : '')}><i class="fas fa-${guide.format === 'pdf' ? 'file-pdf' : 'download'}"></i> ${guide.format === 'pdf' ? lang.guideBtnOpen : lang.guideBtnDownload}</a>`;
-    coverLinkHtml = `<a href="${u}" onclick="${clickAction}" class="cover-link"></a>`;
-  }
-
-  const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
-
-  if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
-    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
-  } else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
-    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  } else if (currentViewMode === "grid") {
+  } 
+  
+  else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
-  } else if (currentViewMode === "view-seven") {
-      const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-      const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
-      const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-      return `<div class="guide-cover-wrapper-seven"><a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}</a></div><div class="guide-text-content-seven"><div class="guide-title">${titleText}</div>${actionLinkHtml}</div>`;
-  } else { // Domyślnie 'full' i 'masonry'
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="guide-cover-wrapper-seven">
+            ${gridCoverImgHtml}
+        </a>
+        <div class="guide-text-content-seven">
+            <div class="guide-title">${titleText}</div>
+            <div class="guide-action-link">${actionLinkHtml}</div>
+        </div>
+    `;
+  } 
+  
+  else { // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
     const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
   }
@@ -1700,10 +1574,19 @@ function renderGuides(sourceArray = null) {
   // === POCZĄTEK ZMIANY: Kompletna obsługa klas CSS ===
   guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
   guideList.classList.toggle("view-full-text", currentViewMode === "full-text");
-  guideList.classList.toggle("view-text-masonry", currentViewMode === "text-masonry");
+  guideList.classList.toggle(
+    "view-text-masonry",
+    currentViewMode === "text-masonry"
+  );
   guideList.classList.toggle("view-grid", currentViewMode === "grid");
-  guideList.classList.toggle("view-image-only", currentViewMode === "image-only");
-  guideList.classList.toggle("view-image-masonry", currentViewMode === "image-masonry");
+  guideList.classList.toggle(
+    "view-image-only",
+    currentViewMode === "image-only"
+  );
+  guideList.classList.toggle(
+    "view-image-masonry",
+    currentViewMode === "image-masonry"
+  );
   guideList.classList.toggle("view-seven", currentViewMode === "view-seven");
   guideList.classList.toggle("view-full", currentViewMode === "full");
   guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
@@ -1716,7 +1599,7 @@ function renderGuides(sourceArray = null) {
   const newWidth = Math.floor(
     config.pageSettings.baseBoxWidth * (sizePercent / 100)
   );
-  
+
   const minSlider = 50,
     maxSlider = 150;
   const minFont = 0.8,
@@ -1747,7 +1630,11 @@ function renderGuides(sourceArray = null) {
     pagination.classList.remove("visible");
     updateGuideCount(source.length, guides.length);
 
-    if (currentViewMode === "masonry" || currentViewMode === "text-masonry" || currentViewMode === "image-masonry") {
+    if (
+      currentViewMode === "masonry" ||
+      currentViewMode === "text-masonry" ||
+      currentViewMode === "image-masonry"
+    ) {
       setTimeout(() => applyMasonryLayout(1), 100);
     }
     return;
@@ -1797,7 +1684,10 @@ function renderGuides(sourceArray = null) {
     preloadNextPageImages();
   }
 
-  const isMasonry = currentViewMode === "masonry" || currentViewMode === "text-masonry" || currentViewMode === "image-masonry";
+  const isMasonry =
+    currentViewMode === "masonry" ||
+    currentViewMode === "text-masonry" ||
+    currentViewMode === "image-masonry";
 
   if (isMasonry) {
     setTimeout(() => applyMasonryLayout(1), 100);
