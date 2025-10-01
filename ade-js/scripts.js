@@ -974,53 +974,27 @@ function createGuideHtml(guide) {
     const targetUrl = decodeUrlFromFilename(guide.file);
     let clickAction;
 
-    // NOWA LOGIKA: Sprawdzamy, czy to link systemowy
-    if (guide.file.startsWith("_")) {
-      // Linki systemowe otwieramy w tej samej karcie
-      clickAction = `window.location.href = '${targetUrl.replace(
-        /'/g,
-        "\\'"
-      )}'; return false;`;
+    if (guide.file.startsWith('_')) {
+      clickAction = `window.location.href = '${targetUrl.replace(/'/g, "\\'")}'; return false;`;
     } else {
-      // Pozostałe linki otwieramy w nowej karcie
-      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${
-        config.paths.urlFallback
-      }', true); return false;`;
+      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
     }
 
     titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info">${
-      guide.linkData.description || ""
-    }</div>`;
+    infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
     actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
     coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
+
   } else if (mediaTypes.includes(guide.format)) {
-    const clickAction = `startSlideshowFrom('${guide.file.replace(
-      /'/g,
-      "\\'"
-    )}'); return false;`;
+    const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
     titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
-      guide.date
-    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
-      lang.guideInfoFormat
-    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
-      lang.guideInfoSize
-    }: ${guide.sizeMB} MB</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
     actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
     coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
   } else {
-    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${
-      config.paths.urlFallback
-    }'); return false;`;
+    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
     titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
-      guide.date
-    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
-      lang.guideInfoFormat
-    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
-      lang.guideInfoSize
-    }: ${guide.sizeMB} MB</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
     if (guide.format === "pdf") {
       actionLinkHtml = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
       coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
@@ -1030,15 +1004,9 @@ function createGuideHtml(guide) {
     }
   }
 
-  const noCoverImg = document.documentElement.classList.contains("dark-mode")
-    ? "ade-base-system/gfx/no_cover_dark.png"
-    : "ade-base-system/gfx/no_cover_light.png";
+  const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
 
-  if (
-    currentViewMode === "text-only" ||
-    currentViewMode === "full-text" ||
-    currentViewMode === "text-masonry"
-  ) {
+  if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
     return `
       ${titleHtml}
       <div class="guide-content-bottom">
@@ -1046,13 +1014,12 @@ function createGuideHtml(guide) {
         ${actionLinkHtml}
       </div>
     `;
-  } else if (currentViewMode === "image-only") {
+  } else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") { // ZMIANA: Zgrupowano dwa tryby
     const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return coverLinkHtml.replace("</a>", `${elegantCoverImgHtml}</a>`);
+    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
   } else if (currentViewMode === "grid") {
     const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction =
-      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
     return `
       <a href="${hrefAction}" onclick="${onclickAction}">
@@ -1068,9 +1035,7 @@ function createGuideHtml(guide) {
       ${titleHtml}
       <div class="guide-content-bottom">
         <div class="guide-info-container">${infoHtml}</div>
-        <a href="#" class="cover-link" onclick="${
-          (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""
-        }">${defaultCoverImgHtml}</a>
+        <a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>
         ${actionLinkHtml}
       </div>
     `;
@@ -1476,19 +1441,17 @@ function initializeDisplayPanel() {
   const rowsValue = document.getElementById("rowsValue");
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
-  // === POCZĄTEK ZMIANY: Poprawna kolejność 9 trybów ===
   const viewModes = [
     "text-only",        // 1
     "full-text",        // 2
     "text-masonry",     // 3
-    "image-only",       // 4: Grafika proporcjonalna (zamienione)
-    "grid",             // 5: Grafika w kwadracie (zamienione)
-    "image-masonry",    // 6
-    "view-seven",       // 7
-    "full",             // 8
-    "masonry",          // 9
+    "image-only",       // 4: Grafika proporcjonalna
+    "grid",             // 5: Grafika w kwadracie
+    "image-masonry",    // 6: Masonry graficzne
+    "view-seven",       // 7: "Glass"
+    "full",             // 8: Pełny
+    "masonry",          // 9: Masonry mieszane
   ];
-  // === KONIEC ZMIANY ===
   
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
@@ -1590,6 +1553,136 @@ function initializeDisplayPanel() {
   });
 
   viewPlayBtn.addEventListener("click", () => startPlayAnimation());
+}
+
+function createGuideHtml(guide) {
+  const f = guide.file
+      .replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "")
+      .split("$$")[0],
+    u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
+    c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+  let titleHtml = "",
+    infoHtml = "",
+    actionLinkHtml = "",
+    coverLinkHtml = "";
+  let titleText = guide.title;
+  if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
+    titleText = titleText.replace(/^\d{2}\s*/, "");
+
+  const mediaTypes = ["jpg", "png", "mp4", "avi"];
+
+  if (guide.format === "link") {
+    const targetUrl = decodeUrlFromFilename(guide.file);
+    let clickAction;
+    if (guide.file.startsWith('_')) {
+      clickAction = `window.location.href = '${targetUrl.replace(/'/g, "\\'")}'; return false;`;
+    } else {
+      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
+    }
+    titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
+    infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
+    actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
+    coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
+  } else if (mediaTypes.includes(guide.format)) {
+    const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
+    titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
+    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+  } else {
+    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="${u}" onclick="${(guide.format === 'pdf' ? clickAction : '')}" ${ (guide.format !== 'pdf' ? 'download' : '')}><i class="fas fa-${guide.format === 'pdf' ? 'file-pdf' : 'download'}"></i> ${guide.format === 'pdf' ? lang.guideBtnOpen : lang.guideBtnDownload}</a>`;
+    coverLinkHtml = `<a href="${u}" onclick="${clickAction}" class="cover-link"></a>`;
+  }
+
+  const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
+
+  if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
+  } else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
+  } else if (currentViewMode === "grid") {
+    const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
+  } else if (currentViewMode === "view-seven") {
+      const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+      const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+      const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+      return `<div class="guide-cover-wrapper-seven"><a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}</a></div><div class="guide-text-content-seven"><div class="guide-title">${titleText}</div>${actionLinkHtml}</div>`;
+  } else { // Domyślnie 'full' i 'masonry'
+    const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
+  }
+}
+
+function createGuideHtml(guide) {
+  const f = guide.file
+      .replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "")
+      .split("$$")[0],
+    u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
+    c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+  let titleHtml = "",
+    infoHtml = "",
+    actionLinkHtml = "",
+    coverLinkHtml = "";
+  let titleText = guide.title;
+  if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
+    titleText = titleText.replace(/^\d{2}\s*/, "");
+
+  const mediaTypes = ["jpg", "png", "mp4", "avi"];
+
+  if (guide.format === "link") {
+    const targetUrl = decodeUrlFromFilename(guide.file);
+    let clickAction;
+    if (guide.file.startsWith('_')) {
+      clickAction = `window.location.href = '${targetUrl.replace(/'/g, "\\'")}'; return false;`;
+    } else {
+      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
+    }
+    titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
+    infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
+    actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
+    coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
+  } else if (mediaTypes.includes(guide.format)) {
+    const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
+    titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
+    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+  } else {
+    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="${u}" onclick="${(guide.format === 'pdf' ? clickAction : '')}" ${ (guide.format !== 'pdf' ? 'download' : '')}><i class="fas fa-${guide.format === 'pdf' ? 'file-pdf' : 'download'}"></i> ${guide.format === 'pdf' ? lang.guideBtnOpen : lang.guideBtnDownload}</a>`;
+    coverLinkHtml = `<a href="${u}" onclick="${clickAction}" class="cover-link"></a>`;
+  }
+
+  const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
+
+  if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
+  } else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
+  } else if (currentViewMode === "grid") {
+    const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
+  } else if (currentViewMode === "view-seven") {
+      const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+      const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+      const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+      return `<div class="guide-cover-wrapper-seven"><a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}</a></div><div class="guide-text-content-seven"><div class="guide-title">${titleText}</div>${actionLinkHtml}</div>`;
+  } else { // Domyślnie 'full' i 'masonry'
+    const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
+  }
 }
 
 function renderGuides(sourceArray = null) {
