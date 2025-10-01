@@ -3292,3 +3292,12 @@ html:not(.dark-mode) .guide-list.view-seven .guide-title {
 html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
     color: #cc0000;
 }
+
+/* === PATCH: Naprawa widoku #4 (image-only) === */
+.guide-list.view-image-only .guide-text-content {
+  display: none; /* Całkowicie usuwa kontener tekstowy z układu */
+}
+
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
+}
