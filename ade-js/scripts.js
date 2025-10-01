@@ -1478,15 +1478,15 @@ function initializeDisplayPanel() {
 
   // === POCZĄTEK ZMIANY: Poprawna kolejność 9 trybów ===
   const viewModes = [
-    "text-only",        // Nowy Nr 1: Tytuł + link
-    "full-text",        // Nowy Nr 2: Tytuł + opis + link
-    "text-masonry",     // Nowy Nr 3: Masonry tekstowe
-    "grid",             // Nowy Nr 4: Grafika kwadrat
-    "image-only",       // Nowy Nr 5: Grafika proporcjonalna
-    "image-masonry",    // Nowy Nr 6: Masonry graficzne (placeholder)
-    "view-seven",       // Nowy Nr 7: "Glass" (placeholder)
-    "full",             // Nowy Nr 8: Pełny (Tytuł, opis, grafika)
-    "masonry",          // Nowy Nr 9: Masonry mieszane
+    "text-only",        // 1
+    "full-text",        // 2
+    "text-masonry",     // 3
+    "image-only",       // 4: Grafika proporcjonalna (zamienione)
+    "grid",             // 5: Grafika w kwadracie (zamienione)
+    "image-masonry",    // 6
+    "view-seven",       // 7
+    "full",             // 8
+    "masonry",          // 9
   ];
   // === KONIEC ZMIANY ===
   
