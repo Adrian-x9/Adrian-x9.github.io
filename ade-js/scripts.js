@@ -1476,16 +1476,20 @@ function initializeDisplayPanel() {
   const rowsValue = document.getElementById("rowsValue");
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
+  // === POCZĄTEK ZMIANY: Poprawna kolejność 9 trybów ===
   const viewModes = [
-    "text-only",
-    "full-text",
-    "text-masonry",
-    "full",
-    "image-only",
-    "grid",
-    "masonry",
+    "text-only",        // Nowy Nr 1: Tytuł + link
+    "full-text",        // Nowy Nr 2: Tytuł + opis + link
+    "text-masonry",     // Nowy Nr 3: Masonry tekstowe
+    "grid",             // Nowy Nr 4: Grafika kwadrat
+    "image-only",       // Nowy Nr 5: Grafika proporcjonalna
+    "image-masonry",    // Nowy Nr 6: Masonry graficzne (placeholder)
+    "view-seven",       // Nowy Nr 7: "Glass" (placeholder)
+    "full",             // Nowy Nr 8: Pełny (Tytuł, opis, grafika)
+    "masonry",          // Nowy Nr 9: Masonry mieszane
   ];
-
+  // === KONIEC ZMIANY ===
+  
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
     <span class="view-number"></span>
@@ -1545,36 +1549,27 @@ function initializeDisplayPanel() {
     renderGuides();
   });
 
-  // === POCZĄTEK KRYTYCZNEJ POPRAWKI SUWAKA ===
-  const debouncedMasonryReflow = debounce(
-    () => applyMasonryLayout(currentPage),
-    75
-  );
+  const debouncedMasonryReflow = debounce(() => applyMasonryLayout(currentPage), 75);
 
   sizeSlider.addEventListener("input", () => {
     const sliderValue = parseInt(sizeSlider.value, 10);
-
-    // Krok 1: Aktualizacja etykiety i szerokości kafelka
+    
     sizeValue.textContent = `${sliderValue}%`;
     const newWidth = Math.floor(
       config.pageSettings.baseBoxWidth * (sliderValue / 100)
     );
     guideList.style.setProperty("--box-width", `${newWidth}px`);
 
-    // Krok 2: PRZYWRÓCONA LOGIKA - dynamiczna zmiana rozmiaru czcionki
-    const minSlider = 50,
-      maxSlider = 150;
-    const minFont = 0.8,
-      maxFont = 1.3;
+    const minSlider = 50, maxSlider = 150;
+    const minFont = 0.8, maxFont = 1.3;
     const percent = (sliderValue - minSlider) / (maxSlider - minSlider);
     const dynamicFontSize = minFont + percent * (maxFont - minFont);
     guideList.style.setProperty(
-      "--dynamic-font-size",
-      `${dynamicFontSize.toFixed(2)}rem`
+        "--dynamic-font-size",
+        `${dynamicFontSize.toFixed(2)}rem`
     );
 
-    // Krok 3: Logika warunkowa dla Masonry
-    if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+    if (currentViewMode === "masonry" || currentViewMode === "text-masonry" || currentViewMode === "image-masonry") {
       debouncedMasonryReflow();
     }
   });
@@ -1583,7 +1578,6 @@ function initializeDisplayPanel() {
     saveToLocalStorage("size_percent", sizeSlider.value);
     renderGuides();
   });
-  // === KONIEC KRYTYCZNEJ POPRAWKI SUWAKA ===
 
   rowsSlider.addEventListener("input", () => {
     rowsValue.textContent = rowsSlider.value;
@@ -1596,6 +1590,129 @@ function initializeDisplayPanel() {
   });
 
   viewPlayBtn.addEventListener("click", () => startPlayAnimation());
+}
+
+function renderGuides(sourceArray = null) {
+  stopCarousel();
+  const source =
+    sourceArray ||
+    (generatorMode === "visible" && generatedGuides) ||
+    filteredGuides;
+
+  guideList.classList.remove("random-draw");
+  if (sourceArray) {
+    guideList.classList.add("random-draw");
+  }
+
+  // === POCZĄTEK ZMIANY: Kompletna obsługa klas CSS ===
+  guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
+  guideList.classList.toggle("view-full-text", currentViewMode === "full-text");
+  guideList.classList.toggle("view-text-masonry", currentViewMode === "text-masonry");
+  guideList.classList.toggle("view-grid", currentViewMode === "grid");
+  guideList.classList.toggle("view-image-only", currentViewMode === "image-only");
+  guideList.classList.toggle("view-image-masonry", currentViewMode === "image-masonry");
+  guideList.classList.toggle("view-seven", currentViewMode === "view-seven");
+  guideList.classList.toggle("view-full", currentViewMode === "full");
+  guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
+  // === KONIEC ZMIANY ===
+
+  guideList.innerHTML = "";
+  if (lazyLoadObserver) lazyLoadObserver.disconnect();
+
+  const sizePercent = document.getElementById("sizeSlider").value;
+  const newWidth = Math.floor(
+    config.pageSettings.baseBoxWidth * (sizePercent / 100)
+  );
+  
+  const minSlider = 50,
+    maxSlider = 150;
+  const minFont = 0.8,
+    maxFont = 1.3;
+  const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
+  const dynamicFontSize = minFont + percent * (maxFont - minFont);
+  guideList.style.setProperty(
+    "--dynamic-font-size",
+    `${dynamicFontSize.toFixed(2)}rem`
+  );
+  guideList.style.setProperty("--grid-rows", selectedRowCount);
+  guideList.style.setProperty("--box-width", `${newWidth}px`);
+
+  if (sourceArray) {
+    const pageDiv = document.createElement("div");
+    pageDiv.className = "guide-page";
+    pageDiv.dataset.pageNumber = 1;
+
+    source.forEach((guide, index) => {
+      const div = document.createElement("div");
+      div.className = "guide animate-in";
+      div.style.animationDelay = `${index * 0.04}s`;
+      div.innerHTML = createGuideHtml(guide);
+      pageDiv.appendChild(div);
+    });
+    guideList.appendChild(pageDiv);
+
+    pagination.classList.remove("visible");
+    updateGuideCount(source.length, guides.length);
+
+    if (currentViewMode === "masonry" || currentViewMode === "text-masonry" || currentViewMode === "image-masonry") {
+      setTimeout(() => applyMasonryLayout(1), 100);
+    }
+    return;
+  }
+
+  const itemWidth = newWidth;
+  const columns =
+    Math.floor((guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001) || 1;
+  const itemsPerPage = columns * selectedRowCount;
+
+  pagesCache = [];
+  if (itemsPerPage > 0) {
+    for (let i = 0; i < source.length; i += itemsPerPage) {
+      pagesCache.push(source.slice(i, i + itemsPerPage));
+    }
+  } else if (source.length > 0) {
+    pagesCache.push(source);
+  }
+  totalPages = pagesCache.length || 1;
+
+  pagesCache.forEach((pageItems, pageIndex) => {
+    const pageDiv = document.createElement("div");
+    pageDiv.className = "guide-page";
+    pageDiv.dataset.pageNumber = pageIndex + 1;
+
+    if (pageIndex === 0) {
+      pageItems.forEach((guide, index) => {
+        const div = document.createElement("div");
+        div.className = "guide";
+        if (isInitialLoad) {
+          div.classList.add("animate-in");
+          div.style.animationDelay = `${index * 0.04}s`;
+        }
+        div.innerHTML = createGuideHtml(guide);
+        pageDiv.appendChild(div);
+      });
+    }
+    guideList.appendChild(pageDiv);
+  });
+
+  setupLazyLoading(pagesCache);
+  renderPagination();
+  updateGuideCount(source.length, guides.length);
+
+  if (isInitialLoad) {
+    isInitialLoad = false;
+    preloadNextPageImages();
+  }
+
+  const isMasonry = currentViewMode === "masonry" || currentViewMode === "text-masonry" || currentViewMode === "image-masonry";
+
+  if (isMasonry) {
+    setTimeout(() => applyMasonryLayout(1), 100);
+  }
+
+  if (!isMasonry) {
+    updateWrapperHeightForPage(1);
+  }
 }
 
 function toggleAudioMute() {
