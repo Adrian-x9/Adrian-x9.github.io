@@ -1545,33 +1545,45 @@ function initializeDisplayPanel() {
     renderGuides();
   });
 
-  // === POCZĄTEK NOWEJ, POPRAWNEJ LOGIKI SUWAKA ===
+  // === POCZĄTEK KRYTYCZNEJ POPRAWKI SUWAKA ===
   const debouncedMasonryReflow = debounce(
     () => applyMasonryLayout(currentPage),
     75
   );
 
   sizeSlider.addEventListener("input", () => {
-    // Krok 1: Zawsze aktualizuj etykietę i zmienną CSS (dla płynnych animacji w trybach grid)
-    sizeValue.textContent = `${sizeSlider.value}%`;
+    const sliderValue = parseInt(sizeSlider.value, 10);
+
+    // Krok 1: Aktualizacja etykiety i szerokości kafelka
+    sizeValue.textContent = `${sliderValue}%`;
     const newWidth = Math.floor(
-      config.pageSettings.baseBoxWidth * (sizeSlider.value / 100)
+      config.pageSettings.baseBoxWidth * (sliderValue / 100)
     );
     guideList.style.setProperty("--box-width", `${newWidth}px`);
 
-    // Krok 2: Logika warunkowa - tylko dla Masonry uruchom dodatkowe przeliczanie
+    // Krok 2: PRZYWRÓCONA LOGIKA - dynamiczna zmiana rozmiaru czcionki
+    const minSlider = 50,
+      maxSlider = 150;
+    const minFont = 0.8,
+      maxFont = 1.3;
+    const percent = (sliderValue - minSlider) / (maxSlider - minSlider);
+    const dynamicFontSize = minFont + percent * (maxFont - minFont);
+    guideList.style.setProperty(
+      "--dynamic-font-size",
+      `${dynamicFontSize.toFixed(2)}rem`
+    );
+
+    // Krok 3: Logika warunkowa dla Masonry
     if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
       debouncedMasonryReflow();
     }
   });
 
   sizeSlider.addEventListener("change", () => {
-    // Po puszczeniu suwaka, zapisz wartość i wykonaj pełny render
-    // dla pewności, że np. paginacja się zaktualizowała
     saveToLocalStorage("size_percent", sizeSlider.value);
     renderGuides();
   });
-  // === KONIEC NOWEJ, POPRAWNEJ LOGIKI SUWAKA ===
+  // === KONIEC KRYTYCZNEJ POPRAWKI SUWAKA ===
 
   rowsSlider.addEventListener("input", () => {
     rowsValue.textContent = rowsSlider.value;
