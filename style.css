@@ -3301,3 +3301,40 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 .guide-list.view-image-only .guide-cover-wrapper {
   height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
 }
+
+/* === TUNING: Ulepszenie widoku #5 (grid) === */
+
+/* Poprawiamy wygląd samej nakładki */
+.guide-list.view-grid .grid-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+/* Nowy, czytelniejszy styl dla tekstu z animacją */
+.grid-overlay .grid-title-text a {
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 800;
+    text-decoration: none;
+    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7); /* Nowy, czytelny cień */
+    -webkit-text-stroke: 0; /* Usuwamy stary efekt */
+    opacity: 0;
+    transform: translateY(10px); /* Początkowa pozycja dla animacji */
+    transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
+}
+body:not(.dark-mode) .grid-overlay .grid-title-text a {
+    color: #000;
+    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Uruchomienie animacji tekstu po najechaniu */
+.guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
+    opacity: 1;
+    transform: translateY(0);
+}
