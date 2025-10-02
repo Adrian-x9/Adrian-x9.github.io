@@ -1583,13 +1583,33 @@ function createGuideHtml(guide) {
             <span class="title-six">${titleText}</span>
         </div>
     `;
-  } else if (currentViewMode === "grid") {
-    const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction =
-      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+  
+  
+  
+  
+} else if (currentViewMode === "grid") {
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
-  } else if (currentViewMode === "view-seven") {
+    
+    // Nowa struktura HTML dla widoku siatki
+    return `
+      <div class="grid-title-bar">${titleText}</div>
+      <a href="${hrefAction}" onclick="${onclickAction}" class="grid-image-link">
+        <img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">
+      </a>
+      <div class="grid-action-bar">
+        <a href="${hrefAction}" onclick="${onclickAction}" class="grid-action-button">
+          <i class="fas fa-external-link-alt"></i>
+          <span>${lang.guideBtnOpen}</span>
+        </a>
+      </div>
+    `;
+  }
+  
+  
+  
+  
+  else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";

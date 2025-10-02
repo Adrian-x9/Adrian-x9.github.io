@@ -3661,3 +3661,90 @@ html.dark-mode #systemInfoLink:hover .visu-text-red {
 html.dark-mode #statusLangBtn > a:hover .lang-code-status {
     color: var(--status-text-dark, #bbb) !important;
 }
+/* --- ŁATKA STYLU: Nowy wygląd siatki (Soft UI) --- */
+
+/* 1. Główny kontener kafelka */
+.guide-list.view-grid .guide {
+  background: #f1e9e8;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #d1c8c7, -8px -8px 16px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+html.dark-mode .guide-list.view-grid .guide {
+  background: #2c2828;
+  box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Usunięcie niepotrzebnych stylów z linku-wrappera */
+.guide-list.view-grid .guide a:not(.grid-action-button) {
+  margin: 0;
+  display: flex; /* Pozwala obrazkowi się rozciągnąć */
+  flex-grow: 1;
+}
+
+/* 2. Pasek tytułu na górze */
+.guide-list.view-grid .grid-title-bar {
+  padding: 10px 15px;
+  font-weight: 600;
+  font-size: 0.9em;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #7b6d6c;
+  flex-shrink: 0;
+}
+
+html.dark-mode .guide-list.view-grid .grid-title-bar {
+  color: #b0a3a2;
+}
+
+/* 3. Obrazek (wypełnia dostępną przestrzeń) */
+.guide-list.view-grid .guide-cover-grid {
+  border-radius: 0; /* Obrazek nie ma już zaokrąglonych rogów */
+  box-shadow: none; /* Cień jest na głównym kontenerze */
+  height: 100%;
+}
+
+/* 4. Dolny pasek z przyciskiem */
+.guide-list.view-grid .grid-action-bar {
+  padding: 8px 12px;
+  text-align: right;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+html.dark-mode .guide-list.view-grid .grid-action-bar {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* 5. Przycisk akcji */
+.guide-list.view-grid .grid-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9em;
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+  transition: transform 0.2s ease;
+}
+
+html.dark-mode .guide-list.view-grid .grid-action-button {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+
+.guide-list.view-grid .grid-action-button:hover {
+  transform: scale(1.05);
+}
