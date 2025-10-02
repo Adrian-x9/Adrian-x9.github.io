@@ -3000,22 +3000,30 @@ html:not(.dark-mode) #lang-modal .item:hover {
   margin-bottom: 20px;
 }
 
+/* ZASTĄP TĘ REGUŁĘ */
 html.dark-mode .glass-status {
   font-family: "Inter", sans-serif;
-  font-size: 1rem;
   color: rgba(255, 255, 255, 0.85);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(
+    45,
+    45,
+    45,
+    0.65
+  ); /* Jaśniejsze, bardziej szare tło "szkła" */
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Wyraźniejsza krawędź */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); /* Głębszy cień */
+  /* Pozostałe właściwości bez zmian */
+  font-size: 1rem;
   border-radius: 10px;
-  padding: 20px 20px;
+  padding: 20px;
   margin-top: 16px;
   display: flex;
   gap: 20px;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin-bottom: 20px;
 }
 
 /* === ADAPTACJA WIDOKÓW: Nowy Widok nr 1 (Tylko Tytuł) === */
@@ -3494,11 +3502,17 @@ html.dark-mode .visu-text-red {
 
 /* --- ŁATKA 4 (POPRAWIONA): Styl dla animacji "WOW" na właściwym przycisku --- */
 #fullscreenBtn.globe-animation-active i.fa-globe {
-    color: var(--button-red-bg-light);
-    transform: scale(1.1);
-    transition: color 0.3s ease, transform 0.3s ease;
+  color: var(--button-red-bg-light);
+  transform: scale(1.1);
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
-    color: var(--button-red-bg-dark);
+  color: var(--button-red-bg-dark);
+}
+
+/* --- ŁATKA 4: Pogrubienie nazwy VisuDir --- */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+    font-weight: bold;
 }
