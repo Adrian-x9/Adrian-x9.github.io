@@ -1374,35 +1374,44 @@ function initializeDisplayPanel() {
   `;
   const viewNumberSpan = viewContentBtn.querySelector(".view-number");
 
-  const updateViewNumber = () => {
+  const updateView = () => {
     const viewNumber = viewModes.indexOf(currentViewMode) + 1;
     viewNumberSpan.textContent = viewNumber;
+    saveToLocalStorage("view_mode", currentViewMode);
+    renderGuides();
   };
 
   currentViewMode =
     getFromLocalStorage("view_mode") || config.pageSettings.defaultViewMode;
   viewContentBtn.title = "Zmień tryb widoku";
-  updateViewNumber();
+  updateView(); // Inicjalizacja numeru i widoku
 
+  // ZMIANA: Obsługa lewego kliknięcia (następny tryb)
   viewContentBtn.addEventListener("click", () => {
     const currentIndex = viewModes.indexOf(currentViewMode);
     currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
-    saveToLocalStorage("view_mode", currentViewMode);
-    updateViewNumber();
-    renderGuides();
+    updateView();
   });
 
+  // NOWOŚĆ: Obsługa prawego kliknięcia (poprzedni tryb)
+  viewContentBtn.addEventListener("contextmenu", (e) => {
+    e.preventDefault(); // Zapobiega wyświetleniu menu kontekstowego
+    const currentIndex = viewModes.indexOf(currentViewMode);
+    const newIndex = (currentIndex - 1 + viewModes.length) % viewModes.length; // Poprawna obsługa pętli wstecz
+    currentViewMode = viewModes[newIndex];
+    updateView();
+  });
+
+  // ZMIANA: Logika ikony motywu
   const updateThemeIcon = () => {
-    const isDark = document.documentElement.classList.contains("dark-mode");
-    viewThemeBtn.innerHTML = isDark
-      ? '<i class="fas fa-sun"></i>'
-      : '<i class="fas fa-moon"></i>';
+    // Ikona jest zawsze księżycem, zmieniamy tylko jej wygląd przez CSS
+    viewThemeBtn.innerHTML = '<i class="fas fa-moon"></i>';
   };
   updateThemeIcon();
 
   viewThemeBtn.addEventListener("click", () => {
     toggleDarkMode();
-    updateThemeIcon();
+    updateThemeIcon(); // Wywołujemy, choć na razie nie jest to konieczne, ale to dobra praktyka
   });
 
   viewOrientationBtn.addEventListener("click", () => {
@@ -1583,14 +1592,11 @@ function createGuideHtml(guide) {
             <span class="title-six">${titleText}</span>
         </div>
     `;
-  
-  
-  
-  
-} else if (currentViewMode === "grid") {
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+  } else if (currentViewMode === "grid") {
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    
+
     // Nowa struktura HTML dla widoku siatki
     return `
       <div class="grid-title-bar">${titleText}</div>
@@ -1604,12 +1610,7 @@ function createGuideHtml(guide) {
         </a>
       </div>
     `;
-  }
-  
-  
-  
-  
-  else if (currentViewMode === "view-seven") {
+  } else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";

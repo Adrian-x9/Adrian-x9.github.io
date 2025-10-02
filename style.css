@@ -2348,9 +2348,18 @@ html.dark-mode #statusMuteBtn.active-red {
   color: #e53935;
 }
 
+
+
+
+
+
+
+
+
+
 /*
 ================================================================
-            FINALNA ŁATKA WIZUALNA v3
+            FINALNA ŁATKA WIZUALNA v3.1 (CHIRURGICZNA KOREKTA)
 ================================================================
 */
 
@@ -2457,31 +2466,24 @@ body.video-ready .control-panel {
 }
 
 /* --- GÓRNY WIERSZ PANELU (FILTRY I STATUS) --- */
-/* --- GÓRNY WIERSZ PANELU (FILTRY I STATUS) --- */
 .deck-top-row {
   display: grid;
-  /* Stan DOMYŚLNY (rozwinięty): sekcja filtrów zajmuje dostępną przestrzeń (1fr) */
   grid-template-columns: 1fr 20px auto;
   gap: 10px;
   width: 100%;
   padding-bottom: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--separator-light);
-  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Płynna animacja */
-  /* min-height: 75px; */
+  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
   align-items: stretch;
 }
 html.dark-mode .deck-top-row {
   border-color: var(--separator-dark);
 }
-
-/* Stan ZWINIĘTY: sekcja filtrów kurczy się do minimalnej potrzebnej szerokości (auto) */
 .deck-top-row.filters-expanded {
   grid-template-columns: auto 20px 1fr;
 }
-
-/* Sekcja filtrów */
 .filter-section {
   display: flex;
   align-items: center;
@@ -2536,8 +2538,6 @@ html.dark-mode .filter-section .dir-db-btn:hover {
   width: 38px;
   padding: 0;
 }
-
-/* Kurtyna */
 .curtain-handle {
   display: flex;
   justify-content: center;
@@ -2600,7 +2600,7 @@ html.dark-mode #statusBarIntegrated b {
 }
 .status-text-group {
   background: none !important;
-} /* Usuwa niepotrzebne tło */
+}
 .status-segment {
   transition: opacity 0.3s ease, max-width 0.4s ease;
   will-change: opacity, max-width;
@@ -2623,7 +2623,6 @@ html.dark-mode #statusBarIntegrated b {
 html.dark-mode .status-separator {
   background-color: var(--separator-dark);
 }
-
 .status-section-bottom {
   display: flex;
   align-items: center;
@@ -2659,8 +2658,6 @@ html.dark-mode .status-section-bottom {
 html.dark-mode .status-icon-btn:hover {
   color: var(--button-red-bg-dark);
 }
-
-/* Logika kurtyny dla paska statusu */
 .deck-top-row.filters-expanded
   .status-text-group
   .status-segment:not(:first-of-type) {
@@ -2714,11 +2711,18 @@ html.dark-mode .display-panel-group {
   cursor: pointer;
   background-color: transparent;
   color: var(--button-text-light);
-  transition: all 0.2s;
+  /* ZMIANA: Dodana płynna animacja do wszystkich przycisków */
+  transition: all 0.2s ease-in-out;
 }
 html.dark-mode .deck-bottom-row button {
   color: var(--button-text-dark);
 }
+
+/* ZMIANA: Ujednolicony efekt hover dla wszystkich przycisków w tej sekcji */
+.deck-bottom-row button:hover {
+  transform: scale(1.1);
+}
+/* ZMIANA: Specjalny hover dla przycisków w szarym kontenerze */
 .deck-bottom-row .display-panel-group:not(.slider-group) button:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
@@ -2728,6 +2732,8 @@ html.dark-mode
   button:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
+
+/* Przyciski z ramką */
 .deck-bottom-row .accent-border {
   border-color: var(--button-red-bg-light);
 }
@@ -2735,15 +2741,15 @@ html.dark-mode .deck-bottom-row .accent-border {
   border-color: var(--button-red-bg-dark);
 }
 
-/* Czerwone, ważne przyciski */
+/* ZMIANA: Czerwone, aktywne przyciski i stan aktywny dla przycisku orientacji */
 .deck-bottom-row #viewContentBtn,
-.deck-bottom-row #viewThemeBtn,
+.deck-bottom-row #viewOrientationBtn.active, /* <-- NOWA REGUŁA */
 .deck-bottom-row .play-accent {
   background-color: var(--button-red-bg-light);
   color: var(--button-red-text-light);
 }
 html.dark-mode .deck-bottom-row #viewContentBtn,
-html.dark-mode .deck-bottom-row #viewThemeBtn,
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active, /* <-- NOWA REGUŁA */
 html.dark-mode .deck-bottom-row .play-accent {
   background-color: var(--button-red-bg-dark);
   color: var(--button-red-text-dark);
@@ -2754,6 +2760,47 @@ html.dark-mode .deck-bottom-row .play-accent {
 html.dark-mode .deck-bottom-row .play-accent {
   box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
 }
+
+/* ZMIANA: Odwrócony hover dla przycisków aktywnych (czerwonych) */
+.deck-bottom-row #viewContentBtn:hover,
+.deck-bottom-row #viewOrientationBtn.active:hover,
+.deck-bottom-row .play-accent:hover {
+    background-color: var(--panel-bg-light);
+    color: var(--button-red-bg-light);
+    border-color: var(--button-red-bg-light);
+}
+html.dark-mode .deck-bottom-row #viewContentBtn:hover,
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active:hover,
+html.dark-mode .deck-bottom-row .play-accent:hover {
+    background-color: var(--panel-bg-dark);
+    color: var(--button-red-bg-dark);
+    border-color: var(--button-red-bg-dark);
+}
+
+
+/* ZMIANA: Nowa, warunkowa stylizacja dla przycisku motywu */
+/* Tryb jasny (nieaktywny) */
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
+  background-color: transparent;
+  color: var(--button-text-light);
+  border-color: var(--button-red-bg-light);
+}
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
+    background-color: var(--button-red-bg-light);
+    color: var(--button-red-text-light);
+}
+/* Tryb ciemny (aktywny) */
+html.dark-mode .deck-bottom-row #viewThemeBtn {
+    background-color: var(--button-red-bg-dark);
+    color: var(--button-red-text-dark);
+    border-color: transparent;
+}
+html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
+    background-color: var(--panel-bg-dark);
+    color: var(--button-red-bg-dark);
+    border-color: var(--button-red-bg-dark);
+}
+
 
 /* --- KROK 4: PRZENIESIENIE I GRUPOWANIE PRZYCISKÓW --- */
 .subtle-bg-group {
@@ -2841,6 +2888,38 @@ html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
   background: var(--slider-thumb-dark);
   border-color: var(--slider-thumb-border-dark);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* --- MODAL I KARUZELA JĘZYKOWA (Wersja wyczyszczona) --- */
 .lang-modal-container {
