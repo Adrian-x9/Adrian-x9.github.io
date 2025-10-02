@@ -3588,3 +3588,73 @@ html.dark-mode #statusLangBtn a:hover {
 .lang-flag-status {
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
+
+/* --- FINAŁOWA ŁATKA KOSMETYCZNA PASKA STANU --- */
+
+/* 1. Poprawka rozmiaru panelu w trybie ciemnym */
+html.dark-mode .glass-status {
+    padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
+}
+
+/* 2. Dodanie ramki do flagi dla lepszej widoczności */
+.lang-flag-status {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .lang-flag-status {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* 5 & 6. Ostateczne i poprawne style dla VisuDir i flagi */
+#systemInfoLink,
+#statusLangBtn > a {
+    /* Ustawiamy standardowy kolor tekstu dla całego linku */
+    color: var(--status-text-light, #444) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+    color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Pogrubiamy tylko "VisuDir" */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+    font-weight: bold;
+}
+
+/* Kolorujemy na czerwono tylko te elementy, które tego wymagają */
+#systemInfoLink .visu-text-red,
+#statusLangBtn .lang-code-status {
+    color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink .visu-text-red,
+html.dark-mode #statusLangBtn .lang-code-status {
+    color: var(--button-red-bg-dark) !important;
+}
+
+/* Efekt hover: cały link (VisuDir i flaga) zmienia kolor na standardowy */
+#systemInfoLink:hover,
+#statusLangBtn > a:hover {
+    color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn > a:hover {
+    color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Hover dla VisuDir: czerwony tekst staje się standardowy */
+#systemInfoLink:hover .visu-text-red {
+    color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #systemInfoLink:hover .visu-text-red {
+    color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Hover dla flagi: czerwony tekst staje się standardowy */
+#statusLangBtn > a:hover .lang-code-status {
+    color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #statusLangBtn > a:hover .lang-code-status {
+    color: var(--status-text-dark, #bbb) !important;
+}
