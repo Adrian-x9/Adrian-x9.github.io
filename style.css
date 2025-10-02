@@ -1246,7 +1246,7 @@ body.dark-mode .pagination .pagination-info {
   text-align: center;
   padding: 20px;
   padding-top: 20px;
-  padding-down: 0px;
+  padding-bottom: 0px;
   font-size: 0.9em;
   max-height: 200px;
   overflow: hidden;
@@ -3689,16 +3689,20 @@ html.dark-mode .guide-list.view-grid .guide {
 }
 
 /* 2. Pasek tytułu na górze */
-.guide-list.view-grid .grid-title-bar {
-  padding: 10px 15px;
+.guide-list.view-grid  {
+  padding: 10px 20px; /* Zmiana */
   font-weight: 600;
   font-size: 0.9em;
-  text-align: left;
+  text-align: center; /* Zmiana */
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   color: #7b6d6c;
   flex-shrink: 0;
+}
+
+.guide-title {
+  text-align: center !important; /* Zmiana */
 }
 
 html.dark-mode .guide-list.view-grid .grid-title-bar {
@@ -3714,7 +3718,7 @@ html.dark-mode .guide-list.view-grid .grid-title-bar {
 
 /* 4. Dolny pasek z przyciskiem */
 .guide-list.view-grid .grid-action-bar {
-  padding: 8px 12px;
+  padding: 8px 20px; /* Zmiana */
   text-align: right;
   flex-shrink: 0;
   background: rgba(0, 0, 0, 0.02);
