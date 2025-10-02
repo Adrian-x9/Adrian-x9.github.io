@@ -2908,10 +2908,6 @@ function initializeLangCarousel() {
   });
 }
 
-// Plik: scripts.js
-
-// ZASTĄP ISTNIEJĄCĄ FUNKCJĘ `calculateSunTimes` PONIŻSZĄ WERSJĄ:
-
 function calculateSunTimes(date, lat, lon) {
   const toRad = Math.PI / 180;
   const toDeg = 180 / Math.PI;
