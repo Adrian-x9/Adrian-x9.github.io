@@ -2873,4 +2873,3 @@ initializeNewButtons();
 initializeDisplayPanel();
 initializeMobileHover();
 initialize3dHoverEffect();
-initializeCurtainControls();
