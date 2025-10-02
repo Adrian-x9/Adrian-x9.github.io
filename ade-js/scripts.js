@@ -2750,15 +2750,16 @@ function initializeLangCarousel() {
   const rebuildCarousel = () => {
     world.innerHTML = "";
     const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
+    // Zaktualizowany kod do wklejenia
     const base = {
-      sceneSize: 250,
+      sceneSize: 320, // Zwiększona szerokość sceny, by spłaszczyć łuk
       perspective: 1000,
       itemWidth: 100,
       itemHeight: 50,
       fontSize: 14,
       flagSize: 22,
       gap: 10,
-      radius: 220, // Tę wartość będziemy modyfikować w przyszłości dla 17 krajów
+      radius: 290, // Zwiększony promień, by odsunąć flagi od siebie
     };
 
     const root = document.documentElement;
