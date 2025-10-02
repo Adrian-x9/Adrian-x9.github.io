@@ -3165,13 +3165,14 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   padding: 0;
   overflow: hidden;
   position: relative;
-  
+
   /* KLUCZOWA POPRAWKA: Nadaje kafelkowi kwadratowe proporcje, zapobiegając jego zwinięciu się */
-  aspect-ratio: 1 / 1; 
+  aspect-ratio: 1 / 1;
 
   /* Zachowujemy animacje 3D */
   transform-style: preserve-3d;
-  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
   transition: transform 0.1s ease-out;
 }
 
@@ -3179,7 +3180,10 @@ html.dark-mode .guide-list.view-image-masonry .guide {
 .guide-list.view-seven .guide::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: radial-gradient(
     circle at var(--glow-x, 50%) var(--glow-y, 50%),
     rgba(229, 57, 53, 0.3),
@@ -3194,11 +3198,13 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   opacity: 1;
 }
 
-
 /* --- 2. GRAFIKA W TLE --- */
 .guide-list.view-seven .guide-cover-wrapper-seven {
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 10px; /* Zaokrąglenie rogów dla obrazka */
   overflow: hidden;
 }
@@ -3216,23 +3222,24 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   transform: scale(1.05);
 }
 
-
 /* --- 3. PANEL "GLASS" I JEGO ANIMACJE --- */
 .guide-list.view-seven .guide-text-content-seven {
   position: absolute;
-  bottom: 0; left: 0; right: 0;
-  
+  bottom: 0;
+  left: 0;
+  right: 0;
+
   /* Wygląd "szkła" */
   padding: 12px 15px;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-top: 1px solid rgba(255, 255, 255, 0.2);
-  
+
   /* Ukrycie domyślne i animacja wsuwania */
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  
+
   /* Układ tekstu wewnątrz */
   display: flex;
   justify-content: space-between;
@@ -3240,15 +3247,14 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   gap: 15px;
 }
 html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Pokazanie panelu po najechaniu */
 .guide-list.view-seven .guide:hover .guide-text-content-seven {
   transform: translateY(0%);
 }
-
 
 /* --- 4. TEKST I LINK W PANELU "GLASS" --- */
 .guide-list.view-seven .guide-title,
@@ -3279,7 +3285,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
   overflow: hidden;
 }
 html:not(.dark-mode) .guide-list.view-seven .guide-title {
-    color: #000;
+  color: #000;
 }
 
 .guide-list.view-seven .guide-action-link a {
@@ -3290,7 +3296,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-title {
   text-decoration: none;
 }
 html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
-    color: #cc0000;
+  color: #cc0000;
 }
 
 /* === PATCH: Naprawa widoku #4 (image-only) === */
@@ -3306,37 +3312,37 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 
 /* Poprawiamy wygląd samej nakładki */
 .guide-list.view-grid .grid-overlay {
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    opacity: 0;
-    transition: opacity 0.3s ease-out;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
 }
 body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
-    background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 /* Nowy, czytelniejszy styl dla tekstu z animacją */
 .grid-overlay .grid-title-text a {
-    color: #fff;
-    font-size: 1.2em;
-    font-weight: 800;
-    text-decoration: none;
-    text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7); /* Nowy, czytelny cień */
-    -webkit-text-stroke: 0; /* Usuwamy stary efekt */
-    opacity: 0;
-    transform: translateY(10px); /* Początkowa pozycja dla animacji */
-    transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 800;
+  text-decoration: none;
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7); /* Nowy, czytelny cień */
+  -webkit-text-stroke: 0; /* Usuwamy stary efekt */
+  opacity: 0;
+  transform: translateY(10px); /* Początkowa pozycja dla animacji */
+  transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
 }
 body:not(.dark-mode) .grid-overlay .grid-title-text a {
-    color: #000;
-    text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
+  color: #000;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
 /* Uruchomienie animacji tekstu po najechaniu */
 .guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
-    opacity: 1;
-    transform: translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /*
@@ -3356,7 +3362,8 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   overflow: hidden; /* Ważne, aby panel nie wychodził poza kafelek */
   border-radius: 12px; /* Subtelne zaokrąglenie */
   transform-style: preserve-3d;
-  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
   transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
@@ -3368,10 +3375,14 @@ html.dark-mode .guide-list.view-image-masonry .guide {
 .guide-list.view-image-masonry .guide::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; width: 100%; height: 100%;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: radial-gradient(
     circle at var(--glow-x, 50%) var(--glow-y, 50%),
-    rgba(229, 57, 53, 0.3), transparent 40%
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
   );
   opacity: 0;
   transition: opacity 0.3s ease-out;
@@ -3384,65 +3395,99 @@ html.dark-mode .guide-list.view-image-masonry .guide {
 
 /* --- 2. OBRAZEK I JEGO KONTENER --- */
 .guide-list.view-image-masonry .cover-link-six {
-    display: block;
-    width: 100%;
-    height: 100%;
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .guide-list.view-image-masonry .guide-cover-elegant {
-    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
-    transform: scale(1.05); /* Efekt parallax przy najechaniu */
+  transform: scale(1.05); /* Efekt parallax przy najechaniu */
 }
 
 /* --- 3. SZKLANY PANEL ("GLASS PANEL") --- */
 .guide-list.view-image-masonry .glass-panel-six {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 10px 12px;
-    box-sizing: border-box;
-    
-    /* Efekt "szkła" z gradientem */
-    background: linear-gradient(to top, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    border-top: 1px solid rgba(255, 255, 255, 0.7);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 12px;
+  box-sizing: border-box;
 
-    /* Animacja wsuwania */
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Efekt "szkła" z gradientem */
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.3)
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+
+  /* Animacja wsuwania */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Panel wsuwa się po najechaniu na kafelek */
 .guide-list.view-image-masonry .guide:hover .glass-panel-six {
-    transform: translateY(0);
+  transform: translateY(0);
 }
 
 /* --- 4. TEKST NA PANELU --- */
 .guide-list.view-image-masonry .title-six {
-    display: block;
-    font-size: 1.05em;
-    font-weight: 700;
-    color: #000;
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+  display: block;
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 
-    /* Animacja pojawiania się tekstu */
-    opacity: 0;
-    transition: opacity 0.3s ease-out 0.2s; /* Opóźnienie, by tekst pojawił się po wsunięciu panelu */
+  /* Animacja pojawiania się tekstu */
+  opacity: 0;
+  transition: opacity 0.3s ease-out 0.2s; /* Opóźnienie, by tekst pojawił się po wsunięciu panelu */
 }
 html.dark-mode .guide-list.view-image-masonry .title-six {
-    color: #fff;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 /* Tekst staje się widoczny po najechaniu */
 .guide-list.view-image-masonry .guide:hover .title-six {
-    opacity: 1;
+  opacity: 1;
 }
 
+/* --- ŁATKA 3: Style dla Paska Statusu --- */
+
+/* 5e: Styl informacji o wersji */
+#statusInfoBtn i {
+  color: var(--button-red-bg-light);
+}
+html.dark-mode #statusInfoBtn i {
+  color: var(--button-red-bg-dark);
+}
+/* Upewniamy się, że Visu jest czerwone (już powinno być przez klasę .visu-text-red) */
+.visu-text-red {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode .visu-text-red {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* 5f1: Styl dla flagi na pasku statusu */
+.lang-flag-status {
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  /* Poprawka dla idealnego wyrównania w pionie */
+  margin-bottom: 0.1em;
+}
+.lang-code-status {
+  vertical-align: middle;
+}

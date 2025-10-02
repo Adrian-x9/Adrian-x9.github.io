@@ -3031,6 +3031,22 @@ function updateLocationBasedStatus() {
   }
 }
 
+function updateStatusLangDisplay() {
+  const langBtn = document.getElementById("statusLangBtn");
+  if (!langBtn) return;
+
+  const currentLangCode = config.language.current;
+  const langData = config.langConfig[currentLangCode];
+
+  if (langData) {
+    const flagImg = langBtn.querySelector(".lang-flag-status");
+    const codeSpan = langBtn.querySelector(".lang-code-status");
+
+    flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${langData.flag}.svg`;
+    codeSpan.textContent = currentLangCode.toUpperCase();
+  }
+}
+
 // Wywołaj inicjalizację karuzeli po załadowaniu strony
 initializeLangCarousel();
 
@@ -3040,3 +3056,4 @@ initializeDisplayPanel();
 initializeMobileHover();
 initialize3dHoverEffect();
 initializeCurtainControls();
+updateStatusLangDisplay();
