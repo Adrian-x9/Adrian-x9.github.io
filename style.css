@@ -2365,9 +2365,12 @@ html.dark-mode #statusMuteBtn.active-red {
 
 
 
+
+
+
 /*
 ================================================================
-            FINALNA ŁATKA WIZUALNA v3.3 (WERSJA NAPRAWCZA)
+            FINALNA ŁATKA WIZUALNA v4.0 (OPERACJA NAPRAWCZA)
 ================================================================
 */
 
@@ -2408,7 +2411,7 @@ html.dark-mode #statusMuteBtn.active-red {
   --status-bold-dark: #fff;
 }
 
-/* --- KROK 1: GŁÓWNY UKŁAD STRONY --- */
+/* --- GŁÓWNY UKŁAD STRONY --- */
 html {
   font-family: "Segoe UI", sans-serif;
 }
@@ -2445,7 +2448,7 @@ body {
   opacity: 1;
 }
 
-/* --- KROK 2: STYL GŁÓWNEGO PANELU --- */
+/* --- STYL GŁÓWNEGO PANELU --- */
 .control-panel {
   display: flex;
   flex-direction: column;
@@ -2473,32 +2476,38 @@ body.video-ready .control-panel {
   -webkit-backdrop-filter: blur(5px);
 }
 
-/* --- GÓRNY WIERSZ PANELU --- */
+/* --- NAPRAWA #1: GÓRNY WIERSZ PANELU (UKŁAD FLEXBOX) --- */
 .deck-top-row {
-  display: grid;
-  grid-template-columns: 1fr 20px auto;
+  display: flex; /* <-- ZMIANA NA FLEXBOX */
+  align-items: center; /* Wyśrodkowanie w pionie */
   gap: 10px;
   width: 100%;
   padding-bottom: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--separator-light);
-  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  box-sizing: border-box;
-  align-items: stretch;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 html.dark-mode .deck-top-row {
   border-color: var(--separator-dark);
 }
-.deck-top-row.filters-expanded {
-  grid-template-columns: auto 20px 1fr;
-}
+
 .filter-section {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: nowrap;
-  overflow: hidden;
+  flex-shrink: 1; /* Pozwala sekcji się kurczyć */
+  min-width: 0; /* Kluczowe dla kurczenia się we flexboxie */
+  overflow: hidden; /* Ukrywa elementy, które się nie mieszczą */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
+.deck-top-row.filters-expanded .filter-section {
+  flex-shrink: 0; /* W stanie rozwiniętym sekcja nie kurczy się */
+}
+.status-section {
+    flex-grow: 1; /* Sekcja statusu zajmuje pozostałe miejsce */
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .filter-section > * {
   flex-shrink: 0;
 }
@@ -2546,11 +2555,12 @@ html.dark-mode .filter-section .dir-db-btn:hover {
   width: 38px;
   padding: 0;
 }
+
+/* --- NAPRAWA #3: KURTYNA Z EFEKTEM HOVER --- */
 .curtain-handle {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   cursor: pointer;
 }
 #curtain-toggle-btn {
@@ -2562,7 +2572,7 @@ html.dark-mode .filter-section .dir-db-btn:hover {
   padding: 0;
   color: var(--button-red-text-light);
   z-index: 1;
-  transition: transform 0.4s ease-in-out, background-color 0.3s;
+  transition: transform 0.4s ease-in-out, background-color 0.3s, box-shadow 0.3s;
 }
 html.dark-mode #curtain-toggle-btn {
   background-color: var(--button-red-bg-dark);
@@ -2576,8 +2586,19 @@ html.dark-mode #curtain-toggle-btn {
   font-size: 16px;
   line-height: 1;
 }
+#curtain-toggle-btn:hover {
+    transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+    box-shadow: 0 0 8px var(--button-red-bg-light);
+}
+.deck-top-row.filters-expanded #curtain-toggle-btn:hover {
+    --rotation: 180deg; /* Zmienna CSS do zachowania obrotu */
+}
+html.dark-mode #curtain-toggle-btn:hover {
+    box-shadow: 0 0 10px var(--button-red-bg-dark);
+}
 
-/* --- PASEK STATUSU --- */
+
+/* --- NAPRAWA #2: PRZYWRÓCENIE GRUPOWANIA IKON --- */
 .status-section {
   display: flex;
   flex-direction: column;
@@ -2586,79 +2607,53 @@ html.dark-mode #curtain-toggle-btn {
   overflow: hidden;
   gap: 4px;
 }
-#statusBarIntegrated {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  white-space: nowrap;
-  color: var(--status-text-light);
-  font-weight: 500;
-  font-size: 0.9em;
-}
-html.dark-mode #statusBarIntegrated {
-  color: var(--status-text-dark);
-}
-#statusBarIntegrated b {
-  font-weight: 700;
-  color: var(--status-bold-light);
-}
-html.dark-mode #statusBarIntegrated b {
-  color: var(--status-bold-dark);
-}
-.status-text-group {
-  background: none !important;
-}
-.status-segment {
-  transition: opacity 0.3s ease, max-width 0.4s ease;
-  will-change: opacity, max-width;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: middle;
-}
-.system-info {
-  transition: opacity 0.3s ease, width 0.4s ease, margin-right 0.4s ease;
-  will-change: opacity, width, margin-right;
-}
-.status-separator {
-  width: 1px;
-  background-color: var(--separator-light);
-  align-self: center;
-  height: 1.2em;
-  margin: 0 0.8em;
-}
-html.dark-mode .status-separator {
-  background-color: var(--separator-dark);
-}
 .status-section-bottom {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
   justify-content: flex-end;
-  color: var(--status-text-light);
 }
-html.dark-mode .status-section-bottom {
-  color: var(--status-text-dark);
+.subtle-bg-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Ujednolicony odstęp */
+  padding: 4px;
+  border-radius: 8px;
+  background-color: var(--group-bg-light);
 }
-.system-info {
-  font-size: 0.9em;
-  font-weight: 600;
-  white-space: nowrap;
-  margin-right: auto;
+html.dark-mode .subtle-bg-group {
+  background-color: var(--group-bg-dark);
+}
+.video-controls-group {
+  padding-right: 8px;
+}
+.video-main-btn {
+  width: auto !important;
+  padding: 0 8px !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .status-icon-btn {
   background: none;
   border: none;
-  color: inherit;
+  color: var(--status-text-light);
   opacity: 0.7;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1.1em;
   padding: 0;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
   transition: opacity 0.2s ease, color 0.2s ease;
-  line-height: 1;
 }
+html.dark-mode .status-icon-btn {
+    color: var(--status-text-dark);
+}
+
+/* --- LOGIKA STANÓW AKTYWNYCH I HOVER DLA IKON (Z POPRZEDNIEJ ŁATY) --- */
 .status-icon-btn:hover {
   opacity: 1;
   color: var(--button-red-bg-light);
@@ -2666,26 +2661,22 @@ html.dark-mode .status-section-bottom {
 html.dark-mode .status-icon-btn:hover {
   color: var(--button-red-bg-dark);
 }
-.deck-top-row.filters-expanded
-  .status-text-group
-  .status-segment:not(:first-of-type) {
-  opacity: 0;
-  max-width: 0;
-  pointer-events: none;
+.status-icon-btn.active-red {
+  opacity: 1;
+  color: var(--button-red-bg-light);
 }
-.deck-top-row.filters-expanded .system-info {
-  opacity: 0;
-  width: 0;
-  margin-right: 0;
-  pointer-events: none;
-  overflow: hidden;
+html.dark-mode .status-icon-btn.active-red {
+  color: var(--button-red-bg-dark);
 }
-.deck-top-row.filters-expanded .status-section-bottom {
-  justify-content: flex-end;
-  width: 100%;
+.status-icon-btn.active-red:hover {
+  color: var(--status-text-light);
+  opacity: 0.8; 
+}
+html.dark-mode .status-icon-btn.active-red:hover {
+  color: var(--status-text-dark);
 }
 
-/* --- DOLNY WIERSZ PANELU (PRZYCISKI I SUWAKI) --- */
+/* --- DOLNY WIERSZ PANELU (BEZ ZMIAN, DLA PEŁNEGO KONTEKSTU) --- */
 .deck-bottom-row {
   display: flex;
   align-items: center;
@@ -2727,10 +2718,22 @@ html.dark-mode .deck-bottom-row button {
 .deck-bottom-row button:hover {
   transform: scale(1.1);
 }
-
-/* --- STAN BAZOWY I HOVER DLA PRZYCISKÓW --- */
-
-/* 1. Przyciski aktywne/czerwone (stan bazowy) */
+.deck-bottom-row .accent-border {
+  border-color: var(--button-red-bg-light);
+}
+html.dark-mode .deck-bottom-row .accent-border {
+  border-color: var(--button-red-bg-dark);
+}
+.deck-bottom-row #viewOrientationBtn:not(.active):hover {
+    background-color: var(--button-red-bg-light);
+    color: var(--button-red-text-light);
+    border-color: transparent;
+}
+html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active):hover {
+    background-color: var(--button-red-bg-dark);
+    color: var(--button-red-text-dark);
+    border-color: transparent;
+}
 .deck-bottom-row #viewContentBtn,
 .deck-bottom-row #viewOrientationBtn.active,
 .deck-bottom-row .play-accent,
@@ -2746,21 +2749,6 @@ html.dark-mode .deck-bottom-row #viewThemeBtn {
   background-color: var(--button-red-bg-dark);
   color: var(--button-red-text-dark);
 }
-
-/* 2. Przyciski nieaktywne/z ramką (stan bazowy) */
-.deck-bottom-row #viewOrientationBtn:not(.active),
-html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
-  background-color: transparent;
-  color: var(--button-text-light);
-  border-color: var(--button-red-bg-light);
-}
-html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active) {
-  color: var(--button-text-dark);
-  border-color: var(--button-red-bg-dark);
-}
-
-
-/* 3. HOVER dla przycisków aktywnych/czerwonych -> odwrócenie kolorów */
 .deck-bottom-row #viewContentBtn:hover,
 .deck-bottom-row #viewOrientationBtn.active:hover,
 .deck-bottom-row .play-accent:hover,
@@ -2777,21 +2765,15 @@ html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
     color: var(--button-red-bg-dark);
     border-color: var(--button-red-bg-dark);
 }
-
-/* 4. HOVER dla przycisków nieaktywnych/z ramką -> stają się aktywne/czerwone */
-.deck-bottom-row #viewOrientationBtn:not(.active):hover,
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
+  background-color: transparent;
+  color: var(--button-text-light);
+  border-color: var(--button-red-bg-light);
+}
 html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
     background-color: var(--button-red-bg-light);
     color: var(--button-red-text-light);
-    border-color: transparent;
 }
-html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active):hover {
-    background-color: var(--button-red-bg-dark);
-    color: var(--button-red-text-dark);
-    border-color: transparent;
-}
-
-/* Cień dla przycisku Play */
 .deck-bottom-row .play-accent {
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
@@ -2867,12 +2849,9 @@ html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
 .slider-control input[type="range"]:hover::-webkit-slider-thumb {
     transform: scale(1.2);
 }
-.slider-control input[type="range"]:hover::-moz-range-thumb {
+.slider-control input[type:="range"]:hover::-moz-range-thumb {
     transform: scale(1.2);
 }
-
-
-
 
 
 
@@ -3600,7 +3579,6 @@ html.dark-mode #statusLangBtn a:hover {
 
 /* Plik: style.css */
 
-/* DODAJ PONIŻSZE REGUŁY NA SAMYM KOŃCU PLIKU, ABY NADPISAĆ ISTNIEJĄCE STYLE */
 
 /* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU v2 --- */
 /* Pogrubienie nazwy */
@@ -3812,4 +3790,36 @@ html.dark-mode .guide-list.view-grid .grid-action-button {
 
 .guide-list.view-grid .grid-action-button:hover {
   transform: scale(1.05);
+}
+
+/* --- ŁATKA: Aktywne stany i hover dla ikon statusu --- */
+
+/* Stan bazowy i hover na nieaktywnym przycisku (bez zmian, dla jasności) */
+.status-icon-btn {
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.status-icon-btn:hover {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn:hover {
+  color: var(--button-red-bg-dark);
+}
+
+/* NOWOŚĆ: Stan aktywny (czerwony) dla przycisków */
+.status-icon-btn.active-red {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn.active-red {
+  color: var(--button-red-bg-dark);
+}
+
+/* NOWOŚĆ: Hover na aktywnym (czerwonym) przycisku -> powrót do koloru bazowego */
+.status-icon-btn.active-red:hover {
+  color: var(--status-text-light);
+  opacity: 0.8; 
+}
+html.dark-mode .status-icon-btn.active-red:hover {
+  color: var(--status-text-dark);
 }

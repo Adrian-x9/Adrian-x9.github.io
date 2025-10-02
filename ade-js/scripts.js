@@ -1823,42 +1823,41 @@ function updateVideoBtnUI() {
   const playBtn = document.getElementById("videoBtn-play");
   const lightboxPlayBtn = document.getElementById("lightbox-video-toggle");
 
-  const updateButton = (btn) => {
-    if (!btn) return;
+  // Logika dla przycisku Play/Pause/Stop
+  const isVideoActive = videoBgState === "playing" || videoBgState === "paused";
+  if (playBtn) {
+    playBtn.classList.toggle("active-red", isVideoActive);
     switch (videoBgState) {
-      case "playing":
-        btn.innerHTML = '<i class="fas fa-pause"></i>';
-        btn.title = lang.videoBtnPause;
-        btn.classList.add("active-play");
-        break;
-      case "paused":
-        btn.innerHTML = '<i class="fas fa-stop"></i>';
-        btn.title = lang.videoBtnOff;
-        btn.classList.add("active-play");
-        break;
-      case "off":
-        btn.innerHTML = '<i class="fas fa-play"></i>';
-        btn.title = lang.videoBtnPlay;
-        btn.classList.remove("active-play");
-        break;
+        case "playing":
+            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            playBtn.title = lang.videoBtnPause;
+            break;
+        case "paused":
+            playBtn.innerHTML = '<i class="fas fa-stop"></i>';
+            playBtn.title = lang.videoBtnOff;
+            break;
+        case "off":
+            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            playBtn.title = lang.videoBtnPlay;
+            break;
     }
-  };
+  }
+  if (lightboxPlayBtn) {
+      lightboxPlayBtn.classList.toggle("active-play", isVideoActive); // Lightbox używa innej klasy, zostawiamy dla spójności
+  }
 
-  updateButton(playBtn);
-  updateButton(lightboxPlayBtn);
 
+  // Logika dla przycisku Shuffle
   const shuffleBtn = document.getElementById("videoBtn-shuffle");
+  const isShuffleActive = autoShuffleInterval !== null;
   if (shuffleBtn) {
-    shuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
+    shuffleBtn.classList.toggle("active-red", isShuffleActive);
   }
   const lightboxShuffleBtn = document.getElementById(
     "lightbox-video-autoshuffle"
   );
   if (lightboxShuffleBtn) {
-    lightboxShuffleBtn.classList.toggle(
-      "active-play",
-      autoShuffleInterval !== null
-    );
+    lightboxShuffleBtn.classList.toggle("active-play", isShuffleActive);
   }
 }
 
@@ -2303,11 +2302,16 @@ function toggleFullScreen() {
 function updateFullscreenIcon() {
   const icon = fullscreenBtn.querySelector("i");
   const iconLightbox = fullscreenBtnLightbox.querySelector("i");
-  const iconStatus = document
-    .getElementById("statusFullscreenBtn")
-    ?.querySelector("i");
+  const statusBtn = document.getElementById("statusFullscreenBtn");
+  const iconStatus = statusBtn?.querySelector("i");
 
-  if (document.fullscreenElement) {
+  const isFullscreen = !!document.fullscreenElement;
+
+  if (statusBtn) {
+      statusBtn.classList.toggle('active-red', isFullscreen);
+  }
+
+  if (isFullscreen) {
     if (icon) icon.className = "fas fa-compress";
     if (iconLightbox) iconLightbox.className = "fas fa-compress";
     if (iconStatus) iconStatus.className = "fas fa-compress";
