@@ -1,5 +1,5 @@
 const config = {
-  version: " v2.1.2", // Test - cascade systems integration
+  version: " v2.1.3", // Bug fix release
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-02", // Last update date YYYY-MM-DD
 

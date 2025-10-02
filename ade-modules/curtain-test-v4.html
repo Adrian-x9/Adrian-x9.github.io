@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Kurtyna Test v4</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .panel {
+      width: 90vw;
+      height: 80vh;
+      background: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .row {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+
+    .row-top, .row-bottom {
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .row-middle {
+      background: #2a2a2a;
+      display: flex;
+      position: relative;
+    }
+
+    .left, .right {
+      flex: 1;
+      padding: 20px;
+      box-sizing: border-box;
+      overflow-y: auto;
+      transition: flex 0.3s ease;
+    }
+
+    .left {
+      background: #333;
+      color: #eee;
+    }
+
+    .right {
+      background: #444;
+      color: #eee;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+
+    .curtain {
+      width: 4px;
+      background: red;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      z-index: 10;
+      cursor: ew-resize;
+      touch-action: none;
+      transition: left 0.3s ease;
+    }
+
+    .curtain::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -6px;
+      width: 16px;
+      height: 16px;
+      background: red;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      box-shadow: 0 0 4px rgba(255,0,0,0.5);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      margin-bottom: 12px;
+      padding: 8px;
+      background: #222;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+    }
+
+    .right-content {
+      display: inline-block;
+      min-width: 300px;
+    }
+
+    button {
+      padding: 10px 16px;
+      margin: 0 8px;
+      background: #e00;
+      border: none;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c00;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <div class="row row-top">
+      <button id="resetLeft">Resetuj Lewy</button>
+      <button id="resetRight">Resetuj Prawy</button>
+    </div>
+
+    <div class="row row-middle" id="middle-row">
+      <div class="left" id="left-panel">
+        <h3>Formularz</h3>
+        <input type="text" placeholder="Indeks">
+        <select>
+          <option>Typ operacji</option>
+          <option>Dodaj</option>
+          <option>Usuń</option>
+        </select>
+        <input type="text" placeholder="Komentarz">
+      </div>
+
+      <div class="curtain" id="curtain"></div>
+
+      <div class="right" id="right-panel">
+        <div class="right-content">
+          <h3>Akcje</h3>
+          <p>Po prawej stronie możesz dodać przycisk, który służy do zmie akcji lub elementy interakcji.</p>
+          <button>Wczytaj</button>
+          <button id="resetRightBtn">Resetuj</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-bottom"></div>
+  </div>
+
+  <script>
+    const curtain = document.getElementById('curtain');
+    const leftPanel = document.getElementById('left-panel');
+    const rightPanel = document.getElementById('right-panel');
+    const middleRow = document.getElementById('middle-row');
+
+    function setCurtainPercent(percent) {
+      curtain.style.left = `${percent}%`;
+      leftPanel.style.flex = percent;
+      rightPanel.style.flex = 100 - percent;
+    }
+
+    function setCurtain(x) {
+      const bounds = middleRow.getBoundingClientRect();
+      const localX = Math.max(0, Math.min(x - bounds.left, bounds.width));
+      const percent = localX / bounds.width * 100;
+      setCurtainPercent(percent);
+    }
+
+    function onMove(e) {
+      const x = e.touches ? e.touches[0].clientX : e.clientX;
+      curtain.style.transition = 'none';
+      leftPanel.style.transition = 'none';
+      rightPanel.style.transition = 'none';
+      setCurtain(x);
+    }
+
+    function restoreTransitions() {
+      curtain.style.transition = 'left 0.3s ease';
+      leftPanel.style.transition = 'flex 0.3s ease';
+      rightPanel.style.transition = 'flex 0.3s ease';
+    }
+
+    curtain.addEventListener('mousedown', () => {
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', () => {
+        document.removeEventListener('mousemove', onMove);
+        restoreTransitions();
+      }, { once: true });
+    });
+
+    curtain.addEventListener('touchstart', () => {
+      document.addEventListener('touchmove', onMove);
+      document.addEventListener('touchend', () => {
+        document.removeEventListener('touchmove', onMove);
+        restoreTransitions();
+      }, { once: true });
+    });
+
+    document.getElementById('resetLeft').addEventListener('click', () => {
+      setCurtainPercent(80);
+    });
+
+    document.getElementById('resetRight').addEventListener('click', () => {
+      setCurtainPercent(20);
+    });
+  </script>
+</body>
+</html>

@@ -1,1 +1,0 @@
-Get-ChildItem "C:\Users\adrian\OneDrive\Desktop" -Recurse | Select-Object FullName, Length, LastWriteTime | Format-Table -AutoSize | Out-File "C:\Users\adrian\listing.txt"
