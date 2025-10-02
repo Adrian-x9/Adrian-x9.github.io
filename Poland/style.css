@@ -358,7 +358,7 @@ body.dark-mode .privacy-notice {
 .header-logo-link {
   position: fixed;
   top: 15px;
-  left: 17px;
+  left: 25px;
   /* Optyczna korekta marginesu */
   z-index: 998;
   width: 44px;
@@ -755,8 +755,10 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   scroll-snap-stop: always;
   display: grid;
   grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(var(--box-width, 256px), 1fr));
-  /* KLUCZOWA ZMIANA */
+  grid-template-columns: repeat(
+    auto-fit,
+    var(--box-width, 256px)
+  ); /* KLUCZOWA ZMIANA */
   justify-content: center;
   gap: 20px;
   padding: 2px;
@@ -1032,7 +1034,7 @@ body.dark-mode .guide-list.view-image-only .guide-title a {
   /* Zamiast wymuszać 100% wymiarów, pozwalamy obrazkowi się skalować */
   max-width: 100%;
   max-height: 100%;
-  object-fit: contain;
+  object-fit: cover; /* KLUCZOWA ZMIANA: Wypełnij i dociśnij obrazek */
   transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
   border-radius: 8px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -1175,7 +1177,7 @@ body.dark-mode .guide-cover-grid {
   opacity: 1;
   transform: translateY(0);
   max-height: 200px;
-  margin-top: 20px;
+  margin-top: 25px; /* Zwiększony margines o 5px */
   margin-bottom: 20px;
 }
 
@@ -2282,33 +2284,20 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   /* Zmniejszony, spójny odstęp */
 }
 
-/* --- START: Ostateczna poprawka wyrównania OBRAZKÓW dla widoku nr 2 --- */
+/* === POPRAWKA WYRÓWNANIA: Widok domyślny ('full') === */
+/* Poniższa reguła zapewnia, że wszystkie kafelki w jednym wierszu 
+  mają tę samą wysokość, a ich zawartość jest estetycznie wyrównana. 
+  Działa tylko w widoku domyślnym (z tytułem, opisem i obrazkiem).
+*/
 .guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
     .view-masonry
   )
-  .guide
   .guide-info-container {
-  flex-grow: 1;
-  /* Kluczowa reguła: każe blokowi z tekstem rozciągnąć się i wypchnąć wszystko pod nim w dół */
+  flex-grow: 1; /* Pozwala kontenerowi z tekstem rozciągnąć się, aby wypełnić wolną przestrzeń */
   display: flex;
-  /* Poniższe reguły ładnie centrują tekst w dostępnej przestrzeni */
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: center; /* Centruje tekst w pionie w dostępnym miejscu */
 }
-
-/* --- END: Ostateczna poprawka --- */
-/* --- START: Ostateczna poprawka wyrównania dla WIDOKU NR 2 --- */
-
-/* Ten selektor działa TYLKO w widoku nr 2 (domyślnym) */
-.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
-    .view-masonry
-  )
-  .guide-info-container {
-  margin-bottom: auto;
-  /* Kluczowa reguła: tworzy elastyczny odstęp POD tekstem, spychając obraz i przycisk na dół */
-}
-
-/* --- END: Ostateczna poprawka --- */
 
 .time-date-group {
   display: flex;
@@ -2423,6 +2412,7 @@ body {
   max-width: 900px;
 }
 .guide-list-wrapper {
+  margin-top: 15px;
   width: 100%;
   max-width: 1920px;
 }
@@ -2476,7 +2466,7 @@ body.video-ready .control-panel {
   margin-bottom: 10px;
   border-bottom: 1px solid var(--separator-light);
   transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Płynna animacja */
-  min-height: 75px;
+  /* min-height: 75px; */
   box-sizing: border-box;
   align-items: stretch;
 }
@@ -2989,4 +2979,682 @@ html:not(.dark-mode) #lang-modal .item:hover {
 .video-controls-group .video-main-btn {
   width: auto; /* Główny przycisk "Wideo" pozostaje elastyczny */
   padding: 0 8px;
+}
+
+.glass-status {
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: #222;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  margin-bottom: 20px;
+}
+
+html.dark-mode .glass-status {
+  font-family: "Inter", sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(45, 45, 45, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  /* UJEDNOLICONE WARTOŚCI ROZMIARU */
+  font-size: 0.95rem;
+  border-radius: 10px;
+  padding: 10px 20px; /* Zmieniony padding dla spójności */
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* === ADAPTACJA WIDOKÓW: Nowy Widok nr 1 (Tylko Tytuł) === */
+/* Zgodnie z nowym briefem, tryb "Tylko Tytuł" (wcześniej 'text-only')
+   nie powinien pokazywać bloku z opisem. Poniższa reguła go ukrywa. */
+.guide-list.view-text-only .guide-info-container {
+  display: none;
+}
+
+/* === ADAPTACJA WIDOKÓW: Nowy Widok nr 3 (Tylko Zdjęcie) === */
+/* Zgodnie z briefem, w tym trybie ukrywamy panel z tekstem pod obrazkiem */
+.guide-list.view-image-only .guide-text-content {
+  display: none;
+}
+
+/* ...i jednocześnie rozciągamy kontener z obrazkiem na 100% wysokości kafelka. */
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 100%;
+}
+/* === POPRAWKA DLA TRYBU 'text-masonry' (Wersja bezpieczna) === */
+/* Duplikujemy reguły zamiast je grupować, aby uniknąć potencjalnych błędów parsowania CSS. */
+
+.guide-list.view-text-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-text-masonry .guide {
+  position: absolute;
+  transition: top 0.4s ease-out, left 0.4s ease-out;
+  width: var(--box-width, 256px);
+}
+/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('image-masonry') === */
+/* Poniższe reguły nadają widokowi #6 wygląd i animacje z trybu #4 ('image-only'),
+   jednocześnie dodając logikę pozycjonowania wymaganą przez Masonry. */
+
+.guide-list.view-image-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-image-masonry .guide {
+  /* 1. Style Masonry (układ) */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* 2. Style skopiowane z 'image-only' (wygląd i animacje 3D) */
+  padding: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+
+  /* 3. Upewniamy się, że kafelek ma tło i cień, tak jak w 'image-only' */
+  background: var(--panel-bg-light, #fdfdfd);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  background: var(--panel-bg-dark, #1a1a1a);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Kopiujemy również efekt poświaty 3D */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('image-masonry') === */
+/* Nadajemy widokowi #6 wygląd i animacje z trybu graficznego,
+   dodając jednocześnie logikę pozycjonowania wymaganą przez Masonry. */
+
+.guide-list.view-image-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-image-masonry .guide {
+  /* 1. Style Masonry (układ) */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* 2. Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  padding: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Kopiujemy również efekt poświaty 3D */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/*
+================================================================
+  WIDOK #7: "GLASS" - WERSJA "WOW" (NAPRAWIONY)
+================================================================
+*/
+
+/* --- 1. GŁÓWNY KONTERNER KAFELKA --- */
+.guide-list.view-seven .guide {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+
+  /* KLUCZOWA POPRAWKA: Nadaje kafelkowi kwadratowe proporcje, zapobiegając jego zwinięciu się */
+  aspect-ratio: 1 / 1;
+
+  /* Zachowujemy animacje 3D */
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out;
+}
+
+/* Kopiujemy efekt poświaty 3D */
+.guide-list.view-seven .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+.guide-list.view-seven .guide:hover::before {
+  opacity: 1;
+}
+
+/* --- 2. GRAFIKA W TLE --- */
+.guide-list.view-seven .guide-cover-wrapper-seven {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px; /* Zaokrąglenie rogów dla obrazka */
+  overflow: hidden;
+}
+
+/* W `createGuideHtml` użyliśmy klasy .guide-cover-grid, która już jest kwadratowa i kadruje */
+/* Dodajemy jej tylko animację parallax */
+.guide-list.view-seven .guide-cover-grid {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Efekt Parallax: powiększenie obrazka po najechaniu */
+.guide-list.view-seven .guide:hover .guide-cover-grid {
+  transform: scale(1.05);
+}
+
+/* --- 3. PANEL "GLASS" I JEGO ANIMACJE --- */
+.guide-list.view-seven .guide-text-content-seven {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  /* Wygląd "szkła" */
+  padding: 12px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* Ukrycie domyślne i animacja wsuwania */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Układ tekstu wewnątrz */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Pokazanie panelu po najechaniu */
+.guide-list.view-seven .guide:hover .guide-text-content-seven {
+  transform: translateY(0%);
+}
+
+/* --- 4. TEKST I LINK W PANELU "GLASS" --- */
+.guide-list.view-seven .guide-title,
+.guide-list.view-seven .guide-action-link {
+  /* Ukrycie domyślne i animacja pojawiania się */
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  transition-delay: 0s; /* Domyślnie bez opóźnienia */
+}
+
+/* Opóźnione pojawienie się tekstu po najechaniu */
+.guide-list.view-seven .guide:hover .guide-title,
+.guide-list.view-seven .guide:hover .guide-action-link {
+  opacity: 1;
+  transition-delay: 0.2s; /* Pojawia się, gdy panel jest już częściowo wsunięty */
+}
+
+.guide-list.view-seven .guide-title {
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  margin: 0;
+  color: #fff; /* Zawsze biały dla czytelności na szkle */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Ograniczenie do 2 linii */
+  overflow: hidden;
+}
+html:not(.dark-mode) .guide-list.view-seven .guide-title {
+  color: #000;
+}
+
+.guide-list.view-seven .guide-action-link a {
+  font-size: 0.9em;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #fff; /* Zawsze biały */
+  text-decoration: none;
+}
+html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
+  color: #cc0000;
+}
+
+/* === PATCH: Naprawa widoku #4 (image-only) === */
+.guide-list.view-image-only .guide-text-content {
+  display: none; /* Całkowicie usuwa kontener tekstowy z układu */
+}
+
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
+}
+
+/* === TUNING: Ulepszenie widoku #5 (grid) === */
+
+/* Poprawiamy wygląd samej nakładki */
+.guide-list.view-grid .grid-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+}
+body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+/* Nowy, czytelniejszy styl dla tekstu z animacją */
+.grid-overlay .grid-title-text a {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 800;
+  text-decoration: none;
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7); /* Nowy, czytelny cień */
+  -webkit-text-stroke: 0; /* Usuwamy stary efekt */
+  opacity: 0;
+  transform: translateY(10px); /* Początkowa pozycja dla animacji */
+  transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
+}
+body:not(.dark-mode) .grid-overlay .grid-title-text a {
+  color: #000;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Uruchomienie animacji tekstu po najechaniu */
+.guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*
+================================================================
+  TUNING: Przebudowa Widoku #6 (image-masonry) - "Glass & 3D"
+================================================================
+*/
+
+/* --- 1. GŁÓWNY KONTERNER KAFELKA (ANIMACJA 3D) --- */
+.guide-list.view-image-masonry .guide {
+  /* Style Masonry (układ) - te już istnieją, upewniamy się, że są obecne */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  padding: 0;
+  overflow: hidden; /* Ważne, aby panel nie wychodził poza kafelek */
+  border-radius: 12px; /* Subtelne zaokrąglenie */
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Efekt poświaty 3D (skopiowany z widoku #4) */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/* --- 2. OBRAZEK I JEGO KONTENER --- */
+.guide-list.view-image-masonry .cover-link-six {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.guide-list.view-image-masonry .guide-cover-elegant {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
+  transform: scale(1.05); /* Efekt parallax przy najechaniu */
+}
+
+/* --- 3. SZKLANY PANEL ("GLASS PANEL") --- */
+.guide-list.view-image-masonry .glass-panel-six {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 12px;
+  box-sizing: border-box;
+
+  /* Efekt "szkła" z gradientem */
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.3)
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+
+  /* Animacja wsuwania */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Panel wsuwa się po najechaniu na kafelek */
+.guide-list.view-image-masonry .guide:hover .glass-panel-six {
+  transform: translateY(0);
+}
+
+/* --- 4. TEKST NA PANELU --- */
+.guide-list.view-image-masonry .title-six {
+  display: block;
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+
+  /* Animacja pojawiania się tekstu */
+  opacity: 0;
+  transition: opacity 0.3s ease-out 0.2s; /* Opóźnienie, by tekst pojawił się po wsunięciu panelu */
+}
+html.dark-mode .guide-list.view-image-masonry .title-six {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Tekst staje się widoczny po najechaniu */
+.guide-list.view-image-masonry .guide:hover .title-six {
+  opacity: 1;
+}
+
+/* --- ŁATKA 3: Style dla Paska Statusu --- */
+
+/* 5e: Styl informacji o wersji */
+#statusInfoBtn i {
+  color: var(--button-red-bg-light);
+}
+html.dark-mode #statusInfoBtn i {
+  color: var(--button-red-bg-dark);
+}
+/* Upewniamy się, że Visu jest czerwone (już powinno być przez klasę .visu-text-red) */
+.visu-text-red {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode .visu-text-red {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* 5f1: Styl dla flagi na pasku statusu */
+.lang-flag-status {
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-bottom: 0.1em;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); /* <-- DODAJ TĘ LINIĘ */
+}
+
+.lang-code-status {
+  vertical-align: middle;
+}
+
+/* --- ŁATKA 4 (POPRAWIONA): Styl dla animacji "WOW" na właściwym przycisku --- */
+#fullscreenBtn.globe-animation-active i.fa-globe {
+  color: var(--button-red-bg-light);
+  transform: scale(1.1);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
+  color: var(--button-red-bg-dark);
+}
+
+/* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU --- */
+/* Pogrubienie nazwy */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+  font-weight: bold;
+}
+
+/* Aktywny, czerwony kolor dla linków */
+#systemInfoLink,
+#statusLangBtn a {
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn a {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Efekt hover - powrót do standardowego koloru tekstu panelu */
+#systemInfoLink:hover,
+#statusLangBtn a:hover {
+  color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn a:hover {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Plik: style.css */
+
+/* DODAJ PONIŻSZE REGUŁY NA SAMYM KOŃCU PLIKU, ABY NADPISAĆ ISTNIEJĄCE STYLE */
+
+/* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU v2 --- */
+/* Pogrubienie nazwy */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+  font-weight: bold;
+}
+
+/* Usunięcie globalnego koloru czerwonego z całego linku */
+#systemInfoLink {
+  text-decoration: none;
+  color: var(--status-text-light, #444) !important;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Nadanie koloru tylko dla 'Visu' */
+#systemInfoLink .visu-text-red {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink .visu-text-red {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Styl dla kodu języka, spójny z 'Visu' */
+#statusLangBtn a {
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #statusLangBtn a {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Wspólny efekt hover dla obu linków */
+#systemInfoLink:hover,
+#statusLangBtn a:hover {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn a:hover {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Dodanie subtelnej ramki do flagi */
+.lang-flag-status {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* --- FINAŁOWA ŁATKA KOSMETYCZNA PASKA STANU --- */
+
+/* 1. Poprawka rozmiaru panelu w trybie ciemnym */
+html.dark-mode .glass-status {
+    padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
+}
+
+/* 2. Dodanie ramki do flagi dla lepszej widoczności */
+.lang-flag-status {
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .lang-flag-status {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* 5 & 6. Ostateczne i poprawne style dla VisuDir i flagi */
+#systemInfoLink,
+#statusLangBtn > a {
+    /* Ustawiamy standardowy kolor tekstu dla całego linku */
+    color: var(--status-text-light, #444) !important;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+    color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Pogrubiamy tylko "VisuDir" */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+    font-weight: bold;
+}
+
+/* Kolorujemy na czerwono tylko te elementy, które tego wymagają */
+#systemInfoLink .visu-text-red,
+#statusLangBtn .lang-code-status {
+    color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink .visu-text-red,
+html.dark-mode #statusLangBtn .lang-code-status {
+    color: var(--button-red-bg-dark) !important;
+}
+
+/* Efekt hover: cały link (VisuDir i flaga) zmienia kolor na standardowy */
+#systemInfoLink:hover,
+#statusLangBtn > a:hover {
+    color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn > a:hover {
+    color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Hover dla VisuDir: czerwony tekst staje się standardowy */
+#systemInfoLink:hover .visu-text-red {
+    color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #systemInfoLink:hover .visu-text-red {
+    color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Hover dla flagi: czerwony tekst staje się standardowy */
+#statusLangBtn > a:hover .lang-code-status {
+    color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #statusLangBtn > a:hover .lang-code-status {
+    color: var(--status-text-dark, #bbb) !important;
 }

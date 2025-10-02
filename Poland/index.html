@@ -18,6 +18,8 @@
     <script src="ade-js/config.js" defer></script>
     <script src="ade-js/db.js" defer></script>
     <script src="ade-js/lang.js" defer></script>
+    <script src="ade-js/lang-db.js"></script>
+    <script src="db.js"></script>
     <script src="ade-js/scripts.js" defer></script>
 
     <script>
@@ -110,7 +112,8 @@
             <div></div>
         </div>
         <div class="caption">
-            <span class="visu">Visu</span><span class="dir">Dir&nbsp;</span><span class="version version-display"></span>
+            <span class="visu">Visu</span><span class="dir-text-themed">Dir</span><span class="version-display"></span><span
+                class="version version-display"></span>
         </div>
     </div>
 
@@ -132,7 +135,7 @@
         </div>
     </div>
 
-    <div class="control-panel">
+    <div class="control-panel ">
         <div class="deck-top-row">
             <div class="filter-section">
                 <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label" style="display: none;"><i
@@ -167,24 +170,8 @@
                 <button id="curtain-toggle-btn" title="Pokaż/ukryj filtry"><i class="fas fa-chevron-right"></i></button>
             </div>
             <div class="status-section">
-                <div id="statusBarIntegrated">
-                    <div class="status-text-group">
-                        <span id="guideCountDisplay" class="status-segment"><b></b></span>
-                        <span id="currentTimeDisplay" class="status-segment"></span>
-                        <span id="moonPhaseDisplay" class="status-segment"></span>
-                        <span id="langDisplay" class="status-segment" style="display: none;"></span>
-                    </div>
-                    <div class="status-separator"></div>
-                    <div class="top-bar-icons subtle-bg-group">
-                        <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i
-                                class="fas fa-info-circle"></i></a>
-                        <a id="statusLangBtn" class="status-icon-btn" title="Zmień język"><i
-                                class="fas fa-globe"></i></a>
-                    </div>
-                </div>
+
                 <div class="status-section-bottom">
-                    <div class="system-info">System <span style="color: #cc0000;">Visu</span>Dir <span
-                            class="version-display"></span></div>
                     <div id="actionControls" class="video-controls-group subtle-bg-group">
                         <button id="videoBtn" class="status-icon-btn video-main-btn" title="Wideo"><i
                                 class="fas fa-video"></i> Wideo</button>
@@ -236,6 +223,28 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="glass-status" style="margin-bottom: 15px;margin-top: 0px;">
+        <span id="guideCountDisplay">📁 <strong>...</strong></span>
+        <span id="currentTimeDisplay">⏰ <strong>--:--</strong> ---- -- --</span>
+        <span id="sunTimesDisplay">🌞 <strong>--:-- – --:--</strong></span>
+        <span id="moonPhaseDisplay"></span>
+        <span>
+            <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i class="fas fa-info-circle"></i></a>
+            <a href="#" id="systemInfoLink" class="">
+                <span class="visu-text-red">Visu</span><span class="dir-text-themed">Dir</span><span
+                    class="version-display"></span>
+            </a>
+        </span>
+        <span id="statusLangBtn">
+            <a class="status-icon-btn" title="Zmień język">
+                <img src="" alt="Flaga" class="lang-flag-status"> <span class="lang-code-status">PL</span>
+            </a>
+        </span>
+    </div>
+
 
     <div class="guide-list-wrapper">
         <div class="guide-list" id="guideList"></div>
@@ -310,7 +319,6 @@
 
 
 
-    <!-- #patch #2     -->
     <div id="lang-modal" class="lang-modal-container" style="display: none;">
         <div id="lang-overlay" class="lang-modal-overlay"></div>
         <div class="lang-modal-content">

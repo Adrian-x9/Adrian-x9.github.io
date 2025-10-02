@@ -43,6 +43,5 @@
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
 
-
         `;
         /// COPY HERE <db> // database end / koniec bazy danych

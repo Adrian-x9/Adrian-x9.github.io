@@ -56,6 +56,7 @@
     const defaultTheme = "light";
     if (theme === "dark" || (!theme && defaultTheme === "dark")) {
       document.documentElement.classList.add("dark-mode");
+      document.body.classList.add("dark-mode");
     }
   } catch (e) {
     /* Ignore */
@@ -142,7 +143,11 @@ function initializeTheme() {
   const storedTheme = localStorage.getItem("visudir_theme");
   const theme = storedTheme || "light";
   const isDark = theme === "dark";
+
+  // Poprawka: Aplikuj klasę do <html> ORAZ <body>
   document.documentElement.classList.toggle("dark-mode", isDark);
+  document.body.classList.toggle("dark-mode", isDark);
+
   if (!storedTheme) {
     localStorage.setItem("visudir_theme", theme);
   }
@@ -225,22 +230,6 @@ function updateRealTimeClock() {
   const clockEl = document.getElementById("currentTimeDisplay");
   if (clockEl) {
     clockEl.innerHTML = `<b>${hours}:${minutes}</b> ${year}-${month}-${day}`;
-  }
-
-  const moonPhaseEl = document.getElementById("moonPhaseDisplay");
-  if (moonPhaseEl) {
-    const moonPhases = [
-      "🌑\uFE0E",
-      "🌒\uFE0E",
-      "🌓\uFE0E",
-      "🌔\uFE0E",
-      "🌕\uFE0E",
-      "🌖\uFE0E",
-      "🌗\uFE0E",
-      "🌘\uFE0E",
-    ];
-    const phaseIndex = getMoonPhase(now);
-    moonPhaseEl.innerHTML = "Księżyc&nbsp;" + moonPhases[phaseIndex];
   }
 }
 
@@ -399,6 +388,12 @@ function normalizeUrl(url) {
 function decodeUrlFromFilename(filename) {
   let urlPart = filename.split("$$")[0];
   urlPart = urlPart.replace(/\.link$/i, "");
+
+  // NOWA LOGIKA: Zamienia tylko pierwszy znak '_' na '.'
+  if (urlPart.startsWith("_")) {
+    urlPart = "." + urlPart.substring(1);
+  }
+
   urlPart = urlPart.replace(/#/g, "/");
   urlPart = urlPart.replace(/&&/g, "?");
   return normalizeUrl(urlPart);
@@ -664,25 +659,25 @@ function startLogoRotator() {
   const logoImg1 = document.getElementById("logo-img-1");
   const logoImg2 = document.getElementById("logo-img-2");
   const headerLogoLink = document.getElementById("logoLink");
-  if (!logoImg1 || !logoImg2 || !headerLogoLink) return;
+  const fullscreenBtn = document.getElementById("fullscreenBtn"); // <-- WŁAŚCIWY PRZYCISK
+
+  if (!logoImg1 || !logoImg2 || !headerLogoLink || !fullscreenBtn) return;
 
   let activeImg = logoImg1;
   let nextImg = logoImg2;
+  let isGlobeIconVisible = false;
 
+  // ... (reszta kodu do obsługi logo pozostaje bez zmian)
   const updateLogo = () => {
     const isDark = document.documentElement.classList.contains("dark-mode");
     const newLogoData = config.logoRotator.logos[currentLogoIndex];
-
     nextImg.src = isDark ? newLogoData.srcDark : newLogoData.srcLight;
     nextImg.alt = newLogoData.alt;
     headerLogoLink.href = newLogoData.href;
-
     activeImg.classList.remove("active");
     nextImg.classList.add("active");
-
     [activeImg, nextImg] = [nextImg, activeImg];
   };
-
   currentLogoIndex = 0;
   const initialLogo = config.logoRotator.logos[currentLogoIndex];
   const isDarkInitial =
@@ -704,6 +699,23 @@ function startLogoRotator() {
   logoInterval = setInterval(() => {
     currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
     updateLogo();
+
+    setTimeout(() => {
+      const icon = fullscreenBtn.querySelector("i");
+      if (!icon) return;
+
+      // Logika animacji przeniesiona na #fullscreenBtn
+      if (isGlobeIconVisible) {
+        fullscreenBtn.classList.remove("globe-animation-active");
+        // Przywracamy właściwą ikonę (expand/compress)
+        updateFullscreenIcon();
+        isGlobeIconVisible = false;
+      } else {
+        fullscreenBtn.classList.add("globe-animation-active");
+        icon.className = "fas fa-globe";
+        isGlobeIconVisible = true;
+      }
+    }, config.logoRotator.interval / 2);
   }, config.logoRotator.interval);
 }
 
@@ -747,31 +759,18 @@ function initializeCurtainControls() {
 }
 
 window.onload = function () {
-  console.log('#checkpoint1');
   applyLanguage();
-  console.log('#checkpoint2');
   if (fileInputLabel) fileInputLabel.style.display = "none";
   document
     .querySelectorAll(".version-display")
     .forEach((el) => (el.textContent = config.version));
-
-  console.log('#checkpoint3');
-  // document.getElementById("aboutLinkFooter").href = config.paths.urlAbout;
-
-  console.log('#checkpoint4');
+  document.getElementById("aboutLinkFooter").href = config.paths.urlAbout;
   currentTheme = initializeTheme();
-
-  console.log('#checkpoint5');
-
   if (config.pageSettings.showMiniLogo && logoLink) {
-      console.log('#checkpoint6');
-    //startLogoRotator();
+    startLogoRotator();
   } else if (logoLink) {
-      console.log('#checkpoint7');
     logoLink.style.display = "none";
   }
-
-  console.log('#checkpoint8');
   const backButton = document.getElementById("backButton");
   if (backButton) {
     backButton.style.display = config.pageSettings.showBackButton
@@ -779,11 +778,9 @@ window.onload = function () {
       : "none";
   }
 
-  console.log('#checkpoint9');
   loadUiSettings();
 
-  console.log('#checkpoint10');
-  //updateBackgroundVideoVisibility(true);
+  updateBackgroundVideoVisibility(true);
   if (videoBgState === "paused") {
     bgVideo.addEventListener(
       "canplay",
@@ -803,9 +800,33 @@ window.onload = function () {
     .getElementById("lightbox-minimizeBtn")
     .addEventListener("click", toggleLightboxMinimize);
 
-  console.log('#checkpoint11');
-  if (typeof dataFromFile !== "undefined" && dataFromFile.trim().length > 0) {
-    init(dataFromFile);
+  // --- START: New Database Selection Logic ---
+  const languageDatabases = {
+    en: typeof data_en !== "undefined" ? data_en : null,
+    de: typeof data_de !== "undefined" ? data_de : null,
+    es: typeof data_es !== "undefined" ? data_es : null,
+    fr: typeof data_fr !== "undefined" ? data_fr : null,
+    it: typeof data_it !== "undefined" ? data_it : null,
+    ja: typeof data_ja !== "undefined" ? data_ja : null,
+    zh: typeof data_zh !== "undefined" ? data_zh : null,
+    pt: typeof data_pt !== "undefined" ? data_pt : null,
+    cs: typeof data_cs !== "undefined" ? data_cs : null,
+    sk: typeof data_sk !== "undefined" ? data_sk : null,
+    uk: typeof data_uk !== "undefined" ? data_uk : null,
+    id: typeof data_id !== "undefined" ? data_id : null,
+    hi: typeof data_hi !== "undefined" ? data_hi : null,
+  };
+
+  const currentLang = config.language.current;
+  let selectedData = typeof dataFromFile !== "undefined" ? dataFromFile : null; // Default to Polish
+
+  if (currentLang !== "pl" && languageDatabases[currentLang]) {
+    selectedData = languageDatabases[currentLang];
+  }
+  // --- END: New Database Selection Logic ---
+
+  if (selectedData && selectedData.trim().length > 0) {
+    init(selectedData);
   } else {
     fetch(config.paths.databaseFileName)
       .then((r) => (r.ok ? r.text() : Promise.reject(r.statusText)))
@@ -823,32 +844,21 @@ window.onload = function () {
       });
   }
 
-  console.log('#checkpoint12');
   sessionStartTime = new Date();
   lastActivityTime = new Date();
 
-  console.log('#checkpoint13');
   setInterval(updateTimers, 1000);
 
-  console.log('#checkpoint14');
   ["mousedown", "mousemove", "keydown", "touchstart"].forEach((event) =>
     window.addEventListener(event, resetIdleTimer)
   );
 
-  console.log('#checkpoint15');
   const controlPanel = document.querySelector(".control-panel");
   if (controlPanel) {
     controlPanel.classList.add("animated-control-panel");
   }
 
-  // ▼▼▼ WKLEJ USUNIĘTY KOD TUTAJ ▼▼▼
-    console.log('#checkpoint16');
-  initializeNewButtons();
-  initializeDisplayPanel();
-  initializeMobileHover();
-  initialize3dHoverEffect();
-  initializeCurtainControls();
-  // ▲▲▲ KONIEC WKLEJONEGO KODU ▲▲▲
+  updateLocationBasedStatus();
 };
 
 function toggleMinimizeView() {
@@ -947,116 +957,6 @@ function checkFileAndOpen(targetUrl, fallbackUrl, isLink = false) {
     });
 }
 
-function createGuideHtml(guide) {
-  const f = guide.file
-      .replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "")
-      .split("$$")[0],
-    u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
-    c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
-  let titleHtml = "",
-    infoHtml = "",
-    actionLinkHtml = "",
-    coverLinkHtml = "";
-  let titleText = guide.title;
-  if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
-    titleText = titleText.replace(/^\d{2}\s*/, "");
-
-  const mediaTypes = ["jpg", "png", "mp4", "avi"];
-
-  if (guide.format === "link") {
-    const targetUrl = decodeUrlFromFilename(guide.file);
-    const clickAction = `checkFileAndOpen('${targetUrl.replace(
-      /'/g,
-      "\\'"
-    )}', '${config.paths.urlFallback}', true); return false;`;
-    titleHtml = `<div class="guide-title"><a href="${targetUrl}" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info">${
-      guide.linkData.description || ""
-    }</div>`;
-    actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
-    coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
-  } else if (mediaTypes.includes(guide.format)) {
-    const clickAction = `startSlideshowFrom('${guide.file.replace(
-      /'/g,
-      "\\'"
-    )}'); return false;`;
-    titleHtml = `<div class="guide-title"><a href="#" onclick="${clickAction}">${titleText}</a></div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
-      guide.date
-    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
-      lang.guideInfoFormat
-    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
-      lang.guideInfoSize
-    }: ${guide.sizeMB} MB</div>`;
-    actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
-    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-  } else {
-    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${
-      config.paths.urlFallback
-    }'); return false;`;
-    titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
-      guide.date
-    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
-      lang.guideInfoFormat
-    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
-      lang.guideInfoSize
-    }: ${guide.sizeMB} MB</div>`;
-    if (guide.format === "pdf") {
-      actionLinkHtml = `<a href="${u}" onclick="${clickAction}"><i class="fas fa-file-pdf"></i> ${lang.guideBtnOpen}</a>`;
-      coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
-    } else {
-      actionLinkHtml = `<a href="${u}" download><i class="fas fa-download"></i> ${lang.guideBtnDownload}</a>`;
-      coverLinkHtml = `<a href="${u}" download class="cover-link"></a>`;
-    }
-  }
-
-  const noCoverImg = document.documentElement.classList.contains("dark-mode")
-    ? "ade-base-system/gfx/no_cover_dark.png"
-    : "ade-base-system/gfx/no_cover_light.png";
-
-  if (currentViewMode === "image-only") {
-    const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return `
-                    <div class="guide-cover-wrapper">
-                        ${elegantCoverImgHtml}
-                        ${coverLinkHtml} 
-                    </div>
-                    <div class="guide-text-content">
-                        ${titleHtml}
-                        <div class="guide-action-link">${actionLinkHtml}</div>
-                    </div>
-                `;
-  } else if (currentViewMode === "grid") {
-    const gridCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction =
-      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
-    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-
-    return `
-                    <a href="${hrefAction}" onclick="${onclickAction}">
-                        ${gridCoverImgHtml}
-                        <div class="grid-overlay">
-                            <span class="grid-title-text">${titleText}</span>
-                        </div>
-                    </a>
-                `;
-  } else {
-    const defaultCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
-    return `
-                    ${titleHtml}
-                    <div class="guide-content-bottom">
-                        <div class="guide-info-container">${infoHtml}</div>
-                        <a href="#" class="cover-link" onclick="${
-                          (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] ||
-                          ""
-                        }">${defaultCoverImgHtml}</a>
-                        ${actionLinkHtml}
-                    </div>
-                `;
-  }
-}
-
 const goToPage = (pageNum) => {
   pageNum = Math.max(1, Math.min(totalPages, pageNum));
   const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
@@ -1068,6 +968,10 @@ const goToPage = (pageNum) => {
     behavior: "smooth",
   });
 };
+
+// ================================================================
+//          POCZĄTEK BLOKU DO PODMIANY (3 FUNKCJE)
+// ================================================================
 
 function renderGuides(sourceArray = null) {
   stopCarousel();
@@ -1088,6 +992,11 @@ function renderGuides(sourceArray = null) {
   guideList.classList.toggle("view-grid", currentViewMode === "grid");
   guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
   guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
+  guideList.classList.toggle("view-full-text", currentViewMode === "full-text"); // DODAJ TĘ LINIĘ
+  guideList.classList.toggle(
+    "view-text-masonry",
+    currentViewMode === "text-masonry"
+  );
 
   guideList.innerHTML = "";
   if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -1112,18 +1021,25 @@ function renderGuides(sourceArray = null) {
   guideList.style.setProperty("--box-width", `${newWidth}px`);
 
   if (sourceArray) {
+    const pageDiv = document.createElement("div");
+    pageDiv.className = "guide-page";
+    pageDiv.dataset.pageNumber = 1;
+
     source.forEach((guide, index) => {
       const div = document.createElement("div");
       div.className = "guide animate-in";
       div.style.animationDelay = `${index * 0.04}s`;
       div.innerHTML = createGuideHtml(guide);
-      guideList.appendChild(div);
+      pageDiv.appendChild(div);
     });
-    requestAnimationFrame(() => {
-      void guideList.offsetWidth;
-    });
+    guideList.appendChild(pageDiv);
+
     pagination.classList.remove("visible");
     updateGuideCount(source.length, guides.length);
+
+    if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+      setTimeout(() => applyMasonryLayout(pageNum), 100);
+    }
     return;
   }
 
@@ -1171,12 +1087,16 @@ function renderGuides(sourceArray = null) {
     preloadNextPageImages();
   }
 
-  if (currentViewMode === "masonry") {
-    setTimeout(() => applyMasonryLayout(), 100);
+  if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+    setTimeout(() => applyMasonryLayout(pageNum), 100);
   }
 
   updateWrapperHeightForPage(1);
 }
+
+// ================================================================
+//          KONIEC BLOKU DO PODMIANY
+// ================================================================
 
 function setupLazyLoading(pages) {
   if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -1198,8 +1118,11 @@ function setupLazyLoading(pages) {
                   div.innerHTML = createGuideHtml(guide);
                   pageDiv.appendChild(div);
                 });
-                if (currentViewMode === "masonry" && pageNum > 1) {
-                  setTimeout(() => applyMasonryLayout(pageNum), 50);
+                if (
+                  currentViewMode === "masonry" ||
+                  currentViewMode === "text-masonry"
+                ) {
+                  setTimeout(() => applyMasonryLayout(pageNum), 100);
                 }
               });
             }
@@ -1388,6 +1311,8 @@ function generateGuides() {
 }
 
 function initializeNewButtons() {
+  document.getElementById("systemInfoLink").href = config.paths.urlAbout; // <-- DODAJ TĘ LINIĘ
+  document.getElementById("systemInfoLink").href = config.paths.urlAbout; // DODAJ TĘ LINIĘ
   mainResetBtn.addEventListener("click", resetView);
 
   document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
@@ -1431,7 +1356,17 @@ function initializeDisplayPanel() {
   const rowsValue = document.getElementById("rowsValue");
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
-  const viewModes = ["text-only", "full", "image-only", "grid", "masonry"];
+  const viewModes = [
+    "text-only", // 1
+    "full-text", // 2
+    "text-masonry", // 3
+    "image-only", // 4: Grafika proporcjonalna
+    "grid", // 5: Grafika w kwadracie
+    "image-masonry", // 6: Masonry graficzne
+    "view-seven", // 7: "Glass"
+    "full", // 8: Pełny
+    "masonry", // 9: Masonry mieszane
+  ];
 
   viewContentBtn.innerHTML = `
     <i class="fas fa-layer-group view-icon"></i>
@@ -1492,20 +1427,38 @@ function initializeDisplayPanel() {
     renderGuides();
   });
 
+  const debouncedMasonryReflow = debounce(
+    () => applyMasonryLayout(currentPage),
+    75
+  );
+
   sizeSlider.addEventListener("input", () => {
     const sliderValue = parseInt(sizeSlider.value, 10);
+
     sizeValue.textContent = `${sliderValue}%`;
-    const newWidth = config.pageSettings.baseBoxWidth * (sliderValue / 100);
+    const newWidth = Math.floor(
+      config.pageSettings.baseBoxWidth * (sliderValue / 100)
+    );
     guideList.style.setProperty("--box-width", `${newWidth}px`);
-    const minFontSize = 0.85;
-    const maxFontSize = 1.25;
-    const normalizedValue = (sliderValue - 50) / 100;
-    const dynamicFontSize =
-      minFontSize + normalizedValue * (maxFontSize - minFontSize);
+
+    const minSlider = 50,
+      maxSlider = 150;
+    const minFont = 0.8,
+      maxFont = 1.3;
+    const percent = (sliderValue - minSlider) / (maxSlider - minSlider);
+    const dynamicFontSize = minFont + percent * (maxFont - minFont);
     guideList.style.setProperty(
       "--dynamic-font-size",
       `${dynamicFontSize.toFixed(2)}rem`
     );
+
+    if (
+      currentViewMode === "masonry" ||
+      currentViewMode === "text-masonry" ||
+      currentViewMode === "image-masonry"
+    ) {
+      debouncedMasonryReflow();
+    }
   });
 
   sizeSlider.addEventListener("change", () => {
@@ -1524,6 +1477,278 @@ function initializeDisplayPanel() {
   });
 
   viewPlayBtn.addEventListener("click", () => startPlayAnimation());
+}
+
+function createGuideHtml(guide) {
+  const f = guide.file
+      .replace(/\.(pdf|epub|mobi|link|jpg|png|mp4|avi)$/i, "")
+      .split("$$")[0],
+    u = `${config.paths.dataFolderName}/${encodeURIComponent(guide.file)}`,
+    c = `${config.paths.coversFolderName}/${encodeURIComponent(f)}.jpg`;
+  let titleHtml = "",
+    infoHtml = "",
+    actionLinkHtml = "",
+    coverLinkHtml = "";
+  let titleText = guide.title;
+  if (guide.format === "link" && /^\d{2}\s*/.test(titleText))
+    titleText = titleText.replace(/^\d{2}\s*/, "");
+
+  const mediaTypes = ["jpg", "png", "mp4", "avi"];
+
+  if (guide.format === "link") {
+    const targetUrl = decodeUrlFromFilename(guide.file);
+    let clickAction;
+    if (guide.file.startsWith("_")) {
+      clickAction = `window.location.href = '${targetUrl.replace(
+        /'/g,
+        "\\'"
+      )}'; return false;`;
+    } else {
+      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${
+        config.paths.urlFallback
+      }', true); return false;`;
+    }
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
+    infoHtml = `<div class="guide-info">${
+      guide.linkData.description || ""
+    }</div>`;
+    actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
+    coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
+  } else if (mediaTypes.includes(guide.format)) {
+    const clickAction = `startSlideshowFrom('${guide.file.replace(
+      /'/g,
+      "\\'"
+    )}'); return false;`;
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
+      guide.date
+    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
+      lang.guideInfoFormat
+    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
+      lang.guideInfoSize
+    }: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
+    coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
+  } else {
+    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${
+      config.paths.urlFallback
+    }'); return false;`;
+    titleHtml = `<div class="guide-title">${titleText}</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
+      guide.date
+    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
+      lang.guideInfoFormat
+    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
+      lang.guideInfoSize
+    }: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="${u}" onclick="${
+      guide.format === "pdf" ? clickAction : ""
+    }" ${guide.format !== "pdf" ? "download" : ""}><i class="fas fa-${
+      guide.format === "pdf" ? "file-pdf" : "download"
+    }"></i> ${
+      guide.format === "pdf" ? lang.guideBtnOpen : lang.guideBtnDownload
+    }</a>`;
+    coverLinkHtml = `<a href="${u}" onclick="${clickAction}" class="cover-link"></a>`;
+  }
+
+  const noCoverImg = document.documentElement.classList.contains("dark-mode")
+    ? "ade-base-system/gfx/no_cover_dark.png"
+    : "ade-base-system/gfx/no_cover_light.png";
+
+  if (
+    currentViewMode === "text-only" ||
+    currentViewMode === "full-text" ||
+    currentViewMode === "text-masonry"
+  ) {
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
+  }
+
+  // else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+  //   const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+  //   return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
+  // }
+
+  // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
+  else if (currentViewMode === "image-masonry") {
+    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    // DODAJEMY NOWY div.glass-panel-six Z TYTUŁEM WEWNĄTRZ
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="cover-link-six">
+            ${elegantCoverImgHtml}
+        </a>
+        <div class="glass-panel-six">
+            <span class="title-six">${titleText}</span>
+        </div>
+    `;
+  } else if (currentViewMode === "grid") {
+    const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
+  } else if (currentViewMode === "view-seven") {
+    const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="guide-cover-wrapper-seven">
+            ${gridCoverImgHtml}
+        </a>
+        <div class="guide-text-content-seven">
+            <div class="guide-title">${titleText}</div>
+            <div class="guide-action-link">${actionLinkHtml}</div>
+        </div>
+    `;
+  } else {
+    // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
+    const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""
+    }">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
+  }
+}
+
+function renderGuides(sourceArray = null) {
+  stopCarousel();
+  const source =
+    sourceArray ||
+    (generatorMode === "visible" && generatedGuides) ||
+    filteredGuides;
+
+  guideList.classList.remove("random-draw");
+  if (sourceArray) {
+    guideList.classList.add("random-draw");
+  }
+
+  // === POCZĄTEK ZMIANY: Kompletna obsługa klas CSS ===
+  guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
+  guideList.classList.toggle("view-full-text", currentViewMode === "full-text");
+  guideList.classList.toggle(
+    "view-text-masonry",
+    currentViewMode === "text-masonry"
+  );
+  guideList.classList.toggle("view-grid", currentViewMode === "grid");
+  guideList.classList.toggle(
+    "view-image-only",
+    currentViewMode === "image-only"
+  );
+  guideList.classList.toggle(
+    "view-image-masonry",
+    currentViewMode === "image-masonry"
+  );
+  guideList.classList.toggle("view-seven", currentViewMode === "view-seven");
+  guideList.classList.toggle("view-full", currentViewMode === "full");
+  guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
+  // === KONIEC ZMIANY ===
+
+  guideList.innerHTML = "";
+  if (lazyLoadObserver) lazyLoadObserver.disconnect();
+
+  const sizePercent = document.getElementById("sizeSlider").value;
+  const newWidth = Math.floor(
+    config.pageSettings.baseBoxWidth * (sizePercent / 100)
+  );
+
+  const minSlider = 50,
+    maxSlider = 150;
+  const minFont = 0.8,
+    maxFont = 1.3;
+  const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
+  const dynamicFontSize = minFont + percent * (maxFont - minFont);
+  guideList.style.setProperty(
+    "--dynamic-font-size",
+    `${dynamicFontSize.toFixed(2)}rem`
+  );
+  guideList.style.setProperty("--grid-rows", selectedRowCount);
+  guideList.style.setProperty("--box-width", `${newWidth}px`);
+
+  if (sourceArray) {
+    const pageDiv = document.createElement("div");
+    pageDiv.className = "guide-page";
+    pageDiv.dataset.pageNumber = 1;
+
+    source.forEach((guide, index) => {
+      const div = document.createElement("div");
+      div.className = "guide animate-in";
+      div.style.animationDelay = `${index * 0.04}s`;
+      div.innerHTML = createGuideHtml(guide);
+      pageDiv.appendChild(div);
+    });
+    guideList.appendChild(pageDiv);
+
+    pagination.classList.remove("visible");
+    updateGuideCount(source.length, guides.length);
+
+    if (
+      currentViewMode === "masonry" ||
+      currentViewMode === "text-masonry" ||
+      currentViewMode === "image-masonry"
+    ) {
+      setTimeout(() => applyMasonryLayout(1), 100);
+    }
+    return;
+  }
+
+  const itemWidth = newWidth;
+  const columns =
+    Math.floor((guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001) || 1;
+  const itemsPerPage = columns * selectedRowCount;
+
+  pagesCache = [];
+  if (itemsPerPage > 0) {
+    for (let i = 0; i < source.length; i += itemsPerPage) {
+      pagesCache.push(source.slice(i, i + itemsPerPage));
+    }
+  } else if (source.length > 0) {
+    pagesCache.push(source);
+  }
+  totalPages = pagesCache.length || 1;
+
+  pagesCache.forEach((pageItems, pageIndex) => {
+    const pageDiv = document.createElement("div");
+    pageDiv.className = "guide-page";
+    pageDiv.dataset.pageNumber = pageIndex + 1;
+
+    if (pageIndex === 0) {
+      pageItems.forEach((guide, index) => {
+        const div = document.createElement("div");
+        div.className = "guide";
+        if (isInitialLoad) {
+          div.classList.add("animate-in");
+          div.style.animationDelay = `${index * 0.04}s`;
+        }
+        div.innerHTML = createGuideHtml(guide);
+        pageDiv.appendChild(div);
+      });
+    }
+    guideList.appendChild(pageDiv);
+  });
+
+  setupLazyLoading(pagesCache);
+  renderPagination();
+  updateGuideCount(source.length, guides.length);
+
+  if (isInitialLoad) {
+    isInitialLoad = false;
+    preloadNextPageImages();
+  }
+
+  const isMasonry =
+    currentViewMode === "masonry" ||
+    currentViewMode === "text-masonry" ||
+    currentViewMode === "image-masonry";
+
+  if (isMasonry) {
+    setTimeout(() => applyMasonryLayout(1), 100);
+  }
+
+  if (!isMasonry) {
+    updateWrapperHeightForPage(1);
+  }
 }
 
 function toggleAudioMute() {
@@ -2021,7 +2246,25 @@ function displayRandomGuide(guide) {
   }
 }
 
+// ZASTĄP TĘ FUNKCJĘ FINALNĄ WERSJĄ
 function toggleFullScreen() {
+  const btn = document.getElementById("fullscreenBtn");
+
+  // --- NOWA LOGIKA ---
+  // Sprawdzamy, czy przycisk ma klasę animacji (czyli czy jest na nim globus)
+  if (btn && btn.classList.contains("globe-animation-active")) {
+    // Jeśli tak, znajdujemy właściwy przycisk języka i symulujemy jego kliknięcie
+    const realLangBtn = document.getElementById("statusLangBtn");
+    if (realLangBtn) {
+      realLangBtn.querySelector("a").click();
+    }
+    return; // Zatrzymujemy dalsze wykonywanie funkcji, aby nie włączyć pełnego ekranu
+  }
+  // --- KONIEC NOWEJ LOGIKI ---
+
+  // Poniższy kod wykona się tylko, jeśli na przycisku NIE MA globusa
+  if (btn) btn.classList.remove("globe-animation-active");
+
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch((err) => {
       alert(
@@ -2033,6 +2276,7 @@ function toggleFullScreen() {
       document.exitFullscreen();
     }
   }
+  setTimeout(updateFullscreenIcon, 50);
 }
 
 function updateFullscreenIcon() {
@@ -2344,36 +2588,74 @@ function applyMasonryLayout(pageNum = 1) {
   if (!guidePage) return;
 
   const items = Array.from(guidePage.children);
-  if (items.length === 0) return;
+  if (items.length === 0) {
+    if (currentPage === pageNum) updateWrapperHeightForPage(pageNum);
+    return;
+  }
 
-  const gap = 20;
-  const itemWidth = items[0].offsetWidth;
-  if (itemWidth === 0) return;
+  const performLayout = () => {
+    const gap = 20;
+    const itemWidth = items[0].offsetWidth;
+    if (itemWidth === 0) return;
 
-  const containerWidth = guidePage.offsetWidth;
-  const numColumns = Math.max(
-    1,
-    Math.floor((containerWidth + gap) / (itemWidth + gap))
+    const viewportWidth = guideList.clientWidth;
+    const numColumns = Math.max(
+      1,
+      Math.floor((viewportWidth + gap) / (itemWidth + gap))
+    );
+    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
+    const remainingSpace = viewportWidth - gridWidth;
+    const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
+
+    guidePage.style.paddingLeft = `${sidePadding}px`;
+    guidePage.style.paddingRight = `${sidePadding}px`;
+    guidePage.style.boxSizing = "border-box";
+
+    // Resetujemy stare style, na wypadek gdyby zostały w pamięci
+    guidePage.style.width = "";
+    guidePage.style.margin = "";
+
+    guidePage.style.position = "relative";
+    const columnHeights = Array(numColumns).fill(0);
+
+    items.forEach((item) => {
+      const minHeight = Math.min(...columnHeights);
+      const columnIndex = columnHeights.indexOf(minHeight);
+
+      item.style.position = "absolute";
+      item.style.top = `${minHeight}px`;
+      // OSTATECZNA POPRAWKA: Prawidłowa kalkulacja pozycji 'left' bez podwójnego przesunięcia
+      item.style.left = `${columnIndex * (itemWidth + gap)}px`;
+
+      columnHeights[columnIndex] += item.offsetHeight + gap;
+    });
+
+    const maxHeight = Math.max(...columnHeights);
+    guidePage.style.height = `${maxHeight}px`;
+    updateWrapperHeightForPage(pageNum);
+  };
+
+  const images = Array.from(
+    guidePage.querySelectorAll(
+      ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
+    )
   );
-
-  guidePage.style.position = "relative";
-  guidePage.style.height = "";
-
-  const columnHeights = Array(numColumns).fill(0);
-
-  items.forEach((item) => {
-    const minHeight = Math.min(...columnHeights);
-    const columnIndex = columnHeights.indexOf(minHeight);
-
-    item.style.position = "absolute";
-    item.style.top = `${minHeight}px`;
-    item.style.left = `${columnIndex * (itemWidth + gap)}px`;
-
-    columnHeights[columnIndex] += item.offsetHeight + gap;
+  if (images.length === 0) {
+    performLayout();
+    return;
+  }
+  let imagesLoaded = 0;
+  images.forEach((img) => {
+    if (img.complete) {
+      imagesLoaded++;
+    } else {
+      img.onload = img.onerror = () => {
+        imagesLoaded++;
+        if (imagesLoaded === images.length) performLayout();
+      };
+    }
   });
-
-  const maxHeight = Math.max(...columnHeights);
-  guidePage.style.height = `${maxHeight}px`;
+  if (imagesLoaded === images.length) performLayout();
 }
 
 function updateWrapperHeightForPage(pageNum) {
@@ -2383,27 +2665,73 @@ function updateWrapperHeightForPage(pageNum) {
   );
   if (!wrapper || !pageElement) return;
 
-  setTimeout(() => {
+  console.log(
+    `%c--- START: Diagnostyka updateWrapperHeight dla strony #${pageNum} ---`,
+    "color: #e53935; font-weight: bold;"
+  );
+
+  requestAnimationFrame(() => {
     const items = pageElement.querySelectorAll(".guide");
+    console.log(`1. Znaleziono ${items.length} kafelków (.guide) na stronie.`);
+
     if (items.length === 0) {
       wrapper.style.height = "0px";
+      console.log("Wynik: Brak kafelków, ustawiam wysokość na 0px i kończę.");
       return;
     }
     const listTop = guideList.getBoundingClientRect().top;
     let maxBottom = 0;
-    items.forEach((item) => {
-      const itemBottom = item.getBoundingClientRect().bottom;
-      if (itemBottom > maxBottom) {
-        maxBottom = itemBottom;
+    console.log(
+      `2. Pozycja 'top' głównego kontenera (.guide-list): ${listTop.toFixed(
+        2
+      )}px`
+    );
+
+    items.forEach((item, index) => {
+      const itemRect = item.getBoundingClientRect();
+      // Logujemy tylko kilka pierwszych, żeby nie zaspamować konsoli
+      if (index < 5) {
+        console.log(
+          `- Kafelka #${index + 1}: top=${itemRect.top.toFixed(
+            2
+          )}, bottom=${itemRect.bottom.toFixed(2)}`
+        );
+      }
+      if (itemRect.bottom > maxBottom) {
+        maxBottom = itemRect.bottom;
       }
     });
 
+    console.log(
+      `3. Najniższy punkt (maxBottom) znaleziony na stronie: ${maxBottom.toFixed(
+        2
+      )}px`
+    );
+
     const preciseHeight = maxBottom - listTop;
+    console.log(
+      `4. Obliczona wysokość (preciseHeight = maxBottom - listTop): ${preciseHeight.toFixed(
+        2
+      )}px`
+    );
 
     if (preciseHeight > 0) {
       wrapper.style.height = `${preciseHeight}px`;
+      console.log(
+        `%cWynik: Ustawiam wysokość wrappera na: ${preciseHeight.toFixed(2)}px`,
+        "color: green; font-weight: bold;"
+      );
+    } else {
+      console.log(
+        `%cWynik: Obliczona wysokość jest <= 0. Nie zmieniam wysokości wrappera.`,
+        "color: orange;"
+      );
     }
-  }, 200);
+    console.log(
+      `%c--- KONIEC: Diagnostyka updateWrapperHeight ---`,
+      "color: #e53935; font-weight: bold;"
+    );
+  });
 }
 
 updateRealTimeClock();
@@ -2413,6 +2741,7 @@ setInterval(updateRealTimeClock, 30000);
 // =================================================================
 //          LOGIKA KARUZELI JĘZYKOWEJ
 // =================================================================
+// ZASTĄP STARĄ WERSJĘ TĄ NOWĄ
 function initializeLangCarousel() {
   const modal = document.getElementById("lang-modal");
   const overlay = document.getElementById("lang-overlay");
@@ -2420,24 +2749,9 @@ function initializeLangCarousel() {
   const world = modal.querySelector(".world");
   const globeBtn = document.getElementById("statusLangBtn");
 
-  const langDetails = {
-    pl: { name: "Polski", flag: "pl" },
-    en: { name: "English", flag: "gb" },
-    de: { name: "Deutsch", flag: "de" },
-    es: { name: "Español", flag: "es" },
-    fr: { name: "Français", flag: "fr" },
-    it: { name: "Italiano", flag: "it" },
-    ja: { name: "日本語", flag: "jp" },
-    zh: { name: "中文", flag: "cn" },
-    pt: { name: "Português", flag: "br" },
-    cs: { name: "Čeština", flag: "cz" },
-    sk: { name: "Slovenčina", flag: "sk" },
-    uk: { name: "Українська", flag: "ua" },
-    id: { name: "Bahasa Indonesia", flag: "id" },
-    hi: { name: "हिन्दी", flag: "in" },
-  };
-
-  const availableLangCodes = Object.keys(languageStrings);
+  // ZMIANA: Usunięto lokalny obiekt langDetails. Poniżej pobieramy dane z config.js
+  const langDetails = config.langConfig;
+  const availableLangCodes = Object.keys(langDetails);
 
   const languages = availableLangCodes
     .map((code) => {
@@ -2458,15 +2772,16 @@ function initializeLangCarousel() {
   const rebuildCarousel = () => {
     world.innerHTML = "";
     const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
+    // Zaktualizowany kod do wklejenia
     const base = {
-      sceneSize: 250,
+      sceneSize: 320, // Zwiększona szerokość sceny, by spłaszczyć łuk
       perspective: 1000,
       itemWidth: 100,
       itemHeight: 50,
       fontSize: 14,
       flagSize: 22,
       gap: 10,
-      radius: 220,
+      radius: 290, // Zwiększony promień, by odsunąć flagi od siebie
     };
 
     const root = document.documentElement;
@@ -2550,7 +2865,7 @@ function initializeLangCarousel() {
       hasDragged = true;
     }
     const deltaX = currentX - lastX;
-    velocity = deltaX * rotationSensitivity; // <-- TUTAJ BYŁ BŁĄD, ZOSTAŁ NAPRAWIONY
+    velocity = deltaX * rotationSensitivity;
     currentRotationY += velocity;
     lastX = currentX;
     updateRotation();
@@ -2593,6 +2908,114 @@ function initializeLangCarousel() {
   });
 }
 
+function calculateSunTimes(date, lat, lon) {
+  const toRad = Math.PI / 180;
+  const toDeg = 180 / Math.PI;
+
+  // 1. Obliczenie dnia roku
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff =
+    date -
+    start +
+    (start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const day = Math.floor(diff / oneDay);
+
+  // 2. Obliczenie czasu słonecznego
+  const B = (360 / 365.24) * (day - 81) * toRad;
+  const eot = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+  const lstm = 15 * Math.floor(date.getTimezoneOffset() / -60);
+  const tc = 4 * (lon - lstm) + eot;
+
+  // 3. Obliczenie kąta godzinowego
+  const latRad = lat * toRad;
+  const declination =
+    -23.44 * Math.cos((360 / 365.24) * (day + 10) * toRad) * toRad;
+  const hourAngle = Math.acos(
+    (Math.sin(-0.83 * toRad) - Math.sin(latRad) * Math.sin(declination)) /
+      (Math.cos(latRad) * Math.cos(declination))
+  );
+
+  if (isNaN(hourAngle)) {
+    return { sunrise: "n/a", sunset: "n/a", duration: "n/a" };
+  }
+
+  const h = (hourAngle * toDeg) / 15;
+
+  // 4. Obliczenie wschodu i zachodu
+  const sunriseMinutes = 720 - h * 60 - tc;
+  const sunsetMinutes = 720 + h * 60 - tc;
+
+  const formatTimeFromMinutes = (mins) => {
+    if (mins < 0) mins += 1440;
+    if (mins >= 1440) mins -= 1440;
+    const hours = Math.floor(mins / 60)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor(mins % 60)
+      .toString()
+      .padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
+
+  const durationMinutes = Math.abs(sunsetMinutes - sunriseMinutes);
+  const durationHours = Math.floor(durationMinutes / 60)
+    .toString()
+    .padStart(2, "0");
+  const durationMins = Math.floor(durationMinutes % 60)
+    .toString()
+    .padStart(2, "0");
+
+  return {
+    sunrise: formatTimeFromMinutes(sunriseMinutes),
+    sunset: formatTimeFromMinutes(sunsetMinutes),
+    duration: `${durationHours}:${durationMins}`,
+  };
+}
+
+// FUNKCJA `updateLocationBasedStatus` POZOSTAJE BEZ ZMIAN (DLA KONTEKSTU)
+
+function updateLocationBasedStatus() {
+  const langCode = config.language.current;
+  const location = config.langConfig[langCode];
+
+  // Aktualizacja Wschodu/Zachodu Słońca
+  const sunTimesEl = document.getElementById("sunTimesDisplay");
+  if (sunTimesEl && location && location.lat && location.lon) {
+    const sunTimes = calculateSunTimes(new Date(), location.lat, location.lon);
+    if (sunTimes.sunrise !== "n/a") {
+      sunTimesEl.innerHTML = `🌞 <b>${sunTimes.sunrise} – ${sunTimes.sunset}</b> (${sunTimes.duration})`;
+    } else {
+      sunTimesEl.innerHTML = `🌞 N/A`;
+    }
+  }
+
+  // Aktualizacja Fazy Księżyca
+  const moonPhaseEl = document.getElementById("moonPhaseDisplay");
+  if (moonPhaseEl) {
+    const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
+    const moonPhaseNames = lang.moonPhaseNames || Array(8).fill(""); // Zabezpieczenie
+    const phaseIndex = getMoonPhase(new Date());
+    moonPhaseEl.innerHTML = `${moonPhases[phaseIndex]} ${moonPhaseNames[phaseIndex]}`;
+  }
+}
+
+function updateStatusLangDisplay() {
+  const langBtn = document.getElementById("statusLangBtn");
+  if (!langBtn) return;
+
+  const currentLangCode = config.language.current;
+  const langData = config.langConfig[currentLangCode];
+
+  if (langData) {
+    const flagImg = langBtn.querySelector(".lang-flag-status");
+    const codeSpan = langBtn.querySelector(".lang-code-status");
+
+    flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${langData.flag}.svg`;
+    codeSpan.textContent = currentLangCode.toUpperCase();
+  }
+}
+
 // Wywołaj inicjalizację karuzeli po załadowaniu strony
 initializeLangCarousel();
 
@@ -2602,3 +3025,4 @@ initializeDisplayPanel();
 initializeMobileHover();
 initialize3dHoverEffect();
 initializeCurtainControls();
+updateStatusLangDisplay();
