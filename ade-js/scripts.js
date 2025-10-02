@@ -675,25 +675,25 @@ function startLogoRotator() {
   const logoImg1 = document.getElementById("logo-img-1");
   const logoImg2 = document.getElementById("logo-img-2");
   const headerLogoLink = document.getElementById("logoLink");
-  if (!logoImg1 || !logoImg2 || !headerLogoLink) return;
+  const fullscreenBtn = document.getElementById("fullscreenBtn"); // <-- WŁAŚCIWY PRZYCISK
+
+  if (!logoImg1 || !logoImg2 || !headerLogoLink || !fullscreenBtn) return;
 
   let activeImg = logoImg1;
   let nextImg = logoImg2;
+  let isGlobeIconVisible = false;
 
+  // ... (reszta kodu do obsługi logo pozostaje bez zmian)
   const updateLogo = () => {
     const isDark = document.documentElement.classList.contains("dark-mode");
     const newLogoData = config.logoRotator.logos[currentLogoIndex];
-
     nextImg.src = isDark ? newLogoData.srcDark : newLogoData.srcLight;
     nextImg.alt = newLogoData.alt;
     headerLogoLink.href = newLogoData.href;
-
     activeImg.classList.remove("active");
     nextImg.classList.add("active");
-
     [activeImg, nextImg] = [nextImg, activeImg];
   };
-
   currentLogoIndex = 0;
   const initialLogo = config.logoRotator.logos[currentLogoIndex];
   const isDarkInitial =
@@ -715,6 +715,23 @@ function startLogoRotator() {
   logoInterval = setInterval(() => {
     currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
     updateLogo();
+
+    setTimeout(() => {
+      const icon = fullscreenBtn.querySelector("i");
+      if (!icon) return;
+
+      // Logika animacji przeniesiona na #fullscreenBtn
+      if (isGlobeIconVisible) {
+        fullscreenBtn.classList.remove("globe-animation-active");
+        // Przywracamy właściwą ikonę (expand/compress)
+        updateFullscreenIcon();
+        isGlobeIconVisible = false;
+      } else {
+        fullscreenBtn.classList.add("globe-animation-active");
+        icon.className = "fas fa-globe";
+        isGlobeIconVisible = true;
+      }
+    }, config.logoRotator.interval / 2);
   }, config.logoRotator.interval);
 }
 
@@ -2245,7 +2262,25 @@ function displayRandomGuide(guide) {
   }
 }
 
+// ZASTĄP TĘ FUNKCJĘ FINALNĄ WERSJĄ
 function toggleFullScreen() {
+  const btn = document.getElementById("fullscreenBtn");
+
+  // --- NOWA LOGIKA ---
+  // Sprawdzamy, czy przycisk ma klasę animacji (czyli czy jest na nim globus)
+  if (btn && btn.classList.contains("globe-animation-active")) {
+    // Jeśli tak, znajdujemy właściwy przycisk języka i symulujemy jego kliknięcie
+    const realLangBtn = document.getElementById("statusLangBtn");
+    if (realLangBtn) {
+      realLangBtn.querySelector("a").click();
+    }
+    return; // Zatrzymujemy dalsze wykonywanie funkcji, aby nie włączyć pełnego ekranu
+  }
+  // --- KONIEC NOWEJ LOGIKI ---
+
+  // Poniższy kod wykona się tylko, jeśli na przycisku NIE MA globusa
+  if (btn) btn.classList.remove("globe-animation-active");
+
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch((err) => {
       alert(
@@ -2257,6 +2292,7 @@ function toggleFullScreen() {
       document.exitFullscreen();
     }
   }
+  setTimeout(updateFullscreenIcon, 50);
 }
 
 function updateFullscreenIcon() {
