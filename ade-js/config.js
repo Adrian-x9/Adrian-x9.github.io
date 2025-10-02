@@ -1,5 +1,8 @@
 const config = {
-  version: "v2.0.3-alfa", // Full interface rework, before v2.0.0 release
+  version: "v2.1.0", // Status panel with text and icons - remake + logic added, CSS improvements
+  build: "2025-09-17", // Build date YYYY-MM-DD
+  updated: "2025-10-02", // Last update date YYYY-MM-DD
+
   language: {
     current: "pl", // Domyślny język na wypadek awarii skryptu
   },

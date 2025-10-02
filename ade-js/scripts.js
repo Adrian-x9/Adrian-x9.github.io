@@ -2912,70 +2912,68 @@ function calculateSunTimes(date, lat, lon) {
   const toRad = Math.PI / 180;
   const toDeg = 180 / Math.PI;
 
-  const dayOfYear = (d) =>
-    Math.floor((d - new Date(d.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-  const n = dayOfYear(date) + 1;
+  // 1. Obliczenie dnia roku
+  const start = new Date(date.getFullYear(), 0, 0);
+  const diff =
+    date -
+    start +
+    (start.getTimezoneOffset() - date.getTimezoneOffset()) * 60 * 1000;
+  const oneDay = 1000 * 60 * 60 * 24;
+  const day = Math.floor(diff / oneDay);
 
-  const j_approx = n - lon / 360;
-  const m = (0.98560028 * j_approx - 3.289) * toRad;
-  const l =
-    m +
-    1.916 * Math.sin(m) * toRad +
-    0.02 * Math.sin(2 * m) * toRad +
-    282.634 * toRad;
+  // 2. Obliczenie czasu słonecznego
+  const B = (360 / 365.24) * (day - 81) * toRad;
+  const eot = 9.87 * Math.sin(2 * B) - 7.53 * Math.cos(B) - 1.5 * Math.sin(B);
+  const lstm = 15 * Math.floor(date.getTimezoneOffset() / -60);
+  const tc = 4 * (lon - lstm) + eot;
 
-  let ra = toDeg * Math.atan(0.91746 * Math.tan(l));
-  const l_quad = Math.floor((toDeg * l) / 90) * 90;
-  const ra_quad = Math.floor(ra / 90) * 90;
-  ra = (ra + (l_quad - ra_quad)) / 15;
+  // 3. Obliczenie kąta godzinowego
+  const latRad = lat * toRad;
+  const declination =
+    -23.44 * Math.cos((360 / 365.24) * (day + 10) * toRad) * toRad;
+  const hourAngle = Math.acos(
+    (Math.sin(-0.83 * toRad) - Math.sin(latRad) * Math.sin(declination)) /
+      (Math.cos(latRad) * Math.cos(declination))
+  );
 
-  const sin_dec = 0.39782 * Math.sin(l);
-  const cos_dec = Math.cos(Math.asin(sin_dec));
-
-  const cos_h =
-    (Math.sin(-0.83 * toRad) - sin_dec * Math.sin(lat * toRad)) /
-    (cos_dec * Math.cos(lat * toRad));
-  if (Math.abs(cos_h) > 1) {
+  if (isNaN(hourAngle)) {
     return { sunrise: "n/a", sunset: "n/a", duration: "n/a" };
   }
 
-  const h = (toDeg * Math.acos(cos_h)) / 15;
+  const h = (hourAngle * toDeg) / 15;
 
-  const j_rise = j_approx + (6.4 - ra) - (h + lon / 15);
-  const j_set = j_approx + (6.4 - ra) + (h - lon / 15);
+  // 4. Obliczenie wschodu i zachodu
+  const sunriseMinutes = 720 - h * 60 - tc;
+  const sunsetMinutes = 720 + h * 60 - tc;
 
-  // KLUCZOWA POPRAWKA: Upewnienie się, że czas nie jest ujemny
-  const ut_rise = (((j_rise - 0.06571 * j_rise - 6.622) % 24) + 24) % 24;
-  const ut_set = (((j_set - 0.06571 * j_set - 6.622) % 24) + 24) % 24;
-
-  const baseDate = new Date(
-    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
-  );
-  const sunriseDate = new Date(baseDate.getTime() + ut_rise * 3600 * 1000);
-  const sunsetDate = new Date(baseDate.getTime() + ut_set * 3600 * 1000);
-
-  const formatTime = (d) => {
-    const hours = d.getUTCHours().toString().padStart(2, "0");
-    const minutes = d.getUTCMinutes().toString().padStart(2, "0");
+  const formatTimeFromMinutes = (mins) => {
+    if (mins < 0) mins += 1440;
+    if (mins >= 1440) mins -= 1440;
+    const hours = Math.floor(mins / 60)
+      .toString()
+      .padStart(2, "0");
+    const minutes = Math.floor(mins % 60)
+      .toString()
+      .padStart(2, "0");
     return `${hours}:${minutes}`;
   };
 
-  const durationMs =
-    sunsetDate > sunriseDate
-      ? sunsetDate - sunriseDate
-      : sunriseDate - sunsetDate;
-  const durationHours = Math.floor(durationMs / 3600000);
-  const durationMinutes = Math.floor((durationMs % 3600000) / 60000);
-  const formattedDuration = `${durationHours
+  const durationMinutes = Math.abs(sunsetMinutes - sunriseMinutes);
+  const durationHours = Math.floor(durationMinutes / 60)
     .toString()
-    .padStart(2, "0")}:${durationMinutes.toString().padStart(2, "0")}`;
+    .padStart(2, "0");
+  const durationMins = Math.floor(durationMinutes % 60)
+    .toString()
+    .padStart(2, "0");
 
   return {
-    sunrise: formatTime(sunriseDate),
-    sunset: formatTime(sunsetDate),
-    duration: formattedDuration,
+    sunrise: formatTimeFromMinutes(sunriseMinutes),
+    sunset: formatTimeFromMinutes(sunsetMinutes),
+    duration: `${durationHours}:${durationMins}`,
   };
 }
+
+// FUNKCJA `updateLocationBasedStatus` POZOSTAJE BEZ ZMIAN (DLA KONTEKSTU)
 
 function updateLocationBasedStatus() {
   const langCode = config.language.current;
@@ -2996,8 +2994,7 @@ function updateLocationBasedStatus() {
   const moonPhaseEl = document.getElementById("moonPhaseDisplay");
   if (moonPhaseEl) {
     const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
-    const moonPhaseNames =
-      lang.moonPhaseNames || Array(8).fill(""); // Zabezpieczenie
+    const moonPhaseNames = lang.moonPhaseNames || Array(8).fill(""); // Zabezpieczenie
     const phaseIndex = getMoonPhase(new Date());
     moonPhaseEl.innerHTML = `${moonPhases[phaseIndex]} ${moonPhaseNames[phaseIndex]}`;
   }
