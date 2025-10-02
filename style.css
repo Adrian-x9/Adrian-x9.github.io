@@ -3338,3 +3338,111 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
     opacity: 1;
     transform: translateY(0);
 }
+
+/*
+================================================================
+  TUNING: Przebudowa Widoku #6 (image-masonry) - "Glass & 3D"
+================================================================
+*/
+
+/* --- 1. GŁÓWNY KONTERNER KAFELKA (ANIMACJA 3D) --- */
+.guide-list.view-image-masonry .guide {
+  /* Style Masonry (układ) - te już istnieją, upewniamy się, że są obecne */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  padding: 0;
+  overflow: hidden; /* Ważne, aby panel nie wychodził poza kafelek */
+  border-radius: 12px; /* Subtelne zaokrąglenie */
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg)) rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Efekt poświaty 3D (skopiowany z widoku #4) */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3), transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/* --- 2. OBRAZEK I JEGO KONTENER --- */
+.guide-list.view-image-masonry .cover-link-six {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.guide-list.view-image-masonry .guide-cover-elegant {
+    transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
+    transform: scale(1.05); /* Efekt parallax przy najechaniu */
+}
+
+/* --- 3. SZKLANY PANEL ("GLASS PANEL") --- */
+.guide-list.view-image-masonry .glass-panel-six {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    
+    /* Efekt "szkła" z gradientem */
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+
+    /* Animacja wsuwania */
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Panel wsuwa się po najechaniu na kafelek */
+.guide-list.view-image-masonry .guide:hover .glass-panel-six {
+    transform: translateY(0);
+}
+
+/* --- 4. TEKST NA PANELU --- */
+.guide-list.view-image-masonry .title-six {
+    display: block;
+    font-size: 1.05em;
+    font-weight: 700;
+    color: #000;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+
+    /* Animacja pojawiania się tekstu */
+    opacity: 0;
+    transition: opacity 0.3s ease-out 0.2s; /* Opóźnienie, by tekst pojawił się po wsunięciu panelu */
+}
+html.dark-mode .guide-list.view-image-masonry .title-six {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Tekst staje się widoczny po najechaniu */
+.guide-list.view-image-masonry .guide:hover .title-six {
+    opacity: 1;
+}
+

@@ -1530,6 +1530,22 @@ function createGuideHtml(guide) {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
   } 
+
+  // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
+  else if (currentViewMode === "image-masonry") {
+    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    // DODAJEMY NOWY div.glass-panel-six Z TYTUŁEM WEWNĄTRZ
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="cover-link-six">
+            ${elegantCoverImgHtml}
+        </a>
+        <div class="glass-panel-six">
+            <span class="title-six">${titleText}</span>
+        </div>
+    `;
+  }
   
   else if (currentViewMode === "grid") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
