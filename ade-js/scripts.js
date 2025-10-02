@@ -954,8 +954,6 @@ function checkFileAndOpen(targetUrl, fallbackUrl, isLink = false) {
     });
 }
 
-
-
 const goToPage = (pageNum) => {
   pageNum = Math.max(1, Math.min(totalPages, pageNum));
   const targetScrollLeft = guideList.clientWidth * (pageNum - 1);
@@ -1497,44 +1495,81 @@ function createGuideHtml(guide) {
   if (guide.format === "link") {
     const targetUrl = decodeUrlFromFilename(guide.file);
     let clickAction;
-    if (guide.file.startsWith('_')) {
-      clickAction = `window.location.href = '${targetUrl.replace(/'/g, "\\'")}'; return false;`;
+    if (guide.file.startsWith("_")) {
+      clickAction = `window.location.href = '${targetUrl.replace(
+        /'/g,
+        "\\'"
+      )}'; return false;`;
     } else {
-      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${config.paths.urlFallback}', true); return false;`;
+      clickAction = `checkFileAndOpen('${targetUrl.replace(/'/g, "\\'")}','${
+        config.paths.urlFallback
+      }', true); return false;`;
     }
     titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info">${guide.linkData.description || ""}</div>`;
+    infoHtml = `<div class="guide-info">${
+      guide.linkData.description || ""
+    }</div>`;
     actionLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}"><i class="fas fa-external-link-alt"></i> ${lang.guideBtnOpen}</a>`;
     coverLinkHtml = `<a href="${targetUrl}" onclick="${clickAction}" class="cover-link"></a>`;
   } else if (mediaTypes.includes(guide.format)) {
-    const clickAction = `startSlideshowFrom('${guide.file.replace(/'/g, "\\'")}'); return false;`;
+    const clickAction = `startSlideshowFrom('${guide.file.replace(
+      /'/g,
+      "\\'"
+    )}'); return false;`;
     titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
+      guide.date
+    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
+      lang.guideInfoFormat
+    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
+      lang.guideInfoSize
+    }: ${guide.sizeMB} MB</div>`;
     actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
     coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
   } else {
-    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${config.paths.urlFallback}'); return false;`;
+    const clickAction = `checkFileAndOpen('${u.replace(/'/g, "\\'")}', '${
+      config.paths.urlFallback
+    }'); return false;`;
     titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br><i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB</div>`;
-    actionLinkHtml = `<a href="${u}" onclick="${(guide.format === 'pdf' ? clickAction : '')}" ${ (guide.format !== 'pdf' ? 'download' : '')}><i class="fas fa-${guide.format === 'pdf' ? 'file-pdf' : 'download'}"></i> ${guide.format === 'pdf' ? lang.guideBtnOpen : lang.guideBtnDownload}</a>`;
+    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
+      guide.date
+    } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
+      lang.guideInfoFormat
+    }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
+      lang.guideInfoSize
+    }: ${guide.sizeMB} MB</div>`;
+    actionLinkHtml = `<a href="${u}" onclick="${
+      guide.format === "pdf" ? clickAction : ""
+    }" ${guide.format !== "pdf" ? "download" : ""}><i class="fas fa-${
+      guide.format === "pdf" ? "file-pdf" : "download"
+    }"></i> ${
+      guide.format === "pdf" ? lang.guideBtnOpen : lang.guideBtnDownload
+    }</a>`;
     coverLinkHtml = `<a href="${u}" onclick="${clickAction}" class="cover-link"></a>`;
   }
 
-  const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
+  const noCoverImg = document.documentElement.classList.contains("dark-mode")
+    ? "ade-base-system/gfx/no_cover_dark.png"
+    : "ade-base-system/gfx/no_cover_light.png";
 
-  if (currentViewMode === 'text-only' || currentViewMode === 'full-text' || currentViewMode === 'text-masonry') {
+  if (
+    currentViewMode === "text-only" ||
+    currentViewMode === "full-text" ||
+    currentViewMode === "text-masonry"
+  ) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
-  } 
-  
+  }
+
   // else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
   //   const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
   //   return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  // } 
+  // }
 
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
   else if (currentViewMode === "image-masonry") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
     // DODAJEMY NOWY div.glass-panel-six Z TYTUŁEM WEWNĄTRZ
     return `
@@ -1545,18 +1580,16 @@ function createGuideHtml(guide) {
             <span class="title-six">${titleText}</span>
         </div>
     `;
-  }
-  
-  else if (currentViewMode === "grid") {
+  } else if (currentViewMode === "grid") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
     return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
-  } 
-  
-  else if (currentViewMode === "view-seven") {
+  } else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
     return `
         <a href="${hrefAction}" onclick="${onclickAction}" class="guide-cover-wrapper-seven">
@@ -1567,11 +1600,12 @@ function createGuideHtml(guide) {
             <div class="guide-action-link">${actionLinkHtml}</div>
         </div>
     `;
-  } 
-  
-  else { // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
+  } else {
+    // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
     const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
-    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${(coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""}">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
+    return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""
+    }">${defaultCoverImgHtml}</a>${actionLinkHtml}</div>`;
   }
 }
 
@@ -2685,6 +2719,7 @@ setInterval(updateRealTimeClock, 30000);
 // =================================================================
 //          LOGIKA KARUZELI JĘZYKOWEJ
 // =================================================================
+// ZASTĄP STARĄ WERSJĘ TĄ NOWĄ
 function initializeLangCarousel() {
   const modal = document.getElementById("lang-modal");
   const overlay = document.getElementById("lang-overlay");
@@ -2692,24 +2727,9 @@ function initializeLangCarousel() {
   const world = modal.querySelector(".world");
   const globeBtn = document.getElementById("statusLangBtn");
 
-  const langDetails = {
-    pl: { name: "Polski", flag: "pl" },
-    en: { name: "English", flag: "gb" },
-    de: { name: "Deutsch", flag: "de" },
-    es: { name: "Español", flag: "es" },
-    fr: { name: "Français", flag: "fr" },
-    it: { name: "Italiano", flag: "it" },
-    ja: { name: "日本語", flag: "jp" },
-    zh: { name: "中文", flag: "cn" },
-    pt: { name: "Português", flag: "br" },
-    cs: { name: "Čeština", flag: "cz" },
-    sk: { name: "Slovenčina", flag: "sk" },
-    uk: { name: "Українська", flag: "ua" },
-    id: { name: "Bahasa Indonesia", flag: "id" },
-    hi: { name: "हिन्दी", flag: "in" },
-  };
-
-  const availableLangCodes = Object.keys(languageStrings);
+  // ZMIANA: Usunięto lokalny obiekt langDetails. Poniżej pobieramy dane z config.js
+  const langDetails = config.langConfig;
+  const availableLangCodes = Object.keys(langDetails);
 
   const languages = availableLangCodes
     .map((code) => {
@@ -2738,7 +2758,7 @@ function initializeLangCarousel() {
       fontSize: 14,
       flagSize: 22,
       gap: 10,
-      radius: 220,
+      radius: 220, // Tę wartość będziemy modyfikować w przyszłości dla 17 krajów
     };
 
     const root = document.documentElement;
@@ -2822,7 +2842,7 @@ function initializeLangCarousel() {
       hasDragged = true;
     }
     const deltaX = currentX - lastX;
-    velocity = deltaX * rotationSensitivity; // <-- TUTAJ BYŁ BŁĄD, ZOSTAŁ NAPRAWIONY
+    velocity = deltaX * rotationSensitivity;
     currentRotationY += velocity;
     lastX = currentX;
     updateRotation();
@@ -2873,3 +2893,4 @@ initializeNewButtons();
 initializeDisplayPanel();
 initializeMobileHover();
 initialize3dHoverEffect();
+initializeCurtainControls();

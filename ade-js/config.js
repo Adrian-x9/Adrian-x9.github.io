@@ -99,4 +99,25 @@ const config = {
     coversFolderName: "ade-base-system/preview",
     previewHdFolderName: "ade-base-system/preview-hd",
   },
+
+  // Wklej ten obiekt wewnątrz obiektu 'config' w pliku config.js
+  langConfig: {
+    pl: { name: "Polski", flag: "pl", lat: 52.23, lon: 21.01 }, // Warszawa
+    en: { name: "English", flag: "gb", lat: 51.51, lon: -0.13 }, // Londyn
+    de: { name: "Deutsch", flag: "de", lat: 52.52, lon: 13.41 }, // Berlin
+    es: { name: "Español", flag: "es", lat: 40.42, lon: -3.7 }, // Madryt
+    fr: { name: "Français", flag: "fr", lat: 48.86, lon: 2.35 }, // Paryż
+    it: { name: "Italiano", flag: "it", lat: 41.9, lon: 12.5 }, // Rzym
+    ja: { name: "日本語", flag: "jp", lat: 35.68, lon: 139.69 }, // Tokio
+    zh: { name: "中文", flag: "cn", lat: 39.9, lon: 116.41 }, // Pekin
+    pt: { name: "Português", flag: "br", lat: -15.79, lon: -47.88 }, // Brasília
+    cs: { name: "Čeština", flag: "cz", lat: 50.08, lon: 14.44 }, // Praga
+    sk: { name: "Slovenčina", flag: "sk", lat: 48.15, lon: 17.11 }, // Bratysława
+    uk: { name: "Українська", flag: "ua", lat: 50.45, lon: 30.52 }, // Kijów
+    id: { name: "Indonesia", flag: "id", lat: -6.21, lon: 106.85 }, // Dżakarta
+    hi: { name: "हिन्दी", flag: "in", lat: 28.61, lon: 77.21 }, // Nowe Delhi
+    us: { name: "USA (English)", flag: "us", lat: 38.91, lon: -77.04 }, // Waszyngton
+    sg: { name: "Singapore", flag: "sg", lat: 1.35, lon: 103.82 }, // Singapur
+    tr: { name: "Türkçe", flag: "tr", lat: 39.93, lon: 32.86 }, // Ankara
+  },
 };
