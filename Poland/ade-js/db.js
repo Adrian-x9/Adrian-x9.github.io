@@ -21,17 +21,33 @@
 06.09.2025  07:14            705561 Gliwice-Stare-Miasto_Polska_298230_1920.jpg
 06.09.2025  07:08           1005258 Gliwice-Zamek-Zima_Polska_4022052_1920.jpg
 06.09.2025  07:29            991244 Janowiec-Ruiny-Zamku_Castle_Polska_822742_1920.jpg
+06.09.2025  12:24            361831 Katowice-Spodek-Noc_Saucer-Night_Polska_932032_1920.jpg
+06.09.2025  12:26            381112 Katowice-Spodek_Saucer_Polska_3626971_1920.jpg
+06.09.2025  12:25            567108 Katowice-Stacja-Kolejowa_Railway-Station_Polska_377001_1920.jpg
+06.09.2025  12:23           1154375 Katowice-Symbol_Polska_2050866_1920.jpg
 06.09.2025  07:28           1284251 Kolobrzeg-Ratusz_The-Town-Hall_Polska_3522136_1920.jpg
 06.09.2025  07:26            785680 Kolobrzeg_Polska_7562038_1920.jpg
+06.09.2025  12:19            660229 Krakow-Noc_Polska_poland-82017_1920.jpg
+06.09.2025  12:19            732276 Krakow-Rynek_Polska_4982314_1920.jpg
 06.09.2025  07:25            630852 Krakow-Sukiennice_Polska_2745231_1920.jpg
+06.09.2025  12:18            768781 Krakow-Wawel_Polska_wawel-3683040_1920.jpg
 06.09.2025  07:29            660229 Krakow-Wisla-Noc_Polska_82017_1920.jpg
+06.09.2025  12:20            760495 Krakow_Polska_4982318_1920.jpg
 06.09.2025  07:22            611312 Malbork-Zamek_Polska_1104042_1920.jpg
 06.09.2025  07:30           1308124 Morskie-Oko_Mountains_Polska_4652861_1920.jpg
 06.09.2025  07:32            433921 Morze-Baltyckie_Baltic-Sea_Polska_7434540_1920.jpg
+06.09.2025  12:08            926377 Moszna-Mosch-Zamek_Polska.jpg
+06.09.2025  12:09            826420 Moszna-Mosch-Zamek_Polska_mosch-930840_1920.jpg
+06.09.2025  12:07            242941 Moszna-Mosch-Zamek_Polska_sabine-930821_960_720.jpg
 06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
 06.09.2025  07:24            778656 Polska-Jura-Zamek_4717062_1920.jpg
 06.09.2025  07:24            897669 Polska-Wilamowice_Polska_5249675_1920.jpg
 06.09.2025  07:25            931818 Poznan-Rynek_Polska_983563_1920.jpg
+06.09.2025  12:12            313064 Pszczyna-Lew_Polska_castle-210873_1280.jpg
+06.09.2025  12:11            564778 Pszczyna-Rynek_Polska_poland-4717423_1920.jpg
+06.09.2025  12:12            612389 Pszczyna-Zamek-Lew_Polska_castle-210873_1920.jpg
+06.09.2025  12:22            670281 Sopot-Monciak_1557406_1920.jpg
+06.09.2025  12:21            913023 Sopot_Polska_6692518_1920.jpg
 06.09.2025  07:03            648074 Standarcie-Kawiarnia-Krakow_Polska_street-cafe-4472312_1920.jpg
 06.09.2025  07:34            532992 Swinoujscie_Morze-Baltyckie_Baltic-Sea_Polska_2687131_1920.jpg
 06.09.2025  07:21            626930 Twierdza-Modlin-Narew_Fortress_Polska_7933060_1920.jpg
@@ -42,6 +58,7 @@
 06.09.2025  07:32           1060107 Warszawa-Stare-Miasto_Polska_910497_1920.jpg
 06.09.2025  07:31            887618 Warszawa-Stare-Miasto_Polska_934971_1920.jpg
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
+
 
         `;
         /// COPY HERE <db> // database end / koniec bazy danych

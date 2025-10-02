@@ -1,3 +1,5 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
+
 /* patch#1 */
 /* Preloader Styles */
 /* === VisuDir Preloader v2 === */
@@ -124,7 +126,7 @@ body.video-ready {
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Satoshi", sans-serif;
   margin: 0;
   padding: 20px;
   transition: background-color 0.5s ease, color 0.3s ease;
@@ -2982,7 +2984,7 @@ html:not(.dark-mode) #lang-modal .item:hover {
 }
 
 .glass-status {
-  font-family: "Inter", sans-serif;
+  /* font-family: "Inter", sans-serif; */
   font-size: 0.95rem;
   color: #222;
   background: rgba(255, 255, 255, 0.65);
@@ -3001,7 +3003,7 @@ html:not(.dark-mode) #lang-modal .item:hover {
 }
 
 html.dark-mode .glass-status {
-  font-family: "Inter", sans-serif;
+  /* font-family: "Inter", sans-serif; */
   color: rgba(255, 255, 255, 0.85);
   background: rgba(45, 45, 45, 0.65);
   backdrop-filter: blur(10px);
@@ -3623,16 +3625,17 @@ html.dark-mode #statusLangBtn > a {
     font-weight: bold;
 }
 
-/* Kolorujemy na czerwono tylko te elementy, które tego wymagają */
+/* Kolorujemy i pogrubiamy elementy akcentu */
 #systemInfoLink .visu-text-red,
 #statusLangBtn .lang-code-status {
     color: var(--button-red-bg-light) !important;
+    font-weight: bold;
 }
 html.dark-mode #systemInfoLink .visu-text-red,
 html.dark-mode #statusLangBtn .lang-code-status {
     color: var(--button-red-bg-dark) !important;
+    font-weight: bold;
 }
-
 /* Efekt hover: cały link (VisuDir i flaga) zmienia kolor na standardowy */
 #systemInfoLink:hover,
 #statusLangBtn > a:hover {
