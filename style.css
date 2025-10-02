@@ -2357,9 +2357,17 @@ html.dark-mode #statusMuteBtn.active-red {
 
 
 
+
+
+
+
+
+
+
+
 /*
 ================================================================
-            FINALNA ŁATKA WIZUALNA v3.1 (CHIRURGICZNA KOREKTA)
+            FINALNA ŁATKA WIZUALNA v3.3 (WERSJA NAPRAWCZA)
 ================================================================
 */
 
@@ -2409,16 +2417,16 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 20px; /* Przywrócenie głównego marginesu */
+  padding: 20px;
   box-sizing: border-box;
 }
 .top-header {
-  flex-shrink: 0; /* Nagłówek się nie kurczy */
-  opacity: 1; /* NAPRAWA: Nadpisanie starych reguł */
+  flex-shrink: 0;
+  opacity: 1;
 }
 .control-panel {
-  flex-shrink: 0; /* Panel się nie kurczy */
-  opacity: 1; /* NAPRAWA: Nadpisanie starych reguł */
+  flex-shrink: 0;
+  opacity: 1;
   width: 100%;
   max-width: 900px;
 }
@@ -2428,10 +2436,10 @@ body {
   max-width: 1920px;
 }
 .footer {
-  margin-top: auto; /* Wypycha stopkę na sam dół */
-  padding-top: 40px; /* Dodatkowy odstęp od treści */
-  flex-shrink: 0; /* Stopka się nie kurczy */
-  opacity: 1; /* NAPRAWA: Nadpisanie starych reguł */
+  margin-top: auto;
+  padding-top: 40px;
+  flex-shrink: 0;
+  opacity: 1;
 }
 .pagination {
   opacity: 1;
@@ -2465,7 +2473,7 @@ body.video-ready .control-panel {
   -webkit-backdrop-filter: blur(5px);
 }
 
-/* --- GÓRNY WIERSZ PANELU (FILTRY I STATUS) --- */
+/* --- GÓRNY WIERSZ PANELU --- */
 .deck-top-row {
   display: grid;
   grid-template-columns: 1fr 20px auto;
@@ -2569,7 +2577,7 @@ html.dark-mode #curtain-toggle-btn {
   line-height: 1;
 }
 
-/* --- KROK 3: UJEDNOLICENIE PASKA STATUSU --- */
+/* --- PASEK STATUSU --- */
 .status-section {
   display: flex;
   flex-direction: column;
@@ -2711,118 +2719,84 @@ html.dark-mode .display-panel-group {
   cursor: pointer;
   background-color: transparent;
   color: var(--button-text-light);
-  /* ZMIANA: Dodana płynna animacja do wszystkich przycisków */
   transition: all 0.2s ease-in-out;
 }
 html.dark-mode .deck-bottom-row button {
   color: var(--button-text-dark);
 }
-
-/* ZMIANA: Ujednolicony efekt hover dla wszystkich przycisków w tej sekcji */
 .deck-bottom-row button:hover {
   transform: scale(1.1);
 }
-/* ZMIANA: Specjalny hover dla przycisków w szarym kontenerze */
-.deck-bottom-row .display-panel-group:not(.slider-group) button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-html.dark-mode
-  .deck-bottom-row
-  .display-panel-group:not(.slider-group)
-  button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
 
-/* Przyciski z ramką */
-.deck-bottom-row .accent-border {
-  border-color: var(--button-red-bg-light);
-}
-html.dark-mode .deck-bottom-row .accent-border {
-  border-color: var(--button-red-bg-dark);
-}
+/* --- STAN BAZOWY I HOVER DLA PRZYCISKÓW --- */
 
-/* ZMIANA: Czerwone, aktywne przyciski i stan aktywny dla przycisku orientacji */
+/* 1. Przyciski aktywne/czerwone (stan bazowy) */
 .deck-bottom-row #viewContentBtn,
-.deck-bottom-row #viewOrientationBtn.active, /* <-- NOWA REGUŁA */
-.deck-bottom-row .play-accent {
+.deck-bottom-row #viewOrientationBtn.active,
+.deck-bottom-row .play-accent,
+html.dark-mode .deck-bottom-row #viewThemeBtn {
   background-color: var(--button-red-bg-light);
   color: var(--button-red-text-light);
+  border-color: transparent;
 }
 html.dark-mode .deck-bottom-row #viewContentBtn,
-html.dark-mode .deck-bottom-row #viewOrientationBtn.active, /* <-- NOWA REGUŁA */
-html.dark-mode .deck-bottom-row .play-accent {
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active,
+html.dark-mode .deck-bottom-row .play-accent,
+html.dark-mode .deck-bottom-row #viewThemeBtn {
   background-color: var(--button-red-bg-dark);
   color: var(--button-red-text-dark);
 }
-.deck-bottom-row .play-accent {
-  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+
+/* 2. Przyciski nieaktywne/z ramką (stan bazowy) */
+.deck-bottom-row #viewOrientationBtn:not(.active),
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
+  background-color: transparent;
+  color: var(--button-text-light);
+  border-color: var(--button-red-bg-light);
 }
-html.dark-mode .deck-bottom-row .play-accent {
-  box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
+html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active) {
+  color: var(--button-text-dark);
+  border-color: var(--button-red-bg-dark);
 }
 
-/* ZMIANA: Odwrócony hover dla przycisków aktywnych (czerwonych) */
+
+/* 3. HOVER dla przycisków aktywnych/czerwonych -> odwrócenie kolorów */
 .deck-bottom-row #viewContentBtn:hover,
 .deck-bottom-row #viewOrientationBtn.active:hover,
-.deck-bottom-row .play-accent:hover {
+.deck-bottom-row .play-accent:hover,
+html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
     background-color: var(--panel-bg-light);
     color: var(--button-red-bg-light);
     border-color: var(--button-red-bg-light);
 }
 html.dark-mode .deck-bottom-row #viewContentBtn:hover,
 html.dark-mode .deck-bottom-row #viewOrientationBtn.active:hover,
-html.dark-mode .deck-bottom-row .play-accent:hover {
-    background-color: var(--panel-bg-dark);
-    color: var(--button-red-bg-dark);
-    border-color: var(--button-red-bg-dark);
-}
-
-
-/* ZMIANA: Nowa, warunkowa stylizacja dla przycisku motywu */
-/* Tryb jasny (nieaktywny) */
-html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
-  background-color: transparent;
-  color: var(--button-text-light);
-  border-color: var(--button-red-bg-light);
-}
-html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
-    background-color: var(--button-red-bg-light);
-    color: var(--button-red-text-light);
-}
-/* Tryb ciemny (aktywny) */
-html.dark-mode .deck-bottom-row #viewThemeBtn {
-    background-color: var(--button-red-bg-dark);
-    color: var(--button-red-text-dark);
-    border-color: transparent;
-}
+html.dark-mode .deck-bottom-row .play-accent:hover,
 html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
     background-color: var(--panel-bg-dark);
     color: var(--button-red-bg-dark);
     border-color: var(--button-red-bg-dark);
 }
 
+/* 4. HOVER dla przycisków nieaktywnych/z ramką -> stają się aktywne/czerwone */
+.deck-bottom-row #viewOrientationBtn:not(.active):hover,
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
+    background-color: var(--button-red-bg-light);
+    color: var(--button-red-text-light);
+    border-color: transparent;
+}
+html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active):hover {
+    background-color: var(--button-red-bg-dark);
+    color: var(--button-red-text-dark);
+    border-color: transparent;
+}
 
-/* --- KROK 4: PRZENIESIENIE I GRUPOWANIE PRZYCISKÓW --- */
-.subtle-bg-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px;
-  border-radius: 8px;
-  background-color: var(--group-bg-light);
+/* Cień dla przycisku Play */
+.deck-bottom-row .play-accent {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
-html.dark-mode .subtle-bg-group {
-  background-color: var(--group-bg-dark);
-}
-.video-controls-group {
-  padding-right: 8px;
-}
-.video-controls-group .video-main-btn {
-  width: auto;
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
+html.dark-mode .deck-bottom-row .play-accent {
+  box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
 }
 
 /* --- SUWAKI --- */
@@ -2871,6 +2845,7 @@ html.dark-mode .slider-control input[type="range"] {
   background: var(--slider-thumb-light);
   border: 2px solid var(--slider-thumb-border-light);
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
   background: var(--slider-thumb-dark);
@@ -2883,10 +2858,17 @@ html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
   background: var(--slider-thumb-light);
   border: 2px solid var(--slider-thumb-border-light);
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
   background: var(--slider-thumb-dark);
   border-color: var(--slider-thumb-border-dark);
+}
+.slider-control input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.2);
+}
+.slider-control input[type="range"]:hover::-moz-range-thumb {
+    transform: scale(1.2);
 }
 
 
