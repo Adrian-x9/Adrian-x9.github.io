@@ -3001,23 +3001,23 @@ html:not(.dark-mode) #lang-modal .item:hover {
 }
 
 html.dark-mode .glass-status {
-    font-family: "Inter", sans-serif;
-    color: rgba(255, 255, 255, 0.85);
-    background: rgba(45, 45, 45, 0.65);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-    /* UJEDNOLICONE WARTOŚCI ROZMIARU */
-    font-size: 0.95rem;
-    border-radius: 10px;
-    padding: 10px 20px; /* Zmieniony padding dla spójności */
-    margin-top: 16px;
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
+  font-family: "Inter", sans-serif;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(45, 45, 45, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  /* UJEDNOLICONE WARTOŚCI ROZMIARU */
+  font-size: 0.95rem;
+  border-radius: 10px;
+  padding: 10px 20px; /* Zmieniony padding dla spójności */
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
 /* === ADAPTACJA WIDOKÓW: Nowy Widok nr 1 (Tylko Tytuł) === */
@@ -3482,13 +3482,13 @@ html.dark-mode .visu-text-red {
 
 /* 5f1: Styl dla flagi na pasku statusu */
 .lang-flag-status {
-    width: 1.2em;
-    height: 1.2em;
-    border-radius: 50%;
-    vertical-align: middle;
-    margin-right: 0.4em;
-    margin-bottom: 0.1em;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); /* <-- DODAJ TĘ LINIĘ */
+  width: 1.2em;
+  height: 1.2em;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-bottom: 0.1em;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); /* <-- DODAJ TĘ LINIĘ */
 }
 
 .lang-code-status {
@@ -3510,23 +3510,81 @@ html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
 /* Pogrubienie nazwy */
 #systemInfoLink .visu-text-red,
 #systemInfoLink .dir-text-themed {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Aktywny, czerwony kolor dla linków */
-#systemInfoLink, #statusLangBtn a {
-    color: var(--button-red-bg-light) !important;
-    text-decoration: none;
-    transition: color 0.2s ease;
+#systemInfoLink,
+#statusLangBtn a {
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
-html.dark-mode #systemInfoLink, html.dark-mode #statusLangBtn a {
-    color: var(--button-red-bg-dark) !important;
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn a {
+  color: var(--button-red-bg-dark) !important;
 }
 
 /* Efekt hover - powrót do standardowego koloru tekstu panelu */
-#systemInfoLink:hover, #statusLangBtn a:hover {
-    color: var(--status-text-light, #444) !important;
+#systemInfoLink:hover,
+#statusLangBtn a:hover {
+  color: var(--status-text-light, #444) !important;
 }
-html.dark-mode #systemInfoLink:hover, html.dark-mode #statusLangBtn a:hover {
-    color: var(--status-text-dark, #bbb) !important;
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn a:hover {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Plik: style.css */
+
+/* DODAJ PONIŻSZE REGUŁY NA SAMYM KOŃCU PLIKU, ABY NADPISAĆ ISTNIEJĄCE STYLE */
+
+/* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU v2 --- */
+/* Pogrubienie nazwy */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+  font-weight: bold;
+}
+
+/* Usunięcie globalnego koloru czerwonego z całego linku */
+#systemInfoLink {
+  text-decoration: none;
+  color: var(--status-text-light, #444) !important;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Nadanie koloru tylko dla 'Visu' */
+#systemInfoLink .visu-text-red {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink .visu-text-red {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Styl dla kodu języka, spójny z 'Visu' */
+#statusLangBtn a {
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #statusLangBtn a {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Wspólny efekt hover dla obu linków */
+#systemInfoLink:hover,
+#statusLangBtn a:hover {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn a:hover {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Dodanie subtelnej ramki do flagi */
+.lang-flag-status {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }

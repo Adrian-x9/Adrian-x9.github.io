@@ -2908,7 +2908,10 @@ function initializeLangCarousel() {
   });
 }
 
-// ZASTĄP CAŁĄ FUNKCJĘ TĄ WERSJĄ
+// Plik: scripts.js
+
+// ZASTĄP ISTNIEJĄCĄ FUNKCJĘ `calculateSunTimes` PONIŻSZĄ WERSJĄ:
+
 function calculateSunTimes(date, lat, lon) {
   const toRad = Math.PI / 180;
   const toDeg = 180 / Math.PI;
@@ -2945,24 +2948,26 @@ function calculateSunTimes(date, lat, lon) {
   const j_rise = j_approx + (6.4 - ra) - (h + lon / 15);
   const j_set = j_approx + (6.4 - ra) + (h - lon / 15);
 
-  const ut_rise = (j_rise - 0.06571 * j_rise - 6.622) % 24;
-  const ut_set = (j_set - 0.06571 * j_set - 6.622) % 24;
+  // KLUCZOWA POPRAWKA: Upewnienie się, że czas nie jest ujemny
+  const ut_rise = (((j_rise - 0.06571 * j_rise - 6.622) % 24) + 24) % 24;
+  const ut_set = (((j_set - 0.06571 * j_set - 6.622) % 24) + 24) % 24;
 
   const baseDate = new Date(
-    date.getFullYear(),
-    date.getMonth(),
-    date.getDate()
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate())
   );
   const sunriseDate = new Date(baseDate.getTime() + ut_rise * 3600 * 1000);
   const sunsetDate = new Date(baseDate.getTime() + ut_set * 3600 * 1000);
 
-  const formatTime = (d) =>
-    `${d.getHours().toString().padStart(2, "0")}:${d
-      .getMinutes()
-      .toString()
-      .padStart(2, "0")}`;
+  const formatTime = (d) => {
+    const hours = d.getUTCHours().toString().padStart(2, "0");
+    const minutes = d.getUTCMinutes().toString().padStart(2, "0");
+    return `${hours}:${minutes}`;
+  };
 
-  const durationMs = sunsetDate - sunriseDate;
+  const durationMs =
+    sunsetDate > sunriseDate
+      ? sunsetDate - sunriseDate
+      : sunriseDate - sunsetDate;
   const durationHours = Math.floor(durationMs / 3600000);
   const durationMinutes = Math.floor((durationMs % 3600000) / 60000);
   const formattedDuration = `${durationHours
@@ -2977,22 +2982,26 @@ function calculateSunTimes(date, lat, lon) {
 }
 
 function updateLocationBasedStatus() {
-  // ... (część dotycząca słońca bez zmian) ...
+  const langCode = config.language.current;
+  const location = config.langConfig[langCode];
+
+  // Aktualizacja Wschodu/Zachodu Słońca
+  const sunTimesEl = document.getElementById("sunTimesDisplay");
+  if (sunTimesEl && location && location.lat && location.lon) {
+    const sunTimes = calculateSunTimes(new Date(), location.lat, location.lon);
+    if (sunTimes.sunrise !== "n/a") {
+      sunTimesEl.innerHTML = `🌞 <b>${sunTimes.sunrise} – ${sunTimes.sunset}</b> (${sunTimes.duration})`;
+    } else {
+      sunTimesEl.innerHTML = `🌞 N/A`;
+    }
+  }
+
   // Aktualizacja Fazy Księżyca
   const moonPhaseEl = document.getElementById("moonPhaseDisplay");
   if (moonPhaseEl) {
     const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
-    // Używamy tłumaczeń z pliku lang.js
-    const moonPhaseNames = lang.moonPhaseNames || [
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-    ];
+    const moonPhaseNames =
+      lang.moonPhaseNames || Array(8).fill(""); // Zabezpieczenie
     const phaseIndex = getMoonPhase(new Date());
     moonPhaseEl.innerHTML = `${moonPhases[phaseIndex]} ${moonPhaseNames[phaseIndex]}`;
   }
