@@ -1526,10 +1526,10 @@ function createGuideHtml(guide) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
   } 
   
-  else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
-    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  } 
+  // else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+  //   const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+  //   return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
+  // } 
 
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
   else if (currentViewMode === "image-masonry") {
