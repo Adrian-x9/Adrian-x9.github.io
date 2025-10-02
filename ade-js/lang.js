@@ -75,6 +75,7 @@ const languageStrings = {
     slideshowShuffle: "Shuffle slides On/Off",
     slideshowNext: "Next",
     slideshowLast: "Last",
+    moonPhaseNames: ["New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous", "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent"],    
   },
   // Polish
   pl: {
@@ -151,6 +152,7 @@ const languageStrings = {
     slideshowShuffle: "Losowe slajdy Wł/Wył",
     slideshowNext: "Następny",
     slideshowLast: "Ostatni",
+    moonPhaseNames: ["Nów", "Sierp przybywający", "Pierwsza kwadra", "Garb przybywający", "Pełnia", "Garb ubywający", "Ostatnia kwadra", "Sierp ubywający"],
   },
   // German
   de: {

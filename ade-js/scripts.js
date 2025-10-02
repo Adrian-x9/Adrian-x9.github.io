@@ -231,22 +231,6 @@ function updateRealTimeClock() {
   if (clockEl) {
     clockEl.innerHTML = `<b>${hours}:${minutes}</b> ${year}-${month}-${day}`;
   }
-
-  const moonPhaseEl = document.getElementById("moonPhaseDisplay");
-  if (moonPhaseEl) {
-    const moonPhases = [
-      "🌑\uFE0E",
-      "🌒\uFE0E",
-      "🌓\uFE0E",
-      "🌔\uFE0E",
-      "🌕\uFE0E",
-      "🌖\uFE0E",
-      "🌗\uFE0E",
-      "🌘\uFE0E",
-    ];
-    const phaseIndex = getMoonPhase(now);
-    moonPhaseEl.innerHTML = "Księżyc&nbsp;" + moonPhases[phaseIndex];
-  }
 }
 
 function initializeBackgroundVideo(theme) {
@@ -2924,125 +2908,94 @@ function initializeLangCarousel() {
   });
 }
 
-// ZASTĄP TĘ FUNKCJĘ
+// ZASTĄP CAŁĄ FUNKCJĘ TĄ WERSJĄ
 function calculateSunTimes(date, lat, lon) {
   const toRad = Math.PI / 180;
   const toDeg = 180 / Math.PI;
+
   const dayOfYear = (d) =>
-    Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
+    Math.floor((d - new Date(d.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
+  const n = dayOfYear(date) + 1;
 
-  const n = dayOfYear(date);
-  const longitude = lon;
-  const latitude = lat;
-
-  const j_rise = n + (6 - longitude / 15) / 24;
-  const j_set = n + (18 - longitude / 15) / 24;
-
-  const m_rise = (0.9856 * j_rise - 3.289) * toRad;
-  const m_set = (0.9856 * j_set - 3.289) * toRad;
-
-  const l_rise =
-    m_rise +
-    1.916 * Math.sin(m_rise) * toRad +
-    0.02 * Math.sin(2 * m_rise) * toRad +
-    282.634 * toRad;
-  const l_set =
-    m_set +
-    1.916 * Math.sin(m_set) * toRad +
-    0.02 * Math.sin(2 * m_set) * toRad +
+  const j_approx = n - lon / 360;
+  const m = (0.98560028 * j_approx - 3.289) * toRad;
+  const l =
+    m +
+    1.916 * Math.sin(m) * toRad +
+    0.02 * Math.sin(2 * m) * toRad +
     282.634 * toRad;
 
-  let ra_rise = toDeg * Math.atan(0.91764 * Math.tan(l_rise));
-  let ra_set = toDeg * Math.atan(0.91764 * Math.tan(l_set));
+  let ra = toDeg * Math.atan(0.91746 * Math.tan(l));
+  const l_quad = Math.floor((toDeg * l) / 90) * 90;
+  const ra_quad = Math.floor(ra / 90) * 90;
+  ra = (ra + (l_quad - ra_quad)) / 15;
 
-  const l_quad_rise = Math.floor((toDeg * l_rise) / 90) * 90;
-  const ra_quad_rise = Math.floor(ra_rise / 90) * 90;
-  ra_rise = ra_rise + (l_quad_rise - ra_quad_rise);
+  const sin_dec = 0.39782 * Math.sin(l);
+  const cos_dec = Math.cos(Math.asin(sin_dec));
 
-  const l_quad_set = Math.floor((toDeg * l_set) / 90) * 90;
-  const ra_quad_set = Math.floor(ra_set / 90) * 90;
-  ra_set = ra_set + (l_quad_set - ra_quad_set);
-
-  const sin_dec_rise = 0.39782 * Math.sin(l_rise);
-  const cos_dec_rise = Math.cos(Math.asin(sin_dec_rise));
-  const sin_dec_set = 0.39782 * Math.sin(l_set);
-  const cos_dec_set = Math.cos(Math.asin(sin_dec_set));
-
-  const cos_h_rise =
-    (Math.sin(-0.83 * toRad) - sin_dec_rise * Math.sin(latitude * toRad)) /
-    (cos_dec_rise * Math.cos(latitude * toRad));
-  const cos_h_set =
-    (Math.sin(-0.83 * toRad) - sin_dec_set * Math.sin(latitude * toRad)) /
-    (cos_dec_set * Math.cos(latitude * toRad));
-
-  if (Math.abs(cos_h_rise) > 1 || Math.abs(cos_h_set) > 1) {
+  const cos_h =
+    (Math.sin(-0.83 * toRad) - sin_dec * Math.sin(lat * toRad)) /
+    (cos_dec * Math.cos(lat * toRad));
+  if (Math.abs(cos_h) > 1) {
     return { sunrise: "n/a", sunset: "n/a", duration: "n/a" };
   }
 
-  const h_rise = (360 - toDeg * Math.acos(cos_h_rise)) / 15;
-  const h_set = (toDeg * Math.acos(cos_h_set)) / 15;
+  const h = (toDeg * Math.acos(cos_h)) / 15;
 
-  const t_rise = h_rise + ra_rise / 15 - 0.06571 * j_rise - 6.622;
-  const t_set = h_set + ra_set / 15 - 0.06571 * j_set - 6.622;
+  const j_rise = j_approx + (6.4 - ra) - (h + lon / 15);
+  const j_set = j_approx + (6.4 - ra) + (h - lon / 15);
 
-  const ut_rise = (t_rise - longitude / 15 + 24) % 24;
-  const ut_set = (t_set - longitude / 15 + 24) % 24;
+  const ut_rise = (j_rise - 0.06571 * j_rise - 6.622) % 24;
+  const ut_set = (j_set - 0.06571 * j_set - 6.622) % 24;
 
-  const timezoneOffset = -date.getTimezoneOffset() / 60;
-  let local_rise = (ut_rise + timezoneOffset + 24) % 24;
-  let local_set = (ut_set + timezoneOffset + 24) % 24;
+  const baseDate = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    date.getDate()
+  );
+  const sunriseDate = new Date(baseDate.getTime() + ut_rise * 3600 * 1000);
+  const sunsetDate = new Date(baseDate.getTime() + ut_set * 3600 * 1000);
 
-  const formatTime = (time) => {
-    const h = Math.floor(time).toString().padStart(2, "0");
-    const m = Math.floor((time % 1) * 60)
+  const formatTime = (d) =>
+    `${d.getHours().toString().padStart(2, "0")}:${d
+      .getMinutes()
       .toString()
-      .padStart(2, "0");
-    return `${h}:${m}`;
-  };
+      .padStart(2, "0")}`;
 
-  // NOWA CZĘŚĆ: Obliczanie i formatowanie czasu trwania dnia
-  const durationHours = local_set - local_rise;
-  const durationH = Math.floor(durationHours);
-  const durationM = Math.floor((durationHours % 1) * 60);
-  const formattedDuration = `${durationH
+  const durationMs = sunsetDate - sunriseDate;
+  const durationHours = Math.floor(durationMs / 3600000);
+  const durationMinutes = Math.floor((durationMs % 3600000) / 60000);
+  const formattedDuration = `${durationHours
     .toString()
-    .padStart(2, "0")}:${durationM.toString().padStart(2, "0")}`;
+    .padStart(2, "0")}:${durationMinutes.toString().padStart(2, "0")}`;
 
   return {
-    sunrise: formatTime(local_rise),
-    sunset: formatTime(local_set),
-    duration: formattedDuration, // <-- Zwracamy nową wartość
+    sunrise: formatTime(sunriseDate),
+    sunset: formatTime(sunsetDate),
+    duration: formattedDuration,
   };
 }
 
-// ZASTĄP TĘ FUNKCJĘ
 function updateLocationBasedStatus() {
-    const lang = config.language.current;
-    const location = config.langConfig[lang];
-
-    if (!location) {
-        console.error(`Brak danych lokalizacyjnych dla języka: ${lang}`);
-        return;
-    }
-
-    const now = new Date();
-
-    // Aktualizacja Wschodu/Zachodu Słońca (z czasem trwania)
-    const sunTimesEl = document.getElementById("sunTimesDisplay");
-    if (sunTimesEl) {
-        const sunTimes = calculateSunTimes(now, location.lat, location.lon);
-        // Zaktualizowany format wyświetlania
-        sunTimesEl.innerHTML = `🌞 <strong>${sunTimes.sunrise} – ${sunTimes.sunset}</strong> (${sunTimes.duration})`;
-    }
-
-    // Aktualizacja Fazy Księżyca
-    const moonPhaseEl = document.getElementById("moonPhaseDisplay");
-    if (moonPhaseEl) {
-        const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
-        const moonPhaseNames = ["Nów", "Sierp przybywający", "Pierwsza kwadra", "Garb przybywający", "Pełnia", "Garb ubywający", "Ostatnia kwadra", "Sierp ubywający"];
-        const phaseIndex = getMoonPhase(now);
-        moonPhaseEl.innerHTML = `${moonPhases[phaseIndex]} ${moonPhaseNames[phaseIndex]}`;
-    }
+  // ... (część dotycząca słońca bez zmian) ...
+  // Aktualizacja Fazy Księżyca
+  const moonPhaseEl = document.getElementById("moonPhaseDisplay");
+  if (moonPhaseEl) {
+    const moonPhases = ["🌑", "🌒", "🌓", "🌔", "🌕", "🌖", "🌗", "🌘"];
+    // Używamy tłumaczeń z pliku lang.js
+    const moonPhaseNames = lang.moonPhaseNames || [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+    ];
+    const phaseIndex = getMoonPhase(new Date());
+    moonPhaseEl.innerHTML = `${moonPhases[phaseIndex]} ${moonPhaseNames[phaseIndex]}`;
+  }
 }
 
 function updateStatusLangDisplay() {
