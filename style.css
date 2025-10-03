@@ -4001,3 +4001,15 @@ body.play-mode-active > .pagination {
     margin-bottom: 15px;
   }
 }
+
+/* --- DO DODANIA --- */
+/* ================================================================
+    ŁATKA: Klasa pomocnicza dla wygaszacza ekranu
+   ================================================================ */
+.screensaver-fade-out {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.8s ease-out !important;
+}
+/* --- KONIEC --- */
+

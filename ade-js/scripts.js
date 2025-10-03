@@ -87,6 +87,7 @@ const SESSION_GRACE_PERIOD_MS = 65000; // 65 sekund (nieco więcej niż interwa�
 
 let globalSessionStartTime; // Zastępuje 'sessionStartTime'
 let lastActivityTime;
+let screenSaverState = 'inactive'; // Możliwe stany: 'inactive', 'stage1', 'stage2'
 let currentSort, selectedRowCount;
 
 let currentViewMode;
@@ -187,10 +188,15 @@ function updateGuideCount(count, total) {
 }
 
 function resetIdleTimer() {
+  // Jeśli wygaszacz był aktywny w dowolnej fazie, przywracamy UI
+  if (screenSaverState !== 'inactive') {
+    restoreUiFromScreenSaver();
+  }
   lastActivityTime = new Date();
 }
 
 function updateTimers() {
+  checkScreenSaverState(); // Sprawdzanie stanu wygaszacza w każdym cyklu timera
   const now = new Date();
   // Używamy teraz globalnego czasu startu sesji
   const sessionDuration = now - globalSessionStartTime;
@@ -3124,6 +3130,66 @@ window.addEventListener("storage", (event) => {
     }
   }
 });
+
+/**
+ * Główna funkcja sprawdzająca stan bezczynności, wywoływana co sekundę.
+ */
+function checkScreenSaverState() {
+  const idleTimeSeconds = (new Date() - lastActivityTime) / 1000;
+  const timeoutStage1 = config.pageSettings.screenSaverTimeout / 2;
+  const timeoutStage2 = config.pageSettings.screenSaverTimeout;
+
+  if (idleTimeSeconds >= timeoutStage2 && screenSaverState !== 'stage2') {
+    enterScreenSaverStage2();
+  } else if (idleTimeSeconds >= timeoutStage1 && screenSaverState === 'inactive') {
+    enterScreenSaverStage1();
+  }
+}
+
+/**
+ * Uruchamia pierwszą fazę wygaszacza - ukrywa statyczne elementy UI.
+ */
+function enterScreenSaverStage1() {
+  console.log("Screensaver: Faza 1 - ukrywanie UI.");
+  screenSaverState = 'stage1';
+  
+  const isSlideshowActive = document.body.classList.contains('play-mode-active');
+  let elementsToHide;
+
+  if (isSlideshowActive) {
+    // W trybie pokazu slajdów ukrywamy jego kontrolki
+    elementsToHide = document.querySelectorAll('#lightbox-controls, #play-caption, #playCloseBtn, #fullscreenBtnLightbox, #lightbox-minimizeBtn');
+  } else {
+    // W widoku głównym ukrywamy panele i stopkę
+    elementsToHide = document.querySelectorAll('.control-panel, .glass-status, .footer');
+  }
+
+  elementsToHide.forEach(el => el.classList.add('screensaver-fade-out'));
+}
+
+/**
+ * Uruchamia drugą fazę wygaszacza - aktywuje pokaz slajdów.
+ */
+function enterScreenSaverStage2() {
+  console.log("Screensaver: Faza 2 - uruchamianie pokazu slajdów.");
+  screenSaverState = 'stage2';
+  
+  // Jeśli już jesteśmy w trybie pokazu, nie robimy nic.
+  if (!document.body.classList.contains('play-mode-active')) {
+    startPlayAnimation();
+  }
+}
+
+/**
+ * Przywraca widoczność interfejsu po wykryciu aktywności użytkownika.
+ */
+function restoreUiFromScreenSaver() {
+  console.log("Screensaver: Wykryto aktywność, przywracanie UI.");
+  screenSaverState = 'inactive';
+  
+  const hiddenElements = document.querySelectorAll('.screensaver-fade-out');
+  hiddenElements.forEach(el => el.classList.remove('screensaver-fade-out'));
+}
 
 // Wywołaj inicjalizację karuzeli po załadowaniu strony
 initializeLangCarousel();

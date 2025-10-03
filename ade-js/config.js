@@ -10,6 +10,7 @@ const config = {
   /// COPY HERE <cfg> // configuration / konfiguracja
   pageSettings: {
     pageKey: "indexMaxi",
+    screenSaverTimeout: 90,
 
     defaultBgVideo: 1,
     bgVideoStartNum: 1,
