@@ -1,4 +1,4 @@
-@import url('https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap');
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap");
 
 /* patch#1 */
 /* Preloader Styles */
@@ -2348,26 +2348,6 @@ html.dark-mode #statusMuteBtn.active-red {
   color: #e53935;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*
 ================================================================
             FINALNA ŁATKA WIZUALNA v4.0 (OPERACJA NAPRAWCZA)
@@ -2510,8 +2490,8 @@ html.dark-mode .deck-top-row {
   max-width: 850px;
 }
 .status-section {
-    flex-grow: 1; /* Sekcja statusu zajmuje pozostałe miejsce */
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-grow: 1; /* Sekcja statusu zajmuje pozostałe miejsce */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .filter-section > * {
@@ -2593,17 +2573,16 @@ html.dark-mode #curtain-toggle-btn {
   line-height: 1;
 }
 #curtain-toggle-btn:hover {
-    transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
-    /* box-shadow: 0 0 8px var(--button-red-bg-light); */
-    box-shadow: 0 0 8px var(--button-red-bg-light);
+  transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+  /* box-shadow: 0 0 8px var(--button-red-bg-light); */
+  box-shadow: 0 0 8px var(--button-red-bg-light);
 }
 .deck-top-row.filters-expanded #curtain-toggle-btn:hover {
-    --rotation: 180deg; /* Zmienna CSS do zachowania obrotu */
+  --rotation: 180deg; /* Zmienna CSS do zachowania obrotu */
 }
 html.dark-mode #curtain-toggle-btn:hover {
-    box-shadow: 0 0 10px var(--button-red-bg-dark);
+  box-shadow: 0 0 10px var(--button-red-bg-dark);
 }
-
 
 /* --- NAPRAWA #2: PRZYWRÓCENIE GRUPOWANIA IKON --- */
 .status-section {
@@ -2657,7 +2636,7 @@ html.dark-mode .subtle-bg-group {
   transition: opacity 0.2s ease, color 0.2s ease;
 }
 html.dark-mode .status-icon-btn {
-    color: var(--status-text-dark);
+  color: var(--status-text-dark);
 }
 
 /* --- LOGIKA STANÓW AKTYWNYCH I HOVER DLA IKON (Z POPRZEDNIEJ ŁATY) --- */
@@ -2677,7 +2656,7 @@ html.dark-mode .status-icon-btn.active-red {
 }
 .status-icon-btn.active-red:hover {
   color: var(--status-text-light);
-  opacity: 0.8; 
+  opacity: 0.8;
 }
 html.dark-mode .status-icon-btn.active-red:hover {
   color: var(--status-text-dark);
@@ -2732,14 +2711,14 @@ html.dark-mode .deck-bottom-row .accent-border {
   border-color: var(--button-red-bg-dark);
 }
 .deck-bottom-row #viewOrientationBtn:not(.active):hover {
-    background-color: var(--button-red-bg-light);
-    color: var(--button-red-text-light);
-    border-color: transparent;
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  border-color: transparent;
 }
 html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active):hover {
-    background-color: var(--button-red-bg-dark);
-    color: var(--button-red-text-dark);
-    border-color: transparent;
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+  border-color: transparent;
 }
 .deck-bottom-row #viewContentBtn,
 .deck-bottom-row #viewOrientationBtn.active,
@@ -2760,29 +2739,29 @@ html.dark-mode .deck-bottom-row #viewThemeBtn {
 .deck-bottom-row #viewOrientationBtn.active:hover,
 .deck-bottom-row .play-accent:hover,
 html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
-    background-color: var(--panel-bg-light);
-    color: var(--button-red-bg-light);
-    border-color: var(--button-red-bg-light);
+  background-color: var(--panel-bg-light);
+  color: var(--button-red-bg-light);
+  border-color: var(--button-red-bg-light);
 }
 html.dark-mode .deck-bottom-row #viewContentBtn:hover,
 html.dark-mode .deck-bottom-row #viewOrientationBtn.active:hover,
 html.dark-mode .deck-bottom-row .play-accent:hover,
 html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
-    background-color: var(--panel-bg-dark);
-    color: var(--button-red-bg-dark);
-    border-color: var(--button-red-bg-dark);
+  background-color: var(--panel-bg-dark);
+  color: var(--button-red-bg-dark);
+  border-color: var(--button-red-bg-dark);
 }
 
 /* Poprawki punktowe trybu HOVER przycisku Widok */
 
-body.dark-mode .control-panel button#viewContentBtn:hover  {
-    background-color: var(--panel-bg-dark);
-    color: var(--panel-bg-light);
+body.dark-mode .control-panel button#viewContentBtn:hover {
+  background-color: var(--panel-bg-dark);
+  color: var(--panel-bg-light);
 }
 
-body:not(dark-mode) .control-panel button#viewContentBtn:hover  {
-    background-color: var(--panel-bg-light);
-    color: var(--panel-bg-dark);
+body:not(dark-mode) .control-panel button#viewContentBtn:hover {
+  background-color: var(--panel-bg-light);
+  color: var(--panel-bg-dark);
 }
 
 html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
@@ -2791,8 +2770,8 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
   border-color: var(--button-red-bg-light);
 }
 html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
-    background-color: var(--button-red-bg-light);
-    color: var(--button-red-text-light);
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
 }
 .deck-bottom-row .play-accent {
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
@@ -2867,40 +2846,11 @@ html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
   border-color: var(--slider-thumb-border-dark);
 }
 .slider-control input[type="range"]:hover::-webkit-slider-thumb {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
 .slider-control input[type:="range"]:hover::-moz-range-thumb {
-    transform: scale(1.2);
+  transform: scale(1.2);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* --- MODAL I KARUZELA JĘZYKOWA (Wersja wyczyszczona) --- */
 .lang-modal-container {
@@ -3377,7 +3327,12 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 /* Poprawiamy wygląd samej nakładki */
 .guide-list.view-grid .grid-overlay {
   /* Zamiast jednolitego tła, używamy gradientu od przezroczystości do koloru */
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.7) 30%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.7) 30%,
+    transparent 100%
+  );
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   opacity: 0;
@@ -3392,7 +3347,12 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   pointer-events: none;
 }
 body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
-  background: linear-gradient(to top, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.75) 30%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.75) 30%,
+    transparent 100%
+  );
 }
 
 /* Nowy, czytelniejszy styl dla tekstu z animacją */
@@ -3590,28 +3550,28 @@ html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
 
 /* Aktywny, czerwony kolor dla linków */
 #systemInfoLink,
-#statusLangBtn a {
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
   color: var(--button-red-bg-light) !important;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 html.dark-mode #systemInfoLink,
-html.dark-mode #statusLangBtn a {
+html.dark-mode #statusLangBtn > a {
   color: var(--button-red-bg-dark) !important;
 }
 
 /* Efekt hover - powrót do standardowego koloru tekstu panelu */
 #systemInfoLink:hover,
-#statusLangBtn a:hover {
-  color: var(--status-text-light, #444) !important;
+#statusLangBtn > a:hover {
+  color: var(--button-red-bg-light) !important;
 }
 html.dark-mode #systemInfoLink:hover,
-html.dark-mode #statusLangBtn a:hover {
-  color: var(--status-text-dark, #bbb) !important;
+html.dark-mode #statusLangBtn > a:hover {
+  color: var(--button-red-bg-dark) !important;
 }
 
 /* Plik: style.css */
-
 
 /* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU v2 --- */
 /* Pogrubienie nazwy */
@@ -3667,71 +3627,74 @@ html.dark-mode #statusLangBtn a:hover {
 
 /* 1. Poprawka rozmiaru panelu w trybie ciemnym */
 html.dark-mode .glass-status {
-    padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
+  padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
 }
 
 /* 2. Dodanie ramki do flagi dla lepszej widoczności */
 .lang-flag-status {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 html.dark-mode .lang-flag-status {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 /* 5 & 6. Ostateczne i poprawne style dla VisuDir i flagi */
 #systemInfoLink,
 #statusLangBtn > a {
-    /* Ustawiamy standardowy kolor tekstu dla całego linku */
-    color: var(--status-text-light, #444) !important;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 html.dark-mode #systemInfoLink,
 html.dark-mode #statusLangBtn > a {
-    color: var(--status-text-dark, #bbb) !important;
+  color: var(--status-text-dark, #bbb) !important;
 }
 
 /* Pogrubiamy tylko "VisuDir" */
 #systemInfoLink .visu-text-red,
 #systemInfoLink .dir-text-themed {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 /* Kolorujemy i pogrubiamy elementy akcentu */
 #systemInfoLink .visu-text-red,
 #statusLangBtn .lang-code-status {
-    color: var(--button-red-bg-light) !important;
-    font-weight: bold;
+  color: var(--button-red-bg-light) !important;
+  font-weight: bold;
 }
 html.dark-mode #systemInfoLink .visu-text-red,
 html.dark-mode #statusLangBtn .lang-code-status {
-    color: var(--button-red-bg-dark) !important;
-    font-weight: bold;
+  color: var(--button-red-bg-dark) !important;
+  font-weight: bold;
 }
 /* Efekt hover: cały link (VisuDir i flaga) zmienia kolor na standardowy */
-#systemInfoLink:hover,
-#statusLangBtn > a:hover {
-    color: var(--status-text-light, #444) !important;
+#systemInfoLink,
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
-html.dark-mode #systemInfoLink:hover,
-html.dark-mode #statusLangBtn > a:hover {
-    color: var(--status-text-dark, #bbb) !important;
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+  color: var(--button-red-bg-dark) !important;
 }
 
 /* Hover dla VisuDir: czerwony tekst staje się standardowy */
 #systemInfoLink:hover .visu-text-red {
-    color: var(--status-text-light, #444) !important;
+  color: var(--status-text-light, #444) !important;
 }
 html.dark-mode #systemInfoLink:hover .visu-text-red {
-    color: var(--status-text-dark, #bbb) !important;
+  color: var(--status-text-dark, #bbb) !important;
 }
 
 /* Hover dla flagi: czerwony tekst staje się standardowy */
 #statusLangBtn > a:hover .lang-code-status {
-    color: var(--status-text-light, #444) !important;
+  color: var(--status-text-light, #444) !important;
 }
 html.dark-mode #statusLangBtn > a:hover .lang-code-status {
-    color: var(--status-text-dark, #bbb) !important;
+  color: var(--status-text-dark, #bbb) !important;
 }
 /* --- ŁATKA STYLU: Nowy wygląd siatki (Soft UI) --- */
 
@@ -3761,7 +3724,7 @@ html.dark-mode .guide-list.view-grid .guide {
 }
 
 /* 2. Pasek tytułu na górze */
-.guide-list.view-grid  {
+.guide-list.view-grid {
   padding: 10px 20px; /* Zmiana */
   font-weight: 600;
   font-size: 0.9em;
@@ -3797,7 +3760,7 @@ html.dark-mode .guide-list.view-grid .grid-title-bar {
 }
 
 html.dark-mode .guide-list.view-grid .grid-action-bar {
-    background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* 5. Przycisk akcji */
@@ -3812,7 +3775,7 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   font-size: 0.9em;
   background-color: var(--button-red-bg-light);
   color: var(--button-red-text-light);
-  box-shadow: 2px 2px 5px rgba(0,0,0,0.15);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
 }
 
@@ -3851,7 +3814,7 @@ html.dark-mode .status-icon-btn.active-red {
 /* NOWOŚĆ: Hover na aktywnym (czerwonym) przycisku -> powrót do koloru bazowego */
 .status-icon-btn.active-red:hover {
   color: var(--status-text-light);
-  opacity: 0.8; 
+  opacity: 0.8;
 }
 html.dark-mode .status-icon-btn.active-red:hover {
   color: var(--status-text-dark);
@@ -3871,4 +3834,30 @@ html.dark-mode .status-icon-btn.active-red:hover {
     order: -1; /* Zmienia wizualną kolejność, umieszczając suwaki na górze */
     margin-bottom: 4px; /* Dodaje niewielki odstęp od przycisków, które znajdą się pod spodem */
   }
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Responsywna czcionka dla panelu statusu --- */
+@media (max-width: 992px) {
+  .glass-status {
+    font-size: 0.9rem; /* Zmniejszenie czcionki dla tabletów */
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-status {
+    font-size: 0.85rem; /* Dalsze zmniejszenie dla telefonów */
+    padding: 8px 15px;
+    gap: 12px;
+  }
+}
+/* Plik: style.css */
+
+/* --- PATCH: Korekta widoczności (opacity) dla kluczowych linków paska statusu --- */
+#statusInfoBtn,
+#systemInfoLink,
+#statusLangBtn > a {
+  opacity: 1; /* Nadpisuje domyślną wartość 0.7, zapewniając pełną intensywność koloru */
 }
