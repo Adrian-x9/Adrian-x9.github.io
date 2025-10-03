@@ -2491,23 +2491,17 @@ html.dark-mode .deck-top-row {
   border-color: var(--separator-dark);
 }
 
-/* Po */
 .filter-section {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-shrink: 1;
-  min-width: 0;
-  overflow: hidden;
+  flex-shrink: 1; /* Pozwala sekcji się kurczyć */
+  min-width: 0; /* Kluczowe dla kurczenia się we flexboxie */
+  overflow: hidden; /* Ukrywa elementy, które się nie mieszczą */
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Curtain mix x absolute position */
-  max-width: 450px;
 }
-
 .deck-top-row.filters-expanded .filter-section {
   flex-shrink: 0; /* W stanie rozwiniętym sekcja nie kurczy się */
-  /* Curtain max x absolute positon */
-  max-width: 850px;
 }
 .status-section {
     flex-grow: 1; /* Sekcja statusu zajmuje pozostałe miejsce */

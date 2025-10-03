@@ -2266,7 +2266,6 @@ function displayRandomGuide(guide) {
   }
 }
 
-// ZASTĄP TĘ FUNKCJĘ FINALNĄ WERSJĄ
 function toggleFullScreen() {
   const btn = document.getElementById("fullscreenBtn");
 
