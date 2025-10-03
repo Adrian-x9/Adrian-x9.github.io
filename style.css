@@ -2573,8 +2573,8 @@ html.dark-mode .filter-section .dir-db-btn:hover {
   background: var(--button-red-bg-light);
   border: none;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   padding: 0;
   color: var(--button-red-text-light);
   z-index: 1;
@@ -2594,6 +2594,7 @@ html.dark-mode #curtain-toggle-btn {
 }
 #curtain-toggle-btn:hover {
     transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+    /* box-shadow: 0 0 8px var(--button-red-bg-light); */
     box-shadow: 0 0 8px var(--button-red-bg-light);
 }
 .deck-top-row.filters-expanded #curtain-toggle-btn:hover {
@@ -2771,6 +2772,19 @@ html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
     color: var(--button-red-bg-dark);
     border-color: var(--button-red-bg-dark);
 }
+
+/* Poprawki punktowe trybu HOVER przycisku Widok */
+
+body.dark-mode .control-panel button#viewContentBtn:hover  {
+    background-color: var(--panel-bg-dark);
+    color: var(--panel-bg-light);
+}
+
+body:not(dark-mode) .control-panel button#viewContentBtn:hover  {
+    background-color: var(--panel-bg-light);
+    color: var(--panel-bg-dark);
+}
+
 html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
   background-color: transparent;
   color: var(--button-text-light);
@@ -3358,18 +3372,27 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
 }
 
-/* === TUNING: Ulepszenie widoku #5 (grid) === */
+/* --- TUNING: Ulepszenie widoku #5 (grid) --- */
 
 /* Poprawiamy wygląd samej nakładki */
 .guide-list.view-grid .grid-overlay {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /* Zamiast jednolitego tła, używamy gradientu od przezroczystości do koloru */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.7) 30%, transparent 100%);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   opacity: 0;
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.4s ease-out;
+  /* Wyrównujemy zawartość do dołu dla lepszego efektu */
+  display: flex; /* Upewniamy się, że flexbox jest aktywny */
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px; /* Dopasowanie do rogów zdjęcia */
+  pointer-events: none;
 }
 body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
-  background: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.75) 30%, transparent 100%);
 }
 
 /* Nowy, czytelniejszy styl dla tekstu z animacją */
@@ -3378,10 +3401,10 @@ body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
   font-size: 1.2em;
   font-weight: 800;
   text-decoration: none;
-  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7); /* Nowy, czytelny cień */
-  -webkit-text-stroke: 0; /* Usuwamy stary efekt */
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0;
   opacity: 0;
-  transform: translateY(10px); /* Początkowa pozycja dla animacji */
+  transform: translateY(15px); /* Początkowa pozycja dla animacji wysunięcia */
   transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
 }
 body:not(.dark-mode) .grid-overlay .grid-title-text a {
@@ -3389,7 +3412,11 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* Uruchomienie animacji tekstu po najechaniu */
+/* Uruchomienie animacji po najechaniu */
+.guide-list.view-grid .guide:hover .grid-overlay {
+  opacity: 1;
+}
+
 .guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
   opacity: 1;
   transform: translateY(0);
