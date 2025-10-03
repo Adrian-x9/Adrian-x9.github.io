@@ -2622,13 +2622,13 @@ function applyMasonryLayout(pageNum = 1) {
     const remainingSpace = viewportWidth - gridWidth;
     const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
 
-    guidePage.style.paddingLeft = `${sidePadding}px`;
-    guidePage.style.paddingRight = `${sidePadding}px`;
-    guidePage.style.boxSizing = "border-box";
+    // Ustawiamy sztywną szerokość kontenera siatki i centrujemy go marginesem
+    guidePage.style.width = `${gridWidth}px`;
+    guidePage.style.margin = '0 auto';
 
-    // Resetujemy stare style, na wypadek gdyby zostały w pamięci
-    guidePage.style.width = "";
-    guidePage.style.margin = "";
+    // Resetujemy padding, aby uniknąć konfliktów
+    guidePage.style.paddingLeft = '0px';
+    guidePage.style.paddingRight = '0px';
 
     guidePage.style.position = "relative";
     const columnHeights = Array(numColumns).fill(0);

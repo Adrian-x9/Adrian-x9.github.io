@@ -141,7 +141,6 @@ body.play-mode-active > .control-panel,
 body.play-mode-active > .display-panel,
 body.play-mode-active > .guide-list-wrapper,
 body.play-mode-active > .filter-controls,
-body.play-mode-active > .pagination,
 body.play-mode-active > .footer,
 body.play-mode-active > #fullscreenBtn,
 body.play-mode-active > #actionControls {
@@ -211,7 +210,6 @@ body:not(.dark-mode) .highlighted-state:hover {
 }
 
 body:not(.dark-mode) .guide,
-body:not(.dark-mode) .pagination-controls,
 body:not(.dark-mode) .action-controls .multi-button.expanded,
 body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
   background: #fdfdfd;
@@ -219,7 +217,6 @@ body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
 }
 
 /* Zachowujemy oryginalny styl dla paneli */
-body.video-ready:not(.dark-mode) .pagination-controls,
 body.video-ready:not(.dark-mode) .action-controls .multi-button.expanded,
 body.video-ready:not(.dark-mode)
   .action-controls
@@ -277,7 +274,6 @@ body.dark-mode .highlighted-state:hover {
 }
 
 body.dark-mode .guide,
-body.dark-mode .pagination-controls,
 body.dark-mode .action-controls .multi-button.expanded,
 body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
   background: #000;
@@ -285,7 +281,6 @@ body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
 }
 
 /* Zachowujemy oryginalny styl dla paneli */
-body.video-ready.dark-mode .pagination-controls,
 body.video-ready.dark-mode .action-controls .multi-button.expanded,
 body.video-ready.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
   background: rgba(0, 0, 0, 0.7);
@@ -449,7 +444,6 @@ body.dark-mode .top-header .counter {
 .controls,
 .action-controls,
 .footer,
-.pagination,
 .control-panel {
   opacity: 0;
   transform: translateY(20px);
@@ -460,7 +454,6 @@ body.dark-mode .top-header .counter {
   transform: translateY(-20px);
 }
 
-.pagination,
 .action-controls,
 .footer {
   transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s,
@@ -755,15 +748,11 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   flex: 0 0 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  display: grid;
-  grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-  grid-template-columns: repeat(
-    auto-fit,
-    var(--box-width, 256px)
-  ); /* KLUCZOWA ZMIANA */
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 2px;
+  padding: 2px 20px;
   transition: grid-template-columns 0.5s ease;
   align-content: start;
   /* Dodana linia zapobiegająca rozciąganiu wierszy */
@@ -1109,6 +1098,7 @@ body.dark-mode .guide-cover-grid {
 }
 
 .guide {
+  width: var(--box-width, 256px) !important;
   padding: 0 20px 10px;
   border-radius: 10px;
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
@@ -1121,6 +1111,8 @@ body.dark-mode .guide-cover-grid {
   overflow: hidden;
   font-size: var(--dynamic-font-size, 1rem);
   /* <-- DODAJ TĘ LINIĘ */
+  /* Ta linia jest do dodania wewnątrz reguły .guide */
+  
 }
 
 .guide-content-bottom {
@@ -1160,70 +1152,6 @@ body.dark-mode .guide-cover-grid {
   font-weight: bold;
   margin-bottom: 10px;
   overflow-wrap: break-word;
-}
-
-.pagination {
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  max-height: 0;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-.pagination.visible {
-  opacity: 1;
-  transform: translateY(0);
-  max-height: 200px;
-  margin-top: 25px; /* Zwiększony margines o 5px */
-  margin-bottom: 20px;
-}
-
-.pagination button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: 1px solid #a00000;
-  font-weight: bold;
-  height: 42px;
-  box-sizing: border-box;
-  padding: 10px;
-}
-
-body:not(.dark-mode) .pagination button {
-  background: #fdfdfd;
-  color: #cc0000;
-}
-
-body.dark-mode .pagination button {
-  background: #000;
-  color: #e53935;
-  border-color: #a00000;
-}
-
-.pagination button:hover:not(:disabled) {
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-}
-
-.pagination .pagination-info {
-  padding: 10px;
-  font-weight: bold;
-}
-
-body:not(.dark-mode) .pagination .pagination-info {
-  color: #555;
-}
-
-body.dark-mode .pagination .pagination-info {
-  color: #aaa;
-}
-
-.pagination button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
 }
 
 .guide.animate-in {
@@ -1637,16 +1565,8 @@ body.dark-mode #lightbox-videoBtn.expanded .multi-button-child {
   animation-fill-mode: forwards;
 }
 
-/* FIX: Usunięcie podwójnej animacji paginacji */
 .animated-action-controls,
 .animated-footer {
-  animation-name: fadeInUp;
-  animation-duration: 0.8s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-.pagination.visible.animated-pagination {
   animation-name: fadeInUp;
   animation-duration: 0.8s;
   animation-timing-function: ease-out;
@@ -1893,177 +1813,6 @@ body.dark-mode #clear-close-btn {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-color: rgba(255, 255, 255, 0.2);
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 8px;
-  border-radius: 12px;
-  border: 1px solid;
-  box-sizing: border-box;
-}
-
-body:not(.dark-mode) .pagination-controls {
-  border-color: #a00000;
-}
-
-body.dark-mode .pagination-controls {
-  border-color: #a00000;
-  box-shadow: 0 0 15px rgba(229, 57, 53, 0.3);
-}
-
-.pagination-controls button {
-  padding: 0;
-  width: 42px;
-  height: 42px;
-  font-size: 1em;
-  flex-shrink: 0;
-}
-
-.pagination-controls .pagination-action-btn {
-  width: 32px;
-  height: 32px;
-  font-size: 0.9em;
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  color: #888;
-}
-
-body.dark-mode .pagination-controls .pagination-action-btn {
-  color: #aaa;
-}
-
-.pagination-controls .pagination-action-btn:hover {
-  color: #cc0000;
-}
-
-body.dark-mode .pagination-controls .pagination-action-btn:hover {
-  color: #e53935;
-}
-
-@media (max-width: 480px) {
-  #firstPageBtn,
-  #lastPageBtn {
-    display: none;
-  }
-
-  .pagination-controls {
-    gap: 5px;
-    padding: 8px;
-  }
-}
-
-.pagination-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.page-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.page-input {
-  width: 60px;
-  height: 30px;
-  text-align: center;
-  border: 1px solid #808080;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1.1em;
-  padding: 5px;
-  -moz-appearance: textfield;
-}
-
-.page-input::-webkit-outer-spin-button,
-.page-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.page-info-text {
-  margin-left: 8px;
-  font-size: 1.1em;
-}
-
-body:not(.dark-mode) .page-input {
-  background-color: #fff;
-  color: #333;
-}
-
-body.dark-mode .page-input {
-  background-color: #222;
-  color: #eee;
-  border-color: #666;
-}
-
-.page-slider {
-  width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.1);
-  outline: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-body.dark-mode .page-slider {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.page-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  background: #cc0000;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-body.dark-mode .page-slider::-webkit-slider-thumb {
-  background: #e53935;
-  border-color: #000;
-}
-
-.page-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-.page-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  background: #cc0000;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-body.dark-mode .page-slider::-moz-range-thumb {
-  background: #e53935;
-  border-color: #000;
-}
-
-.page-slider::-moz-range-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
 .display-panel-group {
@@ -2424,9 +2173,6 @@ body {
   flex-shrink: 0;
   opacity: 1;
 }
-.pagination {
-  opacity: 1;
-}
 
 /* --- STYL GŁÓWNEGO PANELU --- */
 .control-panel {
@@ -2444,16 +2190,6 @@ body {
 html.dark-mode .control-panel {
   background-color: var(--panel-bg-dark);
   box-shadow: var(--panel-shadow-dark);
-}
-body.video-ready:not(html.dark-mode) .control-panel {
-  background: rgba(240, 240, 240, var(--panel-bg-alpha));
-}
-body.video-ready.dark-mode .control-panel {
-  background: rgba(26, 26, 26, 0.85) !important;
-}
-body.video-ready .control-panel {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
 }
 
 /* --- NAPRAWA #1: GÓRNY WIERSZ PANELU (UKŁAD FLEXBOX) --- */
@@ -3887,7 +3623,7 @@ html.dark-mode .status-icon-btn.active-red:hover {
   .curtain-handle {
     display: none; /* Ukrycie uchwytu kurtyny, który traci sens w tym układzie */
   }
-  
+
   /* 2. Reorganizacja PASKA STATUSU */
   .glass-status {
     flex-direction: column; /* Zmiana układu z poziomego na pionowy */
@@ -3913,13 +3649,13 @@ html.dark-mode .status-icon-btn.active-red:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  pointer-events: none; 
+  pointer-events: none;
   z-index: 5;
 }
 
 /* 3. Linia pozioma - UJEDNOLICONY KOLOR */
 .viewfinder::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 70px;
   left: 50px;
@@ -3954,220 +3690,314 @@ html.dark-mode .status-icon-btn.active-red:hover {
 
 /* 6. NOWOŚĆ: Dodanie strzałek za pomocą pseudo-elementów */
 .viewfinder .west-label::before {
-  content: '<';
+  content: "<";
   margin-right: 5px;
   opacity: 0.6;
 }
 
 .viewfinder .east-label::after {
-  content: '>';
+  content: ">";
   margin-left: 5px;
   opacity: 0.6;
 }
 
-/* Plik: style.css */
+/* === SEKCJA PAGINACJI (PO REFAKTORYZACJI I NAPRAWIE UKŁADU) === */
 
-/* --- PATCH: Przebudowa i ujednolicenie wyglądu panelu paginacji --- */
-
-/* 1. Ujednolicenie wyglądu kontenera paginacji ze stylem panelu głównego */
-.pagination-controls {
-  border: 2px solid transparent; /* Zastępuje starą ramkę */
-  background-clip: padding-box;
-  background-color: var(--panel-bg-light);
-  box-shadow: var(--panel-shadow-light);
-  max-width: 900px; /* Dopasowanie do szerokości panelu głównego */
-}
-
-html.dark-mode .pagination-controls {
-  background-color: var(--panel-bg-dark);
-  box-shadow: var(--panel-shadow-dark);
-}
-
-body.video-ready:not(html.dark-mode) .pagination-controls {
-  background: rgba(240, 240, 240, 0.85);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-body.video-ready.dark-mode .pagination-controls {
-  background: rgba(26, 26, 26, 0.85);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
-/* 2. Style dla nowego, dwuwierszowego układu wewnątrz paginacji */
-.page-info {
+/* --- Kontenery i Układ --- */
+.pagination {
   display: flex;
-  justify-content: space-between; /* Rozmieszcza elementy (reset, licznik, play) na całej szerokości */
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
+  gap: 10px;
+  text-align: center;
   width: 100%;
-  margin-bottom: 5px;
+  max-width: 500px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s,
+    margin 0.5s, padding 0.5s;
+  margin-bottom: 20px;
 }
 
-.page-input-group {
-  display: flex;
-  align-items: center;
-}
-
-/* 3. Zapewnienie, że suwak zajmuje całą dostępną szerokość */
-.page-slider {
-  width: 100%;
-}
-
-/* Plik: style.css */
-
-/* --- PATCH: Przebudowa i ujednolicenie wyglądu panelu paginacji --- */
-
-/* 1. Ujednolicenie wyglądu kontenera paginacji ze stylem panelu głównego */
-.pagination-controls {
-  border: 2px solid transparent; /* Zastępuje starą ramkę */
-  background-clip: padding-box;
-  background-color: var(--panel-bg-light);
-  box-shadow: var(--panel-shadow-light);
-  max-width: 900px; /* Dopasowanie do szerokości panelu głównego */
-}
-
-html.dark-mode .pagination-controls {
-  background-color: var(--panel-bg-dark);
-  box-shadow: var(--panel-shadow-dark);
-}
-
-body.video-ready:not(html.dark-mode) .pagination-controls {
-  background: rgba(240, 240, 240, 0.85);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-body.video-ready.dark-mode .pagination-controls {
-  background: rgba(26, 26, 26, 0.85);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-
-/* 2. Style dla nowego, dwuwierszowego układu wewnątrz paginacji */
-.page-info {
-  display: flex;
-  justify-content: space-between; /* Rozmieszcza elementy (reset, licznik, play) na całej szerokości */
-  align-items: center;
-  width: 100%;
-  margin-bottom: 5px;
-}
-
-.page-input-group {
-  display: flex;
-  align-items: center;
-}
-
-/* 3. Zapewnienie, że suwak zajmuje całą dostępną szerokość */
-.page-slider {
-  width: 100%;
-}
-
-
-/* Plik: style.css */
-
-/* --- PATCH: Finalne poprawki wizualne i funkcjonalne panelu paginacji --- */
-
-/* 1. Dodanie marginesów dla przycisków w górnym wierszu paginacji */
-.page-info .pagination-action-btn:first-child {
-  margin-right: 10px;
-}
-.page-info .pagination-action-btn:last-child {
-  margin-left: 10px;
-}
-
-/* 2. Styl zapewniający, że przycisk Play/Carousel jest zawsze czerwony */
-#paginationCarouselBtn {
-  color: var(--button-red-bg-light) !important;
+.pagination.visible {
   opacity: 1;
-}
-html.dark-mode #paginationCarouselBtn {
-  color: var(--button-red-bg-dark) !important;
-}
-#paginationCarouselBtn:hover {
-  opacity: 0.8;
+  transform: translateY(0);
+  max-height: 200px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 
-/* 3. Styl dla aktywnego przycisku Shuffle */
-#paginationShuffleBtn.active-red {
-  color: var(--button-red-bg-light);
-}
-html.dark-mode #paginationShuffleBtn.active-red {
-  color: var(--button-red-bg-dark);
-}
-
-/* Plik: style.css */
-
-/* --- PATCH FINALNY: Spójność interfejsu, tła, odstępy i poprawki mobilne --- */
-
-/* 1. UJEDNOLICENIE TŁA PANELI (Głównego i Paginacji) */
-.control-panel,
 .pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 12px;
+  box-sizing: border-box;
   border: 2px solid transparent;
   background-clip: padding-box;
   background-color: var(--panel-bg-light);
   box-shadow: var(--panel-shadow-light);
 }
-html.dark-mode .control-panel,
+
 html.dark-mode .pagination-controls {
   background-color: var(--panel-bg-dark);
   box-shadow: var(--panel-shadow-dark);
 }
-body.video-ready:not(html.dark-mode) .control-panel,
-body.video-ready:not(html.dark-mode) .pagination-controls {
-  background: rgba(240, 240, 240, 0.85);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
-body.video-ready.dark-mode .control-panel,
-body.video-ready.dark-mode .pagination-controls {
-  background: rgba(26, 26, 26, 0.85);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+
+.pagination-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
 }
 
-/* 2. KOREKTA SZEROKOŚCI PANELU PAGINACJI */
-.pagination {
-  width: 100%; /* Zapewnia, że kontener paginacji ma pełną szerokość */
-  max-width: 500px;
+.page-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
-/* 3. UJEDNOLICENIE PIONOWYCH ODSTĘPÓW (Desktop) */
-.top-header, .glass-status, .control-panel, .guide-list-wrapper, .pagination {
-  margin-bottom: 20px;
+.page-input-group {
+  display: flex;
+  align-items: center;
 }
 
-/* 5. POPRAWKI PANELU STATUSU (.glass-status) */
-.glass-status {
-  padding: 8px 20px; /* 5a: Zmniejszenie wysokości panelu */
-  /* 5c: Subtelniejszy, czerwony cień */
-  box-shadow: 0 2px 15px rgba(204, 0, 0, 0.15);
-  border: 1px solid rgba(255, 0, 0, 0.2);
-}
-html.dark-mode .glass-status {
-  box-shadow: 0 2px 20px rgba(229, 57, 53, 0.2);
-  border: 1px solid rgba(229, 57, 53, 0.3);
+/* --- Przyciski --- */
+.pagination button,
+.pagination-controls button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #a00000;
+  font-weight: bold;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 10px;
+  flex-shrink: 0;
 }
 
-/* 5b: Korekta koloru linku "VisuDir" */
-#systemInfoLink {
-  /* Przywrócenie domyślnego koloru dla całego linku */
-  color: var(--status-text-light, #444) !important;
+body:not(.dark-mode) .pagination button,
+body:not(.dark-mode) .pagination-controls button {
+  background: #fdfdfd;
+  color: #cc0000;
 }
-html.dark-mode #systemInfoLink {
-  color: var(--status-text-dark, #bbb) !important;
+
+body.dark-mode .pagination button,
+body.dark-mode .pagination-controls button {
+  background: #000;
+  color: #e53935;
+  border-color: #a00000;
 }
-/* Reguła zapewniająca, że TYLKO "Visu" jest czerwone (powinna już istnieć, ale to jest jej prawidłowa forma) */
-#systemInfoLink .visu-text-red {
+
+.pagination button:hover:not(:disabled),
+.pagination-controls button:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+.pagination button:disabled,
+.pagination-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination-controls .pagination-action-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 0.9em;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: #888;
+}
+
+body.dark-mode .pagination-controls .pagination-action-btn {
+  color: #aaa;
+}
+
+.pagination-controls .pagination-action-btn:hover {
+  color: #cc0000;
+}
+
+body.dark-mode .pagination-controls .pagination-action-btn:hover {
+  color: #e53935;
+}
+
+.page-info .pagination-action-btn:first-child {
+  margin-right: 10px;
+}
+
+.page-info .pagination-action-btn:last-child {
+  margin-left: 10px;
+}
+
+#paginationCarouselBtn {
   color: var(--button-red-bg-light) !important;
+  opacity: 1;
 }
-html.dark-mode #systemInfoLink .visu-text-red {
+
+html.dark-mode #paginationCarouselBtn {
   color: var(--button-red-bg-dark) !important;
 }
 
+#paginationCarouselBtn:hover {
+  opacity: 0.8;
+}
 
-/* 4. POPRAWKI ODSTĘPÓW W TRYBIE MOBILNYM */
+#paginationShuffleBtn.active-red {
+  color: var(--button-red-bg-light);
+}
+
+html.dark-mode #paginationShuffleBtn.active-red {
+  color: var(--button-red-bg-dark);
+}
+
+/* --- Pola tekstowe i informacje --- */
+.pagination .pagination-info {
+  padding: 10px;
+  font-weight: bold;
+}
+
+body:not(.dark-mode) .pagination .pagination-info {
+  color: #555;
+}
+
+body.dark-mode .pagination .pagination-info {
+  color: #aaa;
+}
+
+.page-input {
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #808080;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 5px;
+  -moz-appearance: textfield;
+}
+
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body:not(.dark-mode) .page-input {
+  background-color: #fff;
+  color: #333;
+}
+
+body.dark-mode .page-input {
+  background-color: #222;
+  color: #eee;
+  border-color: #666;
+}
+
+.page-info-text {
+  margin-left: 8px;
+  font-size: 1.1em;
+}
+
+/* --- Suwak (Slider) --- */
+.page-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+body.dark-mode .page-slider {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.page-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #cc0000;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.dark-mode .page-slider::-webkit-slider-thumb {
+  background: #e53935;
+  border-color: #000;
+}
+
+.page-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.page-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #cc0000;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.dark-mode .page-slider::-moz-range-thumb {
+  background: #e53935;
+  border-color: #000;
+}
+
+.page-slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* --- Animacje --- */
+.pagination.visible.animated-pagination {
+  animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+body.play-mode-active > .pagination {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0s 0.4s;
+}
+
+/* --- Style responsywne --- */
 @media (max-width: 480px) {
-  /* Zmniejszenie pionowych odstępów między głównymi modułami */
-  .top-header, .glass-status, .control-panel, .guide-list-wrapper, .pagination {
+  #firstPageBtn,
+  #lastPageBtn {
+    display: none;
+  }
+
+  .pagination-controls {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .pagination {
     margin-bottom: 15px;
   }
 }
