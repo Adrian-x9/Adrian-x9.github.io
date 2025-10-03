@@ -1,3 +1,5 @@
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&display=swap");
+
 /* patch#1 */
 /* Preloader Styles */
 /* === VisuDir Preloader v2 === */
@@ -124,7 +126,7 @@ body.video-ready {
 }
 
 body {
-  font-family: "Segoe UI", sans-serif;
+  font-family: "Satoshi", sans-serif;
   margin: 0;
   padding: 20px;
   transition: background-color 0.5s ease, color 0.3s ease;
@@ -139,7 +141,6 @@ body.play-mode-active > .control-panel,
 body.play-mode-active > .display-panel,
 body.play-mode-active > .guide-list-wrapper,
 body.play-mode-active > .filter-controls,
-body.play-mode-active > .pagination,
 body.play-mode-active > .footer,
 body.play-mode-active > #fullscreenBtn,
 body.play-mode-active > #actionControls {
@@ -209,7 +210,6 @@ body:not(.dark-mode) .highlighted-state:hover {
 }
 
 body:not(.dark-mode) .guide,
-body:not(.dark-mode) .pagination-controls,
 body:not(.dark-mode) .action-controls .multi-button.expanded,
 body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
   background: #fdfdfd;
@@ -217,7 +217,6 @@ body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
 }
 
 /* Zachowujemy oryginalny styl dla paneli */
-body.video-ready:not(.dark-mode) .pagination-controls,
 body.video-ready:not(.dark-mode) .action-controls .multi-button.expanded,
 body.video-ready:not(.dark-mode)
   .action-controls
@@ -275,7 +274,6 @@ body.dark-mode .highlighted-state:hover {
 }
 
 body.dark-mode .guide,
-body.dark-mode .pagination-controls,
 body.dark-mode .action-controls .multi-button.expanded,
 body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
   background: #000;
@@ -283,7 +281,6 @@ body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
 }
 
 /* Zachowujemy oryginalny styl dla paneli */
-body.video-ready.dark-mode .pagination-controls,
 body.video-ready.dark-mode .action-controls .multi-button.expanded,
 body.video-ready.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
   background: rgba(0, 0, 0, 0.7);
@@ -447,7 +444,6 @@ body.dark-mode .top-header .counter {
 .controls,
 .action-controls,
 .footer,
-.pagination,
 .control-panel {
   opacity: 0;
   transform: translateY(20px);
@@ -458,7 +454,6 @@ body.dark-mode .top-header .counter {
   transform: translateY(-20px);
 }
 
-.pagination,
 .action-controls,
 .footer {
   transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s,
@@ -753,15 +748,11 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   flex: 0 0 100%;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  display: grid;
-  grid-template-rows: repeat(var(--grid-rows, 4), 1fr);
-  grid-template-columns: repeat(
-    auto-fit,
-    var(--box-width, 256px)
-  ); /* KLUCZOWA ZMIANA */
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  padding: 2px;
+  padding: 2px 20px;
   transition: grid-template-columns 0.5s ease;
   align-content: start;
   /* Dodana linia zapobiegająca rozciąganiu wierszy */
@@ -1107,6 +1098,7 @@ body.dark-mode .guide-cover-grid {
 }
 
 .guide {
+  width: var(--box-width, 256px) !important;
   padding: 0 20px 10px;
   border-radius: 10px;
   transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
@@ -1119,6 +1111,8 @@ body.dark-mode .guide-cover-grid {
   overflow: hidden;
   font-size: var(--dynamic-font-size, 1rem);
   /* <-- DODAJ TĘ LINIĘ */
+  /* Ta linia jest do dodania wewnątrz reguły .guide */
+  
 }
 
 .guide-content-bottom {
@@ -1160,70 +1154,6 @@ body.dark-mode .guide-cover-grid {
   overflow-wrap: break-word;
 }
 
-.pagination {
-  text-align: center;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  max-height: 0;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-.pagination.visible {
-  opacity: 1;
-  transform: translateY(0);
-  max-height: 200px;
-  margin-top: 25px; /* Zwiększony margines o 5px */
-  margin-bottom: 20px;
-}
-
-.pagination button {
-  cursor: pointer;
-  border-radius: 10px;
-  border: 1px solid #a00000;
-  font-weight: bold;
-  height: 42px;
-  box-sizing: border-box;
-  padding: 10px;
-}
-
-body:not(.dark-mode) .pagination button {
-  background: #fdfdfd;
-  color: #cc0000;
-}
-
-body.dark-mode .pagination button {
-  background: #000;
-  color: #e53935;
-  border-color: #a00000;
-}
-
-.pagination button:hover:not(:disabled) {
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
-}
-
-.pagination .pagination-info {
-  padding: 10px;
-  font-weight: bold;
-}
-
-body:not(.dark-mode) .pagination .pagination-info {
-  color: #555;
-}
-
-body.dark-mode .pagination .pagination-info {
-  color: #aaa;
-}
-
-.pagination button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
 .guide.animate-in {
   animation: fadeInSlideIn 0.5s ease-out forwards;
 }
@@ -1244,7 +1174,7 @@ body.dark-mode .pagination .pagination-info {
   text-align: center;
   padding: 20px;
   padding-top: 20px;
-  padding-down: 0px;
+  padding-bottom: 0px;
   font-size: 0.9em;
   max-height: 200px;
   overflow: hidden;
@@ -1635,16 +1565,8 @@ body.dark-mode #lightbox-videoBtn.expanded .multi-button-child {
   animation-fill-mode: forwards;
 }
 
-/* FIX: Usunięcie podwójnej animacji paginacji */
 .animated-action-controls,
 .animated-footer {
-  animation-name: fadeInUp;
-  animation-duration: 0.8s;
-  animation-timing-function: ease-out;
-  animation-fill-mode: forwards;
-}
-
-.pagination.visible.animated-pagination {
   animation-name: fadeInUp;
   animation-duration: 0.8s;
   animation-timing-function: ease-out;
@@ -1891,177 +1813,6 @@ body.dark-mode #clear-close-btn {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-color: rgba(255, 255, 255, 0.2);
-}
-
-.pagination-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 8px;
-  border-radius: 12px;
-  border: 1px solid;
-  box-sizing: border-box;
-}
-
-body:not(.dark-mode) .pagination-controls {
-  border-color: #a00000;
-}
-
-body.dark-mode .pagination-controls {
-  border-color: #a00000;
-  box-shadow: 0 0 15px rgba(229, 57, 53, 0.3);
-}
-
-.pagination-controls button {
-  padding: 0;
-  width: 42px;
-  height: 42px;
-  font-size: 1em;
-  flex-shrink: 0;
-}
-
-.pagination-controls .pagination-action-btn {
-  width: 32px;
-  height: 32px;
-  font-size: 0.9em;
-  border: none;
-  background: transparent;
-  box-shadow: none;
-  color: #888;
-}
-
-body.dark-mode .pagination-controls .pagination-action-btn {
-  color: #aaa;
-}
-
-.pagination-controls .pagination-action-btn:hover {
-  color: #cc0000;
-}
-
-body.dark-mode .pagination-controls .pagination-action-btn:hover {
-  color: #e53935;
-}
-
-@media (max-width: 480px) {
-  #firstPageBtn,
-  #lastPageBtn {
-    display: none;
-  }
-
-  .pagination-controls {
-    gap: 5px;
-    padding: 8px;
-  }
-}
-
-.pagination-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.page-info {
-  display: flex;
-  align-items: center;
-  margin-bottom: 5px;
-  font-weight: bold;
-}
-
-.page-input {
-  width: 60px;
-  height: 30px;
-  text-align: center;
-  border: 1px solid #808080;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1.1em;
-  padding: 5px;
-  -moz-appearance: textfield;
-}
-
-.page-input::-webkit-outer-spin-button,
-.page-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.page-info-text {
-  margin-left: 8px;
-  font-size: 1.1em;
-}
-
-body:not(.dark-mode) .page-input {
-  background-color: #fff;
-  color: #333;
-}
-
-body.dark-mode .page-input {
-  background-color: #222;
-  color: #eee;
-  border-color: #666;
-}
-
-.page-slider {
-  width: 100%;
-  -webkit-appearance: none;
-  appearance: none;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.1);
-  outline: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-body.dark-mode .page-slider {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.page-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  background: #cc0000;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-body.dark-mode .page-slider::-webkit-slider-thumb {
-  background: #e53935;
-  border-color: #000;
-}
-
-.page-slider::-webkit-slider-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-}
-
-.page-slider::-moz-range-thumb {
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  background: #cc0000;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-body.dark-mode .page-slider::-moz-range-thumb {
-  background: #e53935;
-  border-color: #000;
-}
-
-.page-slider::-moz-range-thumb:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
 }
 
 .display-panel-group {
@@ -2348,7 +2099,7 @@ html.dark-mode #statusMuteBtn.active-red {
 
 /*
 ================================================================
-            FINALNA ŁATKA WIZUALNA v3
+            FINALNA ŁATKA WIZUALNA v4.0 (OPERACJA NAPRAWCZA)
 ================================================================
 */
 
@@ -2389,7 +2140,7 @@ html.dark-mode #statusMuteBtn.active-red {
   --status-bold-dark: #fff;
 }
 
-/* --- KROK 1: GŁÓWNY UKŁAD STRONY --- */
+/* --- GŁÓWNY UKŁAD STRONY --- */
 html {
   font-family: "Segoe UI", sans-serif;
 }
@@ -2398,16 +2149,16 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  padding: 20px; /* Przywrócenie głównego marginesu */
+  padding: 20px;
   box-sizing: border-box;
 }
 .top-header {
-  flex-shrink: 0; /* Nagłówek się nie kurczy */
-  opacity: 1; /* NAPRAWA: Nadpisanie starych reguł */
+  flex-shrink: 0;
+  opacity: 1;
 }
 .control-panel {
-  flex-shrink: 0; /* Panel się nie kurczy */
-  opacity: 1; /* NAPRAWA: Nadpisanie starych reguł */
+  flex-shrink: 0;
+  opacity: 1;
   width: 100%;
   max-width: 900px;
 }
@@ -2417,16 +2168,13 @@ body {
   max-width: 1920px;
 }
 .footer {
-  margin-top: auto; /* Wypycha stopkę na sam dół */
-  padding-top: 40px; /* Dodatkowy odstęp od treści */
-  flex-shrink: 0; /* Stopka się nie kurczy */
-  opacity: 1; /* NAPRAWA: Nadpisanie starych reguł */
-}
-.pagination {
+  margin-top: auto;
+  padding-top: 40px;
+  flex-shrink: 0;
   opacity: 1;
 }
 
-/* --- KROK 2: STYL GŁÓWNEGO PANELU --- */
+/* --- STYL GŁÓWNEGO PANELU --- */
 .control-panel {
   display: flex;
   flex-direction: column;
@@ -2443,50 +2191,45 @@ html.dark-mode .control-panel {
   background-color: var(--panel-bg-dark);
   box-shadow: var(--panel-shadow-dark);
 }
-body.video-ready:not(html.dark-mode) .control-panel {
-  background: rgba(240, 240, 240, 0.85);
-}
-body.video-ready.dark-mode .control-panel {
-  background: rgba(26, 26, 26, 0.85) !important;
-}
-body.video-ready .control-panel {
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-}
 
-/* --- GÓRNY WIERSZ PANELU (FILTRY I STATUS) --- */
-/* --- GÓRNY WIERSZ PANELU (FILTRY I STATUS) --- */
+/* --- NAPRAWA #1: GÓRNY WIERSZ PANELU (UKŁAD FLEXBOX) --- */
 .deck-top-row {
-  display: grid;
-  /* Stan DOMYŚLNY (rozwinięty): sekcja filtrów zajmuje dostępną przestrzeń (1fr) */
-  grid-template-columns: 1fr 20px auto;
+  display: flex; /* <-- ZMIANA NA FLEXBOX */
+  align-items: center; /* Wyśrodkowanie w pionie */
   gap: 10px;
   width: 100%;
   padding-bottom: 10px;
   margin-bottom: 10px;
   border-bottom: 1px solid var(--separator-light);
-  transition: grid-template-columns 0.5s cubic-bezier(0.4, 0, 0.2, 1); /* Płynna animacja */
-  /* min-height: 75px; */
-  box-sizing: border-box;
-  align-items: stretch;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 html.dark-mode .deck-top-row {
   border-color: var(--separator-dark);
 }
 
-/* Stan ZWINIĘTY: sekcja filtrów kurczy się do minimalnej potrzebnej szerokości (auto) */
-.deck-top-row.filters-expanded {
-  grid-template-columns: auto 20px 1fr;
-}
-
-/* Sekcja filtrów */
+/* Po */
 .filter-section {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex-wrap: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
   overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Curtain mix x absolute position */
+  max-width: 450px;
 }
+
+.deck-top-row.filters-expanded .filter-section {
+  flex-shrink: 0; /* W stanie rozwiniętym sekcja nie kurczy się */
+  /* Curtain max x absolute positon */
+  max-width: 850px;
+}
+.status-section {
+  flex-grow: 1; /* Sekcja statusu zajmuje pozostałe miejsce */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .filter-section > * {
   flex-shrink: 0;
 }
@@ -2535,24 +2278,23 @@ html.dark-mode .filter-section .dir-db-btn:hover {
   padding: 0;
 }
 
-/* Kurtyna */
+/* --- NAPRAWA #3: KURTYNA Z EFEKTEM HOVER --- */
 .curtain-handle {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   cursor: pointer;
 }
 #curtain-toggle-btn {
   background: var(--button-red-bg-light);
   border: none;
   border-radius: 50%;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
   padding: 0;
   color: var(--button-red-text-light);
   z-index: 1;
-  transition: transform 0.4s ease-in-out, background-color 0.3s;
+  transition: transform 0.4s ease-in-out, background-color 0.3s, box-shadow 0.3s;
 }
 html.dark-mode #curtain-toggle-btn {
   background-color: var(--button-red-bg-dark);
@@ -2566,8 +2308,20 @@ html.dark-mode #curtain-toggle-btn {
   font-size: 16px;
   line-height: 1;
 }
+#curtain-toggle-btn:hover {
+  transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+  /* box-shadow: 0 0 8px var(--button-red-bg-light); */
+  box-shadow: 0 0 8px var(--button-red-bg-light);
+}
+.deck-top-row.filters-expanded #curtain-toggle-btn:hover {
+  --rotation: 180deg; /* Zmienna CSS do zachowania obrotu */
+}
+html.dark-mode #curtain-toggle-btn:hover {
+  transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+  box-shadow: 0 0 10px var(--button-red-bg-dark);
+}
 
-/* --- KROK 3: UJEDNOLICENIE PASKA STATUSU --- */
+/* --- NAPRAWA #2: PRZYWRÓCENIE GRUPOWANIA IKON --- */
 .status-section {
   display: flex;
   flex-direction: column;
@@ -2576,80 +2330,53 @@ html.dark-mode #curtain-toggle-btn {
   overflow: hidden;
   gap: 4px;
 }
-#statusBarIntegrated {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  white-space: nowrap;
-  color: var(--status-text-light);
-  font-weight: 500;
-  font-size: 0.9em;
-}
-html.dark-mode #statusBarIntegrated {
-  color: var(--status-text-dark);
-}
-#statusBarIntegrated b {
-  font-weight: 700;
-  color: var(--status-bold-light);
-}
-html.dark-mode #statusBarIntegrated b {
-  color: var(--status-bold-dark);
-}
-.status-text-group {
-  background: none !important;
-} /* Usuwa niepotrzebne tło */
-.status-segment {
-  transition: opacity 0.3s ease, max-width 0.4s ease;
-  will-change: opacity, max-width;
-  display: inline-block;
-  overflow: hidden;
-  white-space: nowrap;
-  vertical-align: middle;
-}
-.system-info {
-  transition: opacity 0.3s ease, width 0.4s ease, margin-right 0.4s ease;
-  will-change: opacity, width, margin-right;
-}
-.status-separator {
-  width: 1px;
-  background-color: var(--separator-light);
-  align-self: center;
-  height: 1.2em;
-  margin: 0 0.8em;
-}
-html.dark-mode .status-separator {
-  background-color: var(--separator-dark);
-}
-
 .status-section-bottom {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 100%;
   justify-content: flex-end;
-  color: var(--status-text-light);
 }
-html.dark-mode .status-section-bottom {
-  color: var(--status-text-dark);
+.subtle-bg-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Ujednolicony odstęp */
+  padding: 4px;
+  border-radius: 8px;
+  background-color: var(--group-bg-light);
 }
-.system-info {
-  font-size: 0.9em;
-  font-weight: 600;
-  white-space: nowrap;
-  margin-right: auto;
+html.dark-mode .subtle-bg-group {
+  background-color: var(--group-bg-dark);
+}
+.video-controls-group {
+  padding-right: 8px;
+}
+.video-main-btn {
+  width: auto !important;
+  padding: 0 8px !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 .status-icon-btn {
   background: none;
   border: none;
-  color: inherit;
+  color: var(--status-text-light);
   opacity: 0.7;
   cursor: pointer;
-  font-size: 1em;
+  font-size: 1.1em;
   padding: 0;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
   transition: opacity 0.2s ease, color 0.2s ease;
-  line-height: 1;
 }
+html.dark-mode .status-icon-btn {
+  color: var(--status-text-dark);
+}
+
+/* --- LOGIKA STANÓW AKTYWNYCH I HOVER DLA IKON (Z POPRZEDNIEJ ŁATY) --- */
 .status-icon-btn:hover {
   opacity: 1;
   color: var(--button-red-bg-light);
@@ -2657,28 +2384,22 @@ html.dark-mode .status-section-bottom {
 html.dark-mode .status-icon-btn:hover {
   color: var(--button-red-bg-dark);
 }
-
-/* Logika kurtyny dla paska statusu */
-.deck-top-row.filters-expanded
-  .status-text-group
-  .status-segment:not(:first-of-type) {
-  opacity: 0;
-  max-width: 0;
-  pointer-events: none;
+.status-icon-btn.active-red {
+  opacity: 1;
+  color: var(--button-red-bg-light);
 }
-.deck-top-row.filters-expanded .system-info {
-  opacity: 0;
-  width: 0;
-  margin-right: 0;
-  pointer-events: none;
-  overflow: hidden;
+html.dark-mode .status-icon-btn.active-red {
+  color: var(--button-red-bg-dark);
 }
-.deck-top-row.filters-expanded .status-section-bottom {
-  justify-content: flex-end;
-  width: 100%;
+.status-icon-btn.active-red:hover {
+  color: var(--status-text-light);
+  opacity: 0.8;
+}
+html.dark-mode .status-icon-btn.active-red:hover {
+  color: var(--status-text-dark);
 }
 
-/* --- DOLNY WIERSZ PANELU (PRZYCISKI I SUWAKI) --- */
+/* --- DOLNY WIERSZ PANELU (BEZ ZMIAN, DLA PEŁNEGO KONTEKSTU) --- */
 .deck-bottom-row {
   display: flex;
   align-items: center;
@@ -2712,19 +2433,13 @@ html.dark-mode .display-panel-group {
   cursor: pointer;
   background-color: transparent;
   color: var(--button-text-light);
-  transition: all 0.2s;
+  transition: all 0.2s ease-in-out;
 }
 html.dark-mode .deck-bottom-row button {
   color: var(--button-text-dark);
 }
-.deck-bottom-row .display-panel-group:not(.slider-group) button:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-html.dark-mode
-  .deck-bottom-row
-  .display-panel-group:not(.slider-group)
-  button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+.deck-bottom-row button:hover {
+  transform: scale(1.1);
 }
 .deck-bottom-row .accent-border {
   border-color: var(--button-red-bg-light);
@@ -2732,48 +2447,74 @@ html.dark-mode
 html.dark-mode .deck-bottom-row .accent-border {
   border-color: var(--button-red-bg-dark);
 }
-
-/* Czerwone, ważne przyciski */
-.deck-bottom-row #viewContentBtn,
-.deck-bottom-row #viewThemeBtn,
-.deck-bottom-row .play-accent {
+.deck-bottom-row #viewOrientationBtn:not(.active):hover {
   background-color: var(--button-red-bg-light);
   color: var(--button-red-text-light);
+  border-color: transparent;
 }
-html.dark-mode .deck-bottom-row #viewContentBtn,
-html.dark-mode .deck-bottom-row #viewThemeBtn,
-html.dark-mode .deck-bottom-row .play-accent {
+html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active):hover {
   background-color: var(--button-red-bg-dark);
   color: var(--button-red-text-dark);
+  border-color: transparent;
+}
+.deck-bottom-row #viewContentBtn,
+.deck-bottom-row #viewOrientationBtn.active,
+.deck-bottom-row .play-accent,
+html.dark-mode .deck-bottom-row #viewThemeBtn {
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  border-color: transparent;
+}
+html.dark-mode .deck-bottom-row #viewContentBtn,
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active,
+html.dark-mode .deck-bottom-row .play-accent,
+html.dark-mode .deck-bottom-row #viewThemeBtn {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+.deck-bottom-row #viewContentBtn:hover,
+.deck-bottom-row #viewOrientationBtn.active:hover,
+.deck-bottom-row .play-accent:hover,
+html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
+  background-color: var(--panel-bg-light);
+  color: var(--button-red-bg-light);
+  border-color: var(--button-red-bg-light);
+}
+html.dark-mode .deck-bottom-row #viewContentBtn:hover,
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active:hover,
+html.dark-mode .deck-bottom-row .play-accent:hover,
+html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
+  background-color: var(--panel-bg-dark);
+  color: var(--button-red-bg-dark);
+  border-color: var(--button-red-bg-dark);
+}
+
+/* Poprawki punktowe trybu HOVER przycisku Widok */
+
+body.dark-mode .control-panel button#viewContentBtn:hover {
+  background-color: var(--panel-bg-dark);
+  color: var(--panel-bg-light);
+}
+
+body:not(dark-mode) .control-panel button#viewContentBtn:hover {
+  background-color: var(--panel-bg-light);
+  color: var(--panel-bg-dark);
+}
+
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
+  background-color: transparent;
+  color: var(--button-text-light);
+  border-color: var(--button-red-bg-light);
+}
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
 }
 .deck-bottom-row .play-accent {
   box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
 }
 html.dark-mode .deck-bottom-row .play-accent {
   box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
-}
-
-/* --- KROK 4: PRZENIESIENIE I GRUPOWANIE PRZYCISKÓW --- */
-.subtle-bg-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 4px;
-  border-radius: 8px;
-  background-color: var(--group-bg-light);
-}
-html.dark-mode .subtle-bg-group {
-  background-color: var(--group-bg-dark);
-}
-.video-controls-group {
-  padding-right: 8px;
-}
-.video-controls-group .video-main-btn {
-  width: auto;
-  padding: 0 8px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 }
 
 /* --- SUWAKI --- */
@@ -2822,6 +2563,7 @@ html.dark-mode .slider-control input[type="range"] {
   background: var(--slider-thumb-light);
   border: 2px solid var(--slider-thumb-border-light);
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
   background: var(--slider-thumb-dark);
@@ -2834,10 +2576,17 @@ html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
   background: var(--slider-thumb-light);
   border: 2px solid var(--slider-thumb-border-light);
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
 }
 html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
   background: var(--slider-thumb-dark);
   border-color: var(--slider-thumb-border-dark);
+}
+.slider-control input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.slider-control input[type:="range"]:hover::-moz-range-thumb {
+  transform: scale(1.2);
 }
 
 /* --- MODAL I KARUZELA JĘZYKOWA (Wersja wyczyszczona) --- */
@@ -2982,7 +2731,7 @@ html:not(.dark-mode) #lang-modal .item:hover {
 }
 
 .glass-status {
-  font-family: "Inter", sans-serif;
+  /* font-family: "Inter", sans-serif; */
   font-size: 0.95rem;
   color: #222;
   background: rgba(255, 255, 255, 0.65);
@@ -3001,7 +2750,7 @@ html:not(.dark-mode) #lang-modal .item:hover {
 }
 
 html.dark-mode .glass-status {
-  font-family: "Inter", sans-serif;
+  /* font-family: "Inter", sans-serif; */
   color: rgba(255, 255, 255, 0.85);
   background: rgba(45, 45, 45, 0.65);
   backdrop-filter: blur(10px);
@@ -3310,18 +3059,37 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
 }
 
-/* === TUNING: Ulepszenie widoku #5 (grid) === */
+/* --- TUNING: Ulepszenie widoku #5 (grid) --- */
 
 /* Poprawiamy wygląd samej nakładki */
 .guide-list.view-grid .grid-overlay {
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /* Zamiast jednolitego tła, używamy gradientu od przezroczystości do koloru */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.7) 30%,
+    transparent 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   opacity: 0;
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.4s ease-out;
+  /* Wyrównujemy zawartość do dołu dla lepszego efektu */
+  display: flex; /* Upewniamy się, że flexbox jest aktywny */
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px; /* Dopasowanie do rogów zdjęcia */
+  pointer-events: none;
 }
 body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
-  background: rgba(255, 255, 255, 0.7);
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.75) 30%,
+    transparent 100%
+  );
 }
 
 /* Nowy, czytelniejszy styl dla tekstu z animacją */
@@ -3330,10 +3098,10 @@ body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
   font-size: 1.2em;
   font-weight: 800;
   text-decoration: none;
-  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7); /* Nowy, czytelny cień */
-  -webkit-text-stroke: 0; /* Usuwamy stary efekt */
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0;
   opacity: 0;
-  transform: translateY(10px); /* Początkowa pozycja dla animacji */
+  transform: translateY(15px); /* Początkowa pozycja dla animacji wysunięcia */
   transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
 }
 body:not(.dark-mode) .grid-overlay .grid-title-text a {
@@ -3341,7 +3109,11 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
 }
 
-/* Uruchomienie animacji tekstu po najechaniu */
+/* Uruchomienie animacji po najechaniu */
+.guide-list.view-grid .guide:hover .grid-overlay {
+  opacity: 1;
+}
+
 .guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
   opacity: 1;
   transform: translateY(0);
@@ -3482,13 +3254,13 @@ html.dark-mode .visu-text-red {
 
 /* 5f1: Styl dla flagi na pasku statusu */
 .lang-flag-status {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1em; /* Zmniejszono z 1.2em */
+  height: 1em; /* Zmniejszono z 1.2em */
   border-radius: 50%;
   vertical-align: middle;
   margin-right: 0.4em;
   margin-bottom: 0.1em;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); /* <-- DODAJ TĘ LINIĘ */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
 .lang-code-status {
@@ -3515,29 +3287,28 @@ html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
 
 /* Aktywny, czerwony kolor dla linków */
 #systemInfoLink,
-#statusLangBtn a {
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
   color: var(--button-red-bg-light) !important;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 html.dark-mode #systemInfoLink,
-html.dark-mode #statusLangBtn a {
+html.dark-mode #statusLangBtn > a {
   color: var(--button-red-bg-dark) !important;
 }
 
 /* Efekt hover - powrót do standardowego koloru tekstu panelu */
 #systemInfoLink:hover,
-#statusLangBtn a:hover {
-  color: var(--status-text-light, #444) !important;
+#statusLangBtn > a:hover {
+  color: var(--button-red-bg-light) !important;
 }
 html.dark-mode #systemInfoLink:hover,
-html.dark-mode #statusLangBtn a:hover {
-  color: var(--status-text-dark, #bbb) !important;
+html.dark-mode #statusLangBtn > a:hover {
+  color: var(--button-red-bg-dark) !important;
 }
 
 /* Plik: style.css */
-
-/* DODAJ PONIŻSZE REGUŁY NA SAMYM KOŃCU PLIKU, ABY NADPISAĆ ISTNIEJĄCE STYLE */
 
 /* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU v2 --- */
 /* Pogrubienie nazwy */
@@ -3593,68 +3364,640 @@ html.dark-mode #statusLangBtn a:hover {
 
 /* 1. Poprawka rozmiaru panelu w trybie ciemnym */
 html.dark-mode .glass-status {
-    padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
+  padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
 }
 
 /* 2. Dodanie ramki do flagi dla lepszej widoczności */
 .lang-flag-status {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
 }
 html.dark-mode .lang-flag-status {
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 /* 5 & 6. Ostateczne i poprawne style dla VisuDir i flagi */
 #systemInfoLink,
 #statusLangBtn > a {
-    /* Ustawiamy standardowy kolor tekstu dla całego linku */
-    color: var(--status-text-light, #444) !important;
-    text-decoration: none;
-    transition: color 0.2s ease;
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 html.dark-mode #systemInfoLink,
 html.dark-mode #statusLangBtn > a {
-    color: var(--status-text-dark, #bbb) !important;
+  color: var(--status-text-dark, #bbb) !important;
 }
 
 /* Pogrubiamy tylko "VisuDir" */
 #systemInfoLink .visu-text-red,
 #systemInfoLink .dir-text-themed {
-    font-weight: bold;
+  font-weight: bold;
 }
 
-/* Kolorujemy na czerwono tylko te elementy, które tego wymagają */
+/* Kolorujemy i pogrubiamy elementy akcentu */
 #systemInfoLink .visu-text-red,
 #statusLangBtn .lang-code-status {
-    color: var(--button-red-bg-light) !important;
+  color: var(--button-red-bg-light) !important;
+  font-weight: bold;
 }
 html.dark-mode #systemInfoLink .visu-text-red,
 html.dark-mode #statusLangBtn .lang-code-status {
-    color: var(--button-red-bg-dark) !important;
+  color: var(--button-red-bg-dark) !important;
+  font-weight: bold;
 }
-
 /* Efekt hover: cały link (VisuDir i flaga) zmienia kolor na standardowy */
-#systemInfoLink:hover,
-#statusLangBtn > a:hover {
-    color: var(--status-text-light, #444) !important;
+#systemInfoLink,
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
-html.dark-mode #systemInfoLink:hover,
-html.dark-mode #statusLangBtn > a:hover {
-    color: var(--status-text-dark, #bbb) !important;
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+  color: var(--button-red-bg-dark) !important;
 }
 
 /* Hover dla VisuDir: czerwony tekst staje się standardowy */
 #systemInfoLink:hover .visu-text-red {
-    color: var(--status-text-light, #444) !important;
+  color: var(--status-text-light, #444) !important;
 }
 html.dark-mode #systemInfoLink:hover .visu-text-red {
-    color: var(--status-text-dark, #bbb) !important;
+  color: var(--status-text-dark, #bbb) !important;
 }
 
 /* Hover dla flagi: czerwony tekst staje się standardowy */
 #statusLangBtn > a:hover .lang-code-status {
-    color: var(--status-text-light, #444) !important;
+  color: var(--status-text-light, #444) !important;
 }
 html.dark-mode #statusLangBtn > a:hover .lang-code-status {
-    color: var(--status-text-dark, #bbb) !important;
+  color: var(--status-text-dark, #bbb) !important;
+}
+/* --- ŁATKA STYLU: Nowy wygląd siatki (Soft UI) --- */
+
+/* 1. Główny kontener kafelka */
+.guide-list.view-grid .guide {
+  background: #f1e9e8;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #d1c8c7, -8px -8px 16px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+html.dark-mode .guide-list.view-grid .guide {
+  background: #2c2828;
+  box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Usunięcie niepotrzebnych stylów z linku-wrappera */
+.guide-list.view-grid .guide a:not(.grid-action-button) {
+  margin: 0;
+  display: flex; /* Pozwala obrazkowi się rozciągnąć */
+  flex-grow: 1;
+}
+
+/* 2. Pasek tytułu na górze */
+.guide-list.view-grid {
+  padding: 10px 20px; /* Zmiana */
+  font-weight: 600;
+  font-size: 0.9em;
+  text-align: center; /* Zmiana */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #7b6d6c;
+  flex-shrink: 0;
+}
+
+.guide-title {
+  text-align: center !important; /* Zmiana */
+}
+
+html.dark-mode .guide-list.view-grid .grid-title-bar {
+  color: #b0a3a2;
+}
+
+/* 3. Obrazek (wypełnia dostępną przestrzeń) */
+.guide-list.view-grid .guide-cover-grid {
+  border-radius: 0; /* Obrazek nie ma już zaokrąglonych rogów */
+  box-shadow: none; /* Cień jest na głównym kontenerze */
+  height: 100%;
+}
+
+/* 4. Dolny pasek z przyciskiem */
+.guide-list.view-grid .grid-action-bar {
+  padding: 8px 20px; /* Zmiana */
+  text-align: right;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+html.dark-mode .guide-list.view-grid .grid-action-bar {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* 5. Przycisk akcji */
+.guide-list.view-grid .grid-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9em;
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+html.dark-mode .guide-list.view-grid .grid-action-button {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+
+.guide-list.view-grid .grid-action-button:hover {
+  transform: scale(1.05);
+}
+
+/* --- ŁATKA: Aktywne stany i hover dla ikon statusu --- */
+
+/* Stan bazowy i hover na nieaktywnym przycisku (bez zmian, dla jasności) */
+.status-icon-btn {
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.status-icon-btn:hover {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn:hover {
+  color: var(--button-red-bg-dark);
+}
+
+/* NOWOŚĆ: Stan aktywny (czerwony) dla przycisków */
+.status-icon-btn.active-red {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn.active-red {
+  color: var(--button-red-bg-dark);
+}
+
+/* NOWOŚĆ: Hover na aktywnym (czerwonym) przycisku -> powrót do koloru bazowego */
+.status-icon-btn.active-red:hover {
+  color: var(--status-text-light);
+  opacity: 0.8;
+}
+html.dark-mode .status-icon-btn.active-red:hover {
+  color: var(--status-text-dark);
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Układ responsywny dla panelu sterowania na urządzeniach mobilnych --- */
+@media (max-width: 600px) {
+  .deck-bottom-row {
+    flex-wrap: wrap; /* Włącza zawijanie elementów do nowego wiersza */
+    gap: 8px; /* Zmniejsza odstępy między grupami w ciaśniejszym układzie */
+  }
+
+  .display-panel-group.slider-group {
+    width: 100%; /* Rozciąga grupę z suwakami na całą szerokość, wypychając przyciski poniżej */
+    order: -1; /* Zmienia wizualną kolejność, umieszczając suwaki na górze */
+    margin-bottom: 4px; /* Dodaje niewielki odstęp od przycisków, które znajdą się pod spodem */
+  }
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Responsywna czcionka dla panelu statusu --- */
+@media (max-width: 992px) {
+  .glass-status {
+    font-size: 0.9rem; /* Zmniejszenie czcionki dla tabletów */
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-status {
+    font-size: 0.85rem; /* Dalsze zmniejszenie dla telefonów */
+    padding: 8px 15px;
+    gap: 12px;
+  }
+}
+/* Plik: style.css */
+
+/* --- PATCH: Korekta widoczności (opacity) dla kluczowych linków paska statusu --- */
+#statusInfoBtn,
+#systemInfoLink,
+#statusLangBtn > a {
+  opacity: 1; /* Nadpisuje domyślną wartość 0.7, zapewniając pełną intensywność koloru */
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Finalne poprawki responsywności dla orientacji pionowej (mobile) --- */
+@media (max-width: 480px) {
+  /* 1. Reorganizacja GÓRNEGO WIERSZA panelu sterowania */
+  .deck-top-row {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: stretch; /* Elementy rozciągają się na pełną szerokość */
+    gap: 10px;
+  }
+
+  .filter-section,
+  .status-section {
+    width: 100%; /* Obie sekcje zajmują pełną szerokość */
+    justify-content: center; /* Centruje zawartość wewnątrz sekcji */
+  }
+
+  .status-section {
+    align-items: center; /* Centruje grupę ikon statusu */
+  }
+
+  .curtain-handle {
+    display: none; /* Ukrycie uchwytu kurtyny, który traci sens w tym układzie */
+  }
+
+  /* 2. Reorganizacja PASKA STATUSU */
+  .glass-status {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: center; /* Wyśrodkowanie wszystkich elementów */
+    gap: 8px; /* Odstęp między wierszami */
+    padding: 12px;
+  }
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Ostateczna Wersja Wskaźnika W-E z Poprawkami Widoczności i Strzałkami --- */
+
+/* 1. Kontekst pozycjonowania (bez zmian) */
+.lang-modal-content {
+  position: relative;
+}
+
+/* 2. Kontener wskaźnika */
+.viewfinder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 3. Linia pozioma - UJEDNOLICONY KOLOR */
+.viewfinder::before {
+  content: "";
+  position: absolute;
+  top: 70px;
+  left: 50px;
+  right: 50px;
+  height: 1px;
+  /* Usunięto rozróżnienie na motywy - linia jest zawsze jasna */
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 4. Pozycjonowanie i styl etykiet W i E - UJEDNOLICONY KOLOR */
+.viewfinder .west-label,
+.viewfinder .east-label {
+  position: absolute;
+  top: 70px;
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 14px;
+  /* Usunięto rozróżnienie na motywy - etykiety są zawsze jasne */
+  color: rgba(255, 255, 255, 0.5);
+  display: flex; /* Umożliwia dodanie strzałek i zachowanie wyrównania */
+  align-items: center;
+}
+
+/* 5. Pozycjonowanie horyzontalne etykiet (bez zmian) */
+.viewfinder .west-label {
+  left: 30px;
+}
+
+.viewfinder .east-label {
+  right: 30px;
+}
+
+/* 6. NOWOŚĆ: Dodanie strzałek za pomocą pseudo-elementów */
+.viewfinder .west-label::before {
+  content: "<";
+  margin-right: 5px;
+  opacity: 0.6;
+}
+
+.viewfinder .east-label::after {
+  content: ">";
+  margin-left: 5px;
+  opacity: 0.6;
+}
+
+/* === SEKCJA PAGINACJI (PO REFAKTORYZACJI I NAPRAWIE UKŁADU) === */
+
+/* --- Kontenery i Układ --- */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s,
+    margin 0.5s, padding 0.5s;
+  margin-bottom: 20px;
+}
+
+.pagination.visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  background-color: var(--panel-bg-light);
+  box-shadow: var(--panel-shadow-light);
+}
+
+html.dark-mode .pagination-controls {
+  background-color: var(--panel-bg-dark);
+  box-shadow: var(--panel-shadow-dark);
+}
+
+.pagination-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.page-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.page-input-group {
+  display: flex;
+  align-items: center;
+}
+
+/* --- Przyciski --- */
+.pagination button,
+.pagination-controls button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #a00000;
+  font-weight: bold;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+body:not(.dark-mode) .pagination button,
+body:not(.dark-mode) .pagination-controls button {
+  background: #fdfdfd;
+  color: #cc0000;
+}
+
+body.dark-mode .pagination button,
+body.dark-mode .pagination-controls button {
+  background: #000;
+  color: #e53935;
+  border-color: #a00000;
+}
+
+.pagination button:hover:not(:disabled),
+.pagination-controls button:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+.pagination button:disabled,
+.pagination-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination-controls .pagination-action-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 0.9em;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: #888;
+}
+
+body.dark-mode .pagination-controls .pagination-action-btn {
+  color: #aaa;
+}
+
+.pagination-controls .pagination-action-btn:hover {
+  color: #cc0000;
+}
+
+body.dark-mode .pagination-controls .pagination-action-btn:hover {
+  color: #e53935;
+}
+
+.page-info .pagination-action-btn:first-child {
+  margin-right: 10px;
+}
+
+.page-info .pagination-action-btn:last-child {
+  margin-left: 10px;
+}
+
+#paginationCarouselBtn {
+  color: var(--button-red-bg-light) !important;
+  opacity: 1;
+}
+
+html.dark-mode #paginationCarouselBtn {
+  color: var(--button-red-bg-dark) !important;
+}
+
+#paginationCarouselBtn:hover {
+  opacity: 0.8;
+}
+
+#paginationShuffleBtn.active-red {
+  color: var(--button-red-bg-light);
+}
+
+html.dark-mode #paginationShuffleBtn.active-red {
+  color: var(--button-red-bg-dark);
+}
+
+/* --- Pola tekstowe i informacje --- */
+.pagination .pagination-info {
+  padding: 10px;
+  font-weight: bold;
+}
+
+body:not(.dark-mode) .pagination .pagination-info {
+  color: #555;
+}
+
+body.dark-mode .pagination .pagination-info {
+  color: #aaa;
+}
+
+.page-input {
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #808080;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 5px;
+  -moz-appearance: textfield;
+}
+
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body:not(.dark-mode) .page-input {
+  background-color: #fff;
+  color: #333;
+}
+
+body.dark-mode .page-input {
+  background-color: #222;
+  color: #eee;
+  border-color: #666;
+}
+
+.page-info-text {
+  margin-left: 8px;
+  font-size: 1.1em;
+}
+
+/* --- Suwak (Slider) --- */
+.page-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+body.dark-mode .page-slider {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.page-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #cc0000;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.dark-mode .page-slider::-webkit-slider-thumb {
+  background: #e53935;
+  border-color: #000;
+}
+
+.page-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.page-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #cc0000;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.dark-mode .page-slider::-moz-range-thumb {
+  background: #e53935;
+  border-color: #000;
+}
+
+.page-slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* --- Animacje --- */
+.pagination.visible.animated-pagination {
+  animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+body.play-mode-active > .pagination {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0s 0.4s;
+}
+
+/* --- Style responsywne --- */
+@media (max-width: 480px) {
+  #firstPageBtn,
+  #lastPageBtn {
+    display: none;
+  }
+
+  .pagination-controls {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .pagination {
+    margin-bottom: 15px;
+  }
 }

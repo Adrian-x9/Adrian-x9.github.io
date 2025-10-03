@@ -113,6 +113,7 @@ let guideDimensionsCache = {};
 let pausedTime = 0;
 let tappedGuide = null;
 let currentTheme = "light";
+let isCarouselShuffleActive = false;
 
 const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -1142,36 +1143,40 @@ function setupLazyLoading(pages) {
   });
 }
 
+// Plik: scripts.js
+
 function renderPagination() {
   pagination.innerHTML = `
     <div class="pagination-controls">
         <button id="firstPageBtn" title="${lang.paginationFirst}"><i class="fas fa-fast-backward"></i></button>
         <button id="prevPageBtn" title="${lang.paginationPrev}"><i class="fas fa-chevron-left"></i></button>
-        <button id="paginationResetBtn" class="pagination-action-btn" title="${lang.paginationReset}"><i class="fas fa-undo"></i></button>
         <div class="pagination-center">
             <div class="page-info">
-                <input type="number" id="pageInput" min="1" value="1" class="page-input">
-                <span id="pageInfoText" class="page-info-text">/ 1</span>
+                <button id="paginationShuffleBtn" class="pagination-action-btn" title="Włącz losowe przewijanie"><i class="fas fa-random"></i></button>
+                <div class="page-input-group">
+                  <input type="number" id="pageInput" min="1" value="1" class="page-input">
+                  <span id="pageInfoText" class="page-info-text">/ 1</span>
+                </div>
+                <button id="paginationCarouselBtn" class="pagination-action-btn" title="${lang.paginationCarouselStart}"><i class="fas fa-play"></i></button>
             </div>
             <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
         </div>
-        <button id="paginationCarouselBtn" class="pagination-action-btn" title="${lang.paginationCarouselStart}"><i class="fas fa-play"></i></button>
         <button id="nextPageBtn" title="${lang.paginationNext}"><i class="fas fa-chevron-right"></i></button>
         <button id="lastPageBtn" title="${lang.paginationLast}"><i class="fas fa-fast-forward"></i></button>
     </div>
   `;
 
+  // ... (reszta funkcji pozostaje bez zmian, ale dla pewności skopiuj całą poniższą część) ...
+
   const controls = pagination.querySelector(".pagination-controls");
 
   if (totalPages <= 1) {
     pagination.classList.remove("visible");
-    controls.style.display = "none";
     return;
   }
 
   pagination.classList.add("visible", "animated-pagination");
-  controls.style.display = "flex";
-
+  
   const firstPageBtn = document.getElementById("firstPageBtn");
   const prevPageBtn = document.getElementById("prevPageBtn");
   const nextPageBtn = document.getElementById("nextPageBtn");
@@ -1179,10 +1184,9 @@ function renderPagination() {
   const pageInput = document.getElementById("pageInput");
   const pageSlider = document.getElementById("pageSlider");
   const pageInfoText = document.getElementById("pageInfoText");
-  document.getElementById("paginationResetBtn").onclick = () => {
-    stopCarousel();
-    goToPage(1);
-  };
+  
+  // Zaktualizowany event listener dla nowego przycisku
+  document.getElementById("paginationShuffleBtn").onclick = toggleCarouselShuffle;
   document.getElementById("paginationCarouselBtn").onclick = toggleCarousel;
 
   const updateControls = (pageNum) => {
@@ -1191,42 +1195,18 @@ function renderPagination() {
     pageInput.max = totalPages;
     pageSlider.value = pageNum;
     pageSlider.max = totalPages;
-
     firstPageBtn.disabled = prevPageBtn.disabled = pageNum <= 1;
     lastPageBtn.disabled = nextPageBtn.disabled = pageNum >= totalPages;
-
     preloadNextPageImages();
   };
 
-  firstPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(1);
-  };
-  prevPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(currentPage - 1);
-  };
-  nextPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(currentPage + 1);
-  };
-  lastPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(totalPages);
-  };
-
-  pageSlider.addEventListener("input", () => {
-    stopCarousel();
-    pageInput.value = pageSlider.value;
-  });
-  pageSlider.addEventListener("change", () =>
-    goToPage(parseInt(pageSlider.value, 10))
-  );
-
-  pageInput.addEventListener("change", () => {
-    stopCarousel();
-    goToPage(parseInt(pageInput.value, 10));
-  });
+  firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
+  prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
+  nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
+  lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
+  pageSlider.addEventListener("input", () => { stopCarousel(); pageInput.value = pageSlider.value; });
+  pageSlider.addEventListener("change", () => goToPage(parseInt(pageSlider.value, 10)) );
+  pageInput.addEventListener("change", () => { stopCarousel(); goToPage(parseInt(pageInput.value, 10)); });
   pageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       stopCarousel();
@@ -1246,17 +1226,10 @@ function renderPagination() {
           updateWrapperHeightForPage(pageNum);
         }
       });
-    },
-    {
-      root: guideList,
-      threshold: 0.75,
-    }
+    }, { root: guideList, threshold: 0.75 }
   );
 
-  document
-    .querySelectorAll(".guide-page")
-    .forEach((page) => paginationObserver.observe(page));
-
+  document.querySelectorAll(".guide-page").forEach((page) => paginationObserver.observe(page));
   currentPage = 1;
   updateControls(1);
 }
@@ -1374,35 +1347,44 @@ function initializeDisplayPanel() {
   `;
   const viewNumberSpan = viewContentBtn.querySelector(".view-number");
 
-  const updateViewNumber = () => {
+  const updateView = () => {
     const viewNumber = viewModes.indexOf(currentViewMode) + 1;
     viewNumberSpan.textContent = viewNumber;
+    saveToLocalStorage("view_mode", currentViewMode);
+    renderGuides();
   };
 
   currentViewMode =
     getFromLocalStorage("view_mode") || config.pageSettings.defaultViewMode;
   viewContentBtn.title = "Zmień tryb widoku";
-  updateViewNumber();
+  updateView(); // Inicjalizacja numeru i widoku
 
+  // ZMIANA: Obsługa lewego kliknięcia (następny tryb)
   viewContentBtn.addEventListener("click", () => {
     const currentIndex = viewModes.indexOf(currentViewMode);
     currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
-    saveToLocalStorage("view_mode", currentViewMode);
-    updateViewNumber();
-    renderGuides();
+    updateView();
   });
 
+  // NOWOŚĆ: Obsługa prawego kliknięcia (poprzedni tryb)
+  viewContentBtn.addEventListener("contextmenu", (e) => {
+    e.preventDefault(); // Zapobiega wyświetleniu menu kontekstowego
+    const currentIndex = viewModes.indexOf(currentViewMode);
+    const newIndex = (currentIndex - 1 + viewModes.length) % viewModes.length; // Poprawna obsługa pętli wstecz
+    currentViewMode = viewModes[newIndex];
+    updateView();
+  });
+
+  // ZMIANA: Logika ikony motywu
   const updateThemeIcon = () => {
-    const isDark = document.documentElement.classList.contains("dark-mode");
-    viewThemeBtn.innerHTML = isDark
-      ? '<i class="fas fa-sun"></i>'
-      : '<i class="fas fa-moon"></i>';
+    // Ikona jest zawsze księżycem, zmieniamy tylko jej wygląd przez CSS
+    viewThemeBtn.innerHTML = '<i class="fas fa-moon"></i>';
   };
   updateThemeIcon();
 
   viewThemeBtn.addEventListener("click", () => {
     toggleDarkMode();
-    updateThemeIcon();
+    updateThemeIcon(); // Wywołujemy, choć na razie nie jest to konieczne, ale to dobra praktyka
   });
 
   viewOrientationBtn.addEventListener("click", () => {
@@ -1584,11 +1566,23 @@ function createGuideHtml(guide) {
         </div>
     `;
   } else if (currentViewMode === "grid") {
-    const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    return `<a href="${hrefAction}" onclick="${onclickAction}">${gridCoverImgHtml}<div class="grid-overlay"><span class="grid-title-text">${titleText}</span></div></a>`;
+
+    // Nowa struktura HTML dla widoku siatki
+    return `
+      <div class="grid-title-bar">${titleText}</div>
+      <a href="${hrefAction}" onclick="${onclickAction}" class="grid-image-link">
+        <img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">
+      </a>
+      <div class="grid-action-bar">
+        <a href="${hrefAction}" onclick="${onclickAction}" class="grid-action-button">
+          <i class="fas fa-external-link-alt"></i>
+          <span>${lang.guideBtnOpen}</span>
+        </a>
+      </div>
+    `;
   } else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
@@ -1802,42 +1796,40 @@ function updateVideoBtnUI() {
   const playBtn = document.getElementById("videoBtn-play");
   const lightboxPlayBtn = document.getElementById("lightbox-video-toggle");
 
-  const updateButton = (btn) => {
-    if (!btn) return;
+  // Logika dla przycisku Play/Pause/Stop
+  const isVideoActive = videoBgState === "playing" || videoBgState === "paused";
+  if (playBtn) {
+    playBtn.classList.toggle("active-red", isVideoActive);
     switch (videoBgState) {
       case "playing":
-        btn.innerHTML = '<i class="fas fa-pause"></i>';
-        btn.title = lang.videoBtnPause;
-        btn.classList.add("active-play");
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        playBtn.title = lang.videoBtnPause;
         break;
       case "paused":
-        btn.innerHTML = '<i class="fas fa-stop"></i>';
-        btn.title = lang.videoBtnOff;
-        btn.classList.add("active-play");
+        playBtn.innerHTML = '<i class="fas fa-stop"></i>';
+        playBtn.title = lang.videoBtnOff;
         break;
       case "off":
-        btn.innerHTML = '<i class="fas fa-play"></i>';
-        btn.title = lang.videoBtnPlay;
-        btn.classList.remove("active-play");
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playBtn.title = lang.videoBtnPlay;
         break;
     }
-  };
+  }
+  if (lightboxPlayBtn) {
+    lightboxPlayBtn.classList.toggle("active-play", isVideoActive); // Lightbox używa innej klasy, zostawiamy dla spójności
+  }
 
-  updateButton(playBtn);
-  updateButton(lightboxPlayBtn);
-
+  // Logika dla przycisku Shuffle
   const shuffleBtn = document.getElementById("videoBtn-shuffle");
+  const isShuffleActive = autoShuffleInterval !== null;
   if (shuffleBtn) {
-    shuffleBtn.classList.toggle("active-play", autoShuffleInterval !== null);
+    shuffleBtn.classList.toggle("active-red", isShuffleActive);
   }
   const lightboxShuffleBtn = document.getElementById(
     "lightbox-video-autoshuffle"
   );
   if (lightboxShuffleBtn) {
-    lightboxShuffleBtn.classList.toggle(
-      "active-play",
-      autoShuffleInterval !== null
-    );
+    lightboxShuffleBtn.classList.toggle("active-play", isShuffleActive);
   }
 }
 
@@ -2246,7 +2238,6 @@ function displayRandomGuide(guide) {
   }
 }
 
-// ZASTĄP TĘ FUNKCJĘ FINALNĄ WERSJĄ
 function toggleFullScreen() {
   const btn = document.getElementById("fullscreenBtn");
 
@@ -2282,11 +2273,16 @@ function toggleFullScreen() {
 function updateFullscreenIcon() {
   const icon = fullscreenBtn.querySelector("i");
   const iconLightbox = fullscreenBtnLightbox.querySelector("i");
-  const iconStatus = document
-    .getElementById("statusFullscreenBtn")
-    ?.querySelector("i");
+  const statusBtn = document.getElementById("statusFullscreenBtn");
+  const iconStatus = statusBtn?.querySelector("i");
 
-  if (document.fullscreenElement) {
+  const isFullscreen = !!document.fullscreenElement;
+
+  if (statusBtn) {
+    statusBtn.classList.toggle("active-red", isFullscreen);
+  }
+
+  if (isFullscreen) {
     if (icon) icon.className = "fas fa-compress";
     if (iconLightbox) iconLightbox.className = "fas fa-compress";
     if (iconStatus) iconStatus.className = "fas fa-compress";
@@ -2437,6 +2433,17 @@ function stopCarousel() {
   }
 }
 
+function toggleCarouselShuffle() {
+  isCarouselShuffleActive = !isCarouselShuffleActive;
+  const shuffleBtn = document.getElementById("paginationShuffleBtn");
+  if (shuffleBtn) {
+    shuffleBtn.classList.toggle("active-red", isCarouselShuffleActive);
+    shuffleBtn.title = isCarouselShuffleActive
+      ? "Wyłącz losowe przewijanie"
+      : "Włącz losowe przewijanie";
+  }
+}
+
 function toggleCarousel() {
   const carouselBtn = document.getElementById("paginationCarouselBtn");
   if (carouselInterval) {
@@ -2446,7 +2453,15 @@ function toggleCarousel() {
     carouselBtn.innerHTML = '<i class="fas fa-pause"></i>';
     carouselBtn.title = lang.paginationCarouselStop;
     carouselInterval = setInterval(() => {
-      const nextPage = (currentPage % totalPages) + 1;
+      let nextPage;
+      // NOWA LOGIKA: Sprawdzenie, czy tryb losowy jest aktywny
+      if (isCarouselShuffleActive) {
+        do {
+          nextPage = Math.floor(Math.random() * totalPages) + 1;
+        } while (totalPages > 1 && nextPage === currentPage);
+      } else {
+        nextPage = (currentPage % totalPages) + 1;
+      }
       goToPage(nextPage);
     }, 5000);
   }
@@ -2607,13 +2622,13 @@ function applyMasonryLayout(pageNum = 1) {
     const remainingSpace = viewportWidth - gridWidth;
     const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
 
-    guidePage.style.paddingLeft = `${sidePadding}px`;
-    guidePage.style.paddingRight = `${sidePadding}px`;
-    guidePage.style.boxSizing = "border-box";
+    // Ustawiamy sztywną szerokość kontenera siatki i centrujemy go marginesem
+    guidePage.style.width = `${gridWidth}px`;
+    guidePage.style.margin = '0 auto';
 
-    // Resetujemy stare style, na wypadek gdyby zostały w pamięci
-    guidePage.style.width = "";
-    guidePage.style.margin = "";
+    // Resetujemy padding, aby uniknąć konfliktów
+    guidePage.style.paddingLeft = '0px';
+    guidePage.style.paddingRight = '0px';
 
     guidePage.style.position = "relative";
     const columnHeights = Array(numColumns).fill(0);
@@ -2742,6 +2757,8 @@ setInterval(updateRealTimeClock, 30000);
 //          LOGIKA KARUZELI JĘZYKOWEJ
 // =================================================================
 // ZASTĄP STARĄ WERSJĘ TĄ NOWĄ
+// Plik: scripts.js
+
 function initializeLangCarousel() {
   const modal = document.getElementById("lang-modal");
   const overlay = document.getElementById("lang-overlay");
@@ -2749,10 +2766,11 @@ function initializeLangCarousel() {
   const world = modal.querySelector(".world");
   const globeBtn = document.getElementById("statusLangBtn");
 
-  // ZMIANA: Usunięto lokalny obiekt langDetails. Poniżej pobieramy dane z config.js
   const langDetails = config.langConfig;
   const availableLangCodes = Object.keys(langDetails);
 
+  // --- MODYFIKACJA START ---
+  // Dodajemy sortowanie według długości geograficznej (longitude) od zachodu na wschód.
   const languages = availableLangCodes
     .map((code) => {
       if (langDetails[code]) {
@@ -2760,11 +2778,14 @@ function initializeLangCarousel() {
           code: code,
           name: langDetails[code].name,
           flag: langDetails[code].flag,
+          lon: langDetails[code].lon, // Pobieramy 'lon' do obiektu
         };
       }
       return null;
     })
-    .filter((lang) => lang);
+    .filter((lang) => lang)
+    .sort((a, b) => a.lon - b.lon); // Sortujemy listę rosnąco według wartości 'lon'
+  // --- MODYFIKACJA KONIEC ---
 
   let resizeTimer;
   let hasDragged = false;
@@ -2772,16 +2793,15 @@ function initializeLangCarousel() {
   const rebuildCarousel = () => {
     world.innerHTML = "";
     const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
-    // Zaktualizowany kod do wklejenia
     const base = {
-      sceneSize: 320, // Zwiększona szerokość sceny, by spłaszczyć łuk
+      sceneSize: 320,
       perspective: 1000,
       itemWidth: 100,
       itemHeight: 50,
       fontSize: 14,
       flagSize: 22,
       gap: 10,
-      radius: 290, // Zwiększony promień, by odsunąć flagi od siebie
+      radius: 290,
     };
 
     const root = document.documentElement;

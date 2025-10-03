@@ -81,8 +81,12 @@ let guides = [],
   slideshowSourceGuides = [],
   playGuidesQueue = [];
 
-let sessionStartTime, lastActivityTime;
+const GLOBAL_SESSION_START_KEY = "visudir_global_session_start";
+const GLOBAL_SESSION_UPDATE_KEY = "visudir_global_session_update";
+const SESSION_GRACE_PERIOD_MS = 65000; // 65 sekund (nieco więcej niż interwał)
 
+let globalSessionStartTime; // Zastępuje 'sessionStartTime'
+let lastActivityTime;
 let currentSort, selectedRowCount;
 
 let currentViewMode;
@@ -188,7 +192,8 @@ function resetIdleTimer() {
 
 function updateTimers() {
   const now = new Date();
-  const sessionDuration = now - sessionStartTime;
+  // Używamy teraz globalnego czasu startu sesji
+  const sessionDuration = now - globalSessionStartTime;
   const idleDuration = now - lastActivityTime;
 
   const idleTimeEl = document.querySelector("#timeDisplay .idle-time");
@@ -198,6 +203,9 @@ function updateTimers() {
     idleTimeEl.textContent = formatTime(idleDuration);
     sessionTimeEl.textContent = formatTime(sessionDuration);
   }
+
+  // Co sekundę wysyłamy "bicie serca" do localStorage, aby utrzymać sesję przy życiu
+  saveToLocalStorage(GLOBAL_SESSION_UPDATE_KEY, now.getTime());
 }
 // --- END: Logika liczników czasu i bezczynności ---
 function getMoonPhase(date = new Date()) {
@@ -845,10 +853,10 @@ window.onload = function () {
       });
   }
 
-  sessionStartTime = new Date();
-  lastActivityTime = new Date();
+  initializeGlobalSession(); // Najpierw inicjalizujemy lub dołączamy do sesji
+  lastActivityTime = new Date(); // Czas bezczynności pozostaje lokalny dla instancji
 
-  setInterval(updateTimers, 1000);
+  setInterval(updateTimers, 1000); // Następnie uruchamiamy timer, który będzie podtrzymywał sesję
 
   ["mousedown", "mousemove", "keydown", "touchstart"].forEach((event) =>
     window.addEventListener(event, resetIdleTimer)
@@ -1176,7 +1184,7 @@ function renderPagination() {
   }
 
   pagination.classList.add("visible", "animated-pagination");
-  
+
   const firstPageBtn = document.getElementById("firstPageBtn");
   const prevPageBtn = document.getElementById("prevPageBtn");
   const nextPageBtn = document.getElementById("nextPageBtn");
@@ -1184,9 +1192,10 @@ function renderPagination() {
   const pageInput = document.getElementById("pageInput");
   const pageSlider = document.getElementById("pageSlider");
   const pageInfoText = document.getElementById("pageInfoText");
-  
+
   // Zaktualizowany event listener dla nowego przycisku
-  document.getElementById("paginationShuffleBtn").onclick = toggleCarouselShuffle;
+  document.getElementById("paginationShuffleBtn").onclick =
+    toggleCarouselShuffle;
   document.getElementById("paginationCarouselBtn").onclick = toggleCarousel;
 
   const updateControls = (pageNum) => {
@@ -1200,13 +1209,33 @@ function renderPagination() {
     preloadNextPageImages();
   };
 
-  firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
-  prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
-  nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
-  lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
-  pageSlider.addEventListener("input", () => { stopCarousel(); pageInput.value = pageSlider.value; });
-  pageSlider.addEventListener("change", () => goToPage(parseInt(pageSlider.value, 10)) );
-  pageInput.addEventListener("change", () => { stopCarousel(); goToPage(parseInt(pageInput.value, 10)); });
+  firstPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(1);
+  };
+  prevPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(currentPage - 1);
+  };
+  nextPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(currentPage + 1);
+  };
+  lastPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(totalPages);
+  };
+  pageSlider.addEventListener("input", () => {
+    stopCarousel();
+    pageInput.value = pageSlider.value;
+  });
+  pageSlider.addEventListener("change", () =>
+    goToPage(parseInt(pageSlider.value, 10))
+  );
+  pageInput.addEventListener("change", () => {
+    stopCarousel();
+    goToPage(parseInt(pageInput.value, 10));
+  });
   pageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       stopCarousel();
@@ -1226,10 +1255,13 @@ function renderPagination() {
           updateWrapperHeightForPage(pageNum);
         }
       });
-    }, { root: guideList, threshold: 0.75 }
+    },
+    { root: guideList, threshold: 0.75 }
   );
 
-  document.querySelectorAll(".guide-page").forEach((page) => paginationObserver.observe(page));
+  document
+    .querySelectorAll(".guide-page")
+    .forEach((page) => paginationObserver.observe(page));
   currentPage = 1;
   updateControls(1);
 }
@@ -2624,11 +2656,11 @@ function applyMasonryLayout(pageNum = 1) {
 
     // Ustawiamy sztywną szerokość kontenera siatki i centrujemy go marginesem
     guidePage.style.width = `${gridWidth}px`;
-    guidePage.style.margin = '0 auto';
+    guidePage.style.margin = "0 auto";
 
     // Resetujemy padding, aby uniknąć konfliktów
-    guidePage.style.paddingLeft = '0px';
-    guidePage.style.paddingRight = '0px';
+    guidePage.style.paddingLeft = "0px";
+    guidePage.style.paddingRight = "0px";
 
     guidePage.style.position = "relative";
     const columnHeights = Array(numColumns).fill(0);
@@ -3035,6 +3067,63 @@ function updateStatusLangDisplay() {
     codeSpan.textContent = currentLangCode.toUpperCase();
   }
 }
+
+/**
+ * Inicjalizuje lub dołącza do istniejącej globalnej sesji.
+ * Sprawdza, czy istnieje aktywna sesja w localStorage. Jeśli tak, dołącza do niej.
+ * Jeśli nie, tworzy nową globalną sesję.
+ */
+function initializeGlobalSession() {
+  const now = new Date().getTime();
+  const lastUpdate = parseInt(
+    getFromLocalStorage(GLOBAL_SESSION_UPDATE_KEY) || "0",
+    10
+  );
+  const sessionStart = parseInt(
+    getFromLocalStorage(GLOBAL_SESSION_START_KEY) || "0",
+    10
+  );
+
+  // Sprawdzamy, czy ostatnia aktualizacja była w "okresie karencji"
+  if (now - lastUpdate < SESSION_GRACE_PERIOD_MS && sessionStart > 0) {
+    // Kontynuujemy istniejącą sesję
+    globalSessionStartTime = new Date(sessionStart);
+    console.log(
+      `✅ Dołączono do istniejącej sesji, która rozpoczęła się o: ${globalSessionStartTime.toLocaleTimeString()}`
+    );
+  } else {
+    // Rozpoczynamy nową sesję
+    globalSessionStartTime = new Date();
+    saveToLocalStorage(
+      GLOBAL_SESSION_START_KEY,
+      globalSessionStartTime.getTime()
+    );
+    console.log(
+      `🚀 Rozpoczęto nową globalną sesję o: ${globalSessionStartTime.toLocaleTimeString()}`
+    );
+  }
+
+  // Niezależnie od wszystkiego, od razu ustawiamy "bicie serca", aby inne karty wiedziały, że jesteśmy aktywni
+  saveToLocalStorage(GLOBAL_SESSION_UPDATE_KEY, now);
+}
+
+// Nasłuchiwanie na zmiany w localStorage w celu synchronizacji między kartami
+window.addEventListener("storage", (event) => {
+  // Jeśli inna karta zresetowała sesję, dostosowujemy się do niej
+  if (event.key === GLOBAL_SESSION_START_KEY) {
+    const newStartTime = parseInt(event.newValue, 10);
+    if (
+      newStartTime &&
+      (!globalSessionStartTime ||
+        globalSessionStartTime.getTime() !== newStartTime)
+    ) {
+      console.log(
+        "🔄 Sesja została zresetowana w innej karcie. Synchronizuję czas."
+      );
+      globalSessionStartTime = new Date(newStartTime);
+    }
+  }
+});
 
 // Wywołaj inicjalizację karuzeli po załadowaniu strony
 initializeLangCarousel();

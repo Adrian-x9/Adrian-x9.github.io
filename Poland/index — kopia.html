@@ -112,8 +112,8 @@
             <div></div>
         </div>
         <div class="caption">
-            <span class="visu">Visu</span><span class="dir-text-themed">Dir</span><span
-                class="version-display"></span><span class="version version-display"></span>
+            <span class="visu">Visu</span><span class="dir-text-themed">Dir</span><span class="version-display"></span><span
+                class="version version-display"></span>
         </div>
     </div>
 
@@ -134,26 +134,6 @@
                 <span class="btn-text" data-lang="btnBack"></span></a>
         </div>
     </div>
-
-    <div class="glass-status" style="margin-bottom: 15px;margin-top: 0px;">
-        <span id="guideCountDisplay">📁 <strong>...</strong></span>
-        <span id="currentTimeDisplay">⏰ <strong>--:--</strong> ---- -- --</span>
-        <span id="sunTimesDisplay">🌞 <strong>--:-- – --:--</strong></span>
-        <span id="moonPhaseDisplay"></span>
-        <span>
-            <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i class="fas fa-info-circle"></i></a>
-            <a href="#" id="systemInfoLink" class="">
-                <span class="visu-text-red">Visu</span><span class="dir-text-themed">Dir</span><span
-                    class="version-display"></span>
-            </a>
-        </span>
-        <span id="statusLangBtn">
-            <a class="status-icon-btn" title="Zmień język">
-                <img src="" alt="Flaga" class="lang-flag-status"> <span class="lang-code-status">PL</span>
-            </a>
-        </span>
-    </div>
-
 
     <div class="control-panel ">
         <div class="deck-top-row">
@@ -193,8 +173,8 @@
 
                 <div class="status-section-bottom">
                     <div id="actionControls" class="video-controls-group subtle-bg-group">
-                        <button id="videoBtn" class="status-icon-btn video-main-btn" data-lang-title="btnVideo"><i
-                                class="fas fa-video"></i> <span data-lang="btnVideo"></span></button>
+                        <button id="videoBtn" class="status-icon-btn video-main-btn" title="Wideo"><i
+                                class="fas fa-video"></i> Wideo</button>
                         <button id="videoBtn-prev" class="status-icon-btn" title="Poprzednie"><i
                                 class="fas fa-chevron-left"></i></button>
                         <button id="videoBtn-play" class="status-icon-btn" title="Play/Pauza"><i
@@ -243,6 +223,28 @@
             </div>
         </div>
     </div>
+
+
+
+    <div class="glass-status" style="margin-bottom: 15px;margin-top: 0px;">
+        <span id="guideCountDisplay">📁 <strong>...</strong></span>
+        <span id="currentTimeDisplay">⏰ <strong>--:--</strong> ---- -- --</span>
+        <span id="sunTimesDisplay">🌞 <strong>--:-- – --:--</strong></span>
+        <span id="moonPhaseDisplay"></span>
+        <span>
+            <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i class="fas fa-info-circle"></i></a>
+            <a href="#" id="systemInfoLink" class="">
+                <span class="visu-text-red">Visu</span><span class="dir-text-themed">Dir</span><span
+                    class="version-display"></span>
+            </a>
+        </span>
+        <span id="statusLangBtn">
+            <a class="status-icon-btn" title="Zmień język">
+                <img src="" alt="Flaga" class="lang-flag-status"> <span class="lang-code-status">PL</span>
+            </a>
+        </span>
+    </div>
+
 
     <div class="guide-list-wrapper">
         <div class="guide-list" id="guideList"></div>
@@ -321,11 +323,6 @@
         <div id="lang-overlay" class="lang-modal-overlay"></div>
         <div class="lang-modal-content">
             <button id="lang-modal-close-btn" class="lang-modal-close-btn">&times;</button>
-
-            <div class="viewfinder">
-                <span class="west-label">W</span>
-                <span class="east-label">E</span>
-            </div>
             <div class="scene">
                 <div class="world"></div>
             </div>
