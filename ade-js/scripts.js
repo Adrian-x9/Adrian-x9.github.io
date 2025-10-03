@@ -2766,6 +2766,8 @@ setInterval(updateRealTimeClock, 30000);
 //          LOGIKA KARUZELI JĘZYKOWEJ
 // =================================================================
 // ZASTĄP STARĄ WERSJĘ TĄ NOWĄ
+// Plik: scripts.js
+
 function initializeLangCarousel() {
   const modal = document.getElementById("lang-modal");
   const overlay = document.getElementById("lang-overlay");
@@ -2773,10 +2775,11 @@ function initializeLangCarousel() {
   const world = modal.querySelector(".world");
   const globeBtn = document.getElementById("statusLangBtn");
 
-  // ZMIANA: Usunięto lokalny obiekt langDetails. Poniżej pobieramy dane z config.js
   const langDetails = config.langConfig;
   const availableLangCodes = Object.keys(langDetails);
 
+  // --- MODYFIKACJA START ---
+  // Dodajemy sortowanie według długości geograficznej (longitude) od zachodu na wschód.
   const languages = availableLangCodes
     .map((code) => {
       if (langDetails[code]) {
@@ -2784,11 +2787,14 @@ function initializeLangCarousel() {
           code: code,
           name: langDetails[code].name,
           flag: langDetails[code].flag,
+          lon: langDetails[code].lon, // Pobieramy 'lon' do obiektu
         };
       }
       return null;
     })
-    .filter((lang) => lang);
+    .filter((lang) => lang)
+    .sort((a, b) => a.lon - b.lon); // Sortujemy listę rosnąco według wartości 'lon'
+  // --- MODYFIKACJA KONIEC ---
 
   let resizeTimer;
   let hasDragged = false;
@@ -2796,16 +2802,15 @@ function initializeLangCarousel() {
   const rebuildCarousel = () => {
     world.innerHTML = "";
     const scale = window.innerWidth <= 600 ? 0.7 : 1.0;
-    // Zaktualizowany kod do wklejenia
     const base = {
-      sceneSize: 320, // Zwiększona szerokość sceny, by spłaszczyć łuk
+      sceneSize: 320,
       perspective: 1000,
       itemWidth: 100,
       itemHeight: 50,
       fontSize: 14,
       flagSize: 22,
       gap: 10,
-      radius: 290, // Zwiększony promień, by odsunąć flagi od siebie
+      radius: 290,
     };
 
     const root = document.documentElement;
