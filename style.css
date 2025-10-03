@@ -4127,6 +4127,7 @@ body.video-ready.dark-mode .pagination-controls {
 /* 2. KOREKTA SZEROKOŚCI PANELU PAGINACJI */
 .pagination {
   width: 100%; /* Zapewnia, że kontener paginacji ma pełną szerokość */
+  max-width: 500px;
 }
 
 /* 3. UJEDNOLICENIE PIONOWYCH ODSTĘPÓW (Desktop) */
