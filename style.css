@@ -3897,62 +3897,70 @@ html.dark-mode .status-icon-btn.active-red:hover {
   }
 }
 
-/* --- PATCH: Finalna, Dostępna Wersja Wskaźnika Wschód-Zachód --- */
+/* Plik: style.css */
+
+/* --- PATCH: Ostateczna Wersja Wskaźnika W-E z Poprawkami Widoczności i Strzałkami --- */
 
 /* 1. Kontekst pozycjonowania (bez zmian) */
 .lang-modal-content {
   position: relative;
 }
 
-/* 2. Kontener wskaźnika (usunięto pointer-events, bo nie jest już potrzebne) */
+/* 2. Kontener wskaźnika */
 .viewfinder {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  pointer-events: none; 
   z-index: 5;
 }
 
-/* 3. Linia pozioma - NOWA POZYCJA */
+/* 3. Linia pozioma - UJEDNOLICONY KOLOR */
 .viewfinder::before {
   content: '';
   position: absolute;
-  top: 70px; /* Pozycja w połowie drogi między 'X' a karuzelą */
+  top: 70px;
   left: 50px;
   right: 50px;
   height: 1px;
+  /* Usunięto rozróżnienie na motywy - linia jest zawsze jasna */
   background-color: rgba(255, 255, 255, 0.3);
 }
 
-/* 4. Usunięcie linii pionowej (poprzednia reguła dla .viewfinder::after została usunięta) */
-
-/* 5. Dostosowanie koloru linii dla motywu jasnego */
-html:not(.dark-mode) .viewfinder::before {
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-/* 6. Pozycjonowanie i styl etykiet W i E - NOWA POZYCJA */
+/* 4. Pozycjonowanie i styl etykiet W i E - UJEDNOLICONY KOLOR */
 .viewfinder .west-label,
 .viewfinder .east-label {
   position: absolute;
-  top: 70px; /* Ta sama pozycja pionowa co linia */
+  top: 70px;
   transform: translateY(-50%);
   font-weight: 600;
   font-size: 14px;
+  /* Usunięto rozróżnienie na motywy - etykiety są zawsze jasne */
   color: rgba(255, 255, 255, 0.5);
+  display: flex; /* Umożliwia dodanie strzałek i zachowanie wyrównania */
+  align-items: center;
 }
 
-html:not(.dark-mode) .viewfinder .west-label,
-html:not(.dark-mode) .viewfinder .east-label {
-  color: rgba(0, 0, 0, 0.5);
-}
-
-/* 7. Pozycjonowanie horyzontalne etykiet na końcach */
+/* 5. Pozycjonowanie horyzontalne etykiet (bez zmian) */
 .viewfinder .west-label {
   left: 30px;
 }
 
 .viewfinder .east-label {
   right: 30px;
+}
+
+/* 6. NOWOŚĆ: Dodanie strzałek za pomocą pseudo-elementów */
+.viewfinder .west-label::before {
+  content: '<';
+  margin-right: 5px;
+  opacity: 0.6;
+}
+
+.viewfinder .east-label::after {
+  content: '>';
+  margin-left: 5px;
+  opacity: 0.6;
 }
