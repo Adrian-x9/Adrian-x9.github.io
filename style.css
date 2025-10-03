@@ -2446,7 +2446,7 @@ html.dark-mode .control-panel {
   box-shadow: var(--panel-shadow-dark);
 }
 body.video-ready:not(html.dark-mode) .control-panel {
-  background: rgba(240, 240, 240, 0.85);
+  background: rgba(240, 240, 240, var(--panel-bg-alpha));
 }
 body.video-ready.dark-mode .control-panel {
   background: rgba(26, 26, 26, 0.85) !important;
@@ -3518,13 +3518,13 @@ html.dark-mode .visu-text-red {
 
 /* 5f1: Styl dla flagi na pasku statusu */
 .lang-flag-status {
-  width: 1.2em;
-  height: 1.2em;
+  width: 1em; /* Zmniejszono z 1.2em */
+  height: 1em; /* Zmniejszono z 1.2em */
   border-radius: 50%;
   vertical-align: middle;
   margin-right: 0.4em;
   margin-bottom: 0.1em;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); /* <-- DODAJ TĘ LINIĘ */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
 .lang-code-status {
@@ -3895,4 +3895,64 @@ html.dark-mode .status-icon-btn.active-red:hover {
     gap: 8px; /* Odstęp między wierszami */
     padding: 12px;
   }
+}
+
+/* --- PATCH: Finalna, Dostępna Wersja Wskaźnika Wschód-Zachód --- */
+
+/* 1. Kontekst pozycjonowania (bez zmian) */
+.lang-modal-content {
+  position: relative;
+}
+
+/* 2. Kontener wskaźnika (usunięto pointer-events, bo nie jest już potrzebne) */
+.viewfinder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+/* 3. Linia pozioma - NOWA POZYCJA */
+.viewfinder::before {
+  content: '';
+  position: absolute;
+  top: 70px; /* Pozycja w połowie drogi między 'X' a karuzelą */
+  left: 50px;
+  right: 50px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 4. Usunięcie linii pionowej (poprzednia reguła dla .viewfinder::after została usunięta) */
+
+/* 5. Dostosowanie koloru linii dla motywu jasnego */
+html:not(.dark-mode) .viewfinder::before {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+/* 6. Pozycjonowanie i styl etykiet W i E - NOWA POZYCJA */
+.viewfinder .west-label,
+.viewfinder .east-label {
+  position: absolute;
+  top: 70px; /* Ta sama pozycja pionowa co linia */
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+html:not(.dark-mode) .viewfinder .west-label,
+html:not(.dark-mode) .viewfinder .east-label {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+/* 7. Pozycjonowanie horyzontalne etykiet na końcach */
+.viewfinder .west-label {
+  left: 30px;
+}
+
+.viewfinder .east-label {
+  right: 30px;
 }
