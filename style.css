@@ -3856,3 +3856,19 @@ html.dark-mode .status-icon-btn.active-red {
 html.dark-mode .status-icon-btn.active-red:hover {
   color: var(--status-text-dark);
 }
+
+/* Plik: style.css */
+
+/* --- PATCH: Układ responsywny dla panelu sterowania na urządzeniach mobilnych --- */
+@media (max-width: 600px) {
+  .deck-bottom-row {
+    flex-wrap: wrap; /* Włącza zawijanie elementów do nowego wiersza */
+    gap: 8px; /* Zmniejsza odstępy między grupami w ciaśniejszym układzie */
+  }
+
+  .display-panel-group.slider-group {
+    width: 100%; /* Rozciąga grupę z suwakami na całą szerokość, wypychając przyciski poniżej */
+    order: -1; /* Zmienia wizualną kolejność, umieszczając suwaki na górze */
+    margin-bottom: 4px; /* Dodaje niewielki odstęp od przycisków, które znajdą się pod spodem */
+  }
+}
