@@ -2581,6 +2581,7 @@ html.dark-mode #curtain-toggle-btn {
   --rotation: 180deg; /* Zmienna CSS do zachowania obrotu */
 }
 html.dark-mode #curtain-toggle-btn:hover {
+  transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
   box-shadow: 0 0 10px var(--button-red-bg-dark);
 }
 
