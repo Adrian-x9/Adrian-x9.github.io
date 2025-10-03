@@ -3861,3 +3861,37 @@ html.dark-mode .status-icon-btn.active-red:hover {
 #statusLangBtn > a {
   opacity: 1; /* Nadpisuje domyślną wartość 0.7, zapewniając pełną intensywność koloru */
 }
+
+/* Plik: style.css */
+
+/* --- PATCH: Finalne poprawki responsywności dla orientacji pionowej (mobile) --- */
+@media (max-width: 480px) {
+  /* 1. Reorganizacja GÓRNEGO WIERSZA panelu sterowania */
+  .deck-top-row {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: stretch; /* Elementy rozciągają się na pełną szerokość */
+    gap: 10px;
+  }
+
+  .filter-section,
+  .status-section {
+    width: 100%; /* Obie sekcje zajmują pełną szerokość */
+    justify-content: center; /* Centruje zawartość wewnątrz sekcji */
+  }
+
+  .status-section {
+    align-items: center; /* Centruje grupę ikon statusu */
+  }
+
+  .curtain-handle {
+    display: none; /* Ukrycie uchwytu kurtyny, który traci sens w tym układzie */
+  }
+  
+  /* 2. Reorganizacja PASKA STATUSU */
+  .glass-status {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: center; /* Wyśrodkowanie wszystkich elementów */
+    gap: 8px; /* Odstęp między wierszami */
+    padding: 12px;
+  }
+}
