@@ -113,6 +113,7 @@ let guideDimensionsCache = {};
 let pausedTime = 0;
 let tappedGuide = null;
 let currentTheme = "light";
+let isCarouselShuffleActive = false;
 
 const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -1142,36 +1143,40 @@ function setupLazyLoading(pages) {
   });
 }
 
+// Plik: scripts.js
+
 function renderPagination() {
   pagination.innerHTML = `
     <div class="pagination-controls">
         <button id="firstPageBtn" title="${lang.paginationFirst}"><i class="fas fa-fast-backward"></i></button>
         <button id="prevPageBtn" title="${lang.paginationPrev}"><i class="fas fa-chevron-left"></i></button>
-        <button id="paginationResetBtn" class="pagination-action-btn" title="${lang.paginationReset}"><i class="fas fa-undo"></i></button>
         <div class="pagination-center">
             <div class="page-info">
-                <input type="number" id="pageInput" min="1" value="1" class="page-input">
-                <span id="pageInfoText" class="page-info-text">/ 1</span>
+                <button id="paginationShuffleBtn" class="pagination-action-btn" title="Włącz losowe przewijanie"><i class="fas fa-random"></i></button>
+                <div class="page-input-group">
+                  <input type="number" id="pageInput" min="1" value="1" class="page-input">
+                  <span id="pageInfoText" class="page-info-text">/ 1</span>
+                </div>
+                <button id="paginationCarouselBtn" class="pagination-action-btn" title="${lang.paginationCarouselStart}"><i class="fas fa-play"></i></button>
             </div>
             <input type="range" id="pageSlider" min="1" max="1" value="1" class="page-slider">
         </div>
-        <button id="paginationCarouselBtn" class="pagination-action-btn" title="${lang.paginationCarouselStart}"><i class="fas fa-play"></i></button>
         <button id="nextPageBtn" title="${lang.paginationNext}"><i class="fas fa-chevron-right"></i></button>
         <button id="lastPageBtn" title="${lang.paginationLast}"><i class="fas fa-fast-forward"></i></button>
     </div>
   `;
 
+  // ... (reszta funkcji pozostaje bez zmian, ale dla pewności skopiuj całą poniższą część) ...
+
   const controls = pagination.querySelector(".pagination-controls");
 
   if (totalPages <= 1) {
     pagination.classList.remove("visible");
-    controls.style.display = "none";
     return;
   }
 
   pagination.classList.add("visible", "animated-pagination");
-  controls.style.display = "flex";
-
+  
   const firstPageBtn = document.getElementById("firstPageBtn");
   const prevPageBtn = document.getElementById("prevPageBtn");
   const nextPageBtn = document.getElementById("nextPageBtn");
@@ -1179,10 +1184,9 @@ function renderPagination() {
   const pageInput = document.getElementById("pageInput");
   const pageSlider = document.getElementById("pageSlider");
   const pageInfoText = document.getElementById("pageInfoText");
-  document.getElementById("paginationResetBtn").onclick = () => {
-    stopCarousel();
-    goToPage(1);
-  };
+  
+  // Zaktualizowany event listener dla nowego przycisku
+  document.getElementById("paginationShuffleBtn").onclick = toggleCarouselShuffle;
   document.getElementById("paginationCarouselBtn").onclick = toggleCarousel;
 
   const updateControls = (pageNum) => {
@@ -1191,42 +1195,18 @@ function renderPagination() {
     pageInput.max = totalPages;
     pageSlider.value = pageNum;
     pageSlider.max = totalPages;
-
     firstPageBtn.disabled = prevPageBtn.disabled = pageNum <= 1;
     lastPageBtn.disabled = nextPageBtn.disabled = pageNum >= totalPages;
-
     preloadNextPageImages();
   };
 
-  firstPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(1);
-  };
-  prevPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(currentPage - 1);
-  };
-  nextPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(currentPage + 1);
-  };
-  lastPageBtn.onclick = () => {
-    stopCarousel();
-    goToPage(totalPages);
-  };
-
-  pageSlider.addEventListener("input", () => {
-    stopCarousel();
-    pageInput.value = pageSlider.value;
-  });
-  pageSlider.addEventListener("change", () =>
-    goToPage(parseInt(pageSlider.value, 10))
-  );
-
-  pageInput.addEventListener("change", () => {
-    stopCarousel();
-    goToPage(parseInt(pageInput.value, 10));
-  });
+  firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
+  prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
+  nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
+  lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
+  pageSlider.addEventListener("input", () => { stopCarousel(); pageInput.value = pageSlider.value; });
+  pageSlider.addEventListener("change", () => goToPage(parseInt(pageSlider.value, 10)) );
+  pageInput.addEventListener("change", () => { stopCarousel(); goToPage(parseInt(pageInput.value, 10)); });
   pageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       stopCarousel();
@@ -1246,17 +1226,10 @@ function renderPagination() {
           updateWrapperHeightForPage(pageNum);
         }
       });
-    },
-    {
-      root: guideList,
-      threshold: 0.75,
-    }
+    }, { root: guideList, threshold: 0.75 }
   );
 
-  document
-    .querySelectorAll(".guide-page")
-    .forEach((page) => paginationObserver.observe(page));
-
+  document.querySelectorAll(".guide-page").forEach((page) => paginationObserver.observe(page));
   currentPage = 1;
   updateControls(1);
 }
@@ -1828,24 +1801,23 @@ function updateVideoBtnUI() {
   if (playBtn) {
     playBtn.classList.toggle("active-red", isVideoActive);
     switch (videoBgState) {
-        case "playing":
-            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
-            playBtn.title = lang.videoBtnPause;
-            break;
-        case "paused":
-            playBtn.innerHTML = '<i class="fas fa-stop"></i>';
-            playBtn.title = lang.videoBtnOff;
-            break;
-        case "off":
-            playBtn.innerHTML = '<i class="fas fa-play"></i>';
-            playBtn.title = lang.videoBtnPlay;
-            break;
+      case "playing":
+        playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        playBtn.title = lang.videoBtnPause;
+        break;
+      case "paused":
+        playBtn.innerHTML = '<i class="fas fa-stop"></i>';
+        playBtn.title = lang.videoBtnOff;
+        break;
+      case "off":
+        playBtn.innerHTML = '<i class="fas fa-play"></i>';
+        playBtn.title = lang.videoBtnPlay;
+        break;
     }
   }
   if (lightboxPlayBtn) {
-      lightboxPlayBtn.classList.toggle("active-play", isVideoActive); // Lightbox używa innej klasy, zostawiamy dla spójności
+    lightboxPlayBtn.classList.toggle("active-play", isVideoActive); // Lightbox używa innej klasy, zostawiamy dla spójności
   }
-
 
   // Logika dla przycisku Shuffle
   const shuffleBtn = document.getElementById("videoBtn-shuffle");
@@ -2307,7 +2279,7 @@ function updateFullscreenIcon() {
   const isFullscreen = !!document.fullscreenElement;
 
   if (statusBtn) {
-      statusBtn.classList.toggle('active-red', isFullscreen);
+    statusBtn.classList.toggle("active-red", isFullscreen);
   }
 
   if (isFullscreen) {
@@ -2461,6 +2433,17 @@ function stopCarousel() {
   }
 }
 
+function toggleCarouselShuffle() {
+  isCarouselShuffleActive = !isCarouselShuffleActive;
+  const shuffleBtn = document.getElementById("paginationShuffleBtn");
+  if (shuffleBtn) {
+    shuffleBtn.classList.toggle("active-red", isCarouselShuffleActive);
+    shuffleBtn.title = isCarouselShuffleActive
+      ? "Wyłącz losowe przewijanie"
+      : "Włącz losowe przewijanie";
+  }
+}
+
 function toggleCarousel() {
   const carouselBtn = document.getElementById("paginationCarouselBtn");
   if (carouselInterval) {
@@ -2470,7 +2453,15 @@ function toggleCarousel() {
     carouselBtn.innerHTML = '<i class="fas fa-pause"></i>';
     carouselBtn.title = lang.paginationCarouselStop;
     carouselInterval = setInterval(() => {
-      const nextPage = (currentPage % totalPages) + 1;
+      let nextPage;
+      // NOWA LOGIKA: Sprawdzenie, czy tryb losowy jest aktywny
+      if (isCarouselShuffleActive) {
+        do {
+          nextPage = Math.floor(Math.random() * totalPages) + 1;
+        } while (totalPages > 1 && nextPage === currentPage);
+      } else {
+        nextPage = (currentPage % totalPages) + 1;
+      }
       goToPage(nextPage);
     }, 5000);
   }

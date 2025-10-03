@@ -1,5 +1,5 @@
 const config = {
-  version: " v2.1.4", // Mobile view version
+  version: " v2.1.5", // Lot of fixes and improvements
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-02", // Last update date YYYY-MM-DD
 
