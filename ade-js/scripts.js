@@ -190,51 +190,57 @@ function updateGuideCount(count, total) {
 
 let idleResetTimeout = null;
 function resetIdleTimer() {
-    clearTimeout(idleResetTimeout);
+  clearTimeout(idleResetTimeout);
 
-    // KLUCZOWA ZMIANA:
-    // Sprawdzamy, czy wygaszacz jest aktywny. Jeśli tak,
-    // to zamiast przywracać WSZYSTKO, przywracamy tylko kontrolki pokazu slajdów.
-    if (screenSaverState !== 'inactive') {
-        const hiddenSlideshowControls = document.querySelectorAll('#lightbox-controls.screensaver-fade-out, #play-caption.screensaver-fade-out, #playCloseBtn.screensaver-fade-out, #fullscreenBtnLightbox.screensaver-fade-out, #lightbox-minimizeBtn.screensaver-fade-out');
-        hiddenSlideshowControls.forEach(el => el.classList.remove('screensaver-fade-out'));
-        
-        // Pokazujemy też widget statusu, jeśli był ukryty
-        const statusWidget = document.getElementById('slideshow-status-widget');
-        if (statusWidget) {
-            statusWidget.classList.add('visible');
-        }
+  // KLUCZOWA ZMIANA: Rozróżnienie stanu przejściowego (stage1) od pełnego wygaszacza (stage2)
+  if (screenSaverState === "stage1") {
+    // SCENARIUSZ 1: Użytkownik przerwał zanim włączył się pokaz slajdów.
+    // Musimy przywrócić cały interfejs i zresetować stan.
+    restoreUiFromScreenSaver();
+  } else if (screenSaverState === "stage2") {
+    // SCENARIUSZ 2: Użytkownik poruszył myszą w trakcie aktywnego pokazu slajdów.
+    // Przywracamy tylko kontrolki pokazu slajdów, ale NIE resetujemy stanu.
+    const hiddenSlideshowControls = document.querySelectorAll(
+      "#lightbox-controls.screensaver-fade-out, #play-caption.screensaver-fade-out, #playCloseBtn.screensaver-fade-out, #fullscreenBtnLightbox.screensaver-fade-out, #lightbox-minimizeBtn.screensaver-fade-out"
+    );
+    hiddenSlideshowControls.forEach((el) =>
+      el.classList.remove("screensaver-fade-out")
+    );
+
+    const statusWidget = document.getElementById("slideshow-status-widget");
+    if (statusWidget) {
+      statusWidget.classList.add("visible");
     }
+  }
 
-    const previousActivityTime = lastActivityTime;
-    lastActivityTime = new Date();
+  // Poniższa logika "zamrażania" licznika i resetu czasu pozostaje bez zmian.
+  const previousActivityTime = lastActivityTime;
+  lastActivityTime = new Date();
 
-    if (previousActivityTime && new Date() - previousActivityTime > 1000) {
-        isIdleTimerFrozen = true;
+  if (previousActivityTime && new Date() - previousActivityTime > 1000) {
+    isIdleTimerFrozen = true;
 
-        const finalIdleDuration = new Date() - previousActivityTime;
-        const formattedFinalIdle = formatTime(finalIdleDuration);
+    const finalIdleDuration = new Date() - previousActivityTime;
+    const formattedFinalIdle = formatTime(finalIdleDuration);
 
-        const idleElements = document.querySelectorAll(
-            "#timeDisplay .idle-time, #widget-idle span"
-        );
-        idleElements.forEach((el) => {
-            if (el) {
-                el.textContent = formattedFinalIdle;
-                const parent = el.closest(".widget-item") || el.parentElement;
-                parent.classList.add("timer-frozen");
-            }
-        });
-    }
+    const idleElements = document.querySelectorAll(
+      "#timeDisplay .idle-time, #widget-idle span"
+    );
+    idleElements.forEach((el) => {
+      if (el) {
+        el.textContent = formattedFinalIdle;
+        const parent = el.closest(".widget-item") || el.parentElement;
+        parent.classList.add("timer-frozen");
+      }
+    });
+  }
 
-    idleResetTimeout = setTimeout(() => {
-        isIdleTimerFrozen = false;
-
-        const idleElements = document.querySelectorAll(".timer-frozen");
-        idleElements.forEach((el) => el.classList.remove("timer-frozen"));
-
-        updateTimers();
-    }, 2000);
+  idleResetTimeout = setTimeout(() => {
+    isIdleTimerFrozen = false;
+    const idleElements = document.querySelectorAll(".timer-frozen");
+    idleElements.forEach((el) => el.classList.remove("timer-frozen"));
+    updateTimers();
+  }, 2000);
 }
 
 function updateTimers() {
@@ -244,12 +250,12 @@ function updateTimers() {
     return;
   }
 
-  checkScreenSaverState(); 
-  
+  checkScreenSaverState();
+
   const now = new Date();
   const sessionDuration = now - globalSessionStartTime;
   const idleDuration = now - lastActivityTime;
-  
+
   const formattedIdle = formatTime(idleDuration);
   const formattedSession = formatTime(sessionDuration);
 
@@ -261,20 +267,22 @@ function updateTimers() {
     idleTimeEl.textContent = formattedIdle;
     sessionTimeEl.textContent = formattedSession;
   }
-  
-  const statusWidget = document.getElementById('slideshow-status-widget');
-  if (statusWidget && statusWidget.classList.contains('visible')) {
-      document.querySelector('#widget-clock span').textContent = now.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
-      const widgetIdle = document.querySelector('#widget-idle');
-      widgetIdle.querySelector('span').textContent = formattedIdle;
-      
-      if (idleDuration > 1000) {
-          widgetIdle.classList.add('idle-pulse');
-      } else {
-          widgetIdle.classList.remove('idle-pulse');
-      }
 
-      document.querySelector('#widget-session span').textContent = formattedSession;
+  const statusWidget = document.getElementById("slideshow-status-widget");
+  if (statusWidget && statusWidget.classList.contains("visible")) {
+    document.querySelector("#widget-clock span").textContent =
+      now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+    const widgetIdle = document.querySelector("#widget-idle");
+    widgetIdle.querySelector("span").textContent = formattedIdle;
+
+    if (idleDuration > 1000) {
+      widgetIdle.classList.add("idle-pulse");
+    } else {
+      widgetIdle.classList.remove("idle-pulse");
+    }
+
+    document.querySelector("#widget-session span").textContent =
+      formattedSession;
   }
 
   saveToLocalStorage(GLOBAL_SESSION_UPDATE_KEY, now.getTime());
@@ -2155,36 +2163,37 @@ function startPlayAnimation(startIndex = 0, forcePause = false) {
 }
 
 function stopPlayAnimation() {
-    if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
-    playAnimationTimeout = null;
+  if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
+  playAnimationTimeout = null;
 
-    // INTELIGENTNE ZAMYKANIE:
-    // Sprawdzamy, czy pokaz slajdów był uruchomiony przez wygaszacz.
-    const wasFromScreensaver = screenSaverState !== 'inactive';
+  // INTELIGENTNE ZAMYKANIE:
+  // Sprawdzamy, czy pokaz slajdów był uruchomiony przez wygaszacz.
+  const wasFromScreensaver = screenSaverState !== "inactive";
 
-    const container = playGuideContainer;
-    const media = container.querySelector("img, video");
+  const container = playGuideContainer;
+  const media = container.querySelector("img, video");
 
-    if (media && slideshowAnimationsEnabled) {
-        media.style.animation = "zoomOutImage 0.4s ease-in forwards";
-    }
+  if (media && slideshowAnimationsEnabled) {
+    media.style.animation = "zoomOutImage 0.4s ease-in forwards";
+  }
 
-    setTimeout(() => {
-        document.body.classList.remove("play-mode-active");
-        backdrop.classList.remove("visible");
-        container.innerHTML = ""; // Czyścimy kontener
+  setTimeout(
+    () => {
+      document.body.classList.remove("play-mode-active");
+      backdrop.classList.remove("visible");
+      container.innerHTML = ""; // Czyścimy kontener
 
-        // JEŚLI WYGASZACZ BYŁ AKTYWNY, TO TERAZ PRZYWRACAMY GŁÓWNY INTERFEJS!
-        if (wasFromScreensaver) {
-            restoreUiFromScreenSaver();
-        }
+      // JEŚLI WYGASZACZ BYŁ AKTYWNY, TO TERAZ PRZYWRACAMY GŁÓWNY INTERFEJS!
+      if (wasFromScreensaver) {
+        restoreUiFromScreenSaver();
+      }
+    },
+    slideshowAnimationsEnabled ? 400 : 0
+  );
 
-    }, slideshowAnimationsEnabled ? 400 : 0);
-
-
-    slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-    slideshowPlayBtn.classList.remove("active-play");
-    updateBackgroundVideoVisibility();
+  slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+  slideshowPlayBtn.classList.remove("active-play");
+  updateBackgroundVideoVisibility();
 }
 
 function scheduleNext(isNav = false) {
