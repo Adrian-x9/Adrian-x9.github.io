@@ -3218,8 +3218,19 @@ window.addEventListener("storage", (event) => {
  * Główna funkcja sprawdzająca stan bezczynności, wywoływana co sekundę.
  */
 function checkScreenSaverState() {
-  // KLUCZOWA POPRAWKA: Jeśli pokaz slajdów jest już aktywny, nie rób nic.
-  if (document.body.classList.contains("play-mode-active")) {
+  // NOWY, ROZSZERZONY BLOK SPRAWDZAJĄCY AKTYWNOŚĆ UŻYTKOWNIKA
+  // Sprawdzamy, czy pokaz slajdów jest aktywny i odtwarzany (a nie zapauzowany)
+  const isSlideshowPlaying =
+    document.body.classList.contains("play-mode-active") && slideshowIsPlaying;
+
+  // Sprawdzamy, czy karuzela paginacji jest włączona
+  const isCarouselActive = carouselInterval !== null;
+
+  if (isSlideshowPlaying || isCarouselActive) {
+    // Jeśli którykolwiek z trybów "oglądania" jest aktywny,
+    // resetujemy licznik bezczynności i natychmiast przerywamy funkcję.
+    // To zapobiega włączeniu wygaszacza, gdy użytkownik coś ogląda.
+    lastActivityTime = new Date();
     return;
   }
 
