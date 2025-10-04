@@ -1,7 +1,7 @@
 const config = {
   version: " v2.2.0", // Added screensaver and auto stopwatch modes
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-02", // Last update date YYYY-MM-DD
+  updated: "2025-10-04", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Domyślny język na wypadek awarii skryptu

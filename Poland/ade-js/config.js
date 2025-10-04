@@ -1,7 +1,7 @@
 const config = {
-  version: " v2.1.1", // Status panel with text and icons - remake + logic added, CSS improvements
+  version: " v2.2.0", // Status panel with text and icons - remake + logic added, CSS improvements
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-02", // Last update date YYYY-MM-DD
+  updated: "2025-10-04", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Domyślny język na wypadek awarii skryptu
@@ -82,14 +82,14 @@ const config = {
     interval: 4500,
     logos: [
       {
-        srcLight: "ade-base-system/gfx/interface/logo-VisuDir-light-480px.png",
-        srcDark: "ade-base-system/gfx/interface/logo-VisuDir-dark-480px.png",
-        href: "ade-base-system/about.html",
+        srcLight: "../ade-base-system/gfx/interface/logo-VisuDir-light-480px.png",
+        srcDark: "../ade-base-system/gfx/interface/logo-VisuDir-dark-480px.png",
+        href: "../ade-base-system/about.html",
         alt: "Logo VisuDir",
       },
       {
-        srcLight: "ade-base-system/gfx/interface/logo-ade-v1-light-240px.png",
-        srcDark: "ade-base-system/gfx/interface/logo-ade-v1-light-240px.png",
+        srcLight: "../ade-base-system/gfx/interface/logo-ade-v1-light-240px.png",
+        srcDark: "../ade-base-system/gfx/interface/logo-ade-v1-light-240px.png",
         href: "https://www.ade.pl",
         alt: "Logo ADE",
       },
@@ -97,11 +97,11 @@ const config = {
   },
 
   paths: {
-    url404: "ade-base-system/404.html",
-    urlAbout: "ade-base-system/about.html",
-    urlFallback: "ade-base-system/soon.html",
-    videoBgLightUrlBase: "ade-base-system/video-bg/bg-light",
-    videoBgDarkUrlBase: "ade-base-system/video-bg/bg-dark",
+    url404: "../ade-base-system/404.html",
+    urlAbout: "../ade-base-system/about.html",
+    urlFallback: "../ade-base-system/soon.html",
+    videoBgLightUrlBase: "../ade-base-system/video-bg/bg-light",
+    videoBgDarkUrlBase: "../ade-base-system/video-bg/bg-dark",
 
     // Wpis dodany z .config.txt
     databaseFileName: "ade-base-system/db.txt",

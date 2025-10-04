@@ -81,8 +81,14 @@ let guides = [],
   slideshowSourceGuides = [],
   playGuidesQueue = [];
 
-let sessionStartTime, lastActivityTime;
+const GLOBAL_SESSION_START_KEY = "visudir_global_session_start";
+const GLOBAL_SESSION_UPDATE_KEY = "visudir_global_session_update";
+const SESSION_GRACE_PERIOD_MS = 65000; // 65 sekund (nieco więcej niż interwał)
 
+let globalSessionStartTime; // Zastępuje 'sessionStartTime'
+let isIdleTimerFrozen = false;
+let lastActivityTime;
+let screenSaverState = "inactive"; // Możliwe stany: 'inactive', 'stage1', 'stage2'
 let currentSort, selectedRowCount;
 
 let currentViewMode;
@@ -182,23 +188,98 @@ function updateGuideCount(count, total) {
   }
 }
 
+let idleResetTimeout = null;
 function resetIdleTimer() {
-  lastActivityTime = new Date();
+    clearTimeout(idleResetTimeout);
+
+    // KLUCZOWA ZMIANA:
+    // Sprawdzamy, czy wygaszacz jest aktywny. Jeśli tak,
+    // to zamiast przywracać WSZYSTKO, przywracamy tylko kontrolki pokazu slajdów.
+    if (screenSaverState !== 'inactive') {
+        const hiddenSlideshowControls = document.querySelectorAll('#lightbox-controls.screensaver-fade-out, #play-caption.screensaver-fade-out, #playCloseBtn.screensaver-fade-out, #fullscreenBtnLightbox.screensaver-fade-out, #lightbox-minimizeBtn.screensaver-fade-out');
+        hiddenSlideshowControls.forEach(el => el.classList.remove('screensaver-fade-out'));
+        
+        // Pokazujemy też widget statusu, jeśli był ukryty
+        const statusWidget = document.getElementById('slideshow-status-widget');
+        if (statusWidget) {
+            statusWidget.classList.add('visible');
+        }
+    }
+
+    const previousActivityTime = lastActivityTime;
+    lastActivityTime = new Date();
+
+    if (previousActivityTime && new Date() - previousActivityTime > 1000) {
+        isIdleTimerFrozen = true;
+
+        const finalIdleDuration = new Date() - previousActivityTime;
+        const formattedFinalIdle = formatTime(finalIdleDuration);
+
+        const idleElements = document.querySelectorAll(
+            "#timeDisplay .idle-time, #widget-idle span"
+        );
+        idleElements.forEach((el) => {
+            if (el) {
+                el.textContent = formattedFinalIdle;
+                const parent = el.closest(".widget-item") || el.parentElement;
+                parent.classList.add("timer-frozen");
+            }
+        });
+    }
+
+    idleResetTimeout = setTimeout(() => {
+        isIdleTimerFrozen = false;
+
+        const idleElements = document.querySelectorAll(".timer-frozen");
+        idleElements.forEach((el) => el.classList.remove("timer-frozen"));
+
+        updateTimers();
+    }, 2000);
 }
 
 function updateTimers() {
-  const now = new Date();
-  const sessionDuration = now - sessionStartTime;
-  const idleDuration = now - lastActivityTime;
+  // Jeśli licznik jest "zamrożony", nie aktualizujemy go co sekundę
+  if (isIdleTimerFrozen) {
+    saveToLocalStorage(GLOBAL_SESSION_UPDATE_KEY, new Date().getTime()); // Heartbeat musi działać nadal
+    return;
+  }
 
+  checkScreenSaverState(); 
+  
+  const now = new Date();
+  const sessionDuration = now - globalSessionStartTime;
+  const idleDuration = now - lastActivityTime;
+  
+  const formattedIdle = formatTime(idleDuration);
+  const formattedSession = formatTime(sessionDuration);
+
+  // Aktualizacja timerów w stopce (istniejąca logika)
   const idleTimeEl = document.querySelector("#timeDisplay .idle-time");
   const sessionTimeEl = document.querySelector("#timeDisplay .session-time");
 
   if (idleTimeEl && sessionTimeEl) {
-    idleTimeEl.textContent = formatTime(idleDuration);
-    sessionTimeEl.textContent = formatTime(sessionDuration);
+    idleTimeEl.textContent = formattedIdle;
+    sessionTimeEl.textContent = formattedSession;
   }
+  
+  const statusWidget = document.getElementById('slideshow-status-widget');
+  if (statusWidget && statusWidget.classList.contains('visible')) {
+      document.querySelector('#widget-clock span').textContent = now.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
+      const widgetIdle = document.querySelector('#widget-idle');
+      widgetIdle.querySelector('span').textContent = formattedIdle;
+      
+      if (idleDuration > 1000) {
+          widgetIdle.classList.add('idle-pulse');
+      } else {
+          widgetIdle.classList.remove('idle-pulse');
+      }
+
+      document.querySelector('#widget-session span').textContent = formattedSession;
+  }
+
+  saveToLocalStorage(GLOBAL_SESSION_UPDATE_KEY, now.getTime());
 }
+
 // --- END: Logika liczników czasu i bezczynności ---
 function getMoonPhase(date = new Date()) {
   const year = date.getFullYear();
@@ -845,10 +926,10 @@ window.onload = function () {
       });
   }
 
-  sessionStartTime = new Date();
-  lastActivityTime = new Date();
+  initializeGlobalSession(); // Najpierw inicjalizujemy lub dołączamy do sesji
+  lastActivityTime = new Date(); // Czas bezczynności pozostaje lokalny dla instancji
 
-  setInterval(updateTimers, 1000);
+  setInterval(updateTimers, 1000); // Następnie uruchamiamy timer, który będzie podtrzymywał sesję
 
   ["mousedown", "mousemove", "keydown", "touchstart"].forEach((event) =>
     window.addEventListener(event, resetIdleTimer)
@@ -1176,7 +1257,7 @@ function renderPagination() {
   }
 
   pagination.classList.add("visible", "animated-pagination");
-  
+
   const firstPageBtn = document.getElementById("firstPageBtn");
   const prevPageBtn = document.getElementById("prevPageBtn");
   const nextPageBtn = document.getElementById("nextPageBtn");
@@ -1184,9 +1265,10 @@ function renderPagination() {
   const pageInput = document.getElementById("pageInput");
   const pageSlider = document.getElementById("pageSlider");
   const pageInfoText = document.getElementById("pageInfoText");
-  
+
   // Zaktualizowany event listener dla nowego przycisku
-  document.getElementById("paginationShuffleBtn").onclick = toggleCarouselShuffle;
+  document.getElementById("paginationShuffleBtn").onclick =
+    toggleCarouselShuffle;
   document.getElementById("paginationCarouselBtn").onclick = toggleCarousel;
 
   const updateControls = (pageNum) => {
@@ -1200,13 +1282,33 @@ function renderPagination() {
     preloadNextPageImages();
   };
 
-  firstPageBtn.onclick = () => { stopCarousel(); goToPage(1); };
-  prevPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage - 1); };
-  nextPageBtn.onclick = () => { stopCarousel(); goToPage(currentPage + 1); };
-  lastPageBtn.onclick = () => { stopCarousel(); goToPage(totalPages); };
-  pageSlider.addEventListener("input", () => { stopCarousel(); pageInput.value = pageSlider.value; });
-  pageSlider.addEventListener("change", () => goToPage(parseInt(pageSlider.value, 10)) );
-  pageInput.addEventListener("change", () => { stopCarousel(); goToPage(parseInt(pageInput.value, 10)); });
+  firstPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(1);
+  };
+  prevPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(currentPage - 1);
+  };
+  nextPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(currentPage + 1);
+  };
+  lastPageBtn.onclick = () => {
+    stopCarousel();
+    goToPage(totalPages);
+  };
+  pageSlider.addEventListener("input", () => {
+    stopCarousel();
+    pageInput.value = pageSlider.value;
+  });
+  pageSlider.addEventListener("change", () =>
+    goToPage(parseInt(pageSlider.value, 10))
+  );
+  pageInput.addEventListener("change", () => {
+    stopCarousel();
+    goToPage(parseInt(pageInput.value, 10));
+  });
   pageInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
       stopCarousel();
@@ -1226,10 +1328,13 @@ function renderPagination() {
           updateWrapperHeightForPage(pageNum);
         }
       });
-    }, { root: guideList, threshold: 0.75 }
+    },
+    { root: guideList, threshold: 0.75 }
   );
 
-  document.querySelectorAll(".guide-page").forEach((page) => paginationObserver.observe(page));
+  document
+    .querySelectorAll(".guide-page")
+    .forEach((page) => paginationObserver.observe(page));
   currentPage = 1;
   updateControls(1);
 }
@@ -2050,29 +2155,36 @@ function startPlayAnimation(startIndex = 0, forcePause = false) {
 }
 
 function stopPlayAnimation() {
-  if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
-  playAnimationTimeout = null;
+    if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
+    playAnimationTimeout = null;
 
-  const container = playGuideContainer;
-  const media = container.querySelector("img, video");
-  if (media && slideshowAnimationsEnabled) {
-    media.style.animation = "zoomOutImage 0.4s ease-in forwards";
-  }
+    // INTELIGENTNE ZAMYKANIE:
+    // Sprawdzamy, czy pokaz slajdów był uruchomiony przez wygaszacz.
+    const wasFromScreensaver = screenSaverState !== 'inactive';
 
-  setTimeout(
-    () => {
-      document.body.classList.remove("play-mode-active");
-      backdrop.classList.remove("visible", "preview-active");
-      if (media) media.style.animation = "";
-      playGuideContainer.innerHTML = "";
-      if (playCaption) playCaption.innerHTML = "";
-    },
-    slideshowAnimationsEnabled ? 400 : 0
-  );
+    const container = playGuideContainer;
+    const media = container.querySelector("img, video");
 
-  slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-  slideshowPlayBtn.classList.remove("active-play");
-  updateBackgroundVideoVisibility();
+    if (media && slideshowAnimationsEnabled) {
+        media.style.animation = "zoomOutImage 0.4s ease-in forwards";
+    }
+
+    setTimeout(() => {
+        document.body.classList.remove("play-mode-active");
+        backdrop.classList.remove("visible");
+        container.innerHTML = ""; // Czyścimy kontener
+
+        // JEŚLI WYGASZACZ BYŁ AKTYWNY, TO TERAZ PRZYWRACAMY GŁÓWNY INTERFEJS!
+        if (wasFromScreensaver) {
+            restoreUiFromScreenSaver();
+        }
+
+    }, slideshowAnimationsEnabled ? 400 : 0);
+
+
+    slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+    slideshowPlayBtn.classList.remove("active-play");
+    updateBackgroundVideoVisibility();
 }
 
 function scheduleNext(isNav = false) {
@@ -2624,11 +2736,11 @@ function applyMasonryLayout(pageNum = 1) {
 
     // Ustawiamy sztywną szerokość kontenera siatki i centrujemy go marginesem
     guidePage.style.width = `${gridWidth}px`;
-    guidePage.style.margin = '0 auto';
+    guidePage.style.margin = "0 auto";
 
     // Resetujemy padding, aby uniknąć konfliktów
-    guidePage.style.paddingLeft = '0px';
-    guidePage.style.paddingRight = '0px';
+    guidePage.style.paddingLeft = "0px";
+    guidePage.style.paddingRight = "0px";
 
     guidePage.style.position = "relative";
     const columnHeights = Array(numColumns).fill(0);
@@ -3033,6 +3145,144 @@ function updateStatusLangDisplay() {
 
     flagImg.src = `https://hatscripts.github.io/circle-flags/flags/${langData.flag}.svg`;
     codeSpan.textContent = currentLangCode.toUpperCase();
+  }
+}
+
+/**
+ * Inicjalizuje lub dołącza do istniejącej globalnej sesji.
+ * Sprawdza, czy istnieje aktywna sesja w localStorage. Jeśli tak, dołącza do niej.
+ * Jeśli nie, tworzy nową globalną sesję.
+ */
+function initializeGlobalSession() {
+  const now = new Date().getTime();
+  const lastUpdate = parseInt(
+    getFromLocalStorage(GLOBAL_SESSION_UPDATE_KEY) || "0",
+    10
+  );
+  const sessionStart = parseInt(
+    getFromLocalStorage(GLOBAL_SESSION_START_KEY) || "0",
+    10
+  );
+
+  // Sprawdzamy, czy ostatnia aktualizacja była w "okresie karencji"
+  if (now - lastUpdate < SESSION_GRACE_PERIOD_MS && sessionStart > 0) {
+    // Kontynuujemy istniejącą sesję
+    globalSessionStartTime = new Date(sessionStart);
+    console.log(
+      `✅ Dołączono do istniejącej sesji, która rozpoczęła się o: ${globalSessionStartTime.toLocaleTimeString()}`
+    );
+  } else {
+    // Rozpoczynamy nową sesję
+    globalSessionStartTime = new Date();
+    saveToLocalStorage(
+      GLOBAL_SESSION_START_KEY,
+      globalSessionStartTime.getTime()
+    );
+    console.log(
+      `🚀 Rozpoczęto nową globalną sesję o: ${globalSessionStartTime.toLocaleTimeString()}`
+    );
+  }
+
+  // Niezależnie od wszystkiego, od razu ustawiamy "bicie serca", aby inne karty wiedziały, że jesteśmy aktywni
+  saveToLocalStorage(GLOBAL_SESSION_UPDATE_KEY, now);
+}
+
+// Nasłuchiwanie na zmiany w localStorage w celu synchronizacji między kartami
+window.addEventListener("storage", (event) => {
+  // Jeśli inna karta zresetowała sesję, dostosowujemy się do niej
+  if (event.key === GLOBAL_SESSION_START_KEY) {
+    const newStartTime = parseInt(event.newValue, 10);
+    if (
+      newStartTime &&
+      (!globalSessionStartTime ||
+        globalSessionStartTime.getTime() !== newStartTime)
+    ) {
+      console.log(
+        "🔄 Sesja została zresetowana w innej karcie. Synchronizuję czas."
+      );
+      globalSessionStartTime = new Date(newStartTime);
+    }
+  }
+});
+
+/**
+ * Główna funkcja sprawdzająca stan bezczynności, wywoływana co sekundę.
+ */
+function checkScreenSaverState() {
+  // KLUCZOWA POPRAWKA: Jeśli pokaz slajdów jest już aktywny, nie rób nic.
+  if (document.body.classList.contains("play-mode-active")) {
+    return;
+  }
+
+  const idleTimeSeconds = (new Date() - lastActivityTime) / 1000;
+  const timeoutStage1 = config.pageSettings.screenSaverTimeout / 2;
+  const timeoutStage2 = config.pageSettings.screenSaverTimeout;
+
+  if (idleTimeSeconds >= timeoutStage2 && screenSaverState !== "stage2") {
+    enterScreenSaverStage2();
+  } else if (
+    idleTimeSeconds >= timeoutStage1 &&
+    screenSaverState === "inactive"
+  ) {
+    enterScreenSaverStage1();
+  }
+}
+
+/**
+ * Uruchamia pierwszą fazę wygaszacza - ukrywa statyczne elementy UI.
+ */
+function enterScreenSaverStage1() {
+  console.log("Screensaver: Faza 1 - ukrywanie UI.");
+  screenSaverState = "stage1";
+
+  const isSlideshowActive =
+    document.body.classList.contains("play-mode-active");
+  let elementsToHide;
+
+  if (isSlideshowActive) {
+    // W trybie pokazu slajdów ukrywamy jego kontrolki
+    elementsToHide = document.querySelectorAll(
+      "#lightbox-controls, #play-caption, #playCloseBtn, #fullscreenBtnLightbox, #lightbox-minimizeBtn"
+    );
+  } else {
+    // W widoku głównym ukrywamy panele i stopkę
+    elementsToHide = document.querySelectorAll(
+      ".control-panel, .glass-status, .footer, #fullscreenBtn, #logoLink"
+    );
+  }
+
+  elementsToHide.forEach((el) => el.classList.add("screensaver-fade-out"));
+  const statusWidget = document.getElementById("slideshow-status-widget");
+  if (isSlideshowActive && statusWidget) {
+    statusWidget.classList.add("visible");
+  }
+}
+
+/**
+ * Uruchamia drugą fazę wygaszacza - aktywuje pokaz slajdów.
+ */
+function enterScreenSaverStage2() {
+  console.log("Screensaver: Faza 2 - uruchamianie pokazu slajdów.");
+  screenSaverState = "stage2";
+
+  // Jeśli już jesteśmy w trybie pokazu, nie robimy nic.
+  if (!document.body.classList.contains("play-mode-active")) {
+    startPlayAnimation();
+  }
+}
+
+/**
+ * Przywraca widoczność interfejsu po wykryciu aktywności użytkownika.
+ */
+function restoreUiFromScreenSaver() {
+  console.log("Screensaver: Wykryto aktywność, przywracanie UI.");
+  screenSaverState = "inactive";
+
+  const hiddenElements = document.querySelectorAll(".screensaver-fade-out");
+  hiddenElements.forEach((el) => el.classList.remove("screensaver-fade-out"));
+  const statusWidget = document.getElementById("slideshow-status-widget");
+  if (statusWidget) {
+    statusWidget.classList.remove("visible");
   }
 }
 
