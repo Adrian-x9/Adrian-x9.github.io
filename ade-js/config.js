@@ -1,5 +1,5 @@
 const config = {
-  version: " v2.1.5", // Lot of fixes and improvements
+  version: " v2.2.0", // Added screensaver and auto stopwatch modes
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-02", // Last update date YYYY-MM-DD
 
@@ -10,7 +10,7 @@ const config = {
   /// COPY HERE <cfg> // configuration / konfiguracja
   pageSettings: {
     pageKey: "indexMaxi",
-    screenSaverTimeout: 90,
+    screenSaverTimeout: 10,
 
     defaultBgVideo: 1,
     bgVideoStartNum: 1,
@@ -77,14 +77,14 @@ const config = {
     interval: 4500,
     logos: [
       {
-        srcLight: "ade-base-system/gfx/interface/logo-VisuDir-light-480px.png",
-        srcDark: "ade-base-system/gfx/interface/logo-VisuDir-dark-480px.png",
+        srcLight: "ade-base-system/gfx/interface/logo-VisuDir-light-240px.png",
+        srcDark: "ade-base-system/gfx/interface/logo-VisuDir-dark-240px.png",
         href: "ade-base-system/about.html",
         alt: "Logo VisuDir",
       },
       {
         srcLight: "ade-base-system/gfx/interface/logo-ade-v1-light-240px.png",
-        srcDark: "ade-base-system/gfx/interface/logo-ade-v1-light-240px.png",
+        srcDark: "ade-base-system/gfx/interface/logo-ade-v1-dark-240px.png",
         href: "https://www.ade.pl",
         alt: "Logo ADE",
       },

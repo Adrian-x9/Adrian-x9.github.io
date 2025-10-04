@@ -140,7 +140,7 @@ body.play-mode-active > .controls,
 body.play-mode-active > .control-panel,
 body.play-mode-active > .display-panel,
 body.play-mode-active > .guide-list-wrapper,
-body.play-mode-active > .filter-controls,
+body.play-mode-active > .glass-status, /* <-- DODANA LINIA */
 body.play-mode-active > .footer,
 body.play-mode-active > #fullscreenBtn,
 body.play-mode-active > #actionControls {
@@ -1112,7 +1112,6 @@ body.dark-mode .guide-cover-grid {
   font-size: var(--dynamic-font-size, 1rem);
   /* <-- DODAJ TĘ LINIĘ */
   /* Ta linia jest do dodania wewnątrz reguły .guide */
-  
 }
 
 .guide-content-bottom {
@@ -4013,3 +4012,96 @@ body.play-mode-active > .pagination {
 }
 /* --- KONIEC --- */
 
+/* --- DO DODANIA --- */
+/* ================================================================
+    ŁATKA: Widget statusu "WOW" dla trybu pokazu slajdów
+   ================================================================ */
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+  }
+}
+
+html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
+  animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+.slideshow-status-widget {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  border-radius: 12px;
+
+  /* Efekt Glassmorphism */
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+
+  color: #fff;
+  font-size: 1.1rem;
+
+  /* Stan początkowy animacji */
+  opacity: 0;
+  transform: translateX(-120%);
+  transition: opacity 0.8s ease-out,
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html:not(.dark-mode) .slideshow-status-widget {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+.slideshow-status-widget.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slideshow-status-widget .widget-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.slideshow-status-widget .widget-item i {
+  opacity: 0.7;
+  width: 20px;
+  text-align: center;
+}
+
+.slideshow-status-widget .widget-item span {
+  font-family: monospace;
+}
+/* --- KONIEC --- */
+
+/* --- DO DODANIA --- */
+/* ================================================================
+    ŁATKA: Styl dla "zamrożonego" licznika bezczynności
+   ================================================================ */
+.timer-frozen {
+  color: #e53935 !important;
+  font-weight: bold !important;
+  transform: scale(1.05);
+}
+
+/* Wygaszamy pulsowanie w widgecie, gdy jest zamrożony */
+.timer-frozen.idle-pulse {
+  animation: none !important;
+}
+/* --- KONIEC --- */
