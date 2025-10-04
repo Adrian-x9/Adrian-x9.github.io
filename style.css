@@ -584,15 +584,16 @@ body.dark-mode .multi-button-child {
 }
 
 .multi-button .multi-button-child {
-  max-width: 0;
+  max-width: 0; /* W stanie zwiniętym dzieci mają zerową szerokość */
   padding: 0;
   opacity: 0;
   border-left: none;
+  overflow: hidden; /* Dodajemy overflow: hidden, aby uniknąć "wyskakiwania" treści w trakcie animacji */
   transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
 }
 
 .multi-button.expanded .multi-button-child {
-  max-width: 45px;
+  max-width: 45px; /* W stanie rozwiniętym dzieci uzyskują swoją docelową szerokość */
   padding: 10px 12px;
   opacity: 1;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -1424,16 +1425,40 @@ body.dark-mode .lightbox-action-btn {
   border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+/* KROK 1: Definiujemy styl dla pojedynczych przycisków i dzieci multi-button */
 #lightbox-controls button,
-#lightbox-controls .dir-db-btn,
 #lightbox-controls .multi-button-child,
 .lightbox-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 1.5em;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 10px 12px;
   transition: background-color 0.2s ease, color 0.2s;
   white-space: nowrap;
+}
+
+/* KROK 2: Definiujemy styl dla samego kontenera multi-button (np. panelu video) */
+#lightbox-controls .dir-db-btn.multi-button {
+  width: auto; /* <-- KLUCZOWA ZMIANA: Szerokość automatyczna, aby mógł się rozszerzać */
+  height: 44px; /* Zachowujemy stałą wysokość */
+  padding: 0; /* Usuwamy padding, bo rozmiar definiują dzieci */
+  display: inline-flex; /* Ustawiamy flex, aby dzieci układały się w rzędzie */
+  align-items: center;
+}
+
+/* KROK 3: Upewniamy się, że główny, widoczny element w multi-button też jest kwadratem */
+#lightbox-controls .multi-button .multi-button-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0; /* Zapobiega kurczeniu się głównego przycisku */
 }
 
 #lightbox-controls .dir-db-btn,
@@ -1460,6 +1485,15 @@ body.dark-mode .lightbox-action-btn {
 
 #lightbox-fxBtn.active i {
   animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 body:not(.dark-mode) #lightbox-fxBtn.active {
@@ -1551,6 +1585,23 @@ body.dark-mode #lightbox-videoBtn.expanded .multi-button-child {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Poprawka dla głównego przycisku wideo, by mógł być szerszy */
+#lightbox-videoBtn .multi-button-main {
+  width: auto;
+  padding: 0 12px;
+}
+
+/* Poprawka dla responsywności (już może istnieć, ale warto zweryfikować) */
+@media (max-width: 768px) {
+  .backdrop {
+    justify-content: flex-end; /* Wyrównuje wszystko do dołu */
+  }
+
+  #lightbox-controls {
+    flex-direction: column; /* Układa grupy jedna pod drugą */
   }
 }
 

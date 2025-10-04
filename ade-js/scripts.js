@@ -2139,7 +2139,7 @@ function startPlayAnimation(startIndex = 0, forcePause = false) {
     backdrop.classList.add("visible");
   }, 10);
 
-  updateBackgroundVideoVisibility();
+  // updateBackgroundVideoVisibility();
 
   const lastPlayState = JSON.parse(getFromLocalStorage("slideshow_playing"));
   slideshowIsPlaying = forcePause
@@ -2166,10 +2166,7 @@ function stopPlayAnimation() {
   if (playAnimationTimeout) clearTimeout(playAnimationTimeout);
   playAnimationTimeout = null;
 
-  // INTELIGENTNE ZAMYKANIE:
-  // Sprawdzamy, czy pokaz slajdów był uruchomiony przez wygaszacz.
   const wasFromScreensaver = screenSaverState !== "inactive";
-
   const container = playGuideContainer;
   const media = container.querySelector("img, video");
 
@@ -2181,9 +2178,14 @@ function stopPlayAnimation() {
     () => {
       document.body.classList.remove("play-mode-active");
       backdrop.classList.remove("visible");
-      container.innerHTML = ""; // Czyścimy kontener
+      container.innerHTML = "";
 
-      // JEŚLI WYGASZACZ BYŁ AKTYWNY, TO TERAZ PRZYWRACAMY GŁÓWNY INTERFEJS!
+      // Ukrywamy widget, który mógł być widoczny
+      const statusWidget = document.getElementById("slideshow-status-widget");
+      if (statusWidget) {
+        statusWidget.classList.remove("visible");
+      }
+
       if (wasFromScreensaver) {
         restoreUiFromScreenSaver();
       }
@@ -2191,8 +2193,9 @@ function stopPlayAnimation() {
     slideshowAnimationsEnabled ? 400 : 0
   );
 
-  slideshowPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-  slideshowPlayBtn.classList.remove("active-play");
+  document.getElementById("slideshow-play").innerHTML =
+    '<i class="fas fa-play"></i>';
+  document.getElementById("slideshow-play").classList.remove("active-play");
   updateBackgroundVideoVisibility();
 }
 
@@ -2422,6 +2425,7 @@ function setupLightboxListeners() {
   fullscreenBtn.addEventListener("click", toggleFullScreen);
   fullscreenBtnLightbox.addEventListener("click", toggleFullScreen);
   document.addEventListener("fullscreenchange", updateFullscreenIcon);
+
   lightboxFxBtn.addEventListener("click", () => {
     slideshowAnimationsEnabled = !slideshowAnimationsEnabled;
     saveToLocalStorage("slideshow_fx", slideshowAnimationsEnabled);
@@ -2431,6 +2435,7 @@ function setupLightboxListeners() {
       !slideshowAnimationsEnabled
     );
   });
+
   document
     .getElementById("lightbox-darkModeBtn")
     .addEventListener("click", () => {
@@ -2449,6 +2454,7 @@ function setupLightboxListeners() {
     lightboxLabelsBtn.classList.toggle("active-play", areLabelsVisible);
     playCaption.classList.toggle("visible", areLabelsVisible);
   });
+
   document
     .getElementById("lightbox-videoBtn")
     .addEventListener("click", (e) => {
@@ -2477,35 +2483,47 @@ function setupLightboxListeners() {
           break;
       }
     });
-  document
-    .getElementById("slideshow-play")
-    .addEventListener("click", toggleSlideshowPlayPause);
-  document
-    .getElementById("slideshow-shuffle")
-    .addEventListener("click", toggleSlideshowShuffle);
-  document
-    .getElementById("slideshow-stop")
-    .addEventListener("click", stopPlayAnimation);
-  document.getElementById("slideshow-next").addEventListener("click", () => {
-    if (!slideshowIsRandom)
-      playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
-    scheduleNext(true);
-  });
-  document.getElementById("slideshow-prev").addEventListener("click", () => {
-    if (!slideshowIsRandom)
-      playCurrentIndex =
-        (playCurrentIndex - 1 + playGuidesQueue.length) %
-        playGuidesQueue.length;
-    scheduleNext(true);
-  });
-  document.getElementById("slideshow-first").addEventListener("click", () => {
-    playCurrentIndex = 0;
-    scheduleNext(true);
-  });
-  document.getElementById("slideshow-last").addEventListener("click", () => {
-    playCurrentIndex = playGuidesQueue.length - 1;
-    scheduleNext(true);
-  });
+
+  // Zastąpiono istniejące, osobne listenery dla panelu slideshow tą logiką
+  const slideshowControls = document.getElementById("slideshow-controls");
+  if (slideshowControls) {
+    slideshowControls.addEventListener("click", (e) => {
+      const target = e.target.closest(".multi-button-child");
+      if (!target) return;
+
+      switch (target.id) {
+        case "slideshow-play":
+          toggleSlideshowPlayPause();
+          break;
+        case "slideshow-shuffle":
+          toggleSlideshowShuffle();
+          break;
+        case "slideshow-stop":
+          stopPlayAnimation();
+          break;
+        case "slideshow-next":
+          if (!slideshowIsRandom)
+            playCurrentIndex = (playCurrentIndex + 1) % playGuidesQueue.length;
+          scheduleNext(true);
+          break;
+        case "slideshow-prev":
+          if (!slideshowIsRandom)
+            playCurrentIndex =
+              (playCurrentIndex - 1 + playGuidesQueue.length) %
+              playGuidesQueue.length;
+          scheduleNext(true);
+          break;
+        case "slideshow-first":
+          playCurrentIndex = 0;
+          scheduleNext(true);
+          break;
+        case "slideshow-last":
+          playCurrentIndex = playGuidesQueue.length - 1;
+          scheduleNext(true);
+          break;
+      }
+    });
+  }
 }
 setupLightboxListeners();
 
@@ -3224,14 +3242,10 @@ function checkScreenSaverState() {
     document.body.classList.contains("play-mode-active") && slideshowIsPlaying;
 
   // Sprawdzamy, czy karuzela paginacji jest włączona
-  const isCarouselActive = carouselInterval !== null;
+    const isCarouselActive = carouselInterval !== null;
 
-  if (isSlideshowPlaying || isCarouselActive) {
-    // Jeśli którykolwiek z trybów "oglądania" jest aktywny,
-    // resetujemy licznik bezczynności i natychmiast przerywamy funkcję.
-    // To zapobiega włączeniu wygaszacza, gdy użytkownik coś ogląda.
-    lastActivityTime = new Date();
-    return;
+ if (isSlideshowPlaying || isCarouselActive) {
+        return;
   }
 
   const idleTimeSeconds = (new Date() - lastActivityTime) / 1000;
@@ -3260,18 +3274,27 @@ function enterScreenSaverStage1() {
   let elementsToHide;
 
   if (isSlideshowActive) {
-    // W trybie pokazu slajdów ukrywamy jego kontrolki
+    const controlsToHideSelector = [
+      "#play-caption",
+      "#playCloseBtn", // <-- DODANY BRAKUJĄCY PRZYCISK
+      "#fullscreenBtnLightbox", // <-- DODANY BRAKUJĄCY PRZYCISK
+      "#lightbox-minimizeBtn",
+    ];
+
+    if (!isLightboxMinimized) {
+      controlsToHideSelector.push("#lightbox-controls");
+    }
     elementsToHide = document.querySelectorAll(
-      "#lightbox-controls, #play-caption, #playCloseBtn, #fullscreenBtnLightbox, #lightbox-minimizeBtn"
+      controlsToHideSelector.join(", ")
     );
   } else {
-    // W widoku głównym ukrywamy panele i stopkę
     elementsToHide = document.querySelectorAll(
       ".control-panel, .glass-status, .footer, #fullscreenBtn, #logoLink"
     );
   }
 
   elementsToHide.forEach((el) => el.classList.add("screensaver-fade-out"));
+
   const statusWidget = document.getElementById("slideshow-status-widget");
   if (isSlideshowActive && statusWidget) {
     statusWidget.classList.add("visible");

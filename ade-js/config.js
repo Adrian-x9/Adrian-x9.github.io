@@ -1,5 +1,5 @@
 const config = {
-  version: " v2.2.0", // Added screensaver and auto stopwatch modes
+  version: " v2.2.1", // Bug fix release
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-04", // Last update date YYYY-MM-DD
 
@@ -10,7 +10,7 @@ const config = {
   /// COPY HERE <cfg> // configuration / konfiguracja
   pageSettings: {
     pageKey: "indexMaxi",
-    screenSaverTimeout: 10,
+    screenSaverTimeout: 20,
 
     defaultBgVideo: 1,
     bgVideoStartNum: 1,
