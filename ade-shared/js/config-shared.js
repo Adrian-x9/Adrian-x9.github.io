@@ -1,5 +1,5 @@
 const config = { /// Global configuration // Globalna konfiguracja
-  version: "v2.3.0", /// Folders structure and names rebuild // Przebudowanie struktury folderów i 
+  version: "v2.3.0", /// Folders structure and names rebuild // Przebudowanie struktury folderów i plików
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-10", // Last update date YYYY-MM-DD
 
