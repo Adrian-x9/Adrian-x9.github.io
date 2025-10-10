@@ -64,6 +64,86 @@
 })();
 // --- End System Initialization ---
 
+(function () {
+  const langConfig = {
+    defaultLanguage: "pl",
+    englishUrl: "index-en.html",
+  };
+  try {
+    let currentLang = localStorage.getItem("visudir_lang");
+    if (!currentLang) {
+      currentLang = langConfig.defaultLanguage;
+      localStorage.setItem("visudir_lang", currentLang);
+    }
+    if (
+      currentLang === "en" &&
+      !window.location.pathname.endsWith(langConfig.englishUrl)
+    ) {
+      // window.location.replace(langConfig.englishUrl);
+    }
+  } catch (e) {
+    /* Ignore storage errors */
+  }
+})();
+
+(function () {
+  try {
+    const theme = localStorage.getItem("visudir_theme");
+    const defaultTheme = "light";
+    if (theme === "dark" || (!theme && defaultTheme === "dark")) {
+      document.documentElement.classList.add("dark-mode");
+    }
+  } catch (e) {
+    /* Ignore */
+  }
+})();
+
+function initializeMobileHover() {
+  // Nasłuchuj dotknięć na całej liście okładek
+  guideList.addEventListener("touchend", function (e) {
+    LanguagetappedItem = e.target.closest(".guide");
+
+    // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
+    if (!tappedItem) {
+      if (tappedGuide) {
+        tappedGuide.classList.remove("mobile-hover");
+        tappedGuide = null;
+      }
+      return;
+    }
+
+    // Zatrzymaj domyślną akcję (np. nawigację), aby obsłużyć ją ręcznie
+    e.preventDefault();
+
+    if (tappedGuide === tappedItem) {
+      // DRUGIE dotknięcie tego samego kafelka: wykonaj akcję kliknięcia
+      const link = tappedItem.querySelector("a");
+      if (link) {
+        link.click();
+      }
+      tappedGuide.classList.remove("mobile-hover");
+      tappedGuide = null;
+    } else {
+      // PIERWSZE dotknięcie lub dotknięcie innego kafelka
+      // Zdejmij hover ze starego kafelka, jeśli istniał
+      if (tappedGuide) {
+        tappedGuide.classList.remove("mobile-hover");
+      }
+      // Ustaw hover na nowym kafelku
+      tappedItem.classList.add("mobile-hover");
+      tappedGuide = tappedItem;
+    }
+  });
+
+  // Dodajmy też reset po kliknięciu gdziekolwiek indziej na stronie
+  document.addEventListener("touchstart", function (e) {
+    if (!e.target.closest(".guide") && tappedGuide) {
+      tappedGuide.classList.remove("mobile-hover");
+      tappedGuide = null;
+    }
+  });
+}
+
 // --- configuraton / konfiguracja ---
 
 /// COPY HERE <cfg> // configuration end / koniec konfiguracji
@@ -3242,10 +3322,10 @@ function checkScreenSaverState() {
     document.body.classList.contains("play-mode-active") && slideshowIsPlaying;
 
   // Sprawdzamy, czy karuzela paginacji jest włączona
-    const isCarouselActive = carouselInterval !== null;
+  const isCarouselActive = carouselInterval !== null;
 
- if (isSlideshowPlaying || isCarouselActive) {
-        return;
+  if (isSlideshowPlaying || isCarouselActive) {
+    return;
   }
 
   const idleTimeSeconds = (new Date() - lastActivityTime) / 1000;

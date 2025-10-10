@@ -1,13 +1,14 @@
-const config2 = {
+const config2 = { 
+  
   /// Subsystem specific settings // Ustawienia specyficzne dla podsystemu
   pageSettings: {
     pageKey: "indexMaxi",
-    pageTitle: "ade ▪ maxi MENU",
+    pageTitle: "ade ▪ maxi MENU 222",
     showMiniLogo: true,
     showVisuDirButton: false,
     showBackButton: false,
     showLanguageButton: false,
-
+    
     screenSaverTimeout: 20,
     defaultBgVideo: 1,
     bgVideoStartNum: 1,
@@ -71,14 +72,4 @@ const config2 = {
   },
 };
 
-const config = {
-  ...config1,
-  pageSettings: {
-    ...config1.pageSettings,
-    ...config2.pageSettings,
-  },
-  paths: {
-    ...config1.paths,
-    ...config2.paths,
-  },
-};
+const config = { ...config1, ...config2 };
