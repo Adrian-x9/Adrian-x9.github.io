@@ -1,0 +1,4158 @@
+@import url("./font-satoshi.css");
+
+/* patch#1 */
+/* Preloader Styles */
+/* === VisuDir Preloader v2 === */
+#preloader {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: bgCycle 8s infinite linear;
+  background-color: #ffffff;
+  transition: opacity 0.5s ease;
+}
+
+#preloader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes bgCycle {
+  0% {
+    background-color: #ffffff;
+  }
+  10% {
+    background-color: #dddddd;
+  }
+  30% {
+    background-color: #222222;
+  }
+  70% {
+    background-color: #222222;
+  }
+  90% {
+    background-color: #dddddd;
+  }
+  100% {
+    background-color: #ffffff;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 20px);
+  grid-gap: 10px;
+  margin-bottom: 20px;
+}
+
+.grid div {
+  width: 20px;
+  height: 20px;
+  background-color: #e53935;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+.grid div:nth-child(odd) {
+  animation-delay: 0.2s;
+}
+.grid div:nth-child(even) {
+  animation-delay: 0.4s;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.4);
+  }
+}
+
+/* patch#2 */
+.caption {
+  font-size: 1.6rem;
+  font-weight: bold;
+  display: flex;
+  gap: 0; /* Usunięto odstęp, aby napisy się stykały */
+  align-items: baseline;
+  font-family: sans-serif;
+}
+/* patch#2 */
+
+.caption .visu {
+  color: #e53935;
+}
+.caption .dir {
+  color: #bbbbbb;
+} /* Zawsze jasnoszary, widoczny na każdym tle */
+.caption .version {
+  color: #bbbbbb; /* Zawsze jasnoszary */
+  font-size: 0.9rem;
+  opacity: 0.6;
+}
+/* === Koniec Preloadera === */
+/* patch#1 */
+
+html:not(.dark-mode) {
+  background-color: #e1e1e1;
+}
+
+html.dark-mode {
+  background-color: #121212;
+}
+
+#bg-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+  display: none;
+}
+
+body.video-ready {
+  background-color: transparent !important;
+}
+
+body {
+  font-family: "Satoshi", sans-serif;
+  margin: 0;
+  padding: 20px;
+  transition: background-color 0.5s ease, color 0.3s ease;
+  min-height: 100vh;
+  box-sizing: border-box;
+  overscroll-behavior-y: contain;
+}
+
+body.play-mode-active > .top-header,
+body.play-mode-active > .controls,
+body.play-mode-active > .control-panel,
+body.play-mode-active > .display-panel,
+body.play-mode-active > .guide-list-wrapper,
+body.play-mode-active > .glass-status, /* <-- DODANA LINIA */
+body.play-mode-active > .footer,
+body.play-mode-active > #fullscreenBtn,
+body.play-mode-active > #actionControls {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0s 0.4s;
+}
+
+#fileInput {
+  display: none;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  text-shadow: #222;
+}
+
+.top-header a.dir-db-btn:hover {
+  text-decoration: none;
+}
+
+.title-red {
+  color: #cc0000;
+}
+
+body.dark-mode .title-red {
+  color: #e53935;
+}
+
+body.dark-mode .version-suffix {
+  color: #eee;
+}
+
+body:not(.dark-mode) .version-suffix {
+  color: #333;
+}
+
+body:not(.dark-mode) .top-header .counter {
+  color: #555;
+}
+
+body.dark-mode .top-header .counter {
+  color: #aaa;
+}
+
+body:not(.dark-mode) {
+  color: #333;
+}
+
+body:not(.dark-mode) a {
+  color: #cc0000;
+}
+
+body:not(.dark-mode) button:hover {
+  background-color: #f0f0f0;
+}
+
+body:not(.dark-mode) .dir-db-btn:hover,
+body:not(.dark-mode) .highlighted-state:hover {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+body:not(.dark-mode) .guide,
+body:not(.dark-mode) .action-controls .multi-button.expanded,
+body:not(.dark-mode) .action-controls .dir-db-btn:not(.multi-button) {
+  background: #fdfdfd;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+}
+
+/* Zachowujemy oryginalny styl dla paneli */
+body.video-ready:not(.dark-mode) .action-controls .multi-button.expanded,
+body.video-ready:not(.dark-mode)
+  .action-controls
+  .dir-db-btn:not(.multi-button) {
+  background: rgba(253, 253, 253, 0.85);
+}
+
+/* A dla samych kafelków ustawiamy nowe, inne tło, jeśli trzeba */
+body.video-ready:not(.dark-mode) .guide {
+  background: rgba(253, 253, 253, 0.85);
+  /* Możemy tu ustawić inną wartość, jeśli chcemy */
+}
+
+body:not(.dark-mode) .guide-cover {
+  border: 2px solid #cc0000;
+  box-shadow: 0 0 10px rgba(204, 0, 0, 0.5);
+}
+
+body:not(.dark-mode) .footer {
+  color: #666;
+}
+
+body:not(.dark-mode) .footer .footer-special-text {
+  color: #555;
+}
+
+/* Nowa reguła dla głównego bloku tekstowego */
+.footer-main-text p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Poprawiona reguła dla notki o prywatności, aby pasowała do nowej struktury */
+.footer .privacy-notice {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+body.dark-mode {
+  color: #eee;
+}
+
+body.dark-mode a {
+  color: #e53935;
+}
+
+body.dark-mode button:hover:not(:disabled) {
+  background-color: #222;
+}
+
+body.dark-mode .dir-db-btn:hover,
+body.dark-mode .highlighted-state:hover {
+  background: #111;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+}
+
+body.dark-mode .guide,
+body.dark-mode .action-controls .multi-button.expanded,
+body.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
+  background: #000;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+/* Zachowujemy oryginalny styl dla paneli */
+body.video-ready.dark-mode .action-controls .multi-button.expanded,
+body.video-ready.dark-mode .action-controls .dir-db-btn:not(.multi-button) {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+/* A dla samych kafelków ustawiamy nowe, mocniejsze krycie */
+body.video-ready.dark-mode .guide {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+body.dark-mode .guide:hover {
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.3);
+}
+
+body.dark-mode .guide-info {
+  color: #bbb;
+}
+
+body.dark-mode .guide-cover {
+  border: 2px solid #e53935;
+  box-shadow: 0 0 10px rgba(229, 57, 53, 0.5);
+}
+
+body.dark-mode .footer {
+  color: #bbb;
+}
+
+body.dark-mode .footer .footer-special-text {
+  color: #eee;
+}
+
+body.dark-mode .privacy-notice {
+  color: #666;
+}
+
+.top-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-20px);
+  max-height: 200px;
+  overflow: hidden;
+  transition: max-height 0.5s ease-out, padding 0.5s ease-out,
+    opacity 0.5s ease-out, margin 0.5s ease-out;
+  padding-top: 5px;
+}
+
+.top-header.minimized-header {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  opacity: 0;
+}
+
+.header-group {
+  display: flex;
+  gap: 10px;
+}
+
+.header-logo-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.header-logo-link {
+  position: fixed;
+  top: 15px;
+  left: 25px;
+  /* Optyczna korekta marginesu */
+  z-index: 998;
+  width: 44px;
+  height: 44px;
+  display: block;
+  box-sizing: border-box;
+}
+
+.header-logo {
+  max-height: 100%;
+  width: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transition: clip-path 1.4s cubic-bezier(0.8, 0, 0.2, 1);
+  clip-path: inset(0 50% 0 50%);
+  /* Start: niewidoczny */
+}
+
+.header-logo.active {
+  clip-path: inset(0 0 0 0);
+  /* End: widoczny */
+}
+
+.top-header .title {
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-top: 11px;
+}
+/* Przywrócenie grubości czcionki */
+
+body:not(.dark-mode) .top-header .title,
+body:not(.dark-mode) .top-header .counter {
+  background: none;
+  color: black;
+  -webkit-text-stroke: 0.5px gray;
+  text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
+}
+
+body.dark-mode .top-header .title,
+body.dark-mode .top-header .counter {
+  background: none;
+  color: white;
+  -webkit-text-stroke: 0.5px #ccc;
+  text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.top-header .counter {
+  font-size: 0.9em;
+}
+
+.top-header .counter b {
+  font-weight: bold;
+}
+
+.top-header .title,
+.top-header .counter {
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+.controls,
+.action-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.generator-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.controls {
+  margin-bottom: 20px;
+}
+
+.action-controls {
+  margin-top: 20px;
+}
+
+.controls,
+.action-controls,
+.footer,
+.control-panel {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.top-header,
+.controls {
+  transform: translateY(-20px);
+}
+
+.action-controls,
+.footer {
+  transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s,
+    margin 0.5s, padding 0.5s;
+}
+
+input,
+select,
+button,
+.dir-db-btn {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid;
+  white-space: nowrap;
+  height: 42px;
+  box-sizing: border-box;
+}
+
+button,
+.dir-db-btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#search {
+  width: 160px;
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+body.dark-mode input::placeholder {
+  color: #666;
+}
+
+.dir-db-btn {
+  padding: 10px 20px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s, color 0.3s,
+    width 0.4s ease, opacity 0.3s;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+/* +++ ZMIANA: Nowy, subtelny efekt hover +++ */
+.dir-db-btn:hover {
+  box-shadow: inset 0 0 20px rgba(255, 0, 0, 0.2), 0 0 20px rgba(255, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+.dir-db-btn i {
+  margin-right: 5px;
+}
+
+#generatorModeBtn {
+  padding: 10px;
+  width: 42px;
+  margin-right: -5px;
+}
+
+#generatorModeBtn i {
+  margin-right: 0;
+}
+
+/* FIX: Poprawka koloru przycisku filtrującego */
+body:not(.dark-mode) #generatorModeBtn:not(.active) {
+  color: #333;
+}
+
+body.dark-mode #generatorModeBtn:not(.active) {
+  color: #eee;
+}
+
+body:not(.dark-mode) #generatorModeBtn.active {
+  color: #cc0000;
+}
+
+body.dark-mode #generatorModeBtn.active {
+  color: #e53935;
+}
+
+#minimizeBtn i,
+#langBtn i,
+#fullscreenBtn i {
+  margin-right: 0;
+}
+
+#langBtn {
+  padding: 10px 12px;
+}
+
+.multi-button {
+  padding: 0;
+  overflow: hidden;
+  transition: background 0.3s ease;
+  /* Płynna zmiana tła dla panelu wideo */
+}
+
+.multi-button > span {
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.btn-text {
+  transition: max-width 0.4s ease, opacity 0.3s ease;
+  max-width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.multi-button-main {
+  flex-grow: 1;
+  padding-right: 12px;
+}
+
+.multi-button-child {
+  padding: 10px 12px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .multi-button-child {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+.multi-button .multi-button-child {
+  max-width: 0; /* W stanie zwiniętym dzieci mają zerową szerokość */
+  padding: 0;
+  opacity: 0;
+  border-left: none;
+  overflow: hidden; /* Dodajemy overflow: hidden, aby uniknąć "wyskakiwania" treści w trakcie animacji */
+  transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+}
+
+.multi-button.expanded .multi-button-child {
+  max-width: 45px; /* W stanie rozwiniętym dzieci uzyskują swoją docelową szerokość */
+  padding: 10px 12px;
+  opacity: 1;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .multi-button.expanded .multi-button-child {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+input,
+select {
+  border-color: #808080;
+}
+
+body:not(.dark-mode) input,
+body:not(.dark-mode) select {
+  background-color: #fff;
+  color: #333;
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background-color: #000;
+  color: #eee;
+  border-color: #808080;
+}
+
+.controls .dir-db-btn,
+.controls button,
+.action-controls .dir-db-btn,
+.action-controls button,
+.top-header .dir-db-btn {
+  border-color: #a00000;
+  box-shadow: 0 0 15px rgba(204, 0, 0, 0.2);
+  font-weight: bold;
+}
+
+body:not(.dark-mode) .controls .dir-db-btn,
+body:not(.dark-mode) .controls button,
+body:not(.dark-mode) .action-controls .dir-db-btn,
+body:not(.dark-mode) .action-controls button,
+body:not(.dark-mode) .top-header .dir-db-btn {
+  background: #fdfdfd;
+  color: #cc0000;
+}
+
+body:not(.dark-mode) .controls .btn-text,
+body:not(.dark-mode) .action-controls .btn-text {
+  color: #333;
+}
+
+body.dark-mode .controls .dir-db-btn,
+body.dark-mode .controls button,
+body.dark-mode .action-controls .dir-db-btn,
+body.dark-mode .action-controls button,
+body.dark-mode .top-header .dir-db-btn {
+  background: #000;
+  color: #e53935;
+}
+
+body.dark-mode .controls .btn-text,
+body.dark-mode .action-controls .btn-text {
+  color: #eee;
+}
+
+.multi-button-child:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+body.dark-mode .multi-button-child:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.multi-button-child.active-play,
+#lightbox-labelsBtn.active-play {
+  background-color: rgba(204, 0, 0, 0.2);
+}
+
+body.dark-mode .multi-button-child.active-play,
+body.dark-mode #lightbox-labelsBtn.active-play {
+  background-color: rgba(229, 57, 53, 0.3);
+}
+
+body:not(.dark-mode) .multi-button-child.active-play i,
+body:not(.dark-mode) #lightbox-labelsBtn.active-play i {
+  color: #cc0000;
+  text-shadow: none;
+}
+
+body.dark-mode .multi-button-child.active-play i,
+body.dark-mode #lightbox-labelsBtn.active-play i {
+  color: #ff8a80;
+  text-shadow: none;
+}
+
+#lightbox-controls .multi-button-child.active-play i,
+#lightbox-bg-video-controls button.active-play i {
+  color: #e53935;
+  text-shadow: none !important;
+}
+
+body.dark-mode #lightbox-controls .multi-button-child.active-play i,
+body.dark-mode #lightbox-bg-video-controls button.active-play i {
+  color: #ff8a80;
+  text-shadow: none !important;
+}
+
+#lightbox-videoBtn.active-play {
+  animation: pulse-red-border 1.5s infinite;
+}
+
+@keyframes pulse-red-border {
+  0% {
+    border-color: rgba(229, 57, 53, 0.7);
+  }
+
+  50% {
+    border-color: rgba(229, 57, 53, 1);
+  }
+
+  100% {
+    border-color: rgba(229, 57, 53, 0.7);
+  }
+}
+
+.guide-list-wrapper {
+  width: 90%;
+  max-width: 1920px;
+  margin: 0 auto;
+  overflow: hidden;
+  transition: height 0.5s ease-in-out;
+}
+
+.guide-list {
+  display: flex;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.guide-list::-webkit-scrollbar {
+  display: none;
+}
+
+.guide-list-wrapper + .pagination {
+  margin-top: 20px;
+}
+
+.guide-page {
+  box-sizing: border-box;
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 2px 20px;
+  transition: grid-template-columns 0.5s ease;
+  align-content: start;
+  /* Dodana linia zapobiegająca rozciąganiu wierszy */
+}
+
+.guide-list.random-draw {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow-x: hidden;
+}
+
+.guide-cover {
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  margin: 10px auto 0;
+  display: block;
+  border-radius: 10px;
+  transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s,
+    border-width 0.5s, transform 0.5s ease-in-out;
+}
+
+.guide .guide-cover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.guide-list.view-text-only .guide-cover,
+.guide-list.hide-covers .guide-cover {
+  opacity: 0;
+  max-height: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  transform: scale(0.7);
+  overflow: hidden;
+}
+
+.guide-list.view-text-only .guide {
+  padding-top: 10px;
+}
+
+.guide-list.view-text-only .guide .guide-title {
+  margin-top: 0;
+}
+
+.guide-page:not(.only-covers) .guide.animate-in .guide-cover {
+  transition: none;
+  opacity: 0;
+  transform: scale(0.7);
+  animation: fadeInCover 0.5s 0.1s ease-out forwards;
+}
+
+@keyframes fadeInCover {
+  from {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutSlideOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.guide.animate-out {
+  animation: fadeOutSlideOut 0.3s ease-in forwards;
+}
+
+.guide-title,
+.guide-info,
+.guide-content-bottom > a:not(.cover-link) {
+  transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s;
+  overflow: hidden;
+}
+
+/* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
+
+/* Ustawienia ogólne dla kafelka w tym trybie */
+/* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
+
+.guide-list.view-image-only .guide {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out;
+  border-radius: 20px;
+  /* <-- Zwiększone zaokrąglenie */
+  /* Płynny powrót */
+}
+
+/* Poświata dla efektu 3D */
+.guide-list.view-image-only .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.guide-list.view-image-only .guide:hover::before {
+  opacity: 1;
+}
+
+/* .guide-list.view-image-only .guide-cover-wrapper {
+            height: 65%;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.03);
+            Subtelne tło dla pustej przestrzeni
+        } */
+
+/* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 65%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Usuwamy niepotrzebne tło dla trybu ciemnego */
+body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
+  background-color: transparent;
+}
+
+/* Styl dla linku-nakładki w widoku eleganckim */
+.guide-list.view-image-only .guide-cover-wrapper .cover-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* Dedykowana klasa dla obrazka w widoku eleganckim */
+/* 3. Przywracamy rozciągnięcie obrazu, aby wypełniał kontener (zamiast się w nim mieścić) */
+.guide-cover-elegant {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* <-- Kluczowa zmiana: wypełnij i przytnij */
+  transition: transform 0.4s ease-out;
+  /* Usuwamy stylizację z samego obrazka, bo ramką jest teraz cały kafelek */
+  border-radius: 0;
+  box-shadow: none;
+  /* display: block;
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            transition: transform 0.4s ease-out;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); */
+}
+
+/* Kontener na tekst pod obrazkiem */
+.guide-list.view-image-only .guide-text-content {
+  height: 35%;
+  padding: 12px 15px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
+
+body.dark-mode .guide-list.view-image-only .guide-text-content {
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.guide-list.view-image-only .guide-info {
+  display: none;
+}
+
+.guide-list.view-image-only .guide-title {
+  font-size: 1.05em;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1.4;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.guide-list.view-image-only .guide-title a {
+  text-decoration: none;
+}
+
+body:not(.dark-mode) .guide-list.view-image-only .guide-title a {
+  color: #333;
+}
+
+body.dark-mode .guide-list.view-image-only .guide-title a {
+  color: #eee;
+}
+
+.guide-list.view-image-only .guide-action-link {
+  text-align: right;
+  font-size: 0.85em;
+  font-weight: bold;
+}
+
+.guide-list.view-image-only .guide-action-link a {
+  text-decoration: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.guide-list.view-image-only .guide-action-link a:hover {
+  opacity: 1;
+}
+
+/* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA --- */
+
+/* 1. Kontener ".guide" staje się całkowicie przezroczysty i niewidoczny */
+.guide-list.view-grid .guide {
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: transparent !important;
+  /* Używamy !important, by mieć pewność */
+  box-shadow: none !important;
+  /* że żadna inna reguła go nie nadpisze */
+  border: none !important;
+}
+
+/* 2. Zdjęcie otrzymuje własną ramkę, cień i nie jest przycinane */
+.guide-cover-grid {
+  /* Zamiast wymuszać 100% wymiarów, pozwalamy obrazkowi się skalować */
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover; /* KLUCZOWA ZMIANA: Wypełnij i dociśnij obrazek */
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+body.dark-mode .guide-cover-grid {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 3. Nakładka z tekstem ma płynne przejście i zaokrąglone rogi pasujące do zdjęcia */
+.guide-list.view-grid .grid-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  /* Dopasowanie do rogów zdjęcia */
+  pointer-events: none;
+  /* Nakładka nie przechwytuje zdarzeń myszy */
+}
+
+/* 4. Tekst na nakładce ma pogrubienie i otoczkę */
+.grid-overlay .grid-title-text a {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 800;
+  text-decoration: none;
+  -webkit-text-stroke: 1px black;
+  paint-order: stroke fill;
+}
+
+/* 5. Efekt HOVER działa teraz na całym obszarze kafelka, ale wizualnie dotyczy zdjęcia */
+.guide-list.view-grid .guide:hover .grid-overlay {
+  opacity: 1;
+}
+
+.guide-list.view-grid .guide:hover .guide-cover-grid {
+  transform: scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA - KONIEC --- */
+
+/* --- WIDOK MASONRY v1.0 - START --- */
+
+.guide-list.view-masonry .guide-page {
+  display: block;
+  /* Wyłączamy grid */
+  position: relative;
+  /* Niezbędne do pozycjonowania kafelków */
+}
+
+.guide-list.view-masonry .guide {
+  /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
+  position: absolute;
+  transition: top 0.4s ease-out, left 0.4s ease-out;
+  width: var(--box-width, 256px);
+}
+
+.guide {
+  width: var(--box-width, 256px) !important;
+  padding: 0 20px 10px;
+  border-radius: 10px;
+  transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  text-align: center;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+  font-size: var(--dynamic-font-size, 1rem);
+  /* <-- DODAJ TĘ LINIĘ */
+  /* Ta linia jest do dodania wewnątrz reguły .guide */
+}
+
+.guide-content-bottom {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* To jest kluczowa zmiana */
+}
+
+.guide-info-container {
+  /* flex-grow: 1; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide a {
+  margin-top: 10px;
+  display: inline-block;
+}
+
+.guide a.cover-link {
+  margin-top: 0;
+  display: block;
+  margin-bottom: 10px;
+  /* Dodaje stały odstęp pod obrazkiem */
+}
+
+.guide-info {
+  font-size: 0.9em;
+}
+
+.guide-title {
+  margin-top: 7px;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+}
+
+.guide.animate-in {
+  animation: fadeInSlideIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeInSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  padding-top: 20px;
+  padding-bottom: 0px;
+  font-size: 0.9em;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.footer.minimized-footer {
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin-top: 0 !important;
+  opacity: 0;
+}
+
+.footer.hidden-animated {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.nobr {
+  white-space: nowrap;
+}
+
+.privacy-notice {
+  margin-top: 10px;
+  font-size: 0.9em;
+}
+
+.footer .footer-special-text {
+  font-weight: normal;
+}
+
+body.play-mode-active {
+  overflow: hidden;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.backdrop.visible {
+  display: flex;
+  opacity: 1;
+  visibility: visible;
+}
+
+.play-guide-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90vw;
+  height: 90vh;
+  flex-grow: 1;
+}
+
+.play-guide-container > a {
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.play-guide-container .preview-media,
+.play-guide-container > a > img,
+.play-guide-container > a > video {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.play-guide-container > a > img,
+.play-guide-container > a > video {
+  display: block;
+  background-color: rgba(255, 255, 255, 0.67);
+  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
+  animation: zoomInImage 0.5s ease-out;
+}
+
+body.slideshow-no-animation .play-guide-container > a > img,
+body.slideshow-no-animation .play-guide-container > a > video {
+  animation: none;
+}
+
+body.dark-mode .play-guide-container > a > img,
+body.dark-mode .play-guide-container > a > video {
+  background-color: rgba(0, 0, 0, 0.67);
+  box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35);
+}
+
+.play-caption {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  z-index: 1000;
+  text-align: center;
+  opacity: 0;
+  transform: translateX(-50%) scale(0.95);
+  transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.play-caption.visible {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+body.slideshow-no-animation .play-caption {
+  transition: none;
+}
+
+body:not(.dark-mode) .play-caption {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #333;
+}
+
+body.dark-mode .play-caption {
+  background-color: rgba(0, 0, 0, 0.85);
+  color: #ccc;
+}
+
+body:not(.dark-mode) .caption-title-highlight {
+  color: #000;
+  font-weight: bold;
+}
+
+body.dark-mode .caption-title-highlight {
+  color: #fff;
+  font-weight: bold;
+}
+
+.caption-description {
+  display: block;
+  font-size: 0.8em;
+  opacity: 0.7;
+  font-weight: normal;
+  margin-top: 5px;
+}
+
+.caption-title-highlight b {
+  font-weight: 900;
+}
+
+.play-caption .caption-total {
+  opacity: 0.7;
+  font-weight: normal;
+  color: inherit;
+}
+
+.lightbox-action-btn {
+  position: fixed;
+  width: 44px;
+  height: 44px;
+  z-index: 1001;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5em;
+  transition: background-color 0.2s ease, color 0.2s;
+}
+
+.lightbox-action-btn i {
+  margin: 0;
+}
+
+#fullscreenBtn {
+  position: fixed;
+  top: 10px;
+  right: 15px;
+  z-index: 998;
+}
+
+#playCloseBtn {
+  top: 15px;
+  right: 15px;
+}
+
+#fullscreenBtnLightbox {
+  top: 15px;
+  right: 69px;
+}
+
+#lightbox-minimizeBtn {
+  bottom: 15px;
+  right: 15px;
+}
+
+#lightbox-controls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.4s ease, padding-bottom 0.3s ease;
+  flex-wrap: wrap;
+  z-index: 1000;
+  box-sizing: border-box;
+}
+
+#lightbox-controls.minimized-controls {
+  transform: translateY(100%);
+}
+
+.lightbox-control-group {
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+body:not(.dark-mode) .lightbox-control-group,
+body:not(.dark-mode) #lightbox-controls .dir-db-btn,
+body:not(.dark-mode) .lightbox-action-btn {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .lightbox-control-group,
+body.dark-mode #lightbox-controls .dir-db-btn,
+body.dark-mode .lightbox-action-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* KROK 1: Definiujemy styl dla pojedynczych przycisków i dzieci multi-button */
+#lightbox-controls button,
+#lightbox-controls .multi-button-child,
+.lightbox-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s;
+  white-space: nowrap;
+}
+
+/* KROK 2: Definiujemy styl dla samego kontenera multi-button (np. panelu video) */
+#lightbox-controls .dir-db-btn.multi-button {
+  width: auto; /* <-- KLUCZOWA ZMIANA: Szerokość automatyczna, aby mógł się rozszerzać */
+  height: 44px; /* Zachowujemy stałą wysokość */
+  padding: 0; /* Usuwamy padding, bo rozmiar definiują dzieci */
+  display: inline-flex; /* Ustawiamy flex, aby dzieci układały się w rzędzie */
+  align-items: center;
+}
+
+/* KROK 3: Upewniamy się, że główny, widoczny element w multi-button też jest kwadratem */
+#lightbox-controls .multi-button .multi-button-main {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0; /* Zapobiega kurczeniu się głównego przycisku */
+}
+
+#lightbox-controls .dir-db-btn,
+#lightbox-controls button {
+  font-size: 1em;
+}
+
+#lightbox-videoBtn {
+  flex-grow: 0;
+}
+
+#slideshow-controls .multi-button-child {
+  font-size: 1.5em;
+  justify-content: center;
+}
+
+#lightbox-controls button:hover,
+#lightbox-controls .dir-db-btn:hover,
+#lightbox-controls .multi-button-child:hover,
+.lightbox-action-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #e53935;
+}
+
+#lightbox-fxBtn.active i {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+body:not(.dark-mode) #lightbox-fxBtn.active {
+  color: #cc0000;
+}
+
+body.dark-mode #lightbox-fxBtn.active {
+  color: #e53935;
+}
+
+body.dark-mode #lightbox-controls button:hover,
+body.dark-mode #lightbox-controls .dir-db-btn:hover,
+body.dark-mode #lightbox-controls .multi-button-child:hover,
+body.dark-mode .lightbox-action-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.lightbox-control-group button:not(:last-child),
+.lightbox-control-group span:not(:last-child) {
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .lightbox-control-group button:not(:last-child),
+body.dark-mode .lightbox-control-group span:not(:last-child) {
+  border-right-color: rgba(255, 255, 255, 0.2);
+}
+
+#lightbox-videoBtn .multi-button-child {
+  max-width: 0;
+  padding: 0;
+  opacity: 0;
+  border-left: none;
+  transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+}
+
+#lightbox-videoBtn.expanded .multi-button-child {
+  max-width: 45px;
+  padding: 10px 12px;
+  opacity: 1;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode #lightbox-videoBtn.expanded .multi-button-child {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes zoomInImage {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes zoomOutImage {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Poprawka dla głównego przycisku wideo, by mógł być szerszy */
+#lightbox-videoBtn .multi-button-main {
+  width: auto;
+  padding: 0 12px;
+}
+
+/* Poprawka dla responsywności (już może istnieć, ale warto zweryfikować) */
+@media (max-width: 768px) {
+  .backdrop {
+    justify-content: flex-end; /* Wyrównuje wszystko do dołu */
+  }
+
+  #lightbox-controls {
+    flex-direction: column; /* Układa grupy jedna pod drugą */
+  }
+}
+
+.animated-header,
+.animated-controls,
+.animated-display-panel,
+.animated-control-panel {
+  animation-name: fadeInDown;
+  animation-duration: 0.6s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.animated-action-controls,
+.animated-footer {
+  animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+.controls.minimized-view .dir-db-btn i,
+#lightbox-controls .dir-db-btn i {
+  margin-right: 0;
+}
+
+.controls.minimized-view .btn-text {
+  max-width: 0;
+  opacity: 0;
+}
+
+.controls.minimized-view .multi-button {
+  padding: 10px 12px;
+}
+
+.controls.minimized-view .multi-button-main {
+  pointer-events: none;
+}
+
+.controls.minimized-view .multi-button .multi-button-main .btn-text {
+  display: none;
+}
+
+.controls.minimized-view .multi-button .multi-button-main i {
+  margin-right: 0;
+}
+
+.controls.minimized-view .multi-button .multi-button-child {
+  max-width: 0;
+  padding: 0;
+  opacity: 0;
+  border-left: none;
+  transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
+}
+
+.controls.minimized-view .multi-button:hover .multi-button-child {
+  max-width: 45px;
+  padding: 10px 12px;
+  opacity: 1;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode
+  .controls.minimized-view
+  .multi-button:hover
+  .multi-button-child {
+  border-left-color: rgba(255, 255, 255, 0.2);
+}
+
+#lightbox-main-controls {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .controls.minimized-view > #search,
+  .controls.minimized-view > #formatFilter {
+    display: flex;
+  }
+
+  .controls.minimized-view > #sortSelector,
+  .controls.minimized-view .generator-group {
+    display: none;
+  }
+
+  .action-controls {
+    flex-direction: column;
+  }
+
+  .backdrop {
+    justify-content: flex-end;
+  }
+
+  #lightbox-controls {
+    flex-direction: column;
+  }
+
+  #play-caption {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin-bottom: 15px;
+  }
+
+  #play-guide-container {
+    height: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  #fullscreenBtnLightbox {
+    display: none !important;
+  }
+}
+
+#lightbox-controls #lightbox-fxBtn {
+  order: 1;
+}
+
+#lightbox-controls #lightbox-videoBtn {
+  order: 2;
+}
+
+#lightbox-controls #slideshow-controls {
+  order: 3;
+}
+
+#lightbox-controls #lightbox-darkModeBtn {
+  order: 4;
+}
+
+#lightbox-controls #lightbox-labelsBtn {
+  order: 5;
+}
+
+/* --- EASTER EGG: CRT Effect Styles --- */
+#crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10001;
+  background: #111;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+html.dark-mode #crt-overlay {
+  background: #eee;
+}
+
+#crt-overlay.active {
+  opacity: 1;
+  animation: crt-flicker 0.1s infinite, crt-collapse 1s 0.5s ease-out forwards;
+}
+
+#crt-overlay::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.06),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.06)
+    );
+  z-index: 2;
+  background-size: 100% 4px, 3px 100%;
+  animation: crt-scanline 2s linear infinite;
+}
+
+html.dark-mode #crt-overlay::before {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0) 50%,
+      rgba(200, 200, 200, 0.25) 50%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.04),
+      rgba(0, 255, 0, 0.02),
+      rgba(0, 0, 255, 0.04)
+    );
+  background-size: 100% 4px, 3px 100%;
+}
+
+@keyframes crt-flicker {
+  0% {
+    opacity: 0.95;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.98;
+  }
+}
+
+@keyframes crt-scanline {
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes crt-collapse {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  30% {
+    transform: scale(1.05, 1);
+  }
+
+  80% {
+    transform: scale(0.001, 1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(0.001, 0);
+    opacity: 0;
+  }
+}
+
+#clear-close-btn {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 9999;
+  width: 44px;
+  height: 44px;
+  font-size: 1.5em;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body:not(.dark-mode) #clear-close-btn {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #333;
+}
+
+body.dark-mode #clear-close-btn {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.display-panel-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 5px;
+  border-radius: 8px;
+}
+
+body.dark-mode .display-panel-group {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.display-panel-group.slider-group {
+  flex-grow: 1;
+  min-width: 250px;
+  padding: 5px 12px;
+  gap: 8px;
+  flex-direction: column;
+}
+
+.slider-control {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.slider-control i {
+  font-size: 1.2em;
+  color: #888;
+  flex-shrink: 0;
+}
+
+body.dark-mode .slider-control i {
+  color: #aaa;
+}
+
+.slider-control input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  outline: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+body.dark-mode .slider-control input[type="range"] {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.slider-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #cc0000;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+body.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
+  background: #e53935;
+  border: 2px solid #000;
+}
+
+.slider-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #cc0000;
+  border: 2px solid #fff;
+  cursor: pointer;
+}
+
+body.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
+  background: #e53935;
+  border: 2px solid #000;
+}
+
+.slider-control span {
+  font-weight: bold;
+  min-width: 45px;
+  text-align: right;
+  font-size: 0.9em;
+  flex-shrink: 0;
+}
+
+/* Styl dla nowego kontenera i przycisku Reset */
+.reset-container {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#mainResetBtn {
+  background: none;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  padding: 0px;
+  font-size: 1.4em;
+  /* Zmniejszona ikona */
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+#mainResetBtn:hover {
+  transform: rotate(90deg);
+}
+
+body:not(.dark-mode) #mainResetBtn {
+  color: #888;
+}
+
+body:not(.dark-mode) #mainResetBtn:hover {
+  color: #cc0000;
+}
+
+body.dark-mode #mainResetBtn {
+  color: #aaa;
+}
+
+body.dark-mode #mainResetBtn:hover {
+  color: #e53935;
+}
+
+/* Poprawka dla przycisku zmiany widoku */
+#viewContentBtn .view-icon {
+  display: inline-block;
+  /* Zapewnia widoczność ikony */
+  transition: opacity 0.2s ease;
+}
+
+#viewContentBtn .view-number {
+  display: none;
+  /* Domyślnie ukrywa numer */
+  font-weight: bold;
+  font-size: 1.2em;
+  font-family: "Segoe UI", sans-serif;
+}
+
+#viewContentBtn:hover .view-icon {
+  display: none;
+  /* Ukrywa ikonę po najechaniu */
+}
+
+#viewContentBtn:hover .view-number {
+  display: inline-block;
+  /* Pokazuje numer po najechaniu */
+}
+
+/* Dodaje czerwone tło dla przycisku widoku w stanie hover, dla spójności z panelem */
+.control-panel button#viewContentBtn:hover {
+  background-color: #cc0000;
+  color: white;
+}
+
+body.dark-mode .control-panel button#viewContentBtn:hover {
+  background-color: #e53935;
+  color: black;
+}
+
+/* Poprawka koloru maski dla trybu jasnego w widoku siatki */
+body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+  background: rgba(255, 255, 255, 0.7);
+  /* Biała, półprzezroczysta maska */
+}
+
+/* Zmiana koloru tekstu na masce, aby był czytelny w trybie jasnym */
+body:not(.dark-mode) .grid-overlay .grid-title-text a {
+  color: #000;
+  /* Czarny tekst */
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
+  /* Biała otoczka dla kontrastu */
+}
+
+/* Poprawka przyklejająca przycisk "Otwórz" do dołu w widoku pełnym i tekstowym */
+.guide:not(.view-image-only):not(.view-grid):not(.view-masonry)
+  .guide-content-bottom
+  > a:not(.cover-link) {
+  margin-top: auto;
+}
+
+/* --- START: Ostateczna, ujednolicona wersja paska statusu --- */
+
+/* STYL PODSTAWOWY - spójny z resztą interfejsu */
+#statusBar {
+  display: none; /* Ukrywamy stary, nieużywany pasek statusu */
+}
+
+/* Poprawiona reguła dla timerów, aby miały odstęp od tekstu powyżej */
+.footer-timers {
+  margin-top: 15px;
+  font-size: 0.9em;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5em;
+}
+
+/* Nowoczesny, dyskretny separator między licznikami */
+.footer-timers > span + span::before {
+  content: "•";
+  opacity: 0.5;
+  margin-right: 0.5em;
+  font-size: 1.2em;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+/* Poprawione pozycjonowanie i wygląd przycisku reset */
+.reset-container {
+  text-align: center;
+  margin: 10px 0 0 0;
+  /* Zmniejszony, spójny odstęp */
+}
+
+/* === POPRAWKA WYRÓWNANIA: Widok domyślny ('full') === */
+/* Poniższa reguła zapewnia, że wszystkie kafelki w jednym wierszu 
+  mają tę samą wysokość, a ich zawartość jest estetycznie wyrównana. 
+  Działa tylko w widoku domyślnym (z tytułem, opisem i obrazkiem).
+*/
+.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
+    .view-masonry
+  )
+  .guide-info-container {
+  flex-grow: 1; /* Pozwala kontenerowi z tekstem rozciągnąć się, aby wypełnić wolną przestrzeń */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centruje tekst w pionie w dostępnym miejscu */
+}
+
+.time-date-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  /* Odstęp między zegarem a księżycem */
+}
+
+/* === ŁATKA: Stały, przezroczysty nagłówek === */
+.top-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; /* Szerokość na cały ekran */
+  padding-top: 12px;
+  padding-bottom: 12px;
+  z-index: 990; /* Ustawia go pod innymi stałymi elementami */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* Wsparcie dla Safari */
+  transition: background-color 0.3s ease; /* Płynna zmiana motywu */
+  border-bottom: 1px solid #80808040;
+}
+
+/* Tło dla trybu jasnego */
+html:not(.dark-mode) .top-header {
+  background-color: rgba(240, 240, 240, 0.85);
+}
+
+/* Tło dla trybu ciemnego */
+html.dark-mode .top-header {
+  background-color: rgba(26, 26, 26, 0.85);
+}
+
+/* === ŁATKA: Aktywny (czerwony) przycisk Mute === */
+#statusMuteBtn.active-red {
+  opacity: 1; /* Zapewnia pełną widoczność, jak przy najechaniu myszą */
+}
+
+/* Kolor czerwony dla trybu jasnego */
+html:not(.dark-mode) #statusMuteBtn.active-red {
+  color: #cc0000;
+}
+
+/* Kolor czerwony dla trybu ciemnego */
+html.dark-mode #statusMuteBtn.active-red {
+  color: #e53935;
+}
+
+/*
+================================================================
+            FINALNA ŁATKA WIZUALNA v4.0 (OPERACJA NAPRAWCZA)
+================================================================
+*/
+
+:root {
+  /* Kolory dla trybu jasnego */
+  --body-bg-light: #e1e1e1;
+  --panel-bg-light: #f0f0f0;
+  --panel-shadow-light: 0 0 0 2px #cc0000, 0 5px 20px rgba(204, 0, 0, 0.3);
+  --group-bg-light: rgba(0, 0, 0, 0.05);
+  --button-text-light: #333;
+  --slider-icon-light: #888;
+  --slider-track-light: rgba(0, 0, 0, 0.1);
+  --slider-thumb-light: #cc0000;
+  --slider-thumb-border-light: #fff;
+  --button-red-bg-light: #cc0000;
+  --button-red-text-light: white;
+  --separator-light: rgba(0, 0, 0, 0.15);
+  --filter-input-bg-light: #fff;
+  --filter-input-border-light: #ccc;
+  --status-text-light: #444;
+  --status-bold-light: #000;
+  /* Kolory dla trybu ciemnego */
+  --body-bg-dark: #121212;
+  --panel-bg-dark: #1a1a1a;
+  --panel-shadow-dark: 0 0 0 2px #e53935, 0 0 25px rgba(229, 57, 53, 0.5);
+  --group-bg-dark: rgba(255, 255, 255, 0.1);
+  --button-text-dark: #eee;
+  --slider-icon-dark: #aaa;
+  --slider-track-dark: rgba(255, 255, 255, 0.2);
+  --slider-thumb-dark: #e53935;
+  --slider-thumb-border-dark: #000;
+  --button-red-bg-dark: #e53935;
+  --button-red-text-dark: #111;
+  --separator-dark: rgba(255, 255, 255, 0.15);
+  --filter-input-bg-dark: #2c2c2c;
+  --filter-input-border-dark: #555;
+  --status-text-dark: #bbb;
+  --status-bold-dark: #fff;
+}
+
+/* --- GŁÓWNY UKŁAD STRONY --- */
+html {
+  font-family: "Segoe UI", sans-serif;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.top-header {
+  flex-shrink: 0;
+  opacity: 1;
+}
+.control-panel {
+  flex-shrink: 0;
+  opacity: 1;
+  width: 100%;
+  max-width: 900px;
+}
+.guide-list-wrapper {
+  margin-top: 15px;
+  width: 100%;
+  max-width: 1920px;
+}
+.footer {
+  margin-top: auto;
+  padding-top: 40px;
+  flex-shrink: 0;
+  opacity: 1;
+}
+
+/* --- STYL GŁÓWNEGO PANELU --- */
+.control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 8px;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background-clip: padding-box;
+  background-color: var(--panel-bg-light);
+  box-shadow: var(--panel-shadow-light);
+  margin-bottom: 20px;
+}
+html.dark-mode .control-panel {
+  background-color: var(--panel-bg-dark);
+  box-shadow: var(--panel-shadow-dark);
+}
+
+/* --- NAPRAWA #1: GÓRNY WIERSZ PANELU (UKŁAD FLEXBOX) --- */
+.deck-top-row {
+  display: flex; /* <-- ZMIANA NA FLEXBOX */
+  align-items: center; /* Wyśrodkowanie w pionie */
+  gap: 10px;
+  width: 100%;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--separator-light);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+html.dark-mode .deck-top-row {
+  border-color: var(--separator-dark);
+}
+
+/* Po */
+.filter-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 1;
+  min-width: 0;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Curtain mix x absolute position */
+  max-width: 450px;
+}
+
+.deck-top-row.filters-expanded .filter-section {
+  flex-shrink: 0; /* W stanie rozwiniętym sekcja nie kurczy się */
+  /* Curtain max x absolute positon */
+  max-width: 850px;
+}
+.status-section {
+  flex-grow: 1; /* Sekcja statusu zajmuje pozostałe miejsce */
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filter-section > * {
+  flex-shrink: 0;
+}
+.filter-section input,
+.filter-section select {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 8px;
+  border: 1px solid var(--filter-input-border-light);
+  background-color: var(--filter-input-bg-light);
+  color: var(--button-text-light);
+  box-sizing: border-box;
+}
+html.dark-mode .filter-section input,
+html.dark-mode .filter-section select {
+  border-color: var(--filter-input-border-dark);
+  background-color: var(--filter-input-bg-dark);
+  color: var(--button-text-dark);
+}
+.filter-section #search {
+  width: 160px;
+}
+.filter-section .dir-db-btn {
+  height: 38px;
+  padding: 0 10px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  border: 1px solid var(--button-red-bg-light);
+  background-color: var(--filter-input-bg-light);
+  color: var(--button-red-bg-light);
+  font-weight: bold;
+}
+html.dark-mode .filter-section .dir-db-btn {
+  border-color: var(--button-red-bg-dark);
+  background-color: var(--filter-input-bg-dark);
+  color: var(--button-red-bg-dark);
+}
+.filter-section .dir-db-btn:hover {
+  background-color: var(--group-bg-light);
+}
+html.dark-mode .filter-section .dir-db-btn:hover {
+  background-color: var(--group-bg-dark);
+}
+#generatorModeBtn {
+  width: 38px;
+  padding: 0;
+}
+
+/* --- NAPRAWA #3: KURTYNA Z EFEKTEM HOVER --- */
+.curtain-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+#curtain-toggle-btn {
+  background: var(--button-red-bg-light);
+  border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  color: var(--button-red-text-light);
+  z-index: 1;
+  transition: transform 0.4s ease-in-out, background-color 0.3s, box-shadow 0.3s;
+}
+html.dark-mode #curtain-toggle-btn {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+.deck-top-row.filters-expanded #curtain-toggle-btn {
+  transform: rotate(180deg);
+}
+#curtain-toggle-btn i {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1;
+}
+#curtain-toggle-btn:hover {
+  transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+  /* box-shadow: 0 0 8px var(--button-red-bg-light); */
+  box-shadow: 0 0 8px var(--button-red-bg-light);
+}
+.deck-top-row.filters-expanded #curtain-toggle-btn:hover {
+  --rotation: 180deg; /* Zmienna CSS do zachowania obrotu */
+}
+html.dark-mode #curtain-toggle-btn:hover {
+  transform: scale(1.2) rotate(var(--rotation, 0deg)); /* Zachowuje obrót przy hover */
+  box-shadow: 0 0 10px var(--button-red-bg-dark);
+}
+
+/* --- NAPRAWA #2: PRZYWRÓCENIE GRUPOWANIA IKON --- */
+.status-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  gap: 4px;
+}
+.status-section-bottom {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  justify-content: flex-end;
+}
+.subtle-bg-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Ujednolicony odstęp */
+  padding: 4px;
+  border-radius: 8px;
+  background-color: var(--group-bg-light);
+}
+html.dark-mode .subtle-bg-group {
+  background-color: var(--group-bg-dark);
+}
+.video-controls-group {
+  padding-right: 8px;
+}
+.video-main-btn {
+  width: auto !important;
+  padding: 0 8px !important;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.status-icon-btn {
+  background: none;
+  border: none;
+  color: var(--status-text-light);
+  opacity: 0.7;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 0;
+  width: 28px;
+  height: 28px;
+  line-height: 28px;
+  text-align: center;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+html.dark-mode .status-icon-btn {
+  color: var(--status-text-dark);
+}
+
+/* --- LOGIKA STANÓW AKTYWNYCH I HOVER DLA IKON (Z POPRZEDNIEJ ŁATY) --- */
+.status-icon-btn:hover {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn:hover {
+  color: var(--button-red-bg-dark);
+}
+.status-icon-btn.active-red {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn.active-red {
+  color: var(--button-red-bg-dark);
+}
+.status-icon-btn.active-red:hover {
+  color: var(--status-text-light);
+  opacity: 0.8;
+}
+html.dark-mode .status-icon-btn.active-red:hover {
+  color: var(--status-text-dark);
+}
+
+/* --- DOLNY WIERSZ PANELU (BEZ ZMIAN, DLA PEŁNEGO KONTEKSTU) --- */
+.deck-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+.display-panel-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--group-bg-light);
+  padding: 6px;
+  border-radius: 8px;
+}
+html.dark-mode .display-panel-group {
+  background-color: var(--group-bg-dark);
+}
+.display-panel-group.slider-group {
+  flex-grow: 1;
+  flex-direction: column;
+  padding: 5px 12px;
+  min-width: 250px;
+}
+.deck-bottom-row button {
+  width: 48px;
+  height: 48px;
+  font-size: 1.2em;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: transparent;
+  color: var(--button-text-light);
+  transition: all 0.2s ease-in-out;
+}
+html.dark-mode .deck-bottom-row button {
+  color: var(--button-text-dark);
+}
+.deck-bottom-row button:hover {
+  transform: scale(1.1);
+}
+.deck-bottom-row .accent-border {
+  border-color: var(--button-red-bg-light);
+}
+html.dark-mode .deck-bottom-row .accent-border {
+  border-color: var(--button-red-bg-dark);
+}
+.deck-bottom-row #viewOrientationBtn:not(.active):hover {
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  border-color: transparent;
+}
+html.dark-mode .deck-bottom-row #viewOrientationBtn:not(.active):hover {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+  border-color: transparent;
+}
+.deck-bottom-row #viewContentBtn,
+.deck-bottom-row #viewOrientationBtn.active,
+.deck-bottom-row .play-accent,
+html.dark-mode .deck-bottom-row #viewThemeBtn {
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  border-color: transparent;
+}
+html.dark-mode .deck-bottom-row #viewContentBtn,
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active,
+html.dark-mode .deck-bottom-row .play-accent,
+html.dark-mode .deck-bottom-row #viewThemeBtn {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+.deck-bottom-row #viewContentBtn:hover,
+.deck-bottom-row #viewOrientationBtn.active:hover,
+.deck-bottom-row .play-accent:hover,
+html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
+  background-color: var(--panel-bg-light);
+  color: var(--button-red-bg-light);
+  border-color: var(--button-red-bg-light);
+}
+html.dark-mode .deck-bottom-row #viewContentBtn:hover,
+html.dark-mode .deck-bottom-row #viewOrientationBtn.active:hover,
+html.dark-mode .deck-bottom-row .play-accent:hover,
+html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
+  background-color: var(--panel-bg-dark);
+  color: var(--button-red-bg-dark);
+  border-color: var(--button-red-bg-dark);
+}
+
+/* Poprawki punktowe trybu HOVER przycisku Widok */
+
+body.dark-mode .control-panel button#viewContentBtn:hover {
+  background-color: var(--panel-bg-dark);
+  color: var(--panel-bg-light);
+}
+
+body:not(dark-mode) .control-panel button#viewContentBtn:hover {
+  background-color: var(--panel-bg-light);
+  color: var(--panel-bg-dark);
+}
+
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn {
+  background-color: transparent;
+  color: var(--button-text-light);
+  border-color: var(--button-red-bg-light);
+}
+html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+}
+.deck-bottom-row .play-accent {
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+html.dark-mode .deck-bottom-row .play-accent {
+  box-shadow: 0 0 15px rgba(229, 57, 53, 0.6);
+}
+
+/* --- SUWAKI --- */
+.slider-control {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+.slider-control i {
+  font-size: 1.2em;
+  color: var(--slider-icon-light);
+}
+html.dark-mode .slider-control i {
+  color: var(--slider-icon-dark);
+}
+.slider-control span {
+  font-weight: bold;
+  min-width: 45px;
+  text-align: right;
+  font-size: 0.9em;
+  color: var(--button-text-light);
+}
+html.dark-mode .slider-control span {
+  color: var(--button-text-dark);
+}
+.slider-control input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: var(--slider-track-light);
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+html.dark-mode .slider-control input[type="range"] {
+  background: var(--slider-track-dark);
+}
+.slider-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--slider-thumb-light);
+  border: 2px solid var(--slider-thumb-border-light);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+html.dark-mode .slider-control input[type="range"]::-webkit-slider-thumb {
+  background: var(--slider-thumb-dark);
+  border-color: var(--slider-thumb-border-dark);
+}
+.slider-control input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--slider-thumb-light);
+  border: 2px solid var(--slider-thumb-border-light);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+html.dark-mode .slider-control input[type="range"]::-moz-range-thumb {
+  background: var(--slider-thumb-dark);
+  border-color: var(--slider-thumb-border-dark);
+}
+.slider-control input[type="range"]:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.slider-control input[type:="range"]:hover::-moz-range-thumb {
+  transform: scale(1.2);
+}
+
+/* --- MODAL I KARUZELA JĘZYKOWA (Wersja wyczyszczona) --- */
+.lang-modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lang-modal-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+.lang-modal-content {
+  position: relative;
+  z-index: 10001;
+}
+.lang-modal-close-btn {
+  position: absolute;
+  top: -30px;
+  right: -10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.lang-modal-close-btn:hover {
+  opacity: 1;
+}
+#lang-modal .scene {
+  width: var(--scene-size);
+  height: var(--scene-size);
+  perspective: var(--perspective);
+}
+#lang-modal .world {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: grab;
+}
+#lang-modal .world.is-dragging {
+  cursor: grabbing;
+}
+#lang-modal .item {
+  position: absolute;
+  top: calc(50% - (var(--item-height) / 2));
+  left: calc(50% - (var(--item-width) / 2));
+  width: var(--item-width);
+  height: var(--item-height);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--gap);
+  border-radius: 6px;
+  font-size: var(--font-size);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backface-visibility: hidden;
+  user-select: none;
+}
+html.dark-mode #lang-modal .item {
+  background-color: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--button-text-dark);
+}
+html.dark-mode #lang-modal .item:hover {
+  background-color: var(--button-red-bg-dark);
+  border-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+html:not(.dark-mode) #lang-modal .item {
+  background-color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  color: var(--button-text-light);
+}
+html:not(.dark-mode) #lang-modal .item:hover {
+  background-color: var(--button-red-bg-light);
+  border-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+}
+#lang-modal .flag-icon {
+  width: var(--flag-size);
+  height: var(--flag-size);
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/*
+================================================================
+            FINALNA POPRAWKA UKŁADU v4
+================================================================
+*/
+.top-header {
+  position: relative !important; /* Gwarantuje, że nagłówek jest częścią układu, a nie "pływa" */
+  width: 100%;
+  max-width: 900px;
+  background-color: transparent !important; /* Usuwamy tło, bo nie jest już potrzebne */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: none !important;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-bottom: 0px; /* Tworzy estetyczny odstęp od nowego panelu */
+}
+
+/*
+================================================================
+            FINALNE POPRAWKI KOSMETYCZNE v5
+================================================================
+*/
+
+/* Poprawka #1: Styl ikon wideo i wysokości wiersza statusu */
+.status-section {
+  gap: 5px; /* Zmniejsza odstęp między wierszami statusu */
+}
+.video-controls-group .status-icon-btn,
+.status-actions-group .status-icon-btn {
+  font-size: 1.1em; /* Ujednolica wielkość ikon wideo z resztą */
+  width: 28px; /* Zapewnia im stałą szerokość */
+  height: 28px; /* i wysokość dla idealnego wyśrodkowania */
+  line-height: 28px;
+  text-align: center;
+}
+.video-controls-group .video-main-btn {
+  width: auto; /* Główny przycisk "Wideo" pozostaje elastyczny */
+  padding: 0 8px;
+}
+
+.glass-status {
+  /* font-family: "Inter", sans-serif; */
+  font-size: 0.95rem;
+  color: #222;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 10px 10px;
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  margin-bottom: 20px;
+}
+
+html.dark-mode .glass-status {
+  /* font-family: "Inter", sans-serif; */
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(45, 45, 45, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  /* UJEDNOLICONE WARTOŚCI ROZMIARU */
+  font-size: 0.95rem;
+  border-radius: 10px;
+  padding: 10px 20px; /* Zmieniony padding dla spójności */
+  margin-top: 16px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+/* === ADAPTACJA WIDOKÓW: Nowy Widok nr 1 (Tylko Tytuł) === */
+/* Zgodnie z nowym briefem, tryb "Tylko Tytuł" (wcześniej 'text-only')
+   nie powinien pokazywać bloku z opisem. Poniższa reguła go ukrywa. */
+.guide-list.view-text-only .guide-info-container {
+  display: none;
+}
+
+/* === ADAPTACJA WIDOKÓW: Nowy Widok nr 3 (Tylko Zdjęcie) === */
+/* Zgodnie z briefem, w tym trybie ukrywamy panel z tekstem pod obrazkiem */
+.guide-list.view-image-only .guide-text-content {
+  display: none;
+}
+
+/* ...i jednocześnie rozciągamy kontener z obrazkiem na 100% wysokości kafelka. */
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 100%;
+}
+/* === POPRAWKA DLA TRYBU 'text-masonry' (Wersja bezpieczna) === */
+/* Duplikujemy reguły zamiast je grupować, aby uniknąć potencjalnych błędów parsowania CSS. */
+
+.guide-list.view-text-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-text-masonry .guide {
+  position: absolute;
+  transition: top 0.4s ease-out, left 0.4s ease-out;
+  width: var(--box-width, 256px);
+}
+/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('image-masonry') === */
+/* Poniższe reguły nadają widokowi #6 wygląd i animacje z trybu #4 ('image-only'),
+   jednocześnie dodając logikę pozycjonowania wymaganą przez Masonry. */
+
+.guide-list.view-image-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-image-masonry .guide {
+  /* 1. Style Masonry (układ) */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* 2. Style skopiowane z 'image-only' (wygląd i animacje 3D) */
+  padding: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+
+  /* 3. Upewniamy się, że kafelek ma tło i cień, tak jak w 'image-only' */
+  background: var(--panel-bg-light, #fdfdfd);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  background: var(--panel-bg-dark, #1a1a1a);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Kopiujemy również efekt poświaty 3D */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('image-masonry') === */
+/* Nadajemy widokowi #6 wygląd i animacje z trybu graficznego,
+   dodając jednocześnie logikę pozycjonowania wymaganą przez Masonry. */
+
+.guide-list.view-image-masonry .guide-page {
+  display: block;
+  position: relative;
+}
+
+.guide-list.view-image-masonry .guide {
+  /* 1. Style Masonry (układ) */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* 2. Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  padding: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Kopiujemy również efekt poświaty 3D */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/*
+================================================================
+  WIDOK #7: "GLASS" - WERSJA "WOW" (NAPRAWIONY)
+================================================================
+*/
+
+/* --- 1. GŁÓWNY KONTERNER KAFELKA --- */
+.guide-list.view-seven .guide {
+  padding: 0;
+  overflow: hidden;
+  position: relative;
+
+  /* KLUCZOWA POPRAWKA: Nadaje kafelkowi kwadratowe proporcje, zapobiegając jego zwinięciu się */
+  aspect-ratio: 1 / 1;
+
+  /* Zachowujemy animacje 3D */
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out;
+}
+
+/* Kopiujemy efekt poświaty 3D */
+.guide-list.view-seven .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+.guide-list.view-seven .guide:hover::before {
+  opacity: 1;
+}
+
+/* --- 2. GRAFIKA W TLE --- */
+.guide-list.view-seven .guide-cover-wrapper-seven {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px; /* Zaokrąglenie rogów dla obrazka */
+  overflow: hidden;
+}
+
+/* W `createGuideHtml` użyliśmy klasy .guide-cover-grid, która już jest kwadratowa i kadruje */
+/* Dodajemy jej tylko animację parallax */
+.guide-list.view-seven .guide-cover-grid {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* Efekt Parallax: powiększenie obrazka po najechaniu */
+.guide-list.view-seven .guide:hover .guide-cover-grid {
+  transform: scale(1.05);
+}
+
+/* --- 3. PANEL "GLASS" I JEGO ANIMACJE --- */
+.guide-list.view-seven .guide-text-content-seven {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  /* Wygląd "szkła" */
+  padding: 12px 15px;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+  /* Ukrycie domyślne i animacja wsuwania */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  /* Układ tekstu wewnątrz */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Pokazanie panelu po najechaniu */
+.guide-list.view-seven .guide:hover .guide-text-content-seven {
+  transform: translateY(0%);
+}
+
+/* --- 4. TEKST I LINK W PANELU "GLASS" --- */
+.guide-list.view-seven .guide-title,
+.guide-list.view-seven .guide-action-link {
+  /* Ukrycie domyślne i animacja pojawiania się */
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  transition-delay: 0s; /* Domyślnie bez opóźnienia */
+}
+
+/* Opóźnione pojawienie się tekstu po najechaniu */
+.guide-list.view-seven .guide:hover .guide-title,
+.guide-list.view-seven .guide:hover .guide-action-link {
+  opacity: 1;
+  transition-delay: 0.2s; /* Pojawia się, gdy panel jest już częściowo wsunięty */
+}
+
+.guide-list.view-seven .guide-title {
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.4;
+  text-align: left;
+  margin: 0;
+  color: #fff; /* Zawsze biały dla czytelności na szkle */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; /* Ograniczenie do 2 linii */
+  overflow: hidden;
+}
+html:not(.dark-mode) .guide-list.view-seven .guide-title {
+  color: #000;
+}
+
+.guide-list.view-seven .guide-action-link a {
+  font-size: 0.9em;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #fff; /* Zawsze biały */
+  text-decoration: none;
+}
+html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
+  color: #cc0000;
+}
+
+/* === PATCH: Naprawa widoku #4 (image-only) === */
+.guide-list.view-image-only .guide-text-content {
+  display: none; /* Całkowicie usuwa kontener tekstowy z układu */
+}
+
+.guide-list.view-image-only .guide-cover-wrapper {
+  height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
+}
+
+/* --- TUNING: Ulepszenie widoku #5 (grid) --- */
+
+/* Poprawiamy wygląd samej nakładki */
+.guide-list.view-grid .grid-overlay {
+  /* Zamiast jednolitego tła, używamy gradientu od przezroczystości do koloru */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.7) 30%,
+    transparent 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 0.4s ease-out;
+  /* Wyrównujemy zawartość do dołu dla lepszego efektu */
+  display: flex; /* Upewniamy się, że flexbox jest aktywny */
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px; /* Dopasowanie do rogów zdjęcia */
+  pointer-events: none;
+}
+body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.75) 30%,
+    transparent 100%
+  );
+}
+
+/* Nowy, czytelniejszy styl dla tekstu z animacją */
+.grid-overlay .grid-title-text a {
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: 800;
+  text-decoration: none;
+  text-shadow: 0px 2px 5px rgba(0, 0, 0, 0.7);
+  -webkit-text-stroke: 0;
+  opacity: 0;
+  transform: translateY(15px); /* Początkowa pozycja dla animacji wysunięcia */
+  transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
+}
+body:not(.dark-mode) .grid-overlay .grid-title-text a {
+  color: #000;
+  text-shadow: 0px 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+/* Uruchomienie animacji po najechaniu */
+.guide-list.view-grid .guide:hover .grid-overlay {
+  opacity: 1;
+}
+
+.guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/*
+================================================================
+  TUNING: Przebudowa Widoku #6 (image-masonry) - "Glass & 3D"
+================================================================
+*/
+
+/* --- 1. GŁÓWNY KONTERNER KAFELKA (ANIMACJA 3D) --- */
+.guide-list.view-image-masonry .guide {
+  /* Style Masonry (układ) - te już istnieją, upewniamy się, że są obecne */
+  position: absolute;
+  width: var(--box-width, 256px);
+
+  /* Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  padding: 0;
+  overflow: hidden; /* Ważne, aby panel nie wychodził poza kafelek */
+  border-radius: 12px; /* Subtelne zaokrąglenie */
+  transform-style: preserve-3d;
+  transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
+    rotateY(var(--rotate-y, 0deg));
+  transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .guide-list.view-image-masonry .guide {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+/* Efekt poświaty 3D (skopiowany z widoku #4) */
+.guide-list.view-image-masonry .guide::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at var(--glow-x, 50%) var(--glow-y, 50%),
+    rgba(229, 57, 53, 0.3),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease-out;
+  z-index: 3;
+  pointer-events: none;
+}
+.guide-list.view-image-masonry .guide:hover::before {
+  opacity: 1;
+}
+
+/* --- 2. OBRAZEK I JEGO KONTENER --- */
+.guide-list.view-image-masonry .cover-link-six {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.guide-list.view-image-masonry .guide-cover-elegant {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
+  transform: scale(1.05); /* Efekt parallax przy najechaniu */
+}
+
+/* --- 3. SZKLANY PANEL ("GLASS PANEL") --- */
+.guide-list.view-image-masonry .glass-panel-six {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 12px;
+  box-sizing: border-box;
+
+  /* Efekt "szkła" z gradientem */
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.6),
+    rgba(255, 255, 255, 0.3)
+  );
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(255, 255, 255, 0.7);
+
+  /* Animacja wsuwania */
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Panel wsuwa się po najechaniu na kafelek */
+.guide-list.view-image-masonry .guide:hover .glass-panel-six {
+  transform: translateY(0);
+}
+
+/* --- 4. TEKST NA PANELU --- */
+.guide-list.view-image-masonry .title-six {
+  display: block;
+  font-size: 1.05em;
+  font-weight: 700;
+  color: #000;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+
+  /* Animacja pojawiania się tekstu */
+  opacity: 0;
+  transition: opacity 0.3s ease-out 0.2s; /* Opóźnienie, by tekst pojawił się po wsunięciu panelu */
+}
+html.dark-mode .guide-list.view-image-masonry .title-six {
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+/* Tekst staje się widoczny po najechaniu */
+.guide-list.view-image-masonry .guide:hover .title-six {
+  opacity: 1;
+}
+
+/* --- ŁATKA 3: Style dla Paska Statusu --- */
+
+/* 5e: Styl informacji o wersji */
+#statusInfoBtn i {
+  color: var(--button-red-bg-light);
+}
+html.dark-mode #statusInfoBtn i {
+  color: var(--button-red-bg-dark);
+}
+/* Upewniamy się, że Visu jest czerwone (już powinno być przez klasę .visu-text-red) */
+.visu-text-red {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode .visu-text-red {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* 5f1: Styl dla flagi na pasku statusu */
+.lang-flag-status {
+  width: 1em; /* Zmniejszono z 1.2em */
+  height: 1em; /* Zmniejszono z 1.2em */
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.4em;
+  margin-bottom: 0.1em;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.lang-code-status {
+  vertical-align: middle;
+}
+
+/* --- ŁATKA 4 (POPRAWIONA): Styl dla animacji "WOW" na właściwym przycisku --- */
+#fullscreenBtn.globe-animation-active i.fa-globe {
+  color: var(--button-red-bg-light);
+  transform: scale(1.1);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
+  color: var(--button-red-bg-dark);
+}
+
+/* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU --- */
+/* Pogrubienie nazwy */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+  font-weight: bold;
+}
+
+/* Aktywny, czerwony kolor dla linków */
+#systemInfoLink,
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Efekt hover - powrót do standardowego koloru tekstu panelu */
+#systemInfoLink:hover,
+#statusLangBtn > a:hover {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn > a:hover {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Plik: style.css */
+
+/* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU v2 --- */
+/* Pogrubienie nazwy */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+  font-weight: bold;
+}
+
+/* Usunięcie globalnego koloru czerwonego z całego linku */
+#systemInfoLink {
+  text-decoration: none;
+  color: var(--status-text-light, #444) !important;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Nadanie koloru tylko dla 'Visu' */
+#systemInfoLink .visu-text-red {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink .visu-text-red {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Styl dla kodu języka, spójny z 'Visu' */
+#statusLangBtn a {
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #statusLangBtn a {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Wspólny efekt hover dla obu linków */
+#systemInfoLink:hover,
+#statusLangBtn a:hover {
+  color: var(--button-red-bg-light) !important;
+}
+html.dark-mode #systemInfoLink:hover,
+html.dark-mode #statusLangBtn a:hover {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Dodanie subtelnej ramki do flagi */
+.lang-flag-status {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+/* --- FINAŁOWA ŁATKA KOSMETYCZNA PASKA STANU --- */
+
+/* 1. Poprawka rozmiaru panelu w trybie ciemnym */
+html.dark-mode .glass-status {
+  padding: 10px 20px; /* Ujednolicenie paddingu z trybem jasnym */
+}
+
+/* 2. Dodanie ramki do flagi dla lepszej widoczności */
+.lang-flag-status {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+}
+html.dark-mode .lang-flag-status {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+/* 5 & 6. Ostateczne i poprawne style dla VisuDir i flagi */
+#systemInfoLink,
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Pogrubiamy tylko "VisuDir" */
+#systemInfoLink .visu-text-red,
+#systemInfoLink .dir-text-themed {
+  font-weight: bold;
+}
+
+/* Kolorujemy i pogrubiamy elementy akcentu */
+#systemInfoLink .visu-text-red,
+#statusLangBtn .lang-code-status {
+  color: var(--button-red-bg-light) !important;
+  font-weight: bold;
+}
+html.dark-mode #systemInfoLink .visu-text-red,
+html.dark-mode #statusLangBtn .lang-code-status {
+  color: var(--button-red-bg-dark) !important;
+  font-weight: bold;
+}
+/* Efekt hover: cały link (VisuDir i flaga) zmienia kolor na standardowy */
+#systemInfoLink,
+#statusLangBtn > a {
+  /* Ustawiamy domyślny kolor na czerwony, wyróżniając linki */
+  color: var(--button-red-bg-light) !important;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+html.dark-mode #systemInfoLink,
+html.dark-mode #statusLangBtn > a {
+  color: var(--button-red-bg-dark) !important;
+}
+
+/* Hover dla VisuDir: czerwony tekst staje się standardowy */
+#systemInfoLink:hover .visu-text-red {
+  color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #systemInfoLink:hover .visu-text-red {
+  color: var(--status-text-dark, #bbb) !important;
+}
+
+/* Hover dla flagi: czerwony tekst staje się standardowy */
+#statusLangBtn > a:hover .lang-code-status {
+  color: var(--status-text-light, #444) !important;
+}
+html.dark-mode #statusLangBtn > a:hover .lang-code-status {
+  color: var(--status-text-dark, #bbb) !important;
+}
+/* --- ŁATKA STYLU: Nowy wygląd siatki (Soft UI) --- */
+
+/* 1. Główny kontener kafelka */
+.guide-list.view-grid .guide {
+  background: #f1e9e8;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #d1c8c7, -8px -8px 16px #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+}
+
+html.dark-mode .guide-list.view-grid .guide {
+  background: #2c2828;
+  box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* Usunięcie niepotrzebnych stylów z linku-wrappera */
+.guide-list.view-grid .guide a:not(.grid-action-button) {
+  margin: 0;
+  display: flex; /* Pozwala obrazkowi się rozciągnąć */
+  flex-grow: 1;
+}
+
+/* 2. Pasek tytułu na górze */
+.guide-list.view-grid {
+  padding: 10px 20px; /* Zmiana */
+  font-weight: 600;
+  font-size: 0.9em;
+  text-align: center; /* Zmiana */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #7b6d6c;
+  flex-shrink: 0;
+}
+
+.guide-title {
+  text-align: center !important; /* Zmiana */
+}
+
+html.dark-mode .guide-list.view-grid .grid-title-bar {
+  color: #b0a3a2;
+}
+
+/* 3. Obrazek (wypełnia dostępną przestrzeń) */
+.guide-list.view-grid .guide-cover-grid {
+  border-radius: 0; /* Obrazek nie ma już zaokrąglonych rogów */
+  box-shadow: none; /* Cień jest na głównym kontenerze */
+  height: 100%;
+}
+
+/* 4. Dolny pasek z przyciskiem */
+.guide-list.view-grid .grid-action-bar {
+  padding: 8px 20px; /* Zmiana */
+  text-align: right;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.02);
+}
+
+html.dark-mode .guide-list.view-grid .grid-action-bar {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* 5. Przycisk akcji */
+.guide-list.view-grid .grid-action-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.9em;
+  background-color: var(--button-red-bg-light);
+  color: var(--button-red-text-light);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+}
+
+html.dark-mode .guide-list.view-grid .grid-action-button {
+  background-color: var(--button-red-bg-dark);
+  color: var(--button-red-text-dark);
+}
+
+.guide-list.view-grid .grid-action-button:hover {
+  transform: scale(1.05);
+}
+
+/* --- ŁATKA: Aktywne stany i hover dla ikon statusu --- */
+
+/* Stan bazowy i hover na nieaktywnym przycisku (bez zmian, dla jasności) */
+.status-icon-btn {
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+.status-icon-btn:hover {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn:hover {
+  color: var(--button-red-bg-dark);
+}
+
+/* NOWOŚĆ: Stan aktywny (czerwony) dla przycisków */
+.status-icon-btn.active-red {
+  opacity: 1;
+  color: var(--button-red-bg-light);
+}
+html.dark-mode .status-icon-btn.active-red {
+  color: var(--button-red-bg-dark);
+}
+
+/* NOWOŚĆ: Hover na aktywnym (czerwonym) przycisku -> powrót do koloru bazowego */
+.status-icon-btn.active-red:hover {
+  color: var(--status-text-light);
+  opacity: 0.8;
+}
+html.dark-mode .status-icon-btn.active-red:hover {
+  color: var(--status-text-dark);
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Układ responsywny dla panelu sterowania na urządzeniach mobilnych --- */
+@media (max-width: 600px) {
+  .deck-bottom-row {
+    flex-wrap: wrap; /* Włącza zawijanie elementów do nowego wiersza */
+    gap: 8px; /* Zmniejsza odstępy między grupami w ciaśniejszym układzie */
+  }
+
+  .display-panel-group.slider-group {
+    width: 100%; /* Rozciąga grupę z suwakami na całą szerokość, wypychając przyciski poniżej */
+    order: -1; /* Zmienia wizualną kolejność, umieszczając suwaki na górze */
+    margin-bottom: 4px; /* Dodaje niewielki odstęp od przycisków, które znajdą się pod spodem */
+  }
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Responsywna czcionka dla panelu statusu --- */
+@media (max-width: 992px) {
+  .glass-status {
+    font-size: 0.9rem; /* Zmniejszenie czcionki dla tabletów */
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .glass-status {
+    font-size: 0.85rem; /* Dalsze zmniejszenie dla telefonów */
+    padding: 8px 15px;
+    gap: 12px;
+  }
+}
+/* Plik: style.css */
+
+/* --- PATCH: Korekta widoczności (opacity) dla kluczowych linków paska statusu --- */
+#statusInfoBtn,
+#systemInfoLink,
+#statusLangBtn > a {
+  opacity: 1; /* Nadpisuje domyślną wartość 0.7, zapewniając pełną intensywność koloru */
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Finalne poprawki responsywności dla orientacji pionowej (mobile) --- */
+@media (max-width: 480px) {
+  /* 1. Reorganizacja GÓRNEGO WIERSZA panelu sterowania */
+  .deck-top-row {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: stretch; /* Elementy rozciągają się na pełną szerokość */
+    gap: 10px;
+  }
+
+  .filter-section,
+  .status-section {
+    width: 100%; /* Obie sekcje zajmują pełną szerokość */
+    justify-content: center; /* Centruje zawartość wewnątrz sekcji */
+  }
+
+  .status-section {
+    align-items: center; /* Centruje grupę ikon statusu */
+  }
+
+  .curtain-handle {
+    display: none; /* Ukrycie uchwytu kurtyny, który traci sens w tym układzie */
+  }
+
+  /* 2. Reorganizacja PASKA STATUSU */
+  .glass-status {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: center; /* Wyśrodkowanie wszystkich elementów */
+    gap: 8px; /* Odstęp między wierszami */
+    padding: 12px;
+  }
+}
+
+/* Plik: style.css */
+
+/* --- PATCH: Ostateczna Wersja Wskaźnika W-E z Poprawkami Widoczności i Strzałkami --- */
+
+/* 1. Kontekst pozycjonowania (bez zmian) */
+.lang-modal-content {
+  position: relative;
+}
+
+/* 2. Kontener wskaźnika */
+.viewfinder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* 3. Linia pozioma - UJEDNOLICONY KOLOR */
+.viewfinder::before {
+  content: "";
+  position: absolute;
+  top: 70px;
+  left: 50px;
+  right: 50px;
+  height: 1px;
+  /* Usunięto rozróżnienie na motywy - linia jest zawsze jasna */
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 4. Pozycjonowanie i styl etykiet W i E - UJEDNOLICONY KOLOR */
+.viewfinder .west-label,
+.viewfinder .east-label {
+  position: absolute;
+  top: 70px;
+  transform: translateY(-50%);
+  font-weight: 600;
+  font-size: 14px;
+  /* Usunięto rozróżnienie na motywy - etykiety są zawsze jasne */
+  color: rgba(255, 255, 255, 0.5);
+  display: flex; /* Umożliwia dodanie strzałek i zachowanie wyrównania */
+  align-items: center;
+}
+
+/* 5. Pozycjonowanie horyzontalne etykiet (bez zmian) */
+.viewfinder .west-label {
+  left: 30px;
+}
+
+.viewfinder .east-label {
+  right: 30px;
+}
+
+/* 6. NOWOŚĆ: Dodanie strzałek za pomocą pseudo-elementów */
+.viewfinder .west-label::before {
+  content: "<";
+  margin-right: 5px;
+  opacity: 0.6;
+}
+
+.viewfinder .east-label::after {
+  content: ">";
+  margin-left: 5px;
+  opacity: 0.6;
+}
+
+/* === SEKCJA PAGINACJI (PO REFAKTORYZACJI I NAPRAWIE UKŁADU) === */
+
+/* --- Kontenery i Układ --- */
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  transition: opacity 0.5s ease-out, transform 0.4s ease-out, max-height 0.5s,
+    margin 0.5s, padding 0.5s;
+  margin-bottom: 20px;
+}
+
+.pagination.visible {
+  opacity: 1;
+  transform: translateY(0);
+  max-height: 200px;
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 8px;
+  border-radius: 12px;
+  box-sizing: border-box;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  background-color: var(--panel-bg-light);
+  box-shadow: var(--panel-shadow-light);
+}
+
+html.dark-mode .pagination-controls {
+  background-color: var(--panel-bg-dark);
+  box-shadow: var(--panel-shadow-dark);
+}
+
+.pagination-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.page-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.page-input-group {
+  display: flex;
+  align-items: center;
+}
+
+/* --- Przyciski --- */
+.pagination button,
+.pagination-controls button {
+  cursor: pointer;
+  border-radius: 10px;
+  border: 1px solid #a00000;
+  font-weight: bold;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 10px;
+  flex-shrink: 0;
+}
+
+body:not(.dark-mode) .pagination button,
+body:not(.dark-mode) .pagination-controls button {
+  background: #fdfdfd;
+  color: #cc0000;
+}
+
+body.dark-mode .pagination button,
+body.dark-mode .pagination-controls button {
+  background: #000;
+  color: #e53935;
+  border-color: #a00000;
+}
+
+.pagination button:hover:not(:disabled),
+.pagination-controls button:hover:not(:disabled) {
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+}
+
+.pagination button:disabled,
+.pagination-controls button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.pagination-controls .pagination-action-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 0.9em;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  color: #888;
+}
+
+body.dark-mode .pagination-controls .pagination-action-btn {
+  color: #aaa;
+}
+
+.pagination-controls .pagination-action-btn:hover {
+  color: #cc0000;
+}
+
+body.dark-mode .pagination-controls .pagination-action-btn:hover {
+  color: #e53935;
+}
+
+.page-info .pagination-action-btn:first-child {
+  margin-right: 10px;
+}
+
+.page-info .pagination-action-btn:last-child {
+  margin-left: 10px;
+}
+
+#paginationCarouselBtn {
+  color: var(--button-red-bg-light) !important;
+  opacity: 1;
+}
+
+html.dark-mode #paginationCarouselBtn {
+  color: var(--button-red-bg-dark) !important;
+}
+
+#paginationCarouselBtn:hover {
+  opacity: 0.8;
+}
+
+#paginationShuffleBtn.active-red {
+  color: var(--button-red-bg-light);
+}
+
+html.dark-mode #paginationShuffleBtn.active-red {
+  color: var(--button-red-bg-dark);
+}
+
+/* --- Pola tekstowe i informacje --- */
+.pagination .pagination-info {
+  padding: 10px;
+  font-weight: bold;
+}
+
+body:not(.dark-mode) .pagination .pagination-info {
+  color: #555;
+}
+
+body.dark-mode .pagination .pagination-info {
+  color: #aaa;
+}
+
+.page-input {
+  width: 60px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #808080;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 5px;
+  -moz-appearance: textfield;
+}
+
+.page-input::-webkit-outer-spin-button,
+.page-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body:not(.dark-mode) .page-input {
+  background-color: #fff;
+  color: #333;
+}
+
+body.dark-mode .page-input {
+  background-color: #222;
+  color: #eee;
+  border-color: #666;
+}
+
+.page-info-text {
+  margin-left: 8px;
+  font-size: 1.1em;
+}
+
+/* --- Suwak (Slider) --- */
+.page-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  outline: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+body.dark-mode .page-slider {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.page-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #cc0000;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.dark-mode .page-slider::-webkit-slider-thumb {
+  background: #e53935;
+  border-color: #000;
+}
+
+.page-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+.page-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: #cc0000;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+body.dark-mode .page-slider::-moz-range-thumb {
+  background: #e53935;
+  border-color: #000;
+}
+
+.page-slider::-moz-range-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
+/* --- Animacje --- */
+.pagination.visible.animated-pagination {
+  animation-name: fadeInUp;
+  animation-duration: 0.8s;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+}
+
+body.play-mode-active > .pagination {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s ease, visibility 0s 0.4s;
+}
+
+/* --- Style responsywne --- */
+@media (max-width: 480px) {
+  #firstPageBtn,
+  #lastPageBtn {
+    display: none;
+  }
+
+  .pagination-controls {
+    gap: 5px;
+    padding: 8px;
+  }
+
+  .pagination {
+    margin-bottom: 15px;
+  }
+}
+
+/* --- DO DODANIA --- */
+/* ================================================================
+    ŁATKA: Klasa pomocnicza dla wygaszacza ekranu
+   ================================================================ */
+.screensaver-fade-out {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.8s ease-out !important;
+}
+/* --- KONIEC --- */
+
+/* --- DO DODANIA --- */
+/* ================================================================
+    ŁATKA: Widget statusu "WOW" dla trybu pokazu slajdów
+   ================================================================ */
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 1);
+  }
+}
+
+html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
+  animation: pulse-glow 2.5s infinite ease-in-out;
+}
+
+.slideshow-status-widget {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  border-radius: 12px;
+
+  /* Efekt Glassmorphism */
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+
+  color: #fff;
+  font-size: 1.1rem;
+
+  /* Stan początkowy animacji */
+  opacity: 0;
+  transform: translateX(-120%);
+  transition: opacity 0.8s ease-out,
+    transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+html:not(.dark-mode) .slideshow-status-widget {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+.slideshow-status-widget.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.slideshow-status-widget .widget-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.slideshow-status-widget .widget-item i {
+  opacity: 0.7;
+  width: 20px;
+  text-align: center;
+}
+
+.slideshow-status-widget .widget-item span {
+  font-family: monospace;
+}
+/* --- KONIEC --- */
+
+/* --- DO DODANIA --- */
+/* ================================================================
+    ŁATKA: Styl dla "zamrożonego" licznika bezczynności
+   ================================================================ */
+.timer-frozen {
+  color: #e53935 !important;
+  font-weight: bold !important;
+  transform: scale(1.05);
+}
+
+/* Wygaszamy pulsowanie w widgecie, gdy jest zamrożony */
+.timer-frozen.idle-pulse {
+  animation: none !important;
+}
+/* --- KONIEC --- */
