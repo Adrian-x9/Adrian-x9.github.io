@@ -5,35 +5,97 @@
     <meta charset="UTF-8" />
     <title>VisuDir | My Media Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" sizes="16x16" href="./ade-base-system/ade-gfx/favicons/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="./ade-base-system/ade-gfx/favicons/favicon-32x32.png" />
+    <link rel="apple-touch-icon" sizes="180x180"
+        href="./ade-base-system/ade-gfx/favicons/apple-touch-icon-180x180.png" />
+    <link rel="icon" type="image/png" sizes="192x192"
+        href="./ade-base-system/ade-gfx/favicons/android-icon-192x192.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
-    
-    <!-- Main System & Subsystems shared settings -->
-    <link rel="icon" type="image/png" sizes="16x16" href="./ade-shared/gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="./ade-shared/gfx/favicons/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./ade-shared/gfx/favicons/android-icon-192x192.png" />
-    <link rel="stylesheet" href="./ade-shared/css/style-shared.css">
-    <link rel="stylesheet" href="./ade-shared/css/font-satoshi.css" />
-    <link rel="stylesheet" href="./ade-shared/css/font-awesome-v7.1.0-all.min.css" />
-    
-    <!-- Shared config first, then subsystem config can overwrites some settings -->
-    <script src="./ade-shared/js/config-shared.js" defer></script> 
-    
-    <!-- Subsystem config overwrites some shared settings -->
-    <script src="./ade-subsystem/js/config-subsystem.js" defer></script> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="ade-js/config.js" defer></script>
+    <script src="ade-js/db.js" defer></script>
+    <script src="ade-js/lang.js" defer></script>
+    <script src="ade-js/lang-db.js"></script>
+    <script src="db.js"></script>
+    <script src="ade-js/scripts.js" defer></script>
 
-    <!-- Interface language files -->
-    <script src="./ade-shared/js/lang-shared.js" defer></script>
-    
-    <!-- Subsystem specific data - db & translations -->
-    <script src="./ade-subsystem/js/db.js" defer></script>
-    <script src="./ade-subsystem/js/db-lang.js"></script>
-    
-    <!-- <script src="db.js"></script> -->
-    <script src="./ade-shared/js/scripts-shared.js" defer></script>
+    <script>
+        (function () {
+            const langConfig = {
+                defaultLanguage: 'pl',
+                englishUrl: 'index-en.html'
+            };
+            try {
+                let currentLang = localStorage.getItem('visudir_lang');
+                if (!currentLang) {
+                    currentLang = langConfig.defaultLanguage;
+                    localStorage.setItem('visudir_lang', currentLang);
+                }
+                if (currentLang === 'en' && !window.location.pathname.endsWith(langConfig.englishUrl)) {
+                    // window.location.replace(langConfig.englishUrl);
+                }
+            } catch (e) { /* Ignore storage errors */ }
+        })();
 
-    
+        (function () {
+            try {
+                const theme = localStorage.getItem('visudir_theme');
+                const defaultTheme = 'light';
+                if ((theme === 'dark') || (!theme && defaultTheme === 'dark')) {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch (e) { /* Ignore */ }
+        })();
+
+        function initializeMobileHover() {
+            // Nasłuchuj dotknięć na całej liście okładek
+            guideList.addEventListener('touchend', function (e) {
+                LanguagetappedItem = e.target.closest('.guide');
+
+                // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
+                if (!tappedItem) {
+                    if (tappedGuide) {
+                        tappedGuide.classList.remove('mobile-hover');
+                        tappedGuide = null;
+                    }
+                    return;
+                }
+
+                // Zatrzymaj domyślną akcję (np. nawigację), aby obsłużyć ją ręcznie
+                e.preventDefault();
+
+                if (tappedGuide === tappedItem) {
+                    // DRUGIE dotknięcie tego samego kafelka: wykonaj akcję kliknięcia
+                    const link = tappedItem.querySelector('a');
+                    if (link) {
+                        link.click();
+                    }
+                    tappedGuide.classList.remove('mobile-hover');
+                    tappedGuide = null;
+                } else {
+                    // PIERWSZE dotknięcie lub dotknięcie innego kafelka
+                    // Zdejmij hover ze starego kafelka, jeśli istniał
+                    if (tappedGuide) {
+                        tappedGuide.classList.remove('mobile-hover');
+                    }
+                    // Ustaw hover na nowym kafelku
+                    tappedItem.classList.add('mobile-hover');
+                    tappedGuide = tappedItem;
+                }
+            });
+
+            // Dodajmy też reset po kliknięciu gdziekolwiek indziej na stronie
+            document.addEventListener('touchstart', function (e) {
+                if (!e.target.closest('.guide') && tappedGuide) {
+                    tappedGuide.classList.remove('mobile-hover');
+                    tappedGuide = null;
+                }
+            });
+        }
+    </script>
 </head>
 
 <body>
