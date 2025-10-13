@@ -712,6 +712,35 @@ async function processData(text) {
       });
     }
   }
+
+  // Proces unifikacji danych: nadpisywanie tytułów i opisów z nowego pliku tłumaczeń
+  try {
+    if (typeof itemTranslations !== "undefined") {
+      const currentLang = config.language.current;
+      // Wybierz słownik dla bieżącego języka lub angielski jako fallback
+      const dictionary =
+        itemTranslations[currentLang] || itemTranslations["en"];
+
+      if (dictionary) {
+        guides = guides.map((guide) => {
+          const translation = dictionary[guide.file];
+          if (translation) {
+            // Znaleziono tłumaczenie, nadpisujemy dane
+            guide.title = translation.title || guide.title; // Nadpisz tytuł
+            if (translation.description) {
+              guide.linkData.description = translation.description; // Nadpisz opis, jeśli istnieje
+            }
+          }
+          return guide;
+        });
+      }
+    }
+  } catch (e) {
+    console.error("Błąd podczas unifikacji tłumaczeń:", e);
+  }
+
+  // <<< KONIEC JEDYNEJ MODYFIKACJI >>>
+
   const orientationPromises = guides
     .filter((guide) =>
       ["jpg", "png", "link", "mp4", "avi"].includes(guide.format)

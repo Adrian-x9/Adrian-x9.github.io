@@ -5,9 +5,9 @@ const config2 = {
     pageTitle: "POLAND ▪ photo gallery",
     pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
     showMiniLogo: true,
-    showVisuDirButton: false,
+    showVisuDirButton: true,
     showBackButton: true,
-    showLanguageButton: false,
+    showLanguageButton: true,
 
     screenSaverTimeout: 20,
     defaultBgVideo: 1,
