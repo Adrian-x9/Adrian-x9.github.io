@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.3.1", // Bug fixes
+  version: "v2.3.3", // Adjusting the file and folder structure for Git compatibility / Dostosowanie struktury plików i folderów do GITa
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-10", // Last update date YYYY-MM-DD
+  updated: "2025-10-13", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure

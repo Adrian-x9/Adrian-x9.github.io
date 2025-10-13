@@ -564,7 +564,8 @@ function decodeUrlFromFilename(filename) {
     urlPart = "." + urlPart.substring(1);
   }
 
-  urlPart = urlPart.replace(/#/g, "/");
+  // POPRAWKA: Zamienia '!!' na '/', co jest bezpieczne dla Gita.
+  urlPart = urlPart.split("!!").join("/");
   urlPart = urlPart.replace(/&&/g, "?");
   return normalizeUrl(urlPart);
 }
