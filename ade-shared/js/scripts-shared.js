@@ -713,33 +713,37 @@ async function processData(text) {
     }
   }
 
-  // Proces unifikacji danych: nadpisywanie tytułów i opisów z nowego pliku tłumaczeń
+  // Proces unifikacji danych: nadpisywanie tytułów i opisów z plików tłumaczeń
   try {
-    if (typeof itemTranslations !== "undefined") {
-      const currentLang = config.language.current;
-      // Wybierz słownik dla bieżącego języka lub angielski jako fallback
-      const dictionary =
-        itemTranslations[currentLang] || itemTranslations["en"];
+    const currentLang = config.language.current;
+    let dictionary = null;
 
-      if (dictionary) {
-        guides = guides.map((guide) => {
-          const translation = dictionary[guide.file];
-          if (translation) {
-            // Znaleziono tłumaczenie, nadpisujemy dane
-            guide.title = translation.title || guide.title; // Nadpisz tytuł
-            if (translation.description) {
-              guide.linkData.description = translation.description; // Nadpisz opis, jeśli istnieje
-            }
+    // Krok 1: Spróbuj znaleźć dedykowany słownik dla danego języka (np. z db-lang-de.js)
+    const specificLangDictionaryName = `itemTranslations_${currentLang}`;
+    if (typeof window[specificLangDictionaryName] !== "undefined") {
+      dictionary = window[specificLangDictionaryName];
+    }
+    // Krok 2: Jeśli nie ma, poszukaj w głównym pliku (db-langs.js)
+    else if (typeof itemTranslations !== "undefined") {
+      dictionary = itemTranslations[currentLang] || itemTranslations["en"]; // Fallback na angielski
+    }
+
+    if (dictionary) {
+      guides = guides.map((guide) => {
+        const translation = dictionary[guide.file];
+        if (translation) {
+          // Znaleziono tłumaczenie, nadpisujemy dane
+          guide.title = translation.title || guide.title;
+          if (translation.description) {
+            guide.linkData.description = translation.description;
           }
-          return guide;
-        });
-      }
+        }
+        return guide;
+      });
     }
   } catch (e) {
     console.error("Błąd podczas unifikacji tłumaczeń:", e);
   }
-
-  // <<< KONIEC JEDYNEJ MODYFIKACJI >>>
 
   const orientationPromises = guides
     .filter((guide) =>
