@@ -1,0 +1,59 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 64E4-665E
+
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\ade-subsystem\preview
+
+13.10.2025  09:56    <DIR>          .
+10.10.2025  13:49    <DIR>          ..
+13.10.2025  09:56                 0 dir.txt
+19.09.2025  08:46            38ÿ247 github.com!!Adrian-x9.jpg
+19.09.2025  08:46           120ÿ742 _!!ade-shared!!about.html.jpg
+19.09.2025  08:46            75ÿ066 _!!ade-shared!!about.html_2.jpg
+19.09.2025  08:46            57ÿ742 _!!ade-shared!!about.html_3.jpg
+19.09.2025  08:46           107ÿ524 _!!ade-shared!!about.html_4.jpg
+19.09.2025  08:46           108ÿ237 _!!ade-shared!!about.html_5.jpg
+19.09.2025  08:46            27ÿ541 _!!ade-shared!!about.html_6.jpg
+19.09.2025  08:46           108ÿ314 _!!ade-shared!!about.html_7.jpg
+19.09.2025  08:46            23ÿ517 _!!ade-shared!!author.html.jpg
+19.09.2025  08:46            32ÿ230 _!!ade-shared!!contact.html.jpg
+19.09.2025  08:46            48ÿ550 _!!adeDesk!!index.html.jpg
+19.09.2025  08:46            42ÿ786 _!!adeDesk!!index.html_2.jpg
+19.09.2025  08:46            25ÿ721 _!!adeDesk!!index.html_3.jpg
+19.09.2025  08:46            33ÿ732 _!!adeINFO!!index.html.jpg
+19.09.2025  08:46            47ÿ397 _!!adePages!!index.html.jpg
+19.09.2025  08:46            40ÿ166 _!!adeSync!!index.html.jpg
+19.09.2025  08:46            64ÿ834 _!!AI!!index.html.jpg
+19.09.2025  08:46            70ÿ035 _!!AI!!index.html_2.jpg
+19.09.2025  20:47            27ÿ272 _!!Certificates!!index.html.jpg
+19.09.2025  08:46            59ÿ628 _!!Certificates!!index.html_2.jpg
+19.09.2025  08:46            42ÿ985 _!!Certificates!!index.html_3.jpg
+19.09.2025  08:46            72ÿ402 _!!Cyprus!!index.html.jpg
+19.09.2025  08:46            99ÿ642 _!!Czechia!!index.html&&search=Ostrava.jpg
+19.09.2025  08:46           100ÿ537 _!!Czechia!!index.html&&search=Praga.jpg
+19.09.2025  08:46            64ÿ204 _!!Czechia!!index.html.jpg
+19.09.2025  08:46           107ÿ615 _!!e-books!!index.html.jpg
+19.09.2025  08:46            78ÿ891 _!!e-books!!index.html_2.jpg
+19.09.2025  08:46            64ÿ733 _!!e-books!!index.html_3.jpg
+19.09.2025  08:46            90ÿ494 _!!GameGuides!!index.html&&search=GryOnline.jpg
+19.09.2025  08:46            92ÿ377 _!!GameGuides!!index.html&&search=Instrukcje.jpg
+19.09.2025  08:46            91ÿ432 _!!GameGuides!!index.html&&search=PrzygodoMania.jpg
+19.09.2025  08:46            92ÿ303 _!!GameGuides!!index.html.jpg
+19.09.2025  08:46            70ÿ974 _!!Germany!!index.html&&search=Berlin.jpg
+19.09.2025  08:46           106ÿ336 _!!Germany!!index.html&&search=Dortmund.jpg
+19.09.2025  08:46            91ÿ881 _!!Germany!!index.html.jpg
+19.09.2025  08:46            33ÿ101 _!!index-midi.html.jpg
+19.09.2025  08:46            28ÿ490 _!!index-mini.html.jpg
+19.09.2025  08:46            31ÿ950 _!!index-portfolio.html.jpg
+19.09.2025  08:46            59ÿ614 _!!index-travel.html.jpg
+19.09.2025  08:46            44ÿ619 _!!index.html.jpg
+19.09.2025  08:46           104ÿ086 _!!Poland!!index.html&&search=Gliwice.jpg
+19.09.2025  08:46            84ÿ892 _!!Poland!!index.html&&search=Morze.jpg
+19.09.2025  08:46            97ÿ317 _!!Poland!!index.html&&search=Warszawa.jpg
+19.09.2025  08:46           100ÿ117 _!!Poland!!index.html.jpg
+19.09.2025  08:46            94ÿ190 _!!Spain!!index.html&&search=Barcelona.jpg
+19.09.2025  08:46            89ÿ888 _!!Spain!!index.html&&search=LLoret.jpg
+19.09.2025  08:46            88ÿ652 _!!Spain!!index.html.jpg
+19.09.2025  08:46            98ÿ749 _!!VisuKeys!!index.html.jpg
+19.09.2025  08:46            39ÿ492 _!!VisuKeys!!index.html_2.jpg
+              50 File(s)      3ÿ421ÿ244 bytes
+               2 Dir(s)  18ÿ008ÿ850ÿ432 bytes free
