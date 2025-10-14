@@ -133,6 +133,7 @@ body {
   min-height: 100vh;
   box-sizing: border-box;
   overscroll-behavior-y: contain;
+  overflow-x: hidden;
 }
 
 body.play-mode-active > .top-header,
@@ -316,92 +317,12 @@ body.dark-mode .privacy-notice {
   color: #666;
 }
 
-.top-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  flex-wrap: wrap;
-  text-align: center;
-  opacity: 0;
-  transform: translateY(-20px);
-  max-height: 200px;
-  overflow: hidden;
-  transition: max-height 0.5s ease-out, padding 0.5s ease-out,
-    opacity 0.5s ease-out, margin 0.5s ease-out;
-  padding-top: 5px;
-}
-
 .top-header.minimized-header {
   max-height: 0 !important;
   padding-top: 0 !important;
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
   opacity: 0;
-}
-
-.header-group {
-  display: flex;
-  gap: 10px;
-}
-
-.header-logo-group {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.header-logo-link {
-  position: fixed;
-  top: 15px;
-  left: 25px;
-  /* Optyczna korekta marginesu */
-  z-index: 998;
-  width: 44px;
-  height: 44px;
-  display: block;
-  box-sizing: border-box;
-}
-
-.header-logo {
-  max-height: 100%;
-  width: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: clip-path 1.4s cubic-bezier(0.8, 0, 0.2, 1);
-  clip-path: inset(0 50% 0 50%);
-  /* Start: niewidoczny */
-}
-
-.header-logo.active {
-  clip-path: inset(0 0 0 0);
-  /* End: widoczny */
-}
-
-.top-header .title {
-  font-size: 1.6em;
-  font-weight: 700;
-  margin-top: 11px;
-}
-/* Przywrócenie grubości czcionki */
-
-body:not(.dark-mode) .top-header .title,
-body:not(.dark-mode) .top-header .counter {
-  background: none;
-  color: black;
-  -webkit-text-stroke: 0.5px gray;
-  text-shadow: 0 0 1px rgba(128, 128, 128, 0.3);
-}
-
-body.dark-mode .top-header .title,
-body.dark-mode .top-header .counter {
-  background: none;
-  color: white;
-  -webkit-text-stroke: 0.5px #ccc;
-  text-shadow: 0 0 1px rgba(255, 255, 255, 0.2);
 }
 
 .top-header .counter {
@@ -1360,13 +1281,6 @@ body.dark-mode .caption-title-highlight {
   margin: 0;
 }
 
-#fullscreenBtn {
-  position: fixed;
-  top: 10px;
-  right: 15px;
-  z-index: 998;
-}
-
 #playCloseBtn {
   top: 15px;
   right: 15px;
@@ -2107,31 +2021,6 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   /* Odstęp między zegarem a księżycem */
 }
 
-/* === ŁATKA: Stały, przezroczysty nagłówek === */
-.top-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw; /* Szerokość na cały ekran */
-  padding-top: 12px;
-  padding-bottom: 12px;
-  z-index: 990; /* Ustawia go pod innymi stałymi elementami */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px); /* Wsparcie dla Safari */
-  transition: background-color 0.3s ease; /* Płynna zmiana motywu */
-  border-bottom: 1px solid #80808040;
-}
-
-/* Tło dla trybu jasnego */
-html:not(.dark-mode) .top-header {
-  background-color: rgba(240, 240, 240, 0.85);
-}
-
-/* Tło dla trybu ciemnego */
-html.dark-mode .top-header {
-  background-color: rgba(26, 26, 26, 0.85);
-}
-
 /* === ŁATKA: Aktywny (czerwony) przycisk Mute === */
 #statusMuteBtn.active-red {
   opacity: 1; /* Zapewnia pełną widoczność, jak przy najechaniu myszą */
@@ -2741,24 +2630,6 @@ html:not(.dark-mode) #lang-modal .item:hover {
 
 /*
 ================================================================
-            FINALNA POPRAWKA UKŁADU v4
-================================================================
-*/
-.top-header {
-  position: relative !important; /* Gwarantuje, że nagłówek jest częścią układu, a nie "pływa" */
-  width: 100%;
-  max-width: 900px;
-  background-color: transparent !important; /* Usuwamy tło, bo nie jest już potrzebne */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  border-bottom: none !important;
-  padding-top: 0;
-  padding-bottom: 0;
-  margin-bottom: 0px; /* Tworzy estetyczny odstęp od nowego panelu */
-}
-
-/*
-================================================================
             FINALNE POPRAWKI KOSMETYCZNE v5
 ================================================================
 */
@@ -2797,6 +2668,10 @@ html:not(.dark-mode) #lang-modal .item:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.4);
   margin-bottom: 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
 }
 
 html.dark-mode .glass-status {
@@ -2812,11 +2687,6 @@ html.dark-mode .glass-status {
   border-radius: 10px;
   padding: 10px 20px; /* Zmieniony padding dla spójności */
   margin-top: 16px;
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 20px;
 }
 
 /* === ADAPTACJA WIDOKÓW: Nowy Widok nr 1 (Tylko Tytuł) === */
@@ -3317,17 +3187,6 @@ html.dark-mode .visu-text-red {
   vertical-align: middle;
 }
 
-/* --- ŁATKA 4 (POPRAWIONA): Styl dla animacji "WOW" na właściwym przycisku --- */
-#fullscreenBtn.globe-animation-active i.fa-globe {
-  color: var(--button-red-bg-light);
-  transform: scale(1.1);
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-html.dark-mode #fullscreenBtn.globe-animation-active i.fa-globe {
-  color: var(--button-red-bg-dark);
-}
-
 /* --- FINAŁOWA ŁATKA STYLU PASKA STATUSU --- */
 /* Pogrubienie nazwy */
 #systemInfoLink .visu-text-red,
@@ -3672,7 +3531,7 @@ html.dark-mode .status-icon-btn.active-red:hover {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 5px 15px;
-    justify-items: start;
+    justify-items: center;
     align-items: center;
     padding: 12px 20px;
   }
@@ -3682,7 +3541,7 @@ html.dark-mode .status-icon-btn.active-red:hover {
     display: grid; /* 1. Zmieniamy tryb wyświetlania na siatkę (grid) */
     grid-template-columns: repeat(2, 1fr); /* 2. Tworzymy dwie równe kolumny */
     gap: 5px 15px; /* 3. Ustawiamy odstępy: 5px w pionie, 15px w poziomie */
-    justify-items: start; /* 4. Wyrównujemy wszystkie elementy do lewej krawędzi ich komórek */
+    justify-items: center; /* 4. Wyrównujemy wszystkie elementy do lewej krawędzi ich komórek */
     align-items: center;
     padding: 12px 20px; /* Dopasowujemy padding dla lepszego wyglądu */
   }
@@ -4182,3 +4041,217 @@ html:not(.dark-mode) .slideshow-status-widget {
     ); /* Ustawia szerokość otwartej kurtyny na 100% minus miejsce na przycisk i margines */
   }
 }
+
+/* --- PATCH: OSTATECZNA POPRAWKA POZYCJONOWANIA NAGŁÓWKA v9 --- */
+
+/* 1. Kontener logo - POPRAWIONY ROZMIAR I ODSTĘPY */
+#logoLink {
+  position: fixed;
+  top: 10px;
+  left: 25px;
+  z-index: 1000;
+  width: 44px; /* Zwiększony rozmiar */
+  height: 44px; /* Zwiększony rozmiar */
+}
+
+/* 2. Animowane obrazki logo (bez zmian) */
+.header-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 100%;
+  width: auto;
+  transition: clip-path 1.4s cubic-bezier(0.8, 0, 0.2, 1);
+  clip-path: inset(0 50% 0 50%);
+}
+.header-logo.active {
+  clip-path: inset(0 0 0 0);
+}
+
+/* 3. Główny kontener nagłówka - ZWIĘKSZONA WYSOKOŚĆ I PADDING */
+.top-header {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  width: 100%;
+  height: 64px; /* Zwiększono z 60px */
+  padding: 0 15px 0 70px;
+  z-index: 995;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  box-sizing: border-box;
+  transition: background-color 0.3s ease;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+html:not(.dark-mode) .top-header {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+html.dark-mode .top-header {
+  background-color: rgba(20, 20, 20, 0.15);
+}
+
+/* 4. Tytuł (bez zmian) */
+.top-header #pageTitle {
+  flex-grow: 1;
+  text-align: center;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+/* 5. Kontener i przyciski po prawej - UJEDNOLICONY ROZMIAR I STYL */
+.header-controls {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5px;
+}
+.header-controls .lightbox-action-btn,
+.header-controls .dir-db-btn {
+  position: static;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 0.2s, color 0.2s, transform 0.2s;
+  height: 44px; /* Ujednolicony rozmiar */
+  width: 44px; /* Ujednolicony rozmiar */
+  padding: 0;
+  font-size: 1.3em; /* Nieco większa ikona */
+}
+.header-controls .lightbox-action-btn:hover,
+.header-controls .dir-db-btn:hover {
+  opacity: 1;
+  background: none;
+  color: var(--button-red-bg-light);
+  transform: scale(1.1);
+}
+html.dark-mode .header-controls .lightbox-action-btn:hover,
+html.dark-mode .header-controls .dir-db-btn:hover {
+  color: var(--button-red-bg-dark);
+}
+/* Przycisk "Wstecz" zachowuje elastyczną szerokość */
+.header-controls .dir-db-btn {
+  width: auto;
+  padding: 0 12px;
+  font-size: 1em;
+}
+
+/* 6. Poprawka marginesu body */
+body {
+  padding-top: 80px;
+} /* Zwiększono z 75px */
+
+/* 7. Reguły dla widoku mobilnego - Zaktualizowane wartości */
+@media (max-width: 480px) {
+  #logoLink {
+    top: 10px;
+    left: 20px;
+    width: 40px; /* Poprawiony rozmiar */
+    height: 40px; /* Poprawiony rozmiar */
+  }
+  .top-header {
+    height: 60px; /* Zwiększona wysokość */
+    padding: 0 10px 0 60px; /* Dopasowany padding */
+    gap: 8px;
+  }
+  .header-controls {
+    gap: 0;
+  }
+  .header-controls .lightbox-action-btn,
+  .header-controls .dir-db-btn {
+    height: 40px; /* Dopasowany rozmiar */
+    width: 40px; /* Dopasowany rozmiar */
+    font-size: 1.2em;
+  }
+  .header-controls .dir-db-btn {
+    width: auto;
+    padding: 0 8px;
+    font-size: 0.9em;
+  }
+  .top-header #pageTitle {
+    font-size: 1.2em;
+  }
+  body {
+    padding-top: 75px;
+  }
+}
+
+/* Plik: style-shared.css */
+
+/* --- PATCH: Poprawka stylu przycisku "Wstecz" w nagłówku --- */
+#backButton {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  color: inherit; /* Dziedziczy kolor z nagłówka */
+  font-weight: normal; /* Usuwa pogrubienie z ogólnej klasy */
+}
+
+/* Ujednolicenie efektu hover z pozostałymi ikonami */
+#backButton:hover {
+  background: transparent;
+  color: var(--button-red-bg-light);
+}
+
+html.dark-mode #backButton:hover {
+  color: var(--button-red-bg-dark);
+}
+
+/* Plik: style-shared.css */
+
+/* --- PATCH: OSTATECZNA, ELASTYCZNA PRZEBUDOWA PANELU POKAZU SLAJDÓW (v2 - POPRAWIONA) --- */
+/* ZASTĄP POPRZEDNI BLOK TYM NOWYM */
+
+/* 1. Ustawienie wszystkich przycisków i kontenerów na sztywny, identyczny rozmiar */
+#lightbox-controls .dir-db-btn,
+/* USUNIĘTO BŁĘDNY .lightbox-control-group Z TEJ LISTY */
+#lightbox-controls .lightbox-action-btn,
+#lightbox-controls .multi-button-child,
+#lightbox-controls .multi-button-main,
+#lightbox-minimizeBtn {
+  width: 36px;
+  height: 36px;
+  font-size: 1.1em;
+  padding: 0;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 2. Przekształcenie panelu pokazu slajdów w elastyczny kontener (BEZ ZMIAN) */
+#slideshow-controls {
+  width: auto;
+  max-width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1px;
+}
+
+/* 3. Przycisk wideo staje się elastyczny tylko po rozwinięciu (BEZ ZMIAN) */
+#lightbox-videoBtn.expanded {
+  width: auto;
+}
+
+/* 4. Usunięcie zbędnych odstępów i ramek (BEZ ZMIAN) */
+#slideshow-controls > *,
+#lightbox-videoBtn > * {
+  border: none !important;
+}
+#lightbox-controls {
+  gap: 8px;
+}
+

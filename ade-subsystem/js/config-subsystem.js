@@ -4,9 +4,9 @@ const config2 = {
     pageKey: "indexMaxi",
     pageTitle: "ade ▪ maxi MENU",
     showMiniLogo: true,
-    showVisuDirButton: false,
-    showBackButton: false,
-    showLanguageButton: false,
+    showVisuDirButton: true,
+    showBackButton: true,
+    showLanguageButton: true,
 
     screenSaverTimeout: 20,
     defaultBgVideo: 1,

@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.2", // Mobile view fixes / Poprawki trybu mobilnego
+  version: "v2.4.3", // Fixes for mobile mode / Poprawki dla trybu mobilnego
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-13", // Last update date YYYY-MM-DD
 

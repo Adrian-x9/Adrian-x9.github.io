@@ -12,7 +12,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="../ade-shared/gfx/favicons/favicon-16x16.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="../ade-shared/gfx/favicons/favicon-32x32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="../ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="./ade-shared/gfx/favicons/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="../ade-shared/gfx/favicons/android-icon-192x192.png" />
     <link rel="stylesheet" href="../ade-shared/css/style-shared.css">
     <link rel="stylesheet" href="../ade-shared/css/font-satoshi.css" />
     <link rel="stylesheet" href="../ade-shared/css/font-awesome-v7.1.0-all.min.css" />
@@ -30,7 +30,7 @@
     <script src="./ade-subsystem/js/db.js" defer></script>
     <script src="./ade-subsystem/js/db-langs.js" defer></script>
     <script src="./ade-subsystem/js/db-lang-de.js" defer></script>
-    <script src="./ade-subsystem/js/db-lang-es.js" defer></script>
+    <script src="./ade-subsystem/js/db-lang.js"></script>
 
     <!-- <script src="db.js"></script> -->
     <script src="../ade-shared/js/scripts-shared.js" defer></script>
@@ -61,17 +61,21 @@
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
 
-    <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-        <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
-        <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
-    </a>
-
     <div class="top-header">
+        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+            <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
+            <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
+        </a>
+
         <div id="pageTitle" class="title"></div>
 
-        <div class="header-group">
+        <div class="header-controls">
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
                 <span class="btn-text" data-lang="btnBack"></span></a>
+            <button id="headerLangBtn" class="lightbox-action-btn" data-lang-title="Zmień język"><i
+                    class="fas fa-globe"></i></button>
+            <button id="fullscreenBtn" class="lightbox-action-btn" data-lang-title="fullscreenBtn"><i
+                    class="fas fa-expand"></i></button>
         </div>
     </div>
 
@@ -219,8 +223,6 @@
             <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
         </div>
     </div>
-
-    <button id="fullscreenBtn" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
 
     <div id="backdrop" class="backdrop">
         <div id="slideshow-status-widget" class="slideshow-status-widget">

@@ -61,17 +61,21 @@
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
 
-    <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
-        <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
-        <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
-    </a>
-
     <div class="top-header">
+        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+            <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
+            <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
+        </a>
+
         <div id="pageTitle" class="title"></div>
 
-        <div class="header-group">
+        <div class="header-controls">
             <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
                 <span class="btn-text" data-lang="btnBack"></span></a>
+            <button id="headerLangBtn" class="lightbox-action-btn" data-lang-title="Zmień język"><i
+                    class="fas fa-globe"></i></button>
+            <button id="fullscreenBtn" class="lightbox-action-btn" data-lang-title="fullscreenBtn"><i
+                    class="fas fa-expand"></i></button>
         </div>
     </div>
 
@@ -219,8 +223,6 @@
             <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
         </div>
     </div>
-
-    <button id="fullscreenBtn" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
 
     <div id="backdrop" class="backdrop">
         <div id="slideshow-status-widget" class="slideshow-status-widget">

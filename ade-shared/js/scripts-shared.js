@@ -711,9 +711,9 @@ async function processData(text) {
         orientation: "pending",
       });
     }
-  };
+  }
 
-    // Proces unifikacji danych: nadpisywanie tytułów i opisów z plików tłumaczeń
+  // Proces unifikacji danych: nadpisywanie tytułów i opisów z plików tłumaczeń
   try {
     const currentLang = config.language.current;
     let dictionary = null;
@@ -722,20 +722,23 @@ async function processData(text) {
     // POPRAWKA: Używamy `window[]` do dynamicznego dostępu do globalnych zmiennych
     const specificLangDictionary = window[`itemTranslations_${currentLang}`];
 
-    if (typeof specificLangDictionary !== 'undefined') {
+    if (typeof specificLangDictionary !== "undefined") {
       dictionary = specificLangDictionary;
-    } 
+    }
     // Krok 2: Jeśli nie ma, poszukaj w głównym pliku (db-langs.js)
-    else if (typeof itemTranslations !== 'undefined' && typeof itemTranslations[currentLang] !== 'undefined') {
+    else if (
+      typeof itemTranslations !== "undefined" &&
+      typeof itemTranslations[currentLang] !== "undefined"
+    ) {
       dictionary = itemTranslations[currentLang];
     }
     // Krok 3: Jeśli nadal nic, użyj angielskiego z głównego pliku jako fallback
-    else if (typeof itemTranslations !== 'undefined') {
-      dictionary = itemTranslations['en'];
+    else if (typeof itemTranslations !== "undefined") {
+      dictionary = itemTranslations["en"];
     }
 
     if (dictionary) {
-      guides = guides.map(guide => {
+      guides = guides.map((guide) => {
         const translation = dictionary[guide.file];
         if (translation) {
           // Znaleziono tłumaczenie, nadpisujemy dane
@@ -909,23 +912,6 @@ function startLogoRotator() {
   logoInterval = setInterval(() => {
     currentLogoIndex = (currentLogoIndex + 1) % config.logoRotator.logos.length;
     updateLogo();
-
-    setTimeout(() => {
-      const icon = fullscreenBtn.querySelector("i");
-      if (!icon) return;
-
-      // Logika animacji przeniesiona na #fullscreenBtn
-      if (isGlobeIconVisible) {
-        fullscreenBtn.classList.remove("globe-animation-active");
-        // Przywracamy właściwą ikonę (expand/compress)
-        updateFullscreenIcon();
-        isGlobeIconVisible = false;
-      } else {
-        fullscreenBtn.classList.add("globe-animation-active");
-        icon.className = "fas fa-globe";
-        isGlobeIconVisible = true;
-      }
-    }, config.logoRotator.interval / 2);
   }, config.logoRotator.interval);
 }
 
@@ -3185,6 +3171,14 @@ function initializeLangCarousel() {
       }
     }, 150);
   });
+
+  const headerGlobeBtn = document.getElementById("headerLangBtn");
+  if (headerGlobeBtn) {
+    headerGlobeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showModal();
+    });
+  }
 }
 
 function calculateSunTimes(date, lat, lon) {
