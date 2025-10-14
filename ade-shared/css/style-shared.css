@@ -4210,10 +4210,7 @@ html.dark-mode #backButton:hover {
   color: var(--button-red-bg-dark);
 }
 
-/* Plik: style-shared.css */
-
 /* --- PATCH: OSTATECZNA, ELASTYCZNA PRZEBUDOWA PANELU POKAZU SLAJDÓW (v2 - POPRAWIONA) --- */
-/* ZASTĄP POPRZEDNI BLOK TYM NOWYM */
 
 /* 1. Ustawienie wszystkich przycisków i kontenerów na sztywny, identyczny rozmiar */
 #lightbox-controls .dir-db-btn,
