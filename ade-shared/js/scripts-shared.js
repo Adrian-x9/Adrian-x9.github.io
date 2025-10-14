@@ -711,25 +711,31 @@ async function processData(text) {
         orientation: "pending",
       });
     }
-  }
+  };
 
-  // Proces unifikacji danych: nadpisywanie tytułów i opisów z plików tłumaczeń
+    // Proces unifikacji danych: nadpisywanie tytułów i opisów z plików tłumaczeń
   try {
     const currentLang = config.language.current;
     let dictionary = null;
 
-    // Krok 1: Spróbuj znaleźć dedykowany słownik dla danego języka (np. z db-lang-de.js)
-    const specificLangDictionaryName = `itemTranslations_${currentLang}`;
-    if (typeof window[specificLangDictionaryName] !== "undefined") {
-      dictionary = window[specificLangDictionaryName];
-    }
+    // Krok 1: Spróbuj znaleźć dedykowany słownik (np. z db-lang-de.js)
+    // POPRAWKA: Używamy `window[]` do dynamicznego dostępu do globalnych zmiennych
+    const specificLangDictionary = window[`itemTranslations_${currentLang}`];
+
+    if (typeof specificLangDictionary !== 'undefined') {
+      dictionary = specificLangDictionary;
+    } 
     // Krok 2: Jeśli nie ma, poszukaj w głównym pliku (db-langs.js)
-    else if (typeof itemTranslations !== "undefined") {
-      dictionary = itemTranslations[currentLang] || itemTranslations["en"]; // Fallback na angielski
+    else if (typeof itemTranslations !== 'undefined' && typeof itemTranslations[currentLang] !== 'undefined') {
+      dictionary = itemTranslations[currentLang];
+    }
+    // Krok 3: Jeśli nadal nic, użyj angielskiego z głównego pliku jako fallback
+    else if (typeof itemTranslations !== 'undefined') {
+      dictionary = itemTranslations['en'];
     }
 
     if (dictionary) {
-      guides = guides.map((guide) => {
+      guides = guides.map(guide => {
         const translation = dictionary[guide.file];
         if (translation) {
           // Znaleziono tłumaczenie, nadpisujemy dane

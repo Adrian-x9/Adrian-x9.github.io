@@ -3614,6 +3614,7 @@ html.dark-mode .status-icon-btn.active-red:hover {
   .deck-bottom-row {
     flex-wrap: wrap; /* Włącza zawijanie elementów do nowego wiersza */
     gap: 8px; /* Zmniejsza odstępy między grupami w ciaśniejszym układzie */
+    justify-content: space-between;
   }
 
   .display-panel-group.slider-group {
@@ -3654,32 +3655,36 @@ html.dark-mode .status-icon-btn.active-red:hover {
 /* --- PATCH: Finalne poprawki responsywności dla orientacji pionowej (mobile) --- */
 @media (max-width: 480px) {
   /* 1. Reorganizacja GÓRNEGO WIERSZA panelu sterowania */
-  .deck-top-row {
-    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
-    align-items: stretch; /* Elementy rozciągają się na pełną szerokość */
-    gap: 10px;
+  .deck-top-row:not(.filters-expanded) .filter-section {
+    max-width: 0; /* Całkowicie zwija panel filtrów */
+    opacity: 0; /* Dodaje efekt płynnego znikania */
+    overflow: hidden; /* Ukrywa zawartość, która wystaje podczas animacji */
+    pointer-events: none; /* Zapobiega interakcji ze zwiniętymi elementami */
   }
 
-  .filter-section,
-  .status-section {
-    width: 100%; /* Obie sekcje zajmują pełną szerokość */
-    justify-content: center; /* Centruje zawartość wewnątrz sekcji */
+  /* 2. Zapewniamy, że sekcja statusu zajmuje całą dostępną przestrzeń, gdy filtry są zwinięte */
+  .deck-top-row:not(.filters-expanded) .status-section {
+    flex-grow: 1;
   }
 
-  .status-section {
-    align-items: center; /* Centruje grupę ikon statusu */
-  }
-
-  .curtain-handle {
-    display: none; /* Ukrycie uchwytu kurtyny, który traci sens w tym układzie */
+  /* 3. Reorganizacja PASKA STATUSU (ta reguła pozostaje bez zmian) */
+  .glass-status {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px 15px;
+    justify-items: start;
+    align-items: center;
+    padding: 12px 20px;
   }
 
   /* 2. Reorganizacja PASKA STATUSU */
   .glass-status {
-    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
-    align-items: center; /* Wyśrodkowanie wszystkich elementów */
-    gap: 8px; /* Odstęp między wierszami */
-    padding: 12px;
+    display: grid; /* 1. Zmieniamy tryb wyświetlania na siatkę (grid) */
+    grid-template-columns: repeat(2, 1fr); /* 2. Tworzymy dwie równe kolumny */
+    gap: 5px 15px; /* 3. Ustawiamy odstępy: 5px w pionie, 15px w poziomie */
+    justify-items: start; /* 4. Wyrównujemy wszystkie elementy do lewej krawędzi ich komórek */
+    align-items: center;
+    padding: 12px 20px; /* Dopasowujemy padding dla lepszego wyglądu */
   }
 }
 
@@ -4156,3 +4161,24 @@ html:not(.dark-mode) .slideshow-status-widget {
   animation: none !important;
 }
 /* --- KONIEC --- */
+
+/* Plik: style.css */
+
+/* --- PATCH: Finalne poprawki responsywności dla orientacji pionowej (mobile) --- */
+@media (max-width: 480px) {
+  /* ... (mogą tu być inne reguły) ... */
+
+  /* 2. Reorganizacja PASKA STATUSU */
+  .glass-status {
+    flex-direction: column; /* Zmiana układu z poziomego na pionowy */
+    align-items: center; /* Wyśrodkowanie wszystkich elementów */
+    gap: 8px; /* Odstęp między wierszami */
+    padding: 12px;
+  }
+
+  .deck-top-row.filters-expanded .filter-section {
+    max-width: calc(
+      100% - 45px
+    ); /* Ustawia szerokość otwartej kurtyny na 100% minus miejsce na przycisk i margines */
+  }
+}
