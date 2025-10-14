@@ -1,8 +1,8 @@
 const config2 = {
   /// Subsystem specific settings // Ustawienia specyficzne dla podsystemu
   pageSettings: {
-    pageKey: "poland",
-    pageTitle: "POLAND ▪ photo gallery",
+    pageKey: "spain",
+    pageTitle: "SPAIN ▪ photo gallery",
     pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
     showMiniLogo: true,
     showVisuDirButton: true,
@@ -33,32 +33,12 @@ const config2 = {
     defaultVideoExpanded: false,
     predefinedFilters: [
       {
-        label: "ADE",
-        search: "ade",
-      },
-      {
-        label: "E-booki",
-        search: "e-book",
-      },
-      {
-        label: "Galerie",
-        search: "galeri",
-      },
-      {
         label: "Hiszpania",
-        search: "Hiszpania",
+        search: "hiszpan",
       },
       {
-        label: "Niemcy",
-        search: "Niemcy",
-      },
-      {
-        label: "Polska",
-        search: "Polska",
-      },
-      {
-        label: "Poradniki",
-        search: "Poradniki",
+        label: "Barcelona",
+        search: "barcelona",
       },
     ],
   },

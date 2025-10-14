@@ -5,8 +5,8 @@ const config2 = {
     pageTitle: "ade ▪ maxi MENU",
     showMiniLogo: true,
     showVisuDirButton: true,
-    showBackButton: true,
     showLanguageButton: true,
+    showBackButton: false,
 
     screenSaverTimeout: 20,
     defaultBgVideo: 1,
