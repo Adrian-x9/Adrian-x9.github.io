@@ -3,6 +3,7 @@ const config2 = {
   pageSettings: {
     pageKey: "indexMaxi",
     pageTitle: "ade ▪ maxi MENU",
+    pathCorrection: ".", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
     showMiniLogo: true,
     showVisuDirButton: true,
     showLanguageButton: true,

@@ -8,33 +8,37 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
 
-    <!-- Main System & Subsystems shared settings -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../ade-shared/gfx/favicons/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="../ade-shared/gfx/favicons/favicon-32x32.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="../ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="../ade-shared/gfx/favicons/android-icon-192x192.png" />
-    <link rel="stylesheet" href="../ade-shared/css/style-shared.css">
-    <link rel="stylesheet" href="../ade-shared/css/font-satoshi.css" />
-    <link rel="stylesheet" href="../ade-shared/css/font-awesome-v7.1.0-all.min.css" />
+    <script src="./ade-subsystem/js/config-paths.js"></script>
 
-    <!-- Shared config first, then subsystem config can overwrites some settings -->
-    <script src="../ade-shared/js/config-shared.js" defer></script>
+    <script>
+        (function() {
+            // Pobieramy prefiks z obiektu config2, który został właśnie załadowany.
+            const prefix = config0.pageSettings.pathCorrection || '.';
 
-    <!-- Subsystem config overwrites some shared settings -->
-    <script src="./ade-subsystem/js/config-subsystem.js" defer></script>
+            // Definiujemy wszystkie pozostałe zasoby.
+            const assets = [
+                // Ikony (zawsze ze ścieżki współdzielonej)
+                `<link rel="icon" type="image/png" sizes="16x16" href="${prefix}/ade-shared/gfx/favicons/favicon-16x16.png" />`,
+                `<link rel="icon" type="image/png" sizes="32x32" href="${prefix}/ade-shared/gfx/favicons/favicon-32x32.png" />`,
+                `<link rel="apple-touch-icon" sizes="180x180" href="${prefix}/ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />`,
+                `<link rel="icon" type="image/png" sizes="192x192" href="${prefix}/ade-shared/gfx/favicons/android-icon-192x192.png" />`,
+                // Style CSS (zawsze ze ścieżki współdzielonej)
+                `<link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">`,
+                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />`,
+                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />`,
+                // Skrypty JS (współdzielone z prefiksem, lokalne bez)
+                `<script src="${prefix}/ade-shared/js/config-shared.js" defer><\/script>`,
+                `<script src="${prefix}/ade-subsystem/js/config-subsystem.js" defer><\/script>`,
+                `<script src="./ade-subsystem/js/db.js" defer><\/script>`,
+                `<script src="./ade-subsystem/js/db-langs.js" defer><\/script>`,
+                `<script src="${prefix}/ade-shared/js/lang-shared.js" defer><\/script>`,
+                `<script src="${prefix}/ade-shared/js/scripts-shared.js" defer><\/script>`
+            ];
 
-    <!-- Interface language files -->
-    <script src="../ade-shared/js/lang-shared.js" defer></script>
-
-    <!-- Subsystem specific data - db & translations -->
-    <script src="./ade-subsystem/js/db.js" defer></script>
-    <script src="./ade-subsystem/js/db-langs.js" defer></script>
-    <script src="./ade-subsystem/js/db-lang-de.js" defer></script>
-    <script src="./ade-subsystem/js/db-lang.js"></script>
-
-    <!-- <script src="db.js"></script> -->
-    <script src="../ade-shared/js/scripts-shared.js" defer></script>
-
+            // Wstawiamy wszystkie zdefiniowane tagi do dokumentu.
+            document.write(assets.join(''));
+        })();
+    </script>
 
 </head>
 

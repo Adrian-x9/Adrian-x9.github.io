@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.4", // Thumbnail generation, translation update / Generacja miniatur, aktualizacja tłumaczeń
+  version: "v2.4.5", // Paths for subsystem fix / Poprawka dla ścieżek dla podsystemów
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-13", // Last update date YYYY-MM-DD
+  updated: "2025-10-15", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure
