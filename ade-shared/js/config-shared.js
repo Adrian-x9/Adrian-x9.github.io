@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.5", // Paths for subsystem fix / Poprawka dla ścieżek dla podsystemów
+  version: "v2.4.5", // Paths for subsystems fix / Poprawka dla ścieżek dla podsystemów
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-15", // Last update date YYYY-MM-DD
 
@@ -12,7 +12,7 @@ const config1 = {
   pageSettings: {
     pageKey: "indexMaxi",
     pageTitle: "ade ▪ maxi MENU",
-    pathCorrection: "", // Use "" for main system, or "." for subsystems in subfolders
+    //pathCorrection: "", // Use "" for main system, or "." for subsystems in subfolders
 
     showMiniLogo: true,
     showVisuDirButton: false,
@@ -89,40 +89,40 @@ const config1 = {
 };
 
 /// Helper function to build shared paths
-function sharedPath(relativePath) {
-  const prefix = config1?.pageSettings?.pathCorrection ?? "";
-  return prefix + relativePath;
-}
+// function sharedPath(relativePath) {
+//   const prefix = config1?.pageSettings?.pathCorrection ?? "";
+//   return prefix + relativePath;
+// }
 
-/// Dynamic assignment of logo paths
-config1.logoRotator.logos = [
-  {
-    srcLight: sharedPath(
-      "./ade-shared/gfx/interface/logo-VisuDir-light-240px.png"
-    ),
-    srcDark: sharedPath(
-      "./ade-shared/gfx/interface/logo-VisuDir-dark-240px.png"
-    ),
-    href: sharedPath("./ade-shared/about.html"),
-    alt: "Logo VisuDir",
-  },
-  {
-    srcLight: sharedPath(
-      "./ade-shared/gfx/interface/logo-ade-v1-light-240px.png"
-    ),
-    srcDark: sharedPath(
-      "./ade-shared/gfx/interface/logo-ade-v1-dark-240px.png"
-    ),
-    href: "https://www.ade.pl",
-    alt: "Logo ADE",
-  },
-];
+// /// Dynamic assignment of logo paths
+// config1.logoRotator.logos = [
+//   {
+//     srcLight: sharedPath(
+//       "./ade-shared/gfx/interface/logo-VisuDir-light-240px.png"
+//     ),
+//     srcDark: sharedPath(
+//       "./ade-shared/gfx/interface/logo-VisuDir-dark-240px.png"
+//     ),
+//     href: sharedPath("./ade-shared/about.html"),
+//     alt: "Logo VisuDir",
+//   },
+//   {
+//     srcLight: sharedPath(
+//       "./ade-shared/gfx/interface/logo-ade-v1-light-240px.png"
+//     ),
+//     srcDark: sharedPath(
+//       "./ade-shared/gfx/interface/logo-ade-v1-dark-240px.png"
+//     ),
+//     href: "https://www.ade.pl",
+//     alt: "Logo ADE",
+//   },
+// ];
 
-/// Dynamic assignment of shared paths
-config1.paths.url404 = sharedPath("./ade-shared/404.html");
-config1.paths.urlAbout = sharedPath("./ade-shared/about.html");
-config1.paths.urlFallback = sharedPath("./ade-shared/soon.html");
-config1.paths.videoBgLightUrlBase = sharedPath(
-  "./ade-shared/video-bg/bg-light"
-);
-config1.paths.videoBgDarkUrlBase = sharedPath("./ade-shared/video-bg/bg-dark");
+// /// Dynamic assignment of shared paths
+// config1.paths.url404 = sharedPath("./ade-shared/404.html");
+// config1.paths.urlAbout = sharedPath("./ade-shared/about.html");
+// config1.paths.urlFallback = sharedPath("./ade-shared/soon.html");
+// config1.paths.videoBgLightUrlBase = sharedPath(
+//   "./ade-shared/video-bg/bg-light"
+// );
+// config1.paths.videoBgDarkUrlBase = sharedPath("./ade-shared/video-bg/bg-dark");

@@ -954,7 +954,37 @@ function initializeCurtainControls() {
   }
 }
 
+function buildDynamicPaths() {
+    const prefix = config.pageSettings.pathCorrection || '.';
+    const buildPath = (path) => `${prefix}/${path}`;
+
+    // 1. Dynamiczne budowanie ścieżek do logo
+    config.logoRotator.logos = [
+        {
+            srcLight: buildPath('ade-shared/gfx/interface/logo-VisuDir-light-240px.png'),
+            srcDark: buildPath('ade-shared/gfx/interface/logo-VisuDir-dark-240px.png'),
+            href: buildPath('ade-shared/about.html'),
+            alt: 'Logo VisuDir'
+        },
+        {
+            srcLight: buildPath('ade-shared/gfx/interface/logo-ade-v1-light-240px.png'),
+            srcDark: buildPath('ade-shared/gfx/interface/logo-ade-v1-dark-240px.png'),
+            href: 'https://www.ade.pl',
+            alt: 'Logo ADE'
+        }
+    ];
+
+    // 2. Dynamiczne budowanie pozostałych ścieżek współdzielonych
+    config.paths.url404 = buildPath('ade-shared/404.html');
+    config.paths.urlAbout = buildPath('ade-shared/about.html');
+    config.paths.urlFallback = buildPath('ade-shared/soon.html');
+    config.paths.videoBgLightUrlBase = buildPath('ade-shared/video-bg/bg-light');
+    config.paths.videoBgDarkUrlBase = buildPath('ade-shared/video-bg/bg-dark');
+}
+
 window.onload = function () {
+  buildDynamicPaths();
+  
   applyLanguage();
   if (fileInputLabel) fileInputLabel.style.display = "none";
   document

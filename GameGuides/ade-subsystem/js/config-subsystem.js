@@ -3,11 +3,11 @@ const config2 = {
   pageSettings: {
     pageKey: "poland",
     pageTitle: "POLAND ▪ photo gallery",
-    pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
+    // pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
     showMiniLogo: true,
-    showVisuDirButton: false,
+    showVisuDirButton: true,
+    showLanguageButton: true,
     showBackButton: true,
-    showLanguageButton: false,
 
     screenSaverTimeout: 20,
     defaultBgVideo: 1,
@@ -72,45 +72,12 @@ const config2 = {
   },
 };
 
-// === POCZĄTEK ŁATKI: Korekta ścieżek dla podsystemu ===
-if (config2.pageSettings.pathCorrection) {
-  const prefix = config2.pageSettings.pathCorrection;
-
-  // Funkcja pomocnicza do poprawiania ścieżek współdzielonych
-  const correctSharedPath = (path) => {
-    // Sprawdzamy, czy ścieżka zaczyna się od ./ade-shared
-    if (typeof path === "string" && path.startsWith("./ade-shared")) {
-      // Zamieniamy "./" na zdefiniowany prefiks, np. "../"
-      return prefix + path.substring(1);
-    }
-    return path;
-  };
-
-  // Poprawiamy ścieżki w logo
-  config1.logoRotator.logos.forEach((logo) => {
-    logo.srcLight = correctSharedPath(logo.srcLight);
-    logo.srcDark = correctSharedPath(logo.srcDark);
-    logo.href = correctSharedPath(logo.href);
-  });
-
-  // Poprawiamy pozostałe ścieżki globalne
-  config1.paths.url404 = correctSharedPath(config1.paths.url404);
-  config1.paths.urlAbout = correctSharedPath(config1.paths.urlAbout);
-  config1.paths.urlFallback = correctSharedPath(config1.paths.urlFallback);
-  config1.paths.videoBgLightUrlBase = correctSharedPath(
-    config1.paths.videoBgLightUrlBase
-  );
-  config1.paths.videoBgDarkUrlBase = correctSharedPath(
-    config1.paths.videoBgDarkUrlBase
-  );
-}
-// === KONIEC ŁATKI ===
-
 const config = {
   ...config1,
   pageSettings: {
     ...config1.pageSettings,
     ...config2.pageSettings,
+    ...config0.pageSettings,
   },
   paths: {
     ...config1.paths,
