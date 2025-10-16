@@ -46,14 +46,14 @@ const itemTranslations = {
         "Monochromatyczne ujęcie wąskiego pasażu między dwoma masywnymi budynkami (ceglanym i kamiennym). Perspektywa podkreśla powtarzalność geometrycznych form i surowy, monumentalny charakter architektury.",
     },
     "architecture-8589487_1920.jpg": {
-      title: "Nowoczesna fasada z rytmem światła",
+      title: "Dzielnica Spichlerzy w Hamburgu nocą",
       description:
-        "Metaliczna powierzchnia budynku z pionowymi żebrami i nieregularnym układem okien. Kontrast między jasną elewacją a ciemnym niebem.",
+        "Nastrojowe, nocne ujęcie kanału w historycznej Dzielnicy Spichlerzy (Speicherstadt). Oświetlone, ceglane budynki odbijają się w spokojnej wodzie, tworząc malowniczy pejzaż miejski.",
     },
     "architecture-9483952_1920.jpg": {
-      title: "Zaokrąglona, futurystyczna fasada biurowa",
+      title: "Żurawie Domy w Kolonii o zachodzie słońca",
       description:
-        "Ujęcie z bliska, z dołu, na falującą, zaokrągloną fasadę nowoczesnego kompleksu biurowego lub muzeum. Powtarzające się rzędy okien podkreślają płynność i dynamikę architektonicznej formy.",
+        "Nowoczesne budynki 'Kranhäuser' (Żurawie Domy) nad Renem w Kolonii. Architektura na tle dramatycznego, kolorowego nieba o zachodzie słońca. W oddali widoczna sylwetka katedry.",
     },
     "bastei-3014467_1920.jpg": {
       title: "Most Bastei o poranku",
@@ -61,14 +61,14 @@ const itemTranslations = {
         "Widok na słynny skalny most Bastei w Saksońskiej Szwajcarii, skąpany w porannej mgle. Dramatyczny krajobraz z piaskowcowymi iglicami i lasem.",
     },
     "bastion-2942474_1920.jpg": {
-      title: "Brühlsche Terrasse w Dreźnie (Balkon Europy)",
+      title: "Most Bastei o wschodzie słońca",
       description:
-        "Słynna kamienna promenada (Taras Brühla) w Dreźnie. Ujęcie w słoneczny dzień, ukazujące barokowe rzeźby, balustrady i schody, z widokiem na historyczne centrum miasta w oddali.",
+        "Szeroka panorama formacji skalnych Bastei w Saksońskiej Szwajcarii o wschodzie słońca. Ciepłe światło oświetla kamienny most i gęsty las w dolinie.",
     },
     "berlin-3005717_1920.jpg": {
-      title: "Geometria szklanego dachu/fasady",
+      title: "Diabelski młyn na festiwalu w Berlinie",
       description:
-        "Symetryczne, architektoniczne ujęcie elementów stalowo-szklanego dachu lub fasady budynku. Powtarzające się prostokątne wzory tworzą geometryczny, nowoczesny motyw na tle nieba.",
+        "Ujęcie z dołu na wielki, oświetlony diabelski młyn (koło widokowe) na tle czystego, niebieskiego nieba. Symetryczna kompozycja podkreśla jego monumentalną konstrukcję.",
     },
     "berlin-4068968_1920.jpg": {
       title: "Plac Poczdamski w Berlinie",
@@ -91,9 +91,9 @@ const itemTranslations = {
         "Nocne ujęcie fasady Reichstagu w Berlinie. W centrum kadru widoczna jest nowoczesna, przeszklona kopuła na tle oświetlonej historycznej architektury. Zdjęcie charakteryzuje się mocnym kontrastem światła.",
     },
     "berlin-8429780_1920.jpg": {
-      title: "Widok na port lub magazyny w Hamburgu",
+      title: "Panorama Berlina z Bramą Brandenburską",
       description:
-        "Panoramiczny widok na kanał portowy lub rzekę w Hamburgu o zmierzchu. Wzdłuż wody widoczne są stare budynki magazynowe i w oddali charakterystyczne dźwigi portowe. Światła odbijają się w spokojnej wodzie.",
+        "Szeroki widok na centrum Berlina z góry, z aleją Straße des 17. Juni prowadzącą prosto do Bramy Brandenburskiej. W tle widoczna jest Katedra Berlińska oraz Czerwony Ratusz.",
     },
     "brandenburg-50492_1920.jpg": {
       title: "Brama Brandenburska nocą",
@@ -301,9 +301,9 @@ const itemTranslations = {
         "Zbliżenie na smukłe, gotyckie wieże katedry w Kolonii, symbol miasta. Detale architektoniczne i kamienne zdobienia.",
     },
     "construction-phase-1570221_1920.jpg": {
-      title: "Plac Budowy Filharmonii nad Ł`ab`ą (Elbphilharmonie)",
+      title: "Budowa osiedla nad jeziorem Phoenix, Dortmund",
       description:
-        "Ujęcie z bliska na elementy konstrukcyjne, metalowe rusztowania i fasadę Filharmonii. Symbol nowoczesnej architektury Hamburga.",
+        "Krajobraz z jeziorem Phoenix (Phoenix-See) w Dortmundzie na pierwszym planie. Na brzegu widoczne są nowoczesne domy w trakcie budowy, z dźwigami w tle, co ilustruje rewitalizację terenów poprzemysłowych.",
     },
     "converter-187706_1920.jpg": {
       title: "Konwerter stalowy w hucie (B&W)",
@@ -646,9 +646,9 @@ const itemTranslations = {
         "Biała latarnia morska na klifie. Klasyczna, nadmorska architektura.",
     },
     "lion-3536149_1920.jpg": {
-      title: "Rzeźba Lwa na Moście Karola w Pradze",
+      title: "Portret lwa w ogrodzie zoologicznym",
       description:
-        "Rzeźba lwa w pobliżu Mostu Karola w Pradze. Detal architektoniczny w historycznym kontekście.",
+        "Zbliżenie na majestatycznego lwa z gęstą, brązową grzywą. Zwierzę odpoczywa na skałach w ogrodzie zoologicznym, patrząc wprost w obiektyw.",
     },
     "mannheim-8000879_1920.jpg": {
       title: "Pałac w Mannheim (Mannheimer Schloss)",
@@ -691,9 +691,9 @@ const itemTranslations = {
         "Wysokie, skaliste Alpy oświetlone promieniami słońca. Surowy, majestatyczny krajobraz górski.",
     },
     "mountains-6531264_1920.jpg": {
-      title: "Jezioro i Alpy w Szwajcarii Saksońskiej",
+      title: "Zamek Hohenzollern o zachodzie słońca",
       description:
-        "Skaliste góry i lasy, na dole widoczne spokojne jezioro i ścieżka spacerowa.",
+        "Malowniczy widok na Zamek Hohenzollern, usytuowany na szczycie zalesionego wzgórza. W tle rozciąga się dramatyczne, różowo-fioletowe niebo o zachodzie słońca.",
     },
     "mountains-6531903_1920.jpg": {
       title: "Jezioro Alpsee i zamek Hohenschwangau",
@@ -756,9 +756,9 @@ const itemTranslations = {
         "Rozległa, zielona dolina rzeki, otoczona stromymi Alpami. Krajobraz Wallberg i jezioro Tegernsee w tle.",
     },
     "passau-7968535_1920.jpg": {
-      title: "Passau (widok z lotu ptaka)",
+      title: "Widok na Stare Miasto w Pasawie (Passau)",
       description:
-        "Widok na historyczne miasto Passau u zbiegu rzek. Kolorowe domy i rzeka Men w centrum.",
+        "Słoneczny widok na historyczne centrum Pasawy od strony rzeki Dunaj. Nad kolorowymi kamienicami góruje barokowa Katedra św. Szczepana z charakterystycznymi kopułami.",
     },
     "path-6514885_1920.jpg": {
       title: "Ścieżka w lesie (B&W)",
@@ -1020,30 +1020,30 @@ const itemTranslations = {
       description:
         "Nowoczesne, dynamiczne ujęcie Berlińskiej Wieży Telewizyjnej (Fernsehturm). Sylwetka wieży odbija się w szklanej fasadzie sąsiedniego budynku, tworząc grę linii i perspektywy.",
     },
-    "berlin-8429780_1920.jpg": {
-      title: "Panorama Berlina z Bramą Brandenburską",
+    "tv-tower-5502995_1920.jpg": {
+      title: "Wieża Telewizyjna z mgłą w tle",
       description:
-        "Szeroki widok na centrum Berlina z góry, z aleją Straße des 17. Juni prowadzącą prosto do Bramy Brandenburskiej. W tle widoczna jest Katedra Berlińska oraz Czerwony Ratusz.",
+        "Berlińska Wieża Telewizyjna na tle gęstej mgły lub niskich chmur. Ujęcie z lotu ptaka lub z wysokości.",
     },
-    "lion-3536149_1920.jpg": {
-      title: "Portret lwa w ogrodzie zoologicznym",
+    "tv-tower-6139241_1920.jpg": {
+      title: "Wieża Telewizyjna i Berliner Dom",
       description:
-        "Zbliżenie na majestatycznego lwa z gęstą, brązową grzywą. Zwierzę odpoczywa na skałach w ogrodzie zoologicznym, patrząc wprost w obiektyw.",
+        "Wieża Telewizyjna i Katedra Berlińska (Berliner Dom) na tle zachmurzonego nieba. Kontrast między nowoczesnym a historycznym symbolem Berlina.",
     },
-    "passau-7968535_1920.jpg": {
-      title: "Widok na Stare Miasto w Pasawie (Passau)",
+    "vineyards-4666055_1920.jpg": {
+      title: "Winnice nad Mozelą",
       description:
-        "Słoneczny widok na historyczne centrum Pasawy od strony rzeki Dunaj. Nad kolorowymi kamienicami góruje barokowa Katedra św. Szczepana z charakterystycznymi kopułami.",
+        "Rzędy winorośli na stromych zboczach doliny Mozeli. Typowy krajobraz winiarski Niemiec w promieniach słońca.",
     },
-    "mountains-6531264_1920.jpg": {
-      title: "Zamek Hohenzollern o zachodzie słońca",
+    "wallberg-3732153_1920.jpg": {
+      title: "Panorama z Wallberg, Tegernsee",
       description:
-        "Malowniczy widok na Zamek Hohenzollern, usytuowany na szczycie zalesionego wzgórza. W tle rozciąga się dramatyczne, różowo-fioletowe niebo o zachodzie słońca.",
+        "Widok z góry Wallberg na jezioro Tegernsee w Alpach Bawarskich. Rozległy krajobraz z górami i spokojną wodą.",
     },
-    "construction-phase-1570221_1920.jpg": {
-      title: "Budowa osiedla nad jeziorem Phoenix, Dortmund",
+    "woman-4339644_1920.jpg": {
+      title: "Kobieta przy winnicy (B&W)",
       description:
-        "Krajobraz z jeziorem Phoenix (Phoenix-See) w Dortmundzie na pierwszym planie. Na brzegu widoczne są nowoczesne domy w trakcie budowy, z dźwigami w tle, co ilustruje rewitalizację terenów poprzemysłowych.",
+        "Monochromatyczne ujęcie kobiety stojącej przy rzędzie winorośli. Scena w winnicy w dolinie Mozeli.",
     },
   },
 };
