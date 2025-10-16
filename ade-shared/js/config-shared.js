@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.7", // Added a mushrooms gallery / Dodano galerię grzybów
+  version: "v2.4.8", // Added a German gallery / Dodano galerię Niemiec
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-15", // Last update date YYYY-MM-DD
 

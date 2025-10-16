@@ -5,1147 +5,1017 @@ const itemTranslations = {
    * =============================================
    */
   pl: {
-    "(Gemeine_Steinpilz)_Boletus_edulis.jpg": {
-      title: "Borowik szlachetny (Prawdziwek)",
+    // --- Poprzednia Partia (71 pozycji) ---
+    "abstract-1138967_1920.jpg": {
+      title: "Futurystyczna fasada biurowca",
       description:
-        "Jeden z najbardziej cenionych grzybów jadalnych. Charakteryzuje się brązowym kapeluszem i baryłkowatym trzonem z białą siateczką. Rośnie w lasach iglastych i mieszanych. Można go pomylić z gorzkim goryczakiem żółciowym, który ma różowe pory.",
+        "Abstrakcyjne ujęcie zakrzywionej, szklanej fasady nowoczesnego budynku biurowego. Dynamiczna kompozycja z perspektywy z dołu, podkreślająca krzywoliniowe, metaliczne elementy.",
     },
-    "2007-07-14_Cantharellus_cibarius.jpg": {
-      title: "Pieprznik jadalny (Kurka)",
+    "aerial-4540834_1920.jpg": {
+      title: "Gęsty las iglasty w górach",
       description:
-        "Popularny i smaczny grzyb jadalny o żółtym kolorze i owocowym zapachu. Zamiast blaszek posiada charakterystyczne listewki pod kapeluszem. Można go pomylić z niejadalną lisówką pomarańczową, która ma gęstsze blaszki i rośnie na drewnie.",
+        "Widok z lotu ptaka na rozległe, zielone wzgórza pokryte gęstym lasem iglastym. W tle widoczny skalisty szczyt góry oświetlony zachodzącym słońcem, bez śladów miasteczka.",
     },
-    "2010-04-27_Inocybe_erubescens.jpg": {
-      title: "Strzępiak ceglasty",
+    "alps-9124288_1920.jpg": {
+      title: "Majestatyczne Alpy w czerni i bieli",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Zawiera muskarynę w dawce śmiertelnej. Kapelusz stożkowaty, z wiekiem rozpostarty, w kolorze od białego do ceglastoczerwonego, często pękający. Rośnie w parkach i lasach liściastych. Nie zbieraj, jeśli nie masz 100% pewności.",
+        "Surowe ujęcie wysokich, skalistych szczytów górskich, pokrytych śniegiem, widzianych w skali szarości. U podnóża góry widoczny ciemny, gęsty las iglasty, a w tle zamglone niebo.",
     },
-    "2010-05-27_Inocybe_erubescens.jpg": {
-      title: "Strzępiak ceglasty (widoczne blaszki)",
+    "alpsee-532864_1920.jpg": {
+      title: "Jezioro Alpsee i zamek Hohenschwangau",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Blaszki młodych owocników są białawe, z wiekiem ciemnieją. Charakterystyczną cechą jest czerwienienie miąższu po uszkodzeniu. Pomyłka z jadalnymi grzybami może mieć tragiczne skutki.",
+        "Malowniczy widok na spokojne, turkusowe jezioro Alpsee. Na lewym brzegu widać Zamek Hohenschwangau ukryty wśród drzew.",
     },
-    "2013-10-16_Cortinarius_orellanus_1a.jpg": {
-      title: "Zasłonak rudy",
+    "architecture-1046564_1920.jpg": {
+      title: "Nowoczesne wieżowce na Placu Poczdamskim",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Zawiera orellaninę, która nieodwracalnie uszkadza nerki. Objawy zatrucia mogą wystąpić nawet po 2-3 tygodniach. Kapelusz rdzawobrązowy, blaszki podobnej barwy. Rośnie w lasach liściastych. Bezwzględnie unikaj!",
+        "Ujęcie z dołu, ukazujące dwa strzeliste, nowoczesne wieżowce (jeden szklany, drugi z regularnymi oknami) na tle niebieskiego nieba. W kadrze widoczny jest także ostry, spiczasty element współczesnej architektury.",
     },
-    "2013-10-16_Cortinarius_orellanus_1b.jpg": {
-      title: "Zasłonak rudy (widoczne blaszki)",
+    "architecture-1079806_1920.jpg": {
+      title: "Abstrakcyjna, zakrzywiona fasada",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Blaszki są szerokie, cynamonowobrązowe. U młodych owocników występuje delikatna zasnówka (pajęczynka), która szybko zanika. Pomyłka możliwa np. z jadalną płachetką kołpakowatą.",
+        "Architektoniczne, monochromatyczne ujęcie falującej, metalicznej fasady nowoczesnego budynku. Zakrzywiona forma z rzędami małych, kwadratowych okien na ciemnym tle nieba, tworząca kontrast światła i cienia.",
     },
-    "2025-10-08_D500-0912_Achim-Lammerts_Imleria-badia.jpg": {
-      title: "Podgrzybek brunatny",
+    "architecture-3820306_1920.jpg": {
+      title: "Przeszklone zadaszenie metra/peronu",
       description:
-        "Bardzo smaczny i popularny grzyb jadalny. Ma kasztanowobrązowy, zamszowy kapelusz i żółtawe pory, które po naciśnięciu sinieją. Rośnie gromadnie w lasach iglastych. Trudno go pomylić z grzybami trującymi.",
+        "Symetryczne ujęcie przeszklonego dachu stacji lub tunelu, z widoczną metalową kratownicą na tle nieba. Perspektywa z dołu, ukazująca metalową konstrukcję i schody ruchome prowadzące w dół.",
     },
-    "AD2009Sep13_Boletus_edulis_01.jpg": {
-      title: "Borowik szlachetny (młody okaz)",
+    "architecture-4981949_1920.jpg": {
+      title: "Surowy pasaż między budynkami (B&W)",
       description:
-        "Młody, jadalny prawdziwek o charakterystycznym, baryłkowatym trzonie i jasnym kapeluszu. W tej fazie wzrostu jest najsmaczniejszy. Uważaj na goryczaka żółciowego – zawsze sprawdzaj spód kapelusza (pory nie mogą być różowe).",
+        "Monochromatyczne ujęcie wąskiego pasażu między dwoma masywnymi budynkami (ceglanym i kamiennym). Perspektywa podkreśla powtarzalność geometrycznych form i surowy, monumentalny charakter architektury.",
     },
-    "AD2009Sep20_Amanita_muscaria_02.jpg": {
-      title: "Muchomor czerwony (młody okaz)",
+    "architecture-8589487_1920.jpg": {
+      title: "Nowoczesna fasada z rytmem światła",
       description:
-        "Grzyb trujący i psychoaktywny. Młody owocnik ma pomarańczowoczerwoną barwę i białe łatki. Chociaż rzadko jest śmiertelny, jego spożycie powoduje poważne zatrucia. Jego wygląd jest ostrzeżeniem samym w sobie.",
+        "Metaliczna powierzchnia budynku z pionowymi żebrami i nieregularnym układem okien. Kontrast między jasną elewacją a ciemnym niebem.",
     },
-    "Agaricus_bisporus,_Agaricaceae_02.jpg": {
-      title: "Pieczarka dwuzarodnikowa (dzika forma)",
+    "architecture-9483952_1920.jpg": {
+      title: "Zaokrąglona, futurystyczna fasada biurowa",
       description:
-        "Jadalna, dzika forma pieczarki, z której wyhodowano odmiany sklepowe. Młode owocniki są kuliste. Rośnie na polach i łąkach. Uwaga na pomyłkę ze śmiertelnie trującym muchomorem jadowitym, który ma zawsze białe blaszki.",
+        "Ujęcie z bliska, z dołu, na falującą, zaokrągloną fasadę nowoczesnego kompleksu biurowego lub muzeum. Powtarzające się rzędy okien podkreślają płynność i dynamikę architektonicznej formy.",
     },
-    "Agaricus_bisporus_G4.jpg": {
-      title: "Pieczarka dwuzarodnikowa (blaszki)",
+    "bastei-3014467_1920.jpg": {
+      title: "Most Bastei o poranku",
       description:
-        "Jadalna. Kluczową cechą rozpoznawczą pieczarek są blaszki, które u młodych owocników są różowe, a z wiekiem stają się ciemnobrązowe. Muchomory, z którymi można je pomylić, mają blaszki zawsze białe.",
+        "Widok na słynny skalny most Bastei w Saksońskiej Szwajcarii, skąpany w porannej mgle. Dramatyczny krajobraz z piaskowcowymi iglicami i lasem.",
     },
-    "Amanita_muscaria_tyndrum.jpg": {
-      title: "Muchomor czerwony",
+    "bastion-2942474_1920.jpg": {
+      title: "Brühlsche Terrasse w Dreźnie (Balkon Europy)",
       description:
-        "Grzyb trujący, ikona lasu. Charakterystyczny czerwony kapelusz z białymi plamkami. Powoduje zatrucia neurotoksyczne. Jego wygląd jest tak charakterystyczny, że pomyłki z grzybami jadalnymi są rzadkie.",
+        "Słynna kamienna promenada (Taras Brühla) w Dreźnie. Ujęcie w słoneczny dzień, ukazujące barokowe rzeźby, balustrady i schody, z widokiem na historyczne centrum miasta w oddali.",
     },
-    "Amanita_phalloides_172551288.jpg": {
-      title: "Muchomor sromotnikowy (grupa)",
+    "berlin-3005717_1920.jpg": {
+      title: "Geometria szklanego dachu/fasady",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Grupa owocników w różnym wieku. Jeden taki grzyb może zabić całą rodzinę. Pamiętaj o kluczowych cechach: zielonkawy kapelusz, białe blaszki i bulwiasta podstawa w pochwie. Nigdy nie zbieraj grzybów, co do których masz wątpliwości.",
+        "Symetryczne, architektoniczne ujęcie elementów stalowo-szklanego dachu lub fasady budynku. Powtarzające się prostokątne wzory tworzą geometryczny, nowoczesny motyw na tle nieba.",
     },
-    "Amanita_phalloides_2011_G1.jpg": {
-      title: "Muchomor sromotnikowy (młode okazy)",
+    "berlin-4068968_1920.jpg": {
+      title: "Plac Poczdamski w Berlinie",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Młode owocniki są szczególnie niebezpieczne, gdyż łatwo je pomylić z jadalnymi gołąbkami. Zawsze sprawdzaj obecność pierścienia i pochwy u podstawy trzonu, których gołąbki nie posiadają.",
+        "Nowoczesne wieżowce i szklane dachy na Potsdamer Platz. Symbol przebudowy i nowoczesności Berlina, kontrastujący z historycznym centrum.",
     },
-    "Amanita_phalloides_2011_G3.jpg": {
-      title: "Muchomor sromotnikowy",
+    "berlin-4663539_1920.jpg": {
+      title: "East Side Gallery w Berlinie",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Jeden z najbardziej niebezpiecznych grzybów na świecie. Nawet jego zarodniki są toksyczne. Kluczowe cechy to oliwkowozielony kapelusz, białe blaszki, pierścień oraz pochwa u podstawy trzonu.",
+        "Fragment Muru Berlińskiego pokryty sztuką uliczną. Historyczny symbol podzielonego miasta i jednocześnie największa galeria plenerowa na świecie.",
     },
-    "Amanita_phalloides_2025_G1.jpg": {
-      title: "Muchomor sromotnikowy (żółta forma)",
+    "berlin-4692820_1920.jpg": {
+      title: "Ogród botaniczny w Berlinie",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Forma o bardziej żółtym zabarwieniu kapelusza. Niezależnie od koloru, toksyczność jest taka sama. Charakterystyczny 'zygzakowaty' wzór na trzonie jest kolejną cechą rozpoznawczą.",
+        "Szklana cieplarnia w ogrodzie botanicznym. Architektura z metalu i szkła tworzy przestronną i futurystyczną kompozycję.",
     },
-    "Amanita_virosa_12.jpg": {
-      title: "Muchomor jadowity",
+    "berlin-5613467_1920.jpg": {
+      title: "Kopuła Reichstagu w Berlinie nocą",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Równie niebezpieczny jak sromotnikowy. Jest cały biały, co zwiększa ryzyko pomyłki z pieczarkami lub gąskami. Ma pierścień i wyraźną, workowatą pochwę u podstawy. Pieczarki mają ciemniejące blaszki, on zawsze białe.",
+        "Nocne ujęcie fasady Reichstagu w Berlinie. W centrum kadru widoczna jest nowoczesna, przeszklona kopuła na tle oświetlonej historycznej architektury. Zdjęcie charakteryzuje się mocnym kontrastem światła.",
     },
-    "Amanita_virosa_82836142.jpg": {
-      title: "Muchomor jadowity (młody okaz)",
+    "berlin-8429780_1920.jpg": {
+      title: "Widok na port lub magazyny w Hamburgu",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Młody, biały owocnik w typowym leśnym otoczeniu. W tle widać muchomora czerwonego. Las jest pełen zarówno skarbów, jak i śmiertelnych pułapek – zbieraj tylko to, co znasz na 100%.",
+        "Panoramiczny widok na kanał portowy lub rzekę w Hamburgu o zmierzchu. Wzdłuż wody widoczne są stare budynki magazynowe i w oddali charakterystyczne dźwigi portowe. Światła odbijają się w spokojnej wodzie.",
     },
-    "Amanita_virosa_UL_01.jpg": {
-      title: "Muchomor jadowity (wysmukły okaz)",
+    "brandenburg-50492_1920.jpg": {
+      title: "Brama Brandenburska nocą",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Okaz w pełni dojrzały, o smukłym kształcie. Zapach jest określany jako nieprzyjemny, słodkawy. Każda część tego grzyba jest śmiertelnie trująca, nawet w małych dawkach.",
+        "Oświetlony zabytek odbijający się w kałuży. Klasyczna architektura i cienie drzew tworzą kompozycję pełną historii i refleksji.",
     },
-    "Armillaria_mellea,_Honey_Fungus,_UK,_3.jpg": {
-      title: "Opieńka miodowa (grupa)",
+    "bridge-1078671_1920.jpg": {
+      title: "Wielki, kratownicowy most stalowy",
       description:
-        "Warunkowo jadalna – trująca na surowo. Wymaga obgotowania przez ok. 20 min i odlania wody. Rośnie w dużych grupach na drewnie. Pomyłka możliwa z trującą maślanką wiązkową, która jest bardziej żółta i gorzka.",
+        "Ujęcie nowoczesnego, masywnego mostu drogowego o kratownicowej konstrukcji, prowadzącego nad rzeką. Perspektywa z dołu, podkreślająca geometryczną stalową konstrukcję.",
     },
-    "Armillaria_mellea,_Honey_Fungus,_UK.jpg": {
-      title: "Opieńka miodowa",
+    "bridge-1690078_1920.jpg": {
+      title: "Most Mülheimer Brücke w Kolonii",
       description:
-        "Warunkowo jadalna. Po odpowiedniej obróbce cieplnej (długie gotowanie) jest smacznym grzybem. Miodowożółty kapelusz pokryty jest drobnymi łuskami. Posiada trwały pierścień na trzonie.",
+        "Długi most nad Renem o stalowej konstrukcji. Minimalistyczna forma i chmurne niebo podkreślają inżynieryjne piękno.",
     },
-    "Boletus_edulis20130728_095.jpg": {
-      title: "Borowik szlachetny",
+    "bridge-5259784_1920.jpg": {
+      title: "Most nocą z gotyckim tłem",
       description:
-        "Dorodny, jadalny prawdziwek. Król polskich lasów. Jego gruby trzon i mięsisty kapelusz sprawiają, że jest wyjątkowo poszukiwany. Doskonały do suszenia, marynowania i jako składnik wielu potraw.",
+        "Oświetlony most z łukami i pionowymi podporami, w tle katedra. Połączenie światła, architektury i historii w miejskim pejzażu.",
     },
-    "Bruderwald_Ölbaumtrichterling_(Omphalotus)_-RM-20191129-01.jpg": {
-      title: "Lejkowniczek oliwkowy",
+    "bridge-5621201_1920.jpg": {
+      title: "Most Hohenzollernów i katedra w Kolonii",
       description:
-        "Grzyb trujący. Powoduje silne zaburzenia żołądkowo-jelitowe. Charakterystyczną cechą jest wzrost na drewnie oraz bioluminescencja – blaszki mogą świecić w ciemności. Mylony z jadalną kurką (pieprznikiem jadalnym).",
+        "Złote łuki mostu nad Renem i gotycka katedra. Symboliczne połączenie inżynierii i sztuki sakralnej.",
     },
-    "C._orellanus_jung.jpg": {
-      title: "Zasłonak rudy (młody okaz)",
+    "bridgeheads-263682_1920.jpg": {
+      title: "Świątynia Wenus na moście, Berlin",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Bardzo młody owocnik, który może nie zdradzać jeszcze wszystkich cech gatunku, co czyni go wyjątkowo niebezpiecznym. Każdy brązowy grzyb z blaszkami powinien być traktowany z najwyższą ostrożnością.",
+        "Klasycystyczna rotunda na Moście Charlottenburger. Kolumny i łuk mostu tworzą elegancką, historyczną scenerię.",
     },
-    "Cantharellus_cibarius_149899828.jpg": {
-      title: "Pieprznik jadalny (Kurka)",
+    "building-6994803_1920.jpg": {
+      title: "Dach Centrum Kulturalnego w Hamburgu",
       description:
-        "Smaczny grzyb jadalny. Widok od spodu ukazuje charakterystyczne, grube listewki, które odróżniają go od trującej lisówki pomarańczowej posiadającej cienkie, gęste blaszki.",
+        "Falisty, nowoczesny dach Elbphilharmonie (Filharmonia nad Łabą). Odbicia nieba i wody w szybach dają efekt dynamiki i lekkości.",
     },
-    "Cantharellus_cibarius_85863580.jpg": {
-      title: "Pieprznik jadalny (Kurka) w lesie",
+    "building-7092747_1920.jpg": {
+      title: "Wieżowiec z dynamicznej perspektywy",
       description:
-        "Jadalne kurki zebrane w lesie. Często rosną w grupach, ukryte w mchu. Ich intensywny, żółty kolor ułatwia ich odnalezienie. Jeden z najbezpieczniejszych grzybów dla początkujących grzybiarzy.",
+        "Ujęcie z bliska, z ekstremalnie zniekształconej, szerokokątnej perspektywy, na szklany wieżowiec. Pionowe gzymsy i prostokątne okna tworzą dynamiczny, abstrakcyjny wzór.",
     },
-    "Clitocybe.dealbata.-.lindsey.jpg": {
-      title: "Lejkówka liściowa",
+    "buildings-1804481_1920.jpg": {
+      title: "Kamienice na placu w Monachium",
       description:
-        "Grzyb trujący, zawiera muskarynę. Rośnie na otwartych, trawiastych terenach, w parkach, na polach golfowych. Jest mały i niepozorny, co zwiększa ryzyko przypadkowego zebrania razem z innymi grzybami.",
+        "Klasyczne budynki z ozdobnymi fasadami i balkonami. Detale architektoniczne i symetria podkreślają historyczny charakter miasta.",
     },
-    "Clitocybe_dealbata_1.jpg": {
-      title: "Lejkówka liściowa",
+    "buildings-1868962_1920.jpg": {
+      title: "Panorama historycznej zabudowy miejskiej",
       description:
-        "Grzyb trujący. Kapelusz białawy, z wiekiem staje się lejkowaty. Pomyłka możliwa z jadalną twardzioszką przydrożną, która ma rzadsze blaszki i jest bardziej elastyczna.",
+        "Widok z góry na gęstą, historyczną zabudowę śródmiejską (kamienice, dachy, kominy). Ujęcie ukazuje miejską panoramę o wschodzie lub zachodzie słońca.",
     },
-    "Clitocybe_dealbata_2_-_Lindsey.jpg": {
-      title: "Lejkówka liściowa (widoczne blaszki)",
+    "buildings-6956678_1920.jpg": {
+      title: "Modernistyczne wieżowce, Frankfurt",
       description:
-        "Grzyb trujący. Białe, gęsto rozmieszczone blaszki to jedna z jej cech charakterystycznych. Zatrucie objawia się m.in. silnym poceniem, ślinotokiem i problemami z oddychaniem.",
+        "Wysokie biurowce ze szkła i stali w centrum finansowym. Gra światła i cienia tworzy pionową, dynamiczną kompozycję.",
     },
-    "Clitocybe_rivulosa_20081116w.jpg": {
-      title: "Lejkówka odbielona",
+    "bundestag-204771_1920.jpg": {
+      title: "Wnętrze kopuły Reichstagu w Berlinie",
       description:
-        "Grzyb trujący, podobnie jak inne małe, białe lejkówki. Rośnie na terenach trawiastych i może tworzyć tzw. 'czarcie kręgi'. Spożycie powoduje zatrucie muskarynowe. Należy unikać zbierania małych, białych grzybów rosnących na łąkach.",
+        "Architektoniczne ujęcie wnętrza szklanej kopuły Reichstagu (Bundestagu) w Berlinie. Widoczna jest spiralna rampa i geometryczna, lustrzana konstrukcja centralna, rozpraszająca światło.",
     },
-    "Coprinopsis_atramentaria_3_-_Lindsey.jpg": {
-      title: "Czernidłak pospolity (dojrzałe okazy)",
+    "bvb-1322728_1920.jpg": {
+      title: "Nowoczesny biurowiec w barwach BVB",
       description:
-        "Warunkowo jadalny. Jadalne są tylko młode, zamknięte owocniki. Starsze rozpływają się w czarną maź. UWAGA: Powoduje zatrucie w połączeniu z alkoholem (reakcja disulfiramowa), nawet do 3 dni po spożyciu.",
+        "Architektoniczne ujęcie fasady nowoczesnego biurowca, z wyraźnymi żółto-czarnymi akcentami dekoracyjnymi na górnych piętrach. Surowa, szklana geometria budynku kontrastuje z dynamicznymi kolorami.",
     },
-    "Coprinus_atramentarius2_mod_(1).jpg": {
-      title: "Czernidłak pospolity",
+    "camp-4522970_1920.jpg": {
+      title: "Pusty stadion piłkarski – widok z trybun",
       description:
-        "Warunkowo jadalny, ale niebezpieczny w połączeniu z alkoholem. Nawet niewielka ilość alkoholu może wywołać silne zatrucie. Rośnie w kępach, często w miastach, parkach i przy drogach.",
+        "Panoramiczny widok z trybun na pustą płytę boiska na dużym stadionie piłkarskim. Żywo zielona murawa i rzędy pustych, kolorowych siedzeń, podkreślające monumentalną skalę obiektu.",
     },
-    "False_Chanterelle_Hygrophoropsis_aurantiaca.jpg": {
-      title: "Lisówka pomarańczowa",
+    "castle-2694027_1920.jpg": {
+      title: "Romantyczny zamek w lesie",
       description:
-        "Grzyb niejadalny, przez niektórych uznawany za lekko trujący. Powoduje dolegliwości żołądkowe. Często mylona z jadalną kurką. Odróżniają ją cieńsze, gęstsze blaszki (kurka ma listewki) i bardziej pomarańczowy kolor.",
+        "Kamienna budowla z wieżami, otoczona gęstym lasem. Klasyczny przykład średniowiecznej architektury w niemieckim krajobrazie.",
     },
-    "Faltentintling_Coprinus_atramentariu.jpg": {
-      title: "Czernidłak pospolity (młody okaz)",
+    "castle-467116_1920.jpg": {
+      title: "Zamek Neuschwanstein, widok zimowy",
       description:
-        "Młody owocnik czernidłaka. W tej fazie jest jadalny, ale należy pamiętać o bezwzględnym zakazie spożywania alkoholu przed, w trakcie i do 3 dni po jego zjedzeniu. W przeciwnym razie grozi silne zatrucie.",
+        "Bajkowy zamek na szczycie góry, pokryty śniegiem. Zimowy, majestatyczny krajobraz Bawarii.",
     },
-    "Fliegenpilz_fly_agaric_Amanita_muscaria.jpg": {
-      title: "Muchomor czerwony",
+    "castle-50521_1280.jpg": {
+      title: "Zamek Lichtenstein",
       description:
-        "Klasyczny, trujący muchomor. Jego wygląd jest powszechnie znany, co czyni go symbolem grzybów trujących. Spożycie wywołuje halucynacje i poważne problemy żołądkowe.",
+        "Neogotycki zamek na skale w Szwabii. Romantyczna, baśniowa architektura, zawieszona nad stromym zboczem.",
     },
-    "Galerina_marginata_(Batsch)_Kühner_274503.jpg": {
-      title: "Hełmówka jadowita",
+    "castle-5116436_1920.jpg": {
+      title: "Zamek Hohenschwangau nad Alpsee",
       description:
-        "ŚMIERTELNIE TRUJĄCA! Zawiera te same toksyny co muchomor sromotnikowy. Mały, niepozorny grzyb rosnący na drewnie. Bardzo łatwo pomylić go z jadalną opieńką lub łuszczakiem zmiennym. Zawsze sprawdzaj grzyby rosnące na pniach!",
+        "Złocista fasada zamku wśród zieleni, z jeziorem i górami w tle. Bajkowy krajobraz z nutą romantyzmu.",
     },
-    "Galerina_marginata_051106Bw.jpg": {
-      title: "Hełmówka jadowita",
+    "castle-5745011_1920.jpg": {
+      title: "Zamek w słońcu",
       description:
-        "ŚMIERTELNIE TRUJĄCA! Niewielki rozmiar i pospolity wygląd sprawiają, że jest jednym z najniebezpieczniejszych grzybów. Pomyłka może kosztować życie. Zwróć uwagę na pierścień na trzonie i lepki kapelusz.",
+        "Gotycka budowla z basztami i murami obronnymi, otoczona gęstym lasem. Scena pełna majestatu i historii.",
     },
-    "Galerina_marginata_051106Cmed.jpg": {
-      title: "Hełmówka jadowita (widoczne blaszki)",
+    "castle-6565029_1920.jpg": {
+      title: "Barokowa rezydencja z kolumnadą i kopułą",
       description:
-        "ŚMIERTELNIE TRUJĄCA! Blaszki w kolorze od jasnożółtego do rdzawobrązowego. Każdy mały grzyb rosnący na drewnie, którego nie jesteś w stanie zidentyfikować w 100%, powinien być uznany za potencjalnie śmiertelną hełmówkę.",
+        "Ujęcie fragmentu okazałego barokowego pałacu lub rezydencji. Widoczna jest kolumnada, bogate zdobienia fasady oraz fragment zielonej kopuły w tle. Architektura oświetlona ciepłym światłem.",
     },
-    "Galerina_marginata_Point_Reyes.jpg": {
-      title: "Hełmówka jadowita (grupa)",
+    "castle-6566978_1920.jpg": {
+      title: "Hohenzollern w chmurach",
       description:
-        "ŚMIERTELNIE TRUJĄCA! Często rośnie w grupach, co zwiększa ryzyko zebrania jej razem z jadalnymi gatunkami, np. opieńkami. Jeden taki grzyb w potrawie może być dawką śmiertelną.",
+        "Zamek unoszący się nad morzem mgły, widziany z ośnieżonej skały. Kompozycja pełna tajemnicy i majestatu.",
     },
-    "GalrinaMarginata.jpg": {
-      title: "Hełmówka jadowita",
+    "castle-6885449_1920.jpg": {
+      title: "Zamek na wzgórzu w świetle zachodu",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Zdjęcie podkreśla jej 'niewinny' wygląd. Piękny, ale śmiertelnie niebezpieczny. Pamiętaj: rośnie na drewnie i bywa mylona z jadalnymi grzybami nadrzewnymi.",
+        "Forteca z wieżami i murami obronnymi, otoczona lasem. Światło dnia podkreśla jej monumentalność i historyczny charakter.",
     },
-    "Gemeine_Gallenröhrling_Tylopilus_felleus.jpg": {
-      title: "Goryczak żółciowy ('Szatan')",
+    "castle-6899041_1920.jpg": {
+      title: "Zamek Neuschwanstein, widok z mostu Marienbrücke",
       description:
-        "Grzyb niejadalny z powodu ekstremalnie gorzkiego smaku. Nie jest trujący, ale jeden mały kawałek potrafi zepsuć całą potrawę. Mylony z borowikiem szlachetnym. Ma różowawe pory i ciemną, wypukłą siateczkę na trzonie.",
+        "Bajkowy zamek na szczycie góry, otoczony jesiennym krajobrazem. Klasyczny symbol niemieckiego romantyzmu.",
     },
-    "Gemeine_Schwefel-Ritterling_Tricholoma_sulphureum.jpg": {
-      title: "Gąska siarkowa",
+    "castle-6899042_1920.jpg": {
+      title: "Neuschwanstein o świcie",
       description:
-        "Grzyb trujący. Powoduje dolegliwości żołądkowo-jelitowe. Charakteryzuje się intensywnie siarkowożółtym kolorem i bardzo nieprzyjemnym, gazowym zapachem. Te cechy skutecznie odstraszają przed pomyłką.",
+        "Widok na zamek z dramatycznym niebem i ciepłym światłem poranka. Bajkowa kompozycja z nutą romantyzmu i legendy.",
     },
-    "Gewone_oesterzwam_(Pleurotus_ostreatus)_25-12-2020_(d.j.b.)_01.jpg": {
-      title: "Boczniak ostrygowaty",
+    "castle-7264664_1920.jpg": {
+      title: "Zamek Eltz jesienią",
       description:
-        "Smaczny grzyb jadalny, popularny w uprawie. Rośnie na drewnie drzew liściastych, tworząc charakterystyczne 'kolonie'. Kapelusz w kształcie muszli. Trudno go pomylić z gatunkami trującymi.",
+        "Średniowieczny zamek otoczony lasem w jesiennych barwach. Mistyczny widok ukrytej fortecy, idealny na pocztówkę.",
     },
-    "Gewone_oesterzwam_(Pleurotus_ostreatus)_31-12-2020_(d.j.b.)_03.jpg": {
-      title: "Boczniak ostrygowaty",
+    "cathedral-4404207_1920.jpg": {
+      title: "Katedra w Aachen",
       description:
-        "Jadalny. Blaszki zbiegają głęboko na krótki, bocznie osadzony trzon. Jest ceniony za delikatny smak i mięsistą konsystencję. Można go spotkać w lasach nawet zimą.",
+        "Wnętrze katedry, miejsca koronacji królów niemieckich, z ozdobnymi kolumnami i łukami. Symbol europejskiej historii i sztuki sakralnej.",
     },
-    "Grüner_Knollenblätterpilz_Amanita_phalloides.jpg": {
-      title: "Muchomor sromotnikowy",
+    "christmas-market-4705877_1920.jpg": {
+      title: "Jarmark Bożonarodzeniowy w Dreźnie",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Zdjęcie ukazuje kluczowe cechy: białe blaszki, pierścień, bulwiastą podstawę w pochwie (tutaj częściowo wyrwaną z ziemi) oraz zielonkawy kapelusz. Bezwzględnie unikaj!",
+        "Urocze drewniane stoiska i świąteczne dekoracje na historycznym placu. Ciepłe światło lampek tworzy magiczną atmosferę.",
     },
-    "Hygrophoropsis_rufa_syn_Hygrophoropsis_aurantiaca_var._rufa.jpg": {
-      title: "Lisówka rudawa",
+    "christmas-market-4705885_1920.jpg": {
+      title: "Świąteczny klimat w niemieckim miasteczku",
       description:
-        "Grzyb niejadalny, uważany za bezwartościowy. Podobnie jak lisówka pomarańczowa, bywa mylona z kurką, jednak ma ciemniejszy, brązowawy kapelusz. Nie stanowi poważnego zagrożenia, ale nie należy jej jeść.",
+        "Karuzele i oświetlone stoiska jarmarku na tle historycznych kamienic. Scena pełna radości i tradycji.",
     },
-    "Imleria_badia_318800799.jpg": {
-      title: "Podgrzybek brunatny",
+    "church-188087_1920.jpg": {
+      title: "Wnętrze Kościoła św. Michała w Hamburgu",
       description:
-        "Ceniony grzyb jadalny. Jego cechą charakterystyczną są żółte pory, które po dotknięciu stają się niebiesko-zielone. Jest to naturalna i nieszkodliwa reakcja chemiczna.",
+        "Wnętrze barokowego Kościoła św. Michała (Michel) w Hamburgu. Białe ściany, drewniane ławki i charakterystyczna ambona w centrum. Jasne, otwarte wnętrze.",
     },
-    "King_Bolete_(Boletus_edulis)_(41886439025).jpg": {
-      title: "Borowik szlachetny (Prawdziwek)",
+    "church-5985941_1920.jpg": {
+      title: "Wnętrze barokowego kościoła",
       description:
-        "Dwa dorodne, jadalne prawdziwki w deszczowy dzień. Mokry kapelusz staje się lepki. To jeden z najbezpieczniejszych wyborów dla grzybiarzy, pod warunkiem zwrócenia uwagi na różowe pory u gorzkiego goryczaka.",
+        "Ołtarz i polichromie w stylu barokowym, pełne detali i złoceń. Przykład bogatej sztuki sakralnej w Bawarii.",
     },
-    "Lactarius-deliciosus-Finland.jpg": {
-      title: "Mleczaj rydz",
+    "church-6384849_1920.jpg": {
+      title: "Kościół w górach",
       description:
-        "Wyśmienity grzyb jadalny. Po uszkodzeniu wydziela charakterystyczne, pomarańczowe mleczko, które nie zmienia barwy. Rośnie pod sosnami. Można go pomylić z innymi, mniej smacznymi lub trującymi mleczajami (np. wełnianką).",
+        "Mały, alpejski kościółek na tle majestatycznych gór. Prosta architektura wtopiona w surowy, ale piękny krajobraz.",
     },
-    "Lactarius_deliciosus_233128663.jpg": {
-      title: "Mleczaj rydz",
+    "city-1658471_1920.jpg": {
+      title: "Panoramiczny nocny widok na Frankfurt",
       description:
-        "Jadalny. Kapelusz z charakterystycznymi, koncentrycznymi pręgami w odcieniach pomarańczu. Jest uważany za rarytas i często marynowany w occie. Uważaj na trującego mleczaja wełniankę, który ma białe mleczko.",
+        "Nocna, panoramiczna perspektywa centrum finansowego Frankfurtu. Światła wieżowców tworzą dynamiczną, miejską panoramę, odbijającą się w wodzie (Men).",
     },
-    "Leccinum_duriusculum.jpg": {
-      title: "Koźlarz topolowy",
+    "city-3021474_1920.jpg": {
+      title: "Widok na zabytkowe miasteczko",
       description:
-        "Smaczny grzyb jadalny. Rośnie pod topolami, zwłaszcza osiką. Trzon pokryty jest ciemnymi, gęstymi kosmkami. Miąższ po przekrojeniu przebarwia się na różowo, a potem szarzeje i czernieje.",
+        "Panoramiczny widok na miasto z czerwonymi dachami, kościołami i średniowiecznymi murami. Klasyczny niemiecki krajobraz urbanistyczny.",
     },
-    "Leccinum_pseudoscabrum_2020_G1_cropped.jpg": {
-      title: "Koźlarz grabowy",
+    "city-3150866_1920.jpg": {
+      title: "Abstrakcyjne ujęcie światła na fasadzie",
       description:
-        "Dobry grzyb jadalny. Jak nazwa wskazuje, rośnie pod grabami. Kapelusz często pomarszczony, szarobrązowy. Po przekrojeniu jego miąższ zmienia kolor na różowo-fioletowy, a następnie czernieje, co jest normalne.",
+        "Wysoce abstrakcyjne, monochromatyczne ujęcie fragmentu nowoczesnej fasady lub wnętrza z ostrym, geometrycznym światłem i cieniem.",
     },
-    "Lentinula_edodes_shiitake.jpg": {
-      title: "Twardnik japoński (Shiitake)",
+    "city-3150867_1920.jpg": {
+      title: "Rothenburg ob der Tauber",
       description:
-        "Jadalny i bardzo ceniony grzyb uprawny, popularny w kuchni azjatyckiej. Rośnie na drewnie. Posiada właściwości lecznicze. W Polsce rzadko spotykany w naturze, głównie pochodzi z upraw.",
+        "Charakterystyczna, kręta ulica i kamienice z muru pruskiego. Poczucie cofnięcia się w czasie do niemieckiego średniowiecza.",
     },
-    "Macrolepiota_procera_2011_G1.jpg": {
-      title: "Czubajka kania (młody okaz)",
+    "city-4848202_1920.jpg": {
+      title: "Frankfurt nocą – panorama z rzeką Men",
       description:
-        "Smaczny grzyb jadalny. Jadalne są tylko kapelusze. Młody, zamknięty owocnik. Kluczową cechą jest ruchomy pierścień na trzonie. Uwaga na śmiertelnie trujące muchomory o podobnym wzorze na kapeluszu, które mają nieruchomy pierścień i pochwę.",
+        "Nocna panorama centrum Frankfurtu. Oświetlone wieżowce i drapacze chmur odbijają się w rzece Men, tworząc wyrazisty, nowoczesny pejzaż miejski.",
     },
-    "Macrolepiota_procera_2013_G1.jpg": {
-      title: "Czubajka kania",
+    "city-6979390_1920.jpg": {
+      title: "Rynek nocą w niemieckim miasteczku",
       description:
-        "Jadalna. Dorosły owocnik z charakterystycznym, łuskowatym kapeluszem i zygzakowatym wzorem na trzonie. Najważniejsza cecha odróżniająca od trujących muchomorów to pierścień, który można swobodnie przesuwać wzdłuż trzonu.",
+        "Oświetlony plac otoczony kamienicami z muru pruskiego. Fontanna i bruk odbijają światło, tworząc ciepłą, przyjazną atmosferę.",
     },
-    "Macrolepiota_procera_94588580.jpg": {
-      title: "Czubajka kania",
+    "city-8450817_1920.jpg": {
+      title: "Monachium – Brama i Ratusz",
       description:
-        "Wyśmienity grzyb jadalny, idealny do smażenia w panierce. Pamiętaj o teście ruchomego pierścienia! Jeśli pierścień jest przyrośnięty do trzonu, to prawdopodobnie jest to trujący muchomor.",
+        "Ratusz Nowy w Monachium w stylu neogotyckim, z widoczną Bramą Isartor. Tłum pieszych w centrum tętniącego życiem miasta.",
     },
-    "Morchella_conica_1_beentree.jpg": {
-      title: "Smardz stożkowaty",
+    "cloister-2041063_1920.jpg": {
+      title: "Klasztor w Maulbronn",
       description:
-        "Wyjątkowo smaczny grzyb jadalny. Główka jest pusta w środku i w całości przyrośnięta do trzonu. W Polsce pod częściową ochroną. Można go pomylić ze śmiertelnie trującą piestrzenicą kasztanowatą, której główka jest pofałdowana i nie w pełni przyrośnięta.",
+        "Wnętrze klasztoru cystersów, wpisanego na listę UNESCO. Surowa, romańska architektura z arkadami i prostymi formami.",
     },
-    "Morchella_esculenta_kz02.jpg": {
-      title: "Smardz jadalny",
+    "cochem-castle-6791148_1920.jpg": {
+      title: "Zamek Cochem nad Mozelą",
       description:
-        "Szlachetny grzyb jadalny o charakterystycznej, gąbczastej główce. Podobnie jak inne smardze, jest w środku pusty. W Polsce częściowo chroniony. Zawsze upewnij się, że nie jest to trująca piestrzenica kasztanowata o mózgowatej strukturze.",
+        "Malowniczy zamek na wzgórzu, górujący nad miasteczkiem i rzeką. Krajobraz pełen historii, idealny dla regionu winiarskiego.",
     },
-    "Narcisridderzwam_(Tricholoma_sulphureum)_Locatie,_Hortus_(Haren,_Groningen)_01.jpg":
-      {
-        title: "Gąska siarkowa",
-        description:
-          "Grzyb trujący. Jej siarkowożółty kolor i odrażający zapach gazu świetlnego są silnymi znakami ostrzegawczymi. Powoduje zaburzenia trawienne. Trudno ją pomylić z jakimkolwiek grzybem jadalnym.",
-      },
-    "Photo_of_three_Amanita_phalloides_(Death_Cap).jpg": {
-      title: "Muchomor sromotnikowy",
+    "cologne-cathedral-1846338_1920.jpg": {
+      title: "Katedra w Kolonii",
       description:
-        "ŚMIERTELNIE TRUJĄCY! Klasyczne ujęcie trzech owocników. Każdy z nich zawiera śmiertelną dawkę amatoksyn. Nie ma antidotum, jedynym ratunkiem jest przeszczep wątroby. Najgroźniejszy grzyb naszych lasów.",
+        "Monumentalna fasada gotyckiej katedry z jej strzelistymi wieżami. Symbol Kolonii i arcydzieło architektury sakralnej.",
     },
-    "Punakas_narmasnutt2.jpg": {
-      title: "Wieruszka zatokowata (lub podobny)",
+    "construction-phase-1570221_1920.jpg": {
+      title: "Abstrakcyjna, metalowa iglica architektoniczna",
       description:
-        "Grzyb trujący. Powoduje bardzo poważne i długotrwałe zatrucia (zespół rhabdomiolizy). Mylony z jadalną majówką wiosenną. Rośnie późną wiosną i latem na terenach trawiastych. Nazwa 'wieruszka' pochodzi od estońskiego.",
+        "Architektoniczne ujęcie fragmentu nowoczesnej, metalowej konstrukcji (masztu lub iglicy) na tle nieba. Geometryczny, ostry kształt ze stalowych elementów.",
     },
-    "Rubroboletus_satanas_23.jpg": {
-      title: "Borowik szatański (krwistoborowik)",
+    "converter-187706_1920.jpg": {
+      title: "Przemysł – konwerter w hucie stali",
       description:
-        "Grzyb trujący. Powoduje silne zatrucia żołądkowo-jelitowe. Charakterystyczny białawy kapelusz i krwistoczerwony trzon oraz pory. Po przekrojeniu sinieje. Rośnie w ciepłych lasach liściastych. Unikać!",
+        "Ujęcie konwertera (pieca hutniczego) wewnątrz hali przemysłowej. Jasny blask roztopionego metalu kontrastuje z ciemnym, industrialnym otoczeniem.",
     },
-    "Rubroboletus_satanas_collection.jpg": {
-      title: "Borowik szatański (zbiór)",
+    "crane-houses-7518551_1920.jpg": {
+      title: "Żurawinhanusy w Kolonii",
       description:
-        "Grzyb trujący. Zdjęcie ukazuje zmienność barw i intensywne sinienie miąższu po uszkodzeniu (niebieski kolor). Każdy borowik o czerwonych porach i trzonie powinien być traktowany jako potencjalnie trujący.",
+        "Trzy nowoczesne budynki przypominające żurawie portowe, ustawione w linii nad Renem. Symetria i szkło tworzą futurystyczny rytm miasta.",
     },
-    "Satans-Röhrling_Boletus_satanas.jpg": {
-      title: "Borowik szatański",
+    "crowd-2140590_1920.jpg": {
+      title: "Tłum z flagami Niemiec",
       description:
-        "Grzyb trujący, rzadki, w Polsce pod ochroną. Mimo nazwy 'borowik', jest toksyczny. Jasny kapelusz kontrastuje z intensywnie czerwonymi porami i trzonem. Nie zbierać!",
+        "Morze ludzi z czarno-czerwono-złotymi flagami w geście wspólnoty. Scena pełna energii, dumy narodowej i emocji.",
     },
-    "Shiitakegrowing.jpg": {
-      title: "Twardnik japoński (Shiitake) w uprawie",
+    "dockland-4431309_1920.jpg": {
+      title: "Nabrzeże w Hamburgu nocą",
       description:
-        "Jadalny. Uprawiany na specjalnych blokach lub na pniach drzew. Posiada wiele cennych właściwości odżywczych i leczniczych. Grzyb ten jest symbolem kuchni japońskiej.",
+        "Czarno-biała fotografia z odbiciami świateł w wodzie. Połączenie nowoczesnych i zabytkowych budynków tworzy spokojny, miejski pejzaż.",
     },
-    "Speise_Morchel_Morchella_esculenta.jpg": {
-      title: "Smardz jadalny",
+    "dortmund-1570255_1920.jpg": {
+      title: "Historyczny Ratusz i rynek w Bremie",
       description:
-        "Wykwintny grzyb jadalny, ceniony za swój unikalny smak i aromat. Pojawia się wiosną. Pamiętaj, że w Polsce jest pod częściową ochroną – można zbierać tylko w określonych miejscach. Musi być pusty w środku!",
+        "Panoramiczny widok na historyczny rynek (Marktplatz) w Bremie, z okazałym Ratuszem i innymi zabytkowymi budynkami.",
     },
-    "Suillus_luteus_(37777246216).jpg": {
-      title: "Maślak zwyczajny",
+    "dortmund-1592410_1920.jpg": {
+      title: "Stadion Signal Iduna Park, Dortmund",
       description:
-        "Bardzo smaczny i pospolity grzyb jadalny. Ma charakterystyczny, śliski i lepki, brązowy kapelusz, który należy obrać ze skórki przed przyrządzeniem. Posiada błoniasty pierścień na trzonie.",
+        "Słynny stadion BVB Dortmund, znany z 'Żółtej Ściany'. Dynamiczny widok z trybun na pole gry i gotowe do akcji piłkarzy.",
     },
-    "Suillus_luteus_10.jpg": {
-      title: "Maślak zwyczajny",
+    "dortmund-1592414_1920.jpg": {
+      title: "Historyczny pociąg na wiadukcie",
       description:
-        "Jadalny. Widoczny żółty spód kapelusza (pory) oraz wyraźny pierścień. Rośnie w lasach iglastych, wyłącznie pod sosnami. Jeden z ulubionych grzybów do marynowania.",
+        "Ujęcie historycznych wagonów lub pociągu jadącego po kamiennym wiadukcie kolejowym. Budowla otoczona gęstymi drzewami.",
     },
-    "Suillus_luteus_9.jpg": {
-      title: "Maślak zwyczajny (grupa)",
+    "dortmund-4524887_1920.jpg": {
+      title: "Florianturm w Dortmundzie",
       description:
-        "Jadalny. Często rośnie w dużych grupach, więc jeśli znajdziesz jednego, rozglądaj się za kolejnymi. Pamiętaj o zdjęciu lepkiej skórki z kapelusza, która może powodować dolegliwości żołądkowe.",
+        "Wieża telewizyjna w Westfalenpark, otoczona zielenią. Symbol miasta i popularny punkt widokowy.",
     },
-    "Tuber_melanosopum_d'Australie.jpg": {
-      title: "Trufla czarnozarodnikowa",
+    "dortmund-5107851_1920.jpg": {
+      title: "Plac Reinolda w Dortmundzie",
       description:
-        "Niezwykle cenny i drogi grzyb jadalny, uważany za kulinarny afrodyzjak. Rośnie pod ziemią, w symbiozie z korzeniami dębów i leszczyn. Do jej poszukiwania wykorzystuje się specjalnie szkolone psy lub świnie.",
+        "Centrum Dortmundu z Kościołem św. Reinolda. Plac pełen ludzi i handlu, tętniący życiem w środku miasta.",
     },
-    "Tuber_melanosporum_-_trufa_negra,_Espana.jpg": {
-      title: "Trufla czarnozarodnikowa (zbiór)",
+    "dortmund-5176206_1920.jpg": {
+      title: "Wysoka zabudowa Dortmundu",
       description:
-        "Jadalna. Zebrane trufle, gotowe do wykorzystania w kuchni. Ich intensywny, charakterystyczny aromat jest nie do podrobienia. Używana jako luksusowy dodatek do potraw.",
+        "Nowoczesne biurowce w centrum Dortmundu. Dynamiczna, miejska architektura z dużą ilością szkła i betonu.",
     },
-    "Tuber_melanosporum_Vittadini_1831_(Fungi_Ascomycota_Pezizomycotina_Pezizomycetes_Pezizales_Tuberacea)_(25817500456).jpg":
-      {
-        title: "Trufla czarnozarodnikowa (przekrój)",
-        description:
-          "Jadalna. Przekrój ukazuje charakterystyczny, marmurkowy wzór (gleba). To właśnie ta struktura odpowiada za wyjątkowy aromat trufli. Jest jednym z najdroższych grzybów świata.",
-      },
-    "Tylopilus_felleus_(36878337253)_(2).jpg": {
-      title: "Goryczak żółciowy",
+    "dortmund-5324505_1920.jpg": {
+      title: "Historyczna brama lub pałac w stylu barokowym",
       description:
-        "Niejadalny z powodu bardzo gorzkiego smaku. Pomyłka z prawdziwkiem może zniszczyć całe danie. Odróżnia go różowawy odcień porów (u prawdziwka są białe lub żółtozielone) i ciemna siateczka na trzonie.",
+        "Architektoniczne ujęcie bogato zdobionej, barokowej fasady lub bramy. Symetryczna kompozycja z rzeźbionymi detalami z piaskowca. Prawdopodobnie Pałac Zwinger lub podobna rezydencja.",
     },
-    "Tylopilus_felleus_collection.jpg": {
-      title: "Goryczak żółciowy ('Szatan')",
+    "dortmund-602959_1920.jpg": {
+      title: "Kościół Mariacki (Marienkirche) w Dortmundzie",
       description:
-        "Niejadalny. Popularnie, choć błędnie, nazywany 'szatanem'. Prawdziwy borowik szatański jest trujący i ma czerwone pory. Ten jest tylko ekstremalnie gorzki. Zawsze warto polizać kawałek miąższu – gorycz jest natychmiast wyczuwalna.",
+        "Gotycki kościół, jeden z najstarszych w Dortmundzie. Prosta, ale monumentalna architektura sakralna.",
     },
-    "Xiitake_(Lentinula_edodes).jpg": {
-      title: "Twardnik japoński (Shiitake)",
+    "dortmund-602962_1920.jpg": {
+      title: "Kościół św. Reinolda, Dortmund",
       description:
-        "Jadalny. Grzyby uprawiane na specjalnym podłożu. Widać charakterystyczne, popękane kapelusze. Shiitake są cenione nie tylko za smak, ale także za właściwości prozdrowotne, m.in. wzmacnianie odporności.",
+        "Centralny gotycki kościół w mieście, symbol Dortmundu. Strzelista wieża dominuje nad historyczną zabudową.",
     },
-  },
-
-  /**
-   * =============================================
-   * 🇬🇧 BLOK JĘZYKA ANGIELSKIEGO (EN)
-   * =============================================
-   */
-  en: {
-    "(Gemeine_Steinpilz)_Boletus_edulis.jpg": {
-      title: "Penny Bun (King Bolete)",
+    "dortmunder-u-260304_1920.jpg": {
+      title: "Budynek Dortmunder U nocą",
       description:
-        "One of the most prized edible mushrooms. It has a brown cap and a barrel-shaped stem with a white net pattern. It grows in coniferous and mixed forests. Can be confused with the bitter Bitter Bolete, which has pinkish pores.",
+        "Były browar, dziś centrum kultury, z oświetlonym znakiem 'U' na szczycie. Ikona nowoczesnego Dortmundu.",
     },
-    "2007-07-14_Cantharellus_cibarius.jpg": {
-      title: "Chanterelle",
+    "dortmunder-u-4662846_1920.jpg": {
+      title: "Dortmunder U z bliska",
       description:
-        "A popular and tasty edible mushroom with a yellow color and a fruity aroma. Instead of gills, it has characteristic ridges beneath its cap. Can be confused with the inedible False Chanterelle, which has finer, denser gills and grows on wood.",
+        "Monumentalny, ceglany budynek industrialny z nowoczesnymi elementami. Charakterystyczny symbol przemysłowej historii regionu.",
     },
-    "2010-04-27_Inocybe_erubescens.jpg": {
-      title: "Deadly Fibrecap (Brick-Red Tear)",
+    "dortmunder-u-5107834_1920.jpg": {
+      title: "Instalacja na dachu Dortmunder U",
       description:
-        "DEADLY POISONOUS! Contains a lethal dose of muscarine. The cap is conical, becoming flatter with age, ranging from white to brick-red, often splitting. It grows in parks and deciduous forests. Do not pick if you are not 100% certain.",
+        "Oświetlone panele na dachu, tworzące symbol 'U'. Widok na nowoczesne centrum sztuki w Dortmundzie.",
     },
-    "2010-05-27_Inocybe_erubescens.jpg": {
-      title: "Deadly Fibrecap (gills view)",
+    // --- Nowa Partia (50 pozycji) ---
+    "dresden-5987976_1920.jpg": {
+      title: "Panorama Drezna i Frauenkirche",
       description:
-        "DEADLY POISONOUS! The gills of young specimens are whitish, darkening with age. A characteristic feature is the reddening of the flesh when damaged. Confusion with edible mushrooms can have tragic consequences.",
+        "Klasyczny widok na historyczne centrum Drezna (Stare Miasto) z widoczną Frauenkirche (Kościół Marii Panny) nad Łabą. Scena pełna barokowej architektury i spokoju.",
     },
-    "2013-10-16_Cortinarius_orellanus_1a.jpg": {
-      title: "Fool's Webcap",
+    "eibsee-7352987_1920.jpg": {
+      title: "Jezioro Eibsee i Zugspitze",
       description:
-        "DEADLY POISONOUS! Contains orellanine, which causes irreversible kidney damage. Symptoms of poisoning can appear after 2-3 weeks. It has a rusty-brown cap and similarly colored gills. Grows in deciduous forests. Avoid at all costs!",
+        "Krystalicznie czyste jezioro w Alpach Bawarskich, z odbijającym się w wodzie masywem góry Zugspitze. Malowniczy krajobraz górski, idealny na ucieczkę od zgiełku miasta.",
     },
-    "2013-10-16_Cortinarius_orellanus_1b.jpg": {
-      title: "Fool's Webcap (gills view)",
+    "europe-6779227_1920.jpg": {
+      title: "Zamek Eltz z lotu ptaka",
       description:
-        "DEADLY POISONOUS! The gills are broad and cinnamon-brown. Young specimens have a delicate cortina (web-like veil) that quickly disappears. Can be confused with the edible Gypsy Mushroom.",
+        "Średniowieczny zamek Eltz, ukryty w dolinie, otoczony gęstym lasem. Widok z góry podkreśla jego odosobnienie i malownicze położenie na skale.",
     },
-    "2025-10-08_D500-0912_Achim-Lammerts_Imleria-badia.jpg": {
-      title: "Bay Bolete",
+    "europe-7492984_1920.jpg": {
+      title: "Klify i latarnia morska na Rugii",
       description:
-        "A very tasty and popular edible mushroom. It has a chestnut-brown, velvety cap and yellowish pores that turn blue when bruised. It grows in groups in coniferous forests. It is difficult to confuse with poisonous mushrooms.",
+        "Widok na kredowe klify w Parku Narodowym Jasmund na wyspie Rugia. Surowy, nadmorski krajobraz z historyczną latarnią morską.",
     },
-    "AD2009Sep13_Boletus_edulis_01.jpg": {
-      title: "Penny Bun (young specimen)",
+    "exzenterhaus-2175925_1920.jpg": {
+      title: "Exzenterhaus w Bochum",
       description:
-        "A young, edible King Bolete with a characteristic barrel-shaped stem and a light-colored cap. It's most delicious at this stage of growth. Beware of the Bitter Bolete – always check the underside of the cap (the pores must not be pink).",
+        "Charakterystyczny, wielopoziomowy budynek biurowy o nietypowej, cylindrycznej formie. Nowoczesna architektura na tle miejskiego krajobrazu Zagłębia Ruhry.",
     },
-    "AD2009Sep20_Amanita_muscaria_02.jpg": {
-      title: "Fly Agaric (young specimen)",
+    "factory-1639990_1920.jpg": {
+      title: "Praca w hucie stali – gorący metal",
       description:
-        "A poisonous and psychoactive mushroom. Young specimens have an orange-red color with white patches. While rarely fatal, its consumption causes severe poisoning. Its appearance is a warning in itself.",
+        "Industrialne ujęcie hali produkcyjnej lub walcowni. Pracownicy w tle i jasny, rozżarzony do czerwoności metal, podkreślający surowość i intensywność pracy w przemyśle ciężkim.",
     },
-    "Agaricus_bisporus,_Agaricaceae_02.jpg": {
-      title: "Button Mushroom (wild form)",
+    "fairytale-532850_1920.jpg": {
+      title: "Bajkowy Zamek Neuschwanstein w mgle",
       description:
-        "An edible, wild form of the mushroom from which cultivated varieties are derived. Young specimens are spherical. It grows in fields and meadows. Beware of confusion with the deadly Destroying Angel, which always has white gills.",
+        "Zamek na tle dramatycznych chmur i mgły. Scena niczym z baśni, podkreślająca romantyczny i fantazyjny charakter budowli.",
     },
-    "Agaricus_bisporus_G4.jpg": {
-      title: "Button Mushroom (gills)",
+    "field-3379250_1920.jpg": {
+      title: "Wzgórza i pola w Saksonii",
       description:
-        "Edible. The key identifying feature of Agaricus mushrooms is their gills, which are pink in young specimens and become dark brown with age. The Amanitas they can be confused with always have white gills.",
+        "Sielski krajobraz z zielonymi wzgórzami, polami i pojedynczymi drzewami. Scena symbolizująca spokój niemieckiej wsi.",
     },
-    "Amanita_muscaria_tyndrum.jpg": {
-      title: "Fly Agaric",
+    "foggy-4660940_1920.jpg": {
+      title: "Most w mgle i wschodzące słońce",
       description:
-        "A poisonous mushroom, an icon of the forest. It has a characteristic red cap with white spots. It causes neurotoxic poisoning. Its appearance is so distinctive that confusion with edible mushrooms is rare.",
+        "Mistyczny, gęsty las otoczony mgłą, z wąskim mostkiem. Scena pełna tajemnicy, idealna dla miłośników przyrody.",
     },
-    "Amanita_phalloides_172551288.jpg": {
-      title: "Death Cap (group)",
+    "forest-3194475_1920.jpg": {
+      title: "Głęboki las Bawarii",
       description:
-        "DEADLY POISONOUS! A group of specimens of different ages. One such mushroom can kill an entire family. Remember the key features: a greenish cap, white gills, and a bulbous base in a sac (volva). Never pick mushrooms you are unsure of.",
+        "Wysokie, proste pnie drzew iglastych w słonecznym lesie. Poczucie izolacji i spokoju w sercu niemieckiej natury.",
     },
-    "Amanita_phalloides_2011_G1.jpg": {
-      title: "Death Cap (young specimens)",
+    "fortress-4670149_1920.jpg": {
+      title: "Twierdza Königstein w Saksonii",
       description:
-        "DEADLY POISONOUS! Young specimens are particularly dangerous as they are easily confused with edible Russula species. Always check for the presence of a ring and a volva at the base of the stem, which Russulas do not have.",
+        "Monumentalna twierdza na płaskowyżu, górująca nad doliną Łaby. Historyczna budowla w Saksońskiej Szwajcarii, o imponujących murach.",
     },
-    "Amanita_phalloides_2011_G3.jpg": {
-      title: "Death Cap",
+    "frankfurt-3581739_1920.jpg": {
+      title: "Wysokie wieżowce w Frankfurcie",
       description:
-        "DEADLY POISONOUS! One of the most dangerous mushrooms in the world. Even its spores are toxic. Key features are an olive-green cap, white gills, a ring, and a volva at the base of the stem.",
+        "Panorama biurowców w finansowym centrum Niemiec. Beton, stal i szkło tworzą dynamiczną, miejską kompozycję.",
     },
-    "Amanita_phalloides_2025_G1.jpg": {
-      title: "Death Cap (yellow form)",
+    "frankfurt-7092736_1920.jpg": {
+      title: "Abstrakcyjne odbicie na wodzie/szkle",
       description:
-        "DEADLY POISONOUS! A form with a more yellow-colored cap. Regardless of the color, the toxicity is the same. The characteristic 'snakeskin' pattern on the stem is another identifying feature.",
+        "Wysoce abstrakcyjne ujęcie zniekształconego odbicia światła i kolorów (prawdopodobnie architektonicznych) na falującej wodzie lub szklanej powierzchni. Pejzaż zamazany, dominują pionowe linie i plamy barwne.",
     },
-    "Amanita_virosa_12.jpg": {
-      title: "Destroying Angel",
+    "freiburg-76217_1920.jpg": {
+      title: "Freiburg im Breisgau, widok z lotu ptaka",
       description:
-        "DEADLY POISONOUS! Just as dangerous as the Death Cap. It is entirely white, which increases the risk of confusion with button mushrooms or some Tricholoma species. It has a ring and a distinct, sac-like volva at the base. Button mushrooms have gills that darken with age; this one's are always white.",
+        "Panorama historycznego miasta z kolorowymi dachami i katedrą w centrum. W tle widać zalesione wzgórza Schwarzwaldu.",
     },
-    "Amanita_virosa_82836142.jpg": {
-      title: "Destroying Angel (young specimen)",
+    "frozen-lake-7658478_1920.jpg": {
+      title: "Zamarznięte jezioro w Alpach",
       description:
-        "DEADLY POISONOUS! A young, white specimen in its typical forest environment. A Fly Agaric is visible in the background. The forest is full of both treasures and deadly traps – only pick what you know 100%.",
+        "Zimowy krajobraz z zamarzniętym jeziorem otoczonym ośnieżonymi górami. Surowe piękno natury w głębi zimy.",
     },
-    "Amanita_virosa_UL_01.jpg": {
-      title: "Destroying Angel (slender specimen)",
+    "germany-1014376_1920.jpg": {
+      title: "Rybak na rzece w Saksonii",
       description:
-        "DEADLY POISONOUS! A fully mature, slender specimen. Its smell is described as unpleasantly sweet. Every part of this mushroom is deadly poisonous, even in small doses.",
+        "Spokojna rzeka w Saksońskiej Szwajcarii, otoczona skalistymi formacjami. Rybak na małej łódce podkreśla harmonię między człowiekiem a naturą.",
     },
-    "Armillaria_mellea,_Honey_Fungus,_UK,_3.jpg": {
-      title: "Honey Fungus (group)",
+    "germany-2063598_1920.jpg": {
+      title: "Romantyczne miasteczko w Turyngii",
       description:
-        "Conditionally edible – poisonous when raw. It must be cooked for about 20 minutes and the water discarded. It grows in large clusters on wood. Can be confused with the poisonous Sulphur Tuft, which is more yellow and bitter.",
+        "Urocze, zabytkowe centrum miasta z rzeką i kolorowymi kamienicami. Scena, która przywodzi na myśl średniowieczne Niemcy.",
     },
-    "Armillaria_mellea,_Honey_Fungus,_UK.jpg": {
-      title: "Honey Fungus",
+    "germany-2077473_1920.jpg": {
+      title: "Krajobraz gór Harzu",
       description:
-        "Conditionally edible. After proper heat treatment (thorough cooking), it is a tasty mushroom. The honey-yellow cap is covered with fine scales. It has a persistent ring on its stem.",
+        "Widok na góry porośnięte gęstym lasem iglastym. Typowy, dziki krajobraz Harzu, idealny na górskie wędrówki.",
     },
-    "Boletus_edulis20130728_095.jpg": {
-      title: "Penny Bun",
+    "germany-2284072_1920.jpg": {
+      title: "Jesień w parkach Poczdamu",
       description:
-        "A fine, edible King Bolete. The king of the forest. Its thick stem and fleshy cap make it highly sought after. Excellent for drying, pickling, and as an ingredient in many dishes.",
+        "Ścieżka spacerowa w parku, otoczona drzewami o intensywnych, jesiennych barwach. Klasyczna, ciepła sceneria niemieckiej jesieni.",
     },
-    "Bruderwald_Ölbaumtrichterling_(Omphalotus)_-RM-20191129-01.jpg": {
-      title: "Jack-o'-lantern Mushroom",
+    "germany-2819467_1920.jpg": {
+      title: "Zamek Neuschwanstein, zbliżenie",
       description:
-        "Poisonous. Causes severe gastrointestinal distress. A characteristic feature is its growth on wood and its bioluminescence – the gills can glow in the dark. Often confused with the edible Chanterelle.",
+        "Widok na szczegóły fasady zamku, z balkonami i wieżyczkami. Ukazuje neogotycką architekturę i dbałość o detale.",
     },
-    "C._orellanus_jung.jpg": {
-      title: "Fool's Webcap (young specimen)",
+    "germany-2822740_1920.jpg": {
+      title: "Historyczny plac z zabudową szachulcową",
       description:
-        "DEADLY POISONOUS! A very young specimen that may not yet show all the species' characteristics, making it extremely dangerous. Any brown, gilled mushroom should be treated with the utmost caution.",
+        "Widok na historyczny plac lub ulicę w Starym Mieście. Dominują tradycyjne domy o konstrukcji szachulcowej i brukowana nawierzchnia. Typowa, urokliwa sceneria z centrum małego, niemieckiego miasta.",
     },
-    "Cantharellus_cibarius_149899828.jpg": {
-      title: "Chanterelle",
+    "germany-7264701_1920.jpg": {
+      title: "Stare miasto w Esslingen am Neckar",
       description:
-        "A tasty edible mushroom. The view from below shows the characteristic thick ridges that distinguish it from the poisonous False Chanterelle, which has thin, dense gills.",
+        "Urokliwa ulica z kamienicami z muru pruskiego. Scena z rowerem i zielenią, podkreślająca spokojny, historyczny klimat.",
     },
-    "Cantharellus_cibarius_85863580.jpg": {
-      title: "Chanterelle in the forest",
+    "germany-7534750_1920.jpg": {
+      title: "Miasteczko w górach Bawarskich",
       description:
-        "Edible chanterelles gathered in the forest. They often grow in groups, hidden in moss. Their intense yellow color makes them easy to find. One of the safest mushrooms for beginner foragers.",
+        "Panoramiczny widok na sielskie, bawarskie miasteczko (lub wieś) w dolinie, otoczone zalesionymi zboczami górskimi. Tradycyjna architektura alpejska.",
     },
-    "Clitocybe.dealbata.-.lindsey.jpg": {
-      title: "Ivory Funnel",
+    "graffiti-2154261_1920.jpg": {
+      title: "Sztuka uliczna w Berlinie",
       description:
-        "Poisonous mushroom, contains muscarine. It grows in open, grassy areas, parks, and on golf courses. It is small and inconspicuous, which increases the risk of accidental collection with other mushrooms.",
+        "Kolorowe, abstrakcyjne graffiti pokrywające betonową ścianę. Energia i ekspresja nowoczesnej, miejskiej sztuki.",
     },
-    "Clitocybe_dealbata_1.jpg": {
-      title: "Ivory Funnel",
+    "grass-4338114_1920.jpg": {
+      title: "Pastwiska w Alpach",
       description:
-        "Poisonous. The cap is whitish and becomes funnel-shaped with age. Can be confused with the edible Fairy Ring Champignon, which has more widely spaced gills and is more flexible.",
+        "Zielone, pofałdowane łąki na tle górskich szczytów. Spokojny, rolniczy krajobraz Bawarii.",
     },
-    "Clitocybe_dealbata_2_-_Lindsey.jpg": {
-      title: "Ivory Funnel (gills view)",
+    "gully-1028040_1920.jpg": {
+      title: "Przełom rzeki w lesie",
       description:
-        "Poisonous. The white, densely packed gills are one of its characteristic features. Poisoning symptoms include profuse sweating, salivation, and breathing difficulties.",
+        "Wąwóz z wodospadem i skalistym dnem. Surowa, ale piękna kompozycja naturalnych elementów.",
     },
-    "Clitocybe_rivulosa_20081116w.jpg": {
-      title: "Fool's Funnel",
+    "hamburg-1340004_1920.jpg": {
+      title: "Kanały Hamburga nocą",
       description:
-        "A poisonous mushroom, like other small, white funnels. It grows in grassy areas and can form 'fairy rings'. Ingestion causes muscarinic poisoning. Avoid picking small, white mushrooms growing in meadows.",
+        "Odbicia światła w wodzie kanałów Speicherstadt, otoczonych ceglanymi magazynami. Ciepłe oświetlenie tworzy magiczny, portowy klimat.",
     },
-    "Coprinopsis_atramentaria_3_-_Lindsey.jpg": {
-      title: "Common Ink Cap (mature specimens)",
+    "hamburg-2976711_1920.jpg": {
+      title: "Filharmonia nad Łabą, Hamburg (Elbphilharmonie)",
       description:
-        "Conditionally edible. Only young, closed caps are edible. Older ones deliquesce into a black ink. WARNING: Causes poisoning when consumed with alcohol (disulfiram reaction), even up to 3 days after eating.",
+        "Nowoczesny budynek z charakterystycznym, szklanym dachem. Ikona architektoniczna Hamburga, łącząca stare i nowe formy.",
     },
-    "Coprinus_atramentarius2_mod_(1).jpg": {
-      title: "Common Ink Cap",
+    "hamburg-3071437_1920.jpg": {
+      title: "Hamburski Ratusz i kanały",
       description:
-        "Conditionally edible, but dangerous when combined with alcohol. Even a small amount of alcohol can trigger severe poisoning. It grows in clumps, often in cities, parks, and along roadsides.",
+        "Neorenesansowy Ratusz w Hamburgu, odbijający się w kanale Alster. Elegancka, historyczna architektura w centrum miasta.",
     },
-    "False_Chanterelle_Hygrophoropsis_aurantiaca.jpg": {
-      title: "False Chanterelle",
+    "hamburg-3998131_1920.jpg": {
+      title: "Futurystyczna rzeźba geometryczna",
       description:
-        "Inedible, considered by some to be mildly poisonous. Causes gastrointestinal issues. Often confused with the edible Chanterelle. It is distinguished by its thinner, denser gills (Chanterelles have ridges) and a more orange color.",
+        "Zbliżenie na nowoczesną, abstrakcyjną rzeźbę lub instalację artystyczną, wykonaną z geometrycznych, metalicznych kształtów. Abstrakcja w miejskiej przestrzeni.",
     },
-    "Faltentintling_Coprinus_atramentariu.jpg": {
-      title: "Common Ink Cap (young specimen)",
+    "hamburg-4103406_1920.jpg": {
+      title: "Most w dokach Hamburga",
       description:
-        "A young Ink Cap specimen. At this stage, it is edible, but you must remember the absolute prohibition of consuming alcohol before, during, and up to 3 days after eating it. Otherwise, severe poisoning is likely.",
+        "Czerwony, industrialny most nad kanałem w porcie. Połączenie stali, cegły i wody w surowym krajobrazie portowym.",
     },
-    "Fliegenpilz_fly_agaric_Amanita_muscaria.jpg": {
-      title: "Fly Agaric",
+    "hamburg-4570577_1920.jpg": {
+      title: "Park Planten un Blomen, Hamburg",
       description:
-        "The classic poisonous mushroom. Its appearance is widely known, making it a symbol of poisonous fungi. Ingestion causes hallucinations and severe stomach problems.",
+        "Widok na park z jeziorem, zielenią i nowoczesną zabudową w tle. Oaza spokoju w centrum metropolii.",
     },
-    "Galerina_marginata_(Batsch)_Kühner_274503.jpg": {
-      title: "Funeral Bell",
+    "hamburg-4767149_1920.jpg": {
+      title: "Kręcone Domy Franka Gehry'ego w Düsseldorfie",
       description:
-        "DEADLY POISONOUS! Contains the same toxins as the Death Cap. A small, inconspicuous mushroom that grows on wood. It's very easy to confuse with the edible Honey Fungus or Sheathed Woodtuft. Always check mushrooms growing on logs!",
+        "Wieczorny widok na port medialny w Düsseldorfie (MedienHafen). Charakterystyczne, futurystyczne, 'kręcone' budynki zaprojektowane przez Franka Gehry'ego, oświetlone nocnym światłem.",
     },
-    "Galerina_marginata_051106Bw.jpg": {
-      title: "Funeral Bell",
+    "hamburg-50444_1920.jpg": {
+      title: "Widok na port i Elbphilharmonie",
       description:
-        "DEADLY POISONOUS! Its small size and common appearance make it one of the most dangerous mushrooms. A mistake can be fatal. Note the ring on the stem and the sticky cap.",
+        "Panorama z żurawiami portowymi, kontenerami i Filharmonią w tle. Symbol industrialnej potęgi i nowoczesności Hamburga.",
     },
-    "Galerina_marginata_051106Cmed.jpg": {
-      title: "Funeral Bell (gills view)",
+    "hamburg-8573427_1920.jpg": {
+      title: "Schody do Elbphilharmonie",
       description:
-        "DEADLY POISONOUS! The gills range from light yellow to rust-brown. Any small mushroom growing on wood that you cannot 100% identify should be considered a potentially deadly Funeral Bell.",
+        "Geometryczne, betonowe schody prowadzące do wejścia Filharmonii. Nowoczesny detal architektoniczny i gra linii.",
     },
-    "Galerina_marginata_Point_Reyes.jpg": {
-      title: "Funeral Bell (group)",
+    "headframe-709208_1920.jpg": {
+      title: "Szyb kopalniany Zollverein, Essen",
       description:
-        "DEADLY POISONOUS! It often grows in groups, which increases the risk of being picked along with edible species like Honey Fungus. One such mushroom in a dish can be a lethal dose.",
+        "Symboliczny, stalowy szyb kopalniany, wpisany na listę UNESCO. Ikona przemysłowej historii Zagłębia Ruhry, dziś centrum kultury.",
     },
-    "GalrinaMarginata.jpg": {
-      title: "Funeral Bell",
+    "hohenschwangau-3743780_1920.jpg": {
+      title: "Zamek Hohenschwangau z bliska",
       description:
-        "DEADLY POISONOUS! This photo highlights its 'innocent' appearance. Beautiful, but deadly. Remember: it grows on wood and is often confused with edible wood-dwelling mushrooms.",
+        "Neogotycki zamek o żółtej fasadzie, otoczony gęstymi lasami. Historyczna rezydencja w Alpach Bawarskich.",
     },
-    "Gemeine_Gallenröhrling_Tylopilus_felleus.jpg": {
-      title: "Bitter Bolete",
+    "hohenzollern-5328719_1920.jpg": {
+      title: "Zamek Hohenzollern na tle burzowego nieba",
       description:
-        "Inedible due to its extremely bitter taste. It is not poisonous, but one small piece can ruin an entire dish. Confused with the Penny Bun. It has pinkish pores and a dark, raised net pattern on the stem.",
+        "Imponujący zamek na szczycie góry, z dramatycznymi chmurami w tle. Architektura i pogoda tworzą majestatyczną i potężną scenę.",
     },
-    "Gemeine_Schwefel-Ritterling_Tricholoma_sulphureum.jpg": {
-      title: "Sulphur Knight",
+    "holiday-home-7101309_1920.jpg": {
+      title: "Tradycyjny dom w Schwarzwaldzie",
       description:
-        "Poisonous. Causes gastrointestinal issues. It is characterized by an intense sulphur-yellow color and a very unpleasant, gassy smell. These features effectively deter confusion.",
+        "Drewniany dom z czerwoną elewacją i ozdobnym dachem. Przykład tradycyjnej, wiejskiej architektury regionu.",
     },
-    "Gewone_oesterzwam_(Pleurotus_ostreatus)_25-12-2020_(d.j.b.)_01.jpg": {
-      title: "Oyster Mushroom",
+    "holocaust-memorial-3710509_1920.jpg": {
+      title: "Pomnik Holokaustu w Berlinie",
       description:
-        "A tasty edible mushroom, popular in cultivation. It grows on the wood of deciduous trees, forming characteristic 'colonies'. The cap is shell-shaped. It's difficult to confuse with poisonous species.",
+        "Pole betonowych stel o różnej wysokości. Abstrakcyjny i poruszający pomnik upamiętniający ofiary Holokaustu.",
     },
-    "Gewone_oesterzwam_(Pleurotus_ostreatus)_31-12-2020_(d.j.b.)_03.jpg": {
-      title: "Oyster Mushroom",
+    "horder-castle-1570208_1920.jpg": {
+      title: "Zamek Hörde w Dortmundzie",
       description:
-        "Edible. The gills run down a short, off-center stem. It is valued for its delicate flavor and meaty texture. It can be found in forests even in winter.",
+        "Historyczny zamek otoczony fosą i wodą. Średniowieczna warownia, symbol lokalnej historii regionu.",
     },
-    "Grüner_Knollenblätterpilz_Amanita_phalloides.jpg": {
-      title: "Death Cap",
+    "horses-7228554_1920.jpg": {
+      title: "Konie na łące w Bawarii",
       description:
-        "DEADLY POISONOUS! This photo shows the key features: white gills, a ring, a bulbous base in a volva (here partially pulled from the ground), and a greenish cap. Avoid at all costs!",
+        "Dwa konie pasące się na zielonej łące, na tle gór. Sielski, spokojny krajobraz alpejskich pastwisk.",
     },
-    "Hygrophoropsis_rufa_syn_Hygrophoropsis_aurantiaca_var._rufa.jpg": {
-      title: "Tawny Funnel",
+    "hot-air-balloon-2879650_1920.jpg": {
+      title: "Lot balonem nad miastem",
       description:
-        "Inedible, considered worthless. Like the False Chanterelle, it is sometimes confused with the Chanterelle, but it has a darker, brownish cap. It is not a serious threat, but it should not be eaten.",
+        "Kolorowy balon na ogrzane powietrze unoszący się nad miasteczkiem z czerwonymi dachami. Perspektywa z góry, dodająca scenie lekkości.",
     },
-    "Imleria_badia_318800799.jpg": {
-      title: "Bay Bolete",
+    "house-4028391_1920.jpg": {
+      title: "Nowoczesna, minimalistyczna willa",
       description:
-        "A prized edible mushroom. Its characteristic feature is its yellow pores, which turn blue-green when touched. This is a natural and harmless chemical reaction.",
+        "Architektura nowoczesnego domu (willi) z wykorzystaniem betonu, drewna i dużych przeszkleń. Prostota formy i współczesny design, na tle zielonego krajobrazu.",
     },
-    "King_Bolete_(Boletus_edulis)_(41886439025).jpg": {
-      title: "Penny Bun (King Bolete)",
+    "houses-7542665_1920.jpg": {
+      title: "Kamienice z muru pruskiego na placu",
       description:
-        "Two fine, edible King Boletes on a rainy day. The wet cap becomes sticky. It is one of the safest choices for foragers, provided you watch out for the pink pores of the Bitter Bolete.",
+        "Zabytkowe, kolorowe budynki z widoczną drewnianą konstrukcją. Architektura typowa dla niemieckich miasteczek historycznych.",
     },
-    "Lactarius-deliciosus-Finland.jpg": {
-      title: "Saffron Milk Cap",
+    "kermit-1651615_1920.jpg": {
+      title: "Zbliżenie na budynek 'Kermit' w Hamburgu",
       description:
-        "An excellent edible mushroom. When damaged, it exudes a characteristic orange latex that does not change color. It grows under pine trees. It can be confused with other, less tasty or poisonous milk caps.",
+        "Szczegółowe ujęcie fasady nowoczesnego budynku biurowego 'Kermit' w Hamburgu. Charakterystyczne żółte zabarwienie i unikalny, rzeźbiony kształt elewacji.",
     },
-    "Lactarius_deliciosus_233128663.jpg": {
-      title: "Saffron Milk Cap",
+    "konigssee-7276585_1920.jpg": {
+      title: "Jezioro Königssee w Berchtesgaden",
       description:
-        "Edible. The cap has characteristic concentric bands in shades of orange. It is considered a delicacy and is often pickled. Beware of poisonous milk caps that have white latex.",
+        "Krystaliczne, górskie jezioro otoczone stromymi, zalesionymi zboczami. Łódź turystyczna na wodzie podkreśla skalę i piękno natury.",
     },
-    "Leccinum_duriusculum.jpg": {
-      title: "Slate Bolete",
+    "landscape-7598904_1920.jpg": {
+      title: "Góry Harz w jesiennej mgle",
       description:
-        "A tasty edible mushroom. It grows under poplar trees, especially aspens. The stem is covered with dark, dense scales. The flesh turns pinkish when cut, then grayish and black.",
+        "Mglisty, jesienny krajobraz z widokiem na las i wzgórza. Scena o stonowanych barwach, pełna spokoju i tajemnicy.",
     },
-    "Leccinum_pseudoscabrum_2020_G1_cropped.jpg": {
-      title: "Hazel Bolete",
+    "lantern-6826687_1920.jpg": {
+      title: "Latarnia morska w Warnemünde",
       description:
-        "A good edible mushroom. As its name suggests, it grows under hazel. The cap is often wrinkled and grayish-brown. When cut, its flesh turns pinkish-purple and then blackens, which is normal.",
+        "Klasyczna, biało-czerwona latarnia morska na tle pochmurnego nieba. Symbol nawigacji i nadmorskiej architektury.",
     },
-    "Lentinula_edodes_shiitake.jpg": {
-      title: "Shiitake",
+    "lantern-6826698_1920.jpg": {
+      title: "Latarnia morska w Warnemünde, zbliżenie",
       description:
-        "An edible and highly valued cultivated mushroom, popular in Asian cuisine. It grows on wood. It has medicinal properties. Rarely found in the wild in Europe, it is mainly cultivated.",
+        "Zbudowana z cegły latarnia morska z widocznym tarasem widokowym. Solidna konstrukcja, odporna na morskie żywioły.",
     },
-    "Macrolepiota_procera_2011_G1.jpg": {
-      title: "Parasol Mushroom (young specimen)",
+    "lighthouse-4691680_1920.jpg": {
+      title: "Latarnia morska w List, Sylt",
       description:
-        "A tasty edible mushroom. Only the caps are eaten. A young, unopened specimen. A key feature is the movable ring on the stem. Beware of deadly poisonous Amanitas with a similar cap pattern, which have a fixed ring and a volva.",
+        "Charakterystyczna, duża latarnia morska na wydmach wyspy Sylt na Morzu Północnym. Czerwono-biała wieża w otoczeniu trawy i piasku.",
     },
-    "Macrolepiota_procera_2013_G1.jpg": {
-      title: "Parasol Mushroom",
+    "lighthouse-6207038_1920.jpg": {
+      title: "Latarnia morska na brzegu Bałtyku",
       description:
-        "Edible. A mature specimen with a characteristic scaly cap and a snakeskin pattern on the stem. The most important feature distinguishing it from poisonous Amanitas is the ring, which can be moved freely along the stem.",
+        "Kamienna latarnia morska z okrągłą wieżą na tle wzburzonego morza i nieba. Surowy, nadmorski krajobraz.",
     },
-    "Macrolepiota_procera_94588580.jpg": {
-      title: "Parasol Mushroom",
+    "lion-3536149_1920.jpg": {
+      title: "Rzeźba lwa w Brunszwiku",
       description:
-        "An excellent edible mushroom, perfect for breading and frying. Remember the movable ring test! If the ring is attached to the stem, it is likely a poisonous Amanita.",
+        "Monumentalna, średniowieczna rzeźba lwa na cokole. Symbol Brunszwiku i germańskiej siły.",
     },
-    "Morchella_conica_1_beentree.jpg": {
-      title: "Black Morel",
+    "mannheim-8000879_1920.jpg": {
+      title: "Pałac Kurfürstów i miasto Mannheim",
       description:
-        "An exceptionally tasty edible mushroom. The head is hollow and fully attached to the stem. Can be confused with the deadly False Morel, which has a wrinkled, brain-like cap that is not fully attached.",
+        "Widok na centrum Mannheim z Pałacem Kurfürstów w roli głównej. Ujęcie z wysokości (np. z wieży) przedstawia barokową architekturę pałacu i otaczającą go zabudowę miejską.",
     },
-    "Morchella_esculenta_kz02.jpg": {
-      title: "Yellow Morel",
+    "mining-5538256_1920.jpg": {
+      title: "Stare budynki kopalni w Nordrhein-Westfalen",
       description:
-        "A choice edible mushroom with a distinctive, sponge-like head. Like other morels, it is hollow inside. Always make sure it is not the poisonous False Morel with its brain-like structure.",
+        "Czerwone, ceglane budynki kopalniane z kominami. Obraz postindustrialnego dziedzictwa Zagłębia Ruhry.",
     },
-    "Narcisridderzwam_(Tricholoma_sulphureum)_Locatie,_Hortus_(Haren,_Groningen)_01.jpg":
-      {
-        title: "Sulphur Knight",
-        description:
-          "Poisonous. Its sulphur-yellow color and repulsive smell of coal gas are strong warning signs. It causes digestive upset. Difficult to confuse with any edible mushroom.",
-      },
-    "Photo_of_three_Amanita_phalloides_(Death_Cap).jpg": {
-      title: "Death Cap",
+    "modern-1046698_1920.jpg": {
+      title: "Współczesna fasada budynku biurowego",
       description:
-        "DEADLY POISONOUS! A classic shot of three specimens. Each contains a lethal dose of amatoxins. There is no antidote; the only cure is a liver transplant. The most dangerous mushroom in our forests.",
+        "Abstrakcyjny widok na fasadę z geometrycznymi, powtarzającymi się elementami i metalowymi żebrami.",
     },
-    "Punakas_narmasnutt2.jpg": {
-      title: "Livid Entoloma (or similar)",
+    "monastery-3130879_1920.jpg": {
+      title: "Klasztor Andechs w Bawarii",
       description:
-        "Poisonous. Causes very severe and prolonged poisoning (rhabdomyolysis). Confused with the edible St. George's Mushroom. It grows in late spring and summer in grassy areas. The name 'wieruszka' in the source is Estonian.",
+        "Barokowy kościół klasztorny na wzgórzu, otoczony wiosennym krajobrazem. Typowy, pielgrzymkowy cel w Bawarii.",
     },
-    "Rubroboletus_satanas_23.jpg": {
-      title: "Satan's Bolete",
+    "moritzburg-84299_1920.jpg": {
+      title: "Zamek Moritzburg na wodzie",
       description:
-        "Poisonous. Causes severe gastrointestinal poisoning. It has a characteristic whitish cap and a blood-red stem and pores. It turns blue when cut. It grows in warm, deciduous forests. Avoid!",
+        "Barokowy zamek myśliwski na wyspie, otoczony fosą. Bajkowa architektura odbijająca się w spokojnej wodzie.",
     },
-    "Rubroboletus_satanas_collection.jpg": {
-      title: "Satan's Bolete (collection)",
+    "mountain-7195958_1920.jpg": {
+      title: "Samotna wędrówka w Alpy Bawarskie",
       description:
-        "Poisonous. The photo shows the color variation and intense blue staining of the flesh when damaged. Any bolete with red pores and a red stem should be treated as potentially poisonous.",
+        "Krajobraz Alpejski z łagodnymi, zielonymi zboczami i samotną postacią turysty idącego ścieżką. Spokojna sceneria górska.",
     },
-    "Satans-Röhrling_Boletus_satanas.jpg": {
-      title: "Satan's Bolete",
+    "mountain-8207212_1920.jpg": {
+      title: "Krajobraz górski nad jeziorem",
       description:
-        "Poisonous and rare. Despite the name 'bolete', it is toxic. The light-colored cap contrasts with the intensely red pores and stem. Do not pick!",
+        "Ośnieżone góry i zielona dolina nad spokojnym jeziorem wczesną wiosną. Harmonia alpejskiego krajobrazu.",
     },
-    "Shiitakegrowing.jpg": {
-      title: "Shiitake (cultivated)",
+    "mountains-4521455_1920.jpg": {
+      title: "Alpejskie łąki i wioska",
       description:
-        "Edible. Cultivated on special blocks or logs. It has many valuable nutritional and medicinal properties. This mushroom is a symbol of Japanese cuisine.",
+        "Panoramiczny widok na góry, zielone zbocza i małą, tradycyjną wioskę. Sielski, letni krajobraz Bawarii.",
     },
-    "Speise_Morchel_Morchella_esculenta.jpg": {
-      title: "Yellow Morel",
+    "mountains-6531264_1920.jpg": {
+      title: "Skały i las w Alpach",
       description:
-        "An exquisite edible mushroom, valued for its unique taste and aroma. It appears in the spring. Remember that it must be hollow inside to distinguish it from toxic look-alikes!",
+        "Widok na skaliste szczyty otoczone gęstymi, ciemnymi lasami. Scena symbolizująca potęgę i surowość alpejskiej natury.",
     },
-    "Suillus_luteus_(37777246216).jpg": {
-      title: "Slippery Jack",
+    "mountains-6531903_1920.jpg": {
+      title: "Jezioro w dolinie alpejskiej",
       description:
-        "A very tasty and common edible mushroom. It has a characteristic slimy and sticky brown cap, from which the skin should be peeled before cooking. It has a membranous ring on its stem.",
+        "Spokojne jezioro w dolinie, otoczone zalesionymi i skalistymi górami. Klasyczny, malowniczy krajobraz górski.",
     },
-    "Suillus_luteus_10.jpg": {
-      title: "Slippery Jack",
+    "mountains-7591326_1920.jpg": {
+      title: "Alpy Bawarskie jesienią",
       description:
-        "Edible. The yellow underside of the cap (pores) and the distinct ring are visible. It grows in coniferous forests, exclusively under pine trees. A favorite for pickling.",
+        "Kolorowe, jesienne lasy na zboczach gór, tworzące mozaikę barw. Scena pełna ciepła i jesiennej melancholii.",
     },
-    "Suillus_luteus_9.jpg": {
-      title: "Slippery Jack (group)",
+    "mountains-8419249_1920.jpg": {
+      title: "Zalesione góry w Niemczech",
       description:
-        "Edible. It often grows in large groups, so if you find one, look for more. Remember to peel the sticky skin from the cap, which can cause indigestion.",
+        "Widok na gęste lasy pokrywające pofałdowane wzgórza. Krajobraz symbolizujący „Niemiecki Las” (np. Szwarcwald lub Harz).",
     },
-    "Tuber_melanosopum_d'Australie.jpg": {
-      title: "Black Truffle",
+    "muddle-of-tracks-2160059_1920.jpg": {
+      title: "Węzeł kolejowy",
       description:
-        "An extremely valuable and expensive edible fungus, considered a culinary aphrodisiac. It grows underground in symbiosis with the roots of oak and hazel trees. Specially trained dogs or pigs are used to find them.",
+        "Skomplikowany splot torów kolejowych i zwrotnic. Abstrakcyjna, industrialna kompozycja, symbolizująca sieć transportową.",
     },
-    "Tuber_melanosporum_-_trufa_negra,_Espana.jpg": {
-      title: "Black Truffle (collection)",
+    "muenster-7269726_1920.jpg": {
+      title: "Panorama nowoczesnego śródmieścia",
       description:
-        "Edible. Harvested truffles, ready for the kitchen. Their intense, characteristic aroma is unmistakable. Used as a luxurious addition to dishes.",
+        "Widok na współczesne centrum miasta, z licznymi nowoczesnymi biurowcami i wysokimi budynkami. Architektura komercyjna i administracyjna.",
     },
-    "Tuber_melanosporum_Vittadini_1831_(Fungi_Ascomycota_Pezizomycotina_Pezizomycetes_Pezizales_Tuberacea)_(25817500456).jpg":
-      {
-        title: "Black Truffle (cross-section)",
-        description:
-          "Edible. The cross-section reveals the characteristic marbled pattern (gleba). It is this structure that is responsible for the unique aroma of the truffle. It is one of the most expensive fungi in the world.",
-      },
-    "Tylopilus_felleus_(36878337253)_(2).jpg": {
-      title: "Bitter Bolete",
+    "munich-798652_1920.jpg": {
+      title: "Plac Mariacki (Marienplatz) w Monachium",
       description:
-        "Inedible due to its very bitter taste. Confusing it with a Penny Bun can ruin an entire meal. It is distinguished by the pinkish hue of its pores (a Penny Bun's are white or yellowish-green) and the dark net pattern on its stem.",
+        "Nowy Ratusz (Neues Rathaus) w Monachium w stylu neogotyckim, z widoczną wieżą i ozdobnym detalem.",
     },
-    "Tylopilus_felleus_collection.jpg": {
-      title: "Bitter Bolete",
+    "neuschwanstein-701732_1920.jpg": {
+      title: "Zamek Neuschwanstein w pełnej krasie",
       description:
-        "Inedible. Popularly, though incorrectly, called 'Satan's Bolete'. The real Satan's Bolete is poisonous and has red pores. This one is just extremely bitter. It's always worth tasting a tiny piece – the bitterness is immediately noticeable.",
+        "Bajkowy zamek na tle zielonych lasów i Alp. Najsłynniejsza, romantyczna budowla w Niemczech.",
     },
-    "Xiitake_(Lentinula_edodes).jpg": {
-      title: "Shiitake",
+    "night-3908272_1920.jpg": {
+      title: "Oświetlony falochron i budynek portowy nocą",
       description:
-        "Edible. Mushrooms cultivated on a special substrate. The characteristic cracked caps are visible. Shiitake are valued not only for their taste but also for their health benefits, such as boosting the immune system.",
+        "Długi pas morskiego falochronu lub przystani oświetlony lampami w nocy. Na końcu widoczny mały budynek lub latarnia. Scena nadmorska z efektem lustrzanego odbicia światła w wodzie.",
     },
-  },
-
-  de: {
-    "(Gemeine_Steinpilz)_Boletus_edulis.jpg": {
-      title: "Gemeiner Steinpilz",
+    "oberbaum-bridge-4699765_1920.jpg": {
+      title: "Most Oberbaumbrücke w Berlinie",
       description:
-        "Einer der begehrtesten Speisepilze. Er hat einen braunen Hut und einen bauchigen Stiel mit einem weißen Netzmuster. Wächst in Nadel- und Mischwäldern. Kann mit dem bitteren, ungenießbaren Gallenröhrling verwechselt werden, der rosa Poren hat.",
+        "Charakterystyczny, czerwony most ceglany nad Szprewą w Berlinie. Symbol połączenia wschodniej i zachodniej części miasta.",
     },
-    "2007-07-14_Cantharellus_cibarius.jpg": {
-      title: "Echter Pfifferling",
+    "old-elisabeth-3284212_1920.jpg": {
+      title: "Kościół św. Elżbiety (Elisabethkirche), Berlin",
       description:
-        "Ein beliebter und schmackhafter Speisepilz mit gelber Farbe und fruchtigem Aroma. Anstelle von Lamellen hat er charakteristische Leisten unter dem Hut. Kann mit dem ungenießbaren Falschen Pfifferling verwechselt werden, der feinere, dichtere Lamellen hat und auf Holz wächst.",
+        "Ruiny neogotyckiego kościoła w Berlinie. Scena kontrastująca historyczne zniszczenia z zielonym, miejskim parkiem.",
     },
-    "2010-04-27_Inocybe_erubescens.jpg": {
-      title: "Ziegelroter Risspilz",
+    "panorama-2646143_1920.jpg": {
+      title: "Panorama miasta z Renu",
       description:
-        "TÖDLICH GIFTIG! Enthält eine tödliche Dosis Muscarin. Der Hut ist kegelförmig, wird mit dem Alter flacher, die Farbe reicht von weiß bis ziegelrot und reißt oft ein. Wächst in Parks und Laubwäldern. Sammeln Sie ihn nicht, wenn Sie nicht 100% sicher sind.",
+        "Szeroki widok na miasto (prawdopodobnie Bonn lub Koblencja) nad Renem. Krajobraz miejski z historycznymi budynkami i nowoczesnymi elementami.",
     },
-    "2010-05-27_Inocybe_erubescens.jpg": {
-      title: "Ziegelroter Risspilz (Lamellenansicht)",
+    "panorama-3194115_1920.jpg": {
+      title: "Panorama Hamburga z wieży",
       description:
-        "TÖDLICH GIFTIG! Die Lamellen junger Exemplare sind weißlich und dunkeln mit dem Alter nach. Ein charakteristisches Merkmal ist die Rötung des Fleisches bei Verletzung. Eine Verwechslung mit Speisepilzen kann tragische Folgen haben.",
+        "Rozległy widok na Hamburg z góry, z widocznymi czerwonymi dachami, rzeką i nowoczesnymi wieżowcami. Typowy, portowy krajobraz.",
     },
-    "2013-01-16_Cortinarius_orellanus_1a.jpg": {
-      title: "Orangefuchsiger Raukopf",
+    "passau-7968535_1920.jpg": {
+      title: "Stare Miasto w Pasawie u ujścia rzek",
       description:
-        "TÖDLICH GIFTIG! Enthält Orellanin, das die Nieren irreversibel schädigt. Vergiftungssymptome können erst nach 2-3 Wochen auftreten. Er hat einen rostbraunen Hut und ähnlich gefärbte Lamellen. Wächst in Laubwäldern. Unbedingt meiden!",
+        "Widok na Pasawę, miasto położone u zbiegu trzech rzek (Dunaju, Inn i Ilz). Kolorowe kamienice i kościoły nad wodą.",
     },
-    "2013-10-16_Cortinarius_orellanus_1b.jpg": {
-      title: "Orangefuchsiger Raukopf (Lamellenansicht)",
+    "path-6514885_1920.jpg": {
+      title: "Leśna droga w mglisty poranek",
       description:
-        "TÖDLICH GIFTIG! Die Lamellen sind breit und zimtbraun. Junge Exemplare haben eine zarte Cortina (schleierartiges Gewebe), die schnell verschwindet. Eine Verwechslung mit dem essbaren Reifpilz ist möglich.",
+        "Ścieżka prowadząca przez gęsty, ciemny las spowity mgłą. Scena tworząca tajemniczy, klimatyczny nastrój.",
     },
-    "2025-10-08_D500-0912_Achim-Lammerts_Imleria-badia.jpg": {
-      title: "Maronen-Röhrling",
+    "peacock-942036_1920.jpg": {
+      title: "Paw z rozłożonym ogonem",
       description:
-        "Ein sehr schmackhafter und beliebter Speisepilz. Er hat einen kastanienbraunen, samtigen Hut und gelbliche Röhren, die bei Druck blau werden. Er wächst in Gruppen in Nadelwäldern. Eine Verwechslung mit Giftpilzen ist schwierig.",
+        "Samiec pawia prezentujący swój kolorowy, pióropuszowy ogon. Majestatyczne ujęcie pełne barw i detalu.",
     },
-    "AD2009Sep13_Boletus_edulis_01.jpg": {
-      title: "Steinpilz (junges Exemplar)",
+    "phoenix-lake-1570246_1920.jpg": {
+      title: "Abstrakcyjne odbicie zachodu słońca na wodzie",
       description:
-        "Ein junger, essbarer Steinpilz mit charakteristischem, bauchigem Stiel und hellem Hut. In diesem Wachstumsstadium ist er am schmackhaftesten. Vorsicht vor dem Gallenröhrling – überprüfen Sie immer die Hutunterseite (die Poren dürfen nicht rosa sein).",
+        "Wysoce abstrakcyjne ujęcie zachodzącego słońca, skupione na intensywnych odbiciach kolorów na powierzchni wody. Zamazany i nastrojowy, wodny pejzaż.",
     },
-    "AD2009Sep20_Amanita_muscaria_02.jpg": {
-      title: "Fliegenpilz (junges Exemplar)",
+    "phoenix-lake-2290942_1920.jpg": {
+      title: "Phoenix See z odbiciami",
       description:
-        "Ein giftiger und psychoaktiver Pilz. Junge Exemplare haben eine orangerote Farbe mit weißen Flecken. Obwohl selten tödlich, verursacht sein Verzehr schwere Vergiftungen. Sein Aussehen ist eine Warnung für sich.",
+        "Odbicia nowoczesnych budynków w spokojnej wodzie jeziora Phoenix. Scena łącząca naturę z architekturą.",
     },
-    "Agaricus_bisporus,_Agaricaceae_02.jpg": {
-      title: "Zucht-Champignon (wilde Form)",
+    "phoenix-lake-489011_1920.jpg": {
+      title: "Molo i most na Phoenix See",
       description:
-        "Eine essbare, wilde Form des Champignons, aus der die kultivierten Sorten gezüchtet wurden. Junge Exemplare sind kugelförmig. Er wächst auf Feldern und Wiesen. Vorsicht vor der Verwechslung mit dem tödlich giftigen Kegelhütigen Knollenblätterpilz, der immer weiße Lamellen hat.",
+        "Drewniany pomost i nowoczesna kładka na jeziorze Phoenix. Scena oświetlona ciepłym, zachodzącym słońcem.",
     },
-    "Agaricus_bisporus_G4.jpg": {
-      title: "Zucht-Champignon (Lamellen)",
+    "phoenix-lake-489012_1920.jpg": {
+      title: "Architektura nad Phoenix See nocą",
       description:
-        "Essbar. Das wichtigste Erkennungsmerkmal von Champignons sind ihre Lamellen, die bei jungen Exemplaren rosa sind und mit dem Alter dunkelbraun werden. Die Knollenblätterpilze, mit denen sie verwechselt werden können, haben immer weiße Lamellen.",
+        "Nowoczesne budynki wokół jeziora Phoenix, oświetlone po zmroku. Światła odbijają się w wodzie, tworząc miejski, nocny pejzaż.",
     },
-    "Amanita_muscaria_tyndrum.jpg": {
-      title: "Fliegenpilz",
+    "phoenix-lake-489013_1920.jpg": {
+      title: "Widok na domy nad Phoenix See",
       description:
-        "Ein giftiger Pilz, eine Ikone des Waldes. Er hat einen charakteristischen roten Hut mit weißen Punkten. Verursacht neurotoxische Vergiftungen. Sein Aussehen ist so markant, dass Verwechslungen mit Speisepilzen selten sind.",
+        "Nowoczesne domy jednorodzinne wzdłuż brzegów jeziora Phoenix. Scena podkreślająca wysoką jakość życia w rewitalizowanym obszarze Dortmundu.",
     },
-    "Amanita_phalloides_172551288.jpg": {
-      title: "Grüner Knollenblätterpilz (Gruppe)",
+    "phoenix-lake-489015_1920.jpg": {
+      title: "Zachód słońca nad Phoenix See",
       description:
-        "TÖDLICH GIFTIG! Eine Gruppe von Exemplaren unterschiedlichen Alters. Ein einziger Pilz kann eine ganze Familie töten. Merken Sie sich die Hauptmerkmale: ein grünlicher Hut, weiße Lamellen und eine knollige Basis in einer Scheide (Volva). Sammeln Sie niemals Pilze, bei denen Sie sich unsicher sind.",
+        "Jezioro w Dortmundzie w ciepłym świetle zachodzącego słońca. Romantyczny widok z nowoczesną architekturą w tle.",
     },
-    "Amanita_phalloides_2011_G1.jpg": {
-      title: "Grüner Knollenblätterpilz (junge Exemplare)",
+    "phoenix-lake-489019_1920.jpg": {
+      title: "Mosty nad Phoenix See",
       description:
-        "TÖDLICH GIFTIG! Junge Exemplare sind besonders gefährlich, da sie leicht mit essbaren Täublingen verwechselt werden. Überprüfen Sie immer das Vorhandensein eines Rings und einer Volva am Stielansatz, die Täublinge nicht haben.",
+        "Widok na nowoczesne kładki dla pieszych i mosty, łączące brzegi jeziora. Symbol infrastruktury rekreacyjnej.",
     },
-    "Amanita_phalloides_2011_G3.jpg": {
-      title: "Grüner Knollenblätterpilz",
+    "phoenix-lake-489022_1920.jpg": {
+      title: "Architektura i jezioro w Dortmundzie",
       description:
-        "TÖDLICH GIFTIG! Einer der gefährlichsten Pilze der Welt. Sogar seine Sporen sind giftig. Hauptmerkmale sind ein olivgrüner Hut, weiße Lamellen, ein Ring und eine Volva am Stielansatz.",
+        "Perspektywa z bliska na nowoczesne budynki mieszkalne nad jeziorem Phoenix. Czyste linie i duże okna.",
     },
-    "Amanita_phalloides_2025_G1.jpg": {
-      title: "Grüner Knollenblätterpilz (gelbe Form)",
+    "phoenix-lake-dortmund-2082469_1920.jpg": {
+      title: "Phoenix See z pomostem",
       description:
-        "TÖDLICH GIFTIG! Eine Form mit gelblicherem Hut. Unabhängig von der Farbe ist die Toxizität dieselbe. Das charakteristische 'genatterte' Muster am Stiel ist ein weiteres Erkennungsmerkmal.",
+        "Długi drewniany pomost wiodący w głąb jeziora. Scena relaksu i rekreacji w miejskim otoczeniu.",
     },
-    "Amanita_virosa_12.jpg": {
-      title: "Kegelhütiger Knollenblätterpilz",
+    "pier-5672967_1920.jpg": {
+      title: "Molo w Westerland, Sylt",
       description:
-        "TÖDLICH GIFTIG! Genauso gefährlich wie der Grüne Knollenblätterpilz. Er ist vollständig weiß, was die Gefahr einer Verwechslung mit Champignons oder einigen Ritterlingen erhöht. Er hat einen Ring und eine ausgeprägte, sackartige Volva an der Basis. Champignons haben nachdunkelnde Lamellen, seine sind immer weiß.",
+        "Długie molo wychodzące w morze, otoczone wzburzonymi falami Morza Północnego. Scena dynamiczna, surowy krajobraz.",
     },
-    "Amanita_virosa_82836142.jpg": {
-      title: "Kegelhütiger Knollenblätterpilz (junges Exemplar)",
+    "port-5052048_1920.jpg": {
+      title: "Industrialny port, Dortmund",
       description:
-        "TÖDLICH GIFTIG! Ein junges, weißes Exemplar in seiner typischen Waldumgebung. Im Hintergrund ist ein Fliegenpilz zu sehen. Der Wald ist voller Schätze und tödlicher Fallen – sammeln Sie nur, was Sie zu 100% kennen.",
+        "Stare konstrukcje przemysłowe i dźwigi portowe w Dortmundzie. Widok na ciężki przemysł nad wodą.",
     },
-    "Amanita_virosa_UL_01.jpg": {
-      title: "Kegelhütiger Knollenblätterpilz (schlankes Exemplar)",
+    "port-5052082_1920.jpg": {
+      title: "Dźwigi w porcie nad rzeką",
       description:
-        "TÖDLICH GIFTIG! Ein voll ausgereiftes, schlankes Exemplar. Sein Geruch wird als unangenehm süßlich beschrieben. Jeder Teil dieses Pilzes ist tödlich giftig, selbst in kleinen Dosen.",
+        "Duże, czerwone żurawie portowe przy nabrzeżu. Obraz portu z elementami transportu i logistyki.",
     },
-    "Armillaria_mellea,_Honey_Fungus,_UK,_3.jpg": {
-      title: "Honiggelber Hallimasch (Gruppe)",
+    "port-5788261_1920.jpg": {
+      title: "Historyczny port w Hamburgu (Speicherstadt)",
       description:
-        "Bedingt essbar – roh giftig. Er muss etwa 20 Minuten gekocht und das Wasser abgegossen werden. Wächst in großen Büscheln auf Holz. Kann mit dem giftigen Grünblättrigen Schwefelkopf verwechselt werden, der gelber und bitterer ist.",
+        "Panorama historycznej dzielnicy magazynów Speicherstadt lub podobnej części portu w Hamburgu. Widoczne kanały wodne, mosty i zabytkowa architektura z czerwonej cegły.",
     },
-    "Armillaria_mellea,_Honey_Fungus,_UK.jpg": {
-      title: "Honiggelber Hallimasch",
+    "port-7930392_1920.jpg": {
+      title: "Wieczór w Porcie w Duisburgu",
       description:
-        "Bedingt essbar. Nach ordnungsgemäßer Hitzebehandlung (gründliches Kochen) ist er ein schmackhafter Pilz. Der honiggelbe Hut ist mit feinen Schuppen bedeckt. Er hat einen beständigen Ring am Stiel.",
+        "Nocne ujęcie basenów portowych w Duisburgu. Odbicia świateł w wodzie, industrialny, a jednocześnie spokojny nastrój.",
     },
-    "Boletus_edulis20130728_095.jpg": {
-      title: "Steinpilz",
+    "station-8558516_1920.jpg": {
+      title: "Symetria berlińskiego metra",
       description:
-        "Ein stattlicher, essbarer Steinpilz. Der König des Waldes. Sein dicker Stiel und sein fleischiger Hut machen ihn sehr begehrt. Hervorragend zum Trocknen, Einlegen und als Zutat in vielen Gerichten.",
+        "Podziemna stacja z niebieskimi filarami i żółtymi pociągami w ruchu. Efekt rozmycia i geometryczne oświetlenie tworzą futurystyczną atmosferę.",
     },
-    "Bruderwald_Ölbaumtrichterling_(Omphalotus)_-RM-20191129-01.jpg": {
-      title: "Ölbaumtrichterling",
+    "reichstag-dome-1571046_1920.jpg": {
+      title: "Szklana kopuła Reichstagu",
       description:
-        "Giftig. Verursacht schwere Magen-Darm-Störungen. Ein charakteristisches Merkmal ist sein Wachstum auf Holz und seine Biolumineszenz – die Lamellen können im Dunkeln leuchten. Wird oft mit dem essbaren Pfifferling verwechselt.",
+        "Spiralna rampa wewnątrz kopuły symbolizuje przejrzystość demokracji. Reflektory światła i lustrzany stożek tworzą przestrzeń pełną światła i perspektywy.",
     },
-    "C._orellanus_jung.jpg": {
-      title: "Orangefuchsiger Raukopf (junges Exemplar)",
+    "brandenburg-50492_1920.jpg": {
+      title: "Brama Brandenburska nocą",
       description:
-        "TÖDLICH GIFTIG! Ein sehr junges Exemplar, das möglicherweise noch nicht alle Merkmale der Art zeigt, was es extrem gefährlich macht. Jeder braune Lamellenpilz sollte mit größter Vorsicht behandelt werden.",
+        "Oświetlony zabytek odbijający się w kałuży. Klasyczna architektura i cienie drzew tworzą kompozycję pełną historii i refleksji.",
     },
-    "Cantharellus_cibarius_149899828.jpg": {
-      title: "Echter Pfifferling",
+    "tv-tower-4759430_1920.jpg": {
+      title: "Wieża Telewizyjna w Berlinie przy Alei Zwycięstwa",
       description:
-        "Ein schmackhafter Speisepilz. Die Ansicht von unten zeigt die charakteristischen dicken Leisten, die ihn vom giftigen Falschen Pfifferling unterscheiden, der dünne, dichte Lamellen hat.",
+        "Monumentalna Berlińska Wieża Telewizyjna górująca nad miastem. Widoczna ulica, prawdopodobnie Aleja Zwycięstwa (Straße des 17. Juni), symbolizująca nowoczesną architekturę stolicy.",
     },
-    "Cantharellus_cibarius_85863580.jpg": {
-      title: "Echter Pfifferling im Wald",
+    "berlin-8429780_1920.jpg": {
+      title: "Panorama Berlina ze Strasse des 17. Juni",
       description:
-        "Essbare Pfifferlinge, im Wald gesammelt. Sie wachsen oft in Gruppen, versteckt im Moos. Ihre intensive gelbe Farbe macht sie leicht zu finden. Einer der sichersten Pilze für Anfänger.",
+        "Widok z lotu ptaka na Bramę Brandenburską i zielony korytarz miasta. W tle katedra, ratusz i kopuły tworzą pejzaż historyczno-urbanistyczny.",
     },
-    "Clitocybe.dealbata.-.lindsey.jpg": {
-      title: "Feld-Trichterling",
+    "grass-4338114_1920.jpg": {
+      title: "Łąka pełna maków i bławatków",
       description:
-        "Giftpilz, enthält Muscarin. Er wächst auf offenen, grasbewachsenen Flächen, in Parks und auf Golfplätzen. Er ist klein und unscheinbar, was das Risiko einer versehentlichen Sammlung mit anderen Pilzen erhöht.",
+        "Soczysta zieleń, czerwone maki i niebieskie kwiaty pod dynamicznym niebem. Scena pełna życia, kontrastu i spokoju.",
     },
-    "Clitocybe_dealbata_1.jpg": {
-      title: "Feld-Trichterling",
+    "rhine-river-3453860_1920.jpg": {
+      title: "Ren i Katedra w Kolonii o zmierzchu",
       description:
-        "Giftig. Der Hut ist weißlich und wird mit dem Alter trichterförmig. Kann mit dem essbaren Nelken-Schwindling verwechselt werden, der weiter auseinander stehende Lamellen hat und flexibler ist.",
+        "Zachód słońca nad Renem z widokiem na Kranhäuser i gotycką katedrę. Połączenie nowoczesności z historią w jednej kompozycji.",
     },
-    "Clitocybe_dealbata_2_-_Lindsey.jpg": {
-      title: "Feld-Trichterling (Lamellenansicht)",
+    "cologne-cathedral-1846338_1920.jpg": {
+      title: "Katedra i Most Hohenzollernów",
       description:
-        "Giftig. Die weißen, dicht gedrängten Lamellen sind eines seiner charakteristischen Merkmale. Vergiftungssymptome sind starkes Schwitzen, Speichelfluss und Atembeschwerden.",
+        "Gotycka katedra w Kolonii i stalowy most nad Renem, oświetlone w blasku zmierzchu. Refleksy w wodzie dodają głębi i uroku.",
     },
-    "Clitocybe_rivulosa_20081116w.jpg": {
-      title: "Weißer Rasen-Trichterling",
+    "bridge-5259784_1920.jpg": {
+      title: "Most nocą z gotyckim tłem",
       description:
-        "Ein giftiger Pilz, wie andere kleine, weiße Trichterlinge. Er wächst auf Rasenflächen und kann 'Hexenringe' bilden. Der Verzehr verursacht eine Muscarin-Vergiftung. Vermeiden Sie das Sammeln kleiner, weißer Pilze, die auf Wiesen wachsen.",
+        "Oświetlony most z łukami i pionowymi podporami, w tle katedra. Połączenie światła, architektury i historii w miejskim pejzażu.",
     },
-    "Coprinopsis_atramentaria_3_-_Lindsey.jpg": {
-      title: "Falten-Tintling (reife Exemplare)",
+    "forest-3194475_1920.jpg": {
+      title: "Poranny las w górach",
       description:
-        "Bedingt essbar. Nur junge, geschlossene Hüte sind essbar. Ältere zerfließen zu einer schwarzen Tinte. ACHTUNG: Verursacht in Verbindung mit Alkohol eine Vergiftung (Disulfiram-Reaktion), sogar bis zu 3 Tage nach dem Verzehr.",
+        "Gęsty las iglasty pokrywający wzgórza, z ciepłym światłem poranka. Spokój, przestrzeń i majestat natury.",
     },
-    "Coprinus_atramentarius2_mod_(1).jpg": {
-      title: "Falten-Tintling",
+    "castle-5116436_1920.jpg": {
+      title: "Zamek Hohenschwangau nad Alpsee",
       description:
-        "Bedingt essbar, aber in Kombination mit Alkohol gefährlich. Schon eine geringe Menge Alkohol kann eine schwere Vergiftung auslösen. Er wächst in Büscheln, oft in Städten, Parks und an Straßenrändern.",
+        "Złocista fasada zamku wśród zieleni, z jeziorem i górami w tle. Bajkowy krajobraz z nutą romantyzmu.",
     },
-    "False_Chanterelle_Hygrophoropsis_aurantiaca.jpg": {
-      title: "Falscher Pfifferling",
+    "crane-houses-7518551_1920.jpg": {
+      title: "Kranhäuser i katedra w Kolonii",
       description:
-        "Ungenießbar, von manchen als leicht giftig angesehen. Verursacht Magen-Darm-Probleme. Wird oft mit dem essbaren Pfifferling verwechselt. Er unterscheidet sich durch seine dünneren, dichteren Lamellen (Pfifferlinge haben Leisten) und eine intensivere orange Farbe.",
+        "Nowoczesne budynki przypominające żurawie portowe, w tle gotycka katedra. Zachód słońca nad Renem tworzy kontrast form i epok.",
     },
-    "Faltentintling_Coprinus_atramentariu.jpg": {
-      title: "Falten-Tintling (junges Exemplar)",
+    "speicherstadt-3883252_1920.jpg": {
+      title: "Wasserschloss w Speicherstadt",
       description:
-        "Ein junges Exemplar des Falten-Tintlings. In diesem Stadium ist er essbar, aber Sie müssen das absolute Alkoholverbot vor, während und bis zu 3 Tage nach dem Verzehr beachten. Andernfalls droht eine schwere Vergiftung.",
+        "Historyczna dzielnica magazynowa Hamburga nocą. Czerwone cegły, kanały i odbicia w wodzie tworzą magiczną scenerię.",
     },
-    "Fliegenpilz_fly_agaric_Amanita_muscaria.jpg": {
-      title: "Fliegenpilz",
+    "bastei-3014467_1920.jpg": {
+      title: "Most Bastei w Saksońskiej Szwajcarii",
       description:
-        "Der klassische Giftpilz. Sein Aussehen ist weithin bekannt und macht ihn zum Symbol für giftige Pilze. Der Verzehr verursacht Halluzinationen und schwere Magenprobleme.",
+        "Kamienny most między skalnymi iglicami, otoczony lasem i górami. Światło dnia podkreśla fakturę piaskowca.",
     },
-    "Galerina_marginata_(Batsch)_Kühner_274503.jpg": {
-      title: "Gift-Häubling",
+    "bastei-3883252_1920.jpg": {
+      title: "Bastei o świcie",
       description:
-        "TÖDLICH GIFTIG! Enthält die gleichen Toxine wie der Grüne Knollenblätterpilz. Ein kleiner, unscheinbarer Pilz, der auf Holz wächst. Er ist sehr leicht mit dem essbaren Hallimasch oder dem Stockschwämmchen zu verwechseln. Überprüfen Sie immer Pilze, die auf Baumstämmen wachsen!",
+        "Jesienne kolory, mgła i wschodzące słońce nad skalnymi formacjami. Połączenie natury i architektury w baśniowej kompozycji.",
     },
-    "Galerina_marginata_051106Bw.jpg": {
-      title: "Gift-Häubling",
+    "hohenzollern-5328719_1920.jpg": {
+      title: "Zamek Hohenzollern na wzgórzu",
       description:
-        "TÖDLICH GIFTIG! Seine geringe Größe und sein gewöhnliches Aussehen machen ihn zu einem der gefährlichsten Pilze. Ein Fehler kann tödlich sein. Achten Sie auf den Ring am Stiel und den klebrigen Hut.",
+        "Imponująca warownia na szczycie góry, otoczona lasem i mgłą. Symbol niemieckiej historii i architektury neogotyckiej.",
     },
-    "Galerina_marginata_051106Cmed.jpg": {
-      title: "Gift-Häubling (Lamellenansicht)",
+    "lichtenstein-castle.jpeg": {
+      title: "Zamek Lichtenstein",
       description:
-        "TÖDLICH GIFTIG! Die Lamellen reichen von hellgelb bis rostbraun. Jeder kleine Pilz, der auf Holz wächst und den Sie nicht zu 100 % identifizieren können, sollte als potenziell tödlicher Gift-Häubling betrachtet werden.",
+        "Neogotycki zamek na skale w Jurze Szwabskiej. Widok z dołu podkreśla monumentalność i dramatyzm budowli.",
     },
-    "Galerina_marginata_Point_Reyes.jpg": {
-      title: "Gift-Häubling (Gruppe)",
+    "castle-6899041_1920.jpg": {
+      title: "Zamek Neuschwanstein w mgle",
       description:
-        "TÖDLICH GIFTIG! Er wächst oft in Gruppen, was das Risiko erhöht, zusammen mit essbaren Arten wie dem Hallimasch gesammelt zu werden. Ein einziger solcher Pilz in einem Gericht kann eine tödliche Dosis sein.",
+        "Bajkowy zamek otoczony gęstą mgłą, z górami w tle. Scena jak z baśni, z nutą tajemnicy i romantyzmu.",
     },
-    "GalrinaMarginata.jpg": {
-      title: "Gift-Häubling",
+    "castle-6899042_1920.jpg": {
+      title: "Neuschwanstein o świcie",
       description:
-        "TÖDLICH GIFTIG! Dieses Foto unterstreicht sein 'unschuldiges' Aussehen. Schön, aber tödlich. Denken Sie daran: Er wächst auf Holz und wird oft mit essbaren holzbewohnenden Pilzen verwechselt.",
+        "Widok na zamek z dramatycznym niebem i ciepłym światłem poranka. Bajkowa kompozycja z nutą romantyzmu i legendy.",
     },
-    "Gemeine_Gallenröhrling_Tylopilus_felleus.jpg": {
-      title: "Gallenröhrling",
+    "castle-6565029_1920.jpg": {
+      title: "Zamek wśród zimowego krajobrazu",
       description:
-        "Wegen seines extrem bitteren Geschmacks ungenießbar. Er ist nicht giftig, aber ein kleines Stück kann ein ganzes Gericht verderben. Wird mit dem Steinpilz verwechselt. Er hat rosafarbene Poren und ein dunkles, erhabenes Netzmuster am Stiel.",
+        "Widok na warownię otoczoną lasem i śniegiem, z dramatycznym niebem w tle. Scena pełna ciszy i potęgi.",
     },
-    "Gemeine_Schwefel-Ritterling_Tricholoma_sulphureum.jpg": {
-      title: "Schwefelritterling",
+    "castle-6566978_1920.jpg": {
+      title: "Hohenzollern w chmurach",
       description:
-        "Giftig. Verursacht Magen-Darm-Probleme. Er zeichnet sich durch eine intensive schwefelgelbe Farbe und einen sehr unangenehmen, gasartigen Geruch aus. Diese Merkmale schrecken wirksam vor einer Verwechslung ab.",
+        "Zamek unoszący się nad morzem mgły, widziany z ośnieżonej skały. Kompozycja pełna tajemnicy i majestatu.",
     },
-    "Gewone_oesterzwam_(Pleurotus_ostreatus)_25-12-2020_(d.j.b.)_01.jpg": {
-      title: "Austern-Seitling",
+    "castle-6885449_1920.jpg": {
+      title: "Zamek na wzgórzu w świetle zachodu",
       description:
-        "Ein schmackhafter Speisepilz, der im Anbau beliebt ist. Er wächst auf dem Holz von Laubbäumen und bildet charakteristische 'Kolonien'. Der Hut ist muschelförmig. Eine Verwechslung mit giftigen Arten ist schwierig.",
+        "Forteca z wieżami i murami obronnymi, otoczona lasem. Światło dnia podkreśla jej monumentalność i historyczny charakter.",
     },
-    "Gewone_oesterzwam_(Pleurotus_ostreatus)_31-12-2020_(d.j.b.)_03.jpg": {
-      title: "Austern-Seitling",
+    "castle-7264664_1920.jpg": {
+      title: "Zamek wśród wzgórz o zachodzie",
       description:
-        "Essbar. Die Lamellen laufen an einem kurzen, seitlich ansetzenden Stiel herab. Er wird für seinen feinen Geschmack und seine fleischige Textur geschätzt. Man kann ihn sogar im Winter in den Wäldern finden.",
+        "Oświetlone słońcem mury zamku na szczycie góry. Panorama z mgłą w dolinie, tworząca ciepły i tajemniczy krajobraz.",
     },
-    "Grüner_Knollenblätterpilz_Amanita_phalloides.jpg": {
-      title: "Grüner Knollenblätterpilz",
+    "cochem-castle-6791148_1920.jpg": {
+      title: "Zamek Cochem na Mozelą",
       description:
-        "TÖDLICH GIFTIG! Dieses Foto zeigt die Hauptmerkmale: weiße Lamellen, einen Ring, eine knollige Basis in einer Volva (hier teilweise aus dem Boden gezogen) und einen grünlichen Hut. Unbedingt meiden!",
+        "Imponujący zamek na wzgórzu, górujący nad miasteczkiem. Zielone zbocza i rzeka tworzą idylliczną scenerię.",
     },
-    "Hygrophoropsis_rufa_syn_Hygrophoropsis_aurantiaca_var._rufa.jpg": {
-      title: "Brauner After-Leistling",
+    "krane-houses-4475871_1920.jpg": {
+      title: "Kranhäuser w Kolonii",
       description:
-        "Ungenießbar, gilt als wertlos. Wie der Falsche Pfifferling wird er manchmal mit dem Pfifferling verwechselt, hat aber einen dunkleren, bräunlichen Hut. Er stellt keine ernsthafte Bedrohung dar, sollte aber nicht gegessen werden.",
+        "Trzy nowoczesne budynki przypominające żurawie portowe, ustawione w linii nad Renem. Symetria i szkło tworzą futurystyczny rytm miasta.",
     },
-    "Imleria_badia_318800799.jpg": {
-      title: "Maronen-Röhrling",
+    "crowd-2140590_1920.jpg": {
+      title: "Tłum z flagami Niemiec",
       description:
-        "Ein geschätzter Speisepilz. Sein charakteristisches Merkmal sind die gelben Poren, die bei Berührung blaugrün werden. Dies ist eine natürliche und harmlose chemische Reaktion.",
+        "Morze ludzi z czarno-czerwono-złotymi flagami w geście wspólnoty. Scena pełna energii, dumy narodowej i emocji.",
     },
-    "King_Bolete_(Boletus_edulis)_(41886439025).jpg": {
-      title: "Steinpilz",
+    "city-6979390_1920.jpg": {
+      title: "Rynek nocą w niemieckim miasteczku",
       description:
-        "Zwei stattliche, essbare Steinpilze an einem regnerischen Tag. Der nasse Hut wird klebrig. Er ist eine der sichersten Wahlen für Sammler, vorausgesetzt, man achtet auf die rosa Poren des Gallenröhrlings.",
+        "Oświetlony plac otoczony kamienicami z muru pruskiego. Fontanna i bruk odbijają światło, tworząc ciepłą, przyjazną atmosferę.",
     },
-    "Lactarius-deliciosus-Finland.jpg": {
-      title: "Edel-Reizker",
+    "dockland-4431309_1920.jpg": {
+      title: "Nabrzeże w Hamburgu nocą",
       description:
-        "Ein ausgezeichneter Speisepilz. Bei Verletzung sondert er eine charakteristische orange Milch ab, die ihre Farbe nicht ändert. Er wächst unter Kiefern. Er kann mit anderen, weniger schmackhaften oder giftigen Reizkern verwechselt werden.",
+        "Czarno-biała fotografia z odbiciami świateł w wodzie. Połączenie nowoczesnych i zabytkowych budynków tworzy spokojny, miejski pejzaż.",
     },
-    "Lactarius_deliciosus_233128663.jpg": {
-      title: "Edel-Reizker",
+    "bridge-5621201_1920.jpg": {
+      title: "Most Hohenzollernów i katedra w Kolonii",
       description:
-        "Essbar. Der Hut hat charakteristische konzentrische Bänder in Orangetönen. Er gilt als Delikatesse und wird oft in Essig eingelegt. Vorsicht vor giftigen Milchlingen, die weiße Milch haben.",
+        "Złote łuki mostu nad Renem i gotycka katedra w tle. Nastrojowe światła odbijają się w wodzie.",
     },
-    "Leccinum_duriusculum.jpg": {
-      title: "Pappel-Raufuß",
+    "tv-tower-5502995_1920.jpg": {
+      title: "Wieża Telewizyjna z mgłą w tle",
       description:
-        "Ein schmackhafter Speisepilz. Er wächst unter Pappeln, insbesondere Espen. Der Stiel ist mit dunklen, dichten Schuppen bedeckt. Das Fleisch verfärbt sich beim Anschneiden rosa, dann gräulich und schwarz.",
+        "Berlińska Wieża Telewizyjna na tle gęstej mgły lub niskich chmur. Ujęcie z lotu ptaka lub z wysokości.",
     },
-    "Leccinum_pseudoscabrum_2020_G1_cropped.jpg": {
-      title: "Hainbuchen-Raufuß",
+    "tv-tower-6139241_1920.jpg": {
+      title: "Wieża Telewizyjna i Berliner Dom",
       description:
-        "Ein guter Speisepilz. Wie der Name schon sagt, wächst er unter Hainbuchen. Der Hut ist oft runzelig und graubraun. Beim Anschneiden verfärbt sich sein Fleisch rosa-violett und schwärzt dann, was normal ist.",
+        "Wieża Telewizyjna i Katedra Berlińska (Berliner Dom) na tle zachmurzonego nieba. Kontrast między nowoczesnym a historycznym symbolem Berlina.",
     },
-    "Lentinula_edodes_shiitake.jpg": {
-      title: "Shiitake",
+    "vineyards-4666055_1920.jpg": {
+      title: "Winnice nad Mozelą",
       description:
-        "Ein essbarer und hochgeschätzter Zuchtpilz, der in der asiatischen Küche beliebt ist. Er wächst auf Holz. Er hat medizinische Eigenschaften. In Europa selten in freier Wildbahn zu finden, wird er hauptsächlich angebaut.",
+        "Rzędy winorośli na stromych zboczach doliny Mozeli. Typowy krajobraz winiarski Niemiec w promieniach słońca.",
     },
-    "Macrolepiota_procera_2011_G1.jpg": {
-      title: "Parasol (junges Exemplar)",
+    "wallberg-3732153_1920.jpg": {
+      title: "Panorama z Wallberg, Tegernsee",
       description:
-        "Ein schmackhafter Speisepilz. Nur die Hüte werden gegessen. Ein junges, ungeöffnetes Exemplar. Ein Hauptmerkmal ist der verschiebbare Ring am Stiel. Vorsicht vor tödlich giftigen Knollenblätterpilzen mit ähnlichem Hutmuster, die einen festen Ring und eine Volva haben.",
+        "Widok z góry Wallberg na jezioro Tegernsee w Alpach Bawarskich. Rozległy krajobraz z górami i spokojną wodą.",
     },
-    "Macrolepiota_procera_2013_G1.jpg": {
-      title: "Parasol",
+    "woman-4339644_1920.jpg": {
+      title: "Kobieta na łące w bawarskim stroju ludowym (Tracht)",
       description:
-        "Essbar. Ein reifes Exemplar mit einem charakteristischen schuppigen Hut und einem genatterten Muster am Stiel. Das wichtigste Unterscheidungsmerkmal zu giftigen Knollenblätterpilzen ist der Ring, der frei am Stiel verschoben werden kann.",
+        "Kobieta w tradycyjnym, bawarskim stroju (Dirndl) siedząca na łące. Scena folklorystyczna w tle idyllicznego krajobrazu.",
     },
-    "Macrolepiota_procera_94588580.jpg": {
-      title: "Parasol",
+    "stadium-1203068_1920.jpg": {
+      title: "Pusty stadion piłkarski",
       description:
-        "Ein ausgezeichneter Speisepilz, perfekt zum Panieren und Braten. Denken Sie an den Test mit dem verschiebbaren Ring! Wenn der Ring am Stiel festgewachsen ist, handelt es sich wahrscheinlich um einen giftigen Knollenblätterpilz.",
-    },
-    "Morchella_conica_1_beentree.jpg": {
-      title: "Spitzmorchel",
-      description:
-        "Ein außergewöhnlich schmackhafter Speisepilz. Der Kopf ist hohl und vollständig mit dem Stiel verwachsen. Kann mit der tödlich giftigen Frühjahrs-Giftlorchel verwechselt werden, die einen faltigen, gehirnartigen Hut hat, der nicht vollständig angewachsen ist.",
-    },
-    "Morchella_esculenta_kz02.jpg": {
-      title: "Speise-Morchel",
-      description:
-        "Ein edler Speisepilz mit einem unverwechselbaren, schwammartigen Kopf. Wie andere Morcheln ist er innen hohl. Achten Sie immer darauf, dass es sich nicht um die giftige Frühjahrs-Giftlorchel mit ihrer gehirnartigen Struktur handelt.",
-    },
-    "Narcisridderzwam_(Tricholoma_sulphureum)_Locatie,_Hortus_(Haren,_Groningen)_01.jpg":
-      {
-        title: "Schwefelritterling",
-        description:
-          "Giftig. Seine schwefelgelbe Farbe und der abstoßende Geruch nach Leuchtgas sind starke Warnzeichen. Er verursacht Verdauungsstörungen. Schwer mit einem Speisepilz zu verwechseln.",
-      },
-    "Photo_of_three_Amanita_phalloides_(Death_Cap).jpg": {
-      title: "Grüner Knollenblätterpilz",
-      description:
-        "TÖDLICH GIFTIG! Eine klassische Aufnahme von drei Exemplaren. Jedes enthält eine tödliche Dosis Amatoxine. Es gibt kein Gegenmittel; die einzige Heilung ist eine Lebertransplantation. Der gefährlichste Pilz in unseren Wäldern.",
-    },
-    "Punakas_narmasnutt2.jpg": {
-      title: "Riesen-Rötling (oder ähnlich)",
-      description:
-        "Giftig. Verursacht sehr schwere und langanhaltende Vergiftungen (Rhabdomyolyse). Wird mit dem essbaren Maipilz verwechselt. Er wächst im späten Frühling und Sommer auf grasbewachsenen Flächen.",
-    },
-    "Rubroboletus_satanas_23.jpg": {
-      title: "Satans-Röhrling",
-      description:
-        "Giftig. Verursacht schwere Magen-Darm-Vergiftungen. Er hat einen charakteristischen weißlichen Hut und einen blutroten Stiel und Poren. Er wird beim Anschneiden blau. Wächst in warmen Laubwäldern. Meiden!",
-    },
-    "Rubroboletus_satanas_collection.jpg": {
-      title: "Satans-Röhrling (Sammlung)",
-      description:
-        "Giftig. Das Foto zeigt die Farbvariation und die intensive Blaufärbung des Fleisches bei Verletzung. Jeder Röhrling mit roten Poren und rotem Stiel sollte als potenziell giftig behandelt werden.",
-    },
-    "Satans-Röhrling_Boletus_satanas.jpg": {
-      title: "Satans-Röhrling",
-      description:
-        "Giftig und selten, in Deutschland geschützt. Trotz des Namens 'Röhrling' ist er giftig. Der helle Hut kontrastiert mit den intensiv roten Poren und dem Stiel. Nicht sammeln!",
-    },
-    "Shiitakegrowing.jpg": {
-      title: "Shiitake (kultiviert)",
-      description:
-        "Essbar. Auf speziellen Blöcken oder Stämmen angebaut. Er hat viele wertvolle ernährungsphysiologische und medizinische Eigenschaften. Dieser Pilz ist ein Symbol der japanischen Küche.",
-    },
-    "Speise_Morchel_Morchella_esculenta.jpg": {
-      title: "Speise-Morchel",
-      description:
-        "Ein exquisiter Speisepilz, der für seinen einzigartigen Geschmack und sein Aroma geschätzt wird. Er erscheint im Frühling. Denken Sie daran, dass er innen hohl sein muss, um ihn von giftigen Doppelgängern zu unterscheiden!",
-    },
-    "Suillus_luteus_(37777246216).jpg": {
-      title: "Butterpilz",
-      description:
-        "Ein sehr schmackhafter und häufiger Speisepilz. Er hat einen charakteristischen schleimigen und klebrigen braunen Hut, dessen Haut vor dem Kochen abgezogen werden sollte. Er hat einen häutigen Ring am Stiel.",
-    },
-    "Suillus_luteus_10.jpg": {
-      title: "Butterpilz",
-      description:
-        "Essbar. Die gelbe Unterseite des Hutes (Poren) und der deutliche Ring sind sichtbar. Er wächst in Nadelwäldern, ausschließlich unter Kiefern. Einer der beliebtesten Pilze zum Einlegen.",
-    },
-    "Suillus_luteus_9.jpg": {
-      title: "Butterpilz (Gruppe)",
-      description:
-        "Essbar. Er wächst oft in großen Gruppen. Wenn Sie also einen finden, suchen Sie nach weiteren. Denken Sie daran, die klebrige Haut vom Hut zu entfernen, da sie Verdauungsstörungen verursachen kann.",
-    },
-    "Tuber_melanosopum_d'Australie.jpg": {
-      title: "Schwarzer Trüffel",
-      description:
-        "Ein äußerst wertvoller und teurer Speisepilz, der als kulinarisches Aphrodisiakum gilt. Er wächst unterirdisch in Symbiose mit den Wurzeln von Eichen und Haselnussbäumen. Speziell ausgebildete Hunde oder Schweine werden zur Suche eingesetzt.",
-    },
-    "Tuber_melanosporum_-_trufa_negra,_Espana.jpg": {
-      title: "Schwarzer Trüffel (Sammlung)",
-      description:
-        "Essbar. Geerntete Trüffel, bereit für die Küche. Ihr intensives, charakteristisches Aroma ist unverwechselbar. Wird als luxuriöse Zutat für Gerichte verwendet.",
-    },
-    "Tuber_melanosporum_Vittadini_1831_(Fungi_Ascomycota_Pezizomycotina_Pezizomycetes_Pezizales_Tuberacea)_(25817500456).jpg":
-      {
-        title: "Schwarzer Trüffel (Querschnitt)",
-        description:
-          "Essbar. Der Querschnitt zeigt das charakteristische marmorierte Muster (Gleba). Diese Struktur ist für das einzigartige Aroma des Trüffels verantwortlich. Er ist einer der teuersten Pilze der Welt.",
-      },
-    "Tylopilus_felleus_(36878337253)_(2).jpg": {
-      title: "Gallenröhrling",
-      description:
-        "Wegen seines sehr bitteren Geschmacks ungenießbar. Eine Verwechslung mit einem Steinpilz kann ein ganzes Gericht ruinieren. Er unterscheidet sich durch den rosa Schimmer seiner Poren (beim Steinpilz sind sie weiß oder gelblich-grün) und das dunkle Netzmuster am Stiel.",
-    },
-    "Tylopilus_felleus_collection.jpg": {
-      title: "Gallenröhrling",
-      description:
-        "Ungenießbar. Volkstümlich, aber fälschlicherweise, 'Satanspilz' genannt. Der echte Satans-Röhrling ist giftig und hat rote Poren. Dieser ist nur extrem bitter. Es lohnt sich immer, ein winziges Stück zu probieren – die Bitterkeit ist sofort spürbar.",
-    },
-    "Xiitake_(Lentinula_edodes).jpg": {
-      title: "Shiitake",
-      description:
-        "Essbar. Auf einem speziellen Substrat gezüchtete Pilze. Die charakteristischen rissigen Hüte sind sichtbar. Shiitake werden nicht nur wegen ihres Geschmacks, sondern auch wegen ihrer gesundheitlichen Vorteile geschätzt, wie z.B. der Stärkung des Immunsystems.",
+        "Widok na puste trybuny, boisko i oświetlenie nowoczesnego, dużego stadionu sportowego. Charakterystyczne żółte siedzenia na trybunach.",
     },
   },
 };
