@@ -1,0 +1,119 @@
++---------+ Skrypt ".\base-system\.tools\.update-systems.py" +---------+ 
+
+"""
+<!-- Do not remove these comments.
+
+============================  
+🔸 WERSJA POLSKA  
+============================  
+.update-systems.py v1.1.0 (2025-09-23) --- Przebudowa systemu + UX w związku z poważną awarią wywołaną przez złą wolę i lenistwo AI Google
+
++---> System kaskadowej aktualizacji. <---+
+Aktualizacja systemu skopiowanego w podfolderach.
+
+Krótki opis:
+Przykładowy system składa się z Systemu \VisuDir, który jest naszym folderem głównym, bez ścieżki, oraz podfolderów: \Poland, \GameGuides \e-books.
+Każdy podfolder to kopia systemu ze zaktualizowaną sekcją konfiguracji, bazy danych, języka.
+Aplikacja pobiera "index.html" z głównego folderu - aktualna wersja - oraz go aktualizuje
+
+Skrypt pobiera aktualny index.html z katalogu głównego aplikacji i wykonuje update.
+Aktualizacja polega na wymianie starej konfiguracji z index.html na nową konfigurację
+z folderów opisanych niżej. Każdy subfolder, jak "Poland\ade-base-system\.tools",
+zawiera pliki: ".config.txt", ".db-secure.txt", ".lang-en.txt", "lang-de.txt", itd.
+System pobiera z nich konfigurację, aktualizuje plik bazowy index.html, język i tworzy nowy plik index.html. Dla języka polskiego plik kopiowany
+jest do głównego folderu, np. \Poland\, natomiast inne języki do \Poland\en Poland\de, itd... 
+Gdy brak jakiegoś pliku językowego, to nie tworzy nowego pliku, bo brak aktualizacji.
+A gdy plik jest na dysku, tworzona jest kopia index-bck.html (stara kopia, jeśli jest, jest usuwana), a nowy plik zapisywany jest pod nazwą index.html.
+
+Historia wersji:
+v1.1.0 (2025-09-23) --- Przebudowa systemu + UX w związku z poważną awarią wywołaną przez złą wolę i lenistwo AI Google
+v1.0.0 (2025-09-22) --- Pierwsza wersja skryptu
+
+Autor: Adrian Ulbrych  
+Lokalizacja: Gliwice, Śląsk, Polska  
+Kontakt: +48 601 190 330  
+
+Wszystkie prawa zastrzeżone.  
+Użycie i modyfikacja kodu wymaga zgody autora.
+
+Projekt zawiera komentarze w pliku .py
+z historią wersji i informacją o autorze.  
+Nie usuwaj ich!
+
+============================
+
+Uproszczona struktura kaskadowego VisuDir
+(Czyli kopia systemu VisuDir w folderach…):
+
+VisuDir\
+| index.html --- baza do pracy - aktualna wersja, tu podmienimy .config, .db-secure i jeden język
+| ade-base-system\
+| | .tools\
+| | | .update-systems.py --- ten skrypt Python, aktualizujący cały system w sposób inteligentny
+| Poland\
+| | index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem dla j. polskiego
+| | en\index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | de\index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | … i tak dalej dla kolejnych języków z konfiguracji
+| | ade-base-system\ 
+| | | .tools\
+| | | | .config.txt --- konfig do podmiany, jeśli jest ustawiona ścieżka w .update-systems.py
+| | | | .db-secure.txt --- baza danych do podmiany, jak wyżej.
+| | | | .lang-pl.txt --- plik językowy, jak wyżej.
+| | | | .lang-en.txt --- jak wyżej…
+| | | | .lang-de.txt --- …
+| | | | …
+| GameGuides\
+| | index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem dla j. polskiego
+| | en\index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | de\index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | … i tak dalej dla kolejnych języków z konfiguracji| | …
+| e-books\
+| | index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem dla j. polskiego
+| | en\index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | de\index.html --- plik, który utworzy ten skrypt, aktualna wersja z konfiguracją i językiem
+| | …
+| | … i tak dalej, to foldery z kopią systemu VisuDir.
+
+============================
+
+⠀⠀⠀⠀⠀⠀⠘⢄⠀⢰⠁⠀⢀⣠⠜  
+⠀⠀⠀⠀⠀⠀⠀⠀⡆⢸⠀⠀⡏  
+⠀⠀⠀⠀⠀⠀⠀⠀⢇⠀⠃⠀⢈  
+⠀⠀⠀⢀⣤⣶⠾⠿⠛⠛⠛⠛⠛⠿⠿⣶⣤⣀  
+⠀⣠⡾⠋⠁⠀⠀⠀⢀⣠⣤⠤⢤⣤⣄⠀⠈⠙⢿⣦  
+⣸⡏⠀⠀⠀⣀⣤⠾⠋⠁⠀⠀⠀⣸⠟⠀⠀⠀⠀⠹⣷  
+⣿⣇⠀⠀⠀⠙⠳⢦⣄⡀⠀⠀⠈⢳⣦⠀⠀⠀⠀⣰⣿  
+⢹⣿⣶⣤⣀⠀⠀⠀⠈⠙⠳⠶⠶⠿⠋⠀⢀⣤⣾⣿⣿⣶⣶⣦⡀  
+⠘⣿⣿⣿⣿⣿⣶⣶⣦⣤⣤⣤⣤⣶⣶⣿⣿⣿⣿⣿⠋⠉⠙⣿⣧  
+⠀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣏⠀⠀⢠⣿⡿  
+⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⣿⣶⣶⣿⡿  
+⠀⠀⠀⠘⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠀⠈⠉⠉⠁  
+⠀⠀⠀⠀⠀⠈⠛⠻⢿⣿⣿⣿⡿⠿⠛⠁  
+
+© 2025 Adrian Ulbrych – All rights reserved  
+Project page: https://adrian-x9.github.io/ 
+
+Do not remove these comments. -->
+
+# dalsza część skryptu
+# …
+"""
+
+Koniec skryptu ".\base-system\.tools\.update-systems.py" 
+
+Konfiguracja - górna część skryptu:
+
+  base: np: "..\..\index.html" - plik bazowy, konfiguracja do podmiany.
+  systems: "..\..\Poland", "..\..\GameGuides", "..\..\e-books", itd.
+  cfg: ".config.txt" - nazwa pliku który wstawimy do index.html
+  db: ".db-secure.txt" - jak wyżej
+  # Nie ustawiona stała, czyli "", oznacza - nie dotykaj tej sekcji, czyli zostaw
+  z oryginalnego index.html
+
+UX musi zawierać panel z pełnym logiem działania systemu. Konfiguracja systemu, ścieżek, w osobnym oknie lub zakładce. Schludny i nowoczesny interfejs oraz do tego estetyczny i funkcjonalny. 
+Główne okno musi zawierać przycisk do uruchamiania systemu, ale zrobiony w sposób atrakcyjny, musi być pełen log, by nie trzeba było patrzeć do kodu, system musi przewidzieć wszystkie sytuacje,
+gdy coś może się nie udać. Aplikacja funkcjonalna, ale animacje niezbędne, używamy wyłącznie standardu języka .py, system musi działać w pełni offline bez Internetu, musi być mały, ale używać tylko najnowszych technologii
+
+
+
