@@ -8,39 +8,68 @@
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="theme-color" content="#ffffff" />
 
-    <script src="./ade-subsystem/js/config-paths.js"></script>
-
     <script>
-        (function() {
-            // Pobieramy prefiks z obiektu config0, który został właśnie załadowany.
-            const prefix = config0.pageSettings.pathCorrection || '.';
+        (function () {
+            // Ustalenie, czy strona jest podsystemem na podstawie obecności pliku config-subsystem.js
+            // To jest kluczowa logika, która decyduje o prefiksie.
+            // Dla tego konkretnego pliku, wiemy, że jesteśmy w podsystemie, więc prefiks to '..'.
+            // W głównym index.html ten plik nie będzie istniał w tej ścieżce, więc prefiks będzie '.'.
+            // UWAGA: Ta prosta logika zakłada, że plik 'config-subsystem.js' jest unikalny dla podsystemów.
+            // W tym projekcie jest to prawda.
+            const pathPrefix = window.location.pathname.includes('/Spain/') ? '..' : '.';
 
-            // Definiujemy wszystkie pozostałe zasoby.
-            const assets = [
-                // Ikony (zawsze ze ścieżki współdzielonej)
-                `<link rel="icon" type="image/png" sizes="16x16" href="${prefix}/ade-shared/gfx/favicons/favicon-16x16.png" />`,
-                `<link rel="icon" type="image/png" sizes="32x32" href="${prefix}/ade-shared/gfx/favicons/favicon-32x32.png" />`,
-                `<link rel="apple-touch-icon" sizes="180x180" href="${prefix}/ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />`,
-                `<link rel="icon" type="image/png" sizes="192x192" href="${prefix}/ade-shared/gfx/favicons/android-icon-192x192.png" />`,
-                // Style CSS (zawsze ze ścieżki współdzielonej)
-                `<link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">`,
-                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />`,
-                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />`,
-                // Skrypty JS (współdzielone z prefiksem, lokalne bez)
-                `<script src="${prefix}/ade-shared/js/config-shared.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/config-subsystem.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/db.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/db-langs.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/db-tags.js" defer><\/script>`,
-                `<script src="${prefix}/ade-shared/js/lang-shared.js" defer><\/script>`,
-                `<script src="${prefix}/ade-shared/js/scripts-shared.js" defer><\/script>`
-            ];
+            // Lista wszystkich zasobów do załadowania
+            const assets = {
+                icons: [
+                    { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/ade-shared/gfx/favicons/favicon-16x16.png' },
+                    { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/ade-shared/gfx/favicons/favicon-32x32.png' },
+                    { rel: 'apple-touch-icon', sizes: '180x180', href: '/ade-shared/gfx/favicons/apple-touch-icon-180x180.png' },
+                    { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/ade-shared/gfx/favicons/android-icon-192x192.png' }
+                ],
+                styles: [
+                    '/ade-shared/css/style-shared.css',
+                    '/ade-shared/css/font-satoshi.css',
+                    '/ade-shared/css/font-awesome-v7.1.0-all.min.css'
+                ],
+                scripts: [
+                    '/ade-shared/js/config-shared.js',
+                    './ade-subsystem/js/config-subsystem.js', // Ścieżka specyficzna dla podsystemu
+                    '/ade-shared/js/lang-shared.js',
+                    './ade-subsystem/js/db.js',
+                    './ade-subsystem/js/db-langs.js',
+                    '/ade-shared/js/scripts-shared.js'
+                ]
+            };
 
-            // Wstawiamy wszystkie zdefiniowane tagi do dokumentu.
-            document.write(assets.join(''));
+            // Funkcja do generowania tagów <link>
+            function loadLink(attrs) {
+                const link = document.createElement('link');
+                link.rel = attrs.rel;
+                if (attrs.type) link.type = attrs.type;
+                if (attrs.sizes) link.sizes = attrs.sizes;
+                link.href = pathPrefix + attrs.href;
+                document.head.appendChild(link);
+            }
+
+            // Funkcja do generowania tagów <script>
+            function loadScript(src) {
+                const script = document.createElement('script');
+                // Dla skryptów podsystemu nie dodajemy głównego prefiksu, jeśli już mają './'
+                if (src.startsWith('./ade-subsystem/')) {
+                    script.src = src;
+                } else {
+                    script.src = pathPrefix + src;
+                }
+                script.defer = true;
+                document.head.appendChild(script);
+            }
+
+            // Ładowanie wszystkich zasobów
+            assets.icons.forEach(loadLink);
+            assets.styles.forEach(src => loadLink({ rel: 'stylesheet', href: src }));
+            assets.scripts.forEach(loadScript);
         })();
     </script>
-
 </head>
 
 <body>

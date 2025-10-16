@@ -1,4 +1,3 @@
-
 const itemTranslations = {
   /**
    * =============================================
@@ -44,7 +43,7 @@ const itemTranslations = {
     },
     "cityscape-9346479_1920.jpg": {
       title: "Nowoczesne centrum Warszawy nocą",
-      description: "Widok na kompleks biurowo-hotelowy w pobliżu Ronda Daszyńskiego w Warszawie, będący symbolem nowej, biznesowej części miasta."
+      description: "Widok na kompleks biurowo-hotelowy Crowne Plaza i Holiday Inn Express w pobliżu Ronda Daszyńskiego w Warszawie, będący symbolem nowej, biznesowej części miasta."
     },
     "falcon-2795228_1920.jpg": {
       title: "Sosna na Sokolicy, Pieniny",
@@ -55,8 +54,8 @@ const itemTranslations = {
       description: "Słynny gdański deptak nad Motławą z charakterystyczną sylwetką Żurawia w tle. Miejsce tętniące życiem i historią."
     },
     "Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg": {
-      title: "Ulica Mariacka w Gdańsku",
-      description: "Uważana za jedną z najpiękniejszych ulic w Europie, z bogato zdobionymi kamienicami i sklepikami z bursztynem. Prowadzi do Bazyliki Mariackiej."
+      title: "Dziewczynka na Długim Targu w Gdańsku",
+      description: "Mała dziewczynka biegnie po Długim Targu, z kolorowymi kamienicami w tle. Zdjęcie oddaje beztroski klimat gdańskiej starówki."
     },
     "Gdansk_Polska_7227096_1920.jpg": {
       title: "Ulica Mariacka o poranku",
@@ -115,7 +114,7 @@ const itemTranslations = {
       description: "Szerokie ujęcie Rynku w Gliwicach, ukazujące Ratusz oraz otaczające go, historyczne kamienice."
     },
     "Gliwice-Rzeka_River_Polska_6311462_1920.jpg": {
-      title: "Port na Kanale Gliwickim",
+      title: "Motorówka na Kanale Gliwickim",
       description: "Motorówka na Kanale Gliwickim, w tle widoczna infrastruktura portowa. Kanał jest ważną drogą wodną łączącą Śląsk z Odrą."
     },
     "Gliwice-Srodmiescie_Polska_2461654_1920.jpg": {
@@ -550,7 +549,7 @@ const itemTranslations = {
     },
     "cityscape-9346479_1920.jpg": {
       title: "Modern Center of Warsaw at Night",
-      description: "A view of the office and hotel complex near Rondo Daszyńskiego in Warsaw, a symbol of the new business district of the city."
+      description: "A view of the Crowne Plaza and Holiday Inn Express office and hotel complex near Rondo Daszyńskiego in Warsaw, a symbol of the new business district of the city."
     },
     "falcon-2795228_1920.jpg": {
       title: "Pine on Sokolica, Pieniny Mountains",
@@ -561,8 +560,8 @@ const itemTranslations = {
       description: "Gdańsk's famous promenade along the Motława River with the characteristic silhouette of the Crane in the background. A place bustling with life and history."
     },
     "Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg": {
-      title: "Mariacka Street in Gdańsk",
-      description: "Considered one of the most beautiful streets in Europe, with richly decorated tenement houses and amber shops. It leads to St. Mary's Basilica."
+      title: "Girl on the Long Market in Gdańsk",
+      description: "A little girl runs across the Long Market, with colorful tenement houses in the background. The photo captures the carefree atmosphere of Gdańsk's old town."
     },
     "Gdansk_Polska_7227096_1920.jpg": {
       title: "Mariacka Street in the Morning",
@@ -734,7 +733,7 @@ const itemTranslations = {
     },
     "monument-92827_1920.jpg": {
       title: "Monument to the Silesian Insurgents - detail",
-      description: "A close-up of an insurgent figure from the Monument to the Silesian Insurgents in Katowice. The dynamic composition conveys the drama of the fight."
+      description: "A close-up of an insurgent figure from the Monument in Katowice. The dynamic composition conveys the drama of the fight."
     },
     "Morskie-Oko_Mountains_Polska_4652861_1920.jpg": {
       title: "Morskie Oko in the Tatra Mountains",
@@ -1055,7 +1054,7 @@ const itemTranslations = {
     },
     "cityscape-9346479_1920.jpg": {
       title: "Modernes Zentrum von Warschau bei Nacht",
-      description: "Blick auf den Büro- und Hotelkomplex in der Nähe des Rondo Daszyńskiego in Warschau, ein Symbol für den neuen Geschäftsteil der Stadt."
+      description: "Blick auf den Büro- und Hotelkomplex Crowne Plaza und Holiday Inn Express in der Nähe des Rondo Daszyńskiego in Warschau, ein Symbol für den neuen Geschäftsteil der Stadt."
     },
     "falcon-2795228_1920.jpg": {
       title: "Die Kiefer auf der Sokolica, Pieninen",
@@ -1066,8 +1065,8 @@ const itemTranslations = {
       description: "Die berühmte Danziger Promenade an der Mottlau mit der charakteristischen Silhouette des Krantors im Hintergrund. Ein Ort voller Leben und Geschichte."
     },
     "Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg": {
-      title: "Frauengasse (ul. Mariacka) in Danzig",
-      description: "Gilt als eine der schönsten Straßen Europas, mit reich verzierten Bürgerhäusern und Bernsteingeschäften. Sie führt zur Marienkirche."
+      title: "Mädchen auf dem Langen Markt in Danzig",
+      description: "Ein kleines Mädchen läuft über den Langen Markt, mit bunten Bürgerhäusern im Hintergrund. Das Foto fängt die unbeschwerte Atmosphäre der Danziger Altstadt ein."
     },
     "Gdansk_Polska_7227096_1920.jpg": {
       title: "Frauengasse am Morgen",
@@ -1515,5 +1514,3 @@ const itemTranslations = {
     }
   }
 };
-
-
