@@ -1,7 +1,7 @@
 const itemTranslations = {
   /**
    * =============================================
-   * 🇵🇱 BLOK JĘZYKA POLSKIEGO (PL)
+   * 🇵🇱 BLOK JĘZYKA POLSKIEGO (PL) - WERSJA POPRAWIONA
    * =============================================
    */
   pl: {
@@ -23,42 +23,42 @@ const itemTranslations = {
     "alpsee-532864_1920.jpg": {
       title: "Jezioro Alpsee i zamek Hohenschwangau",
       description:
-        "Malowniczy widok na spokojne, turkusowe jezioro Alpsee. Na lewym brzegu widać Zamek Hohenschwangau ukryty wśród drzew.",
+        "Malowniczy widok na spokojne, turkusowe jezioro Alpsee. Na prawym brzegu widać Zamek Hohenschwangau ukryty wśród drzew, a w tle wznoszą się Alpy.",
     },
     "architecture-1046564_1920.jpg": {
       title: "Nowoczesne wieżowce na Placu Poczdamskim",
       description:
-        "Ujęcie z dołu, ukazujące dwa strzeliste, nowoczesne wieżowce (jeden szklany, drugi z regularnymi oknami) na tle niebieskiego nieba. W kadrze widoczny jest także ostry, spiczasty element współczesnej architektury.",
+        "Ujęcie z dołu, ukazujące dwa strzeliste, nowoczesne wieżowce (jeden szklany, drugi z regularnymi oknami) na tle niebieskiego nieba w Berlinie.",
     },
     "architecture-1079806_1920.jpg": {
       title: "Abstrakcyjna, zakrzywiona fasada",
       description:
-        "Architektoniczne, monochromatyczne ujęcie falującej, metalicznej fasady nowoczesnego budynku. Zakrzywiona forma z rzędami małych, kwadratowych okien na ciemnym tle nieba, tworząca kontrast światła i cienia.",
+        "Architektoniczne, monochromatyczne ujęcie falującej, metalicznej fasady nowoczesnego budynku. Zakrzywiona forma z rzędami małych, kwadratowych okien na ciemnym tle nieba.",
     },
     "architecture-3820306_1920.jpg": {
-      title: "Przeszklone zadaszenie metra/peronu",
+      title: "Przeszklone zadaszenie stacji metra",
       description:
-        "Symetryczne ujęcie przeszklonego dachu stacji lub tunelu, z widoczną metalową kratownicą na tle nieba. Perspektywa z dołu, ukazująca metalową konstrukcję i schody ruchome prowadzące w dół.",
+        "Symetryczne ujęcie przeszklonego dachu stacji lub tunelu, z widoczną metalową kratownicą na tle nieba. Perspektywa z dołu, ukazująca metalową konstrukcję i schody ruchome.",
     },
     "architecture-4981949_1920.jpg": {
       title: "Surowy pasaż między budynkami (B&W)",
       description:
-        "Monochromatyczne ujęcie wąskiego pasażu między dwoma masywnymi budynkami (ceglanym i kamiennym). Perspektywa podkreśla powtarzalność geometrycznych form i surowy, monumentalny charakter architektury.",
+        "Monochromatyczne ujęcie wąskiego pasażu między dwoma masywnymi budynkami. Perspektywa podkreśla powtarzalność geometrycznych form i surowy, monumentalny charakter architektury.",
     },
     "architecture-8589487_1920.jpg": {
       title: "Dzielnica Spichlerzy w Hamburgu nocą",
       description:
-        "Nastrojowe, nocne ujęcie kanału w historycznej Dzielnicy Spichlerzy (Speicherstadt). Oświetlone, ceglane budynki odbijają się w spokojnej wodzie, tworząc malowniczy pejzaż miejski.",
+        "Nastrojowe, nocne ujęcie kanału w historycznej Dzielnicy Spichlerzy (Speicherstadt). Oświetlone, ceglane budynki odbijają się w spokojnej wodzie.",
     },
     "architecture-9483952_1920.jpg": {
       title: "Żurawie Domy w Kolonii o zachodzie słońca",
       description:
-        "Nowoczesne budynki 'Kranhäuser' (Żurawie Domy) nad Renem w Kolonii. Architektura na tle dramatycznego, kolorowego nieba o zachodzie słońca. W oddali widoczna sylwetka katedry.",
+        "Nowoczesne budynki 'Kranhäuser' (Żurawie Domy) nad Renem w Kolonii. Architektura na tle dramatycznego, kolorowego nieba. W oddali widoczna sylwetka katedry.",
     },
     "bastei-3014467_1920.jpg": {
-      title: "Most Bastei o poranku",
+      title: "Most Bastei w Saksońskiej Szwajcarii",
       description:
-        "Widok na słynny skalny most Bastei w Saksońskiej Szwajcarii, skąpany w porannej mgle. Dramatyczny krajobraz z piaskowcowymi iglicami i lasem.",
+        "Widok na słynny skalny most Bastei w Saksońskiej Szwajcarii. Dramatyczny krajobraz z piaskowcowymi iglicami i lasem w słoneczny dzień.",
     },
     "bastion-2942474_1920.jpg": {
       title: "Most Bastei o wschodzie słońca",
@@ -71,24 +71,24 @@ const itemTranslations = {
         "Ujęcie z dołu na wielki, oświetlony diabelski młyn (koło widokowe) na tle czystego, niebieskiego nieba. Symetryczna kompozycja podkreśla jego monumentalną konstrukcję.",
     },
     "berlin-4068968_1920.jpg": {
-      title: "Plac Poczdamski w Berlinie",
+      title: "Stacja metra (U-Bahn) w Berlinie",
       description:
-        "Nowoczesne wieżowce i szklane dachy na Potsdamer Platz. Symbol przebudowy i nowoczesności Berlina, kontrastujący z historycznym centrum.",
+        "Dynamiczne ujęcie stacji berlińskiego metra z dwoma pociągami w ruchu. Długi czas naświetlania tworzy efekt rozmytych, żółtych smug po obu stronach peronu.",
     },
     "berlin-4663539_1920.jpg": {
-      title: "East Side Gallery w Berlinie",
+      title: "Wnętrze kopuły Reichstagu w Berlinie",
       description:
-        "Fragment Muru Berlińskiego pokryty sztuką uliczną. Historyczny symbol podzielonego miasta i jednocześnie największa galeria plenerowa na świecie.",
+        "Widok na spiralne rampy wewnątrz nowoczesnej, szklanej kopuły Reichstagu. Turyści spacerują po kładkach, podziwiając panoramę Berlina widoczną za szkłem.",
     },
     "berlin-4692820_1920.jpg": {
-      title: "Ogród botaniczny w Berlinie",
+      title: "Brama Brandenburska nocą z odbiciem w kałuży",
       description:
-        "Szklana cieplarnia w ogrodzie botanicznym. Architektura z metalu i szkła tworzy przestronną i futurystyczną kompozycję.",
+        "Nastrojowe, nocne ujęcie oświetlonej Bramy Brandenburskiej w Berlinie. Monumentalna budowla odbija się w dużej kałuży na pierwszym planie.",
     },
     "berlin-5613467_1920.jpg": {
-      title: "Kopuła Reichstagu w Berlinie nocą",
+      title: "Wieża Telewizyjna (Fernsehturm) w Berlinie",
       description:
-        "Nocne ujęcie fasady Reichstagu w Berlinie. W centrum kadru widoczna jest nowoczesna, przeszklona kopuła na tle oświetlonej historycznej architektury. Zdjęcie charakteryzuje się mocnym kontrastem światła.",
+        "Charakterystyczna Wieża Telewizyjna w Berlinie, widziana zza ram okiennych lub pomiędzy budynkami. Ujęcie podkreśla jej dominację w miejskim krajobrazie.",
     },
     "berlin-8429780_1920.jpg": {
       title: "Panorama Berlina z Bramą Brandenburską",
@@ -96,134 +96,134 @@ const itemTranslations = {
         "Szeroki widok na centrum Berlina z góry, z aleją Straße des 17. Juni prowadzącą prosto do Bramy Brandenburskiej. W tle widoczna jest Katedra Berlińska oraz Czerwony Ratusz.",
     },
     "brandenburg-50492_1920.jpg": {
-      title: "Brama Brandenburska nocą",
+      title: "Pole maków i chabrów w Brandenburgii",
       description:
-        "Oświetlony zabytek odbijający się w kałuży. Klasyczna architektura i cienie drzew tworzą kompozycję pełną historii i refleksji.",
+        "Kolorowa łąka pełna czerwonych maków i niebieskich chabrów na tle zielonego zboża. Sielski, letni krajobraz wiejski pod błękitnym niebem z białymi chmurami.",
     },
     "bridge-1078671_1920.jpg": {
-      title: "Wielki, kratownicowy most stalowy",
+      title: "Most Hohenzollernów i Katedra w Kolonii nocą",
       description:
-        "Ujęcie nowoczesnego, masywnego mostu drogowego o kratownicowej konstrukcji, prowadzącego nad rzeką. Perspektywa z dołu, podkreślająca geometryczną stalową konstrukcję.",
+        "Ikoniczny widok na oświetlony most kolejowy Hohenzollernbrücke nad Renem. W tle widać majestatyczne, gotyckie wieże Katedry Kolońskiej na tle wieczornego nieba.",
     },
     "bridge-1690078_1920.jpg": {
-      title: "Most Mülheimer Brücke w Kolonii",
+      title: "Most Gänstorbrücke i Katedra w Ulm nocą",
       description:
-        "Długi most nad Renem o stalowej konstrukcji. Minimalistyczna forma i chmurne niebo podkreślają inżynieryjne piękno.",
+        "Nocne ujęcie oświetlonego mostu Gänstorbrücke w Ulm. W tle majestatycznie wznosi się gotycka wieża Katedry w Ulm (Ulmer Münster), najwyższego kościoła na świecie.",
     },
     "bridge-5259784_1920.jpg": {
-      title: "Most nocą z gotyckim tłem",
+      title: "Kamienny mostek w parku",
       description:
-        "Oświetlony most z łukami i pionowymi podporami, w tle katedra. Połączenie światła, architektury i historii w miejskim pejzażu.",
+        "Malowniczy, niewielki kamienny mostek łukowy w otoczeniu bujnej zieleni parku. Spokojna, letnia scena z alejką spacerową i wysoką trawą w świetle popołudniowego słońca.",
     },
     "bridge-5621201_1920.jpg": {
-      title: "Most Hohenzollernów i katedra w Kolonii",
+      title: "Kamienny Most (Steinerne Brücke) w Ratyzbonie",
       description:
-        "Złote łuki mostu nad Renem i gotycka katedra w tle. Nastrojowe światła odbijają się w wodzie.",
+        "Widok na historyczny Kamienny Most w Ratyzbonie (Regensburg), prowadzący do bramy Starego Miasta. W tle widać wieżę gotyckiej Katedry św. Piotra.",
     },
     "bridgeheads-263682_1920.jpg": {
-      title: "Świątynia Wenus na moście, Berlin",
+      title: "Przyczółek starego mostu kolejowego",
       description:
-        "Klasycystyczna rotunda na Moście Charlottenburger. Kolumny i łuk mostu tworzą elegancką, historyczną scenerię.",
+        "Monumentalny, ceglany przyczółek zrujnowanego mostu kolejowego, porośnięty dziką roślinnością. Industrialna ruina odbija się w spokojnej wodzie.",
     },
     "building-6994803_1920.jpg": {
-      title: "Dach Centrum Kulturalnego w Hamburgu",
+      title: "Rynek w Rothenburg ob der Tauber",
       description:
-        "Falisty, nowoczesny dach Elbphilharmonie (Filharmonia nad Łabą). Odbicia nieba i wody w szybach dają efekt dynamiki i lekkości.",
+        "Historyczny rynek (Marktplatz) w Rothenburg ob der Tauber. W centrum kadru widoczny jest biały budynek Ratstrinkstube (Gospoda Rajców) z wieżą zegarową.",
     },
     "building-7092747_1920.jpg": {
-      title: "Wieżowiec z dynamicznej perspektywy",
+      title: "Panorama Frankfurtu nad Menem",
       description:
-        "Ujęcie z bliska, z ekstremalnie zniekształconej, szerokokątnej perspektywy, na szklany wieżowiec. Pionowe gzymsy i prostokątne okna tworzą dynamiczny, abstrakcyjny wzór.",
+        "Szeroki widok na Frankfurt z góry. Na pierwszym planie widać historyczną zabudowę Starego Miasta (Römerberg), a w tle wznosi się nowoczesne centrum z drapaczami chmur.",
     },
     "buildings-1804481_1920.jpg": {
-      title: "Kamienice na placu w Monachium",
+      title: "Skyline Frankfurtu o zmierzchu",
       description:
-        "Klasyczne budynki z ozdobnymi fasadami i balkonami. Detale architektoniczne i symetria podkreślają historyczny urok miejskiej architektury.",
+        "Nocna panorama finansowego centrum Frankfurtu nad Menem. Oświetlone wieżowce, w tym charakterystyczny Commerzbank Tower, na tle granatowego nieba o zmierzchu.",
     },
     "buildings-1868962_1920.jpg": {
-      title: "Stare Miasto w Ratyzbonie (Regensburg)",
+      title: "Dzielnica Spichlerzy (Speicherstadt) w Hamburgu nocą",
       description:
-        "Widok na kolorowe fasady kamienic i rzekę Dunaj w Regensburgu. Charakterystyczny kamienny most i historyczne centrum miasta wpisane na listę UNESCO.",
+        "Nastrojowe, nocne ujęcie kanału w historycznej Dzielnicy Spichlerzy. Oświetlone, ceglane budynki odbijają się w spokojnej wodzie.",
     },
     "buildings-6956678_1920.jpg": {
-      title: "Kolorowe kamienice nad kanałem (Hamburg)",
+      title: "Urokliwa uliczka z muru pruskiego",
       description:
-        "Urokliwe, kolorowe kamienice wzdłuż kanału wodnego w Hamburgu. Architektura z cegły i spadziste dachy tworzą klasyczny, miejski pejzaż.",
+        "Wąskie, kamienne schody prowadzące w górę, wzdłuż malowniczych, starych domów z muru pruskiego, ozdobionych czerwonymi kwiatami. Klimatyczna scena z małego miasteczka.",
     },
     "bundestag-204771_1920.jpg": {
-      title: "Kopuła Reichstagu w Berlinie",
+      title: "Wejście do stacji metra Bundestag, Berlin",
       description:
-        "Ikoniczna szklana kopuła na dachu budynku Reichstagu. Symbol nowoczesności i transparentności władzy.",
+        "Nowoczesne, betonowe wejście do stacji berlińskiego metra (U-Bahn) 'Bundestag'. Charakterystyczne niebieskie logo 'U' i nazwa stacji na tle surowej architektury.",
     },
     "bvb-1322728_1920.jpg": {
-      title: "Trybuna z kibicami na stadionie BVB",
+      title: "Flaga klubu Borussia Dortmund (BVB)",
       description:
-        "Zbiór kibiców na słynnej trybunie Signal Iduna Park w Dortmundzie. Scena uchwycona w trakcie meczu piłkarskiego.",
+        "Żółto-czarna flaga z logo klubu piłkarskiego Borussia Dortmund (BVB 09), powiewająca na wietrze na tle gałęzi drzew.",
     },
     "camp-4522970_1920.jpg": {
-      title: "Letni obóz w Bawarii",
+      title: "Kemping pod gwiazdami",
       description:
-        "Dziecięcy obóz na polanie w górach. Drewniane domki kempingowe i namioty otoczone wysokimi iglastymi drzewami.",
+        "Nocne ujęcie oświetlonego namiotu pod prowizorycznym zadaszeniem (tarpem). Osoba w środku odpoczywa, a nad nią widać rozgwieżdżone niebo z chmurami w ruchu.",
     },
     "castle-2694027_1920.jpg": {
-      title: "Zamek Neuschwanstein (klasyczne ujęcie)",
+      title: "Zamek Lichtenstein w Badenii-Wirtembergii",
       description:
-        "Najbardziej rozpoznawalny widok na Zamek Neuschwanstein. Bajkowy zamek na tle zielonych lasów i Alp.",
+        "Bajkowy, neogotycki zamek Lichtenstein, zbudowany na stromej skale nad zalesioną doliną. Jeden z najbardziej malowniczych zamków w Niemczech.",
     },
     "castle-467116_1920.jpg": {
-      title: "Zamek Neuschwanstein z mostu Marienbrücke",
+      title: "Zamek Neuschwanstein i panorama Alp",
       description:
-        "Ujęcie zamku z perspektywy mostu wiszącego Marienbrücke. Malownicza kompozycja z zamkiem na skale.",
+        "Ujęcie zamku z perspektywy góry. Malownicza kompozycja z zamkiem na skale i rozległym krajobrazem jezior i równin w tle.",
     },
     "castle-50521_1280.jpg": {
-      title: "Zamek w Heidelbergu (Heidelberger Schloss)",
+      title: "Pałac Kórnicki w Polsce (błędne zdjęcie)",
       description:
-        "Imponujące ruiny zamku w Heidelbergu, widoczne z zielonego wzgórza. Historyczna architektura i panoramiczny widok na dolinę rzeki Neckar.",
+        "Zdjęcie przedstawia pałac w Kórniku w Polsce, a nie Zamek w Heidelbergu. Klasycystyczna architektura otoczona parkiem i jeziorem.",
     },
     "castle-5116436_1920.jpg": {
-      title: "Zamek Cochem nad Mozelą",
-      description:
-        "Gotycki zamek położony na wzgórzu, górujący nad miasteczkiem. Architektura z kamienia i czerwone dachy otoczone zielenią.",
-    },
-    "castle-5745011_1920.jpg": {
-      title: "Zamek Linderhof nocą",
-      description:
-        "Nocne ujęcie pałacu Linderhof w Bawarii. Oświetlona fasada odbija się w spokojnej wodzie basenu przed zamkiem.",
-    },
-    "castle-6565029_1920.jpg": {
-      title: "Zamek Neuschwanstein w zimowej scenerii",
-      description:
-        "Zamek Neuschwanstein pokryty śniegiem. Bajkowy widok w białej, zimowej scenerii.",
-    },
-    "castle-6566978_1920.jpg": {
-      title: "Widok na alpejski zamek i jezioro",
-      description:
-        "Zamek na tle gór. Idealne połączenie architektury i natury. Zamek leży nad małym, górskim jeziorem.",
-    },
-    "castle-6885449_1920.jpg": {
-      title: "Zamek Schwerin (Schweriner Schloss)",
-      description:
-        "Bajkowy zamek na wyspie, otoczony wodą. Neorenesansowa architektura z wieżami i fasadami z cegły.",
-    },
-    "castle-6899041_1920.jpg": {
       title: "Zamek Neuschwanstein o zachodzie słońca",
       description:
         "Zamek w ciepłych kolorach zachodzącego słońca. Dramatyczny krajobraz górski i zamek na skale.",
     },
-    "castle-6899042_1920.jpg": {
-      title: "Zamek Neuschwanstein w pełnym słońcu",
+    "castle-5745011_1920.jpg": {
+      title: "Zamek Hohenzollern nocą",
       description:
-        "Klasyczne ujęcie zamku w słoneczny dzień. Biała fasada na tle błękitnego nieba i zielonych lasów.",
+        "Nocne ujęcie oświetlonego zamku Hohenzollern na szczycie góry. Widok na morze świateł w dolinie.",
+    },
+    "castle-6565029_1920.jpg": {
+      title: "Zamek Hohenzollern o wschodzie słońca",
+      description:
+        "Zamek Hohenzollern na szczycie góry na tle spektakularnego, różowego nieba o wschodzie słońca. W dolinach mgły.",
+    },
+    "castle-6566978_1920.jpg": {
+      title: "Pałac Drachenburg w Königswinter",
+      description:
+        "Neogotycki pałac Drachenburg z ozdobną fasadą, wieżyczkami i balkonami, otoczony zadbanym ogrodem.",
+    },
+    "castle-6885449_1920.jpg": {
+      title: "Zamek Hohenzollern w zimowej scenerii",
+      description:
+        "Zamek Hohenzollern na szczycie góry, widoczny z daleka w mroźny, zimowy dzień. Oszronione drzewa na pierwszym planie.",
+    },
+    "castle-6899041_1920.jpg": {
+      title: "Zamek Hohenzollern ponad chmurami",
+      description:
+        "Zamek Hohenzollern wynurzający się z morza chmur i mgły w zimowy dzień. Oszronione drzewa na zboczach góry.",
+    },
+    "castle-6899042_1920.jpg": {
+      title: "Zamek Hohenzollern we mgle",
+      description:
+        "Zamek Hohenzollern na szczycie góry, częściowo spowity gęstą mgłą. Skały i drzewo na pierwszym planie.",
     },
     "castle-7264664_1920.jpg": {
-      title: "Zamek Marienburg (Würzburg)",
+      title: "Zamek Cochem nad Mozelą",
       description:
-        "Widok na twierdzę Marienburg, górującą nad rzeką Men i miastem Würzburg. Masywne, historyczne fortyfikacje.",
+        "Gotycki zamek położony na wzgórzu, górujący nad rzeką Mozelą i miasteczkiem. Architektura z kamienia i czerwone dachy otoczone zielenią.",
     },
     "cathedral-4404207_1920.jpg": {
-      title: "Gotyckie sklepienie katedry",
+      title: "Katedra w Spirze (Speyer) o zachodzie słońca",
       description:
-        "Ujęcie wnętrza katedry z perspektywy z dołu, ukazujące imponujące sklepienie krzyżowo-żebrowe. Architektura gotycka z ciemnymi kamiennymi filarami.",
+        "Monumentalna, romańska Katedra w Spirze na tle pomarańczowego nieba o zachodzie słońca. Jeden z najważniejszych zabytków Niemiec.",
     },
     "christmas-market-4705877_1920.jpg": {
       title: "Jarmark Bożonarodzeniowy w Niemczech",
@@ -231,189 +231,189 @@ const itemTranslations = {
         "Ujęcie z góry na oświetlony plac bożonarodzeniowy. Stragany, karuzele i mnóstwo ludzi. Magiczna, zimowa atmosfera.",
     },
     "christmas-market-4705885_1920.jpg": {
-      title: "Ozdobne budki na jarmarku",
+      title: "Karuzela na jarmarku we Frankfurcie",
       description:
-        "Zbliżenie na drewniane, świątecznie udekorowane stragany. Detale, światełka i bożonarodzeniowe dekoracje.",
+        "Ozdobna, oświetlona karuzela na jarmarku bożonarodzeniowym. W tle historyczne domy z muru pruskiego na placu Römerberg we Frankfurcie.",
     },
     "church-188087_1920.jpg": {
-      title: "Wieża kościoła w Garmisch-Partenkirchen",
+      title: "Wnętrze nowoczesnego kościoła",
       description:
-        "Charakterystyczna, barokowa wieża kościoła z kolorowymi malowidłami. Budynek otoczony tradycyjnymi bawarskimi domami.",
+        "Symetryczne ujęcie nawy głównej nowoczesnego kościoła w sepii. Widok na ławki, chór z organami i sklepienie żebrowe.",
     },
     "church-5985941_1920.jpg": {
-      title: "Katedra w Kolonii nocą",
+      title: "Stare Miasto w Kolonii",
       description:
-        "Nocne ujęcie Katedry Kolońskiej. Gotycka architektura oświetlona mocnym, ciepłym światłem. W tle widoczny pobliski wieżowiec.",
+        "Widok na dachy Starego Miasta w Kolonii, z romańskim kościołem św. Marcina i gotyckimi wieżami Katedry Kolońskiej w tle.",
     },
     "church-6384849_1920.jpg": {
-      title: "Wieża Katedry Berlińskiej (Berliner Dom)",
+      title: "Kościół Marii Panny (Frauenkirche) w Dreźnie",
       description:
-        "Monumentalna kopuła i wieże katedry w Berlinie. Barokowa architektura sakralna na tle błękitnego nieba.",
+        "Widok na barokową kopułę Kościoła Marii Panny z perspektywy wąskiej, historycznej uliczki w Dreźnie.",
     },
     "city-1658471_1920.jpg": {
-      title: "Panorama Frankfurtu z rzeki Men",
+      title: "Dzielnica Spichlerzy (Speicherstadt) w Hamburgu",
       description:
-        "Szeroki widok na nowoczesne wieżowce Frankfurtu. Sylwetka miasta odbija się w spokojnej rzece Men.",
+        "Symetryczne ujęcie kanału w historycznej Dzielnicy Spichlerzy w Hamburgu, otoczonego wysokimi, ceglanymi magazynami.",
     },
     "city-3021474_1920.jpg": {
-      title: "Monachium (widok na ratusz)",
+      title: "Nocna panorama Ulm z Katedrą",
       description:
-        "Fragment panoramy Monachium z widocznymi gotyckimi wieżami Nowego Ratusza. Architektura historycznego centrum miasta.",
+        "Szeroka, nocna panorama miasta Ulm. W centrum kadru oświetlona jest gotycka Katedra (Ulmer Münster), najwyższy kościół na świecie.",
     },
     "city-3150866_1920.jpg": {
-      title: "Kolorowe kamienice w Bambergu",
+      title: "Jezioro Phoenix w Dortmundzie o zmierzchu",
       description:
-        "Rząd kolorowych, historycznych kamienic położonych wzdłuż rzeki Regnitz. Urokliwe, stare miasto w Bambergu.",
+        "Widok na jezioro Phoenix i nowoczesną zabudowę mieszkalną. W tle widoczna wieża telewizyjna Florianturm.",
     },
     "city-3150867_1920.jpg": {
-      title: "Most Starego Ratusza w Bambergu",
+      title: "Nocna panorama Jeziora Phoenix w Dortmundzie",
       description:
-        "Widok na Stary Ratusz w Bambergu, unikalnie zbudowany na sztucznej wyspie na rzece. Architektura z muru pruskiego.",
+        "Szeroki widok na oświetlone, nowoczesne osiedle nad jeziorem Phoenix nocą. W tle widoczne centrum Dortmundu i wieża Florianturm.",
     },
     "city-4848202_1920.jpg": {
-      title: "Skyline Frankfurtu nocą (ujęcie z lotu ptaka)",
+      title: "Rynek Römerberg we Frankfurcie nocą",
       description:
-        "Nocna panorama miasta. Wieżowce Frankfurtu oświetlone, a światła tworzą dynamiczną kompozycję.",
+        "Szerokokątne ujęcie historycznego placu Römerberg nocą. Oświetlone domy z muru pruskiego i mokra, brukowana nawierzchnia.",
     },
     "city-6979390_1920.jpg": {
-      title: "Ulica na Starym Mieście w Monachium",
+      title: "Nabrzeże w porcie w Düsseldorfie nocą (B&W)",
       description:
-        "Wąska, brukowana uliczka w historycznym centrum Monachium. Klasyczne fasady kamienic i historyczny urok.",
+        "Monochromatyczne, nocne ujęcie nabrzeża w Düsseldorfie. Odbicia świateł w wodzie i nowoczesna architektura w tle.",
     },
     "city-8450817_1920.jpg": {
-      title: "Wieżowce we Frankfurcie nad Menem nocą",
+      title: "Most Hohenzollernów i Katedra w Kolonii nocą",
       description:
-        "Nocne, dynamiczne ujęcie nowoczesnych wieżowców finansowej dzielnicy Frankfurtu. Odbicia świateł w szklanych fasadach.",
+        "Nocny widok na rzekę Ren, most Hohenzollernbrücke z przejeżdżającym pociągiem i oświetloną Katedrę Kolońską.",
     },
     "cloister-2041063_1920.jpg": {
-      title: "Krużganki klasztoru (B&W)",
+      title: "Krużganki pałacu w Mannheim",
       description:
-        "Monochromatyczne ujęcie krużganków klasztoru. Powtarzalność kolumn i łuków tworzy geometryczny, medytacyjny wzór.",
+        "Ujęcie długich, łukowatych krużganków Pałacu w Mannheim. Perspektywa, gra światła i cienia podkreślają monumentalizm architektury.",
     },
     "cochem-castle-6791148_1920.jpg": {
-      title: "Zamek Cochem w pełnym słońcu",
+      title: "Zamek Cochem o zachodzie słońca",
       description:
-        "Klasyczne ujęcie średniowiecznego zamku w Cochem, położonego na wzgórzu. Ujęcie z pobliskich winnic.",
+        "Dramatyczne ujęcie średniowiecznego zamku Cochem na wzgórzu, otoczonego lasem, na tle zachodzącego słońca.",
     },
     "cologne-cathedral-1846338_1920.jpg": {
-      title: "Gotycka iglica Katedry Kolońskiej",
+      title: "Nocna panorama Kolonii z Katedrą i mostem",
       description:
-        "Zbliżenie na smukłe, gotyckie wieże katedry w Kolonii, symbol miasta. Detale architektoniczne i kamienne zdobienia.",
+        "Szeroki, nocny widok na Kolonię z lotu ptaka. Na pierwszym planie oświetlony most Hohenzollernbrücke, za nim Katedra i dworzec główny.",
     },
     "construction-phase-1570221_1920.jpg": {
       title: "Budowa osiedla nad jeziorem Phoenix, Dortmund",
       description:
-        "Krajobraz z jeziorem Phoenix (Phoenix-See) w Dortmundzie na pierwszym planie. Na brzegu widoczne są nowoczesne domy w trakcie budowy, z dźwigami w tle, co ilustruje rewitalizację terenów poprzemysłowych.",
+        "Krajobraz z jeziorem Phoenix (Phoenix-See) w Dortmundzie. Na brzegu widoczne są nowoczesne domy w trakcie budowy, z dźwigami w tle.",
     },
     "converter-187706_1920.jpg": {
-      title: "Konwerter stalowy w hucie (B&W)",
+      title: "Konwerter stalowy, zabytek techniki",
       description:
-        "Monochromatyczne ujęcie wnętrza starej huty. Monumentalne, pofabryczne maszyny i industrialna atmosfera.",
+        "Historyczny konwerter stalowy z huty Phoenix-West w Dortmundzie, ustawiony jako pomnik nad jeziorem Phoenix.",
     },
     "crane-houses-7518551_1920.jpg": {
-      title: "Żurawie domy w Kolonii",
+      title: "Żurawie Domy w Kolonii (ujęcie z dołu)",
       description:
-        "Nowoczesne apartamentowce w porcie w Kolonii, przypominające kształtem żurawie portowe. Architektura na tle nieba.",
+        "Nowoczesne apartamentowce w porcie w Kolonii, przypominające kształtem żurawie portowe. Ujęcie z poziomu ulicy, podkreślające ich wysokość i symetrię.",
     },
     "crowd-2140590_1920.jpg": {
-      title: "Tłum na ulicy Berlina",
+      title: "Tłum kibiców z flagami Niemiec",
       description:
-        "Dynamiczne ujęcie tłumu ludzi na ulicy w Berlinie. Ujęcie z perspektywy z góry, z widoczną sygnalizacją świetlną.",
+        "Gęsty tłum ludzi machających niemieckimi flagami podczas wydarzenia sportowego lub festiwalu. Morze rąk i barw narodowych.",
     },
     "dockland-4431309_1920.jpg": {
-      title: "Budynek Dockland w Hamburgu",
+      title: "Budynek Dockland w Hamburgu o zmierzchu",
       description:
-        "Charakterystyczny, szklany budynek biurowy o kształcie statku na wodzie. Symbol nowoczesności w porcie Hamburga.",
+        "Charakterystyczny, szklany budynek biurowy o kształcie statku na tle kolorowego nieba o zachodzie słońca. Symbol nowoczesności w porcie Hamburga.",
     },
     "dortmund-1570255_1920.jpg": {
-      title: "Wieża Reinoldikirche w Dortmundzie",
+      title: "Zamek Bodelschwingh w Dortmundzie",
       description:
-        "Wieża Kościoła św. Rajnolda w Dortmundzie. Historyczny symbol miasta i jeden z jego najwyższych punktów.",
+        "Historyczny zamek na wodzie (Wasserschloss) w dzielnicy Bodelschwingh. Architektura z wieżą i ozdobnymi fasadami o zachodzie słońca.",
     },
     "dortmund-1592410_1920.jpg": {
-      title: "Industrialny Park Technologiczny w Dortmundzie",
+      title: "Futurystyczny pawilon nad jeziorem Phoenix",
       description:
-        "Nowoczesne budynki biurowe w dzielnicy technologicznej. Szkło i metal tworzą sterylną, biznesową architekturę.",
+        "Nowoczesny, biały pawilon o organicznych, zaokrąglonych kształtach, zlokalizowany na pomoście nad jeziorem Phoenix w Dortmundzie.",
     },
     "dortmund-1592414_1920.jpg": {
-      title: "Stadion Signal Iduna Park, Dortmund",
+      title: "Relaks nad Jeziorem Phoenix w Dortmundzie",
       description:
-        "Widok na stadion z zewnątrz, z charakterystycznymi żółtymi pylonami podtrzymującymi konstrukcję dachu.",
+        "Osoba odpoczywająca na drewnianym pomoście nad Jeziorem Phoenix. W tle nowoczesna zabudowa mieszkalna na zielonym wzgórzu.",
     },
     "dortmund-4524887_1920.jpg": {
-      title: "Dortmunder U nocą",
+      title: "Kościół św. Rajnolda w Dortmundzie",
       description:
-        "Oświetlony budynek 'Dortmunder U' (dawny browar, obecnie centrum sztuki i kreatywności). Ikona miasta.",
+        "Wieża kościoła św. Rajnolda (Reinoldikirche) widziana z perspektywy ulicy, z kwitnącymi kwiatami na pierwszym planie.",
     },
     "dortmund-5107851_1920.jpg": {
-      title: "Dortmunder U od strony fasady",
+      title: "Dortmunder U i mural w Dortmundzie",
       description:
-        "Szklana fasada budynku 'Dortmunder U' z charakterystycznym, podświetlonym logiem w kształcie litery U.",
+        "Widok na budynek 'Dortmunder U' z oddali. Na pierwszym planie, na ścianie kamienicy, widoczny jest duży mural z portretem i cytatem.",
     },
     "dortmund-5176206_1920.jpg": {
-      title: "Wieża Floriana (Florianturm) w Dortmundzie",
+      title: "Nowoczesna architektura w Dortmundzie",
       description:
-        "Widok na wieżę telewizyjną Floriana w Parku Westfalenpark. Symbol nowoczesności miasta i punkt widokowy.",
+        "Zderzenie różnych form architektonicznych: ceglanej fasady, szklanych ścian i zaokrąglonego wieżowca w centrum Dortmundu. W tle budynek Signal Iduna.",
     },
     "dortmund-5324505_1920.jpg": {
-      title: "Dortmund, Stare Miasto",
+      title: "Owce na wzgórzu z widokiem na miasto",
       description:
-        "Ujęcie historycznego centrum Dortmundu z widocznymi wieżami kościołów i placem miejskim. Architektura z czerwonej cegły.",
+        "Stado owiec pasące się na zielonym wzgórzu. W oddali widoczna panorama miasta, prawdopodobnie Dortmundu lub okolic Zagłębia Ruhry.",
     },
     "dortmund-602959_1920.jpg": {
-      title: "Katedra św. Reinolda (Reinoldikirche), Dortmund",
+      title: "Dortmunder U, widok na szczyt",
       description:
-        "Ujęcie głównego portalu i wieży kościoła św. Rajnolda. Architektura sakralna z detalami z czerwonej cegły.",
+        "Zbliżenie na szczyt budynku 'Dortmunder U' z charakterystycznym, złotym logo w kształcie litery 'U' na tle błękitnego nieba.",
     },
     "dortmund-602962_1920.jpg": {
-      title: "Kościół św. Marii (Marienkirche), Dortmund",
+      title: "Dortmunder U, detal logo",
       description:
-        "Widok na fasadę Kościoła Mariackiego. Romańsko-gotycka architektura i proste linie budynku.",
+        "Zbliżenie na złote, podświetlone logo 'U' na dachu budynku Dortmunder U, na tle błękitnego nieba z chmurami.",
     },
     "dortmunder-u-260304_1920.jpg": {
-      title: "Wnętrze Dortmunder U",
+      title: "Detal fasady Dortmunder U",
       description:
-        "Industrialne wnętrze budynku 'Dortmunder U' z widocznymi, surowymi elementami konstrukcyjnymi.",
+        "Zbliżenie na szczyt budynku 'Dortmunder U' z charakterystycznym logo 'U' i kolorowymi, mozaikowymi panelami w oknach.",
     },
     "dortmunder-u-4662846_1920.jpg": {
-      title: "Detale Dortmunder U (B&W)",
+      title: "Dortmunder U, detal fasady i logo",
       description:
-        "Monochromatyczne zbliżenie na detale fasady i podświetlone logo 'U' na szczycie budynku.",
+        "Zbliżenie na górną część budynku 'Dortmunder U' z podświetlonym logo i oknami z artystycznymi instalacjami.",
     },
     "dortmunder-u-5107834_1920.jpg": {
-      title: "Dortmunder U, szerokie ujęcie nocą",
+      title: "Dortmunder U w pełnej okazałości",
       description:
-        "Nocny widok na budynek, ze szklanymi fasadami i podświetlonym logo 'U' na tle ciemnego nieba.",
+        "Szerokie ujęcie budynku 'Dortmunder U', dawnego browaru, a obecnie centrum sztuki i kreatywności. Widoczny napis 'KEINEN ABSTAND' na fasadzie.",
     },
     "dresden-5987976_1920.jpg": {
-      title: "Kościół Marii Panny (Frauenkirche) w Dreźnie",
+      title: "Uliczka w Dreźnie z widokiem na Frauenkirche",
       description:
-        "Ikona Drezna. Odbudowany Kościół Marii Panny z charakterystyczną kopułą. Barokowa architektura sakralna w centrum miasta.",
+        "Historyczna, brukowana uliczka w Dreźnie, otoczona kamienicami. W perspektywie ulicy widać majestatyczną kopułę Kościoła Marii Panny (Frauenkirche).",
     },
     "eibsee-7352987_1920.jpg": {
       title: "Góra Zugspitze i Jezioro Eibsee",
       description:
-        "Malowniczy widok na turkusowe jezioro Eibsee i górujący nad nim masyw Zugspitze (najwyższy szczyt Niemiec).",
+        "Malowniczy widok na turkusowe jezioro Eibsee i górujący nad nim masyw Zugspitze (najwyższy szczyt Niemiec), widziany przez naturalną ramę z drzew.",
     },
     "europe-6779227_1920.jpg": {
-      title: "Flaga Unii Europejskiej na fasadzie",
+      title: "Katedra w Moguncji (Mainz)",
       description:
-        "Flagi Unii Europejskiej powiewające na wietrze, na tle szklanej fasady nowoczesnego budynku.",
+        "Widok na romańską Katedrę św. Marcina w Moguncji. Masywna budowla z czerwonego piaskowca z charakterystycznymi wieżami.",
     },
     "europe-7492984_1920.jpg": {
-      title: "Ogród różany nad Renem w Kolonii",
+      title: "Szczyt Watzmann w Alpach Berchtesgadeńskich",
       description:
-        "Widok na ogród różany w Kolonii, z ławkami i fontanną. W tle widoczne budynki i rzeka Ren.",
+        "Majestatyczny, ośnieżony szczyt góry Watzmann, częściowo spowity chmurami. Dramatyczny, surowy krajobraz alpejski.",
     },
     "exzenterhaus-2175925_1920.jpg": {
       title: "Exzenterhaus w Bochum",
       description:
-        "Charakterystyczny, cylindryczny wieżowiec w Bochum. Nowoczesna architektura z dynamicznym układem okien.",
+        "Charakterystyczny, cylindryczny wieżowiec w Bochum. Nowoczesna architektura z dynamicznym układem okien i balkonów.",
     },
     "factory-1639990_1920.jpg": {
-      title: "Budynki fabryczne (architektura industrialna)",
+      title: "Huta w Völklingen (Völklinger Hütte)",
       description:
-        "Ujęcie starych budynków fabrycznych z cegły. Architektura przemysłowa z rzędami okien i kominami.",
+        "Industrialny krajobraz byłej huty żelaza, wpisanej na listę UNESCO. Monumentalne, zardzewiałe konstrukcje, rury i piece.",
     },
     "fairytale-532850_1920.jpg": {
       title: "Zamek Neuschwanstein (ujęcie z oddali)",
@@ -421,144 +421,144 @@ const itemTranslations = {
         "Widok na bajkowy zamek, ukryty w lesie na skale. Ujęcie z pobliskiej góry, podkreślające romantyczny charakter budowli.",
     },
     "field-3379250_1920.jpg": {
-      title: "Winnice i zamek w Cochem",
+      title: "Zielona dolina Renu",
       description:
-        "Rozległe winnice na wzgórzach. W tle widoczny średniowieczny Zamek Cochem. Typowy krajobraz doliny Mozeli.",
+        "Rozległy, zielony krajobraz z polami i lasami w dolinie rzeki Ren. Widok z góry na spokojną, sielską okolicę.",
     },
     "foggy-4660940_1920.jpg": {
-      title: "Jesienny las we mgle",
+      title: "Tajemniczy las we mgle",
       description:
-        "Droga leśna w gęstej mgle. Drzewa z jesiennymi, kolorowymi liśćmi. Tajemnicza, nastrojowa atmosfera.",
+        "Zbocze wzgórza porośnięte rzadkim lasem bezlistnych drzew. Gęsta mgła tworzy mroczną i tajemniczą atmosferę.",
     },
     "forest-3194475_1920.jpg": {
-      title: "Leśna ścieżka w Bawarii",
+      title: "Leśny strumień i odbicia",
       description:
-        "Ścieżka spacerowa w głębokim, zielonym lesie w Alpach Bawarskich. Urokliwy, naturalny krajobraz.",
+        "Spokojny strumień lub rzeka płynąca przez las. Drzewa i niebo odbijają się w wodzie, tworząc malowniczy, nastrojowy krajobraz.",
     },
     "fortress-4670149_1920.jpg": {
-      title: "Twierdza Königstein",
+      title: "Dziedziniec Twierdzy Marienberg w Würzburgu",
       description:
-        "Monumentalna twierdza Königstein na szczycie góry. Historyczne fortyfikacje i panoramiczny widok na Saksońską Szwajcarię.",
+        "Widok z wąskiej uliczki na wewnętrzny dziedziniec twierdzy Marienberg. Centralnym punktem jest kościół z charakterystyczną kopułą (Marienkirche).",
     },
     "frankfurt-3581739_1920.jpg": {
-      title: "Wieżowce Frankfurtu o wschodzie słońca",
+      title: "Panorama Frankfurtu o zmierzchu z mostu",
       description:
-        "Sylwetka nowoczesnych budynków na tle nieba o wschodzie słońca. Ciepłe światło omiata szklane fasady.",
+        "Szeroki widok na nowoczesne wieżowce Frankfurtu na tle nieba o zmierzchu. Na pierwszym planie oświetlony most nad Menem, którego światła odbijają się w wodzie.",
     },
     "frankfurt-7092736_1920.jpg": {
-      title: "Skyline Frankfurtu z dynamicznej perspektywy",
+      title: "Kontrast architektury we Frankfurcie",
       description:
-        "Szerokokątne ujęcie wieżowców z poziomu ulicy. Architektura dominująca w centrum miasta.",
+        "Ujęcie z wąskiej uliczki Starego Miasta (Römerberg) we Frankfurcie, ukazujące kontrast między historyczną zabudową a nowoczesnymi wieżowcami w tle.",
     },
     "freiburg-76217_1920.jpg": {
-      title: "Brama miejska w Freiburgu (Schwabentor)",
+      title: "Ulica we Fryburgu nocą",
       description:
-        "Historyczna brama miejska Schwabentor z wieżą zegarową. Element architektury średniowiecznego miasta.",
+        "Nastrojowe, nocne ujęcie ulicy we Fryburgu Bryzgowijskim (Freiburg im Breisgau). Zaparkowane rowery, kawiarniane stoliki i oświetlone kamienice.",
     },
     "frozen-lake-7658478_1920.jpg": {
-      title: "Zamarznięte jezioro w Alpach",
+      title: "Zamarznięte jezioro o wschodzie słońca",
       description:
-        "Zamarznięta tafla jeziora w otoczeniu wysokich, ośnieżonych Alp. Zimowy, surowy krajobraz górski.",
+        "Zimowy krajobraz z zamarzniętym jeziorem. Wschodzące słońce przebija się przez rząd drzew bez liści, tworząc długie cienie na lodzie.",
     },
     "germany-1014376_1920.jpg": {
-      title: "Wzgórza i zamglona dolina (Harz)",
+      title: "Zamek Neuschwanstein w Bawarii",
       description:
-        "Widok na zalesione wzgórza pogórza Harz. W dolinie zalega gęsta mgła, tworząc nastrojowy krajobraz.",
+        "Malowniczy widok na bajkowy Zamek Neuschwanstein, położony na wzgórzu. W tle widać jezioro i rozległą dolinę.",
     },
     "germany-2063598_1920.jpg": {
-      title: "Pola i pagórki w Nadrenii-Palatynacie",
+      title: "Zamek i Katedra w Miśni (Meissen)",
       description:
-        "Zielony krajobraz z polami uprawnymi, w tle łagodne pagórki i małe miasteczko. Typowy wiejski krajobraz Niemiec.",
+        "Widok od strony rzeki Łaby na Wzgórze Zamkowe w Miśni. Widoczny jest gotycki zamek Albrechtsburg oraz wieże Katedry św. Jana i św. Donata.",
     },
     "germany-2077473_1920.jpg": {
-      title: "Świątynia na moście w Berlinie (B&W)",
+      title: "Góry we mgle o wschodzie słońca",
       description:
-        "Monochromatyczne ujęcie Świątyni Wenus na Moście Charlottenburger. Klasycystyczna architektura i cień.",
+        "Warstwy górskich szczytów spowite poranną mgłą. Delikatne, pastelowe kolory nieba o wschodzie słońca tworzą minimalistyczny, spokojny krajobraz.",
     },
     "germany-2284072_1920.jpg": {
-      title: "Widok na Kościół Mariacki w Monachium",
+      title: "Maszyna parowa w muzeum techniki",
       description:
-        "Dwie charakterystyczne, ceglane wieże Kościoła Mariackiego (Frauenkirche). Symbol Monachium.",
+        "Zbliżenie na detale starej, potężnej maszyny parowej. Mosiężne smarownice i stalowe elementy w industrialnym otoczeniu.",
     },
     "germany-2819467_1920.jpg": {
-      title: "Wioska w Alpach Bawarskich",
+      title: "Mechanizm maszyny parowej",
       description:
-        "Tradycyjne bawarskie domy z drewnianymi balkonami. W tle strome, ośnieżone Alpy. Idyliczny krajobraz.",
+        "Zbliżenie na korbowód i inne mechanizmy potężnej, historycznej maszyny parowej. Surowy, industrialny klimat.",
     },
     "germany-2822740_1920.jpg": {
-      title: "Pola i drzewa w Hesji (Hessen)",
+      title: "Mechanizm maszyny parowej DEMAG",
       description:
-        "Zielone pola uprawne, wzdłuż których biegnie droga. W tle rząd drzew i widoczne wzniesienia.",
+        "Perspektywiczne ujęcie rzędu cylindrów i mechanizmów potężnej maszyny parowej firmy DEMAG. Industrialna symetria i potęga.",
     },
     "germany-7264701_1920.jpg": {
-      title: "Wioska w dolinie Mozeli",
+      title: "Winnice i dolina rzeki Mozeli",
       description:
-        "Malownicza wioska wzdłuż rzeki Mozela. Winnice na stromych zboczach. Urokliwy, spokojny krajobraz.",
+        "Rozległy widok na zielone winnice na stromych zboczach doliny rzeki Mozeli. W dole widać rzekę i małe miasteczko.",
     },
     "germany-7534750_1920.jpg": {
-      title: "Pola uprawne w Północnych Niemczech",
+      title: "Rynek w Ochsenfurt",
       description:
-        "Rozległe pola z dojrzałymi zbożami, w tle las i niewielkie gospodarstwa. Charakterystyczny wiejski pejzaż.",
+        "Historyczny plac w miasteczku Ochsenfurt w Bawarii. Charakterystyczne budynki, fontanna i wieża kościoła w tle.",
     },
     "graffiti-2154261_1920.jpg": {
-      title: "Fragment muru z graffiti",
+      title: "Mural z motywem chemicznym",
       description:
-        "Ściana pokryta kolorowym, dynamicznym graffiti. Sztuka uliczna i miejski charakter.",
+        "Kolorowy mural przedstawiający postać w hełmie, która przez lupę wlewa ciecz do puszki z aerozolem. Dynamiczna kompozycja w stylu street art.",
     },
     "grass-4338114_1920.jpg": {
-      title: "Łąka z widokiem na Zamek Neuschwanstein",
+      title: "Drewniana kładka przez wydmy",
       description:
-        "Słoneczna łąka z wysoką trawą. W tle widoczny Zamek Neuschwanstein. Sielski, bawarski krajobraz.",
+        "Drewniana ścieżka prowadząca przez piaszczyste wydmy porośnięte wysoką trawą. Nadmorski krajobraz, prawdopodobnie nad Morzem Północnym lub Bałtykiem.",
     },
     "gully-1028040_1920.jpg": {
-      title: "Wąwóz Partnachklamm w Garmisch",
+      title: "Właz kanalizacyjny w Dortmundzie",
       description:
-        "Surowy, głęboki wąwóz skalny z krystalicznie czystą wodą. Dramatyczny krajobraz naturalny.",
+        "Zbliżenie na metalowy właz kanalizacyjny na brukowanej ulicy. Na włazie widnieje herb miasta Dortmund (statek) i napis 'STADT DORTMUND HANSAPLATZ'.",
     },
     "hamburg-1340004_1920.jpg": {
-      title: "Woda w kanale i mosty w Hamburgu",
+      title: "Dzielnica Spichlerzy w Hamburgu nocą",
       description:
-        "Ujęcie kanału w Hamburgu, z widocznymi mostami i historycznymi budynkami. Woda odbija architekturę.",
+        "Nastrojowe, nocne ujęcie kanału w historycznej Dzielnicy Spichlerzy (Speicherstadt). Oświetlone, ceglane budynki odbijają się w spokojnej wodzie.",
     },
     "hamburg-2976711_1920.jpg": {
-      title: "Kładka w Dzielnicy Spichlerzy (Speicherstadt)",
+      title: "Kanał i most w Speicherstadt o zachodzie słońca",
       description:
-        "Nocne ujęcie kładki nad kanałem w Speicherstadt. Oświetlone, historyczne budynki z cegły odbijają się w wodzie.",
+        "Ujęcie kanału w Dzielnicy Spichlerzy w Hamburgu. Ciepłe światło zachodzącego słońca oświetla ceglane budynki i metalowy most.",
     },
     "hamburg-3071437_1920.jpg": {
-      title: "Budynki z cegły w Speicherstadt",
+      title: "Most i architektura nad kanałem w Hamburgu",
       description:
-        "Fasady historycznych budynków z czerwonej cegły, typowe dla Dzielnicy Spichlerzy. Architektura industrialna.",
+        "Historyczny budynek z wieżyczkami i łukowy most nad kanałem w Hamburgu. Urokliwa, miejska sceneria.",
     },
     "hamburg-3998131_1920.jpg": {
-      title: "Panorama portu w Hamburgu nocą",
+      title: "Dzielnica Spichlerzy w Hamburgu nocą",
       description:
-        "Szeroki widok na portowe dźwigi i nowoczesne budynki. Światła miasta odbijają się w wodzie rzeki Łaby.",
+        "Nastrojowe, nocne ujęcie kanału w historycznej Dzielnicy Spichlerzy (Speicherstadt). Oświetlone, ceglane budynki odbijają się w spokojnej wodzie.",
     },
     "hamburg-4103406_1920.jpg": {
-      title: "Kładka i spichlerze w Speicherstadt",
+      title: "Złota godzina w Dzielnicy Spichlerzy",
       description:
-        "Ujęcie z bliska, ukazujące architekturę z czerwonej cegły. Nastrojowe światło w wąskim kanale.",
+        "Kanał w Speicherstadt w Hamburgu skąpany w ciepłym świetle 'złotej godziny'. Promienie słońca oświetlają ceglane fasady, tworząc magiczną atmosferę.",
     },
     "hamburg-4570577_1920.jpg": {
-      title: "Nowoczesne wieżowce portu w Hamburgu",
+      title: "Zameczek na wodzie w Speicherstadt",
       description:
-        "Budynki biurowe w porcie. Szkło i metal kontrastują z historyczną zabudową miasta.",
+        "Widok na tzw. 'Wasserschloss' (Zameczek na wodzie) w hamburskiej Dzielnicy Spichlerzy. Urokliwy budynek otoczony kanałami i mostami.",
     },
     "hamburg-4767149_1920.jpg": {
-      title: "Architektura w Hamburgu (fasady)",
+      title: "St. Pauli Landungsbrücken w Hamburgu nocą",
       description:
-        "Zbliżenie na detale architektoniczne historycznej kamienicy. Ozdobne gzymsy i okna.",
+        "Nocne ujęcie historycznego budynku z wieżą zegarową przy nabrzeżu w Hamburgu. Długi czas naświetlania uchwycił smugi świateł samochodów.",
     },
     "hamburg-50444_1920.jpg": {
-      title: "Port w Hamburgu (widok z wody)",
+      title: "Statek muzeum 'Cap San Diego' w Hamburgu",
       description:
-        "Widok na portowe dźwigi i kontenery. Industrialny charakter największego portu w Niemczech.",
+        "Statek towarowy 'Cap San Diego' zacumowany w porcie w Hamburgu, obecnie służący jako muzeum. W tle widać nowoczesny budynek filharmonii (Elbphilharmonie).",
     },
     "hamburg-8573427_1920.jpg": {
-      title: "Kanał portowy w Hamburgu nocą",
+      title: "Filharmonia nad Łabą (Elbphilharmonie) w Hamburgu",
       description:
-        "Oświetlone latarniami nabrzeże i spokojna woda kanału. Nastrojowy, miejski pejzaż nocny.",
+        "Nowoczesny budynek filharmonii z charakterystyczną, falistą, szklaną fasadą, zbudowany na szczycie starego, ceglanego magazynu. Symbol nowoczesnego Hamburga.",
     },
     "headframe-709208_1920.jpg": {
       title: "Górnicza Wieża Wyciągowa (Zollverein)",
@@ -566,84 +566,84 @@ const itemTranslations = {
         "Monumentalna wieża wyciągowa (Szyb Zollverein 12) w Essen. Symbol industrialnej historii Zagłębia Ruhry.",
     },
     "hohenschwangau-3743780_1920.jpg": {
-      title: "Zamek Hohenschwangau",
+      title: "Zamek Hohenschwangau i Alpy",
       description:
-        "Widok na zamek w stylu neogotyckim. Żółte mury na tle zielonych lasów i Alp Bawarskich.",
+        "Widok na zamek w stylu neogotyckim. Żółte mury na tle zielonych lasów i pasma Alp Bawarskich w oddali.",
     },
     "hohenzollern-5328719_1920.jpg": {
       title: "Zamek Hohenzollern w Badenii-Wirtembergii",
       description:
-        "Malowniczy zamek na szczycie góry, wynurzający się z mgły. Bajkowy widok w chmurach.",
+        "Malowniczy zamek na szczycie góry, górujący nad rozległą, zieloną doliną. Letni krajobraz.",
     },
     "holiday-home-7101309_1920.jpg": {
-      title: "Dom wakacyjny na wybrzeżu",
+      title: "Nowoczesny dom z balkonami",
       description:
-        "Tradycyjny dom z bali na wybrzeżu Bałtyku. Architektura w stylu skandynawskim.",
+        "Fasada nowoczesnego, niebieskiego domu o skandynawskim designie, z białymi balkonami. Czysta, geometryczna architektura.",
     },
     "holocaust-memorial-3710509_1920.jpg": {
       title: "Pomnik Ofiar Holokaustu w Berlinie",
       description:
-        "Monochromatyczne ujęcie labiryntu betonowych bloków. Surowy, refleksyjny charakter pomnika.",
+        "Perspektywiczne ujęcie korytarza w labiryncie betonowych bloków. Surowy, refleksyjny charakter pomnika, ze światłem na końcu drogi.",
     },
     "horder-castle-1570208_1920.jpg": {
       title: "Zamek Hörder Burg, Dortmund",
       description:
-        "Ruiny średniowiecznego zamku w Dortmundzie, położone nad jeziorem Phoenix. Historyczny element w nowoczesnym otoczeniu.",
+        "Historyczny zamek w Dortmundzie z charakterystyczną wieżą. Architektura w stylu renesansu i gotyku.",
     },
     "horses-7228554_1920.jpg": {
-      title: "Konie na łące w Bawarii",
+      title: "Siwe konie na pastwisku",
       description:
-        "Trzy konie pasące się na zielonej łące. W tle łagodne wzgórza Bawarii.",
+        "Dwa siwe konie (w typie lipicańskim) pasące się na zielonej łące w słoneczny dzień.",
     },
     "hot-air-balloon-2879650_1920.jpg": {
-      title: "Balon na gorące powietrze nad Alpami",
+      title: "Balon BVB nad Dortmundem",
       description:
-        "Kolorowy balon na tle gór. Idealny widok dla miłośników lotnictwa i górskich panoram.",
+        "Żółto-czarny balon na gorące powietrze z logo klubu Borussia Dortmund (BVB) i Pumy, unoszący się na tle błękitnego nieba.",
     },
     "house-4028391_1920.jpg": {
-      title: "Kolorowe domy w Meersburgu",
+      title: "Dom kryty strzechą na wydmach",
       description:
-        "Urokliwe, kolorowe domy z muru pruskiego. Architektura typowa dla miasteczek nad Jeziorem Bodeńskim.",
+        "Tradycyjny, biały dom z dachem krytym strzechą, położony na piaszczystych wydmach nad morzem. Nadmorski, spokojny krajobraz.",
     },
     "houses-7542665_1920.jpg": {
-      title: "Wioska w bawarskich Alpach",
+      title: "Uliczka z girlandami",
       description:
-        "Domy z tradycyjnymi, spadzistymi dachami, usytuowane w dolinie górskiej. W tle zalesione wzniesienia.",
+        "Klimatyczne ujęcie uliczki z historycznymi domami krytymi łupkiem. Na pierwszym planie widoczne są trójkątne, białe flagi na girlandzie.",
     },
     "kermit-1651615_1920.jpg": {
-      title: "Muzeum Filmu i Telewizji, Berlin",
+      title: "Kermit Żaba i wino",
       description:
-        "Światła i neony na fasadzie budynku. Nowoczesna, dynamiczna architektura w centrum Berlina.",
+        "Zabawna scena z pluszową maskotką Kermita Żaby, która leży na ziemi, 'obejmując' butelkę wina różowego. W tle stoją butelki z winem czerwonym i białym.",
     },
     "konigssee-7276585_1920.jpg": {
-      title: "Jezioro Königssee w jesieni",
+      title: "Jezioro Königssee w Alpach",
       description:
-        "Turkusowa woda jeziora Königssee otoczona górami o jesiennym, kolorowym listowiu. Malowniczy krajobraz.",
+        "Malowniczy widok na turkusową wodę jeziora Königssee, otoczonego stromymi, zalesionymi zboczami Alp Berchtesgadeńskich.",
     },
     "landscape-7598904_1920.jpg": {
       title: "Wzgórza i zamglone doliny w Turyngii",
       description:
-        "Widok z lotu ptaka na zielone, zalesione wzgórza. Poranna mgła wypełnia doliny.",
+        "Widok z lotu ptaka na zielone, zalesione wzgórza. Poranna mgła wypełnia doliny, tworząc malowniczy krajobraz.",
     },
     "lantern-6826687_1920.jpg": {
-      title: "Latarnia uliczna w Berlinie nocą",
+      title: "Lampa naftowa na plaży",
       description:
-        "Historyczna latarnia uliczna oświetlająca ulicę w Berlinie. Klimatyczne, nocne ujęcie.",
+        "Stylowa, zapalona lampa naftowa ustawiona na korzeniach drzewa na kamienistej plaży o zmierzchu. Nastrojowa, spokojna scena.",
     },
     "lantern-6826698_1920.jpg": {
-      title: "Latarnia w Dzielnicy Spichlerzy nocą",
+      title: "Lampa naftowa na gałęzi nad jeziorem",
       description:
-        "Metalowa latarnia na tle ceglanej fasady w Hamburgu. Nastrojowe światło w historycznej scenerii.",
+        "Zapalona lampa naftowa zawieszona na gałęzi drzewa nad brzegiem jeziora nocą. Tajemnicza i spokojna atmosfera.",
     },
     "lighthouse-4691680_1920.jpg": {
-      title: "Latarnia morska w List, Sylt",
+      title: "Latarnia morska w Lindau",
       description:
-        "Klasyczna latarnia morska na wydmach wyspy Sylt. Połączenie architektury i surowego krajobrazu morskiego.",
+        "Historyczna latarnia morska przy wejściu do portu w Lindau nad Jeziorem Bodeńskim, spowita gęstą mgłą.",
     },
     "lighthouse-6207038_1920.jpg": {
-      title: "Latarnia morska na Rugii (Kap Arkona)",
+      title: "Latarnia morska na wyspie Sylt",
       description:
-        "Biała latarnia morska na klifie. Klasyczna, nadmorska architektura.",
+        "Ceglana latarnia morska (Leuchtturm Kampen) pośród piaszczystych wydm na wyspie Sylt. Charakterystyczny krajobraz Morza Północnego.",
     },
     "lion-3536149_1920.jpg": {
       title: "Portret lwa w ogrodzie zoologicznym",
@@ -653,352 +653,327 @@ const itemTranslations = {
     "mannheim-8000879_1920.jpg": {
       title: "Pałac w Mannheim (Mannheimer Schloss)",
       description:
-        "Monumentalny barokowy pałac w Mannheim. Symetryczna, elegancka architektura.",
+        "Monumentalny barokowy pałac w Mannheim o zmierzchu. Symetryczna, elegancka architektura i pusty, brukowany dziedziniec.",
     },
     "mining-5538256_1920.jpg": {
-      title: "Kopalnia węgla (Zollverein, Essen)",
+      title: "Wieża wyciągowa kopalni Zollern, Dortmund",
       description:
-        "Industrialny krajobraz byłej kopalni węgla. Maszyny, metalowe konstrukcje i pofabryczna atmosfera.",
+        "Ujęcie z dołu na stalową konstrukcję wieży wyciągowej w dawnej kopalni Zollern w Dortmundzie. Zabytek techniki industrialnej.",
     },
     "modern-1046698_1920.jpg": {
-      title: "Abstrakcyjne ujęcie nowoczesnej architektury",
+      title: "Siedziba ADAC w Monachium",
       description:
-        "Dynamiczny, szerokokątny kadr nowoczesnego wieżowca. Linie i płaszczyzny tworzą geometryczną, futurystyczną kompozycję.",
+        "Nowoczesny, monumentalny budynek z jasnego kamienia z dużym, asymetrycznym zadaszeniem. Siedziba niemieckiego automobilklubu ADAC.",
     },
     "monastery-3130879_1920.jpg": {
-      title: "Klasztor Kloster Andechs (Bawaria)",
+      title: "Krużganki klasztoru Maulbronn",
       description:
-        "Widok na barokowy klasztor na wzgórzu. Architektura sakralna otoczona zielenią.",
+        "Nastrojowe ujęcie historycznych, kamiennych krużganków w klasztorze Maulbronn (obiekt UNESCO). Gra światła i cienia podkreśla gotyckie sklepienia.",
     },
     "moritzburg-84299_1920.jpg": {
       title: "Zamek Moritzburg (Saksonia)",
       description:
-        "Barokowy pałac myśliwski na wodzie. Malowniczy zamek na jeziorze.",
+        "Barokowy pałac myśliwski na wodzie, z charakterystycznymi czerwonymi dachami. Malowniczy zamek odbija się w tafli jeziora w słoneczny dzień.",
     },
     "mountain-7195958_1920.jpg": {
-      title: "Alpy Bawarskie (widok na jezioro)",
+      title: "Zamek Hohenzollern o zmierzchu",
       description:
-        "Panoramiczny widok na górskie jezioro i Alpy Bawarskie. Czysta woda, zielone lasy i skaliste szczyty.",
+        "Oświetlony zamek Hohenzollern na szczycie zalesionej góry, uchwycony tuż po zachodzie słońca.",
     },
     "mountain-8207212_1920.jpg": {
-      title: "Zamarznięte jezioro w Alpach, zimą",
+      title: "Panorama Alp z Zugspitze",
       description:
-        "Duże, zamarznięte jezioro. Długi pomost prowadzący w głąb jeziora. Krajobraz górski w bieli.",
+        "Rozległy, surowy krajobraz płaskowyżu Zugspitzplatt na tle pasma Alp. Widok z najwyższego szczytu Niemiec, Zugspitze.",
     },
     "mountains-4521455_1920.jpg": {
-      title: "Alpejskie szczyty w słońcu",
+      title: "Wędrowiec na alpejskim szlaku",
       description:
-        "Wysokie, skaliste Alpy oświetlone promieniami słońca. Surowy, majestatyczny krajobraz górski.",
+        "Samotny wędrowiec z plecakiem na kamienistym szlaku w Alpach. Zbocza gór częściowo spowite są mgłą.",
     },
     "mountains-6531264_1920.jpg": {
-      title: "Zamek Hohenzollern o zachodzie słońca",
+      title: "Zamek Hohenzollern o wschodzie słońca",
       description:
-        "Malowniczy widok na Zamek Hohenzollern, usytuowany na szczycie zalesionego wzgórza. W tle rozciąga się dramatyczne, różowo-fioletowe niebo o zachodzie słońca.",
+        "Zamek Hohenzollern na szczycie góry na tle spektakularnego, różowego nieba o wschodzie słońca. W dolinach mgły.",
     },
     "mountains-6531903_1920.jpg": {
-      title: "Jezioro Alpsee i zamek Hohenschwangau",
+      title: "Jezioro Seealpsee w Alpach Algawskich",
       description:
-        "Malowniczy widok na turkusowe jezioro i zamek Hohenschwangau ukryty wśród drzew.",
+        "Malowniczy widok na turkusowe jezioro Seealpsee, położone w dolinie otoczonej zielonymi zboczami i wysokimi szczytami Alp Algawskich.",
     },
     "mountains-7591326_1920.jpg": {
-      title: "Wędrowiec w Alpach (B&W)",
+      title: "Góra wynurzająca się z mgły o wschodzie słońca",
       description:
-        "Monochromatyczne ujęcie wędrowca na tle potężnych, skalistych Alp. Samotność i monumentalna skala gór.",
+        "Minimalistyczny krajobraz z wierzchołkiem góry wystającym ponad gęste morze mgły. Pastelowe kolory nieba o wschodzie słońca.",
     },
     "mountains-8419249_1920.jpg": {
-      title: "Alpy Bawarskie w zimie",
+      title: "Jezioro Königssee w Alpach",
       description:
-        "Góry pokryte grubą warstwą śniegu. Drzewa iglaste i surowy, zimowy krajobraz.",
+        "Malowniczy widok na turkusową wodę jeziora Königssee, otoczonego stromymi, zalesionymi zboczami. Po jeziorze płynie statek wycieczkowy.",
     },
     "muddle-of-tracks-2160059_1920.jpg": {
-      title: "Skrzyżowanie torów kolejowych (B&W)",
+      title: "Skrzyżowanie torów kolejowych",
       description:
-        "Monochromatyczne ujęcie z góry na sieć torów kolejowych. Geometria i chaos infrastruktury.",
+        "Gęsta sieć torów kolejowych, rozjazdów i semaforów na terenie dużej stacji lub bocznicy kolejowej. Industrialny krajobraz.",
     },
     "muenster-7269726_1920.jpg": {
-      title: "Ratusz w Münster",
+      title: "Pałac Książęcy w Münster",
       description:
-        "Fasada historycznego ratusza w Münster. Gotycka architektura z dekoracyjnymi detalami.",
+        "Widok na barokową fasadę Pałacu Książęcego (Fürstbischöfliches Schloss) w Münster, widzianą przez bramę. Obecnie siedziba uniwersytetu.",
     },
     "munich-798652_1920.jpg": {
-      title: "Nowy Ratusz w Monachium nocą",
+      title: "Brama Zwycięstwa (Siegestor) w Monachium",
       description:
-        "Oświetlony Ratusz Marienplatz w Monachium. Gotycka, ozdobna architektura z wieżą zegarową.",
+        "Monumentalny, klasycystyczny łuk triumfalny w Monachium, zwieńczony rzeźbą Bawarii z rydwanem zaprzężonym w lwy.",
     },
     "neuschwanstein-701732_1920.jpg": {
-      title: "Zamek Neuschwanstein i Most Marienbrücke",
+      title: "Zamek Neuschwanstein w zimowej scenerii",
       description:
-        "Zamek widziany z mostu Marienbrücke. Najbardziej znane, panoramiczne ujęcie.",
+        "Zamek Neuschwanstein pokryty śniegiem. Bajkowy widok w białej, zimowej scenerii, z widokiem na ośnieżoną dolinę.",
     },
     "night-3908272_1920.jpg": {
-      title: "Nocna panorama miasta (Hamburg)",
+      title: "Ratusz w Hanowerze nocą",
       description:
-        "Szeroki widok na oświetlone miasto i rzekę. Światła wieżowców odbijają się w wodzie.",
+        "Nocne ujęcie z mostu, z długim czasem naświetlania smug świateł samochodowych. W tle widoczny jest oświetlony, historyczny budynek ratusza.",
     },
     "oberbaum-bridge-4699765_1920.jpg": {
-      title: "Most Oberbaumbrücke w Berlinie",
+      title: "Wschód słońca z Mostu Oberbaumbrücke w Berlinie",
       description:
-        "Czerwony, ceglany most z łukami. Symbol Berlina, na tle nowoczesnej architektury.",
+        "Sylwetka łuków Mostu Oberbaumbrücke na tle wschodzącego słońca nad rzeką Sprewą. Nastrojowa, miejska scena.",
     },
     "old-elisabeth-3284212_1920.jpg": {
-      title: "Stary Cmentarz w Berlinie (Alter St.-Elisabeth-Friedhof)",
+      title: "Stare domy wiejskie o zachodzie słońca",
       description:
-        "Zniszczony nagrobek i elementy architektury cmentarza. Nastrojowe, historyczne ujęcie.",
+        "Dwa historyczne domy, w tym jeden z muru pruskiego, na otwartej przestrzeni w ciepłym świetle zachodzącego słońca. Sceneria w stylu sepii.",
     },
     "panorama-2646143_1920.jpg": {
-      title: "Panorama Kolonii z Mostu Hohenzollernów",
+      title: "Panorama Ratyzbony (Regensburg) nad Dunajem",
       description:
-        "Szeroki widok na rzekę Ren, most i panoramę Kolonii, z dominującą Katedrą.",
+        "Szeroka, panoramiczna fotografia historycznego centrum Ratyzbony, odbijającego się w rzece Dunaj. Efekt długiego naświetlania wygładził wodę.",
     },
     "panorama-3194115_1920.jpg": {
-      title: "Widok na alpejską dolinę (Wallberg)",
+      title: "Nocna panorama Jeziora Phoenix w Dortmundzie",
       description:
-        "Rozległa, zielona dolina rzeki, otoczona stromymi Alpami. Krajobraz Wallberg i jezioro Tegernsee w tle.",
+        "Szeroki widok na oświetlone, nowoczesne osiedle nad jeziorem Phoenix nocą. W tle widoczne centrum Dortmundu i wieża Florianturm.",
     },
     "passau-7968535_1920.jpg": {
       title: "Widok na Stare Miasto w Pasawie (Passau)",
       description:
-        "Słoneczny widok na historyczne centrum Pasawy od strony rzeki Dunaj. Nad kolorowymi kamienicami góruje barokowa Katedra św. Szczepana z charakterystycznymi kopułami.",
+        "Słoneczny widok na historyczne centrum Pasawy od strony rzeki Dunaj. Nad kolorowymi kamienicami góruje barokowa Katedra św. Szczepana.",
     },
     "path-6514885_1920.jpg": {
-      title: "Ścieżka w lesie (B&W)",
+      title: "Droga wzdłuż wału przeciwpowodziowego",
       description:
-        "Monochromatyczne ujęcie ścieżki prowadzącej w głąb gęstego lasu. Kontrast i głębia cienia.",
+        "Wiejska droga prowadząca wzdłuż zielonego wału rzecznego. Spokojny krajobraz z polami i rzeką w tle.",
     },
     "peacock-942036_1920.jpg": {
-      title: "Paw w ogrodzie botanicznym",
+      title: "Paw z rozłożonym ogonem",
       description:
-        "Kolorowy paw spacerujący po trawniku w ogrodzie botanicznym. Detal na upierzenie ptaka.",
+        "Majestatyczny paw prezentujący swój piękny, kolorowy ogon w pełnej krasie. Ptak stoi na zielonej trawie.",
     },
     "phoenix-lake-1570246_1920.jpg": {
-      title: "Jezioro Phoenix w Dortmundzie",
+      title: "Żaglówka na Jeziorze Phoenix w Dortmundzie",
       description:
-        "Nowoczesne budynki mieszkalne wzdłuż brzegu jeziora Phoenix. Rewitalizacja terenów poprzemysłowych.",
+        "Mały model żaglówki pływający po Jeziorze Phoenix. W tle widoczne nowe osiedla w budowie i zrekultywowane wzgórza.",
     },
     "phoenix-lake-2290942_1920.jpg": {
-      title: "Most nad Jeziorem Phoenix (zachód słońca)",
+      title: "Konwerter stalowy, pomnik nad Jeziorem Phoenix",
       description:
-        "Kładka dla pieszych nad jeziorem Phoenix. Romantyczny zachód słońca i światła odbijające się w wodzie.",
+        "Historyczny konwerter stalowy z huty Phoenix-West w Dortmundzie, ustawiony jako zabytek techniki nad Jeziorem Phoenix.",
     },
     "phoenix-lake-489011_1920.jpg": {
-      title: "Widok na jezioro i wieżowiec (Dortmund)",
+      title: "Nocna panorama Jeziora Phoenix, Dortmund",
       description:
-        "Nowoczesny wieżowiec biurowy nad jeziorem Phoenix. Architektura i woda w miejskim krajobrazie.",
+        "Szeroki, nocny widok na oświetlone budynki wokół Jeziora Phoenix. W tle widoczne dźwigi i wieża telewizyjna Florianturm.",
     },
     "phoenix-lake-489012_1920.jpg": {
-      title: "Odbicie w jeziorze Phoenix",
+      title: "Nocna panorama Jeziora Phoenix z dźwigami",
       description:
-        "Idealne odbicie fasad budynków i nieba w spokojnej tafli jeziora Phoenix. Symetria i kontrast.",
+        "Szeroki, nocny widok na oświetlone budynki wokół Jeziora Phoenix. W tle widoczne dźwigi budowlane i wieża telewizyjna Florianturm.",
     },
     "phoenix-lake-489013_1920.jpg": {
-      title: "Architektura nad jeziorem Phoenix",
+      title: "Jezioro Phoenix nocą z wieżą Florianturm",
       description:
-        "Budynki mieszkalne i biurowe wzdłuż brzegu jeziora. Nowoczesna, minimalistyczna architektura.",
+        "Nocny krajobraz Jeziora Phoenix w Dortmundzie. Oświetlona zabudowa i odbicia w wodzie. W tle dominuje wieża telewizyjna Florianturm.",
     },
     "phoenix-lake-489015_1920.jpg": {
-      title: "Ścieżka spacerowa nad jeziorem Phoenix",
+      title: "Zamek Hörder Burg nad Jeziorem Phoenix nocą",
       description:
-        "Kładka i ścieżka spacerowa wzdłuż brzegu jeziora. Beton, metal i woda.",
+        "Nocny widok na oświetlony, historyczny Zamek Hörder Burg i nowoczesną promenadę nad Jeziorem Phoenix w Dortmundzie.",
     },
     "phoenix-lake-489019_1920.jpg": {
-      title: "Fontanna nad jeziorem Phoenix",
+      title: "Port jachtowy nad Jeziorem Phoenix nocą",
       description:
-        "Wodotrysk w jeziorze. Odbicie architektonicznych detali w wodzie.",
+        "Nocny widok na przystań i oświetlone budynki nad Jeziorem Phoenix. Odbicia świateł w spokojnej wodzie.",
     },
     "phoenix-lake-489022_1920.jpg": {
-      title: "Detale architektoniczne nad jeziorem Phoenix",
+      title: "Przystań i apartamentowiec nad Jeziorem Phoenix",
       description:
-        "Zbliżenie na nowoczesną fasadę budynku biurowego nad jeziorem. Linie i geometryczne wzory.",
+        "Nocne ujęcie mariny z zacumowanymi żaglówkami i nowoczesnego, oświetlonego apartamentowca FAPS nad Jeziorem Phoenix w Dortmundzie.",
     },
     "phoenix-lake-dortmund-2082469_1920.jpg": {
-      title: "Jezioro Phoenix (szerokie ujęcie)",
+      title: "Nowoczesne osiedle nad Jeziorem Phoenix nocą",
       description:
-        "Panorama jeziora z widokiem na wszystkie nowoczesne budynki wokół. Dawny teren przemysłowy, obecnie rekreacyjny.",
+        "Rząd nowoczesnych, oświetlonych apartamentowców odbijających się w idealnie spokojnej wodzie Jeziora Phoenix w Dortmundzie.",
     },
     "pier-5672967_1920.jpg": {
-      title: "Molo i plaża nad Bałtykiem",
+      title: "Molo w Sellin na Rugii",
       description:
-        "Drewniane molo nad morzem. Zimowa, pusta plaża i szare, chmurne niebo.",
+        "Historyczne molo (Seebrücke) w nadmorskim kurorcie Sellin na wyspie Rugia. Charakterystyczny budynek restauracji na końcu mola.",
     },
     "port-5052048_1920.jpg": {
-      title: "Brama Portowa w Hamburgu",
+      title: "Port kontenerowy w Dortmundzie",
       description:
-        "Historyczne budynki i brama portowa. Architektura z cegły i industrialny charakter.",
+        "Widok na port śródlądowy w Dortmundzie, z dźwigami i rzędami kolorowych kontenerów. Scena industrialna.",
     },
     "port-5052082_1920.jpg": {
-      title: "Dźwigi portowe w Hamburgu",
+      title: "Kontenery i graffiti",
       description:
-        "Sylwetki monumentalnych dźwigów portowych na tle nieba. Industrialny widok z portu.",
+        "Plac z kontenerami morskimi, z których część pokryta jest kolorowym graffiti. Miejski, industrialny krajobraz.",
     },
     "port-5788261_1920.jpg": {
-      title: "Panorama portu w Hamburgu (noc)",
+      title: "St. Pauli Landungsbrücken i port w Hamburgu",
       description:
-        "Szeroka nocna panorama portu. Oświetlone dźwigi i budynki odbijające się w wodzie.",
+        "Widok z góry na historyczny budynek przy nabrzeżu St. Pauli i rozległy, oświetlony port w Hamburgu w tle o zmierzchu.",
     },
     "port-7930392_1920.jpg": {
-      title: "Kontenery w porcie (B&W)",
+      title: "Port przemysłowy w Dortmundzie",
       description:
-        "Monochromatyczne ujęcie rzędów kontenerów w porcie. Powtarzalność form i industrialny minimalizm.",
+        "Widok na kanał portowy w Dortmundzie. Na lewym brzegu historyczny budynek zarządu portu (Altes Hafenamt), w tle industrialna zabudowa.",
     },
     "puddle-7844705_1920.jpg": {
-      title: "Odbicie drzew w kałuży (B&W)",
+      title: "Odbicie w kałuży z flagą Niemiec",
       description:
-        "Monochromatyczne ujęcie kałuży odbijającej drzewa i niebo. Abstrakcyjny, naturalny motyw.",
+        "Abstrakcyjne ujęcie kałuży na bruku, w której odbija się fasada budynku, flaga Niemiec oraz przechodzące osoby.",
     },
     "red-river-5151514_1920.jpg": {
-      title: "Rzeka i czerwona fasada w Hamburgu",
+      title: "Kwitnący rododendron i strumień",
       description:
-        "Czerwona, ceglana fasada budynku w Dzielnicy Spichlerzy. Architektura i woda w tle.",
+        "Duży, kwitnący krzew rododendronu nad małym strumieniem o rdzawym zabarwieniu wody. Leśna, wiosenna sceneria.",
     },
     "reichstag-dome-1571046_1920.jpg": {
-      title: "Wnętrze Kopuły Reichstagu",
+      title: "Sylwetki w kopule Reichstagu",
       description:
-        "Spiralna rampa i szklane wnętrze nowoczesnej kopuły. Perspektywa i gra światła.",
+        "Sylwetki turystów na spiralnych rampach wewnątrz szklanej kopuły Reichstagu w Berlinie. W tle widoczny fragment historycznej kopuły.",
     },
     "relax-2462333_1920.jpg": {
-      title: "Plaża i molo (Bałtyk)",
+      title: "Rower i ponton nad Jeziorem Phoenix",
       description:
-        "Widok na piaszczystą plażę i drewniane molo na Bałtyku. Letni, spokojny krajobraz nadmorski.",
+        "Rower typu cruiser i fioletowy, dmuchany fotel (ponton) na drewnianym pomoście nad Jeziorem Phoenix w Dortmundzie. Scena relaksu w mieście.",
     },
     "rhine-river-3453860_1920.jpg": {
-      title: "Brama miasta i most na Renie",
+      title: "Deutsches Eck w Koblencji (Koblenz)",
       description:
-        "Historyczna brama miejska i most nad rzeką Ren. Architektura w stylu renesansowym.",
+        "Widok z lotu ptaka na Deutsches Eck (Niemiecki Róg), cypel u zbiegu rzek Ren i Mozela, z monumentalnym pomnikiem cesarza Wilhelma I.",
     },
     "river-4336788_1920.jpg": {
-      title: "Most na rzece Men we Frankfurcie",
+      title: "Dolina rzeki Mozeli",
       description:
-        "Historyczny most nad Menem. W tle widoczny skyline nowoczesnego Frankfurtu.",
+        "Malowniczy widok z góry na zakole rzeki Mozeli, otoczonej stromymi, zielonymi wzgórzami z winnicami i małymi miasteczkami na brzegach.",
     },
     "sea-7394353_1920.jpg": {
-      title: "Zachód słońca nad Morzem Bałtyckim",
+      title: "Panorama Stralsundu o zachodzie słońca",
       description:
-        "Pomarańczowo-różowe niebo i słońce nad spokojną taflą Morza Bałtyckiego. Romantyczny krajobraz.",
+        "Sylwetka historycznego miasta Stralsund na tle ciepłego, pomarańczowego nieba. Na pierwszym planie kaczki pływające po spokojnej wodzie.",
     },
     "ship-50445_1920.jpg": {
-      title: "Statek w porcie w Hamburgu",
+      title: "Statek wycieczkowy w porcie w Hamburgu",
       description:
-        "Duży statek towarowy zacumowany w porcie w Hamburgu. Scena z życia portowego.",
+        "Historyczny statek kołowy (parowiec) zacumowany przy nabrzeżu w porcie w Hamburgu. W tle industrialny krajobraz.",
     },
     "snow-7658489_1920.jpg": {
-      title: "Zimowy las w Bawarii",
+      title: "Samotne drzewo na ośnieżonym polu",
       description:
-        "Śnieżny krajobraz. Ścieżka prowadząca w głąb lasu. Drzewa pokryte białym puchem.",
+        "Minimalistyczny, zimowy krajobraz z samotnym, bezlistnym drzewem na polu pokrytym śniegiem. Spokojna, melancholijna atmosfera.",
     },
     "snow-8173264_1920.jpg": {
-      title: "Zimowy krajobraz Alp",
+      title: "Zimowy wschód słońca nad polem",
       description:
-        "Góry i doliny pokryte śniegiem. W tle widoczne małe, samotne domy. Surowa, zimowa sceneria.",
+        "Krajobraz z polem pokrytym grubą warstwą śniegu. Wschodzące słońce oświetla mgłę unoszącą się nad ziemią, a w oddali widać samotną stodołę.",
     },
     "speicherstadt-3883252_1920.jpg": {
-      title: "Speicherstadt w Hamburgu nocą",
+      title: "Kanał w Speicherstadt nocą",
       description:
-        "Nocne ujęcie Dzielnicy Spichlerzy. Oświetlone, ceglane budynki i ich odbicia w wodzie kanałów.",
+        "Nocne ujęcie kanału w Dzielnicy Spichlerzy w Hamburgu. Oświetlone ceglane magazyny i nowoczesny biurowiec w tle.",
     },
     "sports-3794186_1920.jpg": {
-      title: "Stadion piłkarski w Dortmundzie",
+      title: "Autokary BVB i Bayernu na boisku",
       description:
-        "Pusta murawa stadionu Signal Iduna Park. Ujęcie z perspektywy widowni, podkreślające ogrom areny.",
+        "Fotomontaż przedstawiający autokary klubów piłkarskich Borussia Dortmund i Bayern Monachium, zaparkowane na murawie stadionu.",
     },
     "stadium-1203068_1920.jpg": {
-      title: "Trybuna z kibicami (BVB)",
+      title: "Stadion Signal Iduna Park, Dortmund",
       description:
-        "Tłum kibiców na trybunie. Dynamiczne ujęcie atmosfery meczu piłkarskiego.",
+        "Panoramiczny widok na stadion Signal Iduna Park z charakterystycznymi żółtymi pylonami, wyłaniający się zza zielonych drzew.",
     },
     "stairs-1229149_1920.jpg": {
-      title: "Schody na tarasie widokowym",
+      title: "Zewnętrzne schody ewakuacyjne",
       description:
-        "Kamienne schody i taras widokowy na tle morza i klifów. Geometria i natura.",
+        "Metalowe schody przeciwpożarowe na zardzewiałej fasadzie industrialnego budynku. Gra świateł i cieni na geometrycznej konstrukcji.",
     },
     "station-7767132_1920.jpg": {
-      title: "Stacja kolejowa w Berlinie",
+      title: "Pociąg ICE na Dworcu Głównym w Berlinie",
       description:
-        "Szklano-metalowy dach dworca kolejowego w Berlinie. Nowoczesna architektura infrastruktury.",
+        "Nowoczesny pociąg dużych prędkości (ICE) stojący na peronie pod przeszklonym, łukowatym dachem Dworca Głównego w Berlinie (Hauptbahnhof).",
     },
     "station-8558516_1920.jpg": {
-      title: "Dworzec Centralny w Berlinie (Hauptbahnhof)",
+      title: "Schody ruchome na stacji metra",
       description:
-        "Szerokie, symetryczne ujęcie nowoczesnego Dworca Centralnego w Berlinie. Przeszklona hala i tory.",
+        "Symetryczne ujęcie z dołu na długie, puste schody ruchome prowadzące w górę. Nad nimi znajduje się przeszklony, geometryczny dach.",
     },
     "statue-of-hercules-2531191_1920.jpg": {
-      title: "Posąg Herkulesa w Kassel",
+      title: "Posąg Herkulesa w Poczdamie",
       description:
-        "Monumentalny posąg Herkulesa na szczycie Piramidy w Parku Wilhelmshöhe. Symbol regionu Hesji.",
+        "Kamienny posąg Herkulesa walczącego z lwem na tle błękitnego nieba. Detal rzeźby z Parku Sanssouci w Poczdamie.",
     },
     "street-5932230_1920.jpg": {
-      title: "Ulica na Starym Mieście (Bawaria)",
+      title: "Uliczka w Tybindze (Tübingen)",
       description:
-        "Wąska, brukowana uliczka. Kolorowe, historyczne kamienice i kwiaty na balkonach.",
+        "Urokliwa, brukowana uliczka w historycznym centrum Tybingi. Po obu stronach widać stare kamienice, niektóre z muru pruskiego.",
     },
     "sunrise-1046700_1920.jpg": {
-      title: "Wschód słońca nad Berlinem",
+      title: "Wschód słońca nad jeziorem we mgle",
       description:
-        "Wschód słońca nad panoramą Berlina. Wieżowce i miasto skąpane w ciepłym, porannym świetle.",
+        "Nastrojowy wschód słońca nad jeziorem lub rzeką. Gęsta, złota mgła unosi się nad wodą, a na pomoście widać sylwetki zacumowanych łodzi.",
     },
     "sunrise-1047080_1920.jpg": {
-      title: "Wschód słońca nad portem w Hamburgu",
+      title: "Wschód słońca nad Jeziorem Phoenix, Dortmund",
       description:
-        "Słońce wschodzące nad portowymi dźwigami i rzeką Łabą. Dramatyczny, industrialny krajobraz.",
+        "Złocisty wschód słońca nad Jeziorem Phoenix. Sylwetki żaglówek i pomostów na tle mglistego krajobrazu.",
     },
     "sunrise-1047081_1920.jpg": {
-      title: "Wschód słońca nad rzeką (Bawaria)",
+      title: "Wschód słońca nad portem jachtowym",
       description:
-        "Wschód słońca nad spokojną rzeką i zalesionymi wzgórzami. Romantyczny, naturalny krajobraz.",
+        "Wschodzące słońce chowa się za nowoczesnym budynkiem przy marinie. Jego promienie odbijają się w wodzie, tworząc świetlistą ścieżkę.",
     },
     "sunset-5551455_1920.jpg": {
-      title: "Zachód słońca nad Bałtykiem",
+      title: "Zachód słońca nad Jeziorem Phoenix w Dortmundzie",
       description:
-        "Słońce zachodzące nad morzem. Ciepłe kolory nieba i morze w tle.",
+        "Panoramiczny widok na Jezioro Phoenix i otaczające je osiedla w ciepłym świetle zachodzącego słońca. W tle widoczne wieże kościołów i wieża Florianturm.",
     },
     "to-stage-4434535_1920.jpg": {
-      title: "Fasada Filharmonii nad Łabą (Elbphilharmonie)",
+      title: "Fale i falochron nad Bałtykiem",
       description:
-        "Nowoczesna, pofalowana fasada budynku. Szkło i odbicia nieba i wody.",
-    },
-    "tv-tower-5502995_1920.jpg": {
-      title: "Wieża Telewizyjna z mgłą w tle",
-      description:
-        "Berlińska Wieża Telewizyjna na tle gęstej mgły lub niskich chmur. Ujęcie z lotu ptaka lub z wysokości.",
-    },
-    "tv-tower-6139241_1920.jpg": {
-      title: "Wieża Telewizyjna i Berliner Dom",
-      description:
-        "Wieża Telewizyjna i Katedra Berlińska (Berliner Dom) na tle zachmurzonego nieba. Kontrast między nowoczesnym a historycznym symbolem Berlina.",
-    },
-    "vineyards-4666055_1920.jpg": {
-      title: "Winnice nad Mozelą",
-      description:
-        "Rzędy winorośli na stromych zboczach doliny Mozeli. Typowy krajobraz winiarski Niemiec w promieniach słońca.",
-    },
-    "wallberg-3732153_1920.jpg": {
-      title: "Panorama z Wallberg, Tegernsee",
-      description:
-        "Widok z góry Wallberg na jezioro Tegernsee w Alpach Bawarskich. Rozległy krajobraz z górami i spokojną wodą.",
-    },
-    "woman-4339644_1920.jpg": {
-      title: "Kobieta przy winnicy (B&W)",
-      description:
-        "Monochromatyczne ujęcie kobiety stojącej przy rzędzie winorośli. Scena w winnicy w dolinie Mozeli.",
+        "Minimalistyczny krajobraz morski z drewnianym falochronem wcinającym się w morze. Długi czas naświetlania stworzył efekt rozmytej, mglistej wody.",
     },
     "town-4570588_1920.jpg": {
-      title: "Kanał w Speicherstadt, Hamburg o wschodzie słońca",
+      title: "Kanał w Speicherstadt o wschodzie słońca",
       description:
         "Nastrojowe ujęcie kanału w historycznej Dzielnicy Spichlerzy (Speicherstadt). Ciepłe światło wschodzącego słońca odbija się w wodzie, podkreślając czerwoną cegłę starych magazynów.",
     },
     "townscape-5584820_1920.jpg": {
       title: "Panorama Heidelbergu ze Starym Mostem",
       description:
-        "Malowniczy widok na historyczne centrum Heidelbergu, z rzeką Neckar i słynnym Starym Mostem (Alte Brücke) na pierwszym planie. W tle widać gęstą zabudowę Starego Miasta.",
+        "Malowniczy widok na historyczne centrum Heidelbergu, z rzeką Neckar i słynnym Starym Mostem (Alte Brücke) na pierwszym planie.",
     },
     "train-4590355_1920.jpg": {
       title: "Nowoczesny pociąg regionalny DB na stacji",
       description:
-        "Ujęcie nowoczesnego, czerwonego pociągu regionalnego Deutsche Bahn (DB) stojącego przy peronie. Zastosowano efekt selektywnego koloru, podkreślając dynamiczną sylwetkę pociągu.",
+        "Ujęcie nowoczesnego, czerwonego pociągu regionalnego Deutsche Bahn (DB) stojącego przy peronie. Zastosowano efekt selektywnego koloru.",
     },
     "tree-9448275_1920.jpg": {
       title: "Samotne drzewo o zachodzie słońca",
       description:
-        "Sylwetka dużego, rozłożystego drzewa bez liści na tle nieba w ciepłych barwach zachodzącego słońca. Spokojny, wiejski krajobraz z drewnianym płotem i łąką na pierwszym planie.",
+        "Sylwetka dużego, rozłożystego drzewa bez liści na tle nieba w ciepłych barwach zachodzącego słońca. Spokojny, wiejski krajobraz z drewnianym płotem.",
     },
     "trees-7114155_1920.jpg": {
       title: "Las iglasty we mgle",
@@ -1018,32 +993,32 @@ const itemTranslations = {
     "tv-tower-4759430_1920.jpg": {
       title: "Wieża Telewizyjna w Berlinie i jej odbicie",
       description:
-        "Nowoczesne, dynamiczne ujęcie Berlińskiej Wieży Telewizyjnej (Fernsehturm). Sylwetka wieży odbija się w szklanej fasadzie sąsiedniego budynku, tworząc grę linii i perspektywy.",
+        "Nowoczesne, dynamiczne ujęcie Berlińskiej Wieży Telewizyjnej (Fernsehturm). Sylwetka wieży odbija się w szklanej fasadzie sąsiedniego budynku.",
     },
     "tv-tower-5502995_1920.jpg": {
-      title: "Wieża Telewizyjna z mgłą w tle",
+      title: "Wieża Telewizyjna w Berlinie",
       description:
-        "Berlińska Wieża Telewizyjna na tle gęstej mgły lub niskich chmur. Ujęcie z lotu ptaka lub z wysokości.",
+        "Berlińska Wieża Telewizyjna (Fernsehturm) na tle błękitnego nieba z białymi chmurami. Czyste, minimalistyczne ujęcie symbolu miasta.",
     },
     "tv-tower-6139241_1920.jpg": {
-      title: "Wieża Telewizyjna i Berliner Dom",
+      title: "Wieża Telewizyjna o zachodzie słońca",
       description:
-        "Wieża Telewizyjna i Katedra Berlińska (Berliner Dom) na tle zachmurzonego nieba. Kontrast między nowoczesnym a historycznym symbolem Berlina.",
+        "Sylwetka Berlińskiej Wieży Telewizyjnej na tle ciepłego, pomarańczowego nieba o zachodzie słońca. Widok zza miejskich budynków.",
     },
     "vineyards-4666055_1920.jpg": {
-      title: "Winnice nad Mozelą",
+      title: "Winnice nad rzeką Ahr",
       description:
-        "Rzędy winorośli na stromych zboczach doliny Mozeli. Typowy krajobraz winiarski Niemiec w promieniach słońca.",
+        "Widok z góry na winnice z żółtymi, jesiennymi liśćmi, położone na zboczach doliny rzeki Ahr. Malowniczy region winiarski.",
     },
     "wallberg-3732153_1920.jpg": {
-      title: "Panorama z Wallberg, Tegernsee",
+      title: "Kaplica na górze Wallberg",
       description:
-        "Widok z góry Wallberg na jezioro Tegernsee w Alpach Bawarskich. Rozległy krajobraz z górami i spokojną wodą.",
+        "Mała, urokliwa kaplica (Wallbergkircherl) na zielonym wzgórzu w Alpach Bawarskich, otoczona lasem iglastym. W tle widać górskie szczyty.",
     },
     "woman-4339644_1920.jpg": {
-      title: "Kobieta przy winnicy (B&W)",
+      title: "Kobieta przed Katedrą Berlińską",
       description:
-        "Monochromatyczne ujęcie kobiety stojącej przy rzędzie winorośli. Scena w winnicy w dolinie Mozeli.",
+        "Młoda kobieta widziana od tyłu, podziwiająca monumentalną fasadę Katedry Berlińskiej (Berliner Dom) w słoneczny dzień.",
     },
   },
 };
