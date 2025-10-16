@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.5", // Paths for subsystems fix / Poprawka dla ścieżek dla podsystemów
+  version: "v2.4.6", // Descriptions for galleries / Opisy dla galerii
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-15", // Last update date YYYY-MM-DD
 
