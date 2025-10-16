@@ -824,7 +824,8 @@ function applyFilters() {
     const inDescription =
       g.linkData.description &&
       g.linkData.description.toLowerCase().includes(search);
-    const inTags = g.tags && g.tags.some(tag => tag.toLowerCase().includes(search));
+    const inTags =
+      g.tags && g.tags.some((tag) => tag.toLowerCase().includes(search));
     const searchMatch = inTitle || inDescription || inTags;
     const formatMatch = !format || g.format === format;
     const orientationMatch =
@@ -1762,13 +1763,15 @@ function createGuideHtml(guide) {
       "\\'"
     )}'); return false;`;
     titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
+    infoHtml = `<div class="guide-info"><span class="guide-info-details"><i class="fas fa-calendar-alt"></i> ${
       guide.date
     } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
       lang.guideInfoFormat
     }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
       lang.guideInfoSize
-    }: ${guide.sizeMB} MB</div>`;
+    }: ${guide.sizeMB} MB</span><span class="guide-info-description">${
+      guide.linkData.description || ""
+    }</span></div>`;
     actionLinkHtml = `<a href="#" onclick="${clickAction}"><i class="fas fa-eye"></i> ${lang.guideBtnView}</a>`;
     coverLinkHtml = `<a href="#" onclick="${clickAction}" class="cover-link"></a>`;
   } else {
@@ -1776,13 +1779,15 @@ function createGuideHtml(guide) {
       config.paths.urlFallback
     }'); return false;`;
     titleHtml = `<div class="guide-title">${titleText}</div>`;
-    infoHtml = `<div class="guide-info"><i class="fas fa-calendar-alt"></i> ${
+    infoHtml = `<div class="guide-info"><span class="guide-info-details"><i class="fas fa-calendar-alt"></i> ${
       guide.date
     } ${guide.time}<br><i class="fas fa-file-alt"></i> ${
       lang.guideInfoFormat
     }: ${guide.format.toUpperCase()}<br><i class="fas fa-database"></i> ${
       lang.guideInfoSize
-    }: ${guide.sizeMB} MB</div>`;
+    }: ${guide.sizeMB} MB</span><span class="guide-info-description">${
+      guide.linkData.description || ""
+    }</span></div>`;
     actionLinkHtml = `<a href="${u}" onclick="${
       guide.format === "pdf" ? clickAction : ""
     }" ${guide.format !== "pdf" ? "download" : ""}><i class="fas fa-${
@@ -1805,10 +1810,10 @@ function createGuideHtml(guide) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
   }
 
-  // else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
-  //   const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-  //   return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  // }
+  else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
+  }
 
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
   else if (currentViewMode === "image-masonry") {
