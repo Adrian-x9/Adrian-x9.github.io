@@ -1283,7 +1283,7 @@ function renderGuides(sourceArray = null) {
 
   const itemWidth = newWidth;
   const columns =
-    Math.floor((guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001) || 1;
+    Math.floor(guideList.clientWidth / (itemWidth + 20) + 0.0001) || 1;
   const itemsPerPage = columns * selectedRowCount;
 
   pagesCache = [];
@@ -1986,7 +1986,7 @@ function renderGuides(sourceArray = null) {
 
   const itemWidth = newWidth;
   const columns =
-    Math.floor((guideList.clientWidth + 20) / (itemWidth + 20) + 0.0001) || 1;
+    Math.floor(guideList.clientWidth / (itemWidth + 20) + 0.0001) || 1;
   const itemsPerPage = columns * selectedRowCount;
 
   pagesCache = [];

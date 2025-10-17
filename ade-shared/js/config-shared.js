@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.8", // Added a German gallery / Dodano galerię Niemiec
+  version: "v2.4.9", // Lot of fixes for views 1..9 / Mnóstwo poprawek dla widoków 1..9
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-15", // Last update date YYYY-MM-DD
+  updated: "2025-10-17", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure
