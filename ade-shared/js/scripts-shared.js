@@ -1810,11 +1810,25 @@ function createGuideHtml(guide) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
   }
 
-  else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+  else if (currentViewMode === "image-only") {
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    const imageHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+
+    return `
+        <div class="guide-cover-wrapper">
+            <a href="${hrefAction}" onclick="${onclickAction}" class="cover-link">${imageHtml}</a>
+        </div>
+        <div class="guide-text-content">
+            <div class="guide-title"><a href="${hrefAction}" onclick="${onclickAction}">${titleText}</a></div>
+            <div class="guide-action-link">${actionLinkHtml}</div>
+        </div>
+    `;
+}
+else if (currentViewMode === "image-masonry") { // Pozostawiamy logikę dla masonry bez zmian
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-  }
-
+}
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
   else if (currentViewMode === "image-masonry") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
