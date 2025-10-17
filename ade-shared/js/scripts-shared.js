@@ -1348,6 +1348,7 @@ function setupLazyLoading(pages) {
 
           if (pageDiv.childElementCount === 0 && pageNum > 1) {
             const pageItems = pages[pageNum - 1];
+            // ... wewnątrz funkcji setupLazyLoading, wewnątrz IntersectionObserver ...
             if (pageItems) {
               requestAnimationFrame(() => {
                 pageItems.forEach((guide, index) => {
@@ -1356,14 +1357,32 @@ function setupLazyLoading(pages) {
                   div.innerHTML = createGuideHtml(guide);
                   pageDiv.appendChild(div);
                 });
-                if (
+                const isMasonry =
                   currentViewMode === "masonry" ||
-                  currentViewMode === "text-masonry"
-                ) {
-                  setTimeout(() => applyMasonryLayout(pageNum), 100);
+                  currentViewMode === "text-masonry" ||
+                  currentViewMode === "image-masonry";
+
+                if (isMasonry) {
+                  // --- POCZĄTEK ŁATY ---
+                  const images = Array.from(pageDiv.querySelectorAll("img"));
+                  const imagePromises = images.map(
+                    (img) =>
+                      new Promise((resolve) => {
+                        if (img.complete) {
+                          resolve();
+                        } else {
+                          img.onload = img.onerror = resolve;
+                        }
+                      })
+                  );
+                  Promise.all(imagePromises).then(() => {
+                    applyMasonryLayout(pageNum);
+                  });
+                  // --- KONIEC ŁATY ---
                 }
               });
             }
+            // ...
           }
           observer.unobserve(pageDiv);
         }
@@ -1808,10 +1827,9 @@ function createGuideHtml(guide) {
     currentViewMode === "text-masonry"
   ) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
-  }
-
-  else if (currentViewMode === "image-only") {
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+  } else if (currentViewMode === "image-only") {
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
     const imageHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
 
@@ -1824,11 +1842,11 @@ function createGuideHtml(guide) {
             <div class="guide-action-link">${actionLinkHtml}</div>
         </div>
     `;
-}
-else if (currentViewMode === "image-masonry") { // Pozostawiamy logikę dla masonry bez zmian
+  } else if (currentViewMode === "image-masonry") {
+    // Pozostawiamy logikę dla masonry bez zmian
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
-}
+    return coverLinkHtml.replace("</a>", `${elegantCoverImgHtml}</a>`);
+  }
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
   else if (currentViewMode === "image-masonry") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
