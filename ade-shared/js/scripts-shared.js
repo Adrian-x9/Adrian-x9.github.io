@@ -2928,8 +2928,8 @@ function applyMasonryLayout(pageNum = 1) {
     const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
 
     // Ustawiamy sztywną szerokość kontenera siatki i centrujemy go marginesem
-    guidePage.style.width = `${gridWidth}px`;
-    guidePage.style.margin = "0 auto";
+    // guidePage.style.width = `${gridWidth}px`;
+    // guidePage.style.margin = "0 auto";
 
     // Resetujemy padding, aby uniknąć konfliktów
     guidePage.style.paddingLeft = "0px";
@@ -2945,7 +2945,7 @@ function applyMasonryLayout(pageNum = 1) {
       item.style.position = "absolute";
       item.style.top = `${minHeight}px`;
       // OSTATECZNA POPRAWKA: Prawidłowa kalkulacja pozycji 'left' bez podwójnego przesunięcia
-      item.style.left = `${columnIndex * (itemWidth + gap)}px`;
+      item.style.left = `${sidePadding + columnIndex * (itemWidth + gap)}px`;
 
       columnHeights[columnIndex] += item.offsetHeight + gap;
     });
