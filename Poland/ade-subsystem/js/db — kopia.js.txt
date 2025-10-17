@@ -1,6 +1,6 @@
 /// COPY HERE <db> // database - txt file / baza danych - plik txt`
-const dataFromFile = `
-        13.10.2025  14:22            852159 architecture-3151102_1920.jpg
+        const dataFromFile = `
+13.10.2025  14:22            852159 architecture-3151102_1920.jpg
 13.10.2025  14:13           1008700 autumn-4601377_1920.jpg
 13.10.2025  14:20           1334394 autumn-6988012_1920.jpg
 13.10.2025  14:12            465124 azienkowska-route-224316_1920.jpg
@@ -63,7 +63,6 @@ const dataFromFile = `
 13.10.2025  14:21            632427 mountains-2741921_1920.jpg
 13.10.2025  14:21            606033 mountains-4695270_1920.jpg
 13.10.2025  14:20            664749 muszyna-2741929_1920.jpg
-17.10.2025  10:39            656554 old-street-lamp-335710_1920.jpg
 13.10.2025  14:22            867762 pieniny-989015_1920.jpg
 13.10.2025  14:21            813828 pieniny-989016_1920.jpg
 06.09.2025  06:57            889642 Polana-Kalatowki_Polska_7958161_1920.jpg
@@ -81,7 +80,6 @@ const dataFromFile = `
 13.10.2025  14:20            753671 robert-kubica-1795020_1920.jpg
 13.10.2025  14:19            592931 rock-2579729_1920.jpg
 13.10.2025  14:22           1336942 rocks-999964_1920.jpg
-17.10.2025  10:38           1384008 school-395641_1920.jpg
 13.10.2025  14:21            615430 slowinski-national-park-862262_1920.jpg
 06.09.2025  12:22            670281 Sopot-Monciak_1557406_1920.jpg
 06.09.2025  12:21            913023 Sopot_Polska_6692518_1920.jpg
@@ -125,5 +123,6 @@ const dataFromFile = `
 06.09.2025  07:26            872460 Wroclaw-Rzeka_Polska_2776456_1920.jpg
 13.10.2025  14:21            877344 yazzed-al-rajhi-1795044_1920.jpg
 
+
         `;
-/// COPY HERE <db> // database end / koniec bazy danych
+        /// COPY HERE <db> // database end / koniec bazy danych

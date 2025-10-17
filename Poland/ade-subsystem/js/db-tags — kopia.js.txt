@@ -25,7 +25,7 @@ const itemTags = {
   "Gdansk-Ulica-Kamienice_Polska_7856554_1920.jpg": ["gdańsk", "gdansk", "długi targ", "long market", "kamienice", "tenement houses", "dziewczynka", "girl", "stare miasto", "old town"],
   "Gdansk_Polska_7227096_1920.jpg": ["gdańsk", "gdansk", "ulica mariacka", "mariacka street", "stare miasto", "old town", "architektura", "architecture", "bruk", "cobblestone"],
   "Gliwice-Autostrada-Noc_Polska_3248323_1920.jpg": ["gliwice", "autostrada", "motorway", "a1", "a4", "noc", "night", "długi czas naświetlania", "long exposure", "zima", "winter"],
-  "Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg": ["gliwice", "choinka", "christmas tree", "święta", "christmas", "zima", "winter", "ozdoby", "decorations", "geometryczna", "geometric", "światła", "lights"],
+  "Gliwice-Choinka_Christmas-Tree_Polska_3024106_1920.jpg": ["gliwice", "rynek", "market square", "choinka", "christmas tree", "święta", "christmas", "zima", "winter"],
   "Gliwice-Park-Jesien_Polska_4565816_1920.jpg": ["gliwice", "park chopina", "park", "jesień", "autumn", "liście", "leaves", "natura", "nature", "relaks", "relax"],
   "Gliwice-Park-Jesien_Polska_4565817_1920.jpg": ["gliwice", "park chopina", "willa", "villa", "jesień", "autumn", "architektura", "architecture", "park"],
   "Gliwice-Park-Jesien_Polska_4565819_1920.jpg": ["gliwice", "palmiarnia", "palm house", "park", "architektura", "architecture", "nowoczesność", "modern", "mgła", "fog"],
@@ -132,7 +132,4 @@ const itemTags = {
   "wroclaw-265323_1920.jpg": ["wrocław", "wroclaw", "odra", "oder river", "architektura", "architecture", "kamienica", "tenement house", "zachód słońca", "sunset"],
   "Wroclaw-Rzeka_Polska_2776456_1920.jpg": ["wrocław", "wroclaw", "odra", "oder river", "przystań", "marina", "łódki", "boats", "lato", "summer", "relaks", "relax"],
   "yazzed-al-rajhi-1795044_1920.jpg": ["rajd polski", "rally poland", "rajd", "rally", "samochód", "car", "sport", "ford fiesta", "wrc"],
-  "old-street-lamp-335710_1920.jpg": ["gliwice", "kościół wszystkich świętych", "all saints church", "latarnia", "lantern", "wieża", "tower", "gotyk", "gothic", "cegła", "brick", "architektura", "architecture", "detal", "detail"],
-  "Gliwice-LO-Ziemowita_Polska_20241017_1920.jpg": ["gliwice", "liceum", "high school", "szkoła", "school", "architektura", "architecture", "cegła", "brick", "budynek", "building", "ziemowita", "historia", "history"],
-
 };
