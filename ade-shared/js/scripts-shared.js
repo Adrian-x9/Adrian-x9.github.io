@@ -2118,6 +2118,17 @@ function updateVideoBtnUI() {
   }
   if (lightboxPlayBtn) {
     lightboxPlayBtn.classList.toggle("active-play", isVideoActive); // Lightbox używa innej klasy, zostawiamy dla spójności
+    switch (videoBgState) {
+      case "playing":
+        lightboxPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
+        break;
+      case "paused":
+        lightboxPlayBtn.innerHTML = '<i class="fas fa-stop"></i>';
+        break;
+      case "off":
+        lightboxPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
+        break;
+    }
   }
 
   // Logika dla przycisku Shuffle
