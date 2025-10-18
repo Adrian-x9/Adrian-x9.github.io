@@ -1,6 +1,6 @@
 /// COPY HERE <db> // database - txt file / baza danych - plik txt`
 const dataFromFile = `
-16.10.2025  12:32            586771 abstract-1138967_1920.jpg
+        16.10.2025  12:32            586771 abstract-1138967_1920.jpg
 16.10.2025  12:32            926591 aerial-4540834_1920.jpg
 16.10.2025  12:32            555124 alps-9124288_1920.jpg
 16.10.2025  12:32            776488 alpsee-532864_1920.jpg
@@ -129,11 +129,6 @@ const dataFromFile = `
 16.10.2025  12:32            312904 lighthouse-4691680_1920.jpg
 16.10.2025  12:32            799077 lighthouse-6207038_1920.jpg
 16.10.2025  12:32           1050242 lion-3536149_1920.jpg
-17.10.2025  20:05            995219 luenen-aerial-bridge.jpg
-17.10.2025  20:06            834915 luenen-residential-street.jpg
-17.10.2025  20:05            498516 luenen-river-church.jpg
-17.10.2025  20:05            707341 luenen-shopping-street.jpg
-17.10.2025  20:06            345294 luenen-tower-night.jpg
 16.10.2025  12:32            624364 mannheim-8000879_1920.jpg
 16.10.2025  12:32            608755 mining-5538256_1920.jpg
 16.10.2025  12:32            558548 modern-1046698_1920.jpg
@@ -209,6 +204,5 @@ const dataFromFile = `
 16.10.2025  12:33            929199 wallberg-3732153_1920.jpg
 16.10.2025  12:33            734278 woman-4339644_1920.jpg
 
-
-`;
+        `;
 /// COPY HERE <db> // database end / koniec bazy danych

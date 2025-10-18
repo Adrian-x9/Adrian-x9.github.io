@@ -936,8 +936,10 @@ function applyLanguage() {
     if (lang[key]) el.title = lang[key];
   });
   document.title = config.pageSettings.pageTitle || lang.pageTitle;
-  document.getElementById("pageTitle").textContent =
-    config.pageSettings.pageTitle || lang.pageTitle;
+  const footerDateEl = document.querySelector('[data-lang="footerDate"]');
+  if (footerDateEl && config.updated) {
+    footerDateEl.textContent = `© ${config.updated}`;
+  }
 
   try {
     const langText = config.language.current.toUpperCase();

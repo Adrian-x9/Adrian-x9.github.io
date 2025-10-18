@@ -1020,30 +1020,5 @@ const itemTranslations = {
       description:
         "Młoda kobieta widziana od tyłu, podziwiająca monumentalną fasadę Katedry Berlińskiej (Berliner Dom) w słoneczny dzień.",
     },
-    "luenen-shopping-street.jpg": {
-      title: "Deptak handlowy w Lünen",
-      description:
-        "Widok na brukowaną ulicę handlową w centrum Lünen, Niemcy. Po obu stronach znajdują się sklepy i pawilony, a w centrum kadru widoczna jest zielona altana. Kompozycja ukazuje połączenie nowoczesnej i tradycyjnej architektury, z charakterystycznym budynkiem z muru pruskiego w tle. Nagie drzewa i zimowe światło sugerują późną jesień.",
-    },
-    "luenen-river-church.jpg": {
-      title: "Kościół nad rzeką w Lünen",
-      description:
-        "Malowniczy widok na centrum Lünen z rzeką przepływającą przez środek kadru. Po lewej stronie wznosi się strzelista wieża kościoła, otoczona budynkami mieszkalnymi i usługowymi o zróżnicowanej architekturze. Brzegi porośnięte są drzewami, a spokojna woda odbija niebo i zieleń. Częściowo zachmurzone niebo i miękkie światło tworzą spokojną, harmonijną atmosferę.",
-    },
-    "luenen-aerial-bridge.jpg": {
-      title: "Widok z lotu ptaka na Lünen z mostem nad kanałem",
-      description:
-        "Ujęcie z góry ukazujące centrum Lünen z kanałem przecinającym miasto. W centrum kadru widoczny jest wąski most pieszy łączący dwie części miasta. Otoczenie stanowią budynki mieszkalne i usługowe o zróżnicowanej architekturze oraz tereny zielone z drzewami. Kompozycja podkreśla integrację przestrzeni miejskiej z naturą.",
-    },
-    "luenen-tower-night.jpg": {
-      title: "Oświetlona wieża widokowa w Lünen nocą",
-      description:
-        "Ujęcie z dołu na nowoczesną wieżę widokową w Lünen, wykonane o zmierzchu lub nocą. Konstrukcja z metalowych kratownic zakończona szerokim, podświetlonym tarasem. Głębokie niebieskie niebo i światła wokół wieży podkreślają jej wysokość i inżynieryjny charakter.",
-    },
-    "luenen-residential-street.jpg": {
-      title: "Spokojna ulica mieszkalna w Lünen",
-      description:
-        "Dzienna scena z cichej ulicy w Lünen, z szeregiem domów z czerwonej cegły i białymi oknami. Ulica otoczona jest drzewami o gęstych koronach, a chodnik prowadzi wzdłuż zadbanych ogrodów. Pojedyncza osoba spaceruje lub jedzie rowerem, co podkreśla spokojny charakter dzielnicy.",
-    },
   },
 };

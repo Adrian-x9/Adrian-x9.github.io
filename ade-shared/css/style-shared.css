@@ -4346,3 +4346,12 @@ body.dark-mode .guide-list.view-image-only .guide-title a {
 body .guide-list.view-image-only .guide-title a:hover {
   text-decoration: underline;
 }
+
+/* --- ŁATKA: Ostateczna poprawka kolorowania VisuDir w statusie --- */
+#systemInfoLink .dir-text-themed {
+    color: var(--status-text-light, #444);
+}
+
+html.dark-mode #systemInfoLink .dir-text-themed {
+    color: var(--status-text-dark, #bbb);
+}
