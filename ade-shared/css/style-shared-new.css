@@ -240,6 +240,11 @@ a:hover {
   white-space: nowrap;
 }
 
+/* POPRAWKA 2: Przywrócona brakująca reguła */
+#fileInput {
+  display: none;
+}
+
 /* ================================================================
    3. UKRYWANIE ELEMENTÓW (TRYB POKAZU SLAJDÓW, MINIMALIZACJA)
    ================================================================ */
@@ -276,16 +281,16 @@ body.play-mode-active > .footer {
    4. GÓRNY PASEK (NAGŁÓWEK)
    ================================================================ */
 
+/* POPRAWKA 1: Zmieniono 'top: 20px' na 'top: 0' */
 .top-header {
   position: fixed;
-  top: 20px;
+  top: 0;
   left: 0;
   width: 100%;
   height: 64px;
-  padding: 0 15px;
+  padding: 0 15px 0 70px;
   z-index: 995;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
@@ -302,7 +307,10 @@ html.dark-mode .top-header {
 }
 
 #logoLink {
-  position: relative;
+  position: fixed;
+  top: 10px; /* (64px - 44px) / 2 = 10px */
+  left: 25px;
+  z-index: 1000;
   width: 44px;
   height: 44px;
 }
@@ -322,6 +330,7 @@ html.dark-mode .top-header {
 }
 
 .top-header #pageTitle {
+  flex-grow: 1;
   text-align: center;
   margin: 0;
   white-space: nowrap;
@@ -466,6 +475,7 @@ html.dark-mode .top-header {
 }
 
 /* --- 6.1 Górny wiersz panelu --- */
+
 .deck-top-row {
   display: flex;
   align-items: center;
@@ -497,15 +507,7 @@ html.dark-mode .top-header {
   flex-shrink: 0;
 }
 
-.filter-section input {
-  height: 38px;
-  padding: 0 10px;
-  border-radius: 8px;
-  border: 1px solid var(--c-border-input);
-  background-color: var(--c-bg-input);
-  color: var(--c-text-primary);
-  box-sizing: border-box;
-}
+.filter-section input,
 .filter-section select {
   height: 38px;
   padding: 0 10px;
@@ -542,19 +544,6 @@ input::placeholder {
 #generatorModeBtn {
   width: 38px;
   padding: 0;
-  border-color: var(--c-border-primary);
-  box-shadow: 0 0 15px var(--c-shadow-red-soft);
-  font-weight: bold;
-  background: var(--c-bg-panel);
-  color: var(--c-text-primary);
-}
-#generatorModeBtn.active {
-  color: var(--c-red-primary);
-}
-#generatorModeBtn:hover {
-  box-shadow: inset 0 0 20px var(--c-shadow-red-soft),
-    0 0 20px var(--c-shadow-red-soft);
-  transform: scale(1.02);
 }
 
 .generator-group {
@@ -669,6 +658,7 @@ input::placeholder {
 }
 
 /* --- 6.3 Dolny wiersz panelu --- */
+
 .deck-bottom-row {
   display: flex;
   align-items: center;
@@ -739,7 +729,6 @@ html.dark-mode .deck-bottom-row #viewThemeBtn {
   color: var(--c-red-primary);
   border-color: var(--c-red-primary);
 }
-
 html.dark-mode .deck-bottom-row #viewThemeBtn:hover {
   background-color: var(--c-bg-panel);
   color: var(--c-red-primary);
@@ -778,6 +767,7 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
 }
 
 /* --- 6.4 Suwaki --- */
+
 .slider-control {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -839,9 +829,9 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
    ================================================================ */
 
 .guide-list-wrapper {
-  width: 90%;
+  width: 100%;
   max-width: 1920px;
-  margin: 0 auto;
+  margin-top: 15px;
   overflow: hidden;
   transition: height 0.5s ease-in-out;
 }
@@ -901,50 +891,10 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
 }
 .guide:hover {
   box-shadow: 0 0 25px var(--c-shadow-red-soft);
-  transform: scale(1.02);
 }
 
-.guide-title {
-  margin-top: 7px;
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 10px;
-  overflow-wrap: break-word;
-}
-
-.guide-info {
-  font-size: 0.9em;
+html.dark-mode .guide-info {
   color: var(--c-text-secondary);
-}
-
-.guide-content-bottom {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.guide-info-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 1;
-}
-
-.guide a {
-  margin-top: 10px;
-  display: inline-block;
-}
-.guide a:not(.cover-link) {
-  margin-top: auto;
-}
-.guide a.cover-link {
-  margin-top: 0;
-  display: block;
-  margin-bottom: 10px;
-}
-.guide a:not(.cover-link) i {
-  margin-right: 5px;
 }
 
 .guide.animate-in {
@@ -974,6 +924,68 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
   }
 }
 
+.guide-title {
+  margin-top: 7px;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  overflow-wrap: break-word;
+}
+
+.guide-info {
+  font-size: 0.9em;
+}
+
+/* POPRAWKA 4: Przywrócone domyślne reguły widoczności opisu/szczegółów */
+.guide-info .guide-info-description {
+  display: none;
+}
+.guide-info .guide-info-details {
+  display: block;
+}
+
+.guide-content-bottom {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.guide-info-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
+    .view-masonry
+  )
+  .guide-info-container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.guide a {
+  margin-top: 10px;
+  display: inline-block;
+}
+.guide a.cover-link {
+  margin-top: 0;
+  display: block;
+  margin-bottom: 10px;
+}
+.guide a:not(.cover-link) i {
+  margin-right: 5px;
+}
+
+.guide:not(.view-image-only):not(.view-grid):not(.view-masonry)
+  .guide-content-bottom
+  > a:not(.cover-link) {
+  margin-top: auto;
+}
+
 /* --- 8.2 Obrazek (.guide-cover) --- */
 .guide-cover {
   max-width: 100%;
@@ -984,7 +996,8 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
   border-radius: 10px;
   border: 2px solid var(--c-red-primary);
   box-shadow: 0 0 10px var(--c-shadow-red-medium);
-  transition: all 0.5s ease-in-out;
+  transition: opacity 0.5s, max-height 0.5s, margin 0.5s, padding 0.5s,
+    border-width 0.5s, transform 0.5s ease-in-out;
 }
 .guide .guide-cover {
   opacity: 1;
@@ -1007,8 +1020,6 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
     transform: scale(1);
   }
 }
-
-/* --- Pozostałe style i widoki od 8.3 do 13... --- */
 
 /* --- 8.3 Ukrywanie elementów w trybach widoku --- */
 .guide-list.view-text-only .guide-cover,
@@ -1127,7 +1138,6 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
   text-decoration: underline;
 }
 
-/* ... Dalsze, bardzo długie sekcje ... */
 /* --- 8.5 Widok #5: Siatka (Soft UI) --- */
 .guide-list.view-grid .guide {
   padding: 0;
@@ -1142,7 +1152,7 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 html.dark-mode .guide-list.view-grid .guide {
-  background: #2c2828;
+  background: #2c2c28;
   box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -1751,13 +1761,13 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 .play-guide-container > a > video {
   display: block;
   background-color: rgba(255, 255, 255, 0.67);
-  box-shadow: 0 0 40px 5px var(--c-shadow-medium);
+  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
   animation: zoomInImage 0.5s ease-out;
 }
 body.dark-mode .play-guide-container > a > img,
 body.dark-mode .play-guide-container > a > video {
   background-color: rgba(0, 0, 0, 0.67);
-  box-shadow: 0 0 50px 5px var(--c-shadow-soft);
+  box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35);
 }
 
 body.slideshow-no-animation .play-guide-container > a > img,
@@ -1805,6 +1815,8 @@ body.slideshow-no-animation .play-caption {
   font-weight: normal;
   color: inherit;
 }
+
+/* --- 11.1 Przyciski i Kontrolki Lightboxa --- */
 
 /* --- 11.1 Przyciski i Kontrolki Lightboxa --- */
 
@@ -1923,15 +1935,16 @@ body.slideshow-no-animation .play-caption {
   font-size: 1.5em;
 }
 
+/* === POCZĄTEK POPRAWKI === */
+/* Kluczowa zmiana: Usuwamy błędne tło i ustawiamy tylko kolor ikony */
 .multi-button-child.active-play,
 #lightbox-labelsBtn.active-play {
-  background-color: rgba(204, 0, 0, 0.2);
-  color: var(--c-red-accent);
+  color: var(--c-red-primary);
+  /* Usunięto błędne reguły 'background-color' i 'color: var(--c-red-accent)' */
 }
-html.dark-mode .multi-button-child.active-play,
-html.dark-mode #lightbox-labelsBtn.active-play {
-  background-color: rgba(229, 57, 53, 0.3);
-}
+/* Usunięto cały blok 'html.dark-mode .multi-button-child.active-play...'
+   ponieważ 'var(--c-red-primary)' działa już poprawnie w obu trybach. */
+/* === KONIEC POPRAWKI === */
 
 #lightbox-fxBtn.active {
   color: var(--c-red-primary);
@@ -2086,7 +2099,7 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 .lang-modal-overlay {
   position: absolute;
   inset: 0;
-  background-color: var(--c-overlay-dark);
+  background-color: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
@@ -2102,26 +2115,19 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 
 .lang-modal-close-btn {
   position: absolute;
-  top: -15px;
-  right: -15px;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid var(--c-text-inverted);
-  background: var(--c-bg-body);
-  color: var(--c-text-primary);
-  font-size: 24px;
-  line-height: 28px;
+  top: -30px;
+  right: -10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 2.5rem;
   cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
   z-index: 10;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-html.dark-mode .lang-modal-close-btn {
-  border-color: var(--c-text-primary);
 }
 .lang-modal-close-btn:hover {
-  transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 0 10px var(--c-shadow-red-soft);
+  opacity: 1;
 }
 
 .scene {
@@ -2176,24 +2182,48 @@ html.dark-mode .lang-modal-close-btn {
 
 .viewfinder {
   position: absolute;
-  inset: 0;
-  border: 1px dashed var(--c-text-tertiary);
-  border-radius: 50%;
-  opacity: 0.3;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   pointer-events: none;
+  z-index: 5;
 }
-.viewfinder span {
+.viewfinder::before {
+  content: "";
   position: absolute;
-  top: 50%;
+  top: 70px;
+  left: 50px;
+  right: 50px;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.viewfinder .west-label,
+.viewfinder .east-label {
+  position: absolute;
+  top: 70px;
   transform: translateY(-50%);
-  color: var(--c-text-tertiary);
-  font-weight: bold;
+  font-weight: 600;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
 }
 .viewfinder .west-label {
-  left: 10px;
+  left: 30px;
 }
 .viewfinder .east-label {
-  right: 10px;
+  right: 30px;
+}
+.viewfinder .west-label::before {
+  content: "<";
+  margin-right: 5px;
+  opacity: 0.6;
+}
+.viewfinder .east-label::after {
+  content: ">";
+  margin-left: 5px;
+  opacity: 0.6;
 }
 
 /* ================================================================
@@ -2256,9 +2286,16 @@ html.dark-mode .lang-modal-close-btn {
 }
 
 @media (max-width: 480px) {
+  #logoLink {
+    top: 10px; /* (60px - 40px) / 2 = 10px */
+    left: 20px;
+    width: 40px;
+    height: 40px;
+  }
+
   .top-header {
     height: 60px;
-    padding: 0 10px;
+    padding: 0 10px 0 60px;
     gap: 8px;
   }
 
@@ -2284,7 +2321,7 @@ html.dark-mode .lang-modal-close-btn {
   }
 
   body {
-    padding-top: 75px;
+    padding-top: 75px; /* 60px header + 15px gap */
   }
 
   .deck-top-row:not(.filters-expanded) .filter-section {

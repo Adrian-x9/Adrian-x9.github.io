@@ -1817,43 +1817,36 @@ body.slideshow-no-animation .play-caption {
 }
 
 /* --- 11.1 Przyciski i Kontrolki Lightboxa --- */
-
-/* --- 11.1 Przyciski i Kontrolki Lightboxa --- */
-
 .lightbox-action-btn {
   position: fixed;
   width: 44px;
   height: 44px;
   z-index: 1001;
-  padding: 10px;
+  padding: 0;
   border-radius: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.5em;
-  transition: background-color 0.2s ease, color 0.2s ease;
   background-color: var(--c-bg-panel-glass-alt);
   color: var(--c-text-primary);
   border: 1px solid var(--c-border-translucent);
   box-shadow: 0 2px 5px var(--c-shadow-medium);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.lightbox-action-btn:hover {
+  background-color: var(--c-bg-hover);
+  color: var(--c-red-primary);
+  transform: scale(1.1);
 }
 .lightbox-action-btn i {
   margin: 0;
 }
 
-#playCloseBtn {
-  top: 15px;
-  right: 15px;
-}
-#fullscreenBtnLightbox {
-  top: 15px;
-  right: 69px;
-}
-#lightbox-minimizeBtn {
-  bottom: 15px;
-  right: 15px;
-}
+#playCloseBtn { top: 15px; right: 15px; }
+#fullscreenBtnLightbox { top: 15px; right: 69px; }
+#lightbox-minimizeBtn { bottom: 15px; right: 15px; }
 
 #lightbox-controls {
   position: fixed;
@@ -1870,69 +1863,106 @@ body.slideshow-no-animation .play-caption {
   z-index: 1000;
   box-sizing: border-box;
 }
-#lightbox-controls.minimized-controls {
-  transform: translateY(100%);
-}
+#lightbox-controls.minimized-controls { transform: translateY(100%); }
 
 #lightbox-controls .dir-db-btn,
 #lightbox-controls .lightbox-control-group {
   background-color: var(--c-bg-panel-glass-alt);
-  color: var(--c-text-primary);
   border: 1px solid var(--c-border-translucent);
   box-shadow: 0 2px 5px var(--c-shadow-medium);
   border-radius: 10px;
   overflow: hidden;
   display: inline-flex;
+  height: 38px;
+  align-items: center;
 }
 
-#lightbox-controls button {
+/* Uniwersalny styl dla wszystkich klikalnych elementów wewnątrz "pigułek" */
+/* Uniwersalny styl dla wszystkich klikalnych elementów wewnątrz "pigułek" */
+#lightbox-controls .dir-db-btn,
+#lightbox-controls .lightbox-control-group > * {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  font-size: 1.1em;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  font-size: 1.2em;
   padding: 0;
   box-sizing: border-box;
   background: none;
   border: none;
   cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s;
+  color: var(--c-text-primary);
+  transition: color 0.2s ease;
   white-space: nowrap;
 }
 
-#lightbox-controls button:hover {
-  background-color: var(--c-bg-hover);
-  color: var(--c-red-primary);
+/* POINT 4: Hover dla ikon NIEAKTYWNYCH (domyślny -> czerwony) */
+#lightbox-controls button:not(.active):not(.active-play):hover,
+#lightbox-controls span:not(.active):not(.active-play):hover {
+    color: var(--c-red-primary);
 }
 
-#lightbox-controls .dir-db-btn.multi-button {
+/* POINT 2 & 3: Ikony AKTYWNE są czerwone */
+#lightbox-controls .active,
+#lightbox-controls .active-play {
+    color: var(--c-red-primary) !important;
+}
+
+/* POINT 4: Hover dla ikon AKTYWNYCH (czerwony -> domyślny) */
+#lightbox-controls button.active:hover,
+#lightbox-controls button.active-play:hover,
+#lightbox-controls span.active:hover,
+#lightbox-controls span.active-play:hover {
+    color: var(--c-text-primary) !important;
+}
+
+/* Panel Wideo */
+#lightbox-controls #lightbox-videoBtn {
   width: auto;
-  height: 44px;
-  padding: 0;
-  align-items: center;
 }
 
-#lightbox-controls .multi-button-main {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  flex-shrink: 0;
-}
-#lightbox-controls .multi-button-child {
-  border-left: 1px solid var(--c-border-translucent);
-  width: 36px;
-  height: 36px;
-  font-size: 1.1em;
+/* Domyślnie ukryj dodatkowe przyciski wideo */
+#lightbox-videoBtn #lightbox-video-prev,
+#lightbox-videoBtn #lightbox-video-autoshuffle,
+#lightbox-videoBtn #lightbox-video-next,
+#lightbox-videoBtn #lightbox-video-reset {
+  max-width: 0;
   padding: 0;
-  box-sizing: border-box;
-  justify-content: center;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-width 0.4s ease, padding 0.4s ease, opacity 0.4s ease;
 }
 
+/* Pokaż je po rozwinięciu */
+#lightbox-videoBtn.expanded #lightbox-video-prev,
+#lightbox-videoBtn.expanded #lightbox-video-autoshuffle,
+#lightbox-videoBtn.expanded #lightbox-video-next,
+#lightbox-videoBtn.expanded #lightbox-video-reset {
+  max-width: 38px;
+  opacity: 1;
+}
+
+/* POINT 1: Usuń wszystkie separatory */
+#lightbox-controls .multi-button-child,
+#lightbox-controls .lightbox-control-group > * + *,
+#lightbox-controls #lightbox-videoBtn > * + * {
+    border-left: none;
+}
+
+/* Powiększone ikony dla panelu slideshow */
 #slideshow-controls .multi-button-child {
-  font-size: 1.5em;
+  font-size: 1.4em;
+}
+
+/* Animacja kręcenia dla aktywnej ikony FX */
+#lightbox-fxBtn.active i {
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* === POCZĄTEK POPRAWKI === */
@@ -2021,7 +2051,7 @@ body.slideshow-no-animation .play-caption {
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-  color: var(--c-text-inverted);
+  color: var(--c-text-primary);
   font-size: 1.1rem;
   opacity: 0;
   transform: translateX(-120%);
