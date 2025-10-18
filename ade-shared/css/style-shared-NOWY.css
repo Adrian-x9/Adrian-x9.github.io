@@ -240,11 +240,6 @@ a:hover {
   white-space: nowrap;
 }
 
-/* POPRAWKA 2: Przywrócona brakująca reguła */
-#fileInput {
-  display: none;
-}
-
 /* ================================================================
    3. UKRYWANIE ELEMENTÓW (TRYB POKAZU SLAJDÓW, MINIMALIZACJA)
    ================================================================ */
@@ -281,16 +276,16 @@ body.play-mode-active > .footer {
    4. GÓRNY PASEK (NAGŁÓWEK)
    ================================================================ */
 
-/* POPRAWKA 1: Zmieniono 'top: 20px' na 'top: 0' */
 .top-header {
   position: fixed;
-  top: 0;
+  top: 20px;
   left: 0;
   width: 100%;
   height: 64px;
-  padding: 0 15px 0 70px;
+  padding: 0 15px;
   z-index: 995;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
@@ -307,10 +302,7 @@ html.dark-mode .top-header {
 }
 
 #logoLink {
-  position: fixed;
-  top: 10px; /* (64px - 44px) / 2 = 10px */
-  left: 25px;
-  z-index: 1000;
+  position: relative;
   width: 44px;
   height: 44px;
 }
@@ -330,7 +322,6 @@ html.dark-mode .top-header {
 }
 
 .top-header #pageTitle {
-  flex-grow: 1;
   text-align: center;
   margin: 0;
   white-space: nowrap;
@@ -936,14 +927,6 @@ html.dark-mode .guide-info {
   font-size: 0.9em;
 }
 
-/* POPRAWKA 4: Przywrócone domyślne reguły widoczności opisu/szczegółów */
-.guide-info .guide-info-description {
-  display: none;
-}
-.guide-info .guide-info-details {
-  display: block;
-}
-
 .guide-content-bottom {
   flex-grow: 1;
   display: flex;
@@ -1138,6 +1121,7 @@ html.dark-mode .guide-info {
   text-decoration: underline;
 }
 
+/* ... Dalsze, bardzo długie sekcje ... */
 /* --- 8.5 Widok #5: Siatka (Soft UI) --- */
 .guide-list.view-grid .guide {
   padding: 0;
@@ -1152,7 +1136,7 @@ html.dark-mode .guide-info {
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
 html.dark-mode .guide-list.view-grid .guide {
-  background: #2c2c28;
+  background: #2c2828;
   box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
@@ -1761,13 +1745,13 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 .play-guide-container > a > video {
   display: block;
   background-color: rgba(255, 255, 255, 0.67);
-  box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 40px 5px var(--c-shadow-medium);
   animation: zoomInImage 0.5s ease-out;
 }
 body.dark-mode .play-guide-container > a > img,
 body.dark-mode .play-guide-container > a > video {
   background-color: rgba(0, 0, 0, 0.67);
-  box-shadow: 0 0 50px 5px rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 50px 5px var(--c-shadow-soft);
 }
 
 body.slideshow-no-animation .play-guide-container > a > img,
@@ -1815,8 +1799,6 @@ body.slideshow-no-animation .play-caption {
   font-weight: normal;
   color: inherit;
 }
-
-/* --- 11.1 Przyciski i Kontrolki Lightboxa --- */
 
 /* --- 11.1 Przyciski i Kontrolki Lightboxa --- */
 
@@ -1935,16 +1917,15 @@ body.slideshow-no-animation .play-caption {
   font-size: 1.5em;
 }
 
-/* === POCZĄTEK POPRAWKI === */
-/* Kluczowa zmiana: Usuwamy błędne tło i ustawiamy tylko kolor ikony */
 .multi-button-child.active-play,
 #lightbox-labelsBtn.active-play {
-  color: var(--c-red-primary);
-  /* Usunięto błędne reguły 'background-color' i 'color: var(--c-red-accent)' */
+  background-color: rgba(204, 0, 0, 0.2);
+  color: var(--c-red-accent);
 }
-/* Usunięto cały blok 'html.dark-mode .multi-button-child.active-play...'
-   ponieważ 'var(--c-red-primary)' działa już poprawnie w obu trybach. */
-/* === KONIEC POPRAWKI === */
+html.dark-mode .multi-button-child.active-play,
+html.dark-mode #lightbox-labelsBtn.active-play {
+  background-color: rgba(229, 57, 53, 0.3);
+}
 
 #lightbox-fxBtn.active {
   color: var(--c-red-primary);
@@ -2099,7 +2080,7 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 .lang-modal-overlay {
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: var(--c-overlay-dark);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 }
@@ -2115,19 +2096,26 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 
 .lang-modal-close-btn {
   position: absolute;
-  top: -30px;
-  right: -10px;
-  background: none;
-  border: none;
-  color: #fff;
-  font-size: 2.5rem;
+  top: -15px;
+  right: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--c-text-inverted);
+  background: var(--c-bg-body);
+  color: var(--c-text-primary);
+  font-size: 24px;
+  line-height: 28px;
   cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s;
   z-index: 10;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+html.dark-mode .lang-modal-close-btn {
+  border-color: var(--c-text-primary);
 }
 .lang-modal-close-btn:hover {
-  opacity: 1;
+  transform: scale(1.1) rotate(90deg);
+  box-shadow: 0 0 10px var(--c-shadow-red-soft);
 }
 
 .scene {
@@ -2182,48 +2170,24 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 
 .viewfinder {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  inset: 0;
+  border: 1px dashed var(--c-text-tertiary);
+  border-radius: 50%;
+  opacity: 0.3;
   pointer-events: none;
-  z-index: 5;
 }
-.viewfinder::before {
-  content: "";
+.viewfinder span {
   position: absolute;
-  top: 70px;
-  left: 50px;
-  right: 50px;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-.viewfinder .west-label,
-.viewfinder .east-label {
-  position: absolute;
-  top: 70px;
+  top: 50%;
   transform: translateY(-50%);
-  font-weight: 600;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  display: flex;
-  align-items: center;
+  color: var(--c-text-tertiary);
+  font-weight: bold;
 }
 .viewfinder .west-label {
-  left: 30px;
+  left: 10px;
 }
 .viewfinder .east-label {
-  right: 30px;
-}
-.viewfinder .west-label::before {
-  content: "<";
-  margin-right: 5px;
-  opacity: 0.6;
-}
-.viewfinder .east-label::after {
-  content: ">";
-  margin-left: 5px;
-  opacity: 0.6;
+  right: 10px;
 }
 
 /* ================================================================
@@ -2286,16 +2250,9 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 }
 
 @media (max-width: 480px) {
-  #logoLink {
-    top: 10px; /* (60px - 40px) / 2 = 10px */
-    left: 20px;
-    width: 40px;
-    height: 40px;
-  }
-
   .top-header {
     height: 60px;
-    padding: 0 10px 0 60px;
+    padding: 0 10px;
     gap: 8px;
   }
 
@@ -2321,7 +2278,7 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   }
 
   body {
-    padding-top: 75px; /* 60px header + 15px gap */
+    padding-top: 75px;
   }
 
   .deck-top-row:not(.filters-expanded) .filter-section {
