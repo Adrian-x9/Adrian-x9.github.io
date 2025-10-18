@@ -2042,6 +2042,8 @@ function renderGuides(sourceArray = null) {
   if (!isMasonry) {
     updateWrapperHeightForPage(1);
   }
+  document.getElementById("pageTitle").textContent =
+    config.pageSettings.pageTitle || lang.pageTitle;
 }
 
 function toggleAudioMute() {
