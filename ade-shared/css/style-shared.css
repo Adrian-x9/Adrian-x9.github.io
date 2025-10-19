@@ -208,14 +208,6 @@ body.interface-minimized {
   padding-bottom: 20px;
 }
 
-.control-panel,
-.guide-list-wrapper,
-.pagination {
-  padding-left: 20px;
-  padding-right: 20px;
-  box-sizing: border-box;
-}
-
 /* FIX: Umożliwia zwolnienie miejsca po ukryciu paneli */
 body.interface-minimized {
   padding-top: 20px;
@@ -491,6 +483,7 @@ html.dark-mode .top-header {
   border: 2px solid var(--c-red-primary);
   box-shadow: 0 5px 20px var(--c-shadow-red-medium);
   margin-bottom: 20px;
+  box-sizing: border-box;
 }
 
 /* --- 6.1 Górny wiersz panelu --- */
@@ -712,6 +705,9 @@ input::placeholder {
   background-color: transparent;
   color: var(--c-text-primary);
   transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .deck-bottom-row button:hover {
   transform: scale(1.1);
@@ -2435,6 +2431,14 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   #firstPageBtn,
   #lastPageBtn {
     display: none;
+  }
+
+  /* POPRAWKA: Poprawny rozmiar i marginesy dla paneli w widoku mobilnym */
+  .control-panel,
+  .pagination {
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 
