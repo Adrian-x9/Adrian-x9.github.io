@@ -3189,19 +3189,19 @@ function initializeLangCarousel() {
     lastX = 0,
     velocity = 0,
     animationFrame = null;
-  const friction = 0.95,
+  const friction = 0.98,
     rotationSensitivity = 0.4;
   const updateRotation = () => {
     world.style.transform = `rotateY(${currentRotationY}deg)`;
   };
   const inertiaAnimate = () => {
-    currentRotationY += velocity;
-    velocity *= friction;
-    updateRotation();
-    if (Math.abs(velocity) > 0.1)
-      animationFrame = requestAnimationFrame(inertiaAnimate);
-    else velocity = 0;
-  };
+      velocity *= friction; 
+      currentRotationY += velocity; 
+      updateRotation();
+      if (Math.abs(velocity) > 0.1)
+        animationFrame = requestAnimationFrame(inertiaAnimate);
+      else velocity = 0;
+    };
   const onDragStart = (e) => {
     e.preventDefault();
     isDragging = true;
@@ -3244,9 +3244,26 @@ function initializeLangCarousel() {
   const showModal = () => {
     rebuildCarousel();
     modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
+
+    // --- NOWA LOGIKA START ---
+    // Znajdź pozycję obecnego języka i ustaw karuzelę
+    const currentLangCode = config.language.current || "pl";
+    const currentIndex = languages.findIndex(
+      (lang) => lang.code === currentLangCode
+    );
+
+    if (currentIndex !== -1) {
+      const totalItems = languages.length;
+      const angle = (360 / totalItems) * currentIndex;
+      currentRotationY = -angle; // Ustawiamy kąt, aby obecny język był z przodu
+      updateRotation(); // Natychmiast zastosuj rotację
+    }
+    // --- NOWA LOGIKA KONIEC ---
   };
   const hideModal = () => {
     modal.style.display = "none";
+    document.body.style.overflow = "";
   };
 
   globeBtn.addEventListener("click", (e) => {
