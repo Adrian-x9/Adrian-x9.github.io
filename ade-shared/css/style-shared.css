@@ -72,7 +72,7 @@ html.dark-mode {
   --c-border-primary: #a00000;
   --c-border-secondary: #808080;
   --c-border-input: #555;
-  --c-border-translucent: rgba(255, 255, 255, 0.2);
+  --c-border-translucent: rgba(255, 255, 255, 0.1);
   --c-border-translucent-alt: rgba(255, 255, 255, 0.15);
 
   --c-shadow-soft: rgba(0, 0, 0, 0.4);
@@ -160,7 +160,7 @@ body {
   font-family: "Satoshi", sans-serif;
   color: var(--c-text-primary);
   margin: 0;
-  padding: 80px 20px 20px 20px;
+  padding: 80px 0 0 0;
   box-sizing: border-box;
   min-height: 100vh;
   display: flex;
@@ -169,6 +169,14 @@ body {
   overflow-x: hidden;
   overscroll-behavior-y: contain;
   transition: background-color 0.5s ease, color 0.3s ease, padding 0.5s ease;
+}
+
+.control-panel,
+.guide-list-wrapper,
+.pagination {
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
 }
 
 /* FIX: Umożliwia zwolnienie miejsca po ukryciu paneli */
@@ -1549,15 +1557,24 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 
 .footer {
   text-align: center;
-  padding: 40px 20px 0px 20px;
+  padding: 20px;
   font-size: 0.9em;
-  max-height: 200px;
-  overflow: hidden;
-  margin-top: auto;
-  flex-shrink: 0;
-  opacity: 1;
   color: var(--c-text-secondary);
   transition: max-height 0.5s, padding 0.5s, margin 0.5s, opacity 0.5s;
+
+  /* STYLE "SZKŁA" - WERSJA PEŁNOEKRANOWA */
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: auto;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid var(--c-border-translucent);
+}
+
+html.dark-mode .footer {
+  background-color: rgba(20, 20, 20, 0.15);
 }
 
 .footer-main-text p {
@@ -1566,7 +1583,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 }
 
 .footer .privacy-notice {
-  margin-top: 10px;
+  margin-top: 12px; /* ZMIANA */
   font-size: 0.9em;
 }
 
@@ -1576,7 +1593,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 }
 
 .footer-timers {
-  margin-top: 15px;
+  margin-top: 12px; /* ZMIANA */
   font-size: 0.9em;
   opacity: 0.7;
   display: flex;
@@ -1596,7 +1613,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 
 .reset-container {
   text-align: center;
-  margin: 10px 0 0 0;
+  margin: 12px 0 0 0;
 }
 
 #mainResetBtn {

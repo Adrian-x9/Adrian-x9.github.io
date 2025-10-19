@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.11", // CSS refactor / refaktoryzacja CSS
-  build: "2025-09-18", // Build date YYYY-MM-DD
-  updated: "2025-10-17", // Last update date YYYY-MM-DD
+  version: "v2.4.12", // CSS refactor / refaktoryzacja CSS
+  build: "2025-09-17", // Build date YYYY-MM-DD
+  updated: "2025-10-19", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure
