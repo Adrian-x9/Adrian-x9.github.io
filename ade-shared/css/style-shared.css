@@ -20,7 +20,7 @@
   --c-text-inverted: #fff;
 
   --c-bg-body: #e1e1e1;
-  --c-bg-panel: #fdfdfd;
+  --c-bg-panel: rgba(253, 253, 253, 0.9);
   --c-bg-panel-hover: #f0f0f0;
   --c-bg-panel-glass: rgba(255, 255, 255, 0.9);
   --c-bg-panel-glass-alt: rgba(255, 255, 255, 0.8);
@@ -61,7 +61,7 @@ html.dark-mode {
   --c-text-inverted: #000;
 
   --c-bg-body: #121212;
-  --c-bg-panel: #000;
+  --c-bg-panel: rgba(0, 0, 0, 0.9);
   --c-bg-panel-hover: #222;
   --c-bg-panel-glass: rgba(45, 45, 45, 0.9);
   --c-bg-panel-glass-alt: rgba(0, 0, 0, 0.8);
@@ -471,9 +471,6 @@ html.dark-mode .top-header {
   vertical-align: middle;
 }
 
-/* ... (reszta kodu jest bardzo długa, więc ją pominę, ale zakładam, że mam ją w pamięci) ... */
-/* CAŁA RESZTA KODU Z POPRZEDNIEGO KROKU, Z USUNIĘTYMI !IMPORTANT I POPRAWKAMI */
-
 /* ================================================================
    6. GŁÓWNY PANEL STEROWANIA (CONTROL-PANEL)
    ================================================================ */
@@ -488,8 +485,8 @@ html.dark-mode .top-header {
   padding: 8px;
   border-radius: 12px;
   background-color: var(--c-bg-panel);
-  box-shadow: 0 0 0 2px var(--c-red-primary),
-    0 5px 20px var(--c-shadow-red-medium);
+  border: 2px solid var(--c-red-primary);
+  box-shadow: 0 5px 20px var(--c-shadow-red-medium);
   margin-bottom: 20px;
 }
 
@@ -1506,8 +1503,8 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   border: 2px solid transparent;
   background-clip: padding-box;
   background-color: var(--c-bg-panel);
-  box-shadow: 0 0 0 2px var(--c-red-primary),
-    0 5px 20px var(--c-shadow-red-soft);
+  border: 2px solid var(--c-red-primary);
+  box-shadow: 0 5px 20px var(--c-shadow-red-medium);
 }
 
 .pagination-center {
@@ -1543,10 +1540,16 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   box-sizing: border-box;
   padding: 10px;
   flex-shrink: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.pagination-controls button:hover:not(:disabled) {
+/* POPRAWKA: Spójny hover dla DUŻYCH przycisków paginacji */
+.pagination-controls button:not(.pagination-action-btn):hover:not(:disabled) {
+  transform: scale(1.1);
   box-shadow: 0 0 20px var(--c-shadow-red-soft);
+  background-color: var(--c-red-primary); /* <-- DODANA LINIA */
+  color: var(--c-text-on-red);            /* <-- DODANA LINIA */
+  border-color: var(--c-red-primary);     /* <-- DODANA LINIA */
 }
 .pagination-controls button:disabled {
   cursor: not-allowed;
@@ -1561,22 +1564,30 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   background: transparent;
   box-shadow: none;
   color: var(--c-text-tertiary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+
+  /* POPRAWKA: Ujednolicenie z górnym panelem */
+  opacity: 0.7;
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
-.pagination-controls .pagination-action-btn:hover {
+.pagination-controls .pagination-action-btn:hover:not(:disabled) {
+  opacity: 1;
   color: var(--c-red-primary);
+  transform: scale(1.1);
 }
 
-/* FIX: Zwiększono specyficzność, usunięto !important */
-.pagination-controls #paginationCarouselBtn {
-  color: var(--c-red-primary);
-  opacity: 1;
-}
+
 .pagination-controls #paginationCarouselBtn:hover {
   opacity: 0.8;
 }
 
-#paginationShuffleBtn.active-red {
+/* POPRAWKA: Poprawny styl dla AKTYWNYCH małych przycisków */
+.pagination-controls .pagination-action-btn.active-red {
   color: var(--c-red-primary);
+  opacity: 1;
 }
 
 .page-input {

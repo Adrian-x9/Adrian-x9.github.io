@@ -1097,33 +1097,31 @@ window.onload = function () {
   if (controlPanel) {
     controlPanel.classList.add("animated-control-panel");
     document.querySelector(".top-header")?.classList.add("animated-header");
-    document
-      .querySelector(".glass-status")
-      ?.classList.add("animated-status-bar");
+    document.querySelector(".glass-status")?.classList.add("animated-status-bar"); 
     document.querySelector(".footer")?.classList.add("animated-footer");
   }
 
   updateLocationBasedStatus();
 
   // FIX: Automatyczne czyszczenie klas po zakończeniu animacji wejścia
-  const animatedElements = document.querySelectorAll(
-    ".animated-header, .animated-status-bar, .animated-control-panel, .animated-footer, .animated-pagination"
+const animatedElements = document.querySelectorAll(
+  ".animated-header, .animated-status-bar, .animated-control-panel, .animated-footer, .animated-pagination"
+);
+animatedElements.forEach((el) => {
+  el.addEventListener(
+    "animationend",
+    () => {
+      el.classList.remove(
+        "animated-header",
+        "animated-status-bar",
+        "animated-control-panel",
+        "animated-footer",
+        "animated-pagination"
+      );
+    },
+    { once: true }
   );
-  animatedElements.forEach((el) => {
-    el.addEventListener(
-      "animationend",
-      () => {
-        el.classList.remove(
-          "animated-header",
-          "animated-status-bar",
-          "animated-control-panel",
-          "animated-footer",
-          "animated-pagination"
-        );
-      },
-      { once: true }
-    );
-  });
+});
 };
 
 function toggleMinimizeView() {
@@ -2793,6 +2791,7 @@ function stopCarousel() {
     const carouselBtn = document.getElementById("paginationCarouselBtn");
     if (carouselBtn) {
       carouselBtn.innerHTML = '<i class="fas fa-play"></i>';
+      carouselBtn.classList.remove("active-red");
       carouselBtn.title = lang.paginationCarouselStart;
     }
   }
@@ -2816,6 +2815,7 @@ function toggleCarousel() {
   } else {
     if (totalPages <= 1) return;
     carouselBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    carouselBtn.classList.add("active-red");
     carouselBtn.title = lang.paginationCarouselStop;
     carouselInterval = setInterval(() => {
       let nextPage;
