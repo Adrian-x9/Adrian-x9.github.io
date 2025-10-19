@@ -1097,11 +1097,33 @@ window.onload = function () {
   if (controlPanel) {
     controlPanel.classList.add("animated-control-panel");
     document.querySelector(".top-header")?.classList.add("animated-header");
-    document.querySelector(".glass-status")?.classList.add("animated-status-bar"); 
+    document
+      .querySelector(".glass-status")
+      ?.classList.add("animated-status-bar");
     document.querySelector(".footer")?.classList.add("animated-footer");
   }
 
   updateLocationBasedStatus();
+
+  // FIX: Automatyczne czyszczenie klas po zakończeniu animacji wejścia
+  const animatedElements = document.querySelectorAll(
+    ".animated-header, .animated-status-bar, .animated-control-panel, .animated-footer, .animated-pagination"
+  );
+  animatedElements.forEach((el) => {
+    el.addEventListener(
+      "animationend",
+      () => {
+        el.classList.remove(
+          "animated-header",
+          "animated-status-bar",
+          "animated-control-panel",
+          "animated-footer",
+          "animated-pagination"
+        );
+      },
+      { once: true }
+    );
+  });
 };
 
 function toggleMinimizeView() {
