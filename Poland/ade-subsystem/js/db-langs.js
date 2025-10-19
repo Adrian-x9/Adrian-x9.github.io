@@ -675,6 +675,531 @@ const itemTranslations = {
       description:
         "Zbliżenie na kamienny, łukowy fragment sklepienia, który przetrwał próbę czasu. Świadectwo dawnej kunsztu budowlanego.",
     },
+    "architecture-3067796_1920.jpg": {
+      title: "Historyczny budynek w Wielkopolsce",
+      description:
+        "Duży, symetryczny budynek z czerwonej cegły z dwiema ośmiobocznymi wieżyczkami. Architektura typowa dla szkół lub koszar z przełomu XIX i XX wieku.",
+    },
+    "architecture-3101759_1920.jpg": {
+      title: "Secesyjna kamienica w Poznaniu",
+      description:
+        "Imponująca, narożna kamienica w stylu secesyjnym, prawdopodobnie w poznańskiej dzielnicy Jeżyce. Bogactwo detali architektonicznych przyciąga wzrok.",
+    },
+    "architecture-3151082_1920.jpg": {
+      title: "Modernistyczna kamienica w Poznaniu",
+      description:
+        "Fragment fasady z zaokrąglonym narożnikiem, charakterystyczny dla architektury modernistycznej lub Art déco. Słońce oświetla budynek w ciepłych barwach.",
+    },
+    "architecture-3151102_1920.jpg": {
+      title: "Uliczka we Wrocławiu",
+      description:
+        "Nastrojowa, brukowana uliczka w sepii, prawdopodobnie na wrocławskim Ostrowie Tumskim lub w jego okolicach. Zdjęcie oddaje historyczny klimat miasta.",
+    },
+    "architecture-3301930_1920.jpg": {
+      title: "Katedra Poznańska na Ostrowie Tumskim",
+      description:
+        "Widok na Archikatedrę Świętych Apostołów Piotra i Pawła w Poznaniu. To najstarsza katedra w Polsce i historyczne serce miasta.",
+    },
+    "architecture-6550356_1920.jpg": {
+      title: "Wieża poznańskiego Ratusza zza okna",
+      description:
+        "Artystyczne ujęcie wieży Ratusza na Starym Rynku w Poznaniu, widzianej przez ramy okna. Kadr podkreśla historyczny detal i architekturę.",
+    },
+    "autumn-landscape-2908879_1920.jpg": {
+      title: "Jesienna ścieżka w polskim lesie",
+      description:
+        "Leśna ścieżka usłana opadłymi, brązowymi liśćmi, kontrastująca z wciąż zielonymi koronami drzew. Esencja polskiej złotej jesieni.",
+    },
+    "block-4068976_1920.jpg": {
+      title: "ICHOT Brama Poznania",
+      description:
+        "Nowoczesny budynek Interaktywnego Centrum Historii Ostrowa Tumskiego, znanego jako Brama Poznania. Minimalistyczna bryła kontrastuje z historycznym otoczeniem.",
+    },
+    "buildings-657525_1920.jpg": {
+      title: "Kontrasty architektury w Poznaniu",
+      description:
+        "Ceglany, neoromański kościół pw. św. Jana Vianneya na Sołaczu na tle nowoczesnego apartamentowca. Zderzenie starej i nowej architektury Poznania.",
+    },
+    "bus-station-447101_1920.jpg": {
+      title: "Dworzec PKS w Poznaniu nocą",
+      description:
+        "Nowoczesny, zintegrowany dworzec autobusowy w Poznaniu, którego elewacja jest podświetlona na różne kolory. Znany również jako 'Chlebak'.",
+    },
+    "castle-4999697_1920.jpg": {
+      title: "Zamek Cesarski w Poznaniu",
+      description:
+        "Monumentalny Zamek Cesarski w Dzielnicy Zamkowej, zbudowany dla cesarza Wilhelma II. Przykład architektury neoromańskiej.",
+    },
+    "city-3426704_1920.jpg": {
+      title: "Uliczka w Poznaniu",
+      description:
+        "Klimatyczna ulica z zabytkowymi kamienicami i brukowanym chodnikiem, prawdopodobnie w jednej ze starszych dzielnic Poznania, jak Jeżyce.",
+    },
+    "city-4999696_1920.jpg": {
+      title: "Stary Rynek w Poznaniu w pochmurny dzień",
+      description:
+        "Widok na poznański Stary Rynek z Ratuszem w tle. Brukowany plac i historyczne kamieniczki w spokojnej, nieco nostalgicznej atmosferze.",
+    },
+    "city-5132735_1920.jpg": {
+      title: "Wnętrze Starego Browaru w Poznaniu",
+      description:
+        "Charakterystyczna architektura wnętrz Centrum Sztuki i Biznesu 'Stary Browar', łącząca historyczną, czerwoną cegłę z nowoczesnym designem.",
+    },
+    "croissant-5209608_1920.jpg": {
+      title: "Pałac w Rogalinie",
+      description:
+        "Widok na główną fasadę rokokowo-klasycystycznego pałacu Raczyńskich w Rogalinie, otoczonego zadbanym parkiem. Perła architektury Wielkopolski.",
+    },
+    "drone-4539817_1920.jpg": {
+      title: "Węzeł autostradowy pod Poznaniem",
+      description:
+        "Widok z lotu ptaka na duży węzeł drogowy, prawdopodobnie na autostradzie A2 w okolicach Poznania. Obrazuje nowoczesną infrastrukturę regionu.",
+    },
+    "fountain-822945_1920.jpg": {
+      title: "Fontanna Wolności na Placu Wolności w Poznaniu",
+      description:
+        "Nocne ujęcie Fontanny Wolności z artystycznym efektem selektywnego koloru. Woda i jej odbicie tworzą hipnotyzujący wzór.",
+    },
+    "houses-7071276_1920.jpg": {
+      title: "Nocna uliczka Starego Miasta w Poznaniu",
+      description:
+        "Nastrojowe ujęcie brukowanej uliczki 'kocimi łbami', oświetlonej ciepłym światłem latarni. Oddaje magiczny klimat historycznej części miasta nocą.",
+    },
+    "imperial-castle-513161_1920.jpg": {
+      title: "Zamek Cesarski w Poznaniu nocą",
+      description:
+        "Fragment fasady Zamku Cesarskiego oświetlony w nocy. Widoczne neoromańskie łuki, zdobienia i potężne kamienne mury.",
+    },
+    "murals-657519_1920.jpg": {
+      title: "Mural na ścianie kamienicy w Poznaniu",
+      description:
+        "Kolorowy mural w stylu street art na dużej ścianie budynku. Sztuka miejska ożywiająca architekturę jednej z poznańskich dzielnic.",
+    },
+    "nature-3339460_1920.jpg": {
+      title: "Aleja parkowa w Poznaniu",
+      description:
+        "Długa, prosta aleja wysadzana drzewami tworzącymi zielony baldachim. Idealne miejsce na spacer, prawdopodobnie w Parku Cytadela lub Wilsona.",
+    },
+    "old-tram-3054142_1920.jpg": {
+      title: "Zabytkowy tramwaj na ulicach Poznania",
+      description:
+        "Historyczny, zielony tramwaj Konstal N na poznańskich torach podczas parady lub przejazdu okolicznościowego, obserwowany przez tłum mieszkańców.",
+    },
+    "painter-2129415_1920.jpg": {
+      title: "Malarz malujący poznańską Katedrę",
+      description:
+        "Artysta w plenerze, malujący obraz poznańskiej Archikatedry z perspektywy brzegu Warty. Scena łącząca sztukę, architekturę i naturę.",
+    },
+    "park-4549275_1920.jpg": {
+      title: "Pałac w Rogalinie jesienią",
+      description:
+        "Szerokie ujęcie Pałacu Raczyńskich w Rogalinie w jesiennej scenerii. Ciepłe światło popołudniowego słońca oświetla fasadę i otaczające drzewa.",
+    },
+    "poland-7025079_1920.jpg": {
+      title: "Oznakowanie szlaku pieszego zimą",
+      description:
+        "Zielony symbol turysty na ośnieżonym, drewnianym słupku. Oznaczenie szlaku pieszego w zimowej, leśnej scenerii w Polsce.",
+    },
+    "poznan-1541467_1920.jpg": {
+      title: "Fasada Ratusza w Poznaniu",
+      description:
+        "Zbliżenie na bogato zdobioną, renesansową fasadę poznańskiego Ratusza, z widoczną loggią i portretami polskich królów z dynastii Jagiellonów.",
+    },
+    "poznan-1670738_1920.jpg": {
+      title: "Wieczór na Starym Rynku w Poznaniu",
+      description:
+        "Klimatyczna scena z poznańskiego Starego Rynku, z ogródkami restauracyjnymi i Ratuszem w tle. Dramatyczne chmury zwiastują nadchodzący wieczór.",
+    },
+    "poznan-2903477_1920.jpg": {
+      title: "Widok na Ostrów Tumski od strony Warty",
+      description:
+        "Panorama najstarszej części Poznania z Archikatedrą, widziana z drugiego brzegu rzeki Warty w słoneczny dzień.",
+    },
+    "poznan-2906170_1920.jpg": {
+      title: "Dachy kamieniczek na Starym Rynku",
+      description:
+        "Charakterystyczne dachy i zdobione fasady kolorowych domków budniczych na Starym Rynku w Poznaniu. Ujęcie podkreśla historyczną zabudowę.",
+    },
+    "poznan-3597202_1920.jpg": {
+      title: "Wieża i attyka poznańskiego Ratusza",
+      description:
+        "Perspektywa z dołu na wieżę zegarową i renesansową attykę Ratusza w Poznaniu, z widocznymi historycznymi inskrypcjami na fasadzie.",
+    },
+    "poznan-4073662_1920.jpg": {
+      title: "Zabudowa nad Wartą w Poznaniu",
+      description:
+        "Nowoczesne budynki mieszkalne na brzegu rzeki Warty. Widok ukazuje, jak współczesna architektura wpisuje się w nadrzeczny krajobraz miasta.",
+    },
+    "poznan-5008490_1920.jpg": {
+      title: "Kolegiata i Fara Poznańska",
+      description:
+        "Widok na barokowy kościół farny (Bazylika Matki Boskiej Nieustającej Pomocy) i przylegający do niego dawny gmach kolegium jezuickiego.",
+    },
+    "poznan-555966_1920.jpg": {
+      title: "Kolorowe domki budnicze w Poznaniu",
+      description:
+        "Zbliżenie na tętniące kolorami i wzorami fasady kamieniczek budniczych na poznańskim Starym Rynku, z charakterystycznymi podcieniami.",
+    },
+    "poznan-69368_1280.jpg": {
+      title: "Fontanna i Ratusz w Poznaniu",
+      description:
+        "Jedna z fontann na Starym Rynku (prawdopodobnie Neptuna lub Prozerpiny) z charakterystyczną wieżą Ratusza w tle, pod zachmurzonym niebem.",
+    },
+    "river-3102429_1920.jpg": {
+      title: "Leśny strumień zimą",
+      description:
+        "Spokojny strumień płynący przez ośnieżony las. Zimowy krajobraz pełen ciszy i naturalnego piękna, charakterystyczny dla Polski.",
+    },
+    "saint-nicholas-day-3859826_1920.jpg": {
+      title: "Poznański Ratusz i kolorowe kamieniczki o poranku",
+      description:
+        "Słynny renesansowy Ratusz na Starym Rynku w Poznaniu w otoczeniu kolorowych domków budniczych, skąpany w ciepłym świetle wschodzącego słońca.",
+    },
+    "stairs-3065064_1920.jpg": {
+      title: "Spiralna klatka schodowa w Collegium Altum",
+      description:
+        "Hipnotyzujące ujęcie słynnej, spiralnej klatki schodowej w budynku Uniwersytetu Ekonomicznego w Poznaniu, widzianej od dołu.",
+    },
+    "stairs-3096912_1920.jpg": {
+      title: "Schody w zimowym parku",
+      description:
+        "Betonowe schody prowadzące pod górę w parku lub lesie, przyprószone śniegiem. Symbol pokonywania drogi w zimowej aurze.",
+    },
+    "the-cathedral-3799811_1920.jpg": {
+      title: "Katedra na Ostrowie Tumskim o zmierzchu",
+      description:
+        "Nastrojowe, wieczorne ujęcie z Mostu Jordana w stronę Archikatedry Poznańskiej. Rozmyty pierwszy plan skupia uwagę na oświetlonych wieżach.",
+    },
+    "the-palace-5209571_1920.jpg": {
+      title: "Droga do Pałacu w Rogalinie",
+      description:
+        "Perspektywa brukowanej drogi prowadzącej przez ceglaną bramę w kierunku Pałacu w Rogalinie, widocznego w oddali.",
+    },
+    "the-palace-5209594_1920.jpg": {
+      title: "Pałac w Rogalinie z perspektywy trawnika",
+      description:
+        "Ujęcie pałacu z niskiej perspektywy, z rozmytą trawą na pierwszym planie. Podkreśla wielkość rezydencji i otaczającego ją parku.",
+    },
+    "train-station-447102_1920.jpg": {
+      title: "Dworzec Poznań Główny nocą",
+      description:
+        "Nowoczesna, przeszklona fasada głównego dworca kolejowego w Poznaniu, podświetlona na niebiesko i zielono. Widoczny neon 'Poznań Główny'.",
+    },
+    "tram-7924891_1920.jpg": {
+      title: "Nowoczesny tramwaj MPK Poznań",
+      description:
+        "Zielony tramwaj Moderus Gamma z napisem 'MPK Poznań' na czele, stojący na torach na jednej z ulic miasta. Symbol nowoczesnego transportu publicznego.",
+    },
+    "uniform-727072_1920.jpg": {
+      title: "Historyczne mundury wojskowe",
+      description:
+        "Wystawa manekinów prezentujących polskie mundury wojskowe z różnych okresów, w tym z Powstania Wielkopolskiego. Prawdopodobnie z muzeum w Poznaniu.",
+    },
+    "wall-2924502_1920.jpg": {
+      title: "Gotycki mur w Poznaniu",
+      description:
+        "Fragment starego, ceglanego muru z łukowym portalem i metalowymi drzwiami. Zielony nalot i surowość cegły świadczą o wiekowości budowli.",
+    },
+    "winter-3067791_1920.jpg": {
+      title: "Oszroniony kosz do koszykówki",
+      description:
+        "Zbliżenie na obręcz do koszykówki z metalową siatką, pokrytą gęstym szronem. Symbol zimowego bezruchu na boisku.",
+    },
+    "woman-727073_1920.jpg": {
+      title: "Rękodzieło w stroju ludowym",
+      description:
+        "Kobieta w historycznym stroju, być może z okresu Księstwa Warszawskiego, zajmująca się precyzyjnym rękodziełem. Scena z festynu lub rekonstrukcji historycznej.",
+    },
+    "advertisement-914068_1920.jpg": {
+      title: "Festiwal Światła Bella Skyway w Toruniu",
+      description:
+        "Nocna ulica toruńskiej Starówki ożywiona przez instalację artystyczną z fioletowych i żółtych lampionów podczas festiwalu światła.",
+    },
+    "advertisement-914074_1920.jpg": {
+      title: "Instalacja świetlna w Toruniu",
+      description:
+        "Ulica Starego Miasta w Toruniu podczas festiwalu Bella Skyway, rozświetlona przez artystyczną instalację w formie świecących lampionów.",
+    },
+    "advertisement-914079_1920.jpg": {
+      title: "Tłum na festiwalu Bella Skyway",
+      description:
+        "Uczestnicy festiwalu światła w Toruniu podziwiający fioletową instalację artystyczną na jednej z ulic Starego Miasta.",
+    },
+    "advertisement-914083_1920.jpg": {
+      title: "Świecąca chmura na festiwalu w Toruniu",
+      description:
+        "Instalacja artystyczna w kształcie chmury, wykonana z setek małych, białych balonów i podświetlona od wewnątrz. Jedna z atrakcji festiwalu Bella Skyway.",
+    },
+    "architecture-3373921_1920.jpg": {
+      title: "Detal Dworu Artusa w Toruniu",
+      description:
+        "Fragment neorenesansowej fasady Dworu Artusa z datą 1891. Bogactwo zdobień, wieżyczek i detali architektonicznych z czerwonej cegły.",
+    },
+    "artus-court-cultural-center-6564940_1920.jpg": {
+      title: "Detal architektoniczny Dworu Artusa",
+      description:
+        "Zbliżenie na neorenesansową fasadę Dworu Artusa w Toruniu, ukazujące kunsztowne zdobienia, kolumny i witraże w oknach.",
+    },
+    "astronomer-2306436_1920.jpg": {
+      title: "Figura Mikołaja Kopernika",
+      description:
+        "Zbliżenie na marmurową rzeźbę Mikołaja Kopernika trzymającego w dłoni sferę armilarną. Detal z wnętrza jednego z toruńskich zabytków.",
+    },
+    "bell-4713231_1920.jpg": {
+      title: "Dzwon Tuba Dei w Toruniu",
+      description:
+        "Słynny dzwon Tuba Dei (Trąba Boża) z 1500 roku, zawieszony na wieży toruńskiej Katedry św. Janów. Jest to jeden z największych średniowiecznych dzwonów w Polsce.",
+    },
+    "bridge-3013133_1920.jpg": {
+      title: "Most drogowy w Toruniu nocą",
+      description:
+        "Oświetlony Most im. Marszałka Józefa Piłsudskiego i jego odbicie w Wiśle. Nocna panorama najstarszego mostu drogowego w mieście.",
+    },
+    "bridge-7769945_1920.jpg": {
+      title: "Most w Toruniu we mgle",
+      description:
+        "Nastrojowe ujęcie Mostu Drogowego im. Marszałka Józefa Piłsudskiego, którego konstrukcja zanurza się w gęstej, porannej mgle nad Wisłą.",
+    },
+    "church-4829657_1920.jpg": {
+      title: "Barokowe organy w toruńskim kościele",
+      description:
+        "Bogato zdobione, historyczne organy piszczałkowe w jednym z gotyckich kościołów Torunia. Złocenia i rzeźbienia świadczą o kunszcie dawnych mistrzów.",
+    },
+    "church-of-the-holy-spirit-3619165_1920.jpg": {
+      title: "Kościół Świętego Ducha w Toruniu",
+      description:
+        "Barokowy kościół akademicki jezuitów pw. Ducha Świętego, zlokalizowany przy Rynku Staromiejskim w Toruniu. Jego jasna fasada kontrastuje z gotyckim otoczeniem.",
+    },
+    "city-1148222_1920.jpg": {
+      title: "Dawne Towarzystwo Kredytowe Ziemskie w Toruniu",
+      description:
+        "Monumentalny, neorenesansowy gmach dawnego Towarzystwa Kredytowego Ziemskiego, często nazywany przez mieszkańców 'Zamkiem'.",
+    },
+    "city-239368_1920.jpg": {
+      title: "Ratusz Staromiejski w Toruniu",
+      description:
+        "Widok na gotycki Ratusz Staromiejski w słoneczny dzień. Jeden z największych i najwspanialszych ceglanych ratuszy w Europie.",
+    },
+    "city-4852130_1920.jpg": {
+      title: "Bulwar Filadelfijski nocą",
+      description:
+        "Nocny widok na toruńską Starówkę od strony Wisły. Oświetlone mury obronne i Katedra św. Janów tworzą malowniczą panoramę.",
+    },
+    "city-4852132_1920.jpg": {
+      title: "Nocna panorama Torunia z Katedrą św. Janów",
+      description:
+        "Oświetlona Katedra św. Janów i mury obronne Starego Miasta, odbijające się w Wiśle. Nocny widok podkreśla gotycki charakter miasta.",
+    },
+    "city-6564615_1920.jpg": {
+      title: "Wieczorna panorama Torunia od strony Wisły",
+      description:
+        "Oświetlona Starówka Torunia i jej odbicie w wodach Wisły tuż po zachodzie słońca. Magiczny widok Bulwaru Filadelfijskiego.",
+    },
+    "city-791279_1920.jpg": {
+      title: "Urokliwy zakątek toruńskiej Starówki",
+      description:
+        "Ceglany budynek porośnięty bluszczem przy brukowanej uliczce. Scena oddaje niepowtarzalny, historyczny klimat Starego Miasta w Toruniu.",
+    },
+    "dill-885783_1920.jpg": {
+      title: "Pomnik Mikołaja Kopernika w Toruniu",
+      description:
+        "Artystyczne, stylizowane na stare, ujęcie pomnika najsłynniejszego torunianina na Rynku Staromiejskim. Oddaje historyczny i naukowy klimat miasta.",
+    },
+    "frog-3572497_1920.jpg": {
+      title: "Żabka z fontanny Flisaka",
+      description:
+        "Zbliżenie na jedną z ośmiu mosiężnych żab otaczających pomnik Flisaka w Toruniu. Legenda głosi, że dotknięcie żabki przynosi szczęście.",
+    },
+    "gothic-4829682_1920.jpg": {
+      title: "Uliczka przy murach obronnych Torunia",
+      description:
+        "Nastrojowy zaułek wzdłuż średniowiecznych murów miejskich z widokiem na Most im. Marszałka Józefa Piłsudskiego nad Wisłą o zachodzie słońca.",
+    },
+    "monument-195702_1920.jpg": {
+      title: "Kościół Wniebowzięcia NMP w Toruniu",
+      description:
+        "Gotycki, pofranciszkański kościół Wniebowzięcia Najświętszej Marii Panny z charakterystycznymi wieżyczkami, widziany zza drzew na Rynku Staromiejskim.",
+    },
+    "monument-239361_1920.jpg": {
+      title: "Collegium Maius UMK w Toruniu",
+      description:
+        "Historyczny, neogotycki gmach Collegium Maius Uniwersytetu Mikołaja Kopernika. Przykład monumentalnej architektury z czerwonej cegły.",
+    },
+    "nicholas-4829624_1920.jpg": {
+      title: "Pomnik Kopernika na tle drzew",
+      description:
+        "Pomnik Mikołaja Kopernika w Toruniu na tle nagich gałęzi drzew, co nadaje scenie surowy, jesienny lub wczesnowiosenny charakter.",
+    },
+    "nicholas-4843379_1920.jpg": {
+      title: "Pomnik Mikołaja Kopernika w Toruniu",
+      description:
+        "Ujęcie pomnika Mikołaja Kopernika z niskiej perspektywy, podkreślające monumentalność postaci wielkiego astronoma.",
+    },
+    "nicholas-4860757_1920.jpg": {
+      title: "Pomnik Kopernika nocą",
+      description:
+        "Oświetlony nocą pomnik Mikołaja Kopernika na tle gotyckiej fasady Ratusza Staromiejskiego. Gra świateł podkreśla detale rzeźby.",
+    },
+    "poland-2773148_1920.jpg": {
+      title: "Gotyckie spichlerze w Toruniu",
+      description:
+        "Charakterystyczne, ceglane spichlerze nad Wisłą. Dawne magazyny zbożowe są świadectwem handlowej potęgi dawnego Torunia.",
+    },
+    "river-4670180_1920.jpg": {
+      title: "Most Piłsudskiego na Wiśle w Toruniu",
+      description:
+        "Widok na stalowy Most Drogowy im. Marszałka Józefa Piłsudskiego i rzekę Wisłę pod malowniczym, chmurzastym niebem.",
+    },
+    "statue-239366_1920.jpg": {
+      title: "Pomnik Flisaka w Toruniu",
+      description:
+        "Pomnik legendarnego Flisaka, który według podania uratował miasto przed plagą żab, grając na skrzypcach. Stoi w otoczeniu fontanny z żabkami.",
+    },
+    "statue-239369_1920.jpg": {
+      title: "Pomnik Mikołaja Kopernika",
+      description:
+        "Pomnik Mikołaja Kopernika w jego rodzinnym mieście, Toruniu. Postać astronoma trzyma w dłoni sferę armilarną.",
+    },
+    "street-6750106_1920.jpg": {
+      title: "Poranek na ulicy Szerokiej w Toruniu",
+      description:
+        "Główny deptak toruńskiej Starówki, ulica Szeroka, w spokojnym świetle poranka. W oddali widać figurkę toruńskiego osiołka.",
+    },
+    "the-ruins-of-the-1604296_1920.jpg": {
+      title: "Ruiny Zamku Krzyżackiego w Toruniu",
+      description:
+        "Fragmenty murów i łuków z czerwonej cegły – pozostałości po pierwszym zamku krzyżackim na ziemi chełmińskiej, zburzonym przez toruńskich mieszczan.",
+    },
+    "the-town-hall-4173338_1920.jpg": {
+      title: "Wieża Ratusza w Toruniu",
+      description:
+        "Gotycka wieża Ratusza Staromiejskiego, górująca nad miastem. Na szczycie znajduje się punkt widokowy, z którego można podziwiać panoramę Torunia.",
+    },
+    "the-town-hall-4173353_1920.jpg": {
+      title: "Wieża toruńskiego Ratusza z bliska",
+      description:
+        "Ujęcie wieży Ratusza Staromiejskiego w Toruniu, ukazujące detale zegarów i gotyckiej ornamentyki. Na szczycie widoczne flagi i turyści.",
+    },
+    "the-town-hall-4173362_1920.jpg": {
+      title: "Ratusz Staromiejski i pomnik Kopernika",
+      description:
+        "Wieża Ratusza Staromiejskiego w Toruniu i stojący przed nią pomnik Mikołaja Kopernika. Dwa najważniejsze symbole miasta w jednym kadrze.",
+    },
+    "torun-2465067_1920.jpg": {
+      title: "Wieża Ratusza Staromiejskiego",
+      description:
+        "Zbliżenie na gotycką wieżę Ratusza w Toruniu, z widocznym zegarem i bogatymi zdobieniami. Arcydzieło średniowiecznej architektury.",
+    },
+    "torun-3013132_1920.jpg": {
+      title: "Nocna panorama Torunia nad Wisłą",
+      description:
+        "Szeroki kadr ukazujący oświetloną toruńską Starówkę, której światła malowniczo odbijają się w spokojnych wodach Wisły.",
+    },
+    "torun-3352310_1920.jpg": {
+      title: "Panorama Torunia w letni dzień",
+      description:
+        "Słoneczna panorama Starego Miasta od strony Wisły, z Katedrą św. Janów, murami obronnymi i statkami turystycznymi na rzece.",
+    },
+    "torun-3501554_1920.jpg": {
+      title: "Wiosenne kwiaty w Toruniu",
+      description:
+        "Zbliżenie na niebieskie cebulice syberyjskie, jedne z pierwszych kwiatów pojawiających się wiosną w toruńskich parkach i ogrodach.",
+    },
+    "torun-3711031_1920.jpg": {
+      title: "Bulwar Filadelfijski w Toruniu",
+      description:
+        "Letni widok na panoramę toruńskiej Starówki od strony Wisły. Po rzece pływają statki turystyczne, a wzdłuż brzegu spacerują turyści.",
+    },
+    "torun-3711032_1920.jpg": {
+      title: "Mury obronne Torunia",
+      description:
+        "Fragment potężnych, średniowiecznych murów obronnych z basztami i bramami, które otaczają toruńską Starówkę.",
+    },
+    "torun-3817096_1920.jpg": {
+      title: "Panorama Torunia z Mostem Piłsudskiego",
+      description:
+        "Szeroki widok z wieży Ratusza na dachy Starego Miasta, Wisłę i stalową konstrukcję Mostu im. Marszałka Józefa Piłsudskiego.",
+    },
+    "torun-419205_1920.jpg": {
+      title: "Widok z wieży Ratusza na Wisłę",
+      description:
+        "Panorama Torunia z widokiem na dachy Starego Miasta, Wisłę i Most Drogowy im. Marszałka Józefa Piłsudskiego w oddali.",
+    },
+    "torun-419206_1920.jpg": {
+      title: "Rynek Staromiejski z góry",
+      description:
+        "Widok z wieży Ratusza na północną część Rynku Staromiejskiego, z Dworem Artusa i kościołem Wniebowzięcia NMP w tle.",
+    },
+    "torun-419208_1920.jpg": {
+      title: "Dachy Starego Miasta w Toruniu",
+      description:
+        "Rozległa panorama dachów toruńskiej Starówki, widziana z wieży Ratusza. Morze czerwonej dachówki świadczy o historycznym charakterze miasta.",
+    },
+    "torun-419210_1920.jpg": {
+      title: "Panorama Starego Miasta w Toruniu",
+      description:
+        "Widok z góry na dachy toruńskiej Starówki, z Katedrą św. Janów na pierwszym planie i szeroką wstęgą Wisły w tle.",
+    },
+    "torun-456763_1920.jpg": {
+      title: "Brama Mostowa w Toruniu",
+      description:
+        "Gotycka Brama Mostowa, jedna z trzech zachowanych bram miejskich Torunia, prowadząca w stronę dawnego mostu na Wiśle.",
+    },
+    "torun-4769058_1920.jpg": {
+      title: "Świąteczne dekoracje na Starówce w Toruniu",
+      description:
+        "Ulica Szeroka w Toruniu udekorowana świątecznymi iluminacjami. Niskie ujęcie podkreśla magię brukowanej ulicy w zimowy wieczór.",
+    },
+    "torun-4772388_1920.jpg": {
+      title: "Kopernik przed Ratuszem Staromiejskim",
+      description:
+        "Pomnik Mikołaja Kopernika na tle gotyckiej architektury Ratusza, ukazujący związek astronoma z jego rodzinnym miastem.",
+    },
+    "torun-4829614_1920.jpg": {
+      title: "Widok na kościół Wniebowzięcia NMP",
+      description:
+        "Panorama z wieży Ratusza ukazująca bryłę kościoła Wniebowzięcia Najświętszej Marii Panny i otaczające go kamienice Starego Miasta.",
+    },
+    "torun-4843129_1920.jpg": {
+      title: "Szczyt wieży Ratusza Staromiejskiego",
+      description:
+        "Zbliżenie na zwieńczenie wieży Ratusza w Toruniu, z widocznymi zegarami i powiewającą na masztach polską flagą.",
+    },
+    "torun-4857967_1920.jpg": {
+      title: "Nocny spacer po toruńskiej Starówce",
+      description:
+        "Nastrojowa, nocna scena z ulicy Różanej z widokiem na oświetloną wieżę Ratusza Staromiejskiego. Ciepłe światło latarni tworzy magiczny klimat.",
+    },
+    "torun-4863419_1920.jpg": {
+      title: "Wieża Ratusza w Toruniu nocą",
+      description:
+        "Oświetlona złotym światłem gotycka wieża Ratusza Staromiejskiego, odcinająca się od ciemnego, nocnego nieba.",
+    },
+    "torun-4863425_1920.jpg": {
+      title: "Nocne detale wieży Ratusza",
+      description:
+        "Zbliżenie na oświetloną wieżę Ratusza w Toruniu nocą, z widocznym zegarem i mniejszą wieżyczką.",
+    },
+    "torun-6049204_1920.jpg": {
+      title: "Kamienica pod Gwiazdą w Toruniu",
+      description:
+        "Czarno-białe ujęcie jednej z najpiękniejszych barokowych kamienic w Polsce, słynącej z bogato zdobionej fasady. Perła toruńskiej architektury.",
+    },
+    "torun-6049206_1920.jpg": {
+      title: "Brama Klasztorna w Toruniu",
+      description:
+        "Czarno-białe zdjęcie Bramy Klasztornej (Świętego Ducha), jednej z zachowanych gotyckich bram miejskich w systemie murów obronnych Torunia.",
+    },
+    "torun-745627_1920.jpg": {
+      title: "Dom Kopernika w Toruniu",
+      description:
+        "Dwa gotyckie budynki z czerwonej cegły. Kamienica po lewej stronie jest uważana za miejsce narodzin Mikołaja Kopernika.",
+    },
+    "torun-916648_1920.jpg": {
+      title: "Instalacja świetlna Bella Skyway Festival",
+      description:
+        "Zbliżenie na kolorowe, świecące lampiony, będące częścią instalacji artystycznej podczas festiwalu światła w Toruniu.",
+    },
   },
 
   /**
@@ -1352,6 +1877,531 @@ const itemTranslations = {
       title: "Detail of a Vault in the Ogrodzieniec Ruins",
       description:
         "A close-up of a stone, arched fragment of a vault that has stood the test of time. A testament to ancient craftsmanship.",
+    },
+    "architecture-3067796_1920.jpg": {
+      title: "Historic Building in Greater Poland",
+      description:
+        "A large, symmetrical red brick building with two octagonal turrets. The architecture is typical of schools or barracks from the turn of the 19th and 20th centuries.",
+    },
+    "architecture-3101759_1920.jpg": {
+      title: "Art Nouveau Tenement House in Poznań",
+      description:
+        "An impressive corner tenement house in the Art Nouveau style, likely in the Jeżyce district of Poznań. The wealth of architectural details is eye-catching.",
+    },
+    "architecture-3151082_1920.jpg": {
+      title: "Modernist Tenement House in Poznań",
+      description:
+        "A facade fragment with a rounded corner, characteristic of Modernist or Art Deco architecture. The sun illuminates the building in warm colors.",
+    },
+    "architecture-3151102_1920.jpg": {
+      title: "Alley in Wrocław",
+      description:
+        "An atmospheric, cobbled street in sepia, likely in Wrocław's Ostrów Tumski or its vicinity. The photo captures the historical atmosphere of the city.",
+    },
+    "architecture-3301930_1920.jpg": {
+      title: "Poznań Cathedral on Ostrów Tumski",
+      description:
+        "A view of the Archcathedral Basilica of St. Peter and St. Paul in Poznań. It is the oldest cathedral in Poland and the historical heart of the city.",
+    },
+    "architecture-6550356_1920.jpg": {
+      title: "Poznań Town Hall Tower Through a Window",
+      description:
+        "An artistic shot of the Town Hall tower on the Old Market Square in Poznań, seen through a window frame. The composition emphasizes historical detail and architecture.",
+    },
+    "autumn-landscape-2908879_1920.jpg": {
+      title: "Autumn Path in a Polish Forest",
+      description:
+        "A forest path covered with fallen brown leaves, contrasting with the still green treetops. The essence of the Polish golden autumn.",
+    },
+    "block-4068976_1920.jpg": {
+      title: "ICHOT Porta Posnania",
+      description:
+        "The modern building of the Interactive Cathedral Island History Center, known as Porta Posnania. The minimalist structure contrasts with its historical surroundings.",
+    },
+    "buildings-657525_1920.jpg": {
+      title: "Architectural Contrasts in Poznań",
+      description:
+        "The brick, Neo-Romanesque Church of St. John Vianney in Sołacz against the backdrop of a modern apartment building. A clash of old and new architecture in Poznań.",
+    },
+    "bus-station-447101_1920.jpg": {
+      title: "Poznań Bus Station at Night",
+      description:
+        "The modern, integrated bus station in Poznań, with its facade illuminated in various colors. Also known as the 'Bread Bin'.",
+    },
+    "castle-4999697_1920.jpg": {
+      title: "Imperial Castle in Poznań",
+      description:
+        "The monumental Imperial Castle in the Castle District, built for Emperor Wilhelm II. An example of Neo-Romanesque architecture.",
+    },
+    "city-3426704_1920.jpg": {
+      title: "A Street in Poznań",
+      description:
+        "An atmospheric street with historic tenement houses and a cobblestone sidewalk, likely in one of Poznań's older districts, such as Jeżyce.",
+    },
+    "city-4999696_1920.jpg": {
+      title: "Old Market Square in Poznań on a Cloudy Day",
+      description:
+        "A view of the Poznań Old Market Square with the Town Hall in the background. The cobbled square and historic houses create a calm, somewhat nostalgic atmosphere.",
+    },
+    "city-5132735_1920.jpg": {
+      title: "Interior of Stary Browar (Old Brewery) in Poznań",
+      description:
+        "The characteristic interior architecture of the 'Stary Browar' Art and Business Center, combining historic red brick with modern design.",
+    },
+    "croissant-5209608_1920.jpg": {
+      title: "Rogalin Palace",
+      description:
+        "View of the main facade of the Rococo-Classical Raczyński Palace in Rogalin, surrounded by a well-kept park. A pearl of Greater Poland's architecture.",
+    },
+    "drone-4539817_1920.jpg": {
+      title: "Motorway Interchange near Poznań",
+      description:
+        "An aerial view of a large road interchange, likely on the A2 motorway near Poznań. It illustrates the modern infrastructure of the region.",
+    },
+    "fountain-822945_1920.jpg": {
+      title: "Freedom Fountain on Wolności Square in Poznań",
+      description:
+        "A night shot of the Freedom Fountain with an artistic selective color effect. The water and its reflection create a mesmerizing pattern.",
+    },
+    "houses-7071276_1920.jpg": {
+      title: "A Night Street in Poznań's Old Town",
+      description:
+        "An atmospheric shot of a cobblestone street, illuminated by the warm light of lanterns. It captures the magical climate of the historic part of the city at night.",
+    },
+    "imperial-castle-513161_1920.jpg": {
+      title: "Imperial Castle in Poznań at Night",
+      description:
+        "A fragment of the Imperial Castle's facade illuminated at night. Neo-Romanesque arches, decorations, and powerful stone walls are visible.",
+    },
+    "murals-657519_1920.jpg": {
+      title: "Mural on a Tenement Wall in Poznań",
+      description:
+        "A colorful street art mural on a large building wall. Urban art enlivening the architecture of one of Poznań's districts.",
+    },
+    "nature-3339460_1920.jpg": {
+      title: "Park Alley in Poznań",
+      description:
+        "A long, straight alley lined with trees forming a green canopy. An ideal place for a walk, likely in Citadel Park or Wilson Park.",
+    },
+    "old-tram-3054142_1920.jpg": {
+      title: "Historic Tram on the Streets of Poznań",
+      description:
+        "A historic, green Konstal N tram on Poznań's tracks during a parade or special event, watched by a crowd of residents.",
+    },
+    "painter-2129415_1920.jpg": {
+      title: "Painter Painting the Poznań Cathedral",
+      description:
+        "An artist painting plein air a picture of the Poznań Archcathedral from the perspective of the Warta riverbank. A scene combining art, architecture, and nature.",
+    },
+    "park-4549275_1920.jpg": {
+      title: "Rogalin Palace in Autumn",
+      description:
+        "A wide shot of the Raczyński Palace in Rogalin in an autumn setting. The warm light of the afternoon sun illuminates the facade and surrounding trees.",
+    },
+    "poland-7025079_1920.jpg": {
+      title: "Hiking Trail Marker in Winter",
+      description:
+        "A green tourist symbol on a snow-covered wooden post. A hiking trail marker in a winter forest setting in Poland.",
+    },
+    "poznan-1541467_1920.jpg": {
+      title: "Facade of the Poznań Town Hall",
+      description:
+        "A close-up of the richly decorated, Renaissance facade of the Poznań Town Hall, showing the loggia and portraits of Polish kings from the Jagiellonian dynasty.",
+    },
+    "poznan-1670738_1920.jpg": {
+      title: "Evening at the Old Market Square in Poznań",
+      description:
+        "An atmospheric scene from Poznań's Old Market Square, with restaurant gardens and the Town Hall in the background. Dramatic clouds herald the coming evening.",
+    },
+    "poznan-2903477_1920.jpg": {
+      title: "View of Ostrów Tumski from the Warta River",
+      description:
+        "A panorama of the oldest part of Poznań with the Archcathedral, seen from the other side of the Warta River on a sunny day.",
+    },
+    "poznan-2906170_1920.jpg": {
+      title: "Roofs of Tenement Houses in the Old Market Square",
+      description:
+        "The characteristic roofs and decorated facades of the colorful merchants' houses in Poznań's Old Market Square. The shot emphasizes the historic buildings.",
+    },
+    "poznan-3597202_1920.jpg": {
+      title: "Tower and Attic of the Poznań Town Hall",
+      description:
+        "A low-angle perspective of the clock tower and Renaissance attic of the Poznań Town Hall, with visible historical inscriptions on the facade.",
+    },
+    "poznan-4073662_1920.jpg": {
+      title: "Housing on the Warta River in Poznań",
+      description:
+        "Modern residential buildings on the bank of the Warta River. The view shows how contemporary architecture fits into the city's riverside landscape.",
+    },
+    "poznan-5008490_1920.jpg": {
+      title: "Collegiate Church and Poznań Fara",
+      description:
+        "A view of the Baroque parish church (Basilica of Our Lady of Perpetual Help) and the adjacent former Jesuit college building.",
+    },
+    "poznan-555966_1920.jpg": {
+      title: "Colorful Merchants' Houses in Poznań",
+      description:
+        "A close-up of the facades of merchants' houses, vibrant with colors and patterns, in the Poznań Old Market Square, with their characteristic arcades.",
+    },
+    "poznan-69368_1280.jpg": {
+      title: "Fountain and Town Hall in Poznań",
+      description:
+        "One of the fountains in the Old Market Square (possibly Neptune or Proserpina) with the characteristic Town Hall tower in the background, under a cloudy sky.",
+    },
+    "river-3102429_1920.jpg": {
+      title: "Forest Stream in Winter",
+      description:
+        "A calm stream flowing through a snow-covered forest. A winter landscape full of silence and natural beauty, characteristic of Poland.",
+    },
+    "saint-nicholas-day-3859826_1920.jpg": {
+      title: "Poznań Town Hall and Colorful Houses in the Morning",
+      description:
+        "The famous Renaissance Town Hall in the Old Market Square in Poznań, surrounded by colorful merchants' houses, bathed in the warm light of the rising sun.",
+    },
+    "stairs-3065064_1920.jpg": {
+      title: "Spiral Staircase in Collegium Altum",
+      description:
+        "A mesmerizing shot of the famous spiral staircase in the Poznań University of Economics building, viewed from the bottom.",
+    },
+    "stairs-3096912_1920.jpg": {
+      title: "Stairs in a Winter Park",
+      description:
+        "Concrete stairs leading up a hill in a park or forest, lightly dusted with snow. A symbol of making one's way in a winter setting.",
+    },
+    "the-cathedral-3799811_1920.jpg": {
+      title: "Cathedral on Ostrów Tumski at Dusk",
+      description:
+        "An atmospheric evening shot from the Jordan Bridge towards the Poznań Archcathedral. The blurred foreground focuses attention on the illuminated towers.",
+    },
+    "the-palace-5209571_1920.jpg": {
+      title: "The Road to Rogalin Palace",
+      description:
+        "A perspective of a cobbled road leading through a brick gate towards Rogalin Palace, visible in the distance.",
+    },
+    "the-palace-5209594_1920.jpg": {
+      title: "Rogalin Palace from the Lawn Perspective",
+      description:
+        "A low-angle shot of the palace with blurred grass in the foreground. It emphasizes the grandeur of the residence and its surrounding park.",
+    },
+    "train-station-447102_1920.jpg": {
+      title: "Poznań Główny Railway Station at Night",
+      description:
+        "The modern, glass facade of the main railway station in Poznań, illuminated in blue and green. The 'Poznań Główny' neon sign is visible.",
+    },
+    "tram-7924891_1920.jpg": {
+      title: "Modern MPK Poznań Tram",
+      description:
+        "A green Moderus Gamma tram with 'MPK Poznań' on the front, standing on the tracks on one of the city's streets. A symbol of modern public transport.",
+    },
+    "uniform-727072_1920.jpg": {
+      title: "Historic Military Uniforms",
+      description:
+        "An exhibition of mannequins presenting Polish military uniforms from various periods, including the Greater Poland Uprising. Likely from a museum in Poznań.",
+    },
+    "wall-2924502_1920.jpg": {
+      title: "Gothic Wall in Poznań",
+      description:
+        "A fragment of an old brick wall with an arched portal and metal door. The green coating and raw brick testify to the age of the structure.",
+    },
+    "winter-3067791_1920.jpg": {
+      title: "Frosted Basketball Hoop",
+      description:
+        "A close-up of a basketball hoop with a chain net, covered in thick frost. A symbol of winter stillness on the court.",
+    },
+    "woman-727073_1920.jpg": {
+      title: "Handicraft in a Folk Costume",
+      description:
+        "A woman in a historical costume, perhaps from the Duchy of Warsaw period, engaged in precise handicraft. A scene from a festival or historical reenactment.",
+    },
+    "advertisement-914068_1920.jpg": {
+      title: "Bella Skyway Light Festival in Toruń",
+      description:
+        "A night street in Toruń's Old Town, brought to life by an art installation of purple and yellow lanterns during the festival of light.",
+    },
+    "advertisement-914074_1920.jpg": {
+      title: "Light Installation in Toruń",
+      description:
+        "A street in Toruń's Old Town during the Bella Skyway festival, illuminated by an artistic installation of glowing lanterns.",
+    },
+    "advertisement-914079_1920.jpg": {
+      title: "Crowd at the Bella Skyway Festival",
+      description:
+        "Participants of the light festival in Toruń admiring a purple art installation on one of the Old Town streets.",
+    },
+    "advertisement-914083_1920.jpg": {
+      title: "Glowing Cloud at a Festival in Toruń",
+      description:
+        "An art installation in the shape of a cloud, made of hundreds of small, white balloons and illuminated from within. One of the attractions of the Bella Skyway Festival.",
+    },
+    "architecture-3373921_1920.jpg": {
+      title: "Detail of the Artus Court in Toruń",
+      description:
+        "A fragment of the Neo-Renaissance facade of the Artus Court with the date 1891. A wealth of decorations, turrets, and architectural details in red brick.",
+    },
+    "artus-court-cultural-center-6564940_1920.jpg": {
+      title: "Architectural Detail of the Artus Court",
+      description:
+        "A close-up of the Neo-Renaissance facade of the Artus Court in Toruń, showing ornate decorations, columns, and stained glass windows.",
+    },
+    "astronomer-2306436_1920.jpg": {
+      title: "Figure of Nicolaus Copernicus",
+      description:
+        "A close-up of a marble sculpture of Nicolaus Copernicus holding an armillary sphere. A detail from the interior of one of Toruń's monuments.",
+    },
+    "bell-4713231_1920.jpg": {
+      title: "The Tuba Dei Bell in Toruń",
+      description:
+        "The famous Tuba Dei (God's Trumpet) bell from 1500, hanging in the tower of the Toruń Cathedral of St. Johns. It is one of the largest medieval bells in Poland.",
+    },
+    "bridge-3013133_1920.jpg": {
+      title: "Road Bridge in Toruń at Night",
+      description:
+        "The illuminated Marshal Józef Piłsudski Bridge and its reflection in the Vistula. A night panorama of the oldest road bridge in the city.",
+    },
+    "bridge-7769945_1920.jpg": {
+      title: "Bridge in Toruń in the Fog",
+      description:
+        "An atmospheric shot of the Marshal Józef Piłsudski Road Bridge, its structure plunging into the dense morning fog over the Vistula River.",
+    },
+    "church-4829657_1920.jpg": {
+      title: "Baroque Organs in a Toruń Church",
+      description:
+        "Richly decorated, historic pipe organs in one of Toruń's Gothic churches. The gilding and carvings testify to the craftsmanship of old masters.",
+    },
+    "church-of-the-holy-spirit-3619165_1920.jpg": {
+      title: "Church of the Holy Spirit in Toruń",
+      description:
+        "The Baroque academic Jesuit Church of the Holy Spirit, located at the Old Town Market Square in Toruń. Its bright facade contrasts with the Gothic surroundings.",
+    },
+    "city-1148222_1920.jpg": {
+      title: "Former Land Credit Society Building in Toruń",
+      description:
+        "The monumental, Neo-Renaissance building of the former Land Credit Society, often called the 'Castle' by locals.",
+    },
+    "city-239368_1920.jpg": {
+      title: "Old Town Hall in Toruń",
+      description:
+        "A view of the Gothic Old Town Hall on a sunny day. One of the largest and most magnificent brick town halls in Europe.",
+    },
+    "city-4852130_1920.jpg": {
+      title: "Philadelphia Boulevard at Night",
+      description:
+        "A night view of the Toruń Old Town from the Vistula side. The illuminated defensive walls and the Cathedral of St. Johns create a picturesque panorama.",
+    },
+    "city-4852132_1920.jpg": {
+      title: "Night Panorama of Toruń with St. Johns' Cathedral",
+      description:
+        "The illuminated Cathedral of St. Johns and the defensive walls of the Old Town, reflected in the Vistula River. The night view emphasizes the Gothic character of the city.",
+    },
+    "city-6564615_1920.jpg": {
+      title: "Evening Panorama of Toruń from the Vistula",
+      description:
+        "The illuminated Old Town of Toruń and its reflection in the waters of the Vistula just after sunset. A magical view of the Philadelphia Boulevard.",
+    },
+    "city-791279_1920.jpg": {
+      title: "A Charming Corner of Toruń's Old Town",
+      description:
+        "A brick building covered with ivy on a cobbled street. The scene captures the unique, historical atmosphere of the Old Town in Toruń.",
+    },
+    "dill-885783_1920.jpg": {
+      title: "Nicolaus Copernicus Monument in Toruń",
+      description:
+        "An artistic, vintage-styled shot of the monument to the most famous citizen of Toruń in the Old Town Market Square. It reflects the historical and scientific atmosphere of the city.",
+    },
+    "frog-3572497_1920.jpg": {
+      title: "Frog from the Raftsman Fountain",
+      description:
+        "A close-up of one of the eight brass frogs surrounding the Raftsman monument in Toruń. Legend has it that touching a frog brings good luck.",
+    },
+    "gothic-4829682_1920.jpg": {
+      title: "Alley by the Defensive Walls of Toruń",
+      description:
+        "An atmospheric alley along the medieval city walls with a view of the Marshal Józef Piłsudski Bridge over the Vistula River at sunset.",
+    },
+    "monument-195702_1920.jpg": {
+      title: "Church of the Assumption of the Blessed Virgin Mary in Toruń",
+      description:
+        "The Gothic, post-Franciscan Church of the Assumption of the Blessed Virgin Mary with its distinctive turrets, seen from behind the trees in the Old Town Market Square.",
+    },
+    "monument-239361_1920.jpg": {
+      title: "Collegium Maius of the Nicolaus Copernicus University in Toruń",
+      description:
+        "The historic, neo-Gothic building of the Collegium Maius of the Nicolaus Copernicus University. An example of monumental red brick architecture.",
+    },
+    "nicholas-4829624_1920.jpg": {
+      title: "Copernicus Monument Against Trees",
+      description:
+        "The monument of Nicolaus Copernicus in Toruń against the bare branches of trees, which gives the scene a stark, autumnal or early spring character.",
+    },
+    "nicholas-4843379_1920.jpg": {
+      title: "Nicolaus Copernicus Monument in Toruń",
+      description:
+        "A low-angle shot of the Nicolaus Copernicus monument, emphasizing the monumentality of the great astronomer's figure.",
+    },
+    "nicholas-4860757_1920.jpg": {
+      title: "Copernicus Monument at Night",
+      description:
+        "The illuminated monument of Nicolaus Copernicus at night against the Gothic facade of the Old Town Hall. The play of light highlights the details of the sculpture.",
+    },
+    "poland-2773148_1920.jpg": {
+      title: "Gothic Granaries in Toruń",
+      description:
+        "Characteristic brick granaries on the Vistula. The former grain warehouses are a testament to the commercial power of old Toruń.",
+    },
+    "river-4670180_1920.jpg": {
+      title: "Piłsudski Bridge on the Vistula in Toruń",
+      description:
+        "A view of the steel Marshal Józef Piłsudski Road Bridge and the Vistula River under a picturesque, cloudy sky.",
+    },
+    "statue-239366_1920.jpg": {
+      title: "Raftsman Monument in Toruń",
+      description:
+        "A monument to the legendary Raftsman who, according to legend, saved the city from a plague of frogs by playing his violin. It stands surrounded by a fountain with frogs.",
+    },
+    "statue-239369_1920.jpg": {
+      title: "Nicolaus Copernicus Monument",
+      description:
+        "The monument to Nicolaus Copernicus in his hometown of Toruń. The figure of the astronomer holds an armillary sphere.",
+    },
+    "street-6750106_1920.jpg": {
+      title: "Morning on Szeroka Street in Toruń",
+      description:
+        "The main promenade of Toruń's Old Town, Szeroka Street, in the calm morning light. In the distance, the figure of the Toruń donkey can be seen.",
+    },
+    "the-ruins-of-the-1604296_1920.jpg": {
+      title: "Ruins of the Teutonic Castle in Toruń",
+      description:
+        "Fragments of walls and arches made of red brick – the remains of the first Teutonic castle in the Chełmno Land, demolished by the townspeople of Toruń.",
+    },
+    "the-town-hall-4173338_1920.jpg": {
+      title: "Town Hall Tower in Toruń",
+      description:
+        "The Gothic tower of the Old Town Hall, towering over the city. At the top, there is an observation deck from which you can admire the panorama of Toruń.",
+    },
+    "the-town-hall-4173353_1920.jpg": {
+      title: "Toruń Town Hall Tower Up Close",
+      description:
+        "A shot of the Old Town Hall tower in Toruń, showing the details of the clocks and Gothic ornamentation. Flags and tourists are visible at the top.",
+    },
+    "the-town-hall-4173362_1920.jpg": {
+      title: "Old Town Hall and Copernicus Monument",
+      description:
+        "The tower of the Old Town Hall in Toruń and the monument of Nicolaus Copernicus standing in front of it. Two of the most important symbols of the city in one frame.",
+    },
+    "torun-2465067_1920.jpg": {
+      title: "Old Town Hall Tower",
+      description:
+        "A close-up of the Gothic tower of the Town Hall in Toruń, with a visible clock and rich decorations. A masterpiece of medieval architecture.",
+    },
+    "torun-3013132_1920.jpg": {
+      title: "Night Panorama of Toruń over the Vistula",
+      description:
+        "A wide frame showing the illuminated Toruń Old Town, whose lights are picturesquely reflected in the calm waters of the Vistula.",
+    },
+    "torun-3352310_1920.jpg": {
+      title: "Panorama of Toruń on a Summer Day",
+      description:
+        "A sunny panorama of the Old Town from the Vistula side, with the Cathedral of St. Johns, defensive walls, and tourist boats on the river.",
+    },
+    "torun-3501554_1920.jpg": {
+      title: "Spring Flowers in Toruń",
+      description:
+        "A close-up of blue Siberian squills, some of the first flowers to appear in spring in Toruń's parks and gardens.",
+    },
+    "torun-3711031_1920.jpg": {
+      title: "Philadelphia Boulevard in Toruń",
+      description:
+        "A summer view of the Toruń Old Town panorama from the Vistula side. Tourist boats sail on the river, and tourists stroll along the bank.",
+    },
+    "torun-3711032_1920.jpg": {
+      title: "Defensive Walls of Toruń",
+      description:
+        "A fragment of the powerful, medieval defensive walls with towers and gates that surround the Old Town of Toruń.",
+    },
+    "torun-3817096_1920.jpg": {
+      title: "Panorama of Toruń with the Piłsudski Bridge",
+      description:
+        "A wide view from the Town Hall tower of the Old Town roofs, the Vistula, and the steel structure of the Marshal Józef Piłsudski Bridge.",
+    },
+    "torun-419205_1920.jpg": {
+      title: "View from the Town Hall Tower to the Vistula",
+      description:
+        "A panorama of Toruń with a view of the Old Town roofs, the Vistula River, and the Marshal Józef Piłsudski Road Bridge in the distance.",
+    },
+    "torun-419206_1920.jpg": {
+      title: "Old Town Market Square from Above",
+      description:
+        "A view from the Town Hall tower of the northern part of the Old Town Market Square, with the Artus Court and the Church of the Assumption of the Blessed Virgin Mary in the background.",
+    },
+    "torun-419208_1920.jpg": {
+      title: "Roofs of the Old Town in Toruń",
+      description:
+        "An extensive panorama of the roofs of Toruń's Old Town, seen from the Town Hall tower. The sea of red tiles testifies to the historical character of the city.",
+    },
+    "torun-419210_1920.jpg": {
+      title: "Panorama of the Old Town in Toruń",
+      description:
+        "A view from above of the roofs of Toruń's Old Town, with the Cathedral of St. Johns in the foreground and the wide ribbon of the Vistula River in the background.",
+    },
+    "torun-456763_1920.jpg": {
+      title: "Bridge Gate in Toruń",
+      description:
+        "The Gothic Bridge Gate, one of the three preserved city gates of Toruń, leading towards the former bridge on the Vistula.",
+    },
+    "torun-4769058_1920.jpg": {
+      title: "Christmas Decorations in Toruń's Old Town",
+      description:
+        "Szeroka Street in Toruń decorated with Christmas illuminations. The low-angle shot emphasizes the magic of the cobbled street on a winter evening.",
+    },
+    "torun-4772388_1920.jpg": {
+      title: "Copernicus in Front of the Old Town Hall",
+      description:
+        "The monument of Nicolaus Copernicus against the Gothic architecture of the Town Hall, showing the astronomer's connection to his hometown.",
+    },
+    "torun-4829614_1920.jpg": {
+      title: "View of the Church of the Assumption of the Blessed Virgin Mary",
+      description:
+        "A panorama from the Town Hall tower showing the body of the Church of the Assumption of the Blessed Virgin Mary and the surrounding tenement houses of the Old Town.",
+    },
+    "torun-4843129_1920.jpg": {
+      title: "Top of the Old Town Hall Tower",
+      description:
+        "A close-up of the top of the Town Hall tower in Toruń, with visible clocks and the Polish flag waving on the masts.",
+    },
+    "torun-4857967_1920.jpg": {
+      title: "A Night Walk Through Toruń's Old Town",
+      description:
+        "An atmospheric night scene from Różana Street with a view of the illuminated Old Town Hall tower. The warm light of the lanterns creates a magical atmosphere.",
+    },
+    "torun-4863419_1920.jpg": {
+      title: "Toruń Town Hall Tower at Night",
+      description:
+        "The Gothic tower of the Old Town Hall, illuminated with golden light, standing out against the dark night sky.",
+    },
+    "torun-4863425_1920.jpg": {
+      title: "Night Details of the Town Hall Tower",
+      description:
+        "A close-up of the illuminated Town Hall tower in Toruń at night, with a visible clock and a smaller turret.",
+    },
+    "torun-6049204_1920.jpg": {
+      title: "House Under the Star in Toruń",
+      description:
+        "A black and white shot of one of the most beautiful Baroque tenement houses in Poland, famous for its richly decorated facade. A pearl of Toruń's architecture.",
+    },
+    "torun-6049206_1920.jpg": {
+      title: "Monastery Gate in Toruń",
+      description:
+        "A black and white photo of the Monastery Gate (Gate of the Holy Spirit), one of the preserved Gothic city gates in Toruń's defensive wall system.",
+    },
+    "torun-745627_1920.jpg": {
+      title: "Copernicus House in Toruń",
+      description:
+        "Two Gothic buildings made of red brick. The tenement on the left is considered the birthplace of Nicolaus Copernicus.",
+    },
+    "torun-916648_1920.jpg": {
+      title: "Bella Skyway Festival Light Installation",
+      description:
+        "A close-up of colorful, glowing lanterns, part of an art installation during the festival of light in Toruń.",
     },
   },
 
@@ -2040,6 +3090,532 @@ const itemTranslations = {
       title: "Detail eines Gewölbes in den Ruinen von Ogrodzieniec",
       description:
         "Nahaufnahme eines steinernen, gewölbten Fragments eines Gewölbes, das den Test der Zeit überstanden hat. Ein Zeugnis alter Handwerkskunst.",
+    },
+    "architecture-3067796_1920.jpg": {
+      title: "Historisches Gebäude in Großpolen",
+      description:
+        "Ein großes, symmetrisches Backsteingebäude mit zwei achteckigen Türmchen. Die Architektur ist typisch für Schulen oder Kasernen der Jahrhundertwende.",
+    },
+    "architecture-3101759_1920.jpg": {
+      title: "Jugendstil-Mietshaus in Posen",
+      description:
+        "Ein beeindruckendes Eckmietshaus im Jugendstil, wahrscheinlich im Posener Stadtteil Jeżyce. Der Reichtum an architektonischen Details ist ein Blickfang.",
+    },
+    "architecture-3151082_1920.jpg": {
+      title: "Modernistisches Mietshaus in Posen",
+      description:
+        "Fassadenfragment mit abgerundeter Ecke, charakteristisch für die Architektur der Moderne oder des Art déco. Die Sonne beleuchtet das Gebäude in warmen Farben.",
+    },
+    "architecture-3151102_1920.jpg": {
+      title: "Gasse in Breslau",
+      description:
+        "Eine stimmungsvolle, gepflasterte Gasse in Sepia, wahrscheinlich auf der Breslauer Dominsel. Das Foto fängt die historische Atmosphäre der Stadt ein.",
+    },
+    "architecture-3301930_1920.jpg": {
+      title: "Posener Dom auf Ostrów Tumski",
+      description:
+        "Blick auf die Erzkathedrale St. Peter und Paul in Posen. Sie ist die älteste Kathedrale Polens und das historische Herz der Stadt.",
+    },
+    "architecture-6550356_1920.jpg": {
+      title: "Posener Rathausturm durch ein Fenster",
+      description:
+        "Eine künstlerische Aufnahme des Rathausturms auf dem Alten Markt in Posen, gesehen durch einen Fensterrahmen. Die Komposition unterstreicht historische Details und Architektur.",
+    },
+    "autumn-landscape-2908879_1920.jpg": {
+      title: "Herbstweg in einem polnischen Wald",
+      description:
+        "Ein Waldweg, bedeckt mit gefallenem braunem Laub, der mit den noch grünen Baumkronen kontrastiert. Die Essenz des goldenen polnischen Herbstes.",
+    },
+    "block-4068976_1920.jpg": {
+      title: "ICHOT Porta Posnania",
+      description:
+        "Das moderne Gebäude des Interaktiven Geschichtszentrums der Dominsel, bekannt als Porta Posnania. Der minimalistische Bau kontrastiert mit seiner historischen Umgebung.",
+    },
+    "buildings-657525_1920.jpg": {
+      title: "Architektonische Kontraste in Posen",
+      description:
+        "Die neoromanische Backsteinkirche St. Johannes Vianney in Sołacz vor dem Hintergrund eines modernen Wohnhauses. Ein Zusammenprall von alter und neuer Architektur in Posen.",
+    },
+    "bus-station-447101_1920.jpg": {
+      title: "Busbahnhof Posen bei Nacht",
+      description:
+        "Der moderne, integrierte Busbahnhof in Posen, dessen Fassade in verschiedenen Farben beleuchtet ist. Auch als 'Brotkasten' bekannt.",
+    },
+    "castle-4999697_1920.jpg": {
+      title: "Kaiserschloss in Posen",
+      description:
+        "Das monumentale Kaiserschloss im Schlossviertel, erbaut für Kaiser Wilhelm II. Ein Beispiel für neoromanische Architektur.",
+    },
+    "city-3426704_1920.jpg": {
+      title: "Eine Straße in Posen",
+      description:
+        "Eine stimmungsvolle Straße mit historischen Mietshäusern und einem Kopfsteinpflaster-Bürgersteig, wahrscheinlich in einem der älteren Stadtteile Posens, wie Jeżyce.",
+    },
+    "city-4999696_1920.jpg": {
+      title: "Alter Markt in Posen an einem bewölkten Tag",
+      description:
+        "Blick auf den Alten Markt in Posen mit dem Rathaus im Hintergrund. Der gepflasterte Platz und die historischen Häuser schaffen eine ruhige, etwas nostalgische Atmosphäre.",
+    },
+    "city-5132735_1920.jpg": {
+      title: "Innenansicht des Stary Browar (Alte Brauerei) in Posen",
+      description:
+        "Die charakteristische Innenarchitektur des Kunst- und Geschäftszentrums 'Stary Browar', die historischen roten Backstein mit modernem Design verbindet.",
+    },
+    "croissant-5209608_1920.jpg": {
+      title: "Schloss Rogalin",
+      description:
+        "Blick auf die Hauptfassade des Rokoko-Klassizistischen Raczyński-Schlosses in Rogalin, umgeben von einem gepflegten Park. Eine Perle der Architektur Großpolens.",
+    },
+    "drone-4539817_1920.jpg": {
+      title: "Autobahnkreuz bei Posen",
+      description:
+        "Eine Luftaufnahme eines großen Verkehrsknotenpunktes, wahrscheinlich an der Autobahn A2 in der Nähe von Posen. Sie veranschaulicht die moderne Infrastruktur der Region.",
+    },
+    "fountain-822945_1920.jpg": {
+      title: "Freiheitsbrunnen auf dem Wolności-Platz in Posen",
+      description:
+        "Eine Nachtaufnahme des Freiheitsbrunnens mit einem künstlerischen selektiven Farbeffekt. Das Wasser und seine Spiegelung erzeugen ein faszinierendes Muster.",
+    },
+    "houses-7071276_1920.jpg": {
+      title: "Eine nächtliche Gasse in der Posener Altstadt",
+      description:
+        "Eine stimmungsvolle Aufnahme einer Kopfsteinpflastergasse, beleuchtet vom warmen Licht der Laternen. Sie fängt die magische Atmosphäre des historischen Stadtteils bei Nacht ein.",
+    },
+    "imperial-castle-513161_1920.jpg": {
+      title: "Kaiserschloss in Posen bei Nacht",
+      description:
+        "Ein Fragment der Fassade des Kaiserschlosses, nachts beleuchtet. Sichtbar sind neoromanische Bögen, Verzierungen und mächtige Steinmauern.",
+    },
+    "murals-657519_1920.jpg": {
+      title: "Wandbild an einer Mietshauswand in Posen",
+      description:
+        "Ein farbenfrohes Street-Art-Wandbild an einer großen Gebäudewand. Urbane Kunst, die die Architektur eines der Posener Stadtteile belebt.",
+    },
+    "nature-3339460_1920.jpg": {
+      title: "Parkallee in Posen",
+      description:
+        "Eine lange, gerade Allee, gesäumt von Bäumen, die ein grünes Blätterdach bilden. Ein idealer Ort für einen Spaziergang, wahrscheinlich im Zitadellenpark oder Wilson-Park.",
+    },
+    "old-tram-3054142_1920.jpg": {
+      title: "Historische Straßenbahn in den Straßen von Posen",
+      description:
+        "Eine historische, grüne Konstal N-Straßenbahn auf den Gleisen von Posen während einer Parade oder einer Sonderveranstaltung, beobachtet von einer Menschenmenge.",
+    },
+    "painter-2129415_1920.jpg": {
+      title: "Maler malt den Posener Dom",
+      description:
+        "Ein Künstler malt im Freien ein Bild des Posener Doms von der Perspektive des Wartheufers aus. Eine Szene, die Kunst, Architektur und Natur verbindet.",
+    },
+    "park-4549275_1920.jpg": {
+      title: "Schloss Rogalin im Herbst",
+      description:
+        "Eine Weitwinkelaufnahme des Raczyński-Schlosses in Rogalin in herbstlicher Umgebung. Das warme Licht der Nachmittagssonne beleuchtet die Fassade und die umliegenden Bäume.",
+    },
+    "poland-7025079_1920.jpg": {
+      title: "Wanderwegmarkierung im Winter",
+      description:
+        "Ein grünes Touristensymbol auf einem schneebedeckten Holzpfosten. Eine Markierung für einen Wanderweg in einer winterlichen Waldlandschaft in Polen.",
+    },
+    "poznan-1541467_1920.jpg": {
+      title: "Fassade des Posener Rathauses",
+      description:
+        "Nahaufnahme der reich verzierten Renaissance-Fassade des Posener Rathauses mit der Loggia und Porträts polnischer Könige der Jagiellonen-Dynastie.",
+    },
+    "poznan-1670738_1920.jpg": {
+      title: "Abend auf dem Alten Markt in Posen",
+      description:
+        "Eine stimmungsvolle Szene vom Alten Markt in Posen mit Restaurantgärten und dem Rathaus im Hintergrund. Dramatische Wolken kündigen den Abend an.",
+    },
+    "poznan-2903477_1920.jpg": {
+      title: "Blick auf Ostrów Tumski von der Warthe",
+      description:
+        "Ein Panorama des ältesten Teils von Posen mit der Erzkathedrale, gesehen vom anderen Ufer der Warthe an einem sonnigen Tag.",
+    },
+    "poznan-2906170_1920.jpg": {
+      title: "Dächer der Mietshäuser am Alten Markt",
+      description:
+        "Die charakteristischen Dächer und verzierten Fassaden der bunten Krämerhäuser am Alten Markt in Posen. Die Aufnahme betont die historische Bebauung.",
+    },
+    "poznan-3597202_1920.jpg": {
+      title: "Turm und Attika des Posener Rathauses",
+      description:
+        "Eine Perspektive von unten auf den Uhrturm und die Renaissance-Attika des Posener Rathauses, mit sichtbaren historischen Inschriften an der Fassade.",
+    },
+    "poznan-4073662_1920.jpg": {
+      title: "Bebauung an der Warthe in Posen",
+      description:
+        "Moderne Wohngebäude am Ufer der Warthe. Die Ansicht zeigt, wie sich zeitgenössische Architektur in die Flusslandschaft der Stadt einfügt.",
+    },
+    "poznan-5008490_1920.jpg": {
+      title: "Stiftskirche und Posener Fara",
+      description:
+        "Blick auf die barocke Pfarrkirche (Basilika Unserer Lieben Frau von der Immerwährenden Hilfe) und das angrenzende ehemalige Jesuitenkolleg-Gebäude.",
+    },
+    "poznan-555966_1920.jpg": {
+      title: "Bunte Krämerhäuser in Posen",
+      description:
+        "Eine Nahaufnahme der farben- und musterprächtigen Fassaden der Krämerhäuser am Posener Alten Markt mit ihren charakteristischen Arkaden.",
+    },
+    "poznan-69368_1280.jpg": {
+      title: "Brunnen und Rathaus in Posen",
+      description:
+        "Einer der Brunnen auf dem Alten Markt (möglicherweise Neptun oder Proserpina) mit dem charakteristischen Rathausturm im Hintergrund, unter einem bewölkten Himmel.",
+    },
+    "river-3102429_1920.jpg": {
+      title: "Waldbach im Winter",
+      description:
+        "Ein ruhiger Bach, der durch einen schneebedeckten Wald fließt. Eine Winterlandschaft voller Stille und natürlicher Schönheit, charakteristisch für Polen.",
+    },
+    "saint-nicholas-day-3859826_1920.jpg": {
+      title: "Posener Rathaus und bunte Häuser am Morgen",
+      description:
+        "Das berühmte Renaissance-Rathaus auf dem Alten Markt in Posen, umgeben von bunten Krämerhäusern, getaucht in das warme Licht der aufgehenden Sonne.",
+    },
+    "stairs-3065064_1920.jpg": {
+      title: "Wendeltreppe im Collegium Altum",
+      description:
+        "Eine faszinierende Aufnahme der berühmten Wendeltreppe im Gebäude der Wirtschaftsuniversität Posen, von unten gesehen.",
+    },
+    "stairs-3096912_1920.jpg": {
+      title: "Treppe in einem Winterpark",
+      description:
+        "Eine Betontreppe, die in einem Park oder Wald einen Hügel hinaufführt und leicht mit Schnee bedeckt ist. Ein Symbol für das Vorankommen in einer winterlichen Umgebung.",
+    },
+    "the-cathedral-3799811_1920.jpg": {
+      title: "Kathedrale auf Ostrów Tumski in der Dämmerung",
+      description:
+        "Eine stimmungsvolle Abendaufnahme von der Jordanbrücke in Richtung der Erzkathedrale von Posen. Der verschwommene Vordergrund lenkt die Aufmerksamkeit auf die beleuchteten Türme.",
+    },
+    "the-palace-5209571_1920.jpg": {
+      title: "Der Weg zum Schloss Rogalin",
+      description:
+        "Eine Perspektive einer gepflasterten Straße, die durch ein Backsteintor zum in der Ferne sichtbaren Schloss Rogalin führt.",
+    },
+    "the-palace-5209594_1920.jpg": {
+      title: "Schloss Rogalin aus der Rasenperspektive",
+      description:
+        "Eine Aufnahme des Schlosses aus niedriger Perspektive mit unscharfem Gras im Vordergrund. Sie betont die Pracht der Residenz und des umliegenden Parks.",
+    },
+    "train-station-447102_1920.jpg": {
+      title: "Bahnhof Poznań Główny bei Nacht",
+      description:
+        "Die moderne Glasfassade des Hauptbahnhofs in Posen, blau und grün beleuchtet. Die Leuchtreklame 'Poznań Główny' ist sichtbar.",
+    },
+    "tram-7924891_1920.jpg": {
+      title: "Moderne Straßenbahn der MPK Posen",
+      description:
+        "Eine grüne Moderus-Gamma-Straßenbahn mit der Aufschrift 'MPK Poznań' an der Vorderseite, die auf den Gleisen in einer der Straßen der Stadt steht. Ein Symbol für den modernen öffentlichen Nahverkehr.",
+    },
+    "uniform-727072_1920.jpg": {
+      title: "Historische Militäruniformen",
+      description:
+        "Eine Ausstellung von Schaufensterpuppen, die polnische Militäruniformen aus verschiedenen Epochen, einschließlich des Großpolnischen Aufstands, präsentieren. Wahrscheinlich aus einem Museum in Posen.",
+    },
+    "wall-2924502_1920.jpg": {
+      title: "Gotische Mauer in Posen",
+      description:
+        "Fragment einer alten Backsteinmauer mit einem Bogenportal und einer Metalltür. Der grüne Belag und der rohe Backstein zeugen vom Alter des Bauwerks.",
+    },
+    "winter-3067791_1920.jpg": {
+      title: "Vereister Basketballkorb",
+      description:
+        "Nahaufnahme eines Basketballkorbs mit einem Kettennetz, der mit dichtem Reif bedeckt ist. Ein Symbol für die winterliche Stille auf dem Spielfeld.",
+    },
+    "woman-727073_1920.jpg": {
+      title: "Handwerk in einer Volkstracht",
+      description:
+        "Eine Frau in einer historischen Tracht, vielleicht aus der Zeit des Herzogtums Warschau, die präzise Handarbeiten ausführt. Eine Szene von einem Fest oder einer historischen Nachstellung.",
+    },
+    "advertisement-914068_1920.jpg": {
+      title: "Lichtfestival Bella Skyway in Thorn",
+      description:
+        "Eine nächtliche Straße in der Thorner Altstadt, belebt durch eine Kunstinstallation aus lila und gelben Laternen während des Lichtfestivals.",
+    },
+    "advertisement-914074_1920.jpg": {
+      title: "Lichtinstallation in Thorn",
+      description:
+        "Eine Straße in der Thorner Altstadt während des Bella Skyway Festivals, beleuchtet von einer künstlerischen Installation aus leuchtenden Laternen.",
+    },
+    "advertisement-914079_1920.jpg": {
+      title: "Menschenmenge beim Bella Skyway Festival",
+      description:
+        "Teilnehmer des Lichtfestivals in Thorn bewundern eine lila Kunstinstallation in einer der Straßen der Altstadt.",
+    },
+    "advertisement-914083_1920.jpg": {
+      title: "Leuchtende Wolke auf einem Festival in Thorn",
+      description:
+        "Eine Kunstinstallation in Form einer Wolke aus Hunderten von kleinen, weißen Ballons, die von innen beleuchtet wird. Eine der Attraktionen des Bella Skyway Festivals.",
+    },
+    "architecture-3373921_1920.jpg": {
+      title: "Detail des Artushofs in Thorn",
+      description:
+        "Ein Fragment der Neorenaissance-Fassade des Artushofs mit dem Datum 1891. Ein Reichtum an Verzierungen, Türmchen und architektonischen Details aus rotem Backstein.",
+    },
+    "artus-court-cultural-center-6564940_1920.jpg": {
+      title: "Architektonisches Detail des Artushofs",
+      description:
+        "Eine Nahaufnahme der Neorenaissance-Fassade des Artushofs in Thorn, die kunstvolle Verzierungen, Säulen und Buntglasfenster zeigt.",
+    },
+    "astronomer-2306436_1920.jpg": {
+      title: "Figur des Nikolaus Kopernikus",
+      description:
+        "Eine Nahaufnahme einer Marmorskulptur von Nikolaus Kopernikus, der eine Armillarsphäre in der Hand hält. Ein Detail aus dem Inneren eines der Thorner Denkmäler.",
+    },
+    "bell-4713231_1920.jpg": {
+      title: "Die Tuba-Dei-Glocke in Thorn",
+      description:
+        "Die berühmte Glocke Tuba Dei (Posaune Gottes) aus dem Jahr 1500, die im Turm der Thorner Johanneskathedrale hängt. Sie ist eine der größten mittelalterlichen Glocken in Polen.",
+    },
+    "bridge-3013133_1920.jpg": {
+      title: "Straßenbrücke in Thorn bei Nacht",
+      description:
+        "Die beleuchtete Marschall-Józef-Piłsudski-Brücke und ihre Spiegelung in der Weichsel. Ein Nachtpanorama der ältesten Straßenbrücke der Stadt.",
+    },
+    "bridge-7769945_1920.jpg": {
+      title: "Brücke in Thorn im Nebel",
+      description:
+        "Eine stimmungsvolle Aufnahme der Marschall-Józef-Piłsudski-Straßenbrücke, deren Konstruktion im dichten Morgennebel über der Weichsel versinkt.",
+    },
+    "church-4829657_1920.jpg": {
+      title: "Barockorgel in einer Thorner Kirche",
+      description:
+        "Reich verzierte, historische Pfeifenorgel in einer der gotischen Kirchen Thorns. Die Vergoldungen und Schnitzereien zeugen von der Handwerkskunst alter Meister.",
+    },
+    "church-of-the-holy-spirit-3619165_1920.jpg": {
+      title: "Heilig-Geist-Kirche in Thorn",
+      description:
+        "Die barocke akademische Jesuitenkirche zum Heiligen Geist am Altstädtischen Markt in Thorn. Ihre helle Fassade kontrastiert mit der gotischen Umgebung.",
+    },
+    "city-1148222_1920.jpg": {
+      title:
+        "Ehemaliges Gebäude der Landschäftlichen Kreditgesellschaft in Thorn",
+      description:
+        "Das monumentale Neorenaissance-Gebäude der ehemaligen Landschäftlichen Kreditgesellschaft, von den Einheimischen oft 'Schloss' genannt.",
+    },
+    "city-239368_1920.jpg": {
+      title: "Altstädtisches Rathaus in Thorn",
+      description:
+        "Blick auf das gotische Altstädtische Rathaus an einem sonnigen Tag. Eines der größten und prächtigsten Backsteinrathäuser Europas.",
+    },
+    "city-4852130_1920.jpg": {
+      title: "Philadelphia-Boulevard bei Nacht",
+      description:
+        "Ein Nachtblick auf die Thorner Altstadt von der Weichselseite. Die beleuchteten Wehrmauern und die Johanneskathedrale bilden ein malerisches Panorama.",
+    },
+    "city-4852132_1920.jpg": {
+      title: "Nachtpanorama von Thorn mit der Johanneskathedrale",
+      description:
+        "Die beleuchtete Johanneskathedrale und die Wehrmauern der Altstadt spiegeln sich in der Weichsel. Die Nachtansicht unterstreicht den gotischen Charakter der Stadt.",
+    },
+    "city-6564615_1920.jpg": {
+      title: "Abendpanorama von Thorn von der Weichsel aus",
+      description:
+        "Die beleuchtete Altstadt von Thorn und ihre Spiegelung im Wasser der Weichsel kurz nach Sonnenuntergang. Ein magischer Blick auf den Philadelphia-Boulevard.",
+    },
+    "city-791279_1920.jpg": {
+      title: "Eine bezaubernde Ecke der Thorner Altstadt",
+      description:
+        "Ein mit Efeu bewachsenes Backsteingebäude an einer gepflasterten Straße. Die Szene fängt die einzigartige, historische Atmosphäre der Altstadt von Thorn ein.",
+    },
+    "dill-885783_1920.jpg": {
+      title: "Nikolaus-Kopernikus-Denkmal in Thorn",
+      description:
+        "Eine künstlerische, im Vintage-Stil gehaltene Aufnahme des Denkmals für den berühmtesten Bürger Thorns auf dem Altstädtischen Markt. Sie spiegelt die historische und wissenschaftliche Atmosphäre der Stadt wider.",
+    },
+    "frog-3572497_1920.jpg": {
+      title: "Frosch vom Flößerbrunnen",
+      description:
+        "Nahaufnahme eines der acht Messingfrösche, die das Flößerdenkmal in Thorn umgeben. Die Legende besagt, dass das Berühren eines Frosches Glück bringt.",
+    },
+    "gothic-4829682_1920.jpg": {
+      title: "Gasse an der Wehrmauer von Thorn",
+      description:
+        "Eine stimmungsvolle Gasse entlang der mittelalterlichen Stadtmauern mit Blick auf die Marschall-Józef-Piłsudski-Brücke über die Weichsel bei Sonnenuntergang.",
+    },
+    "monument-195702_1920.jpg": {
+      title: "Mariä-Himmelfahrt-Kirche in Thorn",
+      description:
+        "Die gotische, nachfranziskanische Mariä-Himmelfahrt-Kirche mit ihren markanten Türmchen, von hinter den Bäumen am Altstädtischen Markt aus gesehen.",
+    },
+    "monument-239361_1920.jpg": {
+      title: "Collegium Maius der Nikolaus-Kopernikus-Universität in Thorn",
+      description:
+        "Das historische, neugotische Gebäude des Collegium Maius der Nikolaus-Kopernikus-Universität. Ein Beispiel für monumentale Backsteinarchitektur.",
+    },
+    "nicholas-4829624_1920.jpg": {
+      title: "Kopernikus-Denkmal vor Bäumen",
+      description:
+        "Das Denkmal von Nikolaus Kopernikus in Thorn vor den kahlen Ästen der Bäume, was der Szene einen herben, herbstlichen oder frühlingshaften Charakter verleiht.",
+    },
+    "nicholas-4843379_1920.jpg": {
+      title: "Nikolaus-Kopernikus-Denkmal in Thorn",
+      description:
+        "Eine Aufnahme des Nikolaus-Kopernikus-Denkmals aus der Froschperspektive, die die Monumentalität der Figur des großen Astronomen betont.",
+    },
+    "nicholas-4860757_1920.jpg": {
+      title: "Kopernikus-Denkmal bei Nacht",
+      description:
+        "Das nachts beleuchtete Denkmal von Nikolaus Kopernikus vor der gotischen Fassade des Altstädtischen Rathauses. Das Lichtspiel hebt die Details der Skulptur hervor.",
+    },
+    "poland-2773148_1920.jpg": {
+      title: "Gotische Speicher in Thorn",
+      description:
+        "Charakteristische Backsteinspeicher an der Weichsel. Die ehemaligen Getreidelager zeugen von der Handelsmacht des alten Thorn.",
+    },
+    "river-4670180_1920.jpg": {
+      title: "Piłsudski-Brücke an der Weichsel in Thorn",
+      description:
+        "Blick auf die stählerne Marschall-Józef-Piłsudski-Straßenbrücke und die Weichsel unter einem malerischen, wolkigen Himmel.",
+    },
+    "statue-239366_1920.jpg": {
+      title: "Flößerdenkmal in Thorn",
+      description:
+        "Ein Denkmal für den legendären Flößer, der der Sage nach die Stadt durch sein Geigenspiel von einer Froschplage befreite. Es steht umgeben von einem Brunnen mit Fröschen.",
+    },
+    "statue-239369_1920.jpg": {
+      title: "Nikolaus-Kopernikus-Denkmal",
+      description:
+        "Das Denkmal für Nikolaus Kopernikus in seiner Heimatstadt Thorn. Die Figur des Astronomen hält eine Armillarsphäre.",
+    },
+    "street-6750106_1920.jpg": {
+      title: "Morgen in der Szeroka-Straße in Thorn",
+      description:
+        "Die Hauptpromenade der Thorner Altstadt, die Szeroka-Straße, im ruhigen Morgenlicht. In der Ferne ist die Figur des Thorner Esels zu sehen.",
+    },
+    "the-ruins-of-the-1604296_1920.jpg": {
+      title: "Ruinen der Deutschordensburg in Thorn",
+      description:
+        "Fragmente von Mauern und Bögen aus rotem Backstein – die Überreste der ersten Deutschordensburg im Kulmerland, die von den Thorner Bürgern zerstört wurde.",
+    },
+    "the-town-hall-4173338_1920.jpg": {
+      title: "Rathausturm in Thorn",
+      description:
+        "Der gotische Turm des Altstädtischen Rathauses, der die Stadt überragt. Oben befindet sich eine Aussichtsplattform, von der aus man das Panorama von Thorn bewundern kann.",
+    },
+    "the-town-hall-4173353_1920.jpg": {
+      title: "Turm des Thorner Rathauses aus der Nähe",
+      description:
+        "Eine Aufnahme des Turms des Altstädtischen Rathauses in Thorn, die Details der Uhren und gotischen Ornamente zeigt. Oben sind Flaggen und Touristen zu sehen.",
+    },
+    "the-town-hall-4173362_1920.jpg": {
+      title: "Altstädtisches Rathaus und Kopernikus-Denkmal",
+      description:
+        "Der Turm des Altstädtischen Rathauses in Thorn und das davor stehende Nikolaus-Kopernikus-Denkmal. Zwei der wichtigsten Symbole der Stadt in einem Bild.",
+    },
+    "torun-2465067_1920.jpg": {
+      title: "Turm des Altstädtischen Rathauses",
+      description:
+        "Eine Nahaufnahme des gotischen Rathausturms in Thorn mit sichtbarer Uhr und reichen Verzierungen. Ein Meisterwerk der mittelalterlichen Architektur.",
+    },
+    "torun-3013132_1920.jpg": {
+      title: "Nachtpanorama von Thorn über der Weichsel",
+      description:
+        "Ein breiter Bildausschnitt, der die beleuchtete Thorner Altstadt zeigt, deren Lichter sich malerisch im ruhigen Wasser der Weichsel spiegeln.",
+    },
+    "torun-3352310_1920.jpg": {
+      title: "Panorama von Thorn an einem Sommertag",
+      description:
+        "Ein sonniges Panorama der Altstadt von der Weichselseite, mit der Johanneskathedrale, Wehrmauern und Touristenbooten auf dem Fluss.",
+    },
+    "torun-3501554_1920.jpg": {
+      title: "Frühlingsblumen in Thorn",
+      description:
+        "Eine Nahaufnahme von blauen Sibirischen Blausternen, einer der ersten Blumen, die im Frühling in den Parks und Gärten Thorns erscheinen.",
+    },
+    "torun-3711031_1920.jpg": {
+      title: "Philadelphia-Boulevard in Thorn",
+      description:
+        "Ein Sommerblick auf das Panorama der Thorner Altstadt von der Weichselseite. Auf dem Fluss fahren Touristenboote, und am Ufer spazieren Touristen entlang.",
+    },
+    "torun-3711032_1920.jpg": {
+      title: "Wehrmauern von Thorn",
+      description:
+        "Ein Fragment der mächtigen, mittelalterlichen Wehrmauern mit Türmen und Toren, die die Thorner Altstadt umgeben.",
+    },
+    "torun-3817096_1920.jpg": {
+      title: "Panorama von Thorn mit der Piłsudski-Brücke",
+      description:
+        "Ein weiter Blick vom Rathausturm auf die Dächer der Altstadt, die Weichsel und die Stahlkonstruktion der Marschall-Józef-Piłsudski-Brücke.",
+    },
+    "torun-419205_1920.jpg": {
+      title: "Blick vom Rathausturm auf die Weichsel",
+      description:
+        "Ein Panorama von Thorn mit Blick auf die Dächer der Altstadt, die Weichsel und die Marschall-Józef-Piłsudski-Straßenbrücke in der Ferne.",
+    },
+    "torun-419206_1920.jpg": {
+      title: "Altstädtischer Markt von oben",
+      description:
+        "Blick vom Rathausturm auf den nördlichen Teil des Altstädtischen Marktes, mit dem Artushof und der Mariä-Himmelfahrt-Kirche im Hintergrund.",
+    },
+    "torun-419208_1920.jpg": {
+      title: "Dächer der Altstadt in Thorn",
+      description:
+        "Ein weitläufiges Panorama der Dächer der Thorner Altstadt, vom Rathausturm aus gesehen. Das Meer aus roten Ziegeln zeugt vom historischen Charakter der Stadt.",
+    },
+    "torun-419210_1920.jpg": {
+      title: "Panorama der Thorner Altstadt",
+      description:
+        "Blick von oben auf die Dächer der Thorner Altstadt, mit der Johanneskathedrale im Vordergrund und dem breiten Band der Weichsel im Hintergrund.",
+    },
+    "torun-456763_1920.jpg": {
+      title: "Brückentor in Thorn",
+      description:
+        "Das gotische Brückentor, eines der drei erhaltenen Stadttore Thorns, das zur ehemaligen Brücke über die Weichsel führte.",
+    },
+    "torun-4769058_1920.jpg": {
+      title: "Weihnachtsdekoration in der Thorner Altstadt",
+      description:
+        "Die Szeroka-Straße in Thorn, geschmückt mit Weihnachtsbeleuchtung. Die Aufnahme aus niedriger Perspektive unterstreicht die Magie der gepflasterten Straße an einem Winterabend.",
+    },
+    "torun-4772388_1920.jpg": {
+      title: "Kopernikus vor dem Altstädtischen Rathaus",
+      description:
+        "Das Denkmal von Nikolaus Kopernikus vor der gotischen Architektur des Rathauses, das die Verbindung des Astronomen zu seiner Heimatstadt zeigt.",
+    },
+    "torun-4829614_1920.jpg": {
+      title: "Blick auf die Mariä-Himmelfahrt-Kirche",
+      description:
+        "Ein Panorama vom Rathausturm, das den Baukörper der Mariä-Himmelfahrt-Kirche und die umliegenden Mietshäuser der Altstadt zeigt.",
+    },
+    "torun-4843129_1920.jpg": {
+      title: "Spitze des Altstädtischen Rathausturms",
+      description:
+        "Eine Nahaufnahme der Spitze des Rathausturms in Thorn, mit sichtbaren Uhren und der polnischen Flagge, die an den Masten weht.",
+    },
+    "torun-4857967_1920.jpg": {
+      title: "Ein Nachtspaziergang durch die Thorner Altstadt",
+      description:
+        "Eine stimmungsvolle Nachtszene aus der Różana-Straße mit Blick auf den beleuchteten Turm des Altstädtischen Rathauses. Das warme Licht der Laternen schafft eine magische Atmosphäre.",
+    },
+    "torun-4863419_1920.jpg": {
+      title: "Thorner Rathausturm bei Nacht",
+      description:
+        "Der gotische Turm des Altstädtischen Rathauses, in goldenes Licht getaucht, hebt sich vom dunklen Nachthimmel ab.",
+    },
+    "torun-4863425_1920.jpg": {
+      title: "Nachtdetails des Rathausturms",
+      description:
+        "Eine Nahaufnahme des nachts beleuchteten Rathausturms in Thorn, mit sichtbarer Uhr und einem kleineren Türmchen.",
+    },
+    "torun-6049204_1920.jpg": {
+      title: "Haus zum Stern in Thorn",
+      description:
+        "Eine Schwarz-Weiß-Aufnahme eines der schönsten Barockhäuser Polens, berühmt für seine reich verzierte Fassade. Eine Perle der Thorner Architektur.",
+    },
+    "torun-6049206_1920.jpg": {
+      title: "Klostertor in Thorn",
+      description:
+        "Ein Schwarz-Weiß-Foto des Klostertors (Heilig-Geist-Tor), eines der erhaltenen gotischen Stadttore im System der Thorner Wehrmauern.",
+    },
+    "torun-745627_1920.jpg": {
+      title: "Kopernikus-Haus in Thorn",
+      description:
+        "Zwei gotische Gebäude aus rotem Backstein. Das Mietshaus auf der linken Seite gilt als Geburtshaus von Nikolaus Kopernikus.",
+    },
+    "torun-916648_1920.jpg": {
+      title: "Lichtinstallation des Bella Skyway Festivals",
+      description:
+        "Eine Nahaufnahme von bunten, leuchtenden Laternen, die Teil einer Kunstinstallation während des Lichtfestivals in Thorn sind.",
     },
   },
 };
