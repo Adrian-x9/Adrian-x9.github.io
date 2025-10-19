@@ -134,5 +134,14 @@ const itemTags = {
   "yazzed-al-rajhi-1795044_1920.jpg": ["rajd polski", "rally poland", "rajd", "rally", "samochód", "car", "sport", "ford fiesta", "wrc"],
   "old-street-lamp-335710_1920.jpg": ["gliwice", "kościół wszystkich świętych", "all saints church", "latarnia", "lantern", "wieża", "tower", "gotyk", "gothic", "cegła", "brick", "architektura", "architecture", "detal", "detail"],
   "Gliwice-LO-Ziemowita_Polska_20241017_1920.jpg": ["gliwice", "liceum", "high school", "szkoła", "school", "architektura", "architecture", "cegła", "brick", "budynek", "building", "ziemowita", "historia", "history"],
-
+  "castle-2568548_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "wieża", "tower", "krajobraz", "landscape"],
+  "castle-2662673_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "zmierzch", "dusk", "niebo", "sky"],
+  "castle-3383242_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "panorama", "zachód słońca", "sunset"],
+  "castle-4557894_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "panorama", "lato", "summer", "słoneczny dzień"],
+  "castle-4557896_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "dramatyczne", "dramatic", "niebo", "sky"],
+  "fencing-1048162_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "okno", "window", "architektura", "architecture"],
+  "fencing-1201467_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "mury", "walls", "wzgórze", "hill"],
+  "fencing-1258546_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "jesień", "autumn", "liście", "leaves"],
+  "fencing-915118_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "mury", "walls", "perspektywa", "perspective"],
+  "the-ruins-of-the-2581510_1920.jpg": ["ogrodzieniec", "zamek ogrodzieniec", "ogrodzieniec castle", "zamek", "castle", "ruiny", "ruins", "jura", "polish jura", "szlak orlich gniazd", "detal", "detail", "sklepienie", "vault", "architektura"],
 };

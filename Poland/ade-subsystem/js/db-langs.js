@@ -625,6 +625,56 @@ const itemTranslations = {
       description:
         "Zabytkowy budynek I Liceum Ogólnokształcącego przy ul. Ziemowita w Gliwicach. Czerwona cegła, ostre połacie dachu i rytmiczne okna tworzą klasyczną, szkolną architekturę.",
     },
+    "castle-2568548_1920.jpg": {
+      title: "Wieża Zamku Ogrodzieniec i jurajski krajobraz",
+      description:
+        "Widok z góry na okrągłą wieżę zamkową w Ogrodzieńcu oraz otaczające ją białe skały wapienne i tereny zielone Jury Krakowsko-Częstochowskiej.",
+    },
+    "castle-2662673_1920.jpg": {
+      title: "Zamek Ogrodzieniec o zmierzchu",
+      description:
+        "Ruiny zamku na wzgórzu w pochmurny, późnopopołudniowy dzień. Dramatyczne niebo dodaje majestatu tej warowni na Szlaku Orlich Gniazd.",
+    },
+    "castle-3383242_1920.jpg": {
+      title: "Panorama Zamku Ogrodzieniec w złotym świetle",
+      description:
+        "Szerokie ujęcie całego kompleksu zamkowego w ciepłym świetle zachodzącego słońca. W tle widać zabudowania pobliskiej miejscowości.",
+    },
+    "castle-4557894_1920.jpg": {
+      title: "Majestatyczne ruiny Ogrodzieńca w letni dzień",
+      description:
+        "Imponująca panorama ruin zamku Ogrodzieniec w pełnym słońcu. Błękitne niebo i bujna zieleń podkreślają piękno Jury.",
+    },
+    "castle-4557896_1920.jpg": {
+      title: "Dramatyczne spojrzenie na Zamek Ogrodzieniec",
+      description:
+        "Artystyczne ujęcie ruin z niskiej perspektywy, z intensywnie niebieskim, skontrastowanym niebem. Podkreśla surowość i monumentalność budowli.",
+    },
+    "fencing-1048162_1920.jpg": {
+      title: "Widok przez zamkowe okno w Ogrodzieńcu",
+      description:
+        "Perspektywa z wnętrza ruin, patrząc przez kamienny łuk na ostańce skalne w oddali. Kadr oddaje historyczną głębię tego miejsca.",
+    },
+    "fencing-1201467_1920.jpg": {
+      title: "Zamek Ogrodzieniec na zielonym wzgórzu",
+      description:
+        "Widok na mury zamku i jedną z wież od strony zbocza. Bujna, letnia roślinność kontrastuje z surowością kamiennych fortyfikacji.",
+    },
+    "fencing-1258546_1920.jpg": {
+      title: "Jesienne kadry Zamku Ogrodzieniec",
+      description:
+        "Fragment ruin widziany z dołu, częściowo przysłonięty przez gałęzie z jesiennymi liśćmi. Połączenie architektury i natury.",
+    },
+    "fencing-915118_1920.jpg": {
+      title: "Potęga murów Zamku w Ogrodzieńcu",
+      description:
+        "Ujęcie z perspektywy 'żabiej' na wysoką, zrujnowaną ścianę zamku z licznymi otworami okiennymi. Pokazuje skalę i dawne rozmiary warowni.",
+    },
+    "the-ruins-of-the-2581510_1920.jpg": {
+      title: "Detal sklepienia w ruinach Ogrodzieńca",
+      description:
+        "Zbliżenie na kamienny, łukowy fragment sklepienia, który przetrwał próbę czasu. Świadectwo dawnej kunsztu budowlanego.",
+    },
   },
 
   /**
@@ -1252,6 +1302,56 @@ const itemTranslations = {
       title: "Brick facade of Gliwice High School",
       description:
         "Historic building of the First High School in Gliwice, located on Ziemowita Street. Red brick, steep rooflines and rhythmic windows define its classic institutional style.",
+    },
+    "castle-2568548_1920.jpg": {
+      title: "Ogrodzieniec Castle Tower and Jura Landscape",
+      description:
+        "A top-down view of the round castle tower in Ogrodzieniec and the surrounding white limestone rocks and green areas of the Polish Jura.",
+    },
+    "castle-2662673_1920.jpg": {
+      title: "Ogrodzieniec Castle at Dusk",
+      description:
+        "The ruins of the castle on a hill on a cloudy, late afternoon. The dramatic sky adds majesty to this fortress on the Trail of the Eagles' Nests.",
+    },
+    "castle-3383242_1920.jpg": {
+      title: "Panorama of Ogrodzieniec Castle in Golden Light",
+      description:
+        "A wide shot of the entire castle complex in the warm light of the setting sun. In the background, the buildings of the nearby town are visible.",
+    },
+    "castle-4557894_1920.jpg": {
+      title: "Majestic Ruins of Ogrodzieniec on a Summer Day",
+      description:
+        "An impressive panorama of the Ogrodzieniec castle ruins in full sun. The blue sky and lush greenery emphasize the beauty of the Jura.",
+    },
+    "castle-4557896_1920.jpg": {
+      title: "A Dramatic Look at Ogrodzieniec Castle",
+      description:
+        "An artistic low-angle shot of the ruins with an intensely blue, contrasted sky. It emphasizes the austerity and monumentality of the structure.",
+    },
+    "fencing-1048162_1920.jpg": {
+      title: "View Through a Castle Window in Ogrodzieniec",
+      description:
+        "A perspective from inside the ruins, looking through a stone arch at the rock formations in the distance. The frame captures the historical depth of the place.",
+    },
+    "fencing-1201467_1920.jpg": {
+      title: "Ogrodzieniec Castle on a Green Hill",
+      description:
+        "A view of the castle walls and one of the towers from the slope. Lush summer vegetation contrasts with the austerity of the stone fortifications.",
+    },
+    "fencing-1258546_1920.jpg": {
+      title: "Autumn Frames of Ogrodzieniec Castle",
+      description:
+        "A fragment of the ruins seen from below, partially obscured by branches with autumn leaves. A combination of architecture and nature.",
+    },
+    "fencing-915118_1920.jpg": {
+      title: "The Power of the Walls of Ogrodzieniec Castle",
+      description:
+        "A worm's-eye view of a high, ruined castle wall with numerous window openings. It shows the scale and former size of the fortress.",
+    },
+    "the-ruins-of-the-2581510_1920.jpg": {
+      title: "Detail of a Vault in the Ogrodzieniec Ruins",
+      description:
+        "A close-up of a stone, arched fragment of a vault that has stood the test of time. A testament to ancient craftsmanship.",
     },
   },
 
@@ -1890,6 +1990,56 @@ const itemTranslations = {
       title: "Backsteinfassade des Gymnasiums in Gliwice",
       description:
         "Historisches Gebäude des ersten Gymnasiums in Gliwice an der Ziemowita-Straße. Roter Backstein, steile Dächer und regelmäßige Fenster prägen den klassischen Schulstil.",
+    },
+    "castle-2568548_1920.jpg": {
+      title: "Burgturm von Ogrodzieniec und Jura-Landschaft",
+      description:
+        "Blick von oben auf den runden Burgturm in Ogrodzieniec sowie die umliegenden weißen Kalksteinfelsen und Grünflächen des Polnischen Jura.",
+    },
+    "castle-2662673_1920.jpg": {
+      title: "Burg Ogrodzieniec in der Dämmerung",
+      description:
+        "Die Ruinen der Burg auf einem Hügel an einem bewölkten Spätnachmittag. Der dramatische Himmel verleiht dieser Festung auf der Adlerhorst-Route Majestät.",
+    },
+    "castle-3383242_1920.jpg": {
+      title: "Panorama der Burg Ogrodzieniec in goldenem Licht",
+      description:
+        "Eine Weitwinkelaufnahme des gesamten Burgkomplexes im warmen Licht der untergehenden Sonne. Im Hintergrund sind die Gebäude der nahen Ortschaft zu sehen.",
+    },
+    "castle-4557894_1920.jpg": {
+      title: "Majestätische Ruinen von Ogrodzieniec an einem Sommertag",
+      description:
+        "Ein beeindruckendes Panorama der Burgruine Ogrodzieniec bei vollem Sonnenschein. Der blaue Himmel und das üppige Grün unterstreichen die Schönheit des Juras.",
+    },
+    "castle-4557896_1920.jpg": {
+      title: "Ein dramatischer Blick auf die Burg Ogrodzieniec",
+      description:
+        "Eine künstlerische Aufnahme der Ruinen aus einer niedrigen Perspektive mit einem intensiv blauen, kontrastreichen Himmel. Sie betont die Strenge und Monumentalität des Bauwerks.",
+    },
+    "fencing-1048162_1920.jpg": {
+      title: "Blick durch ein Burgfenster in Ogrodzieniec",
+      description:
+        "Eine Perspektive aus dem Inneren der Ruinen, durch einen Steinbogen auf die Felsformationen in der Ferne blickend. Der Bildausschnitt fängt die historische Tiefe des Ortes ein.",
+    },
+    "fencing-1201467_1920.jpg": {
+      title: "Burg Ogrodzieniec auf einem grünen Hügel",
+      description:
+        "Blick auf die Burgmauern und einen der Türme vom Hang aus. Üppige Sommervegetation kontrastiert mit der Strenge der steinernen Befestigungsanlagen.",
+    },
+    "fencing-1258546_1920.jpg": {
+      title: "Herbstliche Ansichten der Burg Ogrodzieniec",
+      description:
+        "Ein Fragment der Ruinen von unten gesehen, teilweise verdeckt von Ästen mit Herbstlaub. Eine Verbindung von Architektur und Natur.",
+    },
+    "fencing-915118_1920.jpg": {
+      title: "Die Macht der Mauern der Burg Ogrodzieniec",
+      description:
+        "Eine Froschperspektive auf eine hohe, zerstörte Burgmauer mit zahlreichen Fensteröffnungen. Sie zeigt den Maßstab und die einstige Größe der Festung.",
+    },
+    "the-ruins-of-the-2581510_1920.jpg": {
+      title: "Detail eines Gewölbes in den Ruinen von Ogrodzieniec",
+      description:
+        "Nahaufnahme eines steinernen, gewölbten Fragments eines Gewölbes, das den Test der Zeit überstanden hat. Ein Zeugnis alter Handwerkskunst.",
     },
   },
 };
