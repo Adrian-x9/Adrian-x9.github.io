@@ -1096,6 +1096,9 @@ window.onload = function () {
   const controlPanel = document.querySelector(".control-panel");
   if (controlPanel) {
     controlPanel.classList.add("animated-control-panel");
+    document.querySelector(".top-header")?.classList.add("animated-header");
+    document.querySelector(".glass-status")?.classList.add("animated-status-bar"); 
+    document.querySelector(".footer")?.classList.add("animated-footer");
   }
 
   updateLocationBasedStatus();
@@ -3195,13 +3198,13 @@ function initializeLangCarousel() {
     world.style.transform = `rotateY(${currentRotationY}deg)`;
   };
   const inertiaAnimate = () => {
-      velocity *= friction; 
-      currentRotationY += velocity; 
-      updateRotation();
-      if (Math.abs(velocity) > 0.1)
-        animationFrame = requestAnimationFrame(inertiaAnimate);
-      else velocity = 0;
-    };
+    velocity *= friction;
+    currentRotationY += velocity;
+    updateRotation();
+    if (Math.abs(velocity) > 0.1)
+      animationFrame = requestAnimationFrame(inertiaAnimate);
+    else velocity = 0;
+  };
   const onDragStart = (e) => {
     e.preventDefault();
     isDragging = true;

@@ -300,8 +300,11 @@ body.play-mode-active > .footer {
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
+
+  /* POPRAWKA: Usunięto 'opacity' z listy, aby naprawić konflikt z animacją wejścia */
   transition: background-color 0.3s ease, max-height 0.5s, padding 0.5s,
-    margin 0.5s, opacity 0.5s;
+    margin 0.5s, border-width 0.5s;
+
   border-bottom: 1px solid var(--c-border-translucent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -1651,9 +1654,11 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   padding: 20px;
   font-size: 0.9em;
   color: var(--c-text-secondary);
-  transition: max-height 0.5s, padding 0.5s, margin 0.5s, opacity 0.5s;
+  
+  /* POPRAWKA: Usunięto 'opacity' z listy, aby naprawić konflikt z animacją wejścia */
+  transition: max-height 0.5s, padding 0.5s, margin 0.5s, border-width 0.5s;
 
-  /* STYLE "SZKŁA" - WERSJA PEŁNOEKRANOWA */
+  /* STYLE "SZKŁA" */
   box-sizing: border-box;
   width: 100%;
   margin-top: auto;
@@ -1661,7 +1666,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   background-color: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border-top: 1px solid var(--c-border-translucent);
+  border-top: 1px solid var (--c-border-translucent);
 }
 
 html.dark-mode .footer {
@@ -2245,7 +2250,7 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   content: "";
   position: absolute;
   top: 70px;
-  left: 70px;  /* ZMIANA z 50px */
+  left: 70px; /* ZMIANA z 50px */
   right: 70px; /* ZMIANA z 50px */
   height: 1px;
   background-color: rgba(255, 255, 255, 0.3);
@@ -2408,5 +2413,44 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   #firstPageBtn,
   #lastPageBtn {
     display: none;
+  }
+}
+
+/* ================================================================
+   14. ANIMACJE WEJŚCIA
+   ================================================================ */
+
+.animated-header,
+.animated-control-panel,
+.animated-status-bar {
+  animation: fadeInDown 0.6s 0.2s ease-out forwards;
+  animation-fill-mode: backwards;
+}
+
+.animated-footer,
+.pagination.animated-pagination {
+  animation: fadeInUp 0.8s 0.2s ease-out forwards;
+  animation-fill-mode: backwards;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
