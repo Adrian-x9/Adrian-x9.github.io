@@ -307,7 +307,8 @@ body.play-mode-active > .footer {
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
-  transition: background-color 0.3s ease, max-height 0.5s, padding 0.5s, margin 0.5s, border-width 0.5s;
+  transition: background-color 0.3s ease, max-height 0.5s, padding 0.5s,
+    margin 0.5s, border-width 0.5s;
   border-bottom: 1px solid var(--c-border-translucent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -361,8 +362,8 @@ html.dark-mode .top-header {
 }
 
 .top-header .header-controls {
-    grid-column: 3 / 4;
-    justify-self: end;
+  grid-column: 3 / 4;
+  justify-self: end;
 }
 
 .header-controls .lightbox-action-btn,
@@ -837,8 +838,11 @@ html:not(.dark-mode) .deck-bottom-row #viewThemeBtn:hover {
   transition: transform 0.2s ease-in-out;
 }
 
+/* POPRAWKA: Ujednolicenie hover na wszystkich suwakach */
 .slider-control input[type="range"]:hover::-webkit-slider-thumb,
-.slider-control input[type="range"]:hover::-moz-range-thumb {
+.slider-control input[type="range"]:hover::-moz-range-thumb,
+.page-slider:hover::-webkit-slider-thumb,
+.page-slider:hover::-moz-range-thumb {
   transform: scale(1.2);
 }
 
@@ -1550,8 +1554,8 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   transform: scale(1.1);
   box-shadow: 0 0 20px var(--c-shadow-red-soft);
   background-color: var(--c-red-primary); /* <-- DODANA LINIA */
-  color: var(--c-text-on-red);            /* <-- DODANA LINIA */
-  border-color: var(--c-red-primary);     /* <-- DODANA LINIA */
+  color: var(--c-text-on-red); /* <-- DODANA LINIA */
+  border-color: var(--c-red-primary); /* <-- DODANA LINIA */
 }
 .pagination-controls button:disabled {
   cursor: not-allowed;
@@ -1580,7 +1584,6 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   color: var(--c-red-primary);
   transform: scale(1.1);
 }
-
 
 .pagination-controls #paginationCarouselBtn:hover {
   opacity: 0.8;
@@ -2421,13 +2424,13 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     max-width: calc(100% - 45px);
   }
 
- .glass-status {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px 15px;
-  padding: 12px 20px;
-  justify-items: center;
-}
+  .glass-status {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 15px;
+    padding: 12px 20px;
+    justify-items: center;
+  }
 
   #firstPageBtn,
   #lastPageBtn {
