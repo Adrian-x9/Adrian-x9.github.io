@@ -2319,24 +2319,9 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 }
 
 @media (max-width: 768px) {
-  .backdrop {
-    justify-content: flex-end;
-  }
 
   #lightbox-controls {
     flex-direction: column;
-  }
-
-  #play-caption {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    margin-bottom: 15px;
-  }
-
-  #play-guide-container {
-    height: auto;
   }
 
   .glass-status {
