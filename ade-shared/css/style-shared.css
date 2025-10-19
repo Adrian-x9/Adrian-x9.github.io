@@ -2440,6 +2440,13 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     margin-left: 10px;
     margin-right: 10px;
   }
+
+  /* POPRAWKA: Zmniejszenie odstępów dla okładek na mobile */
+  .guide-page {
+    padding-left: 10px;
+    padding-right: 10px;
+    gap: 10px;
+  }
 }
 
 /* ================================================================
