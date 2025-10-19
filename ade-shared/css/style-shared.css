@@ -2319,7 +2319,6 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 }
 
 @media (max-width: 768px) {
-
   #lightbox-controls {
     flex-direction: column;
   }
@@ -2431,6 +2430,10 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     padding-left: 10px;
     padding-right: 10px;
     gap: 10px;
+  }
+
+  #play-caption {
+    top: 130px; /* Zwiększamy odstęp od góry */
   }
 }
 

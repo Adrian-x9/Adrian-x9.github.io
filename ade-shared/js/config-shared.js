@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.14", // carousel refactor / zajebista karuzela hehe
+  version: "v2.4.15", // Mobile view fixes / poprawki dla trybu mobilnego
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-19", // Last update date YYYY-MM-DD
 
