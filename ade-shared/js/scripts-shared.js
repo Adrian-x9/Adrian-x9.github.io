@@ -1108,6 +1108,8 @@ function toggleMinimizeView() {
   const minimizeBtn = document.getElementById("minimizeBtn");
   isMinimized = !isMinimized;
 
+  document.body.classList.toggle("interface-minimized", isMinimized);
+
   minimizeBtn.classList.toggle("minimized", isMinimized);
   minimizeBtn.title = isMinimized ? lang.maximizeBtn : lang.minimizeBtn;
   const icon = minimizeBtn.querySelector("i");

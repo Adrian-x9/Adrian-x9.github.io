@@ -202,6 +202,12 @@ body {
   transition: background-color 0.5s ease, color 0.3s ease, padding 0.5s ease;
 }
 
+/* FIX: Umożliwia zwolnienie miejsca po ukryciu paneli */
+body.interface-minimized {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
 .control-panel,
 .guide-list-wrapper,
 .pagination {
@@ -1480,7 +1486,6 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
 }
 
 .pagination.visible {
-  opacity: 1;
   transform: translateY(0);
   max-height: 200px;
   margin-top: 25px;
@@ -1654,7 +1659,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   padding: 20px;
   font-size: 0.9em;
   color: var(--c-text-secondary);
-  
+
   /* POPRAWKA: Usunięto 'opacity' z listy, aby naprawić konflikt z animacją wejścia */
   transition: max-height 0.5s, padding 0.5s, margin 0.5s, border-width 0.5s;
 
