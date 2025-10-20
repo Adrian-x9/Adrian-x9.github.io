@@ -1,0 +1,129 @@
+[33mc13426f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{0}: reset: moving to HEAD~2
+[33m320bdea[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{1}: commit: fixes
+[33m0fd99c0[m HEAD@{2}: commit: test fixes
+[33mc13426f[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m HEAD@{3}: commit: temp fix fot tests
+[33m9ba2581[m HEAD@{4}: commit: fixes
+[33mcab4520[m HEAD@{5}: commit: fixes
+[33mda706fd[m HEAD@{6}: commit: v2.4.18 Remake of all views / Przebudowa wszystkich widoków
+[33m684b6af[m HEAD@{7}: commit: fixes
+[33m4e65a85[m HEAD@{8}: commit: fixes
+[33m82b211e[m HEAD@{9}: commit: v2.4.17 Patches for views / łatki dla widoków
+[33m4a0c738[m HEAD@{10}: commit: fixes for view-7
+[33mbe2cbf1[m HEAD@{11}: commit: fixes
+[33m5402e23[m HEAD@{12}: commit: lots of changes for tests
+[33mfdc1a46[m HEAD@{13}: commit: temp fixes - testing
+[33m39f7880[m HEAD@{14}: commit: fixes
+[33mca6101d[m HEAD@{15}: commit: fixes
+[33m6cab858[m HEAD@{16}: commit: Polish gallery updates — added lots of photos
+[33mdce7964[m HEAD@{17}: commit: Polish gallery update / aktualizacja galerii polskiej
+[33m138a661[m HEAD@{18}: commit: fixes
+[33mc24c64a[m HEAD@{19}: commit: v2.4.15 Mobile view fixes / poprawki dla trybu mobilnego
+[33m48d03ce[m HEAD@{20}: commit: fixes
+[33m1d2c08e[m HEAD@{21}: commit: fixes, fixes, fixes
+[33m22cf854[m HEAD@{22}: commit: fixes
+[33m5a00d01[m HEAD@{23}: commit: fixes
+[33mb4d3774[m HEAD@{24}: commit: fixes
+[33m0f45b1f[m HEAD@{25}: commit: v2.4.14 fixes...
+[33m12d41b1[m HEAD@{26}: commit: fixes
+[33m3c64a41[m HEAD@{27}: commit: animation fixes
+[33m9acace9[m HEAD@{28}: commit: fixes
+[33m904a639[m HEAD@{29}: commit: v2.4.13 Carousel refactor / zajebista karuzela hehe
+[33m24a4e91[m HEAD@{30}: commit: fixes
+[33m4e3aff9[m HEAD@{31}: commit: v2.4.12 Lots of visual, CSS, and feature tweaks — Sunday morning. I'm a bit nervous ;) / Sorry, nie tłumaczę tego na polski :P
+[33m3c1867c[m HEAD@{32}: commit: temp changes for css refactor, refactor done, but problems needs to be fixes...
+[33m072a452[m HEAD@{33}: commit: temporary fixes for testing
+[33m69ec59d[m HEAD@{34}: commit: v2.4.11 CSS refactor / refaktoryzacja CSS
+[33mfbfef7f[m HEAD@{35}: commit: fixes
+[33md126668[m HEAD@{36}: commit: v2.4.10 Fixes / Poprawki
+[33mee34a76[m HEAD@{37}: commit: v2.4.9 Lot of fixes for views 1..9 / Mnóstwo poprawek dla widoków 1..9
+[33m33c0b01[m HEAD@{38}: commit: Views fixes
+[33me32d0d9[m HEAD@{39}: commit: Masonry views - 3, 6, 9 - fixes
+[33me57ca8a[m HEAD@{40}: commit: fixes
+[33mef758d0[m HEAD@{41}: commit: fixes
+[33maa15251[m HEAD@{42}: commit: fixes
+[33mc9d6751[m HEAD@{43}: commit: views patches
+[33mfa087eb[m HEAD@{44}: commit: Galleries updates, tags added, translations updated
+[33m09f1e0b[m HEAD@{45}: commit: fixes
+[33m7cc7800[m HEAD@{46}: commit: fixes
+[33m7dcf186[m HEAD@{47}: commit: fixes
+[33m5fae487[m HEAD@{48}: commit: fixes
+[33m180371a[m HEAD@{49}: commit: fixes
+[33mf853012[m HEAD@{50}: commit: fixes
+[33m056ecb5[m HEAD@{51}: commit: v2.4.7 // Added a mushrooms gallery / Dodano galerię grzybów
+[33m336c3a4[m HEAD@{52}: commit: v2.4.6 Descriptions for galleries / Opisy dla galerii
+[33m6d1de45[m HEAD@{53}: commit: Spain gallery update
+[33mc8eabbc[m HEAD@{54}: commit: v2.4.5 Paths for subsystems fix / Poprawka dla ścieżek dla podsystemów
+[33m8e66b99[m HEAD@{55}: commit: Temporary fix before v2.4.5
+[33m8393f50[m HEAD@{56}: commit: v2.4.4 Thumbnail generation, translation update / Generacja miniatur, aktualizacja tłumaczeń
+[33m2512eff[m HEAD@{57}: commit: fixes
+[33m3a189a1[m HEAD@{58}: commit: v2.4.3 Fixes for mobile mode / Poprawki dla trybu mobilnego
+[33m8c18224[m HEAD@{59}: commit: v2.4.2 Mobile view fixes / Poprawki trybu mobilnego
+[33m6d5c3a4[m HEAD@{60}: commit: v2.4.1 // Added German for tests / Dodano język niemiecki dla testów
+[33m9daf853[m HEAD@{61}: commit: v2.4.0 Translation engine updated / Aktualizacja silnika tłumaczeń
+[33me4e7842[m HEAD@{62}: commit: fixes
+[33m1b068ad[m HEAD@{63}: commit: v2.3.3 Adjusting the file and folder structure for Git compatibility / Dostosowanie struktury plików i folderów do GITa
+[33m7d31abf[m HEAD@{64}: commit: directory structure changes, files updates for subsystems
+[33mbce436c[m HEAD@{65}: commit: fixes
+[33m958e8b6[m HEAD@{66}: commit: small fix
+[33m09ea699[m HEAD@{67}: commit: dot files replaced by _ for GIT Compatibility
+[33mfeb8c94[m HEAD@{68}: commit: small fixes
+[33m7a0811e[m HEAD@{69}: commit: v2.3.1 Bug fixes
+[33mddaf30d[m HEAD@{70}: commit: v2.3.0 /// Folders structure and names rebuild // Przebudowanie struktury folderów i plików
+[33m6c7e970[m HEAD@{71}: commit: v2.3.0 /// Folders structure and names rebuild // Przebudowanie struktury folderów i plików
+[33mee5ef49[m HEAD@{72}: commit: v2.2.2 Bug fix release
+[33m9c2e20a[m HEAD@{73}: commit: 2.2.1 Bug fix release
+[33me8941e6[m HEAD@{74}: commit: small fixes
+[33mb2f42ca[m HEAD@{75}: commit: small fixes
+[33m676a685[m HEAD@{76}: commit: small fixes
+[33md9b1694[m HEAD@{77}: commit: v2.2.0 Added screensaver and auto stopwatch modes
+[33madb0d71[m HEAD@{78}: commit: feat: screensaver + session persistence <60s
+[33mea52118[m HEAD@{79}: commit: fixes
+[33m179869a[m HEAD@{80}: commit: view fixes
+[33m8c87ff0[m HEAD@{81}: commit: fixes
+[33m04f7e2b[m HEAD@{82}: commit: v2.1.5 Lot of fixes and improvements
+[33m79a2b77[m HEAD@{83}: commit: fixes
+[33me8da250[m HEAD@{84}: commit: small fixes
+[33m32cb8f0[m HEAD@{85}: commit: small fix
+[33mf02be93[m HEAD@{86}: commit: Lang carousel ordered West - East
+[33mc70789a[m HEAD@{87}: commit: mobile view fixes
+[33m44d562a[m HEAD@{88}: commit: fixes
+[33m93ef157[m HEAD@{89}: commit: v2.1.4 Mobile view version
+[33maf8939b[m HEAD@{90}: commit: curtain fixes
+[33mb9bbd3a[m HEAD@{91}: commit: Fixes for main view panel
+[33m3eb38a3[m HEAD@{92}: commit: fixes
+[33m7d99f31[m HEAD@{93}: commit: small fixes
+[33m19bca59[m HEAD@{94}: commit: fixed main panel
+[33ma1a811f[m HEAD@{95}: commit: v2.1.3 Bug fix release
+[33m85b85ae[m HEAD@{96}: commit: small padding fix
+[33m52fedff[m HEAD@{97}: commit: View 4 fixes
+[33m4825a04[m HEAD@{98}: commit: v2.1.2 Test - cascade systems integration
+[33ma857263[m HEAD@{99}: commit: fixes
+[33m1cadf2a[m HEAD@{100}: commit: fixes
+[33mcef00a2[m HEAD@{101}: commit: v2.1.0 Status panel with text and icons - remake + logic added, CSS improvements
+[33mf340815[m HEAD@{102}: commit: fixes
+[33m98b4b0a[m HEAD@{103}: commit: new status bar big fix
+[33m604494b[m HEAD@{104}: commit: fixes
+[33mab3f9de[m HEAD@{105}: commit: small status text bar fixes
+[33m3a54f8f[m HEAD@{106}: commit: maximalize / globus icon new rotator added
+[33m013cccf[m HEAD@{107}: commit: status bar -> language carousel status iscon and two letters id
+[33m679a485[m HEAD@{108}: commit: text status bar fixes
+[33mfb6d5ee[m HEAD@{109}: commit: language carousel fix
+[33m04277cc[m HEAD@{110}: commit: fixes
+[33mdb550e9[m HEAD@{111}: commit: views fixes
+[33m7a8714b[m HEAD@{112}: commit: fixes
+[33m410a950[m HEAD@{113}: commit: style fixes
+[33ma0be732[m HEAD@{114}: commit: view #5 tuning
+[33md8049fa[m HEAD@{115}: commit: view #4 small fix
+[33m3deb360[m HEAD@{116}: commit: all views fixed, critical fix!
+[33m50578b7[m HEAD@{117}: commit: view fixes
+[33m3000210[m HEAD@{118}: commit: fixes for views, last view remain
+[33m27ed84d[m HEAD@{119}: commit: patches
+[33mc7fe916[m HEAD@{120}: commit: font size in view fixes
+[33m3e4996d[m HEAD@{121}: commit: fixes
+[33mfcec541[m HEAD@{122}: commit: fixes
+[33m0bdbada[m HEAD@{123}: commit: fixes in views
+[33m71c9e3a[m HEAD@{124}: commit: fixes
+[33mc12ad02[m HEAD@{125}: commit: fixes
+[33mc2a5ae9[m HEAD@{126}: commit: fixes
+[33m88bb55b[m HEAD@{127}: commit (merge): dark mode fix
+[33m185bcc8[m HEAD@{128}: commit: fixes
