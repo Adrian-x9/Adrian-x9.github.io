@@ -1072,13 +1072,16 @@ html.dark-mode .guide-info {
 .guide-list.view-image-only .guide {
   padding: 0;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  display: grid; /* ZMIANA: Przejście na stabilny Grid */
+  grid-template-rows: 1fr auto; /* ZMIANA: Obrazek (1fr) wypełnia całą wolną przestrzeń, tekst (auto) zajmuje tyle, ile potrzebuje */
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
     rotateY(var(--rotate-y, 0deg));
   transition: transform 0.1s ease-out;
   border-radius: 20px;
+  aspect-ratio: 4 / 3;
 }
 
 .guide-list.view-image-only .guide::before {
@@ -1104,7 +1107,6 @@ html.dark-mode .guide-info {
 
 .guide-list.view-image-only .guide-cover-wrapper {
   height: auto;
-  aspect-ratio: 1 / 1;
   overflow: hidden;
   position: relative;
 }
@@ -1113,7 +1115,7 @@ html.dark-mode .guide-info {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover; /* ZAPEWNIA idealne wypełnienie i docięcie */
   transition: transform 0.4s ease-out;
   border-radius: 0;
   box-shadow: none;
