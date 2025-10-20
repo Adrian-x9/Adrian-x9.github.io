@@ -1788,6 +1788,25 @@ function createGuideHtml(guide) {
             <a href="${hrefAction}" onclick="${onclickAction}" class="guide-title">${titleText}</a>
         </div>
     `;
+  } else if (currentViewMode === "view-8") {
+    // Specjalna, uproszczona struktura dla Widoku #8
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+
+    const coverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const description = guide.linkData.description || ""; // Pobieramy opis, tak jak w widoku #3
+
+    // Zwracamy nową strukturę: cały kafelek jest linkiem, a w środku jest overlay
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="view-8-link">
+            ${titleHtml}
+            ${coverImgHtml}
+            <div class="view-8-overlay">
+                <div class="view-8-description">${description}</div>
+            </div>
+        </a>
+    `;
   } else {
     // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
     const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
