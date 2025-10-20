@@ -1,0 +1,35 @@
+/* Plik: ./ade-subsystem/styles-subsystem.css */
+
+/* --- ZIELONY MOTYW - TRYB JASNY --- */
+:root {
+  /* Podstawowy, mocny zielony zamiast czerwonego */
+  --c-red-primary: #1a8a3a;
+  
+  /* Jaśniejszy, żywszy zielony jako akcent */
+  --c-red-accent: #28a745; 
+  
+  /* Cienie oparte na nowym kolorze zielonym */
+  --c-shadow-red-soft: rgba(26, 138, 58, 0.2);
+  --c-shadow-red-medium: rgba(26, 138, 58, 0.3);
+  --c-shadow-red-strong: rgba(26, 138, 58, 0.5);
+
+  /* (Opcjonalnie) Możesz też dostosować kolor obramowania, jeśli chcesz */
+  --c-border-primary: #126329;
+}
+
+/* --- ZIELONY MOTYW - TRYB CIEMNY --- */
+html.dark-mode {
+  /* Jaśniejszy, bardziej widoczny zielony na ciemnym tle */
+  --c-red-primary: #28a745;
+  
+  /* Bardzo jasny zielony jako akcent */
+  --c-red-accent: #87e49c;
+
+  /* Cienie dla trybu ciemnego */
+  --c-shadow-red-soft: rgba(40, 167, 69, 0.3);
+  --c-shadow-red-medium: rgba(40, 167, 69, 0.4);
+  --c-shadow-red-strong: rgba(40, 167, 69, 0.6);
+
+  /* (Opcjonalnie) Ciemniejszy zielony dla obramowania w trybie ciemnym */
+  --c-border-primary: #1a8a3a;
+}

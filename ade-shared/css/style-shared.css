@@ -2904,3 +2904,11 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     transform: translateY(0);
   }
 }
+
+/* Poprawka płynnego pojawiania się zegara w widgecie */
+.slideshow-status-widget #widget-clock span:not(.is-visible) {
+  opacity: 0;
+}
+.slideshow-status-widget #widget-clock span {
+  transition: opacity 0.4s ease;
+}

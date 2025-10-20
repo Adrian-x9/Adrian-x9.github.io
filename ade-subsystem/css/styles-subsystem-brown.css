@@ -1,0 +1,36 @@
+/* Plik: ./ade-subsystem/styles-subsystem.css */
+/* --- BRĄZOWY MOTYW - WERSJA "KAWA" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  /* Podstawowy, głęboki kolor kawy */
+  --c-red-primary: #795548;
+  
+  /* Jaśniejszy, mleczny brąz jako akcent */
+  --c-red-accent: #a1887f;
+  
+  /* Cienie oparte na nowym kolorze brązowym */
+  --c-shadow-red-soft: rgba(121, 85, 72, 0.2);
+  --c-shadow-red-medium: rgba(121, 85, 72, 0.3);
+  --c-shadow-red-strong: rgba(121, 85, 72, 0.5);
+
+  /* Ciemniejszy odcień espresso dla obramowań */
+  --c-border-primary: #5d4037;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  /* Jaśniejszy brąz, aby był dobrze widoczny na ciemnym tle */
+  --c-red-primary: #a1887f;
+  
+  /* Bardzo jasny, kremowy kolor jako akcent */
+  --c-red-accent: #d7ccc8;
+
+  /* Cienie dla trybu ciemnego */
+  --c-shadow-red-soft: rgba(161, 136, 127, 0.3);
+  --c-shadow-red-medium: rgba(161, 136, 127, 0.4);
+  --c-shadow-red-strong: rgba(161, 136, 127, 0.6);
+
+  /* Ciemniejszy brąz dla obramowania w trybie ciemnym */
+  --c-border-primary: #8d6e63;
+}

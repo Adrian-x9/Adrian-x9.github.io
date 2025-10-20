@@ -352,6 +352,12 @@ function updateTimers() {
   if (statusWidget && statusWidget.classList.contains("visible")) {
     document.querySelector("#widget-clock span").textContent =
       now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+    const clockSpan = document.querySelector("#widget-clock span");
+    clockSpan.textContent = now.toLocaleTimeString("pl-PL", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    clockSpan.classList.add("is-visible"); // ✅ DODAJ TĘ LINIĘ
     const widgetIdle = document.querySelector("#widget-idle");
     widgetIdle.querySelector("span").textContent = formattedIdle;
 
@@ -2884,7 +2890,7 @@ function applyMasonryLayout(pageNum = 1) {
   if (!guidePage) return;
 
   const items = Array.from(guidePage.children);
-  
+
   // 1. Zabezpieczenie jest teraz głównym warunkiem w funkcji
   if (items.length === 0) {
     // Jeśli nie ma elementów, upewnij się, że kontenery mają zerową wysokość
@@ -2898,16 +2904,29 @@ function applyMasonryLayout(pageNum = 1) {
     if (itemWidth === 0) return; // Dodatkowe zabezpieczenie
 
     const viewportWidth = guideList.clientWidth;
-    const numColumns = Math.max(
+
+    // Krok 1: Oblicz, ile maksymalnie kolumn zmieściłoby się na ekranie (bez zmian)
+    const maxColumns = Math.max(
       1,
       Math.floor((viewportWidth + gap) / (itemWidth + gap))
     );
-    const gridWidth = numColumns * itemWidth + (numColumns - 1) * gap;
+
+    // --- NOWA, KLUCZOWA LOGIKA ---
+    // Krok 2: Ustal, ile kolumn FAKTYCZNIE użyjemy. Będzie to mniejsza z dwóch wartości:
+    // maksymalna liczba kolumn LUB liczba dostępnych kafelków.
+    const actualNumColumns = Math.min(maxColumns, items.length);
+
+    // Krok 3: Oblicz szerokość siatki na podstawie FAKTYCZNEJ liczby kolumn.
+    const gridWidth =
+      actualNumColumns * itemWidth + (actualNumColumns - 1) * gap;
+
+    // Krok 4: Wyśrodkuj tę faktyczną siatkę.
     const remainingSpace = viewportWidth - gridWidth;
     const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
+    // --- KONIEC NOWEJ LOGIKI ---
 
     guidePage.style.position = "relative";
-    const columnHeights = Array(numColumns).fill(0);
+    const columnHeights = Array(maxColumns).fill(0);
 
     items.forEach((item) => {
       const minHeight = Math.min(...columnHeights);
@@ -3428,6 +3447,8 @@ function checkScreenSaverState() {
 /**
  * Uruchamia pierwszą fazę wygaszacza - ukrywa statyczne elementy UI.
  */
+// Plik: scripts-shared.js
+
 function enterScreenSaverStage1() {
   console.log("Screensaver: Faza 1 - ukrywanie UI.");
   screenSaverState = "stage1";
@@ -3439,8 +3460,8 @@ function enterScreenSaverStage1() {
   if (isSlideshowActive) {
     const controlsToHideSelector = [
       "#play-caption",
-      "#playCloseBtn", // <-- DODANY BRAKUJĄCY PRZYCISK
-      "#fullscreenBtnLightbox", // <-- DODANY BRAKUJĄCY PRZYCISK
+      "#playCloseBtn",
+      "#fullscreenBtnLightbox",
       "#lightbox-minimizeBtn",
     ];
 

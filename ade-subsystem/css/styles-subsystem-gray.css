@@ -1,0 +1,36 @@
+/* Plik: ./ade-subsystem/styles-subsystem.css */
+/* --- SZARY/NIEBIESKI MOTYW - WERSJA "TECH/NEUTRAL" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  /* Elegancki, stalowy niebieski zamiast czerwonego */
+  --c-red-primary: #4a6a8a;
+  
+  /* Jaśniejszy, błękitny akcent */
+  --c-red-accent: #6c9ac3;
+  
+  /* Cienie oparte na nowym kolorze */
+  --c-shadow-red-soft: rgba(74, 106, 138, 0.2);
+  --c-shadow-red-medium: rgba(74, 106, 138, 0.3);
+  --c-shadow-red-strong: rgba(74, 106, 138, 0.5);
+
+  /* Ciemniejszy odcień dla obramowań */
+  --c-border-primary: #3b556e;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  /* Jaśniejszy, bardziej "cyfrowy" niebieski na ciemnym tle */
+  --c-red-primary: #6c9ac3;
+  
+  /* Bardzo jasny, niemal biały błękit jako akcent */
+  --c-red-accent: #c2dcf2;
+
+  /* Cienie dla trybu ciemnego */
+  --c-shadow-red-soft: rgba(108, 154, 195, 0.3);
+  --c-shadow-red-medium: rgba(108, 154, 195, 0.4);
+  --c-shadow-red-strong: rgba(108, 154, 195, 0.6);
+
+  /* Ciemniejszy niebieski dla obramowania w trybie ciemnym */
+  --c-border-primary: #4a6a8a;
+}
