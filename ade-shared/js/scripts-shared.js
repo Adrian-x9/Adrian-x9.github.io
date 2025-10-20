@@ -2875,6 +2875,8 @@ function initialize3dHoverEffect() {
   guideList.addEventListener("mousemove", onMouseMove, true);
 }
 
+// Plik: scripts-shared.js
+
 function applyMasonryLayout(pageNum = 1) {
   const guidePage = guideList.querySelector(
     `.guide-page[data-page-number="${pageNum}"]`
@@ -2882,15 +2884,18 @@ function applyMasonryLayout(pageNum = 1) {
   if (!guidePage) return;
 
   const items = Array.from(guidePage.children);
+  
+  // 1. Zabezpieczenie jest teraz głównym warunkiem w funkcji
   if (items.length === 0) {
+    // Jeśli nie ma elementów, upewnij się, że kontenery mają zerową wysokość
     if (currentPage === pageNum) updateWrapperHeightForPage(pageNum);
-    return;
+    return; // Zakończ działanie funkcji
   }
 
   const performLayout = () => {
     const gap = 20;
     const itemWidth = items[0].offsetWidth;
-    if (itemWidth === 0) return;
+    if (itemWidth === 0) return; // Dodatkowe zabezpieczenie
 
     const viewportWidth = guideList.clientWidth;
     const numColumns = Math.max(
@@ -2901,14 +2906,6 @@ function applyMasonryLayout(pageNum = 1) {
     const remainingSpace = viewportWidth - gridWidth;
     const sidePadding = remainingSpace > 0 ? remainingSpace / 2 : 0;
 
-    // Ustawiamy sztywną szerokość kontenera siatki i centrujemy go marginesem
-    // guidePage.style.width = `${gridWidth}px`;
-    // guidePage.style.margin = "0 auto";
-
-    // Resetujemy padding, aby uniknąć konfliktów
-    guidePage.style.paddingLeft = "0px";
-    guidePage.style.paddingRight = "0px";
-
     guidePage.style.position = "relative";
     const columnHeights = Array(numColumns).fill(0);
 
@@ -2918,7 +2915,6 @@ function applyMasonryLayout(pageNum = 1) {
 
       item.style.position = "absolute";
       item.style.top = `${minHeight}px`;
-      // OSTATECZNA POPRAWKA: Prawidłowa kalkulacja pozycji 'left' bez podwójnego przesunięcia
       item.style.left = `${sidePadding + columnIndex * (itemWidth + gap)}px`;
 
       columnHeights[columnIndex] += item.offsetHeight + gap;
@@ -2929,6 +2925,8 @@ function applyMasonryLayout(pageNum = 1) {
     updateWrapperHeightForPage(pageNum);
   };
 
+  // ... (reszta funkcji pozostaje bez zmian) ...
+  // Upewnij się, że reszta kodu z ładowaniem obrazków jest na miejscu
   const images = Array.from(
     guidePage.querySelectorAll(
       ".guide-cover, .guide-cover-elegant, .guide-cover-grid"
