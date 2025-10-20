@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.17", // Patches for views / łatki dla widoków
+  version: "v2.4.18", // Remake of all views / Przebudowa wszystkich widoków
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-20", // Last update date YYYY-MM-DD
 

@@ -1788,9 +1788,10 @@ function createGuideHtml(guide) {
             <a href="${hrefAction}" onclick="${onclickAction}" class="guide-title">${titleText}</a>
         </div>
     `;
-  } else if (currentViewMode === 'view-8') {
+  } else if (currentViewMode === "view-8") {
     // === POCZĄTEK POPRAWKI: Przywrócony i poprawiony blok dla Widoku #8 ===
-    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
 
     const coverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
@@ -1816,10 +1817,16 @@ function createGuideHtml(guide) {
     const allDetailsHtml = `
         <div class="guide-info-details">
             <i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br>
-            <i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br>
-            <i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB
+            <i class="fas fa-file-alt"></i> ${
+              lang.guideInfoFormat
+            }: ${guide.format.toUpperCase()}<br>
+            <i class="fas fa-database"></i> ${lang.guideInfoSize}: ${
+      guide.sizeMB
+    } MB
         </div>
-        <div class="guide-info-description">${guide.linkData.description || ""}</div>
+        <div class="guide-info-description">${
+          guide.linkData.description || ""
+        }</div>
     `;
 
     return `
@@ -2833,7 +2840,9 @@ function initialize3dHoverEffect() {
   guideList.addEventListener(
     "mouseenter",
     (e) => {
-      const guide = e.target.closest(".guide-list.view-7 .guide");
+      const guide = e.target.closest(
+        ".guide-list.view-7 .guide, .guide-list.view-5 .guide"
+      );
       if (guide) {
         guide.style.transition = "none";
         currentGuide = guide;
@@ -2845,7 +2854,9 @@ function initialize3dHoverEffect() {
   guideList.addEventListener(
     "mouseleave",
     (e) => {
-      const guideTarget = e.target.closest(".guide-list.view-7 .guide");
+      const guideTarget = e.target.closest(
+        ".guide-list.view-7 .guide, .guide-list.view-5 .guide"
+      );
       if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
         cancelAnimationFrame(animationFrameId);
         currentGuide.style.transition = "transform 0.4s ease-out";
