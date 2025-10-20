@@ -884,7 +884,7 @@
         let itemsPerRow = 0;
         
         let animationState = 0; // 0: ON, 1: OFF, 2: ON+VIDEO
-        let previewState = 0; // 0: Text+Img, 1: Text-Only, 2: Img-Only
+        let previewState = 0; // 0: Text+Img, 1: view-1, 2: Img-Only
         
         const fileInput = document.getElementById('fileInput');
         const fileInputLabel = document.getElementById('fileInputLabel');
@@ -1469,7 +1469,7 @@
                     previewBtn.classList.remove("inactive", "state-red");
                     guideList.classList.remove('hide-covers', 'only-covers');
                     break;
-                case 1: // Text-Only
+                case 1: // view-1
                     previewBtn.innerHTML = `<i class="fas fa-eye-slash"></i>&nbsp;Tylko tekst`;
                     previewBtn.classList.add("inactive");
                     previewBtn.classList.remove("state-red");

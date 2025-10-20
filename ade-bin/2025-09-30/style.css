@@ -745,7 +745,7 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   transform: scale(1);
 }
 
-.guide-list.view-text-only .guide-cover,
+.guide-list.view-1 .guide-cover,
 .guide-list.hide-covers .guide-cover {
   opacity: 0;
   max-height: 0;
@@ -758,11 +758,11 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   overflow: hidden;
 }
 
-.guide-list.view-text-only .guide {
+.guide-list.view-1 .guide {
   padding-top: 10px;
 }
 
-.guide-list.view-text-only .guide .guide-title {
+.guide-list.view-1 .guide .guide-title {
   margin-top: 0;
 }
 
@@ -808,12 +808,12 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   overflow: hidden;
 }
 
-/* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
+/* --- WIDOK ELEGANCKI (view-7) - OSTATNIE POPRAWKI --- */
 
 /* Ustawienia ogólne dla kafelka w tym trybie */
 /* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
 
-.guide-list.view-image-only .guide {
+.guide-list.view-7 .guide {
   padding: 0;
   overflow: hidden;
   display: flex;
@@ -828,7 +828,7 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
 }
 
 /* Poświata dla efektu 3D */
-.guide-list.view-image-only .guide::before {
+.guide-list.view-7 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -846,11 +846,11 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   pointer-events: none;
 }
 
-.guide-list.view-image-only .guide:hover::before {
+.guide-list.view-7 .guide:hover::before {
   opacity: 1;
 }
 
-/* .guide-list.view-image-only .guide-cover-wrapper {
+/* .guide-list.view-7 .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
@@ -862,19 +862,19 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
         } */
 
 /* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
-.guide-list.view-image-only .guide-cover-wrapper {
+.guide-list.view-7 .guide-cover-wrapper {
   height: 65%;
   overflow: hidden;
   position: relative;
 }
 
 /* Usuwamy niepotrzebne tło dla trybu ciemnego */
-body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
+body.dark-mode .guide-list.view-7 .guide-cover-wrapper {
   background-color: transparent;
 }
 
 /* Styl dla linku-nakładki w widoku eleganckim */
-.guide-list.view-image-only .guide-cover-wrapper .cover-link {
+.guide-list.view-7 .guide-cover-wrapper .cover-link {
   position: absolute;
   top: 0;
   left: 0;
@@ -907,7 +907,7 @@ body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
 }
 
 /* Kontener na tekst pod obrazkiem */
-.guide-list.view-image-only .guide-text-content {
+.guide-list.view-7 .guide-text-content {
   height: 35%;
   padding: 12px 15px;
   box-sizing: border-box;
@@ -917,16 +917,16 @@ body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
   border-top: 1px solid rgba(128, 128, 128, 0.2);
 }
 
-body.dark-mode .guide-list.view-image-only .guide-text-content {
+body.dark-mode .guide-list.view-7 .guide-text-content {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.guide-list.view-image-only .guide-info {
+.guide-list.view-7 .guide-info {
   display: none;
 }
 
-.guide-list.view-image-only .guide-title {
+.guide-list.view-7 .guide-title {
   font-size: 1.05em;
   font-weight: 600;
   margin: 0;
@@ -938,38 +938,38 @@ body.dark-mode .guide-list.view-image-only .guide-text-content {
   overflow: hidden;
 }
 
-.guide-list.view-image-only .guide-title a {
+.guide-list.view-7 .guide-title a {
   text-decoration: none;
 }
 
-body:not(.dark-mode) .guide-list.view-image-only .guide-title a {
+body:not(.dark-mode) .guide-list.view-7 .guide-title a {
   color: #333;
 }
 
-body.dark-mode .guide-list.view-image-only .guide-title a {
+body.dark-mode .guide-list.view-7 .guide-title a {
   color: #eee;
 }
 
-.guide-list.view-image-only .guide-action-link {
+.guide-list.view-7 .guide-action-link {
   text-align: right;
   font-size: 0.85em;
   font-weight: bold;
 }
 
-.guide-list.view-image-only .guide-action-link a {
+.guide-list.view-7 .guide-action-link a {
   text-decoration: none;
   opacity: 0.7;
   transition: opacity 0.2s ease;
 }
 
-.guide-list.view-image-only .guide-action-link a:hover {
+.guide-list.view-7 .guide-action-link a:hover {
   opacity: 1;
 }
 
 /* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA --- */
 
 /* 1. Kontener ".guide" staje się całkowicie przezroczysty i niewidoczny */
-.guide-list.view-grid .guide {
+.guide-list.view-5 .guide {
   padding: 0;
   display: flex;
   justify-content: center;
@@ -1001,7 +1001,7 @@ body.dark-mode .guide-cover-grid {
 }
 
 /* 3. Nakładka z tekstem ma płynne przejście i zaokrąglone rogi pasujące do zdjęcia */
-.guide-list.view-grid .grid-overlay {
+.guide-list.view-5 .grid-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -1034,11 +1034,11 @@ body.dark-mode .guide-cover-grid {
 }
 
 /* 5. Efekt HOVER działa teraz na całym obszarze kafelka, ale wizualnie dotyczy zdjęcia */
-.guide-list.view-grid .guide:hover .grid-overlay {
+.guide-list.view-5 .guide:hover .grid-overlay {
   opacity: 1;
 }
 
-.guide-list.view-grid .guide:hover .guide-cover-grid {
+.guide-list.view-5 .guide:hover .guide-cover-grid {
   transform: scale(1.03);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
@@ -1047,14 +1047,14 @@ body.dark-mode .guide-cover-grid {
 
 /* --- WIDOK MASONRY v1.0 - START --- */
 
-.guide-list.view-masonry .guide-page {
+.guide-list.view-9 .guide-page {
   display: block;
   /* Wyłączamy grid */
   position: relative;
   /* Niezbędne do pozycjonowania kafelków */
 }
 
-.guide-list.view-masonry .guide {
+.guide-list.view-9 .guide {
   /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
   position: absolute;
   transition: top 0.4s ease-out, left 0.4s ease-out;
@@ -2271,7 +2271,7 @@ body.dark-mode .display-panel button#viewContentBtn:hover {
 }
 
 /* Poprawka koloru maski dla trybu jasnego w widoku siatki */
-body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+body:not(.dark-mode) .guide-list.view-5 .grid-overlay {
   background: rgba(255, 255, 255, 0.7);
   /* Biała, półprzezroczysta maska */
 }
@@ -2285,7 +2285,7 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
 }
 
 /* Poprawka przyklejająca przycisk "Otwórz" do dołu w widoku pełnym i tekstowym */
-.guide:not(.view-image-only):not(.view-grid):not(.view-masonry)
+.guide:not(.view-7):not(.view-5):not(.view-9)
   .guide-content-bottom
   > a:not(.cover-link) {
   margin-top: auto;
@@ -2428,8 +2428,8 @@ body.dark-mode #statusBar span {
 }
 
 /* --- START: Ostateczna poprawka wyrównania OBRAZKÓW dla widoku nr 2 --- */
-.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
-    .view-masonry
+.guide-list:not(.view-1):not(.view-7):not(.view-5):not(
+    .view-9
   )
   .guide
   .guide-info-container {
@@ -2445,8 +2445,8 @@ body.dark-mode #statusBar span {
 /* --- START: Ostateczna poprawka wyrównania dla WIDOKU NR 2 --- */
 
 /* Ten selektor działa TYLKO w widoku nr 2 (domyślnym) */
-.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
-    .view-masonry
+.guide-list:not(.view-1):not(.view-7):not(.view-5):not(
+    .view-9
   )
   .guide-info-container {
   margin-bottom: auto;

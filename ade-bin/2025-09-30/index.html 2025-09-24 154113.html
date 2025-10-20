@@ -729,7 +729,7 @@
             transform: scale(1);
         }
 
-        .guide-list.view-text-only .guide-cover,
+        .guide-list.view-1 .guide-cover,
         .guide-list.hide-covers .guide-cover {
             opacity: 0;
             max-height: 0;
@@ -742,11 +742,11 @@
             overflow: hidden;
         }
 
-        .guide-list.view-text-only .guide {
+        .guide-list.view-1 .guide {
             padding-top: 10px;
         }
 
-        .guide-list.view-text-only .guide .guide-title {
+        .guide-list.view-1 .guide .guide-title {
             margin-top: 0;
         }
 
@@ -795,7 +795,7 @@
         /* --- WIDOK ELEGANCKI v2.2 (LEKKOŚĆ I BALANS) - START --- */
 
         /* Ustawienia ogólne dla kafelka w tym trybie */
-        .guide-list.view-image-only .guide {
+        .guide-list.view-7 .guide {
             padding: 0;
             overflow: hidden;
             display: flex;
@@ -803,14 +803,14 @@
         }
 
         /* Kontener na obrazek */
-        .guide-list.view-image-only .guide-cover-wrapper {
+        .guide-list.view-7 .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
         }
 
         /* Styl dla linku-nakładki w widoku eleganckim */
-        .guide-list.view-image-only .guide-cover-wrapper .cover-link {
+        .guide-list.view-7 .guide-cover-wrapper .cover-link {
             position: absolute;
             top: 0;
             left: 0;
@@ -831,7 +831,7 @@
         }
 
         /* Kontener na tekst pod obrazkiem */
-        .guide-list.view-image-only .guide-text-content {
+        .guide-list.view-7 .guide-text-content {
             height: 35%;
             padding: 12px 15px;
             box-sizing: border-box;
@@ -843,17 +843,17 @@
             /* WAŻNE: Tło jest teraz dziedziczone z .guide, nie ma własnego koloru */
         }
 
-        body.dark-mode .guide-list.view-image-only .guide-text-content {
+        body.dark-mode .guide-list.view-7 .guide-text-content {
             border-top: 1px solid rgba(255, 255, 255, 0.15);
         }
 
         /* Ukrywamy oryginalne elementy, których nie chcemy w tym widoku */
-        .guide-list.view-image-only .guide-info {
+        .guide-list.view-7 .guide-info {
             display: none;
         }
 
         /* Tytuł w widoku eleganckim */
-        .guide-list.view-image-only .guide-title {
+        .guide-list.view-7 .guide-title {
             font-size: 1.05em;
             font-weight: 600;
             margin: 0;
@@ -866,34 +866,34 @@
             overflow: hidden;
         }
 
-        .guide-list.view-image-only .guide-title a {
+        .guide-list.view-7 .guide-title a {
             text-decoration: none;
         }
 
-        body:not(.dark-mode) .guide-list.view-image-only .guide-title a {
+        body:not(.dark-mode) .guide-list.view-7 .guide-title a {
             color: #333;
         }
 
-        body.dark-mode .guide-list.view-image-only .guide-title a {
+        body.dark-mode .guide-list.view-7 .guide-title a {
             color: #eee;
         }
 
 
         /* NOWY ELEMENT: Link akcji na dole kafelka */
-        .guide-list.view-image-only .guide-action-link {
+        .guide-list.view-7 .guide-action-link {
             text-align: right;
             /* Wyrównanie do prawej */
             font-size: 0.85em;
             font-weight: bold;
         }
 
-        .guide-list.view-image-only .guide-action-link a {
+        .guide-list.view-7 .guide-action-link a {
             text-decoration: none;
             opacity: 0.7;
             transition: opacity 0.2s ease;
         }
 
-        .guide-list.view-image-only .guide-action-link a:hover {
+        .guide-list.view-7 .guide-action-link a:hover {
             opacity: 1;
         }
 
@@ -902,7 +902,7 @@
 
 
 
-        .guide-list.view-image-only .guide:hover .guide-cover-elegant {
+        .guide-list.view-7 .guide:hover .guide-cover-elegant {
             transform: scale(1.05);
         }
 
@@ -3234,7 +3234,7 @@
 
             const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
 
-            if (currentViewMode === 'image-only') {
+            if (currentViewMode === 'view-7') {
                 // POPRAWIONA ARCHITEKTURA HTML
                 const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
                 return `
@@ -3279,8 +3279,8 @@
                 guideList.classList.add('random-draw');
             }
 
-            guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
-            guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
+            guideList.classList.toggle('view-7', currentViewMode === 'view-7');
+            guideList.classList.toggle('view-1', currentViewMode === 'view-1');
 
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -3616,11 +3616,11 @@
                 renderGuides();
                 let iconClass, title;
                 switch (currentViewMode) {
-                    case 'image-only': // Nasz nowy widok "Elegancki"
+                    case 'view-7': // Nasz nowy widok "Elegancki"
                         iconClass = 'fa-th-large'; // Ikona siatki
                         title = 'Widok: Elegancki'; // Nowa etykieta
                         break;
-                    case 'text-only':
+                    case 'view-1':
                         iconClass = 'fa-align-left';
                         title = lang.viewModeText;
                         break;
@@ -3645,9 +3645,9 @@
 
             viewContentBtn.addEventListener('click', () => {
                 if (currentViewMode === 'full') {
-                    currentViewMode = 'image-only';
-                } else if (currentViewMode === 'image-only') {
-                    currentViewMode = 'text-only';
+                    currentViewMode = 'view-7';
+                } else if (currentViewMode === 'view-7') {
+                    currentViewMode = 'view-1';
                 } else {
                     currentViewMode = 'full';
                 }

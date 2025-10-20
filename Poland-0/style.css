@@ -781,7 +781,7 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   transform: scale(1);
 }
 
-.guide-list.view-text-only .guide-cover,
+.guide-list.view-1 .guide-cover,
 .guide-list.hide-covers .guide-cover {
   opacity: 0;
   max-height: 0;
@@ -794,11 +794,11 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   overflow: hidden;
 }
 
-.guide-list.view-text-only .guide {
+.guide-list.view-1 .guide {
   padding-top: 10px;
 }
 
-.guide-list.view-text-only .guide .guide-title {
+.guide-list.view-1 .guide .guide-title {
   margin-top: 0;
 }
 
@@ -844,12 +844,12 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   overflow: hidden;
 }
 
-/* --- WIDOK ELEGANCKI (view-image-only) - OSTATNIE POPRAWKI --- */
+/* --- WIDOK ELEGANCKI (view-7) - OSTATNIE POPRAWKI --- */
 
 /* Ustawienia ogólne dla kafelka w tym trybie */
 /* 1. Podwajamy zaokrąglenie rogów głównego kafelka */
 
-.guide-list.view-image-only .guide {
+.guide-list.view-7 .guide {
   padding: 0;
   overflow: hidden;
   display: flex;
@@ -864,7 +864,7 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
 }
 
 /* Poświata dla efektu 3D */
-.guide-list.view-image-only .guide::before {
+.guide-list.view-7 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -882,11 +882,11 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
   pointer-events: none;
 }
 
-.guide-list.view-image-only .guide:hover::before {
+.guide-list.view-7 .guide:hover::before {
   opacity: 1;
 }
 
-/* .guide-list.view-image-only .guide-cover-wrapper {
+/* .guide-list.view-7 .guide-cover-wrapper {
             height: 65%;
             overflow: hidden;
             position: relative;
@@ -898,19 +898,19 @@ body.dark-mode #lightbox-bg-video-controls button.active-play i {
         } */
 
 /* 2. Przywracamy oryginalne zachowanie kontenera obrazka (bez flexboxa i tła) */
-.guide-list.view-image-only .guide-cover-wrapper {
+.guide-list.view-7 .guide-cover-wrapper {
   height: 65%;
   overflow: hidden;
   position: relative;
 }
 
 /* Usuwamy niepotrzebne tło dla trybu ciemnego */
-body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
+body.dark-mode .guide-list.view-7 .guide-cover-wrapper {
   background-color: transparent;
 }
 
 /* Styl dla linku-nakładki w widoku eleganckim */
-.guide-list.view-image-only .guide-cover-wrapper .cover-link {
+.guide-list.view-7 .guide-cover-wrapper .cover-link {
   position: absolute;
   top: 0;
   left: 0;
@@ -943,7 +943,7 @@ body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
 }
 
 /* Kontener na tekst pod obrazkiem */
-.guide-list.view-image-only .guide-text-content {
+.guide-list.view-7 .guide-text-content {
   height: 35%;
   padding: 12px 15px;
   box-sizing: border-box;
@@ -953,16 +953,16 @@ body.dark-mode .guide-list.view-image-only .guide-cover-wrapper {
   border-top: 1px solid rgba(128, 128, 128, 0.2);
 }
 
-body.dark-mode .guide-list.view-image-only .guide-text-content {
+body.dark-mode .guide-list.view-7 .guide-text-content {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.guide-list.view-image-only .guide-info {
+.guide-list.view-7 .guide-info {
   display: none;
 }
 
-.guide-list.view-image-only .guide-title {
+.guide-list.view-7 .guide-title {
   font-size: 1.05em;
   font-weight: 600;
   margin: 0;
@@ -974,38 +974,38 @@ body.dark-mode .guide-list.view-image-only .guide-text-content {
   overflow: hidden;
 }
 
-.guide-list.view-image-only .guide-title a {
+.guide-list.view-7 .guide-title a {
   text-decoration: none;
 }
 
-body:not(.dark-mode) .guide-list.view-image-only .guide-title a {
+body:not(.dark-mode) .guide-list.view-7 .guide-title a {
   color: #333;
 }
 
-body.dark-mode .guide-list.view-image-only .guide-title a {
+body.dark-mode .guide-list.view-7 .guide-title a {
   color: #eee;
 }
 
-.guide-list.view-image-only .guide-action-link {
+.guide-list.view-7 .guide-action-link {
   text-align: right;
   font-size: 0.85em;
   font-weight: bold;
 }
 
-.guide-list.view-image-only .guide-action-link a {
+.guide-list.view-7 .guide-action-link a {
   text-decoration: none;
   opacity: 0.7;
   transition: opacity 0.2s ease;
 }
 
-.guide-list.view-image-only .guide-action-link a:hover {
+.guide-list.view-7 .guide-action-link a:hover {
   opacity: 1;
 }
 
 /* --- WIDOK SIATKA (GRID) v1.0 - OSTATECZNA WERSJA --- */
 
 /* 1. Kontener ".guide" staje się całkowicie przezroczysty i niewidoczny */
-.guide-list.view-grid .guide {
+.guide-list.view-5 .guide {
   padding: 0;
   display: flex;
   justify-content: center;
@@ -1037,7 +1037,7 @@ body.dark-mode .guide-cover-grid {
 }
 
 /* 3. Nakładka z tekstem ma płynne przejście i zaokrąglone rogi pasujące do zdjęcia */
-.guide-list.view-grid .grid-overlay {
+.guide-list.view-5 .grid-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -1070,11 +1070,11 @@ body.dark-mode .guide-cover-grid {
 }
 
 /* 5. Efekt HOVER działa teraz na całym obszarze kafelka, ale wizualnie dotyczy zdjęcia */
-.guide-list.view-grid .guide:hover .grid-overlay {
+.guide-list.view-5 .guide:hover .grid-overlay {
   opacity: 1;
 }
 
-.guide-list.view-grid .guide:hover .guide-cover-grid {
+.guide-list.view-5 .guide:hover .guide-cover-grid {
   transform: scale(1.03);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
@@ -1083,14 +1083,14 @@ body.dark-mode .guide-cover-grid {
 
 /* --- WIDOK MASONRY v1.0 - START --- */
 
-.guide-list.view-masonry .guide-page {
+.guide-list.view-9 .guide-page {
   display: block;
   /* Wyłączamy grid */
   position: relative;
   /* Niezbędne do pozycjonowania kafelków */
 }
 
-.guide-list.view-masonry .guide {
+.guide-list.view-9 .guide {
   /* Używamy standardowych stylów dla .guide, ale z pozycją absolute */
   position: absolute;
   transition: top 0.4s ease-out, left 0.4s ease-out;
@@ -1979,7 +1979,7 @@ body.dark-mode .control-panel button#viewContentBtn:hover {
 }
 
 /* Poprawka koloru maski dla trybu jasnego w widoku siatki */
-body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+body:not(.dark-mode) .guide-list.view-5 .grid-overlay {
   background: rgba(255, 255, 255, 0.7);
   /* Biała, półprzezroczysta maska */
 }
@@ -1993,7 +1993,7 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
 }
 
 /* Poprawka przyklejająca przycisk "Otwórz" do dołu w widoku pełnym i tekstowym */
-.guide:not(.view-image-only):not(.view-grid):not(.view-masonry)
+.guide:not(.view-7):not(.view-5):not(.view-9)
   .guide-content-bottom
   > a:not(.cover-link) {
   margin-top: auto;
@@ -2039,8 +2039,8 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   mają tę samą wysokość, a ich zawartość jest estetycznie wyrównana. 
   Działa tylko w widoku domyślnym (z tytułem, opisem i obrazkiem).
 */
-.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
-    .view-masonry
+.guide-list:not(.view-1):not(.view-7):not(.view-5):not(
+    .view-9
   )
   .guide-info-container {
   flex-grow: 1; /* Pozwala kontenerowi z tekstem rozciągnąć się, aby wypełnić wolną przestrzeń */
@@ -2769,50 +2769,50 @@ html.dark-mode .glass-status {
 }
 
 /* === ADAPTACJA WIDOKÓW: Nowy Widok nr 1 (Tylko Tytuł) === */
-/* Zgodnie z nowym briefem, tryb "Tylko Tytuł" (wcześniej 'text-only')
+/* Zgodnie z nowym briefem, tryb "Tylko Tytuł" (wcześniej 'view-1')
    nie powinien pokazywać bloku z opisem. Poniższa reguła go ukrywa. */
-.guide-list.view-text-only .guide-info-container {
+.guide-list.view-1 .guide-info-container {
   display: none;
 }
 
 /* === ADAPTACJA WIDOKÓW: Nowy Widok nr 3 (Tylko Zdjęcie) === */
 /* Zgodnie z briefem, w tym trybie ukrywamy panel z tekstem pod obrazkiem */
-.guide-list.view-image-only .guide-text-content {
+.guide-list.view-7 .guide-text-content {
   display: none;
 }
 
 /* ...i jednocześnie rozciągamy kontener z obrazkiem na 100% wysokości kafelka. */
-.guide-list.view-image-only .guide-cover-wrapper {
+.guide-list.view-7 .guide-cover-wrapper {
   height: 100%;
 }
-/* === POPRAWKA DLA TRYBU 'text-masonry' (Wersja bezpieczna) === */
+/* === POPRAWKA DLA TRYBU 'view-3' (Wersja bezpieczna) === */
 /* Duplikujemy reguły zamiast je grupować, aby uniknąć potencjalnych błędów parsowania CSS. */
 
-.guide-list.view-text-masonry .guide-page {
+.guide-list.view-3 .guide-page {
   display: block;
   position: relative;
 }
 
-.guide-list.view-text-masonry .guide {
+.guide-list.view-3 .guide {
   position: absolute;
   transition: top 0.4s ease-out, left 0.4s ease-out;
   width: var(--box-width, 256px);
 }
-/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('image-masonry') === */
-/* Poniższe reguły nadają widokowi #6 wygląd i animacje z trybu #4 ('image-only'),
+/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('view-6') === */
+/* Poniższe reguły nadają widokowi #6 wygląd i animacje z trybu #4 ('view-7'),
    jednocześnie dodając logikę pozycjonowania wymaganą przez Masonry. */
 
-.guide-list.view-image-masonry .guide-page {
+.guide-list.view-6 .guide-page {
   display: block;
   position: relative;
 }
 
-.guide-list.view-image-masonry .guide {
+.guide-list.view-6 .guide {
   /* 1. Style Masonry (układ) */
   position: absolute;
   width: var(--box-width, 256px);
 
-  /* 2. Style skopiowane z 'image-only' (wygląd i animacje 3D) */
+  /* 2. Style skopiowane z 'view-7' (wygląd i animacje 3D) */
   padding: 0;
   overflow: hidden;
   border-radius: 20px;
@@ -2821,17 +2821,17 @@ html.dark-mode .glass-status {
     rotateY(var(--rotate-y, 0deg));
   transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
 
-  /* 3. Upewniamy się, że kafelek ma tło i cień, tak jak w 'image-only' */
+  /* 3. Upewniamy się, że kafelek ma tło i cień, tak jak w 'view-7' */
   background: var(--panel-bg-light, #fdfdfd);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-html.dark-mode .guide-list.view-image-masonry .guide {
+html.dark-mode .guide-list.view-6 .guide {
   background: var(--panel-bg-dark, #1a1a1a);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Kopiujemy również efekt poświaty 3D */
-.guide-list.view-image-masonry .guide::before {
+.guide-list.view-6 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -2849,25 +2849,25 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   pointer-events: none;
 }
 
-.guide-list.view-image-masonry .guide:hover::before {
+.guide-list.view-6 .guide:hover::before {
   opacity: 1;
 }
 
-/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('image-masonry') === */
+/* === POPRAWKA WIDOKU #6: Masonry Graficzne ('view-6') === */
 /* Nadajemy widokowi #6 wygląd i animacje z trybu graficznego,
    dodając jednocześnie logikę pozycjonowania wymaganą przez Masonry. */
 
-.guide-list.view-image-masonry .guide-page {
+.guide-list.view-6 .guide-page {
   display: block;
   position: relative;
 }
 
-.guide-list.view-image-masonry .guide {
+.guide-list.view-6 .guide {
   /* 1. Style Masonry (układ) */
   position: absolute;
   width: var(--box-width, 256px);
 
-  /* 2. Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  /* 2. Style skopiowane z 'view-7' dla wyglądu i animacji 3D */
   padding: 0;
   overflow: hidden;
   border-radius: 20px;
@@ -2877,12 +2877,12 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-html.dark-mode .guide-list.view-image-masonry .guide {
+html.dark-mode .guide-list.view-6 .guide {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Kopiujemy również efekt poświaty 3D */
-.guide-list.view-image-masonry .guide::before {
+.guide-list.view-6 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -2900,7 +2900,7 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   pointer-events: none;
 }
 
-.guide-list.view-image-masonry .guide:hover::before {
+.guide-list.view-6 .guide:hover::before {
   opacity: 1;
 }
 
@@ -2911,7 +2911,7 @@ html.dark-mode .guide-list.view-image-masonry .guide {
 */
 
 /* --- 1. GŁÓWNY KONTERNER KAFELKA --- */
-.guide-list.view-seven .guide {
+.guide-list.view-4 .guide {
   padding: 0;
   overflow: hidden;
   position: relative;
@@ -2927,7 +2927,7 @@ html.dark-mode .guide-list.view-image-masonry .guide {
 }
 
 /* Kopiujemy efekt poświaty 3D */
-.guide-list.view-seven .guide::before {
+.guide-list.view-4 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -2944,12 +2944,12 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   z-index: 3;
   pointer-events: none;
 }
-.guide-list.view-seven .guide:hover::before {
+.guide-list.view-4 .guide:hover::before {
   opacity: 1;
 }
 
 /* --- 2. GRAFIKA W TLE --- */
-.guide-list.view-seven .guide-cover-wrapper-seven {
+.guide-list.view-4 .guide-cover-wrapper-seven {
   position: absolute;
   top: 0;
   left: 0;
@@ -2961,19 +2961,19 @@ html.dark-mode .guide-list.view-image-masonry .guide {
 
 /* W `createGuideHtml` użyliśmy klasy .guide-cover-grid, która już jest kwadratowa i kadruje */
 /* Dodajemy jej tylko animację parallax */
-.guide-list.view-seven .guide-cover-grid {
+.guide-list.view-4 .guide-cover-grid {
   width: 100%;
   height: 100%;
   transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 /* Efekt Parallax: powiększenie obrazka po najechaniu */
-.guide-list.view-seven .guide:hover .guide-cover-grid {
+.guide-list.view-4 .guide:hover .guide-cover-grid {
   transform: scale(1.05);
 }
 
 /* --- 3. PANEL "GLASS" I JEGO ANIMACJE --- */
-.guide-list.view-seven .guide-text-content-seven {
+.guide-list.view-4 .guide-text-content-seven {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -2996,19 +2996,19 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   align-items: center;
   gap: 15px;
 }
-html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
+html:not(.dark-mode) .guide-list.view-4 .guide-text-content-seven {
   background-color: rgba(255, 255, 255, 0.5);
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Pokazanie panelu po najechaniu */
-.guide-list.view-seven .guide:hover .guide-text-content-seven {
+.guide-list.view-4 .guide:hover .guide-text-content-seven {
   transform: translateY(0%);
 }
 
 /* --- 4. TEKST I LINK W PANELU "GLASS" --- */
-.guide-list.view-seven .guide-title,
-.guide-list.view-seven .guide-action-link {
+.guide-list.view-4 .guide-title,
+.guide-list.view-4 .guide-action-link {
   /* Ukrycie domyślne i animacja pojawiania się */
   opacity: 0;
   transition: opacity 0.3s ease-out;
@@ -3016,13 +3016,13 @@ html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
 }
 
 /* Opóźnione pojawienie się tekstu po najechaniu */
-.guide-list.view-seven .guide:hover .guide-title,
-.guide-list.view-seven .guide:hover .guide-action-link {
+.guide-list.view-4 .guide:hover .guide-title,
+.guide-list.view-4 .guide:hover .guide-action-link {
   opacity: 1;
   transition-delay: 0.2s; /* Pojawia się, gdy panel jest już częściowo wsunięty */
 }
 
-.guide-list.view-seven .guide-title {
+.guide-list.view-4 .guide-title {
   font-size: 1.05em;
   font-weight: 600;
   line-height: 1.4;
@@ -3034,34 +3034,34 @@ html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
   -webkit-line-clamp: 2; /* Ograniczenie do 2 linii */
   overflow: hidden;
 }
-html:not(.dark-mode) .guide-list.view-seven .guide-title {
+html:not(.dark-mode) .guide-list.view-4 .guide-title {
   color: #000;
 }
 
-.guide-list.view-seven .guide-action-link a {
+.guide-list.view-4 .guide-action-link a {
   font-size: 0.9em;
   font-weight: bold;
   white-space: nowrap;
   color: #fff; /* Zawsze biały */
   text-decoration: none;
 }
-html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
+html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
   color: #cc0000;
 }
 
-/* === PATCH: Naprawa widoku #4 (image-only) === */
-.guide-list.view-image-only .guide-text-content {
+/* === PATCH: Naprawa widoku #4 (view-7) === */
+.guide-list.view-7 .guide-text-content {
   display: none; /* Całkowicie usuwa kontener tekstowy z układu */
 }
 
-.guide-list.view-image-only .guide-cover-wrapper {
+.guide-list.view-7 .guide-cover-wrapper {
   height: 100%; /* Rozciąga kontener z obrazem na 100% wysokości kafelka */
 }
 
 /* --- TUNING: Ulepszenie widoku #5 (grid) --- */
 
 /* Poprawiamy wygląd samej nakładki */
-.guide-list.view-grid .grid-overlay {
+.guide-list.view-5 .grid-overlay {
   /* Zamiast jednolitego tła, używamy gradientu od przezroczystości do koloru */
   background: linear-gradient(
     to top,
@@ -3082,7 +3082,7 @@ html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
   border-radius: 8px; /* Dopasowanie do rogów zdjęcia */
   pointer-events: none;
 }
-body:not(.dark-mode) .guide-list.view-grid .grid-overlay {
+body:not(.dark-mode) .guide-list.view-5 .grid-overlay {
   background: linear-gradient(
     to top,
     rgba(255, 255, 255, 0.9) 0%,
@@ -3109,28 +3109,28 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
 }
 
 /* Uruchomienie animacji po najechaniu */
-.guide-list.view-grid .guide:hover .grid-overlay {
+.guide-list.view-5 .guide:hover .grid-overlay {
   opacity: 1;
 }
 
-.guide-list.view-grid .guide:hover .grid-overlay .grid-title-text a {
+.guide-list.view-5 .guide:hover .grid-overlay .grid-title-text a {
   opacity: 1;
   transform: translateY(0);
 }
 
 /*
 ================================================================
-  TUNING: Przebudowa Widoku #6 (image-masonry) - "Glass & 3D"
+  TUNING: Przebudowa Widoku #6 (view-6) - "Glass & 3D"
 ================================================================
 */
 
 /* --- 1. GŁÓWNY KONTERNER KAFELKA (ANIMACJA 3D) --- */
-.guide-list.view-image-masonry .guide {
+.guide-list.view-6 .guide {
   /* Style Masonry (układ) - te już istnieją, upewniamy się, że są obecne */
   position: absolute;
   width: var(--box-width, 256px);
 
-  /* Style skopiowane z 'image-only' dla wyglądu i animacji 3D */
+  /* Style skopiowane z 'view-7' dla wyglądu i animacji 3D */
   padding: 0;
   overflow: hidden; /* Ważne, aby panel nie wychodził poza kafelek */
   border-radius: 12px; /* Subtelne zaokrąglenie */
@@ -3140,12 +3140,12 @@ body:not(.dark-mode) .grid-overlay .grid-title-text a {
   transition: transform 0.1s ease-out, top 0.4s ease-out, left 0.4s ease-out;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
-html.dark-mode .guide-list.view-image-masonry .guide {
+html.dark-mode .guide-list.view-6 .guide {
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 /* Efekt poświaty 3D (skopiowany z widoku #4) */
-.guide-list.view-image-masonry .guide::before {
+.guide-list.view-6 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -3162,25 +3162,25 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   z-index: 3;
   pointer-events: none;
 }
-.guide-list.view-image-masonry .guide:hover::before {
+.guide-list.view-6 .guide:hover::before {
   opacity: 1;
 }
 
 /* --- 2. OBRAZEK I JEGO KONTENER --- */
-.guide-list.view-image-masonry .cover-link-six {
+.guide-list.view-6 .cover-link-six {
   display: block;
   width: 100%;
   height: 100%;
 }
-.guide-list.view-image-masonry .guide-cover-elegant {
+.guide-list.view-6 .guide-cover-elegant {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
+.guide-list.view-6 .guide:hover .guide-cover-elegant {
   transform: scale(1.05); /* Efekt parallax przy najechaniu */
 }
 
 /* --- 3. SZKLANY PANEL ("GLASS PANEL") --- */
-.guide-list.view-image-masonry .glass-panel-six {
+.guide-list.view-6 .glass-panel-six {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -3202,18 +3202,18 @@ html.dark-mode .guide-list.view-image-masonry .guide {
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
+html.dark-mode .guide-list.view-6 .glass-panel-six {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
   border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Panel wsuwa się po najechaniu na kafelek */
-.guide-list.view-image-masonry .guide:hover .glass-panel-six {
+.guide-list.view-6 .guide:hover .glass-panel-six {
   transform: translateY(0);
 }
 
 /* --- 4. TEKST NA PANELU --- */
-.guide-list.view-image-masonry .title-six {
+.guide-list.view-6 .title-six {
   display: block;
   font-size: 1.05em;
   font-weight: 700;
@@ -3224,13 +3224,13 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   opacity: 0;
   transition: opacity 0.3s ease-out 0.2s; /* Opóźnienie, by tekst pojawił się po wsunięciu panelu */
 }
-html.dark-mode .guide-list.view-image-masonry .title-six {
+html.dark-mode .guide-list.view-6 .title-six {
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 /* Tekst staje się widoczny po najechaniu */
-.guide-list.view-image-masonry .guide:hover .title-six {
+.guide-list.view-6 .guide:hover .title-six {
   opacity: 1;
 }
 
@@ -3435,7 +3435,7 @@ html.dark-mode #statusLangBtn > a:hover .lang-code-status {
 /* --- ŁATKA STYLU: Nowy wygląd siatki (Soft UI) --- */
 
 /* 1. Główny kontener kafelka */
-.guide-list.view-grid .guide {
+.guide-list.view-5 .guide {
   background: #f1e9e8;
   border-radius: 20px;
   box-shadow: 8px 8px 16px #d1c8c7, -8px -8px 16px #ffffff;
@@ -3446,21 +3446,21 @@ html.dark-mode #statusLangBtn > a:hover .lang-code-status {
   overflow: hidden;
 }
 
-html.dark-mode .guide-list.view-grid .guide {
+html.dark-mode .guide-list.view-5 .guide {
   background: #2c2828;
   box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 /* Usunięcie niepotrzebnych stylów z linku-wrappera */
-.guide-list.view-grid .guide a:not(.grid-action-button) {
+.guide-list.view-5 .guide a:not(.grid-action-button) {
   margin: 0;
   display: flex; /* Pozwala obrazkowi się rozciągnąć */
   flex-grow: 1;
 }
 
 /* 2. Pasek tytułu na górze */
-.guide-list.view-grid {
+.guide-list.view-5 {
   padding: 10px 20px; /* Zmiana */
   font-weight: 600;
   font-size: 0.9em;
@@ -3476,31 +3476,31 @@ html.dark-mode .guide-list.view-grid .guide {
   text-align: center !important; /* Zmiana */
 }
 
-html.dark-mode .guide-list.view-grid .grid-title-bar {
+html.dark-mode .guide-list.view-5 .grid-title-bar {
   color: #b0a3a2;
 }
 
 /* 3. Obrazek (wypełnia dostępną przestrzeń) */
-.guide-list.view-grid .guide-cover-grid {
+.guide-list.view-5 .guide-cover-grid {
   border-radius: 0; /* Obrazek nie ma już zaokrąglonych rogów */
   box-shadow: none; /* Cień jest na głównym kontenerze */
   height: 100%;
 }
 
 /* 4. Dolny pasek z przyciskiem */
-.guide-list.view-grid .grid-action-bar {
+.guide-list.view-5 .grid-action-bar {
   padding: 8px 20px; /* Zmiana */
   text-align: right;
   flex-shrink: 0;
   background: rgba(0, 0, 0, 0.02);
 }
 
-html.dark-mode .guide-list.view-grid .grid-action-bar {
+html.dark-mode .guide-list.view-5 .grid-action-bar {
   background: rgba(0, 0, 0, 0.1);
 }
 
 /* 5. Przycisk akcji */
-.guide-list.view-grid .grid-action-button {
+.guide-list.view-5 .grid-action-button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -3515,12 +3515,12 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   transition: transform 0.2s ease;
 }
 
-html.dark-mode .guide-list.view-grid .grid-action-button {
+html.dark-mode .guide-list.view-5 .grid-action-button {
   background-color: var(--button-red-bg-dark);
   color: var(--button-red-text-dark);
 }
 
-.guide-list.view-grid .grid-action-button:hover {
+.guide-list.view-5 .grid-action-button:hover {
   transform: scale(1.05);
 }
 

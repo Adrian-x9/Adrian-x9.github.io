@@ -1240,131 +1240,6 @@ const goToPage = (pageNum) => {
 //          POCZĄTEK BLOKU DO PODMIANY (3 FUNKCJE)
 // ================================================================
 
-function renderGuides(sourceArray = null) {
-  stopCarousel();
-  const source =
-    sourceArray ||
-    (generatorMode === "visible" && generatedGuides) ||
-    filteredGuides;
-
-  guideList.classList.remove("random-draw");
-  if (sourceArray) {
-    guideList.classList.add("random-draw");
-  }
-
-  guideList.classList.toggle(
-    "view-image-only",
-    currentViewMode === "image-only"
-  );
-  guideList.classList.toggle("view-grid", currentViewMode === "grid");
-  guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
-  guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
-  guideList.classList.toggle("view-full-text", currentViewMode === "full-text"); // DODAJ TĘ LINIĘ
-  guideList.classList.toggle(
-    "view-text-masonry",
-    currentViewMode === "text-masonry"
-  );
-
-  guideList.innerHTML = "";
-  if (lazyLoadObserver) lazyLoadObserver.disconnect();
-
-  const sizePercent = document.getElementById("sizeSlider").value;
-  const newWidth = Math.floor(
-    config.pageSettings.baseBoxWidth * (sizePercent / 100)
-  );
-  const minSlider = 50,
-    maxSlider = 150;
-  const minFont = 0.8,
-    maxFont = 1.3;
-
-  const percent = (sizePercent - minSlider) / (maxSlider - minSlider);
-
-  const dynamicFontSize = minFont + percent * (maxFont - minFont);
-  guideList.style.setProperty(
-    "--dynamic-font-size",
-    `${dynamicFontSize.toFixed(2)}rem`
-  );
-  guideList.style.setProperty("--grid-rows", selectedRowCount);
-  guideList.style.setProperty("--box-width", `${newWidth}px`);
-
-  if (sourceArray) {
-    const pageDiv = document.createElement("div");
-    pageDiv.className = "guide-page";
-    pageDiv.dataset.pageNumber = 1;
-
-    source.forEach((guide, index) => {
-      const div = document.createElement("div");
-      div.className = "guide animate-in";
-      div.style.animationDelay = `${index * 0.04}s`;
-      div.innerHTML = createGuideHtml(guide);
-      pageDiv.appendChild(div);
-    });
-    guideList.appendChild(pageDiv);
-
-    pagination.classList.remove("visible");
-    updateGuideCount(source.length, guides.length);
-
-    if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
-      setTimeout(() => applyMasonryLayout(pageNum), 100);
-    }
-    return;
-  }
-
-  const itemWidth = newWidth;
-  const columns =
-    Math.floor(guideList.clientWidth / (itemWidth + 20) + 0.0001) || 1;
-  const itemsPerPage = columns * selectedRowCount;
-
-  pagesCache = [];
-  if (itemsPerPage > 0) {
-    for (let i = 0; i < source.length; i += itemsPerPage) {
-      pagesCache.push(source.slice(i, i + itemsPerPage));
-    }
-  } else if (source.length > 0) {
-    pagesCache.push(source);
-  }
-  totalPages = pagesCache.length || 1;
-
-  pagesCache.forEach((pageItems, pageIndex) => {
-    const pageDiv = document.createElement("div");
-    pageDiv.className = "guide-page";
-    pageDiv.dataset.pageNumber = pageIndex + 1;
-
-    if (pageIndex === 0) {
-      pageItems.forEach((guide, index) => {
-        const div = document.createElement("div");
-        div.className = "guide";
-        if (isInitialLoad) {
-          div.classList.add("animate-in");
-          div.style.animationDelay = `${index * 0.04}s`;
-        }
-        div.innerHTML = createGuideHtml(guide);
-        pageDiv.appendChild(div);
-      });
-    }
-    guideList.appendChild(pageDiv);
-  });
-
-  setupLazyLoading(pagesCache);
-  renderPagination();
-  updateGuideCount(source.length, guides.length);
-
-  if (isInitialLoad) {
-    isInitialLoad = false;
-    preloadNextPageImages();
-  }
-
-  if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
-    setTimeout(() => applyMasonryLayout(pageNum), 100);
-  }
-
-  updateWrapperHeightForPage(1);
-}
-
-// ================================================================
-//          KONIEC BLOKU DO PODMIANY
-// ================================================================
-
 function setupLazyLoading(pages) {
   if (lazyLoadObserver) lazyLoadObserver.disconnect();
 
@@ -1387,9 +1262,9 @@ function setupLazyLoading(pages) {
                   pageDiv.appendChild(div);
                 });
                 const isMasonry =
-                  currentViewMode === "masonry" ||
-                  currentViewMode === "text-masonry" ||
-                  currentViewMode === "image-masonry";
+                  currentViewMode === "view-9" ||
+                  currentViewMode === "view-3" ||
+                  currentViewMode === "view-6";
 
                 if (isMasonry) {
                   // --- POCZĄTEK ŁATY ---
@@ -1638,15 +1513,15 @@ function initializeDisplayPanel() {
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
   const viewModes = [
-    "text-only", // 1 Tekst
-    "full-text", // 2 Tekst + opis
-    "text-masonry", // 3 Tekst Masonry
-    "view-seven", // 4: Grafika proporcjonalna - docięta w kwadrat
-    "grid", // 5: Tu mamy chwilowo burdel, popracujemy
-    "image-masonry", // 6: Masonry graficzne
-    "image-only", // 7: Kafelki - do zrobienia
-    "full", // 8: Pełny
-    "masonry", // 9: Masonry mieszane
+    "view-1", // 1 Tekst
+    "view-2", // 2 Tekst + opis
+    "view-3", // 3 Tekst Masonry
+    "view-4", // 4: Grafika proporcjonalna - docięta w kwadrat
+    "view-5", // 5: Tu mamy chwilowo burdel, popracujemy
+    "view-6", // 6: Masonry graficzne
+    "view-7", // 7: Kafelki - do zrobienia
+    "view-8", // 8: Pełny
+    "view-9", // 9: Masonry mieszane
   ];
 
   viewContentBtn.innerHTML = `
@@ -1743,9 +1618,9 @@ function initializeDisplayPanel() {
     );
 
     if (
-      currentViewMode === "masonry" ||
-      currentViewMode === "text-masonry" ||
-      currentViewMode === "image-masonry"
+      currentViewMode === "view-9" ||
+      currentViewMode === "view-3" ||
+      currentViewMode === "view-6"
     ) {
       debouncedMasonryReflow();
     }
@@ -1850,12 +1725,12 @@ function createGuideHtml(guide) {
     : "ade-base-system/gfx/no_cover_light.png";
 
   if (
-    currentViewMode === "text-only" ||
-    currentViewMode === "full-text" ||
-    currentViewMode === "text-masonry"
+    currentViewMode === "view-1" ||
+    currentViewMode === "view-2" ||
+    currentViewMode === "view-3"
   ) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
-  } else if (currentViewMode === "image-only") {
+  } else if (currentViewMode === "view-7") {
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
@@ -1873,7 +1748,7 @@ function createGuideHtml(guide) {
   //...
   }
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml // <-- Komentarz może pozostać lub zostać usunięty, logika jest poprawna
-  else if (currentViewMode === "image-masonry") {
+  else if (currentViewMode === "view-6") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
@@ -1887,21 +1762,7 @@ function createGuideHtml(guide) {
             <span class="title-six">${titleText}</span>
         </div>
     `;
-  } else if (currentViewMode === "grid") {
-    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const onclickAction =
-      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
-    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    // DODAJEMY NOWY div.glass-panel-six Z TYTUŁEM WEWNĄTRZ
-    return `
-        <a href="${hrefAction}" onclick="${onclickAction}" class="cover-link-six">
-            ${elegantCoverImgHtml}
-        </a>
-        <div class="glass-panel-six">
-            <span class="title-six">${titleText}</span>
-        </div>
-    `;
-  } else if (currentViewMode === "grid") {
+  } else if (currentViewMode === "view-5") {
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
@@ -1919,7 +1780,7 @@ function createGuideHtml(guide) {
         </a>
       </div>
     `;
-  } else if (currentViewMode === "view-seven") {
+  } else if (currentViewMode === "view-4") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
@@ -1954,24 +1815,24 @@ function renderGuides(sourceArray = null) {
   }
 
   // === POCZĄTEK ZMIANY: Kompletna obsługa klas CSS ===
-  guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
-  guideList.classList.toggle("view-full-text", currentViewMode === "full-text");
+  guideList.classList.toggle("view-1", currentViewMode === "view-1");
+  guideList.classList.toggle("view-2", currentViewMode === "view-2");
   guideList.classList.toggle(
-    "view-text-masonry",
-    currentViewMode === "text-masonry"
+    "view-3",
+    currentViewMode === "view-3"
   );
-  guideList.classList.toggle("view-grid", currentViewMode === "grid");
+  guideList.classList.toggle("view-5", currentViewMode === "view-5");
   guideList.classList.toggle(
-    "view-image-only",
-    currentViewMode === "image-only"
+    "view-7",
+    currentViewMode === "view-7"
   );
   guideList.classList.toggle(
-    "view-image-masonry",
-    currentViewMode === "image-masonry"
+    "view-6",
+    currentViewMode === "view-6"
   );
-  guideList.classList.toggle("view-seven", currentViewMode === "view-seven");
-  guideList.classList.toggle("view-full", currentViewMode === "full");
-  guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
+  guideList.classList.toggle("view-4", currentViewMode === "view-4");
+  guideList.classList.toggle("view-8", currentViewMode === "view-8");
+  guideList.classList.toggle("view-9", currentViewMode === "view-9");
   // === KONIEC ZMIANY ===
 
   guideList.innerHTML = "";
@@ -2013,9 +1874,9 @@ function renderGuides(sourceArray = null) {
     updateGuideCount(source.length, guides.length);
 
     if (
-      currentViewMode === "masonry" ||
-      currentViewMode === "text-masonry" ||
-      currentViewMode === "image-masonry"
+      currentViewMode === "view-9" ||
+      currentViewMode === "view-3" ||
+      currentViewMode === "view-6"
     ) {
       setTimeout(() => applyMasonryLayout(1), 100);
     }
@@ -2067,9 +1928,9 @@ function renderGuides(sourceArray = null) {
   }
 
   const isMasonry =
-    currentViewMode === "masonry" ||
-    currentViewMode === "text-masonry" ||
-    currentViewMode === "image-masonry";
+    currentViewMode === "view-9" ||
+    currentViewMode === "view-3" ||
+    currentViewMode === "view-6";
 
   if (isMasonry) {
     setTimeout(() => applyMasonryLayout(1), 100);
@@ -2939,7 +2800,7 @@ function initialize3dHoverEffect() {
   guideList.addEventListener(
     "mouseenter",
     (e) => {
-      const guide = e.target.closest(".guide-list.view-image-only .guide");
+      const guide = e.target.closest(".guide-list.view-7 .guide");
       if (guide) {
         guide.style.transition = "none";
         currentGuide = guide;
@@ -2952,7 +2813,7 @@ function initialize3dHoverEffect() {
     "mouseleave",
     (e) => {
       const guideTarget = e.target.closest(
-        ".guide-list.view-image-only .guide"
+        ".guide-list.view-7 .guide"
       );
       if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
         cancelAnimationFrame(animationFrameId);

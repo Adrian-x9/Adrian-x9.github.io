@@ -1076,16 +1076,16 @@ function renderGuides(sourceArray = null) {
   }
 
   guideList.classList.toggle(
-    "view-image-only",
-    currentViewMode === "image-only"
+    "view-7",
+    currentViewMode === "view-7"
   );
-  guideList.classList.toggle("view-grid", currentViewMode === "grid");
-  guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
-  guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
-  guideList.classList.toggle("view-full-text", currentViewMode === "full-text"); // DODAJ TĘ LINIĘ
+  guideList.classList.toggle("view-5", currentViewMode === "grid");
+  guideList.classList.toggle("view-9", currentViewMode === "masonry");
+  guideList.classList.toggle("view-1", currentViewMode === "view-1");
+  guideList.classList.toggle("view-2", currentViewMode === "view-2"); // DODAJ TĘ LINIĘ
   guideList.classList.toggle(
-    "view-text-masonry",
-    currentViewMode === "text-masonry"
+    "view-3",
+    currentViewMode === "view-3"
   );
 
   guideList.innerHTML = "";
@@ -1127,7 +1127,7 @@ function renderGuides(sourceArray = null) {
     pagination.classList.remove("visible");
     updateGuideCount(source.length, guides.length);
 
-    if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+    if (currentViewMode === "masonry" || currentViewMode === "view-3") {
       setTimeout(() => applyMasonryLayout(pageNum), 100);
     }
     return;
@@ -1177,7 +1177,7 @@ function renderGuides(sourceArray = null) {
     preloadNextPageImages();
   }
 
-  if (currentViewMode === "masonry" || currentViewMode === "text-masonry") {
+  if (currentViewMode === "masonry" || currentViewMode === "view-3") {
     setTimeout(() => applyMasonryLayout(pageNum), 100);
   }
 
@@ -1210,7 +1210,7 @@ function setupLazyLoading(pages) {
                 });
                 if (
                   currentViewMode === "masonry" ||
-                  currentViewMode === "text-masonry"
+                  currentViewMode === "view-3"
                 ) {
                   setTimeout(() => applyMasonryLayout(pageNum), 100);
                 }
@@ -1443,13 +1443,13 @@ function initializeDisplayPanel() {
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
   const viewModes = [
-    "text-only", // 1
-    "full-text", // 2
-    "text-masonry", // 3
-    "image-only", // 4: Grafika proporcjonalna
+    "view-1", // 1
+    "view-2", // 2
+    "view-3", // 3
+    "view-7", // 4: Grafika proporcjonalna
     "grid", // 5: Grafika w kwadracie
-    "image-masonry", // 6: Masonry graficzne
-    "view-seven", // 7: "Glass"
+    "view-6", // 6: Masonry graficzne
+    "view-4", // 7: "Glass"
     "full", // 8: Pełny
     "masonry", // 9: Masonry mieszane
   ];
@@ -1549,8 +1549,8 @@ function initializeDisplayPanel() {
 
     if (
       currentViewMode === "masonry" ||
-      currentViewMode === "text-masonry" ||
-      currentViewMode === "image-masonry"
+      currentViewMode === "view-3" ||
+      currentViewMode === "view-6"
     ) {
       debouncedMasonryReflow();
     }
@@ -1651,20 +1651,20 @@ function createGuideHtml(guide) {
     : "ade-base-system/gfx/no_cover_light.png";
 
   if (
-    currentViewMode === "text-only" ||
-    currentViewMode === "full-text" ||
-    currentViewMode === "text-masonry"
+    currentViewMode === "view-1" ||
+    currentViewMode === "view-2" ||
+    currentViewMode === "view-3"
   ) {
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div>${actionLinkHtml}</div>`;
   }
 
-  // else if (currentViewMode === "image-only" || currentViewMode === "image-masonry") {
+  // else if (currentViewMode === "view-7" || currentViewMode === "view-6") {
   //   const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
   //   return coverLinkHtml.replace('</a>', `${elegantCoverImgHtml}</a>`);
   // }
 
   // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
-  else if (currentViewMode === "image-masonry") {
+  else if (currentViewMode === "view-6") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
@@ -1696,7 +1696,7 @@ function createGuideHtml(guide) {
         </a>
       </div>
     `;
-  } else if (currentViewMode === "view-seven") {
+  } else if (currentViewMode === "view-4") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
@@ -1732,24 +1732,24 @@ function renderGuides(sourceArray = null) {
   }
 
   // === POCZĄTEK ZMIANY: Kompletna obsługa klas CSS ===
-  guideList.classList.toggle("view-text-only", currentViewMode === "text-only");
-  guideList.classList.toggle("view-full-text", currentViewMode === "full-text");
+  guideList.classList.toggle("view-1", currentViewMode === "view-1");
+  guideList.classList.toggle("view-2", currentViewMode === "view-2");
   guideList.classList.toggle(
-    "view-text-masonry",
-    currentViewMode === "text-masonry"
+    "view-3",
+    currentViewMode === "view-3"
   );
-  guideList.classList.toggle("view-grid", currentViewMode === "grid");
+  guideList.classList.toggle("view-5", currentViewMode === "grid");
   guideList.classList.toggle(
-    "view-image-only",
-    currentViewMode === "image-only"
+    "view-7",
+    currentViewMode === "view-7"
   );
   guideList.classList.toggle(
-    "view-image-masonry",
-    currentViewMode === "image-masonry"
+    "view-6",
+    currentViewMode === "view-6"
   );
-  guideList.classList.toggle("view-seven", currentViewMode === "view-seven");
-  guideList.classList.toggle("view-full", currentViewMode === "full");
-  guideList.classList.toggle("view-masonry", currentViewMode === "masonry");
+  guideList.classList.toggle("view-4", currentViewMode === "view-4");
+  guideList.classList.toggle("view-8", currentViewMode === "full");
+  guideList.classList.toggle("view-9", currentViewMode === "masonry");
   // === KONIEC ZMIANY ===
 
   guideList.innerHTML = "";
@@ -1792,8 +1792,8 @@ function renderGuides(sourceArray = null) {
 
     if (
       currentViewMode === "masonry" ||
-      currentViewMode === "text-masonry" ||
-      currentViewMode === "image-masonry"
+      currentViewMode === "view-3" ||
+      currentViewMode === "view-6"
     ) {
       setTimeout(() => applyMasonryLayout(1), 100);
     }
@@ -1846,8 +1846,8 @@ function renderGuides(sourceArray = null) {
 
   const isMasonry =
     currentViewMode === "masonry" ||
-    currentViewMode === "text-masonry" ||
-    currentViewMode === "image-masonry";
+    currentViewMode === "view-3" ||
+    currentViewMode === "view-6";
 
   if (isMasonry) {
     setTimeout(() => applyMasonryLayout(1), 100);
@@ -2702,7 +2702,7 @@ function initialize3dHoverEffect() {
   guideList.addEventListener(
     "mouseenter",
     (e) => {
-      const guide = e.target.closest(".guide-list.view-image-only .guide");
+      const guide = e.target.closest(".guide-list.view-7 .guide");
       if (guide) {
         guide.style.transition = "none";
         currentGuide = guide;
@@ -2715,7 +2715,7 @@ function initialize3dHoverEffect() {
     "mouseleave",
     (e) => {
       const guideTarget = e.target.closest(
-        ".guide-list.view-image-only .guide"
+        ".guide-list.view-7 .guide"
       );
       if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
         cancelAnimationFrame(animationFrameId);

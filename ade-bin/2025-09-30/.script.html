@@ -937,7 +937,7 @@
 
             const noCoverImg = document.documentElement.classList.contains("dark-mode") ? "ade-base-system/gfx/no_cover_dark.png" : "ade-base-system/gfx/no_cover_light.png";
 
-            if (currentViewMode === 'image-only') {
+            if (currentViewMode === 'view-7') {
                 const elegantCoverImgHtml = `<img src="${c}" alt="Okładka: ${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
                 return `
                     <div class="guide-cover-wrapper">
@@ -996,10 +996,10 @@
                 guideList.classList.add('random-draw');
             }
 
-            guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
-            guideList.classList.toggle('view-grid', currentViewMode === 'grid');
-            guideList.classList.toggle('view-masonry', currentViewMode === 'masonry');
-            guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
+            guideList.classList.toggle('view-7', currentViewMode === 'view-7');
+            guideList.classList.toggle('view-5', currentViewMode === 'grid');
+            guideList.classList.toggle('view-9', currentViewMode === 'masonry');
+            guideList.classList.toggle('view-1', currentViewMode === 'view-1');
 
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -1336,7 +1336,7 @@
             const updateContentView = () => {
                 let iconClass, title;
                 switch (currentViewMode) {
-                    case 'text-only':
+                    case 'view-1':
                         iconClass = 'fa-align-left';
                         title = lang.viewModeText;
                         break;
@@ -1344,7 +1344,7 @@
                         iconClass = 'fa-file-image';
                         title = lang.viewModeFull;
                         break;
-                    case 'image-only':
+                    case 'view-7':
                         iconClass = 'fa-th-large';
                         title = 'Widok: Elegancki';
                         break;
@@ -1372,7 +1372,7 @@
             });
 
             viewContentBtn.addEventListener('click', () => {
-                const viewModes = ['text-only', 'full', 'image-only', 'grid', 'masonry'];
+                const viewModes = ['view-1', 'full', 'view-7', 'grid', 'masonry'];
                 const currentIndex = viewModes.indexOf(currentViewMode);
                 currentViewMode = viewModes[(currentIndex + 1) % viewModes.length];
                 updateContentView();
@@ -2168,14 +2168,14 @@
             };
 
             guideList.addEventListener('mouseenter', (e) => {
-                const guide = e.target.closest('.guide-list.view-image-only .guide');
+                const guide = e.target.closest('.guide-list.view-7 .guide');
                 if (guide) {
                     currentGuide = guide;
                 }
             }, true);
 
             guideList.addEventListener('mouseleave', (e) => {
-                const guideTarget = e.target.closest('.guide-list.view-image-only .guide');
+                const guideTarget = e.target.closest('.guide-list.view-7 .guide');
                 if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
                     cancelAnimationFrame(animationFrameId);
                     requestAnimationFrame(() => {

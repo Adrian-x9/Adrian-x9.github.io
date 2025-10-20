@@ -1807,14 +1807,14 @@
         }
 
         /* Efekt hover dla trybu "tylko grafika" */
-        .guide-list.view-image-only .guide {
+        .guide-list.view-7 .guide {
             position: relative;
             overflow: hidden;
         }
 
-        .guide-list.view-image-only .guide-title,
-        .guide-list.view-image-only .guide-info,
-        .guide-list.view-image-only .guide-content-bottom>a:not(.cover-link) {
+        .guide-list.view-7 .guide-title,
+        .guide-list.view-7 .guide-info,
+        .guide-list.view-7 .guide-content-bottom>a:not(.cover-link) {
             opacity: 0;
             max-height: 0;
             margin: 0;
@@ -1822,7 +1822,7 @@
             pointer-events: none;
         }
 
-        .guide-list.view-image-only .guide:hover .guide-title {
+        .guide-list.view-7 .guide:hover .guide-title {
             position: absolute;
             bottom: 0;
             left: 0;
@@ -3314,7 +3314,7 @@
             // Stan widoku (grafika/tekst)
             let isImageOnlyView = false; // Domyślnie pokazujemy wszystko
             const updateContentView = () => {
-                guideList.classList.toggle('view-image-only', isImageOnlyView);
+                guideList.classList.toggle('view-7', isImageOnlyView);
                 viewContentBtn.innerHTML = isImageOnlyView ? '<i class="fas fa-align-left"></i>' : '<i class="fas fa-image"></i>';
                 viewContentBtn.classList.toggle('active', isImageOnlyView);
                 viewContentBtn.title = isImageOnlyView ? "Widok: Tekst (pokaż z opisem)" : "Widok: Grafika (ukryj opisy)";

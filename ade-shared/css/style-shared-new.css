@@ -957,8 +957,8 @@ html.dark-mode .guide-info {
   justify-content: center;
 }
 
-.guide-list:not(.view-text-only):not(.view-image-only):not(.view-grid):not(
-    .view-masonry
+.guide-list:not(.view-1):not(.view-7):not(.view-5):not(
+    .view-9
   )
   .guide-info-container {
   flex-grow: 1;
@@ -980,7 +980,7 @@ html.dark-mode .guide-info {
   margin-right: 5px;
 }
 
-.guide:not(.view-image-only):not(.view-grid):not(.view-masonry)
+.guide:not(.view-7):not(.view-5):not(.view-9)
   .guide-content-bottom
   > a:not(.cover-link) {
   margin-top: auto;
@@ -1022,7 +1022,7 @@ html.dark-mode .guide-info {
 }
 
 /* --- 8.3 Ukrywanie elementów w trybach widoku --- */
-.guide-list.view-text-only .guide-cover,
+.guide-list.view-1 .guide-cover,
 .guide-list.hide-covers .guide-cover {
   opacity: 0;
   max-height: 0;
@@ -1035,19 +1035,19 @@ html.dark-mode .guide-info {
   overflow: hidden;
 }
 
-.guide-list.view-text-only .guide {
+.guide-list.view-1 .guide {
   padding-top: 10px;
 }
-.guide-list.view-text-only .guide .guide-title {
+.guide-list.view-1 .guide .guide-title {
   margin-top: 0;
 }
 
-.guide-list.view-text-only .guide-info-container {
+.guide-list.view-1 .guide-info-container {
   display: none;
 }
 
 /* --- 8.4 Widok #4: Tylko Obraz (kwadraty z tytułem) --- */
-.guide-list.view-image-only .guide {
+.guide-list.view-7 .guide {
   padding: 0;
   overflow: hidden;
   display: flex;
@@ -1059,7 +1059,7 @@ html.dark-mode .guide-info {
   border-radius: 20px;
 }
 
-.guide-list.view-image-only .guide::before {
+.guide-list.view-7 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1076,11 +1076,11 @@ html.dark-mode .guide-info {
   z-index: 3;
   pointer-events: none;
 }
-.guide-list.view-image-only .guide:hover::before {
+.guide-list.view-7 .guide:hover::before {
   opacity: 1;
 }
 
-.guide-list.view-image-only .guide-cover-wrapper {
+.guide-list.view-7 .guide-cover-wrapper {
   height: auto;
   aspect-ratio: 1 / 1;
   overflow: hidden;
@@ -1097,7 +1097,7 @@ html.dark-mode .guide-info {
   box-shadow: none;
 }
 
-.guide-list.view-image-only .guide-text-content {
+.guide-list.view-7 .guide-text-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1109,15 +1109,15 @@ html.dark-mode .guide-info {
   background-color: transparent;
 }
 
-.guide-list.view-image-only .guide-info {
+.guide-list.view-7 .guide-info {
   display: none;
 }
 
-.guide-list.view-image-only .guide-action-link {
+.guide-list.view-7 .guide-action-link {
   display: none;
 }
 
-.guide-list.view-image-only .guide-title {
+.guide-list.view-7 .guide-title {
   font-size: 1.05em;
   font-weight: 600;
   margin: 0;
@@ -1130,16 +1130,16 @@ html.dark-mode .guide-info {
   width: 100%;
 }
 
-.guide-list.view-image-only .guide-title a {
+.guide-list.view-7 .guide-title a {
   color: var(--c-text-primary);
   text-decoration: none;
 }
-.guide-list.view-image-only .guide-title a:hover {
+.guide-list.view-7 .guide-title a:hover {
   text-decoration: underline;
 }
 
 /* --- 8.5 Widok #5: Siatka (Soft UI) --- */
-.guide-list.view-grid .guide {
+.guide-list.view-5 .guide {
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1151,19 +1151,19 @@ html.dark-mode .guide-info {
   box-shadow: 8px 8px 16px #d1c8c7, -8px -8px 16px #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.8);
 }
-html.dark-mode .guide-list.view-grid .guide {
+html.dark-mode .guide-list.view-5 .guide {
   background: #2c2c28;
   box-shadow: 8px 8px 16px #1e1b1b, -8px -8px 16px #3a3535;
   border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.guide-list.view-grid .guide a:not(.grid-action-button) {
+.guide-list.view-5 .guide a:not(.grid-action-button) {
   margin: 0;
   display: flex;
   flex-grow: 1;
 }
 
-.guide-list.view-grid .grid-title-bar {
+.guide-list.view-5 .grid-title-bar {
   padding: 10px 20px;
   font-weight: 600;
   font-size: 0.9em;
@@ -1174,11 +1174,11 @@ html.dark-mode .guide-list.view-grid .guide {
   color: #7b6d6c;
   flex-shrink: 0;
 }
-html.dark-mode .guide-list.view-grid .grid-title-bar {
+html.dark-mode .guide-list.view-5 .grid-title-bar {
   color: #b0a3a2;
 }
 
-.guide-list.view-grid .guide-cover-grid {
+.guide-list.view-5 .guide-cover-grid {
   border-radius: 0;
   box-shadow: none;
   height: 100%;
@@ -1187,17 +1187,17 @@ html.dark-mode .guide-list.view-grid .grid-title-bar {
   object-fit: cover;
 }
 
-.guide-list.view-grid .grid-action-bar {
+.guide-list.view-5 .grid-action-bar {
   padding: 8px 20px;
   text-align: right;
   flex-shrink: 0;
   background: rgba(0, 0, 0, 0.02);
 }
-html.dark-mode .guide-list.view-grid .grid-action-bar {
+html.dark-mode .guide-list.view-5 .grid-action-bar {
   background: rgba(0, 0, 0, 0.1);
 }
 
-.guide-list.view-grid .grid-action-button {
+.guide-list.view-5 .grid-action-button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -1211,38 +1211,38 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   box-shadow: 2px 2px 5px var(--c-shadow-soft);
   transition: transform 0.2s ease;
 }
-.guide-list.view-grid .grid-action-button:hover {
+.guide-list.view-5 .grid-action-button:hover {
   transform: scale(1.05);
 }
 
 /* --- 8.6 Widok #9 & #3: Masonry --- */
-.guide-list.view-masonry .guide-page,
-.guide-list.view-text-masonry .guide-page {
+.guide-list.view-9 .guide-page,
+.guide-list.view-3 .guide-page {
   display: block;
   position: relative;
 }
 
-.guide-list.view-masonry .guide,
-.guide-list.view-text-masonry .guide {
+.guide-list.view-9 .guide,
+.guide-list.view-3 .guide {
   position: absolute;
   transition: top 0.4s ease-out, left 0.4s ease-out;
   width: var(--box-width, 256px);
 }
 
-.guide-list.view-text-masonry .guide-info .guide-info-details {
+.guide-list.view-3 .guide-info .guide-info-details {
   display: none;
 }
-.guide-list.view-text-masonry .guide-info .guide-info-description {
+.guide-list.view-3 .guide-info .guide-info-description {
   display: block;
 }
 
 /* --- 8.7 Widok #6: Masonry Graficzne ("Glass & 3D") --- */
-.guide-list.view-image-masonry .guide-page {
+.guide-list.view-6 .guide-page {
   display: block;
   position: relative;
 }
 
-.guide-list.view-image-masonry .guide {
+.guide-list.view-6 .guide {
   position: absolute;
   width: var(--box-width, 256px);
   padding: 0;
@@ -1255,7 +1255,7 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   box-shadow: 0 4px 15px var(--c-shadow-medium);
 }
 
-.guide-list.view-image-masonry .guide::before {
+.guide-list.view-6 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1272,24 +1272,24 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   z-index: 3;
   pointer-events: none;
 }
-.guide-list.view-image-masonry .guide:hover::before {
+.guide-list.view-6 .guide:hover::before {
   opacity: 1;
 }
 
-.guide-list.view-image-masonry .cover-link-six {
+.guide-list.view-6 .cover-link-six {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.guide-list.view-image-masonry .guide-cover-elegant {
+.guide-list.view-6 .guide-cover-elegant {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
+.guide-list.view-6 .guide:hover .guide-cover-elegant {
   transform: scale(1.05);
 }
 
-.guide-list.view-image-masonry .glass-panel-six {
+.guide-list.view-6 .glass-panel-six {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1307,16 +1307,16 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
+html.dark-mode .guide-list.view-6 .glass-panel-six {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
   border-top: 1px solid var(--c-border-translucent);
 }
 
-.guide-list.view-image-masonry .guide:hover .glass-panel-six {
+.guide-list.view-6 .guide:hover .glass-panel-six {
   transform: translateY(0);
 }
 
-.guide-list.view-image-masonry .title-six {
+.guide-list.view-6 .title-six {
   display: block;
   font-size: 1.05em;
   font-weight: 700;
@@ -1326,12 +1326,12 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   transition: opacity 0.3s ease-out 0.2s;
 }
 
-.guide-list.view-image-masonry .guide:hover .title-six {
+.guide-list.view-6 .guide:hover .title-six {
   opacity: 1;
 }
 
 /* --- 8.8 Widok #7: "Glass" --- */
-.guide-list.view-seven .guide {
+.guide-list.view-4 .guide {
   padding: 0;
   overflow: hidden;
   position: relative;
@@ -1342,7 +1342,7 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   transition: transform 0.1s ease-out;
 }
 
-.guide-list.view-seven .guide::before {
+.guide-list.view-4 .guide::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1359,11 +1359,11 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   z-index: 3;
   pointer-events: none;
 }
-.guide-list.view-seven .guide:hover::before {
+.guide-list.view-4 .guide:hover::before {
   opacity: 1;
 }
 
-.guide-list.view-seven .guide-cover-wrapper-seven {
+.guide-list.view-4 .guide-cover-wrapper-seven {
   position: absolute;
   top: 0;
   left: 0;
@@ -1373,16 +1373,16 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   overflow: hidden;
 }
 
-.guide-list.view-seven .guide-cover-grid {
+.guide-list.view-4 .guide-cover-grid {
   width: 100%;
   height: 100%;
   transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-.guide-list.view-seven .guide:hover .guide-cover-grid {
+.guide-list.view-4 .guide:hover .guide-cover-grid {
   transform: scale(1.05);
 }
 
-.guide-list.view-seven .guide-text-content-seven {
+.guide-list.view-4 .guide-text-content-seven {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -1399,29 +1399,29 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   align-items: center;
   gap: 15px;
 }
-html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
+html:not(.dark-mode) .guide-list.view-4 .guide-text-content-seven {
   background-color: var(--c-overlay-light);
   border-top: 1px solid var(--c-border-translucent);
 }
 
-.guide-list.view-seven .guide:hover .guide-text-content-seven {
+.guide-list.view-4 .guide:hover .guide-text-content-seven {
   transform: translateY(0%);
 }
 
-.guide-list.view-seven .guide-title,
-.guide-list.view-seven .guide-action-link {
+.guide-list.view-4 .guide-title,
+.guide-list.view-4 .guide-action-link {
   opacity: 0;
   transition: opacity 0.3s ease-out;
   transition-delay: 0s;
 }
 
-.guide-list.view-seven .guide:hover .guide-title,
-.guide-list.view-seven .guide:hover .guide-action-link {
+.guide-list.view-4 .guide:hover .guide-title,
+.guide-list.view-4 .guide:hover .guide-action-link {
   opacity: 1;
   transition-delay: 0.2s;
 }
 
-.guide-list.view-seven .guide-title {
+.guide-list.view-4 .guide-title {
   font-size: 1.05em;
   font-weight: 600;
   line-height: 1.4;
@@ -1434,14 +1434,14 @@ html:not(.dark-mode) .guide-list.view-seven .guide-text-content-seven {
   overflow: hidden;
 }
 
-.guide-list.view-seven .guide-action-link a {
+.guide-list.view-4 .guide-action-link a {
   font-size: 0.9em;
   font-weight: bold;
   white-space: nowrap;
   color: var(--c-text-inverted);
   text-decoration: none;
 }
-html:not(.dark-mode) .guide-list.view-seven .guide-action-link a {
+html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
   color: var(--c-red-primary);
 }
 

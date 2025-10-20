@@ -682,7 +682,7 @@
             transform: scale(1);
         }
         
-        .guide-list.view-text-only .guide-cover,
+        .guide-list.view-1 .guide-cover,
         .guide-list.hide-covers .guide-cover {
             opacity: 0;
             max-height: 0;
@@ -695,10 +695,10 @@
             overflow: hidden;
         }
 
-        .guide-list.view-text-only .guide {
+        .guide-list.view-1 .guide {
              padding-top: 10px;
         }
-        .guide-list.view-text-only .guide .guide-title {
+        .guide-list.view-1 .guide .guide-title {
              margin-top: 0;
         }
 
@@ -728,9 +728,9 @@
             overflow: hidden;
         }
 
-        .guide-list.view-image-only .guide-title,
-        .guide-list.view-image-only .guide-info,
-        .guide-list.view-image-only .guide-content-bottom>a:not(.cover-link) {
+        .guide-list.view-7 .guide-title,
+        .guide-list.view-7 .guide-info,
+        .guide-list.view-7 .guide-content-bottom>a:not(.cover-link) {
             opacity: 0;
             max-height: 0;
             margin: 0;
@@ -738,14 +738,14 @@
             pointer-events: none;
         }
 
-        .guide-list.view-image-only .guide {
+        .guide-list.view-7 .guide {
             padding: 10px;
             justify-content: center;
             align-items: center;
             height: 100%;
         }
 
-        .guide-list.view-image-only .guide-cover {
+        .guide-list.view-7 .guide-cover {
             margin: 0;
             border: none !important;
             opacity: 1;
@@ -1829,14 +1829,14 @@
             flex-shrink: 0;
         }
         
-        .guide-list.view-image-only .guide {
+        .guide-list.view-7 .guide {
             position: relative;
             overflow: hidden;
         }
         
-        .guide-list.view-image-only .guide .guide-title,
-        .guide-list.view-image-only .guide .guide-info,
-        .guide-list.view-image-only .guide .guide-content-bottom>a:not(.cover-link) {
+        .guide-list.view-7 .guide .guide-title,
+        .guide-list.view-7 .guide .guide-info,
+        .guide-list.view-7 .guide .guide-content-bottom>a:not(.cover-link) {
             opacity: 0;
             max-height: 0;
             margin: 0;
@@ -1844,15 +1844,15 @@
             pointer-events: none;
         }
         
-        .guide-list.view-image-only .guide .guide-cover {
+        .guide-list.view-7 .guide .guide-cover {
             transition: transform 0.3s ease-out;
         }
         
-        .guide-list.view-image-only .guide:hover .guide-cover {
+        .guide-list.view-7 .guide:hover .guide-cover {
             transform: scale(1.05);
         }
         
-        .guide-list.view-image-only .guide::before {
+        .guide-list.view-7 .guide::before {
             content: '';
             position: absolute;
             top: 0;
@@ -1865,11 +1865,11 @@
             z-index: 1;
         }
 
-        .guide-list.view-image-only .guide:hover::before {
+        .guide-list.view-7 .guide:hover::before {
             transform: translateY(0);
         }
         
-        .guide-list.view-image-only .guide .guide-title {
+        .guide-list.view-7 .guide .guide-title {
             position: absolute;
             top: 50%;
             left: 10px;
@@ -1888,7 +1888,7 @@
             font-size: 1em;
         }
         
-        .guide-list.view-image-only .guide:hover .guide-title {
+        .guide-list.view-7 .guide:hover .guide-title {
             opacity: 1;
             transform: translateY(-50%) translateY(0);
         }
@@ -2977,8 +2977,8 @@
                  guideList.classList.add('random-draw');
             }
             
-            guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
-            guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
+            guideList.classList.toggle('view-7', currentViewMode === 'view-7');
+            guideList.classList.toggle('view-1', currentViewMode === 'view-1');
 
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -3281,10 +3281,10 @@
                 renderGuides(); 
                 let iconClass = 'fa-file-image';
                 let title = lang.viewModeFull;
-                if(currentViewMode === 'image-only') {
+                if(currentViewMode === 'view-7') {
                     iconClass = 'fa-image';
                     title = lang.viewModeImage;
-                } else if(currentViewMode === 'text-only') {
+                } else if(currentViewMode === 'view-1') {
                     iconClass = 'fa-align-left';
                     title = lang.viewModeText;
                 }
@@ -3304,9 +3304,9 @@
 
             viewContentBtn.addEventListener('click', () => {
                 if (currentViewMode === 'full') {
-                    currentViewMode = 'image-only';
-                } else if (currentViewMode === 'image-only') {
-                    currentViewMode = 'text-only';
+                    currentViewMode = 'view-7';
+                } else if (currentViewMode === 'view-7') {
+                    currentViewMode = 'view-1';
                 } else {
                     currentViewMode = 'full';
                 }

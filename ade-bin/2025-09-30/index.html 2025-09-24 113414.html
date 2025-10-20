@@ -718,7 +718,7 @@
             transform: scale(1);
         }
 
-        .guide-list.view-text-only .guide-cover,
+        .guide-list.view-1 .guide-cover,
         .guide-list.hide-covers .guide-cover {
             opacity: 0;
             max-height: 0;
@@ -731,11 +731,11 @@
             overflow: hidden;
         }
 
-        .guide-list.view-text-only .guide {
+        .guide-list.view-1 .guide {
             padding-top: 10px;
         }
 
-        .guide-list.view-text-only .guide .guide-title {
+        .guide-list.view-1 .guide .guide-title {
             margin-top: 0;
         }
 
@@ -781,9 +781,9 @@
             overflow: hidden;
         }
 
-        .guide-list.view-image-only .guide-title,
-        .guide-list.view-image-only .guide-info,
-        .guide-list.view-image-only .guide-content-bottom>a:not(.cover-link) {
+        .guide-list.view-7 .guide-title,
+        .guide-list.view-7 .guide-info,
+        .guide-list.view-7 .guide-content-bottom>a:not(.cover-link) {
             opacity: 0;
             max-height: 0;
             margin: 0;
@@ -825,7 +825,7 @@
         }
 
         /* Ogólne ustawienia dla kafelka w trybie "tylko obrazki" */
-        .guide-list.view-image-only .guide {
+        .guide-list.view-7 .guide {
             position: relative;
             overflow: hidden;
             padding: 0;
@@ -834,7 +834,7 @@
         }
 
         /* Styl okładki */
-        .guide-list.view-image-only .guide .guide-cover {
+        .guide-list.view-7 .guide .guide-cover {
             margin: 0;
             height: 100%;
             width: 100%;
@@ -843,7 +843,7 @@
         }
 
         /* Maska z animacją koloru */
-        .guide-list.view-image-only .guide::before {
+        .guide-list.view-7 .guide::before {
             content: '';
             position: absolute;
             top: 0;
@@ -859,7 +859,7 @@
         }
 
         /* Tytuł z efektem "kurtyny" */
-        .guide-list.view-image-only .guide .guide-title {
+        .guide-list.view-7 .guide .guide-title {
             position: absolute;
             top: 0;
             left: 50%;
@@ -879,13 +879,13 @@
         }
 
         /* Link wewnątrz tytułu */
-        .guide-list.view-image-only .guide .guide-title a {
+        .guide-list.view-7 .guide .guide-title a {
             color: var(--hover-text-color, #FFFFFF);
             text-decoration: none;
         }
 
         /* Styl dla Opisu */
-        .guide-list.view-image-only .guide .guide-info {
+        .guide-list.view-7 .guide .guide-info {
             position: absolute;
             /* >>> FIX: Obniżenie pozycji opisu, aby pasował do nowego paddingu <<< */
             bottom: 10px;
@@ -907,44 +907,44 @@
         }
 
         /* Obramowanie liter */
-        .guide-list.view-image-only .guide .guide-title a,
-        .guide-list.view-image-only .guide .guide-info {
+        .guide-list.view-7 .guide .guide-title a,
+        .guide-list.view-7 .guide .guide-info {
             -webkit-text-stroke-width: 0.5px;
             text-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
         }
 
-        body:not(.dark-mode) .guide-list.view-image-only .guide .guide-title a,
-        body:not(.dark-mode) .guide-list.view-image-only .guide .guide-info {
+        body:not(.dark-mode) .guide-list.view-7 .guide .guide-title a,
+        body:not(.dark-mode) .guide-list.view-7 .guide .guide-info {
             -webkit-text-stroke-color: rgba(80, 80, 80, 0.5);
         }
 
-        body.dark-mode .guide-list.view-image-only .guide .guide-title a,
-        body.dark-mode .guide-list.view-image-only .guide .guide-info {
+        body.dark-mode .guide-list.view-7 .guide .guide-title a,
+        body.dark-mode .guide-list.view-7 .guide .guide-info {
             -webkit-text-stroke-color: rgba(20, 20, 20, 0.7);
         }
 
         /* --- AKCJA HOVER / MOBILE TAP --- */
-        .guide-list.view-image-only .guide:hover .guide-cover,
-        .guide-list.view-image-only .guide.mobile-hover .guide-cover {
+        .guide-list.view-7 .guide:hover .guide-cover,
+        .guide-list.view-7 .guide.mobile-hover .guide-cover {
             transform: scale(1.1);
             filter: brightness(0.8);
         }
 
-        .guide-list.view-image-only .guide:hover::before,
-        .guide-list.view-image-only .guide.mobile-hover::before {
+        .guide-list.view-7 .guide:hover::before,
+        .guide-list.view-7 .guide.mobile-hover::before {
             opacity: 1;
             animation-play-state: running;
         }
 
-        .guide-list.view-image-only .guide:hover .guide-title,
-        .guide-list.view-image-only .guide.mobile-hover .guide-title {
+        .guide-list.view-7 .guide:hover .guide-title,
+        .guide-list.view-7 .guide.mobile-hover .guide-title {
             opacity: 1;
             transform: translate(-50%, 0);
             pointer-events: auto;
         }
 
-        .guide-list.view-image-only .guide:hover .guide-info,
-        .guide-list.view-image-only .guide.mobile-hover .guide-info {
+        .guide-list.view-7 .guide:hover .guide-info,
+        .guide-list.view-7 .guide.mobile-hover .guide-info {
             opacity: 1;
             max-height: 5.4em;
             transform: translate(-50%, 0);
@@ -952,7 +952,7 @@
 
         /* --- NOWY EFEKT HOVER v2 "WOW" - (WERSJA OSTATECZNA POPRAWIONA) - KONIEC --- */
 
-        .guide-list.view-image-only .guide-cover {
+        .guide-list.view-7 .guide-cover {
             margin: 0;
             border: none !important;
             opacity: 1;
@@ -3309,8 +3309,8 @@
                 guideList.classList.add('random-draw');
             }
 
-            guideList.classList.toggle('view-image-only', currentViewMode === 'image-only');
-            guideList.classList.toggle('view-text-only', currentViewMode === 'text-only');
+            guideList.classList.toggle('view-7', currentViewMode === 'view-7');
+            guideList.classList.toggle('view-1', currentViewMode === 'view-1');
 
             guideList.innerHTML = "";
             if (lazyLoadObserver) lazyLoadObserver.disconnect();
@@ -3646,10 +3646,10 @@
                 renderGuides();
                 let iconClass = 'fa-file-image';
                 let title = lang.viewModeFull;
-                if (currentViewMode === 'image-only') {
+                if (currentViewMode === 'view-7') {
                     iconClass = 'fa-image';
                     title = lang.viewModeImage;
-                } else if (currentViewMode === 'text-only') {
+                } else if (currentViewMode === 'view-1') {
                     iconClass = 'fa-align-left';
                     title = lang.viewModeText;
                 }
@@ -3669,9 +3669,9 @@
 
             viewContentBtn.addEventListener('click', () => {
                 if (currentViewMode === 'full') {
-                    currentViewMode = 'image-only';
-                } else if (currentViewMode === 'image-only') {
-                    currentViewMode = 'text-only';
+                    currentViewMode = 'view-7';
+                } else if (currentViewMode === 'view-7') {
+                    currentViewMode = 'view-1';
                 } else {
                     currentViewMode = 'full';
                 }
