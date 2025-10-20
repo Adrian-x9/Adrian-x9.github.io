@@ -36,6 +36,7 @@
 
   --c-shadow-soft: rgba(0, 0, 0, 0.1);
   --c-shadow-medium: rgba(0, 0, 0, 0.2);
+  --c-view7-shadow: rgba(0, 0, 0, 0.25);
 
   /* Kolory specyficzne dla komponentów */
   --c-slider-track: rgba(0, 0, 0, 0.1);
@@ -77,6 +78,7 @@ html.dark-mode {
 
   --c-shadow-soft: rgba(0, 0, 0, 0.4);
   --c-shadow-medium: rgba(0, 0, 0, 0.3);
+  --c-view7-shadow: rgba(255, 255, 255, 0.15);
 
   /* Kolory specyficzne dla komponentów */
   --c-slider-track: rgba(255, 255, 255, 0.2);
@@ -1068,14 +1070,14 @@ html.dark-mode .guide-info {
   display: none;
 }
 
-/* --- 8.4 Widok #7: Tylko Obraz --- */
+/* --- 8.4 Widok #7: Obraz + tekst, kafelek 3D */
 .guide-list.view-7 .guide {
   padding: 0;
   /* overflow: hidden; USUNIĘTE */
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  aspect-ratio: 3 / 4;
+  aspect-ratio: 5 / 6;
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
     rotateY(var(--rotate-y, 0deg));
@@ -1163,17 +1165,17 @@ html.dark-mode .guide-info {
 }
 
 .guide-list.view-7 .view-7-cover {
-  flex-basis: 61.8%;
+  flex-basis: 70%;
   background-size: cover;
   background-position: center;
   margin-top: 0;
-  filter: drop-shadow(0 6px 4px var(--c-shadow-medium));
+  filter: drop-shadow(0 6px 4px var(--c-view7-shadow)); /* ZMIANA ZMIENNEJ */
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
 }
 
 .guide-list.view-7 .view-7-text {
-  flex-basis: 38.2%;
+  flex-basis: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
