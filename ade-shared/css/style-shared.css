@@ -1577,11 +1577,11 @@ html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
 }
 
 /* --- 8.9 Widok #8: Minimalistyczny z kurtyną --- */
-.guide-list.view-8 .guide {
-  padding: 0;
-  overflow: hidden; /* Niezbędne, aby kurtyna nie "wystawała" poza kafelek */
-  display: flex;
-  flex-direction: column;
+.guide-list.view-8 .guide-cover {
+  aspect-ratio: 3 / 4; /* Narzuca obrazkowi proporcje 3:4 (bardziej pionowe niż kwadrat) */
+  width: 100%;
+  height: auto; /* Wysokość jest teraz automatyczna, dostosuje się do proporcji */
+  object-fit: cover;
 }
 
 /* Cały kafelek jako klikalny link */
@@ -1623,22 +1623,27 @@ html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
 /* "Szklana Kurtyna" (Overlay) */
 .guide-list.view-8 .view-8-overlay {
   position: absolute;
-  inset: 0; /* Rozciąga overlay na cały kafelek */
+  inset: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  z-index: 3; /* Kurtyna jest na samej górze */
+  z-index: 3;
 
-  /* Efekt "szkła" */
-  background-color: var(--c-bg-panel-glass);
+  /* <<< KLUCZOWA POPRAWKA: Większa przezroczystość */
+  background-color: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
-  /* Animacja - domyślnie kurtyna jest ukryta pod kafelkiem */
   opacity: 0;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+}
+
+/* ORAZ DODAJ PONIŻSZY BLOK DLA TRYBU CIEMNEGO */
+
+html.dark-mode .guide-list.view-8 .view-8-overlay {
+    background-color: rgba(30, 30, 30, 0.75); /* Dedykowany, ciemny kolor z większą przezroczystością */
 }
 
 .guide-list.view-8 .guide:hover .view-8-overlay {
@@ -1667,6 +1672,93 @@ html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
 
 .guide-list.view-8 .guide:hover .view-8-description {
   opacity: 1; /* Tekst staje się widoczny po wsunięciu kurtyny */
+}
+
+/* --- 8.9 Widok #8: Minimalistyczny z kurtyną (WERSJA POPRAWIONA) --- */
+.guide-list.view-8 .guide {
+  padding: 0; /* 1. Resetuje globalny padding, aby obrazek zajął całą szerokość */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Poprawka proporcji obrazka w widoku #8 */
+.guide-list.view-8 .guide-cover {
+  aspect-ratio: 3 / 4;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border: none;
+  margin: 0;
+  box-shadow: none;
+  border-radius: 0;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.guide-list.view-8 .guide:hover .guide-cover {
+  transform: scale(1.05);
+}
+
+/* Cały kafelek jako klikalny link */
+.guide-list.view-8 .view-8-link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+  margin-top: 0; /* Zapobiega dziedziczeniu niechcianego marginesu */
+}
+
+/* Styl Tytułu */
+.guide-list.view-8 .guide-title {
+  padding: 15px 20px; /* 2. Nadaje padding boczny tylko tytułowi */
+  margin-bottom: 0;
+  flex-shrink: 0;
+  z-index: 2;
+  position: relative;
+}
+
+/* "Szklana Kurtyna" (Overlay) */
+.guide-list.view-8 .view-8-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 3;
+  background-color: rgba(255, 255, 255, 0.75); /* 3. Większa przezroczystość */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(100%);
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+}
+
+html.dark-mode .guide-list.view-8 .view-8-overlay {
+  background-color: rgba(30, 30, 30, 0.75);
+}
+
+.guide-list.view-8 .guide:hover .view-8-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Tekst opisu wewnątrz kurtyny */
+.guide-list.view-8 .view-8-description {
+  font-size: 0.9em;
+  color: var(--c-text-primary);
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 8;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+}
+
+.guide-list.view-8 .guide:hover .view-8-description {
+  opacity: 1;
 }
 
 /* --- 8.10 Widok #9: Atrakcyjne Masonry z animacją --- */
