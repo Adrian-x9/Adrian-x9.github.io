@@ -1012,6 +1012,24 @@ html.dark-mode .guide-info {
   margin-top: auto;
 }
 
+/* --- Poprawka dla Widoku #2: Symetria przycisku --- */
+.guide-list.view-2 .guide-content-bottom {
+  justify-content: flex-start; /* Zamiast rozpychać, układamy od góry */
+}
+
+.guide-list.view-2 .guide-info-container {
+  padding-bottom: 10px; /* Dodajemy mały odstęp między opisem a przyciskiem */
+}
+
+/* --- Poprawka dla Widoku #3: Symetria przycisku --- */
+.guide-list.view-3 .guide-content-bottom {
+  justify-content: flex-start;
+}
+
+.guide-list.view-3 .guide-info-container {
+  padding-bottom: 10px;
+}
+
 /* --- 8.2 Obrazek (.guide-cover) --- */
 .guide-cover {
   max-width: 100%;
