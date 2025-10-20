@@ -1788,16 +1788,14 @@ function createGuideHtml(guide) {
             <a href="${hrefAction}" onclick="${onclickAction}" class="guide-title">${titleText}</a>
         </div>
     `;
-  } else if (currentViewMode === "view-8") {
-    // Specjalna, uproszczona struktura dla Widoku #8
-    const onclickAction =
-      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+  } else if (currentViewMode === 'view-8') {
+    // === POCZĄTEK POPRAWKI: Przywrócony i poprawiony blok dla Widoku #8 ===
+    const onclickAction = (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
 
     const coverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    const description = guide.linkData.description || ""; // Pobieramy opis, tak jak w widoku #3
+    const description = guide.linkData.description || "";
 
-    // Zwracamy nową strukturę: cały kafelek jest linkiem, a w środku jest overlay
     return `
         <a href="${hrefAction}" onclick="${onclickAction}" class="view-8-link">
             ${titleHtml}
@@ -1807,8 +1805,38 @@ function createGuideHtml(guide) {
             </div>
         </a>
     `;
+    // === KONIEC POPRAWKI ===
+  } else if (currentViewMode === "view-9") {
+    // Specjalna struktura dla atrakcyjnego widoku Masonry #9
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    const coverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+
+    const allDetailsHtml = `
+        <div class="guide-info-details">
+            <i class="fas fa-calendar-alt"></i> ${guide.date} ${guide.time}<br>
+            <i class="fas fa-file-alt"></i> ${lang.guideInfoFormat}: ${guide.format.toUpperCase()}<br>
+            <i class="fas fa-database"></i> ${lang.guideInfoSize}: ${guide.sizeMB} MB
+        </div>
+        <div class="guide-info-description">${guide.linkData.description || ""}</div>
+    `;
+
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="view-9-link">
+            <div class="view-9-image-container">
+                ${coverImgHtml}
+            </div>
+            <div class="view-9-content">
+                ${titleHtml}
+                <div class="view-9-details">
+                    ${allDetailsHtml}
+                </div>
+            </div>
+        </a>
+    `;
   } else {
-    // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
+    // Domyślny, pełny widok (używany teraz jako fallback)
     const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
     return `${titleHtml}<div class="guide-content-bottom"><div class="guide-info-container">${infoHtml}</div><a href="#" class="cover-link" onclick="${
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || ""
