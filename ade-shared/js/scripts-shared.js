@@ -1734,21 +1734,16 @@ function createGuideHtml(guide) {
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
-    const imageHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
 
-    return `
-        <div class="guide-cover-wrapper">
-            <a href="${hrefAction}" onclick="${onclickAction}" class="cover-link">${imageHtml}</a>
-        </div>
-        <div class="guide-text-content">
-            <div class="guide-title"><a href="${hrefAction}" onclick="${onclickAction}">${titleText}</a></div>
-            <div class="guide-action-link">${actionLinkHtml}</div>
+    // NOWA STRUKTURA: Link `<a>` jako kontener tła obrazu i osobny `<div>` dla tekstu
+    const imageContainerHtml = `<a href="${hrefAction}" onclick="${onclickAction}" class="view-7-cover" style="background-image: url('${c}')"></a>`;
+    const textContainerHtml = `
+        <div class="view-7-text">
+            <div class="guide-title">${titleText}</div>
         </div>
     `;
-  //...
-  }
-  // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml // <-- Komentarz może pozostać lub zostać usunięty, logika jest poprawna
-  else if (currentViewMode === "view-6") {
+    return imageContainerHtml + textContainerHtml;
+  } else if (currentViewMode === "view-6") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
@@ -1817,19 +1812,10 @@ function renderGuides(sourceArray = null) {
   // === POCZĄTEK ZMIANY: Kompletna obsługa klas CSS ===
   guideList.classList.toggle("view-1", currentViewMode === "view-1");
   guideList.classList.toggle("view-2", currentViewMode === "view-2");
-  guideList.classList.toggle(
-    "view-3",
-    currentViewMode === "view-3"
-  );
+  guideList.classList.toggle("view-3", currentViewMode === "view-3");
   guideList.classList.toggle("view-5", currentViewMode === "view-5");
-  guideList.classList.toggle(
-    "view-7",
-    currentViewMode === "view-7"
-  );
-  guideList.classList.toggle(
-    "view-6",
-    currentViewMode === "view-6"
-  );
+  guideList.classList.toggle("view-7", currentViewMode === "view-7");
+  guideList.classList.toggle("view-6", currentViewMode === "view-6");
   guideList.classList.toggle("view-4", currentViewMode === "view-4");
   guideList.classList.toggle("view-8", currentViewMode === "view-8");
   guideList.classList.toggle("view-9", currentViewMode === "view-9");
@@ -2812,9 +2798,7 @@ function initialize3dHoverEffect() {
   guideList.addEventListener(
     "mouseleave",
     (e) => {
-      const guideTarget = e.target.closest(
-        ".guide-list.view-7 .guide"
-      );
+      const guideTarget = e.target.closest(".guide-list.view-7 .guide");
       if (currentGuide && (!guideTarget || guideTarget === currentGuide)) {
         cancelAnimationFrame(animationFrameId);
         currentGuide.style.transition = "transform 0.4s ease-out";

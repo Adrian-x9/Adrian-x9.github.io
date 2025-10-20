@@ -1068,20 +1068,18 @@ html.dark-mode .guide-info {
   display: none;
 }
 
-/* --- 8.4 Widok #4: Tylko Obraz (kwadraty z tytułem) --- */
+/* --- 8.4 Widok #7: Tylko Obraz --- */
 .guide-list.view-7 .guide {
   padding: 0;
-  overflow: hidden;
-  padding: 0;
-  overflow: hidden;
-  display: grid; /* ZMIANA: Przejście na stabilny Grid */
-  grid-template-rows: 61.8fr 38.2fr;
+  /* overflow: hidden; USUNIĘTE */
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  aspect-ratio: 3 / 4;
   transform-style: preserve-3d;
   transform: perspective(1000px) rotateX(var(--rotate-x, 0deg))
     rotateY(var(--rotate-y, 0deg));
   transition: transform 0.1s ease-out;
-  border-radius: 20px;
-  aspect-ratio: 3 / 4;
 }
 
 .guide-list.view-7 .guide::before {
@@ -1162,6 +1160,29 @@ html.dark-mode .guide-info {
 }
 .guide-list.view-7 .guide-title a:hover {
   text-decoration: underline;
+}
+
+.guide-list.view-7 .view-7-cover {
+  flex-basis: 61.8%;
+  background-size: cover;
+  background-position: center;
+  margin-top: 0;
+  filter: drop-shadow(0 6px 4px var(--c-shadow-medium));
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.guide-list.view-7 .view-7-text {
+  flex-basis: 38.2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  background: var(--c-bg-body);
+  box-shadow: inset 0 4px 8px var(--c-shadow-soft);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 /* --- 8.5 Widok #5: Siatka (Soft UI) --- */
