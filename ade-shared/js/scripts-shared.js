@@ -685,20 +685,20 @@ async function processData(text) {
       let linkData = {
         description: offlineDesc,
       };
-      if (format === "link" && !isOffline) {
-        try {
-          const response = await fetch(
-            `${config.paths.dataFolderName}/${filename}`
-          );
-          if (response.ok) {
-            linkData.description = await response.text();
-          } else if (!offlineDesc) {
-            linkData.description = "Błąd wczytywania opisu.";
-          }
-        } catch (e) {
-          if (!offlineDesc) linkData.description = "Błąd wczytywania opisu.";
-        }
-      }
+      // if (format === "link" && !isOffline) {
+      //   try {
+      //     const response = await fetch(
+      //       `${config.paths.dataFolderName}/${filename}`
+      //     );
+      //     if (response.ok) {
+      //       linkData.description = await response.text();
+      //     } else if (!offlineDesc) {
+      //       linkData.description = "Błąd wczytywania opisu.";
+      //     }
+      //   } catch (e) {
+      //     if (!offlineDesc) linkData.description = "Błąd wczytywania opisu.";
+      //   }
+      // }
       guides.push({
         title,
         format,
