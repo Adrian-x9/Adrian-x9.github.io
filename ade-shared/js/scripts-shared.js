@@ -1097,31 +1097,33 @@ window.onload = function () {
   if (controlPanel) {
     controlPanel.classList.add("animated-control-panel");
     document.querySelector(".top-header")?.classList.add("animated-header");
-    document.querySelector(".glass-status")?.classList.add("animated-status-bar"); 
+    document
+      .querySelector(".glass-status")
+      ?.classList.add("animated-status-bar");
     document.querySelector(".footer")?.classList.add("animated-footer");
   }
 
   updateLocationBasedStatus();
 
   // FIX: Automatyczne czyszczenie klas po zakończeniu animacji wejścia
-const animatedElements = document.querySelectorAll(
-  ".animated-header, .animated-status-bar, .animated-control-panel, .animated-footer, .animated-pagination"
-);
-animatedElements.forEach((el) => {
-  el.addEventListener(
-    "animationend",
-    () => {
-      el.classList.remove(
-        "animated-header",
-        "animated-status-bar",
-        "animated-control-panel",
-        "animated-footer",
-        "animated-pagination"
-      );
-    },
-    { once: true }
+  const animatedElements = document.querySelectorAll(
+    ".animated-header, .animated-status-bar, .animated-control-panel, .animated-footer, .animated-pagination"
   );
-});
+  animatedElements.forEach((el) => {
+    el.addEventListener(
+      "animationend",
+      () => {
+        el.classList.remove(
+          "animated-header",
+          "animated-status-bar",
+          "animated-control-panel",
+          "animated-footer",
+          "animated-pagination"
+        );
+      },
+      { once: true }
+    );
+  });
 };
 
 function toggleMinimizeView() {
@@ -1591,11 +1593,10 @@ function generateGuides() {
 }
 
 function initializeNewButtons() {
-  document.getElementById("systemInfoLink").href = config.paths.urlAbout; // <-- DODAJ TĘ LINIĘ
   document.getElementById("systemInfoLink").href = config.paths.urlAbout; // DODAJ TĘ LINIĘ
-  mainResetBtn.addEventListener("click", resetView);
-
   document.getElementById("statusInfoBtn").href = config.paths.urlAbout;
+
+  mainResetBtn.addEventListener("click", resetView);
 
   // USUNIĘTO DWIE LINIJKI POWODUJĄCE BŁĄD, KTÓRE ODNOSIŁY SIĘ DO STAREJ LOGIKI JĘZYKÓW
 
@@ -1637,13 +1638,13 @@ function initializeDisplayPanel() {
   const viewPlayBtn = document.getElementById("viewPlayBtn");
 
   const viewModes = [
-    "text-only", // 1
-    "full-text", // 2
-    "text-masonry", // 3
-    "image-only", // 4: Grafika proporcjonalna
-    "grid", // 5: Grafika w kwadracie
+    "text-only", // 1 Tekst
+    "full-text", // 2 Tekst + opis
+    "text-masonry", // 3 Tekst Masonry
+    "view-seven", // 4: Grafika proporcjonalna - docięta w kwadrat
+    "grid", // 5: Tu mamy chwilowo burdel, popracujemy
     "image-masonry", // 6: Masonry graficzne
-    "view-seven", // 7: "Glass"
+    "image-only", // 7: Kafelki - do zrobienia
     "full", // 8: Pełny
     "masonry", // 9: Masonry mieszane
   ];
@@ -1907,6 +1908,7 @@ function createGuideHtml(guide) {
         </a>
       </div>
     `;
+  
   } else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
@@ -1917,10 +1919,10 @@ function createGuideHtml(guide) {
             ${gridCoverImgHtml}
         </a>
         <div class="guide-text-content-seven">
-            <div class="guide-title">${titleText}</div>
-            <div class="guide-action-link">${actionLinkHtml}</div>
+            <a href="${hrefAction}" onclick="${onclickAction}" class="guide-title">${titleText}</a>
         </div>
     `;
+
   } else {
     // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
     const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;
