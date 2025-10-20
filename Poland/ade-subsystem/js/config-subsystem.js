@@ -10,15 +10,15 @@ const config2 = {
     showLanguageButton: true,
 
     screenSaverTimeout: 20,
-    defaultBgVideo: 1,
+    defaultBgVideo: 12,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 35,
+    bgVideoEndNum: 42,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
 
-    defaultSort: "nameAsc",
-    defaultRows: 2,
+    defaultSort: "view-6",
+    defaultRows: 6,
     defaultSizePercent: 100,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
@@ -33,32 +33,32 @@ const config2 = {
     defaultVideoExpanded: false,
     predefinedFilters: [
       {
-        label: "ADE",
-        search: "ade",
+        label: "Gliwice",
+        search: "gliwice",
       },
       {
-        label: "E-booki",
-        search: "e-book",
+        label: "Warszawa",
+        search: "warszawa",
       },
       {
-        label: "Galerie",
-        search: "galeri",
+        label: "Kraków",
+        search: "kraków",
       },
       {
-        label: "Hiszpania",
-        search: "Hiszpania",
+        label: "Wrocław",
+        search: "wrocław",
       },
       {
-        label: "Niemcy",
-        search: "Niemcy",
+        label: "Toruń",
+        search: "toruń",
       },
       {
-        label: "Polska",
-        search: "Polska",
+        label: "Morze Bałtyckie",
+        search: "morze",
       },
       {
-        label: "Poradniki",
-        search: "Poradniki",
+        label: "Polskie góry",
+        search: "góry",
       },
     ],
 
