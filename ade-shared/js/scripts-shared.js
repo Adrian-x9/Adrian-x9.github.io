@@ -1870,13 +1870,24 @@ function createGuideHtml(guide) {
             <div class="guide-action-link">${actionLinkHtml}</div>
         </div>
     `;
-  } else if (currentViewMode === "image-masonry") {
-    // Pozostawiamy logikę dla masonry bez zmian
-    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
-    return coverLinkHtml.replace("</a>", `${elegantCoverImgHtml}</a>`);
+  //...
   }
-  // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml
+  // ZNAJDŹ I ZASTĄP TEN BLOK W FUNKCJI createGuideHtml // <-- Komentarz może pozostać lub zostać usunięty, logika jest poprawna
   else if (currentViewMode === "image-masonry") {
+    const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
+    const onclickAction =
+      (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
+    const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
+    // DODAJEMY NOWY div.glass-panel-six Z TYTUŁEM WEWNĄTRZ
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="cover-link-six">
+            ${elegantCoverImgHtml}
+        </a>
+        <div class="glass-panel-six">
+            <span class="title-six">${titleText}</span>
+        </div>
+    `;
+  } else if (currentViewMode === "grid") {
     const elegantCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-elegant" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
@@ -1908,7 +1919,6 @@ function createGuideHtml(guide) {
         </a>
       </div>
     `;
-  
   } else if (currentViewMode === "view-seven") {
     const gridCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover-grid" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const onclickAction =
@@ -1922,7 +1932,6 @@ function createGuideHtml(guide) {
             <a href="${hrefAction}" onclick="${onclickAction}" class="guide-title">${titleText}</a>
         </div>
     `;
-
   } else {
     // Domyślnie 'full' (Widok #8) i 'masonry' (Widok #9)
     const defaultCoverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');this.style.opacity=1;this.style.transform='scale(1)';">`;

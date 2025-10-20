@@ -1303,30 +1303,31 @@ html.dark-mode .guide-list.view-grid .grid-action-bar {
   height: 100%;
 }
 
+.guide-list.view-image-masonry .guide a.cover-link-six {
+    margin-top: 0;
+}
+
 .guide-list.view-image-masonry .guide-cover-elegant {
   transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
 .guide-list.view-image-masonry .guide:hover .guide-cover-elegant {
-  transform: scale(1.05);
+  transform: scale(1.05); /* EFEKT ZOOMU */
 }
 
 .guide-list.view-image-masonry .glass-panel-six {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 10px 12px;
-  box-sizing: border-box;
-  background: linear-gradient(
-    to top,
-    rgba(255, 255, 255, 0.6),
-    rgba(255, 255, 255, 0.3)
-  );
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border-top: 1px solid rgba(255, 255, 255, 0.7);
-  transform: translateY(100%);
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  inset: 0; /* Rozciąga na cały kafelek */
+  display: flex; /* Umożliwia centrowanie */
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.6); /* Ciemniejszy overlay */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0; /* Domyślnie niewidoczny */
+  transition: opacity 0.4s ease;
+  pointer-events: none; /* Zapobiega blokowaniu linku pod spodem */
 }
 html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.4));
@@ -1334,17 +1335,18 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
 }
 
 .guide-list.view-image-masonry .guide:hover .glass-panel-six {
-  transform: translateY(0);
+  opacity: 1; /* Pokaż overlay */
 }
 
 .guide-list.view-image-masonry .title-six {
-  display: block;
-  font-size: 1.05em;
+  font-size: 1.2em;
   font-weight: 700;
-  color: var(--c-text-inverted);
-  text-shadow: 0 1px 2px var(--c-shadow-soft);
+  color: #fff; /* Zawsze biały dla kontrastu */
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+  text-align: center;
+  transform: translateY(15px); /* Przesunięty w dół */
   opacity: 0;
-  transition: opacity 0.3s ease-out 0.2s;
+  transition: opacity 0.3s ease-out 0.1s, transform 0.3s ease-out 0.1s;
 }
 
 .guide-list.view-image-masonry .guide a.cover-link {
@@ -1353,6 +1355,7 @@ html.dark-mode .guide-list.view-image-masonry .glass-panel-six {
 
 .guide-list.view-image-masonry .guide:hover .title-six {
   opacity: 1;
+  transform: translateY(0); /* Animuj wejście tytułu */
 }
 
 /* --- 8.8 Widok #7: "Glass" --- */
