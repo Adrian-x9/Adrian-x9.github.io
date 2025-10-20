@@ -200,6 +200,11 @@ let pausedTime = 0;
 let tappedGuide = null;
 let currentTheme = "light";
 let isCarouselShuffleActive = false;
+let currentThemeIndex = 0;
+let finalThemeList = []; // Ta lista będzie dynamicznie budowana
+const THEME_STORAGE_KEY = `visudir_theme_index_${
+  config.pageSettings.pageKey || "default"
+}`;
 
 const lang = languageStrings[config.language.current] || languageStrings.pl;
 
@@ -1162,6 +1167,10 @@ function toggleLightboxMinimize() {
     : "fas fa-chevron-down";
 }
 
+/**
+ * Resetuje wszystkie ustawienia widoku do wartości domyślnych,
+ * włączając w to motyw kolorystyczny.
+ */
 function resetView() {
   stopPlayAnimation();
   stopCarousel();
@@ -1196,6 +1205,9 @@ function resetView() {
   generatorMode = config.pageSettings.defaultGeneratorMode;
   saveToLocalStorage("generator_mode", generatorMode);
   updateGeneratorModeBtn();
+
+  // Resetuje motyw do domyślnego (zawsze na pozycji 0 na liście).
+  applyTheme(0);
 
   applyFilters();
   renderGuides();
@@ -3513,6 +3525,95 @@ function restoreUiFromScreenSaver() {
   }
 }
 
+/**
+ * Stosuje wybrany motyw kolorystyczny, zapisuje wybór i aktualizuje stan.
+ * @param {number} index - Indeks motywu z finalnej, połączonej listy.
+ */
+function applyTheme(index) {
+  if (!finalThemeList || !finalThemeList[index]) {
+    return;
+  }
+
+  const themeLink = document.getElementById("dynamic-theme");
+  const newThemePath = finalThemeList[index];
+
+  if (themeLink) {
+    themeLink.href = newThemePath;
+  }
+
+  currentThemeIndex = index;
+  saveToLocalStorage(THEME_STORAGE_KEY, index);
+}
+
+/**
+ * Zmienia motyw na następny lub poprzedni w pętli (karuzela).
+ * @param {number} direction - Kierunek zmiany (-1 dla poprzedniego, 1 dla następnego).
+ */
+function changeTheme(direction) {
+  if (!finalThemeList || finalThemeList.length === 0) return;
+
+  // Nowa, prosta i niezawodna logika. Bez skomplikowanej matematyki.
+  let newIndex = currentThemeIndex + direction;
+  console.log("1:",newIndex);
+
+  if (newIndex >= (finalThemeList.length-1)) {
+    // Jeśli wyszliśmy "za" listę, wróć na początek.
+    newIndex = 1;
+  } else if (newIndex <= 0) {
+    // Jeśli cofnęliśmy "przed" początek, idź na koniec.
+    newIndex = finalThemeList.length - 1;
+  }
+
+  console.log("2:",newIndex);
+  
+  applyTheme(newIndex);
+}
+
+/**
+ * Inicjalizuje przełącznik motywów, buduje finalną listę, dodaje listenery
+ * i wczytuje zapisany motyw.
+ */
+function initializeThemeSwitcher() {
+  const globalThemes = config.pageSettings.colorThemes || [];
+  const defaultSubsystemTheme = config.pageSettings.defaultThemeFile;
+  
+  // Pobierz poprawny prefix ścieżki (np. ".." dla podsystemu lub "." dla głównego)
+  const prefix = config.pageSettings.pathCorrection || '.';
+
+  // Budowanie finalnej listy motywów
+  if (defaultSubsystemTheme) {
+    // Podsystem ma swój domyślny motyw, wstawiamy go na początek.
+    // Pozostałe, globalne motywy otrzymują poprawny prefix.
+    finalThemeList = [
+      defaultSubsystemTheme, 
+      ...globalThemes.map(theme => (theme ? `${prefix}/${theme}` : ''))
+    ];
+  } else {
+    // Brak domyślnego motywu podsystemu, używamy globalnej listy z prefixem.
+    finalThemeList = globalThemes.map(theme => (theme ? `${prefix}/${theme}` : ''));
+  }
+
+  // Ukryj przyciski, jeśli jest tylko jeden (lub zero) motywów do wyboru
+  const prevBtn = document.getElementById('themePrevBtn');
+  const nextBtn = document.getElementById('themeNextBtn');
+  if (finalThemeList.length <= 1) {
+    if (prevBtn) prevBtn.style.display = 'none';
+    if (nextBtn) nextBtn.style.display = 'none';
+    return;
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => changeTheme(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => changeTheme(1));
+
+  // Wczytaj zapisany motyw lub zastosuj domyślny (indeks 0)
+  const savedThemeIndex = parseInt(getFromLocalStorage(THEME_STORAGE_KEY), 10);
+  if (!isNaN(savedThemeIndex) && savedThemeIndex < finalThemeList.length) {
+    applyTheme(savedThemeIndex);
+  } else {
+    applyTheme(0);
+  }
+}
+
 // Wywołaj inicjalizację karuzeli po załadowaniu strony
 initializeLangCarousel();
 
@@ -3523,3 +3624,4 @@ initializeMobileHover();
 initialize3dHoverEffect();
 initializeCurtainControls();
 updateStatusLangDisplay();
+initializeThemeSwitcher();

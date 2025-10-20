@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.4.18", // Remake of all views / Przebudowa wszystkich widoków
+  version: "v2.5.0", // Color themes added / Dodano motywy kolorystyczne
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-20", // Last update date YYYY-MM-DD
 
@@ -42,6 +42,17 @@ const config1 = {
 
     defaultVideoExpanded: false,
     predefinedFilters: [{ label: "ADE", search: "ade" }],
+
+    colorThemes: [
+      "ade-shared/css/style-shared-red.css",
+      "ade-shared/css/style-shared-green.css",
+      "ade-shared/css/style-shared-blue.css",
+      "ade-shared/css/style-shared-brown.css",
+      "ade-shared/css/style-shared-orange.css",
+      "ade-shared/css/style-shared-violet.css",
+      "ade-shared/css/style-shared-teal.css",
+      "ade-shared/css/style-shared-gray.css",
+    ],
   },
 
   /// Shared settings and paths // Ustawienia i ścieżki wspólne

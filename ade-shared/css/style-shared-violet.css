@@ -1,0 +1,22 @@
+/* Plik: style-shared-violet.css */
+/* --- ELEGANCKI FIOLET - WERSJA "LUKSUS" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  --c-red-primary: #8e44ad;
+  --c-red-accent: #9b59b6;
+  --c-shadow-red-soft: rgba(142, 68, 173, 0.2);
+  --c-shadow-red-medium: rgba(142, 68, 173, 0.3);
+  --c-shadow-red-strong: rgba(142, 68, 173, 0.5);
+  --c-border-primary: #6c3483;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  --c-red-primary: #9b59b6;
+  --c-red-accent: #d7bde2;
+  --c-shadow-red-soft: rgba(155, 89, 182, 0.3);
+  --c-shadow-red-medium: rgba(155, 89, 182, 0.4);
+  --c-shadow-red-strong: rgba(155, 89, 182, 0.6);
+  --c-border-primary: #8e44ad;
+}

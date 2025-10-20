@@ -1643,7 +1643,12 @@ html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
 /* ORAZ DODAJ PONIŻSZY BLOK DLA TRYBU CIEMNEGO */
 
 html.dark-mode .guide-list.view-8 .view-8-overlay {
-    background-color: rgba(30, 30, 30, 0.75); /* Dedykowany, ciemny kolor z większą przezroczystością */
+  background-color: rgba(
+    30,
+    30,
+    30,
+    0.75
+  ); /* Dedykowany, ciemny kolor z większą przezroczystością */
 }
 
 .guide-list.view-8 .guide:hover .view-8-overlay {
@@ -2154,6 +2159,10 @@ html.dark-mode .footer {
 }
 
 .reset-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px; /* Dodaje odstęp między przyciskami */
   text-align: center;
   margin: 12px 0 0 0;
 }
@@ -2172,6 +2181,25 @@ html.dark-mode .footer {
 #mainResetBtn:hover {
   transform: rotate(90deg);
   color: var(--c-red-primary);
+}
+
+#themePrevBtn,
+#themeNextBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1.2em;
+  color: var(--c-text-tertiary);
+  opacity: 0.7;
+  transition: color 0.2s ease, transform 0.2s ease, opacity 0.2s;
+}
+
+#themePrevBtn:hover,
+#themeNextBtn:hover {
+  transform: scale(1.2);
+  color: var(--c-red-primary);
+  opacity: 1;
 }
 
 /* ================================================================

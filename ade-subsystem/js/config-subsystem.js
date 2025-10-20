@@ -61,8 +61,9 @@ const config2 = {
         search: "Poradniki",
       },
     ],
-  },
 
+    defaultThemeFile: './ade-subsystem/css/styles-subsystem.css',
+  },
   paths: {
     /// Subsystem specific paths // Ścieżki specyficzne dla podsystemu
     databaseFileName: "./ade-subsystem/ade-tools/.db-secure.txt",

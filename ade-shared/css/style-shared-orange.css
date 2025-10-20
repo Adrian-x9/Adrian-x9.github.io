@@ -1,0 +1,22 @@
+/* Plik: style-shared-orange.css */
+/* --- BURSZTYNOWY POMARAŃCZ - WERSJA "ENERGIA" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  --c-red-primary: #e67e22;
+  --c-red-accent: #f39c12;
+  --c-shadow-red-soft: rgba(230, 126, 34, 0.2);
+  --c-shadow-red-medium: rgba(230, 126, 34, 0.3);
+  --c-shadow-red-strong: rgba(230, 126, 34, 0.5);
+  --c-border-primary: #d35400;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  --c-red-primary: #f39c12;
+  --c-red-accent: #f8c471;
+  --c-shadow-red-soft: rgba(243, 156, 18, 0.3);
+  --c-shadow-red-medium: rgba(243, 156, 18, 0.4);
+  --c-shadow-red-strong: rgba(243, 156, 18, 0.6);
+  --c-border-primary: #e67e22;
+}

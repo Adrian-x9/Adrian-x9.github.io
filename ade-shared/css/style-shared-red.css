@@ -1,0 +1,22 @@
+/* Plik: style-shared-red.css */
+/* --- CZERWONY MOTYW - WERSJA "DOMYŚLNA" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  --c-red-primary: #cc0000;
+  --c-red-accent: #e53935;
+  --c-shadow-red-soft: rgba(255, 0, 0, 0.2);
+  --c-shadow-red-medium: rgba(204, 0, 0, 0.3);
+  --c-shadow-red-strong: rgba(255, 0, 0, 0.5);
+  --c-border-primary: #a00000;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  --c-red-primary: #e53935;
+  --c-red-accent: #ff8a80;
+  --c-shadow-red-soft: rgba(255, 0, 0, 0.3);
+  --c-shadow-red-medium: rgba(229, 57, 53, 0.4);
+  --c-shadow-red-strong: rgba(229, 57, 53, 0.6);
+  --c-border-primary: #a00000;
+}

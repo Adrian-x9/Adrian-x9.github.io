@@ -1,0 +1,22 @@
+/* Plik: style-shared-teal.css */
+/* --- MORSKI TURKUS - WERSJA "ŚWIEŻOŚĆ" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  --c-red-primary: #16a085;
+  --c-red-accent: #1abc9c;
+  --c-shadow-red-soft: rgba(22, 160, 133, 0.2);
+  --c-shadow-red-medium: rgba(22, 160, 133, 0.3);
+  --c-shadow-red-strong: rgba(22, 160, 133, 0.5);
+  --c-border-primary: #117a65;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  --c-red-primary: #1abc9c;
+  --c-red-accent: #76d7c4;
+  --c-shadow-red-soft: rgba(26, 188, 156, 0.3);
+  --c-shadow-red-medium: rgba(26, 188, 156, 0.4);
+  --c-shadow-red-strong: rgba(26, 188, 156, 0.6);
+  --c-border-primary: #16a085;
+}

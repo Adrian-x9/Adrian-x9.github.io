@@ -61,6 +61,8 @@ const config2 = {
         search: "Poradniki",
       },
     ],
+
+    defaultThemeFile: './ade-subsystem/css/style-subsystem.css',
   },
 
   paths: {

@@ -25,6 +25,7 @@
                 // Style CSS (zawsze ze ścieżki współdzielonej)
                 `<link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">`,
                 `<link rel="stylesheet" href="./ade-subsystem/css/styles-subsystem.css">`,
+                `<link id="dynamic-theme" rel="stylesheet" href="">`,
                 `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />`,
                 `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />`,
                 // Skrypty JS (współdzielone z prefiksem, lokalne bez)
@@ -226,7 +227,9 @@
         </div>
 
         <div class="reset-container">
+            <button id="themePrevBtn" title="Poprzedni motyw"><i class="fas fa-chevron-left"></i></button>
             <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+            <button id="themeNextBtn" title="Następny motyw"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 

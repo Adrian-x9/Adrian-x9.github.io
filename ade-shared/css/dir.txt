@@ -1,0 +1,21 @@
+ Volume in drive C has no label.
+ Volume Serial Number is 64E4-665E
+
+ Directory of C:\Users\adrian\OneDrive\Documents\.www\VisuDir\ade-shared\css
+
+20.10.2025  21:43    <DIR>          .
+10.10.2025  15:25    <DIR>          ..
+20.10.2025  21:44                 0 dir.txt
+29.09.2025  21:06            74ÿ320 font-awesome-v7.1.0-all.min.css
+05.10.2025  19:57               938 font-satoshi.css
+20.10.2025  15:31            56ÿ916 style-shared - kopia.css
+20.10.2025  20:49             1ÿ097 style-shared-blue.css
+20.10.2025  20:49             1ÿ087 style-shared-brown.css
+20.10.2025  20:49             1ÿ104 style-shared-gray.css
+20.10.2025  20:49             1ÿ113 style-shared-green1.css
+20.10.2025  20:49             1ÿ096 style-shared-green2.css
+20.10.2025  12:47            51ÿ839 style-shared-new.css
+20.10.2025  12:47           105ÿ202 style-shared-old.css
+20.10.2025  20:49            69ÿ314 style-shared.css
+              12 File(s)        364ÿ026 bytes
+               2 Dir(s)  38ÿ054ÿ285ÿ312 bytes free
