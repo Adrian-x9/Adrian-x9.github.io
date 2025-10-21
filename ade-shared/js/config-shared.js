@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.5.3", // Fixes / poprawki
+  version: "v2.5.4", // Slide show clock fox / poprawka dla zegara slide show
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-21", // Last update date YYYY-MM-DD
 

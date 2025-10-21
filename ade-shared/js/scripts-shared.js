@@ -289,6 +289,7 @@ function resetIdleTimer() {
     const statusWidget = document.getElementById("slideshow-status-widget");
     if (statusWidget) {
       statusWidget.classList.add("visible");
+      updateTimers();
     }
   }
 
@@ -349,14 +350,12 @@ function updateTimers() {
 
   const statusWidget = document.getElementById("slideshow-status-widget");
   if (statusWidget && statusWidget.classList.contains("visible")) {
-    document.querySelector("#widget-clock span").textContent =
-      now.toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
     const clockSpan = document.querySelector("#widget-clock span");
     clockSpan.textContent = now.toLocaleTimeString("pl-PL", {
       hour: "2-digit",
       minute: "2-digit",
     });
-    clockSpan.classList.add("is-visible"); // ✅ DODAJ TĘ LINIĘ
+    clockSpan.classList.add("is-visible");
     const widgetIdle = document.querySelector("#widget-idle");
     widgetIdle.querySelector("span").textContent = formattedIdle;
 
@@ -3548,9 +3547,9 @@ function changeTheme(direction) {
 
   // Nowa, prosta i niezawodna logika. Bez skomplikowanej matematyki.
   let newIndex = currentThemeIndex + direction;
-  console.log("1:",newIndex);
+  console.log("1:", newIndex);
 
-  if (newIndex >= (finalThemeList.length-1)) {
+  if (newIndex >= finalThemeList.length - 1) {
     // Jeśli wyszliśmy "za" listę, wróć na początek.
     newIndex = 1;
   } else if (newIndex <= 0) {
@@ -3558,8 +3557,8 @@ function changeTheme(direction) {
     newIndex = finalThemeList.length - 1;
   }
 
-  console.log("2:",newIndex);
-  
+  console.log("2:", newIndex);
+
   applyTheme(newIndex);
 }
 
@@ -3570,34 +3569,36 @@ function changeTheme(direction) {
 function initializeThemeSwitcher() {
   const globalThemes = config.pageSettings.colorThemes || [];
   const defaultSubsystemTheme = config.pageSettings.defaultThemeFile;
-  
+
   // Pobierz poprawny prefix ścieżki (np. ".." dla podsystemu lub "." dla głównego)
-  const prefix = config.pageSettings.pathCorrection || '.';
+  const prefix = config.pageSettings.pathCorrection || ".";
 
   // Budowanie finalnej listy motywów
   if (defaultSubsystemTheme) {
     // Podsystem ma swój domyślny motyw, wstawiamy go na początek.
     // Pozostałe, globalne motywy otrzymują poprawny prefix.
     finalThemeList = [
-      defaultSubsystemTheme, 
-      ...globalThemes.map(theme => (theme ? `${prefix}/${theme}` : ''))
+      defaultSubsystemTheme,
+      ...globalThemes.map((theme) => (theme ? `${prefix}/${theme}` : "")),
     ];
   } else {
     // Brak domyślnego motywu podsystemu, używamy globalnej listy z prefixem.
-    finalThemeList = globalThemes.map(theme => (theme ? `${prefix}/${theme}` : ''));
+    finalThemeList = globalThemes.map((theme) =>
+      theme ? `${prefix}/${theme}` : ""
+    );
   }
 
   // Ukryj przyciski, jeśli jest tylko jeden (lub zero) motywów do wyboru
-  const prevBtn = document.getElementById('themePrevBtn');
-  const nextBtn = document.getElementById('themeNextBtn');
+  const prevBtn = document.getElementById("themePrevBtn");
+  const nextBtn = document.getElementById("themeNextBtn");
   if (finalThemeList.length <= 1) {
-    if (prevBtn) prevBtn.style.display = 'none';
-    if (nextBtn) nextBtn.style.display = 'none';
+    if (prevBtn) prevBtn.style.display = "none";
+    if (nextBtn) nextBtn.style.display = "none";
     return;
   }
 
-  if (prevBtn) prevBtn.addEventListener('click', () => changeTheme(-1));
-  if (nextBtn) nextBtn.addEventListener('click', () => changeTheme(1));
+  if (prevBtn) prevBtn.addEventListener("click", () => changeTheme(-1));
+  if (nextBtn) nextBtn.addEventListener("click", () => changeTheme(1));
 
   // Wczytaj zapisany motyw lub zastosuj domyślny (indeks 0)
   const savedThemeIndex = parseInt(getFromLocalStorage(THEME_STORAGE_KEY), 10);
