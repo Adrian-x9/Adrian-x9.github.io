@@ -14,7 +14,6 @@
 17.09.2025  22:10                 0 _!!Germany!!index.html$$57 Niemcy$$Galeria fotografii z Niemiec.link
 17.09.2025  22:50                 0 _!!Germany!!index.html&&search=Berlin$$59 Berlin$$Galeria fotografii z Berlina.link
 17.09.2025  22:49                 0 _!!Germany!!index.html&&search=Dortmund$$58 Dortmund$$Galeria fotografii z Dortmundu.link
-17.09.2025  20:37                 0 _!!index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
 17.09.2025  21:41                 0 _!!Poland!!index.html$$52 Polska$$Galeria fotografii z Polski.link
 17.09.2025  21:47                 0 _!!Poland!!index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
 17.09.2025  22:10                 0 _!!Poland!!index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
