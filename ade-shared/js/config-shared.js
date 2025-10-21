@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.5.1", // Fixes / poprawki
+  version: "v2.5.2", // Fixes / poprawki
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-20", // Last update date YYYY-MM-DD
+  updated: "2025-10-21", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure

@@ -3,7 +3,7 @@ const config2 = {
   pageSettings: {
     pageKey: "poland",
     pageTitle: "POLAND ▪ photo gallery",
-    // pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
+
     showMiniLogo: true,
     showVisuDirButton: true,
     showBackButton: true,
