@@ -21,7 +21,6 @@
 17.09.2025  22:50                 0 _!!Spain!!index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
 17.09.2025  22:50                 0 _!!Spain!!index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
 17.09.2025  22:50                 0 _!!Spain!!index.html&&search=LLoret$$64 Lloret de Mar$$Galeria fotografii z Lloret de Mar, Hiszpania.link
-17.09.2025  20:20                 0 _!!VisuKeys!!index.html$$32 VisuKeys$$Zostan magikiem klawiatury, poznaj skroty!.link
 
         `;
         /// COPY HERE <db> // database end / koniec bazy danych
