@@ -27,12 +27,12 @@ const config1 = {
     defaultLabelsVisible: true,
     slideshowAnimations: true,
 
-    defaultSort: "nameAsc",
+    defaultSort: "nameAsc", //nameAsc | nameDesc | dateAsc | dateDesc | sizeAsc | sizeDesc | shuffle
     defaultRows: 2,
     defaultSizePercent: 100,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
-    defaultViewMode: "view-8",
+    defaultViewMode: "view-9",
     hoverOverlayColor: "rgba(204, 0, 0, 0.7)",
     hoverTextColor: "#ffffff",
 

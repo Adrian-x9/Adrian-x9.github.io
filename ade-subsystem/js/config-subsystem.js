@@ -19,7 +19,7 @@ const config2 = {
 
     defaultSort: "nameAsc", //nameAsc | nameDesc | dateAsc | dateDesc | sizeAsc | sizeDesc | shuffle
     defaultRows: 2,
-    defaultSizePercent: 100,
+    defaultSizePercent: 66,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
     defaultViewMode: "view-7",
