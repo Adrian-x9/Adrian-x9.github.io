@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>VisuDir | My Media Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
+
+    <script src="./ade-subsystem/js/config-paths.js"></script>
+
+    <script>
+        (function () {
+            // Pobieramy prefiks z obiektu config0, który został właśnie załadowany.
+            const prefix = config0.pageSettings.pathCorrection || '.';
+
+            // Definiujemy wszystkie pozostałe zasoby.
+            const assets = [
+                // Ikony (zawsze ze ścieżki współdzielonej)
+                `<link rel="icon" type="image/png" sizes="16x16" href="${prefix}/ade-shared/gfx/favicons/favicon-16x16.png" />`,
+                `<link rel="icon" type="image/png" sizes="32x32" href="${prefix}/ade-shared/gfx/favicons/favicon-32x32.png" />`,
+                `<link rel="apple-touch-icon" sizes="180x180" href="${prefix}/ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />`,
+                `<link rel="icon" type="image/png" sizes="192x192" href="${prefix}/ade-shared/gfx/favicons/android-icon-192x192.png" />`,
+                // Style CSS (zawsze ze ścieżki współdzielonej)
+                `<link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">`,
+                `<link rel="stylesheet" href="./ade-subsystem/css/styles-subsystem.css">`,
+                `<link id="dynamic-theme" rel="stylesheet" href="">`,
+                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />`,
+                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />`,
+                // Skrypty JS (współdzielone z prefiksem, lokalne bez)
+                `<script src="${prefix}/ade-shared/js/config-shared.js" defer><\/script>`,
+                `<script src="./ade-subsystem/js/config-subsystem.js" defer><\/script>`,
+                `<script src="./ade-subsystem/js/db.js" defer><\/script>`,
+                `<script src="./ade-subsystem/js/db-langs.js" defer><\/script>`,
+                `<script src="./ade-subsystem/js/db-tags.js" defer><\/script>`,
+                `<script src="${prefix}/ade-shared/js/lang-shared.js" defer><\/script>`,
+                `<script src="${prefix}/ade-shared/js/scripts-shared.js" defer><\/script>`
+            ];
+
+            // Wstawiamy wszystkie zdefiniowane tagi do dokumentu.
+            document.write(assets.join(''));
+        })();
+    </script>
+
+</head>
+
+<body>
+    <div id="preloader">
+        <div class="grid">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="caption">
+            <span class="visu">Visu</span><span class="dir-text-themed">Dir</span>&nbsp;<span
+                class="version-display"></span>
+        </div>
+    </div>
+
+    <video id="bg-video" autoplay loop muted playsinline>
+        <source id="bg-video-source" src="" type="video/mp4" />
+    </video>
+
+    <div class="top-header">
+        <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
+            <img id="logo-img-1" class="header-logo" src="" alt="Logo" />
+            <img id="logo-img-2" class="header-logo" src="" alt="Logo" />
+        </a>
+
+        <div id="pageTitle" class="title"></div>
+
+        <div class="header-controls">
+            <a id="backButton" class="dir-db-btn" href="javascript:history.back()"><i class="fas fa-chevron-left"></i>
+                <span class="btn-text" data-lang="btnBack"></span></a>
+            <button id="headerLangBtn" class="lightbox-action-btn" data-lang-title="Zmień język"><i
+                    class="fas fa-globe"></i></button>
+            <button id="fullscreenBtn" class="lightbox-action-btn" data-lang-title="fullscreenBtn"><i
+                    class="fas fa-expand"></i></button>
+        </div>
+    </div>
+
+    <div class="glass-status" style="margin-bottom: 15px;margin-top: 0px;">
+        <span id="guideCountDisplay">📁 <strong>...</strong></span>
+        <span id="currentTimeDisplay">⏰ <strong>--:--</strong> ---- -- --</span>
+        <span id="sunTimesDisplay">🌞 <strong>--:-- – --:--</strong></span>
+        <span id="moonPhaseDisplay"></span>
+        <span>
+            <a id="statusInfoBtn" class="status-icon-btn" title="Informacje"><i class="fas fa-info-circle"></i></a>
+            <a href="#" id="systemInfoLink" class="">
+                <strong><span class="visu-text-red">Visu</span><span class="dir-text-themed">Dir</span></strong> <span
+                    class="version-display"></span>
+            </a>
+        </span>
+        <span id="statusLangBtn">
+            <a class="status-icon-btn" title="Zmień język">
+                <img src="" alt="Flaga" class="lang-flag-status"> <span class="lang-code-status">PL</span>
+            </a>
+        </span>
+    </div>
+
+
+    <div class="control-panel ">
+        <div class="deck-top-row">
+            <div class="filter-section">
+                <label for="fileInput" id="fileInputLabel" class="dir-db-btn file-input-label" style="display: none;"><i
+                        class="fas fa-upload"></i>
+                    <span class="btn-text" data-lang="btnLoad"></span></label>
+                <input type="file" id="fileInput" accept=".txt" />
+                <input type="text" id="search" data-lang-placeholder="searchPlaceholder"
+                    placeholder="Szukaj pozycji..." />
+                <select id="formatFilter">
+                    <option value="" data-lang="filterAll">FILTRUJ</option>
+                </select>
+                <select id="sortSelector">
+                    <option value="" disabled selected data-lang="sortLabel">SORTUJ</option>
+                    <option value="shuffle" data-lang="sortShuffle"></option>
+                    <option disabled>──────────</option>
+                    <option value="nameAsc" data-lang="sortNameAsc"></option>
+                    <option value="nameDesc" data-lang="sortNameDesc"></option>
+                    <option value="dateAsc" data-lang="sortDateAsc"></option>
+                    <option value="dateDesc" data-lang="sortDateDesc"></option>
+                    <option value="sizeAsc" data-lang="sortSizeAsc"></option>
+                    <option value="sizeDesc" data-lang="sortSizeDesc"></option>
+                </select>
+                <div class="generator-group">
+                    <select id="generator">
+                        <option value="" disabled selected data-lang="generatorLabel">LOSUJ</option>
+                    </select>
+                    <button id="generatorModeBtn" class="dir-db-btn" title="Tryb generatora"><i
+                            class="fas fa-filter"></i></button>
+                </div>
+            </div>
+            <div class="curtain-handle">
+                <button id="curtain-toggle-btn" title="Pokaż/ukryj filtry"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="status-section">
+
+                <div class="status-section-bottom">
+                    <div id="actionControls" class="video-controls-group subtle-bg-group">
+                        <button id="videoBtn" class="status-icon-btn video-main-btn" data-lang-title="btnVideo"><i
+                                class="fas fa-video"></i> <span data-lang="btnVideo"></span></button>
+                        <button id="videoBtn-prev" class="status-icon-btn" title="Poprzednie"><i
+                                class="fas fa-chevron-left"></i></button>
+                        <button id="videoBtn-play" class="status-icon-btn" title="Play/Pauza"><i
+                                class="fas fa-play"></i></button>
+                        <button id="videoBtn-shuffle" class="status-icon-btn" title="Losowe"><i
+                                class="fas fa-random"></i></button>
+                        <button id="videoBtn-next" class="status-icon-btn" title="Następne"><i
+                                class="fas fa-chevron-right"></i></button>
+                        <button id="videoBtn-reset" class="status-icon-btn" title="Resetuj"><i
+                                class="fas fa-undo"></i></button>
+                    </div>
+                    <div class="status-actions-group subtle-bg-group">
+                        <button id="statusMuteBtn" class="status-icon-btn" title="Wycisz/Włącz wideo"><i
+                                class="fas fa-volume-mute"></i></button>
+                        <button id="minimizeBtn" class="status-icon-btn" title="Minimalizuj interfejs"><i
+                                class="fas fa-chevron-up"></i></button>
+                        <button id="statusFullscreenBtn" class="status-icon-btn" title="Pełny ekran"><i
+                                class="fas fa-expand"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="deck-bottom-row">
+            <div class="display-panel-group">
+                <button id="viewContentBtn" title="Zmień tryb widoku"><i class="fas fa-layer-group"></i></button>
+                <button id="viewOrientationBtn" class="accent-border" title="Filtruj wg orientacji"><i
+                        class="fas fa-images"></i></button>
+            </div>
+            <div class="display-panel-group slider-group">
+                <div class="slider-control">
+                    <i class="fas fa-th-large" data-lang-title="sizeLabel" title="Wielkość miniaturek"></i>
+                    <input type="range" id="sizeSlider" min="40" max="150" value="100" step="1"> <span
+                        id="sizeValue">100%</span>
+                </div>
+                <div class="slider-control">
+                    <i class="fas fa-grip-lines" data-lang-title="rowsLabel" title="Liczba wierszy"></i>
+                    <input type="range" id="rowsSlider" min="1" max="10" value="2" step="1">
+                    <span id="rowsValue">2</span>
+                </div>
+            </div>
+            <div class="display-panel-group">
+                <button id="viewThemeBtn" class="theme-toggle-btn" title="Zmień motyw na ciemny/jasny"><i
+                        class="fas fa-moon"></i></button>
+                <button id="viewPlayBtn" class="play-accent" title="Rozpocznij pokaz slajdów"><i
+                        class="fas fa-play"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <div class="guide-list-wrapper">
+        <div class="guide-list" id="guideList"></div>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <div class="footer">
+        <div class="footer-main-text">
+            <p>
+                <strong>System <a id="aboutLinkFooter" href="#"><strong><span class="title-red">Visu</span><span
+                                class="version-suffix">Dir</span></strong> <span
+                            class="version-display"></span></a></strong>
+                <span data-lang="footerDate"></span>
+                <span data-lang="footerDesc"></span> |
+                <span class="nobr"><a href="https://www.ade.pl" target="_blank" rel="noopener noreferrer">Adrian
+                        Ulbrych
+                    </a></span>
+                <span class="nobr"><strong> tel.</strong> <a href="tel:601190330">601 190 330</a></span>
+            </p>
+            <p class="privacy-notice">
+                <strong data-lang="privacyTitle"></strong>.
+                <span data-lang="privacyDesc"></span>
+                <strong data-lang="privacySafe"></strong>
+            </p>
+        </div>
+
+        <div id="timeDisplay" class="footer-timers">
+            <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
+            <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
+        </div>
+
+        <div class="reset-container">
+            <button id="themePrevBtn" title="Poprzedni motyw"><i class="fas fa-chevron-left"></i></button>
+            <button id="mainResetBtn" data-lang-title="mainResetBtn"><i class="fas fa-sync"></i></button>
+            <button id="themeNextBtn" title="Następny motyw"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <div id="backdrop" class="backdrop">
+        <div id="slideshow-status-widget" class="slideshow-status-widget">
+            <div id="widget-clock" class="widget-item"><i class="fas fa-clock"></i> <span></span></div>
+            <div id="widget-idle" class="widget-item"><i class="fas fa-hourglass-half"></i> <span>00:00:00</span></div>
+            <div id="widget-session" class="widget-item"><i class="fas fa-history"></i> <span>00:00:00</span></div>
+        </div>
+
+        <div id="play-caption" class="play-caption"></div>
+        <button id="fullscreenBtnLightbox" class="lightbox-action-btn"><i class="fas fa-expand"></i></button>
+        <button id="playCloseBtn" class="lightbox-action-btn"><i class="fas fa-times"></i></button>
+        <div id="play-guide-container" class="play-guide-container"></div>
+
+        <div id="lightbox-controls">
+            <button id="lightbox-fxBtn" class="dir-db-btn"><i class="fas fa-magic"></i></button>
+            <div id="lightbox-videoBtn" class="dir-db-btn multi-button"> <span id="lightbox-videoBtn-main"
+                    class="multi-button-main"><i class="fas fa-video"></i></span>
+                <span id="lightbox-video-prev" class="multi-button-child"><i class="fas fa-chevron-left"></i></span>
+                <span id="lightbox-video-toggle" class="multi-button-child"><i class="fas fa-play"></i></span>
+                <span id="lightbox-video-autoshuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
+                <span id="lightbox-video-next" class="multi-button-child"><i class="fas fa-chevron-right"></i></span>
+                <span id="lightbox-video-reset" class="multi-button-child"><i class="fas fa-undo"></i></span>
+            </div>
+
+            <div id="slideshow-controls" class="lightbox-control-group">
+                <span id="slideshow-first" class="multi-button-child"><i class="fas fa-fast-backward"></i></span>
+                <span id="slideshow-prev" class="multi-button-child"><i class="fas fa-step-backward"></i></span>
+                <span id="slideshow-stop" class="multi-button-child"><i class="fas fa-stop"></i></span>
+                <span id="slideshow-play" class="multi-button-child"><i class="fas fa-play"></i></span>
+                <span id="slideshow-shuffle" class="multi-button-child"><i class="fas fa-random"></i></span>
+                <span id="slideshow-next" class="multi-button-child"><i class="fas fa-step-forward"></i></span>
+                <span id="slideshow-last" class="multi-button-child"><i class="fas fa-fast-forward"></i></span>
+            </div>
+
+            <button id="lightbox-darkModeBtn" class="dir-db-btn"><i class="fas fa-moon"></i></button>
+            <button id="lightbox-labelsBtn" class="dir-db-btn"><i class="fas fa-tags"></i></button>
+        </div>
+        <button id="lightbox-minimizeBtn" class="lightbox-action-btn"><i class="fas fa-chevron-down"></i></button>
+    </div>
+
+
+
+    <div id="lang-modal" class="lang-modal-container" style="display: none;">
+        <div id="lang-overlay" class="lang-modal-overlay"></div>
+        <div class="lang-modal-content">
+            <button id="lang-modal-close-btn" class="lang-modal-close-btn">&times;</button>
+
+            <div class="viewfinder">
+                <span class="west-label">W</span>
+                <span class="east-label">E</span>
+            </div>
+            <div class="scene">
+                <div class="world"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
