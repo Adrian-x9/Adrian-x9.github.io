@@ -12,17 +12,17 @@ const config2 = {
     screenSaverTimeout: 20,
     defaultBgVideo: 1,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 42,
+    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
 
-    defaultSort: "view-7",
+    defaultSort: "nameAsc", //nameAsc | nameDesc | dateAsc | dateDesc | sizeAsc | sizeDesc | shuffle
     defaultRows: 2,
     defaultSizePercent: 100,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
-    defaultViewMode: "view-5",
+    defaultViewMode: "view-7",
     hoverOverlayColor: "rgba(204, 0, 0, 0.7)",
     hoverTextColor: "#ffffff",
 
