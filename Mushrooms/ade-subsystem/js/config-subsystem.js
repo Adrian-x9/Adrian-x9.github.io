@@ -10,19 +10,19 @@ const config2 = {
     showLanguageButton: true,
 
     screenSaverTimeout: 20,
-    defaultBgVideo: 1,
+    defaultBgVideo: 36,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 35,
+    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
 
-    defaultSort: "nameAsc",
-    defaultRows: 2,
+    defaultSort: "shuffle",
+    defaultRows: 1,
     defaultSizePercent: 100,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
-    defaultViewMode: "full",
+    defaultViewMode: "view-6",
     hoverOverlayColor: "rgba(204, 0, 0, 0.7)",
     hoverTextColor: "#ffffff",
 
@@ -41,6 +41,8 @@ const config2 = {
         search: "grzyb",
       },
     ],
+
+    defaultThemeFile: "./ade-subsystem/css/style-subsystem.css",
   },
 
   paths: {

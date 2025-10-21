@@ -2,7 +2,7 @@ const config2 = {
   /// Subsystem specific settings // Ustawienia specyficzne dla podsystemu
   pageSettings: {
     pageKey: "poland",
-    pageTitle: "POLAND ▪ photo gallery",
+    pageTitle: "POLSKA",
 
     showMiniLogo: true,
     showVisuDirButton: true,
@@ -10,19 +10,19 @@ const config2 = {
     showLanguageButton: true,
 
     screenSaverTimeout: 20,
-    defaultBgVideo: 12,
+    defaultBgVideo: 34,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 42,
+    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
 
-    defaultSort: "view-6",
+    defaultSort: "nameASC",
     defaultRows: 6,
-    defaultSizePercent: 100,
+    defaultSizePercent: 75,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
-    defaultViewMode: "full",
+    defaultViewMode: "view-6",
     hoverOverlayColor: "rgba(204, 0, 0, 0.7)",
     hoverTextColor: "#ffffff",
 
@@ -51,6 +51,10 @@ const config2 = {
       {
         label: "Toruń",
         search: "toruń",
+      },
+      {
+        label: "Poznań",
+        search: "poznan",
       },
       {
         label: "Morze Bałtyckie",

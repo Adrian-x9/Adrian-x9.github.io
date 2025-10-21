@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.5.2", // Fixes / poprawki
+  version: "v2.5.3", // Fixes / poprawki
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-21", // Last update date YYYY-MM-DD
 
@@ -22,7 +22,7 @@ const config1 = {
     screenSaverTimeout: 20,
     defaultBgVideo: 1,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 35,
+    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,

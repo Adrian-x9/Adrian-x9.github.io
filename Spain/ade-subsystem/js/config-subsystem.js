@@ -2,7 +2,7 @@ const config2 = {
   /// Subsystem specific settings // Ustawienia specyficzne dla podsystemu
   pageSettings: {
     pageKey: "spain",
-    pageTitle: "SPAIN ▪ photo gallery",
+    pageTitle: "ESPAÑA ▪ photo gallery",
     pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
     showMiniLogo: true,
     showVisuDirButton: true,
@@ -10,9 +10,9 @@ const config2 = {
     showLanguageButton: true,
 
     screenSaverTimeout: 20,
-    defaultBgVideo: 1,
+    defaultBgVideo: 41,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 35,
+    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
@@ -22,7 +22,7 @@ const config2 = {
     defaultSizePercent: 100,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
-    defaultViewMode: "full",
+    defaultViewMode: "view-6",
     hoverOverlayColor: "rgba(204, 0, 0, 0.7)",
     hoverTextColor: "#ffffff",
 
@@ -33,14 +33,16 @@ const config2 = {
     defaultVideoExpanded: false,
     predefinedFilters: [
       {
-        label: "Hiszpania",
-        search: "hiszpan",
-      },
-      {
         label: "Barcelona",
         search: "barcelona",
       },
+      {
+        label: "Madrid",
+        search: "madrid",
+      },
     ],
+
+    defaultThemeFile: './ade-subsystem/css/style-subsystem.css',
   },
 
   paths: {

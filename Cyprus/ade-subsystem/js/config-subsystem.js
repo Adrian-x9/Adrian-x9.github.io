@@ -2,7 +2,7 @@ const config2 = {
   /// Subsystem specific settings // Ustawienia specyficzne dla podsystemu
   pageSettings: {
     pageKey: "cyprus",
-    pageTitle: "CYPRUS ▪ photo gallery",
+    pageTitle: "ΚΎΠΡΟΣ ▪ photo gallery",
     pathCorrection: "..", // <-- NOWA LINIA: Definiuje korektę dla podsystemu
     showMiniLogo: true,
     showVisuDirButton: true,
@@ -10,9 +10,9 @@ const config2 = {
     showLanguageButton: true,
 
     screenSaverTimeout: 20,
-    defaultBgVideo: 1,
+    defaultBgVideo: 43,
     bgVideoStartNum: 1,
-    bgVideoEndNum: 35,
+    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
@@ -22,7 +22,7 @@ const config2 = {
     defaultSizePercent: 100,
     baseBoxWidth: 256,
     estimatedItemHeight: 380,
-    defaultViewMode: "full",
+    defaultViewMode: "view-6",
     hoverOverlayColor: "rgba(204, 0, 0, 0.7)",
     hoverTextColor: "#ffffff",
 
@@ -31,16 +31,9 @@ const config2 = {
     generatorOptions: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 25, 50, 100],
 
     defaultVideoExpanded: false,
-    predefinedFilters: [
-      {
-        label: "Cyprus",
-        search: "cypr",
-      },
-      {
-        label: "Cypr",
-        search: "cypr",
-      },
-    ],
+    predefinedFilters: [{}, {}],
+
+    defaultThemeFile: './ade-subsystem/css/style-subsystem.css',
   },
 
   paths: {

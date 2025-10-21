@@ -1,0 +1,36 @@
+/* Plik: ./ade-subsystem/styles-subsystem.css */
+/* --- NIEBIESKI MOTYW - WERSJA "WODA/TECHNOLOGIA" --- */
+
+/* --- TRYB JASNY --- */
+:root {
+  /* Podstawowy, nasycony niebieski */
+  --c-red-primary: #007bff;
+  
+  /* Jaśniejszy, błękitny akcent */
+  --c-red-accent: #3498db;
+  
+  /* Cienie oparte na nowym kolorze niebieskim */
+  --c-shadow-red-soft: rgba(0, 123, 255, 0.2);
+  --c-shadow-red-medium: rgba(0, 123, 255, 0.3);
+  --c-shadow-red-strong: rgba(0, 123, 255, 0.5);
+
+  /* Ciemniejszy odcień dla obramowań */
+  --c-border-primary: #0056b3;
+}
+
+/* --- TRYB CIEMNY --- */
+html.dark-mode {
+  /* Jaśniejszy, bardziej "elektryczny" niebieski na ciemnym tle */
+  --c-red-primary: #3498db;
+  
+  /* Bardzo jasny, niemal "neonowy" błękit jako akcent */
+  --c-red-accent: #85c1e9;
+
+  /* Cienie dla trybu ciemnego */
+  --c-shadow-red-soft: rgba(52, 152, 219, 0.3);
+  --c-shadow-red-medium: rgba(52, 152, 219, 0.4);
+  --c-shadow-red-strong: rgba(52, 152, 219, 0.6);
+
+  /* Ciemniejszy niebieski dla obramowania w trybie ciemnym */
+  --c-border-primary: #007bff;
+}
