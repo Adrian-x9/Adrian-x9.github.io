@@ -2539,6 +2539,24 @@ body .screensaver-fade-out {
   transition: opacity 0.8s ease-out,
     transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.slideshow-status-widget .widget-item.timer-frozen span {
+  color: var(--c-red-primary);
+  font-weight: bold;
+  /* Proponuję też dodać subtelną, czerwoną poświatę, żeby było jeszcze fajniej */
+  animation: pulse-glow-red 2s infinite ease-in-out;
+}
+
+@keyframes pulse-glow-red {
+  0%,
+  100% {
+    text-shadow: 0 0 5px var(--c-shadow-red-soft);
+  }
+  50% {
+    text-shadow: 0 0 15px var(--c-shadow-red-strong);
+  }
+}
+
 .slideshow-status-widget.visible {
   opacity: 1;
   transform: translateX(0);
@@ -2909,7 +2927,7 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     right: 65px; /* Miejsce na przyciski X i Pełny Ekran (fullscreenBtnLightbox) */
     width: auto; /* Szerokość liczona z left/right */
     transform: translateX(0) scale(0.95); /* Reset centrowania */
-    font-size: 1.0em; /* Zmniejszenie czcionki */
+    font-size: 1em; /* Zmniejszenie czcionki */
     text-align: left; /* Wyrównanie do lewej w nowym boksie */
   }
 
