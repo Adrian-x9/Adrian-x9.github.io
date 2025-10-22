@@ -1,5 +1,6 @@
 /// COPY HERE <db> // database - txt file / baza danych - plik txt
         const dataFromFile = `
+17.09.2025  20:37                 0 index.html$$50 START$$Wróć na początek.link
 17.09.2025  20:37                 0 _!!index-travel.html$$51 Podroze$$Dzialanie VisuDir na przykladzie foto galerii.link
 17.09.2025  21:41                 0 _!!Poland!!index.html$$52 Polska$$Galeria fotografii z Polski.link
 17.09.2025  22:10                 0 _!!Poland!!index.html&&search=Warszawa$$53 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
