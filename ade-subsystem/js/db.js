@@ -29,6 +29,7 @@
 17.09.2025  21:41                 0 _!!Poland!!index.html$$52 Polska$$Galeria fotografii z Polski.link
 17.09.2025  21:47                 0 _!!Poland!!index.html&&search=Gliwice$$53 Gliwice$$Galeria fotografii z Gliwic, Slask, Silesia.link
 17.09.2025  22:10                 0 _!!Poland!!index.html&&search=Morze$$56 Morze Baltyckie$$Galeria fotografii Morza Baltyckiego, Baltic Sea.link
+17.09.2025  22:10                 0 _!!Poland!!index.html&&search=Gory$$57 Polskie góry$$Galeria fotografii polskich gór.jpg
 17.09.2025  22:10                 0 _!!Poland!!index.html&&search=Warszawa$$54 Warszawa$$Galeria fotografii z Warszaway, Mazowsze, Mazovia.link
 17.09.2025  22:50                 0 _!!Spain!!index.html$$63 Hiszpania$$Galeria fotografii z Hiszpanii.link
 17.09.2025  22:50                 0 _!!Spain!!index.html&&search=Barcelona$$65 Barcelona$$Galeria fotografii z Barcelony, Hiszpania.link
