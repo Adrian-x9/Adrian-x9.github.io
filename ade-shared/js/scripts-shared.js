@@ -1200,6 +1200,7 @@ function resetView() {
   updateGeneratorModeBtn();
 
   // Resetuje motyw do domyślnego (zawsze na pozycji 0 na liście).
+  resetVideoSettings();
   applyTheme(0);
 
   applyFilters();
@@ -1807,16 +1808,20 @@ function createGuideHtml(guide) {
 
     const coverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const description = guide.linkData.description || "";
+const tagsHtml = guide.tags && guide.tags.length > 0
+  ? `<div class="view-8-tags"><b>Tagi:</b> ${guide.tags.join(", ")}</div>`
+  : "";
 
-    return `
-        <a href="${hrefAction}" onclick="${onclickAction}" class="view-8-link">
-            ${titleHtml}
-            ${coverImgHtml}
-            <div class="view-8-overlay">
-                <div class="view-8-description">${description}</div>
-            </div>
-        </a>
-    `;
+return `
+    <a href="${hrefAction}" onclick="${onclickAction}" class="view-8-link">
+        ${titleHtml}
+        ${coverImgHtml}
+        <div class="view-8-overlay">
+            <div class="view-8-description">${description}</div>
+            ${tagsHtml}
+        </div>
+    </a>
+`;
     // === KONIEC POPRAWKI ===
   } else if (currentViewMode === "view-9") {
     // Specjalna struktura dla atrakcyjnego widoku Masonry #9

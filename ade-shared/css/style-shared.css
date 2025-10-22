@@ -403,6 +403,19 @@ html.dark-mode .top-header {
   transform: scale(1.1);
 }
 
+/* Poprawka widoczności przycisku Wstecz w trybie jasnym */
+html:not(.dark-mode) .top-header #backButton {
+  border: 1px solid var(--c-red-primary);
+  color: var(--c-red-primary);
+  background-color: var(--c-bg-input);
+  opacity: 1;
+}
+
+html:not(.dark-mode) .top-header #backButton:hover {
+  background-color: var(--c-red-primary);
+  color: var(--c-text-on-red);
+}
+
 /* ================================================================
    5. PASEK STATUSU (GLASS-STATUS)
    ================================================================ */
@@ -1633,7 +1646,7 @@ html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
   z-index: 3;
 
   /* <<< KLUCZOWA POPRAWKA: Większa przezroczystość */
-  background-color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 
@@ -1649,7 +1662,7 @@ html.dark-mode .guide-list.view-8 .view-8-overlay {
     30,
     30,
     30,
-    0.75
+    0.65
   ); /* Dedykowany, ciemny kolor z większą przezroczystością */
 }
 
@@ -1734,7 +1747,7 @@ html.dark-mode .guide-list.view-8 .view-8-overlay {
   justify-content: center;
   padding: 20px;
   z-index: 3;
-  background-color: rgba(255, 255, 255, 0.75); /* 3. Większa przezroczystość */
+  background-color: rgba(255, 255, 255, 0.65); /* 3. Większa przezroczystość */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   opacity: 0;
@@ -1743,7 +1756,7 @@ html.dark-mode .guide-list.view-8 .view-8-overlay {
 }
 
 html.dark-mode .guide-list.view-8 .view-8-overlay {
-  background-color: rgba(30, 30, 30, 0.75);
+  background-color: rgba(30, 30, 30, 0.65);
 }
 
 .guide-list.view-8 .guide:hover .view-8-overlay {
