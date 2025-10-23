@@ -1172,13 +1172,11 @@ function resetView() {
   sortSelector.value = "";
   applySort(config.pageSettings.defaultSort, guides);
   saveToLocalStorage("sort", config.pageSettings.defaultSort);
-
   if (guideList)
     guideList.scrollTo({
       left: 0,
       behavior: "smooth",
     });
-
   orientationFilterState = null;
 
   selectedRowCount = config.pageSettings.defaultRows;
@@ -1199,8 +1197,7 @@ function resetView() {
   saveToLocalStorage("generator_mode", generatorMode);
   updateGeneratorModeBtn();
 
-  // Resetuje motyw do domyślnego (zawsze na pozycji 0 na liście).
-  resetVideoSettings();
+  resetVideoSettings(); // ZMIANA WPROWADZONA TUTAJ
   applyTheme(0);
 
   applyFilters();
@@ -1801,27 +1798,31 @@ function createGuideHtml(guide) {
         </div>
     `;
   } else if (currentViewMode === "view-8") {
-    // === POCZĄTEK POPRAWKI: Przywrócony i poprawiony blok dla Widoku #8 ===
     const onclickAction =
       (coverLinkHtml.match(/onclick="([^"]*)"/) || [])[1] || "";
     const hrefAction = (coverLinkHtml.match(/href="([^"]*)"/) || [])[1] || "#";
 
     const coverImgHtml = `<img src="${c}" alt="${titleText}" class="guide-cover" onerror="this.onerror=null;this.src='${noCoverImg}';this.classList.add('placeholder-cover');">`;
     const description = guide.linkData.description || "";
-const tagsHtml = guide.tags && guide.tags.length > 0
-  ? `<div class="view-8-tags"><b>Tagi:</b> ${guide.tags.join(", ")}</div>`
-  : "";
+    const tagsHtml =
+      guide.tags && guide.tags.length > 0
+        ? `<div class="view-8-tags"><b>${
+            lang.guideTagsLabel
+          }:</b> ${guide.tags.join(", ")}</div>`
+        : "";
 
-return `
-    <a href="${hrefAction}" onclick="${onclickAction}" class="view-8-link">
-        ${titleHtml}
-        ${coverImgHtml}
-        <div class="view-8-overlay">
-            <div class="view-8-description">${description}</div>
-            ${tagsHtml}
-        </div>
-    </a>
-`;
+    return `
+        <a href="${hrefAction}" onclick="${onclickAction}" class="view-8-link">
+            ${titleHtml}
+            ${coverImgHtml}
+            <div class="view-8-overlay">
+                <div class="view-8-content-wrapper">
+                    <div class="view-8-description">${description}</div>
+                    ${tagsHtml}
+                </div>
+            </div>
+        </a>
+    `;
     // === KONIEC POPRAWKI ===
   } else if (currentViewMode === "view-9") {
     // Specjalna struktura dla atrakcyjnego widoku Masonry #9

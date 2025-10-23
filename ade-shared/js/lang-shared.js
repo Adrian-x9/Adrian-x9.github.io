@@ -77,6 +77,7 @@ const languageStrings = {
     slideshowShuffle: "Shuffle slides On/Off",
     slideshowNext: "Next",
     slideshowLast: "Last",
+    guideTagsLabel: "Tags",
     moonPhaseNames: [
       "New Moon",
       "Waxing Crescent",
@@ -163,6 +164,7 @@ const languageStrings = {
     slideshowShuffle: "Losowe slajdy Wł/Wył",
     slideshowNext: "Następny",
     slideshowLast: "Ostatni",
+    guideTagsLabel: "Tagi",
     moonPhaseNames: [
       "Nów",
       "Sierp przybywający",
@@ -250,6 +252,7 @@ const languageStrings = {
     slideshowShuffle: "Zufällige Folien Ein/Aus",
     slideshowNext: "Nächstes",
     slideshowLast: "Letztes",
+    guideTagsLabel: "Schlagwörter",
     moonPhaseNames: [
       "Neumond",
       "Zunehmender Sichelmond",
@@ -336,6 +339,7 @@ const languageStrings = {
     slideshowShuffle: "Diapositivas aleatorias On/Off",
     slideshowNext: "Siguiente",
     slideshowLast: "Último",
+    guideTagsLabel: "Etiquetas",
     moonPhaseNames: [
       "Luna Nueva",
       "Luna Creciente",
@@ -422,6 +426,7 @@ const languageStrings = {
     slideshowShuffle: "Diapos aléatoires On/Off",
     slideshowNext: "Suivant",
     slideshowLast: "Dernier",
+    guideTagsLabel: "Mots-clés",
     moonPhaseNames: [
       "Nouvelle Lune",
       "Premier Croissant",
@@ -508,6 +513,7 @@ const languageStrings = {
     slideshowShuffle: "Diapositive casuali On/Off",
     slideshowNext: "Successivo",
     slideshowLast: "Ultimo",
+    guideTagsLabel: "Tag",
     moonPhaseNames: [
       "Luna Nuova",
       "Luna Crescente",
@@ -594,6 +600,7 @@ const languageStrings = {
     slideshowShuffle: "スライドシャッフル オン/オフ",
     slideshowNext: "次へ",
     slideshowLast: "最後",
+    guideTagsLabel: "タグ",
     moonPhaseNames: [
       "新月",
       "三日月",
@@ -680,6 +687,7 @@ const languageStrings = {
     slideshowShuffle: "随机幻灯片 开/关",
     slideshowNext: "下一个",
     slideshowLast: "最后一个",
+    guideTagsLabel: "标签",
     moonPhaseNames: [
       "新月",
       "娥眉月",
@@ -766,6 +774,7 @@ const languageStrings = {
     slideshowShuffle: "Slides aleatórios On/Off",
     slideshowNext: "Próximo",
     slideshowLast: "Último",
+    guideTagsLabel: "Tags",
     moonPhaseNames: [
       "Lua Nova",
       "Lua Crescente",
@@ -852,6 +861,7 @@ const languageStrings = {
     slideshowShuffle: "Náhodné snímky Zap/Vyp",
     slideshowNext: "Další",
     slideshowLast: "Poslední",
+    guideTagsLabel: "Štítky",
     moonPhaseNames: [
       "Nov",
       "Dorůstající srpek",
@@ -938,6 +948,7 @@ const languageStrings = {
     slideshowShuffle: "Náhodné snímky Zap/Vyp",
     slideshowNext: "Ďalší",
     slideshowLast: "Posledný",
+    guideTagsLabel: "Značky",
     moonPhaseNames: [
       "Nov",
       "Pribúdajúci kosáčik",
@@ -1024,6 +1035,7 @@ const languageStrings = {
     slideshowShuffle: "Випадкові слайди Увімк/Вимк",
     slideshowNext: "Наступний",
     slideshowLast: "Останній",
+    guideTagsLabel: "Теги",
     moonPhaseNames: [
       "Новий місяць",
       "Молодий місяць",
@@ -1111,6 +1123,7 @@ const languageStrings = {
     slideshowShuffle: "Slide acak Nyala/Mati",
     slideshowNext: "Berikutnya",
     slideshowLast: "Terakhir",
+    guideTagsLabel: "Tag",
     moonPhaseNames: [
       "Bulan Baru",
       "Sabit Awal",
@@ -1198,6 +1211,7 @@ const languageStrings = {
     slideshowShuffle: "स्लाइड शफ़ल चालू/बंद",
     slideshowNext: "अगला",
     slideshowLast: "अंतिम",
+    guideTagsLabel: "टैग",
     moonPhaseNames: [
       "अमावस्या",
       "बालचंद्र",
@@ -1283,6 +1297,7 @@ const languageStrings = {
     slideshowShuffle: "Shuffle slides On/Off",
     slideshowNext: "Next",
     slideshowLast: "Last",
+    guideTagsLabel: "Tags",
     moonPhaseNames: [
       "New Moon",
       "Waxing Crescent",
@@ -1368,6 +1383,7 @@ const languageStrings = {
     slideshowShuffle: "Shuffle slides On/Off",
     slideshowNext: "Next",
     slideshowLast: "Last",
+    guideTagsLabel: "Tags",
     moonPhaseNames: [
       "New Moon",
       "Waxing Crescent",
@@ -1453,6 +1469,7 @@ const languageStrings = {
     slideshowShuffle: "Slaytları karıştır Açık/Kapalı",
     slideshowNext: "Sonraki",
     slideshowLast: "Son",
+    guideTagsLabel: "Etiketler",
     moonPhaseNames: [
       "Yeni Ay",
       "Hilal",

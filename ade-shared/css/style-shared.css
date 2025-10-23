@@ -301,12 +301,10 @@ body.play-mode-active > .footer {
   left: 0;
   width: 100%;
   height: 64px;
-  /* ZMIANA: Symetryczny padding boczny */
   padding: 0 15px;
   z-index: 995;
-  display: grid; /* ZMIANA */
-  /* ZMIANA: Lewa kolumna robi miejsce na logo, środek 1fr, prawa auto */
-  grid-template-columns: 55px 1fr auto;
+  display: grid; /* WRACAMY DO GRID */
+  grid-template-columns: 55px 1fr auto; /* ORYGINALNY UKŁAD KOLUMN */
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
@@ -347,7 +345,16 @@ html.dark-mode .top-header {
 }
 
 .top-header #pageTitle {
-  grid-column: 2 / 3; /* Tytuł w środkowej, rozciągliwej kolumnie */
+  position: absolute; /* NOWOŚĆ: Wyjmujemy tytuł z siatki */
+  left: 50%;
+  transform: translateX(-50%);
+  
+  max-width: calc(100% - 300px); /* Zabezpieczenie przed nachodzeniem na przyciski */
+  width: 100%;
+  padding: 0 15px; /* Drobny padding boczny */
+  box-sizing: border-box;
+  
+  /* Pozostałe style bez zmian */
   text-align: center;
   margin: 0;
   white-space: nowrap;
@@ -355,6 +362,8 @@ html.dark-mode .top-header {
   text-overflow: ellipsis;
   font-size: 1.5em;
   font-weight: 700;
+  /* Ten element nie może przechwytywać kliknięć myszą, żeby nie blokować przycisków pod spodem */
+  pointer-events: none;
 }
 
 .header-controls {
@@ -414,6 +423,23 @@ html:not(.dark-mode) .top-header #backButton {
 html:not(.dark-mode) .top-header #backButton:hover {
   background-color: var(--c-red-primary);
   color: var(--c-text-on-red);
+}
+
+.top-header #backButton {
+  background-color: var(--c-bg-group);
+  border: 1px solid var(--c-border-translucent);
+  border-radius: 8px;
+  opacity: 0.9;
+  color: var(--c-text-primary);
+}
+.top-header #backButton:hover {
+  background-color: var(--c-red-primary);
+  color: var(--c-text-on-red);
+  border-color: var(--c-red-primary);
+  opacity: 1;
+}
+html.dark-mode .top-header #backButton:hover {
+  color: var(--c-text-primary);
 }
 
 /* ================================================================
@@ -1644,28 +1670,17 @@ html:not(.dark-mode) .guide-list.view-4 .guide-action-link a {
   justify-content: center;
   padding: 20px;
   z-index: 3;
-
-  /* <<< KLUCZOWA POPRAWKA: Większa przezroczystość */
-  background-color: rgba(255, 255, 255, 0.65);
+  background-color: rgba(255, 255, 255, 0.65); /* ZMIANA PRZEZROCZYSTOŚCI */
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-
   opacity: 0;
   transform: translateY(100%);
   transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
 }
 
-/* ORAZ DODAJ PONIŻSZY BLOK DLA TRYBU CIEMNEGO */
-
 html.dark-mode .guide-list.view-8 .view-8-overlay {
-  background-color: rgba(
-    30,
-    30,
-    30,
-    0.65
-  ); /* Dedykowany, ciemny kolor z większą przezroczystością */
+  background-color: rgba(30, 30, 30, 0.65); /* ZMIANA PRZEZROCZYSTOŚCI */
 }
-
 .guide-list.view-8 .guide:hover .view-8-overlay {
   opacity: 1;
   transform: translateY(
@@ -1692,6 +1707,34 @@ html.dark-mode .guide-list.view-8 .view-8-overlay {
 
 .guide-list.view-8 .guide:hover .view-8-description {
   opacity: 1; /* Tekst staje się widoczny po wsunięciu kurtyny */
+}
+
+.guide-list.view-8 .view-8-content-wrapper {
+  display: flex;
+  flex-direction: column; /* Układa opis i tagi w pionie */
+  gap: 15px; /* Odstęp między opisem a tagami */
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+}
+
+.guide-list.view-8 .guide:hover .view-8-content-wrapper {
+  opacity: 1;
+}
+
+.guide-list.view-8 .view-8-description {
+  font-size: 0.9em;
+  color: var(--c-text-primary);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6; /* Mniej miejsca na opis, bo są tagi */
+  overflow: hidden;
+}
+
+.guide-list.view-8 .view-8-tags {
+  font-size: 0.8em;
+  color: var(--c-text-secondary);
+  line-height: 1.5;
 }
 
 /* --- 8.9 Widok #8: Minimalistyczny z kurtyną (WERSJA POPRAWIONA) --- */
