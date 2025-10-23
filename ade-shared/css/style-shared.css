@@ -214,12 +214,6 @@ body.interface-minimized {
   padding-bottom: 20px;
 }
 
-/* FIX: Umożliwia zwolnienie miejsca po ukryciu paneli */
-body.interface-minimized {
-  padding-top: 20px;
-  padding-bottom: 20px;
-}
-
 /* FIX: Zwiększono specyficzność, usunięto !important */
 html body.video-ready {
   background-color: transparent;
@@ -303,8 +297,8 @@ body.play-mode-active > .footer {
   height: 64px;
   padding: 0 15px;
   z-index: 995;
-  display: grid; /* WRACAMY DO GRID */
-  grid-template-columns: 55px 1fr auto; /* ORYGINALNY UKŁAD KOLUMN */
+  display: grid; /* Domyślnie używamy stabilnego GRID */
+  grid-template-columns: 55px 1fr auto; /* Układ rezerwujący miejsce na logo */
   align-items: center;
   gap: 15px;
   box-sizing: border-box;
@@ -345,16 +339,13 @@ html.dark-mode .top-header {
 }
 
 .top-header #pageTitle {
-  position: absolute; /* NOWOŚĆ: Wyjmujemy tytuł z siatki */
+  position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  
-  max-width: calc(100% - 300px); /* Zabezpieczenie przed nachodzeniem na przyciski */
+  max-width: calc(100% - 300px);
   width: 100%;
-  padding: 0 15px; /* Drobny padding boczny */
+  padding: 0 15px;
   box-sizing: border-box;
-  
-  /* Pozostałe style bez zmian */
   text-align: center;
   margin: 0;
   white-space: nowrap;
@@ -362,11 +353,12 @@ html.dark-mode .top-header {
   text-overflow: ellipsis;
   font-size: 1.5em;
   font-weight: 700;
-  /* Ten element nie może przechwytywać kliknięć myszą, żeby nie blokować przycisków pod spodem */
   pointer-events: none;
 }
 
 .header-controls {
+  grid-column: 3 / 4; /* Przyciski zawsze w prawej kolumnie siatki */
+  justify-self: end;
   display: flex;
   align-items: center;
   flex-shrink: 0;
@@ -378,70 +370,50 @@ html.dark-mode .top-header {
   justify-self: end;
 }
 
-.header-controls .lightbox-action-btn,
-.header-controls .dir-db-btn {
-  position: static;
+/* === NOWY, ZUNIFIKOWANY STYL DLA PRZYCISKÓW W NAGŁÓWKU === */
+
+.header-controls .dir-db-btn,
+.header-controls .lightbox-action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: none;
-  border: none;
-  background: transparent;
-  color: inherit;
-  opacity: 0.7;
-  transition: opacity 0.2s, color 0.2s, transform 0.2s;
   height: 44px;
+  padding: 0 12px;
+  border-radius: 8px;
+  
+  background-color: var(--c-bg-group); /* Subtelne tło do grupowania */
+  border: 1px solid var(--c-border-translucent);
+  color: var(--c-text-secondary); /* Nieco mocniejszy kolor dla widoczności */
+  
+  font-size: 1em;
+  opacity: 1; /* Pełna widoczność, kontrolujemy wyglądem */
+  transition: all 0.2s ease;
+  
+  /* Resetowanie starych stylów */
+  position: static;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+/* Dopasowanie dla przycisków z samą ikoną */
+.header-controls .lightbox-action-btn {
   width: 44px;
   padding: 0;
   font-size: 1.3em;
-  cursor: pointer;
 }
 
-#backButton {
-  font-weight: normal;
-  width: auto;
-  padding: 0 8px;
-  font-size: 1em;
-}
-
-.header-controls .lightbox-action-btn:hover,
-.header-controls .dir-db-btn:hover {
-  opacity: 1;
-  background: none;
+/* Zunifikowany efekt :hover dla wszystkich przycisków */
+.header-controls .dir-db-btn:hover,
+.header-controls .lightbox-action-btn:hover {
+  background-color: var(--c-bg-hover);
   color: var(--c-red-primary);
-  transform: scale(1.1);
+  border-color: var(--c-border-translucent-alt);
 }
 
-/* Poprawka widoczności przycisku Wstecz w trybie jasnym */
-html:not(.dark-mode) .top-header #backButton {
-  border: 1px solid var(--c-red-primary);
+/* Poprawka koloru tekstu w :hover dla przycisku "Wstecz", żeby był spójny z ikonami */
+.header-controls #backButton:hover {
   color: var(--c-red-primary);
-  background-color: var(--c-bg-input);
-  opacity: 1;
 }
-
-html:not(.dark-mode) .top-header #backButton:hover {
-  background-color: var(--c-red-primary);
-  color: var(--c-text-on-red);
-}
-
-.top-header #backButton {
-  background-color: var(--c-bg-group);
-  border: 1px solid var(--c-border-translucent);
-  border-radius: 8px;
-  opacity: 0.9;
-  color: var(--c-text-primary);
-}
-.top-header #backButton:hover {
-  background-color: var(--c-red-primary);
-  color: var(--c-text-on-red);
-  border-color: var(--c-red-primary);
-  opacity: 1;
-}
-html.dark-mode .top-header #backButton:hover {
-  color: var(--c-text-primary);
-}
-
 /* ================================================================
    5. PASEK STATUSU (GLASS-STATUS)
    ================================================================ */
@@ -486,13 +458,6 @@ html.dark-mode .top-header #backButton:hover {
   color: var(--c-red-primary);
 }
 
-.glass-status #systemInfoLink .visu-text-red,
-.glass-status #statusLangBtn .lang-code-status {
-  color: var(--c-red-primary);
-  font-weight: bold;
-}
-
-/* FIX: Zwiększono specyficzność, usunięto !important */
 .glass-status #systemInfoLink .visu-text-red,
 .glass-status #statusLangBtn .lang-code-status {
   color: var(--c-red-primary);
@@ -1737,93 +1702,6 @@ html.dark-mode .guide-list.view-8 .view-8-overlay {
   line-height: 1.5;
 }
 
-/* --- 8.9 Widok #8: Minimalistyczny z kurtyną (WERSJA POPRAWIONA) --- */
-.guide-list.view-8 .guide {
-  padding: 0; /* 1. Resetuje globalny padding, aby obrazek zajął całą szerokość */
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Poprawka proporcji obrazka w widoku #8 */
-.guide-list.view-8 .guide-cover {
-  aspect-ratio: 3 / 4;
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border: none;
-  margin: 0;
-  box-shadow: none;
-  border-radius: 0;
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.guide-list.view-8 .guide:hover .guide-cover {
-  transform: scale(1.05);
-}
-
-/* Cały kafelek jako klikalny link */
-.guide-list.view-8 .view-8-link {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  text-decoration: none;
-  color: inherit;
-  margin-top: 0; /* Zapobiega dziedziczeniu niechcianego marginesu */
-}
-
-/* Styl Tytułu */
-.guide-list.view-8 .guide-title {
-  padding: 15px 20px; /* 2. Nadaje padding boczny tylko tytułowi */
-  margin-bottom: 0;
-  flex-shrink: 0;
-  z-index: 2;
-  position: relative;
-}
-
-/* "Szklana Kurtyna" (Overlay) */
-.guide-list.view-8 .view-8-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  z-index: 3;
-  background-color: rgba(255, 255, 255, 0.65); /* 3. Większa przezroczystość */
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  opacity: 0;
-  transform: translateY(100%);
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
-}
-
-html.dark-mode .guide-list.view-8 .view-8-overlay {
-  background-color: rgba(30, 30, 30, 0.65);
-}
-
-.guide-list.view-8 .guide:hover .view-8-overlay {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Tekst opisu wewnątrz kurtyny */
-.guide-list.view-8 .view-8-description {
-  font-size: 0.9em;
-  color: var(--c-text-primary);
-  text-align: center;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 8;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease 0.2s;
-}
-
-.guide-list.view-8 .guide:hover .view-8-description {
-  opacity: 1;
-}
-
 /* --- 8.10 Widok #9: Atrakcyjne Masonry z animacją --- */
 
 /* Główny kontener kafelka */
@@ -2599,8 +2477,6 @@ body .screensaver-fade-out {
 .slideshow-status-widget .widget-item.timer-frozen span {
   color: var(--c-red-primary);
   font-weight: bold;
-  /* Proponuję też dodać subtelną, czerwoną poświatę, żeby było jeszcze fajniej */
-  animation: pulse-glow-red 2s infinite ease-in-out;
 }
 
 @keyframes pulse-glow-red {
@@ -2868,6 +2744,24 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     width: 36px;
     height: 36px;
   }
+  .top-header {
+    display: flex; /* Zmieniamy na FLEXBOX */
+    justify-content: space-between;
+    padding-left: 60px; /* Robimy miejsce na stałe logo */
+  }
+
+  .top-header #pageTitle {
+    position: static; /* Tytuł wraca do normalnego układu */
+    transform: none;
+    max-width: none;
+    padding: 0;
+    text-align: left; /* Wyrównujemy do lewej */
+    flex-grow: 1; /* Tytuł wypełnia wolne miejsce */
+    pointer-events: auto; /* Przywracamy interaktywność */
+  }
+  .footer {
+    font-size: 0.85em; /* Stabilizuje rozmiar czcionki na mniejszych ekranach */
+  }
 }
 
 @media (max-width: 600px) {
@@ -2919,7 +2813,7 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   }
 
   .top-header #pageTitle {
-    font-size: 1.2em;
+    /* font-size: 1.2em; */
   }
 
   body {

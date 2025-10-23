@@ -989,7 +989,7 @@
             // Zaktualizuj interfejs użytkownika
             updateAnimationButtonUI();
             updateBackgroundVideoVisibility(); // To załaduje domyślne wideo
-            console.log('Ustawienia wideo zostały zresetowane do domyślnych.');
+            if (DEBUG) console.log('Ustawienia wideo zostały zresetowane do domyślnych.');
         }
 
         function updateDarkModeButtonUI() {

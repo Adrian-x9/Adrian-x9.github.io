@@ -92,6 +92,7 @@
     const defaultTheme = "light";
     if (theme === "dark" || (!theme && defaultTheme === "dark")) {
       document.documentElement.classList.add("dark-mode");
+      document.body.classList.add("dark-mode");
     }
   } catch (e) {
     /* Ignore */
@@ -101,7 +102,7 @@
 function initializeMobileHover() {
   // Nasłuchuj dotknięć na całej liście okładek
   guideList.addEventListener("touchend", function (e) {
-    LanguagetappedItem = e.target.closest(".guide");
+    const tappedItem = e.target.closest(".guide");
 
     // Jeśli dotknięto czegoś poza kafelkiem, zresetuj stan
     if (!tappedItem) {
@@ -158,6 +159,7 @@ let guides = [],
 const GLOBAL_SESSION_START_KEY = "visudir_global_session_start";
 const GLOBAL_SESSION_UPDATE_KEY = "visudir_global_session_update";
 const SESSION_GRACE_PERIOD_MS = 65000; // 65 sekund (nieco więcej niż interwał)
+const DEBUG = false; // toggle for console logs
 
 let globalSessionStartTime; // Zastępuje 'sessionStartTime'
 let isIdleTimerFrozen = false;
@@ -2705,6 +2707,7 @@ const debouncedRender = debounce(() => {
   }
 }, 250);
 window.addEventListener("resize", debouncedRender);
+window.addEventListener("orientationchange", debouncedRender);
 
 window.addEventListener("pageshow", function (event) {
   if (event.persisted) {
@@ -2987,23 +2990,23 @@ function updateWrapperHeightForPage(pageNum) {
   );
   if (!wrapper || !pageElement) return;
 
-  console.log(
+  if (DEBUG) console.log(
     `%c--- START: Diagnostyka updateWrapperHeight dla strony #${pageNum} ---`,
     "color: #e53935; font-weight: bold;"
   );
 
   requestAnimationFrame(() => {
     const items = pageElement.querySelectorAll(".guide");
-    console.log(`1. Znaleziono ${items.length} kafelków (.guide) na stronie.`);
+    if (DEBUG) console.log(`1. Znaleziono ${items.length} kafelków (.guide) na stronie.`);
 
     if (items.length === 0) {
       wrapper.style.height = "0px";
-      console.log("Wynik: Brak kafelków, ustawiam wysokość na 0px i kończę.");
+      if (DEBUG) console.log("Wynik: Brak kafelków, ustawiam wysokość na 0px i kończę.");
       return;
     }
     const listTop = guideList.getBoundingClientRect().top;
     let maxBottom = 0;
-    console.log(
+    if (DEBUG) console.log(
       `2. Pozycja 'top' głównego kontenera (.guide-list): ${listTop.toFixed(
         2
       )}px`
@@ -3013,7 +3016,7 @@ function updateWrapperHeightForPage(pageNum) {
       const itemRect = item.getBoundingClientRect();
       // Logujemy tylko kilka pierwszych, żeby nie zaspamować konsoli
       if (index < 5) {
-        console.log(
+        if (DEBUG) console.log(
           `- Kafelka #${index + 1}: top=${itemRect.top.toFixed(
             2
           )}, bottom=${itemRect.bottom.toFixed(2)}`
@@ -3024,14 +3027,14 @@ function updateWrapperHeightForPage(pageNum) {
       }
     });
 
-    console.log(
+    if (DEBUG) console.log(
       `3. Najniższy punkt (maxBottom) znaleziony na stronie: ${maxBottom.toFixed(
         2
       )}px`
     );
 
     const preciseHeight = maxBottom - listTop;
-    console.log(
+    if (DEBUG) console.log(
       `4. Obliczona wysokość (preciseHeight = maxBottom - listTop): ${preciseHeight.toFixed(
         2
       )}px`
@@ -3039,17 +3042,17 @@ function updateWrapperHeightForPage(pageNum) {
 
     if (preciseHeight > 0) {
       wrapper.style.height = `${preciseHeight}px`;
-      console.log(
+      if (DEBUG) console.log(
         `%cWynik: Ustawiam wysokość wrappera na: ${preciseHeight.toFixed(2)}px`,
         "color: green; font-weight: bold;"
       );
     } else {
-      console.log(
+      if (DEBUG) console.log(
         `%cWynik: Obliczona wysokość jest <= 0. Nie zmieniam wysokości wrappera.`,
         "color: orange;"
       );
     }
-    console.log(
+    if (DEBUG) console.log(
       `%c--- KONIEC: Diagnostyka updateWrapperHeight ---`,
       "color: #e53935; font-weight: bold;"
     );
@@ -3388,7 +3391,7 @@ function initializeGlobalSession() {
   if (now - lastUpdate < SESSION_GRACE_PERIOD_MS && sessionStart > 0) {
     // Kontynuujemy istniejącą sesję
     globalSessionStartTime = new Date(sessionStart);
-    console.log(
+    if (DEBUG) console.log(
       `✅ Dołączono do istniejącej sesji, która rozpoczęła się o: ${globalSessionStartTime.toLocaleTimeString()}`
     );
   } else {
@@ -3398,7 +3401,7 @@ function initializeGlobalSession() {
       GLOBAL_SESSION_START_KEY,
       globalSessionStartTime.getTime()
     );
-    console.log(
+    if (DEBUG) console.log(
       `🚀 Rozpoczęto nową globalną sesję o: ${globalSessionStartTime.toLocaleTimeString()}`
     );
   }
@@ -3417,7 +3420,7 @@ window.addEventListener("storage", (event) => {
       (!globalSessionStartTime ||
         globalSessionStartTime.getTime() !== newStartTime)
     ) {
-      console.log(
+      if (DEBUG) console.log(
         "🔄 Sesja została zresetowana w innej karcie. Synchronizuję czas."
       );
       globalSessionStartTime = new Date(newStartTime);
@@ -3461,7 +3464,7 @@ function checkScreenSaverState() {
 // Plik: scripts-shared.js
 
 function enterScreenSaverStage1() {
-  console.log("Screensaver: Faza 1 - ukrywanie UI.");
+  if (DEBUG) console.log("Screensaver: Faza 1 - ukrywanie UI.");
   screenSaverState = "stage1";
 
   const isSlideshowActive =
@@ -3500,7 +3503,7 @@ function enterScreenSaverStage1() {
  * Uruchamia drugą fazę wygaszacza - aktywuje pokaz slajdów.
  */
 function enterScreenSaverStage2() {
-  console.log("Screensaver: Faza 2 - uruchamianie pokazu slajdów.");
+  if (DEBUG) console.log("Screensaver: Faza 2 - uruchamianie pokazu slajdów.");
   screenSaverState = "stage2";
 
   // Jeśli już jesteśmy w trybie pokazu, nie robimy nic.
@@ -3513,7 +3516,7 @@ function enterScreenSaverStage2() {
  * Przywraca widoczność interfejsu po wykryciu aktywności użytkownika.
  */
 function restoreUiFromScreenSaver() {
-  console.log("Screensaver: Wykryto aktywność, przywracanie UI.");
+  if (DEBUG) console.log("Screensaver: Wykryto aktywność, przywracanie UI.");
   screenSaverState = "inactive";
 
   const hiddenElements = document.querySelectorAll(".screensaver-fade-out");
@@ -3553,7 +3556,7 @@ function changeTheme(direction) {
 
   // Nowa, prosta i niezawodna logika. Bez skomplikowanej matematyki.
   let newIndex = currentThemeIndex + direction;
-  console.log("1:", newIndex);
+  if (DEBUG) console.log("1:", newIndex);
 
   if (newIndex >= finalThemeList.length - 1) {
     // Jeśli wyszliśmy "za" listę, wróć na początek.
@@ -3563,7 +3566,7 @@ function changeTheme(direction) {
     newIndex = finalThemeList.length - 1;
   }
 
-  console.log("2:", newIndex);
+  if (DEBUG) console.log("2:", newIndex);
 
   applyTheme(newIndex);
 }
