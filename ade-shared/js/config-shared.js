@@ -20,9 +20,6 @@ const config1 = {
     showLanguageButton: false,
 
     screenSaverTimeout: 20,
-    defaultBgVideo: 1,
-    bgVideoStartNum: 1,
-    bgVideoEndNum: 76,
     defaultVideoBg: true,
     defaultLabelsVisible: true,
     slideshowAnimations: true,
@@ -43,6 +40,20 @@ const config1 = {
     defaultVideoExpanded: false,
     predefinedFilters: [{ label: "ADE", search: "ade" }],
 
+    standardVideoCategories: [
+      "red",
+      "green",
+      "blue",
+      "gray",
+      "brown",
+      "violet",
+      "teal",
+      "orange",
+    ],
+    allowedVideoCategories: ["*"],
+    defaultBgVideoFile: "red-1.mp4",
+    defaultSlideshowVideoFile: "blue-41.mp4",
+
     colorThemes: [
       "ade-shared/css/style-shared-red.css",
       "ade-shared/css/style-shared-green.css",
@@ -53,6 +64,17 @@ const config1 = {
       "ade-shared/css/style-shared-teal.css",
       "ade-shared/css/style-shared-gray.css",
     ],
+    themeMap: {
+      red: "ade-shared/css/style-shared-red.css",
+      green: "ade-shared/css/style-shared-green.css",
+      blue: "ade-shared/css/style-shared-blue.css",
+      brown: "ade-shared/css/style-shared-brown.css",
+      orange: "ade-shared/css/style-shared-orange.css",
+      violet: "ade-shared/css/style-shared-violet.css",
+      teal: "ade-shared/css/style-shared-teal.css",
+      gray: "ade-shared/css/style-shared-gray.css",
+      // Możemy tu dodać więcej mapowań w przyszłości, np. "yellow"
+    },
   },
 
   /// Shared settings and paths // Ustawienia i ścieżki wspólne

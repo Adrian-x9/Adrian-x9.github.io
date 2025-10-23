@@ -409,48 +409,34 @@ function updateRealTimeClock() {
   }
 }
 
-function initializeBackgroundVideo(theme) {
-  const pageKey = config.pageSettings.pageKey;
-  const storageKey = `visudir_bg_video_${pageKey}`;
-  const storedVideoNum = localStorage.getItem(storageKey);
-  let videoNum = parseInt(storedVideoNum) || config.pageSettings.defaultBgVideo;
-  if (
-    videoNum < config.pageSettings.bgVideoStartNum ||
-    videoNum > config.pageSettings.bgVideoEndNum
-  ) {
-    videoNum = config.pageSettings.defaultBgVideo;
-  }
-  if (bgVideo && bgVideoSource) {
-    const videoUrlBase =
-      theme === "light"
-        ? config.paths.videoBgLightUrlBase
-        : config.paths.videoBgDarkUrlBase;
-    const videoSrc = `${videoUrlBase}${videoNum}.mp4`;
-    bgVideoSource.src = videoSrc;
-    bgVideo.load();
-    bgVideo.muted = isAudioMuted;
-    const playPromise = bgVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((error) => {
-        if (error.name !== "AbortError") {
-          console.error("Błąd odtwarzania wideo:", error);
-        }
-      });
-    }
+/**
+ * Zwraca listę dostępnych plików wideo, uwzględniając hierarchię konfiguracji.
+ * @returns {string[]} Tablica z nazwami plików wideo.
+ */
+function getAvailableVideos() {
+  const themeMode = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
+  const fullVideoList = videoDatabase[themeMode] || [];
+  
+  let categoriesToUse;
 
-    bgVideo.addEventListener(
-      "canplay",
-      () => {
-        document.body.classList.add("video-ready");
-      },
-      {
-        once: true,
-      }
-    );
+  // 1. Sprawdź, czy dla bieżącego systemu zdefiniowano własną listę kategorii.
+  if (config.pageSettings.allowedVideoCategories) {
+    categoriesToUse = config.pageSettings.allowedVideoCategories;
+  } else {
+    // 2. Jeśli nie, użyj globalnego, "bezpiecznego" zestawu standardowych kategorii.
+    categoriesToUse = config.pageSettings.standardVideoCategories || [];
   }
-  if (!storedVideoNum || parseInt(storedVideoNum) !== videoNum) {
-    localStorage.setItem(storageKey, videoNum);
+  
+  // 3. Obsłuż wildcard '*', który daje dostęp do wszystkiego.
+  if (categoriesToUse.includes('*')) {
+    return fullVideoList;
   }
+
+  // 4. Przefiltruj pełną bazę wideo na podstawie wybranej listy kategorii.
+  return fullVideoList.filter(videoFile => {
+    const category = videoFile.split('-')[0];
+    return categoriesToUse.includes(category);
+  });
 }
 
 function updateBackgroundVideoVisibility(forceShow = false) {
@@ -2102,56 +2088,51 @@ function updateVideoBtnUI() {
 }
 
 function shuffleBackgroundVideo() {
-  const { pageKey, bgVideoStartNum, bgVideoEndNum, defaultBgVideo } =
-    config.pageSettings;
-  const storageKey = `visudir_bg_video_${pageKey}`;
-  const range = bgVideoEndNum - bgVideoStartNum;
-  if (range < 1) return;
-  const currentVideoNum =
-    parseInt(localStorage.getItem(storageKey)) || defaultBgVideo;
-  let newVideoNum;
+  const pageKey = config.pageSettings.pageKey;
+  const storageKey = `visudir_bg_video_file_${pageKey}`;
+  const availableVideos = getAvailableVideos();
+
+  if (availableVideos.length < 2) return;
+  
+  const currentVideoFile = localStorage.getItem(storageKey);
+  let newVideoFile;
   do {
-    newVideoNum = Math.floor(Math.random() * (range + 1)) + bgVideoStartNum;
-  } while (newVideoNum === currentVideoNum);
-  localStorage.setItem(storageKey, newVideoNum);
-  initializeBackgroundVideo(currentTheme);
+    newVideoFile = availableVideos[Math.floor(Math.random() * availableVideos.length)];
+  } while (newVideoFile === currentVideoFile);
+
+  localStorage.setItem(storageKey, newVideoFile);
+  initializeBackgroundVideo();
 }
 
 function changeBackgroundVideo(direction) {
   if (videoBgState === "off") return;
-
   if (autoShuffleInterval) {
     shuffleBackgroundVideo();
     return;
   }
+  const pageKey = config.pageSettings.pageKey;
+  const storageKey = `visudir_bg_video_file_${pageKey}`;
+  const currentVideoFile = localStorage.getItem(storageKey);
+  const availableVideos = getAvailableVideos();
 
-  const { pageKey, bgVideoStartNum, bgVideoEndNum } = config.pageSettings;
-  if (bgVideoEndNum - bgVideoStartNum < 1) return;
+  if (availableVideos.length < 2) return;
+  
+  let currentIndex = availableVideos.indexOf(currentVideoFile);
+  if (currentIndex === -1) currentIndex = 0;
+  
+  let nextIndex = currentIndex + direction;
+  if (nextIndex >= availableVideos.length) nextIndex = 0;
+  if (nextIndex < 0) nextIndex = availableVideos.length - 1;
 
-  const storageKey = `visudir_bg_video_${pageKey}`;
-  let currentVideoNum =
-    parseInt(localStorage.getItem(storageKey)) || bgVideoStartNum;
-  currentVideoNum += direction;
-
-  if (currentVideoNum > bgVideoEndNum) currentVideoNum = bgVideoStartNum;
-  if (currentVideoNum < bgVideoStartNum) currentVideoNum = bgVideoEndNum;
-
-  localStorage.setItem(storageKey, currentVideoNum);
-
+  localStorage.setItem(storageKey, availableVideos[nextIndex]);
   const wasPaused = videoBgState === "paused";
-  initializeBackgroundVideo(currentTheme);
+  initializeBackgroundVideo();
 
   if (wasPaused) {
-    bgVideo.addEventListener(
-      "canplay",
-      function onCanPlay() {
-        bgVideo.currentTime = pausedTime;
-        bgVideo.pause();
-      },
-      {
-        once: true,
-      }
-    );
+    bgVideo.addEventListener("canplay", () => {
+      bgVideo.currentTime = pausedTime;
+      bgVideo.pause();
+    }, { once: true });
   }
   updateVideoBtnUI();
 }
@@ -2174,8 +2155,14 @@ function toggleAutoShuffle(forceStart = false) {
 }
 
 function resetVideoSettings() {
-  const { pageKey, defaultBgVideo } = config.pageSettings;
-  localStorage.setItem(`visudir_bg_video_${pageKey}`, defaultBgVideo);
+  const pageKey = config.pageSettings.pageKey;
+  const defaultVideo = config.pageSettings.defaultBgVideoFile;
+
+  if (defaultVideo) {
+    localStorage.setItem(`visudir_bg_video_file_${pageKey}`, defaultVideo);
+  } else {
+    localStorage.removeItem(`visudir_bg_video_file_${pageKey}`);
+  }
 
   if (autoShuffleInterval) {
     clearInterval(autoShuffleInterval);
@@ -2193,6 +2180,80 @@ function resetVideoSettings() {
   }
 
   updateVideoBtnUI();
+}
+
+function initializeBackgroundVideo() {
+  const pageKey = config.pageSettings.pageKey;
+  const storageKey = `visudir_bg_video_file_${pageKey}`;
+  const storedVideoFile = localStorage.getItem(storageKey);
+  
+  const availableVideos = getAvailableVideos();
+
+  if (availableVideos.length === 0) {
+    if (bgVideo) bgVideo.style.display = 'none'; // Ukryj wideo, jeśli nie ma dostępnych
+    return;
+  }
+
+  let videoFile = storedVideoFile;
+
+  if (!videoFile || !availableVideos.includes(videoFile)) {
+    videoFile = availableVideos[Math.floor(Math.random() * availableVideos.length)];
+  }
+
+  if (bgVideo && bgVideoSource) {
+    const themeMode = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
+    const videoUrlBase = config.paths[`videoBg${themeMode === 'dark' ? 'Dark' : 'Light'}UrlBase`];
+    const videoSrc = `${videoUrlBase}/${videoFile}`;
+    
+    bgVideoSource.src = videoSrc;
+    bgVideo.load();
+    bgVideo.muted = isAudioMuted;
+    
+    const playPromise = bgVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        if (error.name !== "AbortError") console.error("Błąd odtwarzania wideo:", error);
+      });
+    }
+
+    bgVideo.addEventListener("canplay", () => document.body.classList.add("video-ready"), { once: true });
+  }
+
+  localStorage.setItem(storageKey, videoFile);
+  applyVideoTheme(videoFile);
+}
+
+/**
+ * Applies a UI theme based on the video category.
+ * @param {string} videoFilename - The filename of the video, e.g., "blue-abstract.mp4".
+ */
+function applyVideoTheme(videoFilename) {
+  if (!videoFilename || typeof videoFilename !== "string") return;
+
+  // 1. Extract category from filename (e.g., "blue-abstract.mp4" -> "blue")
+  const category = videoFilename.split("-")[0];
+  const themeMap = config.pageSettings.themeMap || {};
+  const themeLink = document.getElementById("dynamic-theme");
+  const prefix = config.pageSettings.pathCorrection || ".";
+
+  if (!themeLink) return;
+
+  // 2. Find the corresponding theme file in the map
+  const themePath = themeMap[category];
+
+  // 3. Apply the theme or do nothing if not found
+  if (themePath) {
+    const fullPath = `${prefix}/${themePath}`;
+    if (themeLink.href !== fullPath) {
+      themeLink.href = fullPath;
+      if (DEBUG)
+        console.log(`Theme applied for category "${category}": ${fullPath}`);
+    }
+  } else {
+    // Optional: Fallback to a default theme or simply leave the current one
+    if (DEBUG)
+      console.log(`No specific theme found for category "${category}".`);
+  }
 }
 
 function toggleDarkMode() {
@@ -2276,32 +2337,43 @@ function toggleSlideshowShuffle() {
     .classList.toggle("active-play", slideshowIsRandom);
 }
 
-function startPlayAnimation(startIndex = 0, forcePause = false) {
-  const source =
-    slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
+function startPlayAnimation(startIndex = -1, forcePause = false) { // Zmieniamy domyślny startIndex na -1
+  const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
   if (source.length === 0) return;
 
   playGuidesQueue = [...source];
-  playCurrentIndex = startIndex;
+
+  // NOWA LOGIKA: Ustawianie domyślnego wideo dla slideshow
+  if (startIndex === -1) { // Jeśli startujemy pokaz "z przycisku", a nie z konkretnego elementu
+    const defaultFile = config.pageSettings.defaultSlideshowVideoFile;
+    if (defaultFile) {
+      const defaultIndex = playGuidesQueue.findIndex(guide => {
+        // Porównujemy tylko nazwę pliku, ignorując ścieżki
+        const guideFilename = guide.file.split('/').pop();
+        return guideFilename === defaultFile;
+      });
+
+      if (defaultIndex !== -1) {
+        playCurrentIndex = defaultIndex;
+      } else {
+        playCurrentIndex = 0; // Fallback, jeśli plik nie zostanie znaleziony
+      }
+    } else {
+      playCurrentIndex = 0; // Fallback, jeśli domyślny plik nie jest zdefiniowany
+    }
+  } else {
+    playCurrentIndex = startIndex; // Użyj indeksu klikniętego elementu
+  }
 
   document.body.classList.add("play-mode-active");
-  document.body.classList.toggle(
-    "slideshow-no-animation",
-    !slideshowAnimationsEnabled
-  );
+  document.body.classList.toggle("slideshow-no-animation", !slideshowAnimationsEnabled);
 
   setTimeout(() => {
     backdrop.classList.add("visible");
   }, 10);
 
-  // updateBackgroundVideoVisibility();
-
   const lastPlayState = JSON.parse(getFromLocalStorage("slideshow_playing"));
-  slideshowIsPlaying = forcePause
-    ? false
-    : lastPlayState !== null
-    ? lastPlayState
-    : true;
+  slideshowIsPlaying = forcePause ? false : lastPlayState !== null ? lastPlayState : true;
 
   if (slideshowIsPlaying) {
     slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -2990,72 +3062,86 @@ function updateWrapperHeightForPage(pageNum) {
   );
   if (!wrapper || !pageElement) return;
 
-  if (DEBUG) console.log(
-    `%c--- START: Diagnostyka updateWrapperHeight dla strony #${pageNum} ---`,
-    "color: #e53935; font-weight: bold;"
-  );
+  if (DEBUG)
+    console.log(
+      `%c--- START: Diagnostyka updateWrapperHeight dla strony #${pageNum} ---`,
+      "color: #e53935; font-weight: bold;"
+    );
 
   requestAnimationFrame(() => {
     const items = pageElement.querySelectorAll(".guide");
-    if (DEBUG) console.log(`1. Znaleziono ${items.length} kafelków (.guide) na stronie.`);
+    if (DEBUG)
+      console.log(
+        `1. Znaleziono ${items.length} kafelków (.guide) na stronie.`
+      );
 
     if (items.length === 0) {
       wrapper.style.height = "0px";
-      if (DEBUG) console.log("Wynik: Brak kafelków, ustawiam wysokość na 0px i kończę.");
+      if (DEBUG)
+        console.log("Wynik: Brak kafelków, ustawiam wysokość na 0px i kończę.");
       return;
     }
     const listTop = guideList.getBoundingClientRect().top;
     let maxBottom = 0;
-    if (DEBUG) console.log(
-      `2. Pozycja 'top' głównego kontenera (.guide-list): ${listTop.toFixed(
-        2
-      )}px`
-    );
+    if (DEBUG)
+      console.log(
+        `2. Pozycja 'top' głównego kontenera (.guide-list): ${listTop.toFixed(
+          2
+        )}px`
+      );
 
     items.forEach((item, index) => {
       const itemRect = item.getBoundingClientRect();
       // Logujemy tylko kilka pierwszych, żeby nie zaspamować konsoli
       if (index < 5) {
-        if (DEBUG) console.log(
-          `- Kafelka #${index + 1}: top=${itemRect.top.toFixed(
-            2
-          )}, bottom=${itemRect.bottom.toFixed(2)}`
-        );
+        if (DEBUG)
+          console.log(
+            `- Kafelka #${index + 1}: top=${itemRect.top.toFixed(
+              2
+            )}, bottom=${itemRect.bottom.toFixed(2)}`
+          );
       }
       if (itemRect.bottom > maxBottom) {
         maxBottom = itemRect.bottom;
       }
     });
 
-    if (DEBUG) console.log(
-      `3. Najniższy punkt (maxBottom) znaleziony na stronie: ${maxBottom.toFixed(
-        2
-      )}px`
-    );
+    if (DEBUG)
+      console.log(
+        `3. Najniższy punkt (maxBottom) znaleziony na stronie: ${maxBottom.toFixed(
+          2
+        )}px`
+      );
 
     const preciseHeight = maxBottom - listTop;
-    if (DEBUG) console.log(
-      `4. Obliczona wysokość (preciseHeight = maxBottom - listTop): ${preciseHeight.toFixed(
-        2
-      )}px`
-    );
+    if (DEBUG)
+      console.log(
+        `4. Obliczona wysokość (preciseHeight = maxBottom - listTop): ${preciseHeight.toFixed(
+          2
+        )}px`
+      );
 
     if (preciseHeight > 0) {
       wrapper.style.height = `${preciseHeight}px`;
-      if (DEBUG) console.log(
-        `%cWynik: Ustawiam wysokość wrappera na: ${preciseHeight.toFixed(2)}px`,
-        "color: green; font-weight: bold;"
-      );
+      if (DEBUG)
+        console.log(
+          `%cWynik: Ustawiam wysokość wrappera na: ${preciseHeight.toFixed(
+            2
+          )}px`,
+          "color: green; font-weight: bold;"
+        );
     } else {
-      if (DEBUG) console.log(
-        `%cWynik: Obliczona wysokość jest <= 0. Nie zmieniam wysokości wrappera.`,
-        "color: orange;"
-      );
+      if (DEBUG)
+        console.log(
+          `%cWynik: Obliczona wysokość jest <= 0. Nie zmieniam wysokości wrappera.`,
+          "color: orange;"
+        );
     }
-    if (DEBUG) console.log(
-      `%c--- KONIEC: Diagnostyka updateWrapperHeight ---`,
-      "color: #e53935; font-weight: bold;"
-    );
+    if (DEBUG)
+      console.log(
+        `%c--- KONIEC: Diagnostyka updateWrapperHeight ---`,
+        "color: #e53935; font-weight: bold;"
+      );
   });
 }
 
@@ -3391,9 +3477,10 @@ function initializeGlobalSession() {
   if (now - lastUpdate < SESSION_GRACE_PERIOD_MS && sessionStart > 0) {
     // Kontynuujemy istniejącą sesję
     globalSessionStartTime = new Date(sessionStart);
-    if (DEBUG) console.log(
-      `✅ Dołączono do istniejącej sesji, która rozpoczęła się o: ${globalSessionStartTime.toLocaleTimeString()}`
-    );
+    if (DEBUG)
+      console.log(
+        `✅ Dołączono do istniejącej sesji, która rozpoczęła się o: ${globalSessionStartTime.toLocaleTimeString()}`
+      );
   } else {
     // Rozpoczynamy nową sesję
     globalSessionStartTime = new Date();
@@ -3401,9 +3488,10 @@ function initializeGlobalSession() {
       GLOBAL_SESSION_START_KEY,
       globalSessionStartTime.getTime()
     );
-    if (DEBUG) console.log(
-      `🚀 Rozpoczęto nową globalną sesję o: ${globalSessionStartTime.toLocaleTimeString()}`
-    );
+    if (DEBUG)
+      console.log(
+        `🚀 Rozpoczęto nową globalną sesję o: ${globalSessionStartTime.toLocaleTimeString()}`
+      );
   }
 
   // Niezależnie od wszystkiego, od razu ustawiamy "bicie serca", aby inne karty wiedziały, że jesteśmy aktywni
@@ -3420,9 +3508,10 @@ window.addEventListener("storage", (event) => {
       (!globalSessionStartTime ||
         globalSessionStartTime.getTime() !== newStartTime)
     ) {
-      if (DEBUG) console.log(
-        "🔄 Sesja została zresetowana w innej karcie. Synchronizuję czas."
-      );
+      if (DEBUG)
+        console.log(
+          "🔄 Sesja została zresetowana w innej karcie. Synchronizuję czas."
+        );
       globalSessionStartTime = new Date(newStartTime);
     }
   }

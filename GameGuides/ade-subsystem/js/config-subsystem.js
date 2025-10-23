@@ -61,6 +61,9 @@ const config2 = {
         search: "Poradniki",
       },
     ],
+
+    allowedVideoCategories: ["gaming", "sport", "abstract"],
+    defaultBgVideoFile: "gaming-54.mp4",
   },
 
   paths: {
