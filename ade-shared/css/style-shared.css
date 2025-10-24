@@ -24,7 +24,7 @@
   --c-bg-panel-hover: #f0f0f0;
   --c-bg-panel-glass: rgba(255, 255, 255, 0.9);
   --c-bg-panel-glass-alt: rgba(255, 255, 255, 0.8);
-  --c-bg-group: rgba(0, 0, 0, 0.05);
+  --c-bg-group: rgba(255, 255, 255, 0.3);
   --c-bg-input: #fff;
   --c-bg-hover: rgba(0, 0, 0, 0.05);
 
@@ -68,7 +68,7 @@ html.dark-mode {
   --c-bg-panel-hover: #222;
   --c-bg-panel-glass: rgba(45, 45, 45, 0.9);
   --c-bg-panel-glass-alt: rgba(0, 0, 0, 0.8);
-  --c-bg-group: rgba(255, 255, 255, 0.1);
+  --c-bg-group: rgba(0, 0, 0, 0.2);
   --c-bg-input: #2c2c2c;
   --c-bg-hover: rgba(255, 255, 255, 0.1);
 
@@ -309,7 +309,7 @@ body.play-mode-active > .footer {
   -webkit-backdrop-filter: blur(8px);
 }
 html:not(.dark-mode) .top-header {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(255, 255, 255, 0.3);
 }
 html.dark-mode .top-header {
   background-color: rgba(20, 20, 20, 0.15);
@@ -380,15 +380,15 @@ html.dark-mode .top-header {
   height: 44px;
   padding: 0 12px;
   border-radius: 8px;
-  
+
   background-color: var(--c-bg-group); /* Subtelne tło do grupowania */
   border: 1px solid var(--c-border-translucent);
   color: var(--c-text-secondary); /* Nieco mocniejszy kolor dla widoczności */
-  
+
   font-size: 1em;
   opacity: 1; /* Pełna widoczność, kontrolujemy wyglądem */
   transition: all 0.2s ease;
-  
+
   /* Resetowanie starych stylów */
   position: static;
   box-shadow: none;
@@ -414,6 +414,17 @@ html.dark-mode .top-header {
 .header-controls #backButton:hover {
   color: var(--c-red-primary);
 }
+
+/* Aureola dla tytułu strony w trybie jasnym */
+html:not(.dark-mode) .top-header #pageTitle {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+/* Aureola dla logo w trybie jasnym */
+html:not(.dark-mode) .header-logo {
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
 /* ================================================================
    5. PASEK STATUSU (GLASS-STATUS)
    ================================================================ */
@@ -2094,6 +2105,12 @@ html.dark-mode .footer {
   line-height: 1;
 }
 
+.footer-video-info {
+  margin-top: 12px;
+  font-size: 0.9em; /* Taki sam rozmiar jak .privacy-notice */
+  color: var(--c-text-secondary); /* Taki sam kolor jak główny tekst stopki */
+}
+
 .reset-container {
   display: flex;
   justify-content: center;
@@ -2727,43 +2744,83 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   }
 }
 
+/* Plik: style-shared.css (ZASTĄP OBIE SEKCJE @media TĄ WERSJĄ) */
+
+/* ================================================================
+   13. STYLE RESPONSYWNE (MEDIA QUERIES)
+   ================================================================ */
+
+/* === GŁÓWNY BREAKPOINT MOBILNY (Tablety) === */
 @media (max-width: 768px) {
-  #lightbox-controls {
-    flex-direction: column;
+  #fullscreenBtnLightbox {
+    display: none;
   }
 
+  /* --- Mobile Header Layout / Mobilny Układ Nagłówka --- */
+
+  .top-header {
+    /* Use Grid for a robust three-column layout */
+    /* Używamy Grid dla pancernego, trzykolumnowego układu */
+    display: grid;
+    grid-template-columns: auto 1fr auto; /* logo | expanding title | controls */
+    align-items: center;
+    gap: 15px;
+    padding: 0 15px;
+  }
+
+  #logoLink {
+    position: relative; /* Make it a positioning context / Ustawiamy go jako kontekst pozycjonowania */
+    grid-column: 1 / 2;
+    justify-self: start;
+    width: 36px;
+    height: 36px;
+  }
+
+  .header-logo {
+    /* Position absolutely within the relative parent (#logoLink) */
+    /* Pozycjonujemy absolutnie wewnątrz relatywnego rodzica (#logoLink) */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* Ensure they fit */
+    /* Zapewniamy dopasowanie */
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  body .top-header #pageTitle {
+    position: static;
+    grid-column: 2 / 3;
+    transform: none;
+    padding: 0;
+    text-align: center; /* This should now have enough specificity / To powinno mieć teraz wystarczającą siłę */
+    min-width: 0;
+  }
+
+  .top-header .header-controls {
+    grid-column: 3 / 4;
+    justify-self: end;
+  }
+
+  /* --- Pozostałe style dla 768px --- */
   .glass-status {
     font-size: 0.85rem;
     padding: 8px 15px;
     gap: 12px;
   }
 
-  #logoLink {
-    top: 14px; /* (64 - 36) / 2 = 14 */
-    left: 22px;
-    width: 36px;
-    height: 36px;
-  }
-  .top-header {
-    display: flex; /* Zmieniamy na FLEXBOX */
-    justify-content: space-between;
-    padding-left: 60px; /* Robimy miejsce na stałe logo */
+  #lightbox-controls {
+    flex-direction: column;
   }
 
-  .top-header #pageTitle {
-    position: static; /* Tytuł wraca do normalnego układu */
-    transform: none;
-    max-width: none;
-    padding: 0;
-    text-align: left; /* Wyrównujemy do lewej */
-    flex-grow: 1; /* Tytuł wypełnia wolne miejsce */
-    pointer-events: auto; /* Przywracamy interaktywność */
-  }
   .footer {
-    font-size: 0.85em; /* Stabilizuje rozmiar czcionki na mniejszych ekranach */
+    font-size: 0.85em;
   }
 }
 
+/* === BREAKPOINT DLA ŚREDNICH EKRANÓW MOBILNYCH === */
 @media (max-width: 600px) {
   .deck-bottom-row {
     flex-wrap: wrap;
@@ -2778,69 +2835,60 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
   }
 }
 
+/* === BREAKPOINT DLA MAŁYCH EKRANÓW (Telefony) === */
 @media (max-width: 480px) {
+  /* --- Dopracowanie nagłówka --- */
+  .top-header {
+    height: 60px;
+    grid-template-columns: 30px 1fr auto; /* Zmniejszamy kolumnę na logo */
+    gap: 10px;
+    padding: 0 10px;
+  }
+
   #logoLink {
-    top: 19px; /* (60 - 22) / 2 = 19 */
-    left: 19px; /* (60 - 22) / 2 = 19 */
-    width: 22px;
+    width: 22px; /* Zmniejszamy samo logo */
     height: 22px;
   }
 
-  .top-header {
-    height: 60px;
-    /* ZMIANA: padding-left musi się dostosować */
-    padding: 0 10px;
-    /* ZMIANA: lewa kolumna na logo */
-    grid-template-columns: 40px 1fr auto;
-    gap: 8px;
+  .top-header #pageTitle {
+    font-size: 1.2em; /* Zmniejszamy czcionkę tytułu */
   }
 
   .header-controls {
-    gap: 0;
+    gap: 5px;
   }
 
   .header-controls .lightbox-action-btn,
   .header-controls .dir-db-btn {
     height: 40px;
     width: 40px;
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 
-  #backButton {
-    width: auto;
-    padding: 0 8px;
-    font-size: 0.9em;
+  #backButton .btn-text {
+    display: none; /* Ukrywamy tekst "Wstecz" */
   }
 
-  .top-header #pageTitle {
-    /* font-size: 1.2em; */
-  }
-
+  /* --- Pozostałe style dla 480px --- */
   body {
     padding-top: 75px;
   }
-
-  /* FIX: Dopasowanie paddingu body w trybie zminimalizowanym na mobile */
   body.interface-minimized {
     padding-top: 15px;
     padding-bottom: 15px;
   }
-
   .deck-top-row:not(.filters-expanded) .filter-section {
     max-width: 0;
     opacity: 0;
     overflow: hidden;
     pointer-events: none;
   }
-
   .deck-top-row:not(.filters-expanded) .status-section {
     flex-grow: 1;
   }
-
   .deck-top-row.filters-expanded .filter-section {
     max-width: calc(100% - 45px);
   }
-
   .glass-status {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2848,53 +2896,41 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
     padding: 12px 20px;
     justify-items: center;
   }
-
   #firstPageBtn,
   #lastPageBtn {
     display: none;
   }
-
-  /* POPRAWKA: Poprawny rozmiar i marginesy dla paneli w widoku mobilnym */
   .control-panel,
   .pagination {
     width: calc(100% - 20px);
     margin-left: 10px;
     margin-right: 10px;
   }
-
-  /* POPRAWKA: Zmniejszenie odstępów dla okładek na mobile */
   .guide-page {
     padding-left: 10px;
     padding-right: 10px;
     gap: 10px;
   }
-
   .play-caption {
-    /* ZMIANA: top: 130px -> 15px */
     top: 15px;
-    /* NOWOŚĆ: Ustawienie szerokości i marginesów */
     left: 15px;
-    right: 65px; /* Miejsce na przyciski X i Pełny Ekran (fullscreenBtnLightbox) */
-    width: auto; /* Szerokość liczona z left/right */
-    transform: translateX(0) scale(0.95); /* Reset centrowania */
-    font-size: 1em; /* Zmniejszenie czcionki */
-    text-align: left; /* Wyrównanie do lewej w nowym boksie */
+    right: 65px;
+    width: auto;
+    transform: translateX(0) scale(0.95);
+    font-size: 1em;
+    text-align: left;
   }
-
   .play-caption.visible {
-    transform: translateX(0) scale(1); /* Reset centrowania dla mobile */
+    transform: translateX(0) scale(1);
   }
-
-  /* NOWOŚĆ: Przeniesienie zegara na prawo, pod przycisk "X" na mobile */
   .slideshow-status-widget {
-    top: 69px; /* Pod przyciskiem X (15px + 44px + 10px marginesu) */
+    top: 69px;
     left: auto;
     right: 15px;
-    transform: translateX(120%); /* Animacja wjazdu z prawej */
+    transform: translateX(120%);
   }
-
   .slideshow-status-widget.visible {
-    transform: translateX(0); /* Wjazd na pozycję */
+    transform: translateX(0);
   }
 }
 
@@ -2943,4 +2979,21 @@ html.dark-mode .slideshow-status-widget .widget-item.idle-pulse span {
 }
 .slideshow-status-widget #widget-clock span {
   transition: opacity 0.4s ease;
+}
+
+#video-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1; /* Znajduje się nad wideo, ale pod resztą treści */
+  background-color: rgba(0, 0, 0, 0.4);
+  mix-blend-mode: multiply; /* Daje świetny efekt przyciemnienia */
+  opacity: 0;
+  pointer-events: none; /* Nie blokuje kliknięć */
+  transition: opacity 0.5s ease;
+}
+
+body.video-overlay-active #video-overlay {
+  opacity: 1;
 }

@@ -12,35 +12,60 @@
 
     <script>
         (function () {
-            // Pobieramy prefiks z obiektu config0, który został właśnie załadowany.
             const prefix = config0.pageSettings.pathCorrection || '.';
+            
+            document.write(`
+                <link rel="icon" type="image/png" href="${prefix}/ade-shared/gfx/favicons/favicon-32x32.png">
+                <link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">
+                <link id="dynamic-theme" rel="stylesheet" href="">
+                <link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />
+                <link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />
+                
+                <script src="${prefix}/ade-shared/js/config-shared.js"><\/script>
+                <script src="./ade-subsystem/js/config-subsystem.js"><\/script>
+                <script src="${prefix}/ade-shared/js/config-merger.js"><\/script>
 
-            // Definiujemy wszystkie pozostałe zasoby.
-            const assets = [
-                // Ikony (zawsze ze ścieżki współdzielonej)
-                `<link rel="icon" type="image/png" sizes="16x16" href="${prefix}/ade-shared/gfx/favicons/favicon-16x16.png" />`,
-                `<link rel="icon" type="image/png" sizes="32x32" href="${prefix}/ade-shared/gfx/favicons/favicon-32x32.png" />`,
-                `<link rel="apple-touch-icon" sizes="180x180" href="${prefix}/ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />`,
-                `<link rel="icon" type="image/png" sizes="192x192" href="${prefix}/ade-shared/gfx/favicons/android-icon-192x192.png" />`,
-                // Style CSS (zawsze ze ścieżki współdzielonej)
-                `<link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">`,
-                `<link rel="stylesheet" href="./ade-subsystem/css/styles-subsystem.css">`,
-                `<link id="dynamic-theme" rel="stylesheet" href="">`,
-                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />`,
-                `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />`,
-                // Skrypty JS (współdzielone z prefiksem, lokalne bez)
-                `<script src="${prefix}/ade-shared/js/config-shared.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/config-subsystem.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/db.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/db-langs.js" defer><\/script>`,
-                `<script src="./ade-subsystem/js/db-tags.js" defer><\/script>`,
-                `<script src="${prefix}/ade-shared/js/lang-shared.js" defer><\/script>`,
-                `<script src="${prefix}/ade-shared/js/scripts-shared.js" defer><\/script>`
-            ];
-
-            // Wstawiamy wszystkie zdefiniowane tagi do dokumentu.
-            document.write(assets.join(''));
+                <script src="./ade-subsystem/js/db.js" defer><\/script>
+                <script src="./ade-subsystem/js/db-langs.js" defer><\/script>
+                <script src="./ade-subsystem/js/db-tags.js" defer><\/script>
+                <script src="${prefix}/ade-shared/js/video-db.js" defer><\/script>
+                <script src="${prefix}/ade-shared/js/lang-shared.js" defer><\/script>
+                <script src="${prefix}/ade-shared/js/scripts-shared.js" defer><\/script>
+            `);
         })();
+
+
+        // (function () {
+        //     // Pobieramy prefiks z obiektu config0, który został właśnie załadowany.
+        //     const prefix = config0.pageSettings.pathCorrection || '.';
+
+        //     // Definiujemy wszystkie pozostałe zasoby.
+        //     const assets = [
+        //         // Ikony (zawsze ze ścieżki współdzielonej)
+        //         `<link rel="icon" type="image/png" sizes="16x16" href="${prefix}/ade-shared/gfx/favicons/favicon-16x16.png" />`,
+        //         `<link rel="icon" type="image/png" sizes="32x32" href="${prefix}/ade-shared/gfx/favicons/favicon-32x32.png" />`,
+        //         `<link rel="apple-touch-icon" sizes="180x180" href="${prefix}/ade-shared/gfx/favicons/apple-touch-icon-180x180.png" />`,
+        //         `<link rel="icon" type="image/png" sizes="192x192" href="${prefix}/ade-shared/gfx/favicons/android-icon-192x192.png" />`,
+        //         // Style CSS (zawsze ze ścieżki współdzielonej)
+        //         `<link rel="stylesheet" href="${prefix}/ade-shared/css/style-shared.css">`,
+        //         `<link rel="stylesheet" href="./ade-subsystem/css/styles-subsystem.css">`,
+        //         `<link id="dynamic-theme" rel="stylesheet" href="">`,
+        //         `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-satoshi.css" />`,
+        //         `<link rel="stylesheet" href="${prefix}/ade-shared/css/font-awesome-v7.1.0-all.min.css" />`,
+        //         // Skrypty JS (współdzielone z prefiksem, lokalne bez)
+        //         `<script src="${prefix}/ade-shared/js/config-shared.js" defer><\/script>`,
+        //         `<script src="./ade-subsystem/js/config-subsystem.js" defer><\/script>`,
+        //         `<script src="./ade-subsystem/js/db-mini.js" defer><\/script>`,
+        //         `<script src="./ade-subsystem/js/db-langs.js" defer><\/script>`,
+        //         `<script src="./ade-subsystem/js/db-tags.js" defer><\/script>`,
+        //         `<script src="${prefix}/ade-shared/js/lang-shared.js" defer><\/script>`,
+        //         `<script src="${prefix}/ade-shared/js/scripts-shared.js" defer><\/script>`,
+        //         `<script src="${prefix}/ade-shared/js/video-db.js" defer><\/script>`
+        //     ];
+
+        //     // Wstawiamy wszystkie zdefiniowane tagi do dokumentu.
+        //     document.write(assets.join(''));
+        // })();
     </script>
 
 </head>
@@ -67,6 +92,7 @@
     <video id="bg-video" autoplay loop muted playsinline>
         <source id="bg-video-source" src="" type="video/mp4" />
     </video>
+    <div id="video-overlay"></div>
 
     <div class="top-header">
         <a id="logoLink" href="https://www.ade.pl" rel="noopener noreferrer" class="header-logo-link">
@@ -221,10 +247,14 @@
             </p>
         </div>
 
+        <div id="videoInfoDisplay" class="footer-video-info"></div>
+
         <div id="timeDisplay" class="footer-timers">
             <span><span data-lang="footerIdleTime"></span>: <span class="idle-time"></span></span>
             <span><span data-lang="footerSessionTime"></span>: <span class="session-time"></span></span>
         </div>
+
+        
 
         <div class="reset-container">
             <button id="themePrevBtn" title="Poprzedni motyw"><i class="fas fa-chevron-left"></i></button>

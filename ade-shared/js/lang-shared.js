@@ -78,6 +78,7 @@ const languageStrings = {
     slideshowNext: "Next",
     slideshowLast: "Last",
     guideTagsLabel: "Tags",
+    videoInfo: "Video file: {file} | Color profile: {profile}",
     moonPhaseNames: [
       "New Moon",
       "Waxing Crescent",
@@ -165,6 +166,7 @@ const languageStrings = {
     slideshowNext: "Następny",
     slideshowLast: "Ostatni",
     guideTagsLabel: "Tagi",
+    videoInfo: "Plik wideo: {file} | Profil kolorów: {profile}",
     moonPhaseNames: [
       "Nów",
       "Sierp przybywający",
@@ -253,6 +255,7 @@ const languageStrings = {
     slideshowNext: "Nächstes",
     slideshowLast: "Letztes",
     guideTagsLabel: "Schlagwörter",
+    videoInfo: "Videodatei: {file} | Farbprofil: {profile}",
     moonPhaseNames: [
       "Neumond",
       "Zunehmender Sichelmond",

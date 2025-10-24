@@ -414,27 +414,31 @@ function updateRealTimeClock() {
  * @returns {string[]} Tablica z nazwami plików wideo.
  */
 function getAvailableVideos() {
-  const themeMode = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
-  const fullVideoList = videoDatabase[themeMode] || [];
-  
+  const themeMode = document.documentElement.classList.contains("dark-mode")
+    ? "dark"
+    : "light";
+
+  // Pobierz wszystkie trzy listy z bazy
+  const themeSpecificList = videoDatabase[themeMode] || [];
+  const neutralList = videoDatabase.neutral || [];
+
+  // Połącz filmy dedykowane dla motywu z neutralnymi
+  const fullVideoList = [...themeSpecificList, ...neutralList];
+
   let categoriesToUse;
 
-  // 1. Sprawdź, czy dla bieżącego systemu zdefiniowano własną listę kategorii.
   if (config.pageSettings.allowedVideoCategories) {
     categoriesToUse = config.pageSettings.allowedVideoCategories;
   } else {
-    // 2. Jeśli nie, użyj globalnego, "bezpiecznego" zestawu standardowych kategorii.
     categoriesToUse = config.pageSettings.standardVideoCategories || [];
   }
-  
-  // 3. Obsłuż wildcard '*', który daje dostęp do wszystkiego.
-  if (categoriesToUse.includes('*')) {
+
+  if (categoriesToUse.includes("*")) {
     return fullVideoList;
   }
 
-  // 4. Przefiltruj pełną bazę wideo na podstawie wybranej listy kategorii.
-  return fullVideoList.filter(videoFile => {
-    const category = videoFile.split('-')[0];
+  return fullVideoList.filter((videoFile) => {
+    const category = videoFile.split("-")[0];
     return categoriesToUse.includes(category);
   });
 }
@@ -2093,11 +2097,12 @@ function shuffleBackgroundVideo() {
   const availableVideos = getAvailableVideos();
 
   if (availableVideos.length < 2) return;
-  
+
   const currentVideoFile = localStorage.getItem(storageKey);
   let newVideoFile;
   do {
-    newVideoFile = availableVideos[Math.floor(Math.random() * availableVideos.length)];
+    newVideoFile =
+      availableVideos[Math.floor(Math.random() * availableVideos.length)];
   } while (newVideoFile === currentVideoFile);
 
   localStorage.setItem(storageKey, newVideoFile);
@@ -2116,10 +2121,10 @@ function changeBackgroundVideo(direction) {
   const availableVideos = getAvailableVideos();
 
   if (availableVideos.length < 2) return;
-  
+
   let currentIndex = availableVideos.indexOf(currentVideoFile);
   if (currentIndex === -1) currentIndex = 0;
-  
+
   let nextIndex = currentIndex + direction;
   if (nextIndex >= availableVideos.length) nextIndex = 0;
   if (nextIndex < 0) nextIndex = availableVideos.length - 1;
@@ -2129,10 +2134,14 @@ function changeBackgroundVideo(direction) {
   initializeBackgroundVideo();
 
   if (wasPaused) {
-    bgVideo.addEventListener("canplay", () => {
-      bgVideo.currentTime = pausedTime;
-      bgVideo.pause();
-    }, { once: true });
+    bgVideo.addEventListener(
+      "canplay",
+      () => {
+        bgVideo.currentTime = pausedTime;
+        bgVideo.pause();
+      },
+      { once: true }
+    );
   }
   updateVideoBtnUI();
 }
@@ -2186,41 +2195,71 @@ function initializeBackgroundVideo() {
   const pageKey = config.pageSettings.pageKey;
   const storageKey = `visudir_bg_video_file_${pageKey}`;
   const storedVideoFile = localStorage.getItem(storageKey);
-  
   const availableVideos = getAvailableVideos();
+  const themeMode = document.documentElement.classList.contains("dark-mode")
+    ? "dark"
+    : "light";
 
   if (availableVideos.length === 0) {
-    if (bgVideo) bgVideo.style.display = 'none'; // Ukryj wideo, jeśli nie ma dostępnych
+    if (bgVideo) bgVideo.style.display = "none";
+    document.body.classList.remove("video-overlay-active");
     return;
   }
 
   let videoFile = storedVideoFile;
-
   if (!videoFile || !availableVideos.includes(videoFile)) {
-    videoFile = availableVideos[Math.floor(Math.random() * availableVideos.length)];
+    videoFile =
+      availableVideos[Math.floor(Math.random() * availableVideos.length)];
   }
 
+  const isNeutral = (videoDatabase.neutral || []).includes(videoFile);
+
   if (bgVideo && bgVideoSource) {
-    const themeMode = document.documentElement.classList.contains("dark-mode") ? "dark" : "light";
-    const videoUrlBase = config.paths[`videoBg${themeMode === 'dark' ? 'Dark' : 'Light'}UrlBase`];
-    const videoSrc = `${videoUrlBase}/${videoFile}`;
-    
+    const folder = isNeutral
+      ? "neutral"
+      : themeMode === "dark"
+      ? "dark"
+      : "light";
+    const prefix = config.pageSettings.pathCorrection || ".";
+    const videoUrlBase = `${prefix}/${config.paths.videoBgBaseUrl}`; // <-- NOWA, CZYSTA LOGIKA
+    const videoSrc = `${videoUrlBase}/${folder}/${videoFile}`;
+
     bgVideoSource.src = videoSrc;
     bgVideo.load();
     bgVideo.muted = isAudioMuted;
-    
-    const playPromise = bgVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((error) => {
-        if (error.name !== "AbortError") console.error("Błąd odtwarzania wideo:", error);
-      });
-    }
 
-    bgVideo.addEventListener("canplay", () => document.body.classList.add("video-ready"), { once: true });
+    bgVideo.play().catch((e) => {
+      if (e.name !== "AbortError") console.error("Błąd wideo:", e);
+    });
+    bgVideo.addEventListener(
+      "canplay",
+      () => document.body.classList.add("video-ready"),
+      { once: true }
+    );
+  }
+
+  if (isNeutral && themeMode === "dark") {
+    document.body.classList.add("video-overlay-active");
+  } else {
+    document.body.classList.remove("video-overlay-active");
   }
 
   localStorage.setItem(storageKey, videoFile);
   applyVideoTheme(videoFile);
+
+  try {
+    const videoInfoEl = document.getElementById("videoInfoDisplay");
+    if (videoInfoEl) {
+      const category = videoFile.split("-")[0];
+      const template =
+        lang.videoInfo || "Video file: {file} | Color profile: {profile}";
+      videoInfoEl.innerHTML = template
+        .replace("{file}", videoFile)
+        .replace("{profile}", category);
+    }
+  } catch (e) {
+    console.error("Error updating video info display:", e);
+  }
 }
 
 /**
@@ -2253,6 +2292,48 @@ function applyVideoTheme(videoFilename) {
     // Optional: Fallback to a default theme or simply leave the current one
     if (DEBUG)
       console.log(`No specific theme found for category "${category}".`);
+  }
+  updateVideoInfoFooter();
+}
+
+/**
+ * Updates the video information in the footer.
+ * It reads the current video file and the active color profile to display them.
+ * ---
+ * Aktualizuje informacje o wideo w stopce.
+ * Odczytuje bieżący plik wideo oraz aktywny profil kolorów i je wyświetla.
+ */
+function updateVideoInfoFooter() {
+  try {
+    const videoInfoEl = document.getElementById("videoInfoDisplay");
+    if (!videoInfoEl) return;
+
+    // 1. Get the current video file from localStorage / Pobierz bieżący plik wideo z localStorage
+    const pageKey = config.pageSettings.pageKey;
+    const storageKey = `visudir_bg_video_file_${pageKey}`;
+    const videoFile = localStorage.getItem(storageKey) || "brak danych";
+
+    // 2. Get the current color profile from the theme's CSS file path
+    //    Pobierz bieżący profil kolorów ze ścieżki pliku CSS motywu
+    const themeLink = document.getElementById("dynamic-theme");
+    let profile = "brak danych";
+    if (themeLink && themeLink.href) {
+      // e.g., from "../ade-shared/css/style-shared-red.css" -> "red"
+      const match = themeLink.href.match(/style-shared-(.+)\.css/);
+      if (match && match[1]) {
+        profile = match[1];
+      }
+    }
+
+    // 3. Update the footer text using language strings
+    //    Zaktualizuj tekst w stopce, używając tłumaczeń
+    const template =
+      lang.videoInfo || "Video file: {file} | Color profile: {profile}";
+    videoInfoEl.innerHTML = template
+      .replace("{file}", videoFile)
+      .replace("{profile}", profile);
+  } catch (e) {
+    console.error("Error updating video info display:", e);
   }
 }
 
@@ -2337,19 +2418,22 @@ function toggleSlideshowShuffle() {
     .classList.toggle("active-play", slideshowIsRandom);
 }
 
-function startPlayAnimation(startIndex = -1, forcePause = false) { // Zmieniamy domyślny startIndex na -1
-  const source = slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
+function startPlayAnimation(startIndex = -1, forcePause = false) {
+  // Zmieniamy domyślny startIndex na -1
+  const source =
+    slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
   if (source.length === 0) return;
 
   playGuidesQueue = [...source];
 
   // NOWA LOGIKA: Ustawianie domyślnego wideo dla slideshow
-  if (startIndex === -1) { // Jeśli startujemy pokaz "z przycisku", a nie z konkretnego elementu
+  if (startIndex === -1) {
+    // Jeśli startujemy pokaz "z przycisku", a nie z konkretnego elementu
     const defaultFile = config.pageSettings.defaultSlideshowVideoFile;
     if (defaultFile) {
-      const defaultIndex = playGuidesQueue.findIndex(guide => {
+      const defaultIndex = playGuidesQueue.findIndex((guide) => {
         // Porównujemy tylko nazwę pliku, ignorując ścieżki
-        const guideFilename = guide.file.split('/').pop();
+        const guideFilename = guide.file.split("/").pop();
         return guideFilename === defaultFile;
       });
 
@@ -2366,14 +2450,21 @@ function startPlayAnimation(startIndex = -1, forcePause = false) { // Zmieniamy 
   }
 
   document.body.classList.add("play-mode-active");
-  document.body.classList.toggle("slideshow-no-animation", !slideshowAnimationsEnabled);
+  document.body.classList.toggle(
+    "slideshow-no-animation",
+    !slideshowAnimationsEnabled
+  );
 
   setTimeout(() => {
     backdrop.classList.add("visible");
   }, 10);
 
   const lastPlayState = JSON.parse(getFromLocalStorage("slideshow_playing"));
-  slideshowIsPlaying = forcePause ? false : lastPlayState !== null ? lastPlayState : true;
+  slideshowIsPlaying = forcePause
+    ? false
+    : lastPlayState !== null
+    ? lastPlayState
+    : true;
 
   if (slideshowIsPlaying) {
     slideshowPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
@@ -3634,6 +3725,7 @@ function applyTheme(index) {
 
   currentThemeIndex = index;
   saveToLocalStorage(THEME_STORAGE_KEY, index);
+  updateVideoInfoFooter();
 }
 
 /**

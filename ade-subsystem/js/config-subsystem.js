@@ -73,15 +73,4 @@ const config2 = {
   },
 };
 
-const config = {
-  ...config1,
-  pageSettings: {
-    ...config1.pageSettings,
-    ...config2.pageSettings,
-    ...config0.pageSettings,
-  },
-  paths: {
-    ...config1.paths,
-    ...config2.paths,
-  },
-};
+

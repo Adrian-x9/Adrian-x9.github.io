@@ -95,8 +95,7 @@ const config1 = {
     url404: "",
     urlAbout: "",
     urlFallback: "",
-    videoBgLightUrlBase: "",
-    videoBgDarkUrlBase: "",
+    videoBgBaseUrl: "ade-shared/video-bg",
   },
 
   /// Shared language configuration // Wspólna konfiguracja językowa
@@ -121,41 +120,4 @@ const config1 = {
   },
 };
 
-/// Helper function to build shared paths
-// function sharedPath(relativePath) {
-//   const prefix = config1?.pageSettings?.pathCorrection ?? "";
-//   return prefix + relativePath;
-// }
 
-// /// Dynamic assignment of logo paths
-// config1.logoRotator.logos = [
-//   {
-//     srcLight: sharedPath(
-//       "./ade-shared/gfx/interface/logo-VisuDir-light-240px.png"
-//     ),
-//     srcDark: sharedPath(
-//       "./ade-shared/gfx/interface/logo-VisuDir-dark-240px.png"
-//     ),
-//     href: sharedPath("./ade-shared/about.html"),
-//     alt: "Logo VisuDir",
-//   },
-//   {
-//     srcLight: sharedPath(
-//       "./ade-shared/gfx/interface/logo-ade-v1-light-240px.png"
-//     ),
-//     srcDark: sharedPath(
-//       "./ade-shared/gfx/interface/logo-ade-v1-dark-240px.png"
-//     ),
-//     href: "https://www.ade.pl",
-//     alt: "Logo ADE",
-//   },
-// ];
-
-// /// Dynamic assignment of shared paths
-// config1.paths.url404 = sharedPath("./ade-shared/404.html");
-// config1.paths.urlAbout = sharedPath("./ade-shared/about.html");
-// config1.paths.urlFallback = sharedPath("./ade-shared/soon.html");
-// config1.paths.videoBgLightUrlBase = sharedPath(
-//   "./ade-shared/video-bg/bg-light"
-// );
-// config1.paths.videoBgDarkUrlBase = sharedPath("./ade-shared/video-bg/bg-dark");
