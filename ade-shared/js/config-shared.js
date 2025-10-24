@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.5.6", // Debug toggle added / dodano przełącznik DEBUG
+  version: "v2.6.0", // Major config and asset loader refactor / Duży refaktor loadera i konfiguracji
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-23", // Last update date YYYY-MM-DD
+  updated: "2025-10-24", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure

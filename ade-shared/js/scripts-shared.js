@@ -1,3 +1,8 @@
+if (typeof config === "undefined") {
+  var config;
+} // Global config object that will be filled by the merger
+// Globalny obiekt config, który zostanie wypełniony przez merger
+
 // --- System Initialization ---
 (function () {
   // --- LOGIKA JĘZYKA ---
