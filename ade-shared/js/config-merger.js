@@ -1,10 +1,12 @@
-// Now, this script only ASSIGNS a value to the global 'config' variable,
-// it doesn't declare it. This allows it to run multiple times and overwrite the config.
-// ---
-// Teraz ten skrypt tylko PRZYPISUJE wartość do globalnej zmiennej 'config',
-// a nie ją deklaruje. To pozwala na wielokrotne uruchamianie i nadpisywanie konfiguracji.
-
-config = {
+/**
+ * Merges all configuration parts into a single, global 'config' object.
+ * Must be loaded AFTER all other config files, but BEFORE the main script.
+ * ---
+ * Łączy wszystkie części konfiguracji w jeden, globalny obiekt 'config'.
+ * Musi być załadowany PO wszystkich innych plikach konfiguracyjnych,
+ * ale PRZED głównym skryptem.
+ */
+var config = {
   ...config1,
 
   pageSettings: {
