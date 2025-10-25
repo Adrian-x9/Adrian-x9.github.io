@@ -1,6 +1,6 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.6.0", // Major config and asset loader refactor / Duży refaktor loadera i konfiguracji
+  version: "v2.6.1", // Fixes / Poprawki
   build: "2025-09-17", // Build date YYYY-MM-DD
   updated: "2025-10-24", // Last update date YYYY-MM-DD
 
