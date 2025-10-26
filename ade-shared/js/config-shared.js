@@ -52,7 +52,7 @@ const config1 = {
     ],
     allowedVideoCategories: ["*"],
     defaultBgVideoFile: "red-1.mp4",
-    defaultSlideshowVideoFile: "blue-41.mp4",
+    defaultSlideshowVideoFile: "gray-62.mp4",
 
     colorThemes: [
       "ade-shared/css/style-shared-red.css",
