@@ -1,8 +1,8 @@
 /// Global configuration // Globalna konfiguracja
 const config1 = {
-  version: "v2.6.1", // Fixes / Poprawki
+  version: "v2.6.1", // Fix: Refactor video logic & reset functions / Poprawka: Refaktoryzacja logiki wideo i funkcji resetu
   build: "2025-09-17", // Build date YYYY-MM-DD
-  updated: "2025-10-24", // Last update date YYYY-MM-DD
+  updated: "2025-10-26", // Last update date YYYY-MM-DD
 
   language: {
     current: "pl", // Default language if script failure

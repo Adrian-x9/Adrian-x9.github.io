@@ -185,6 +185,7 @@ let lazyLoadObserver;
 let playAnimationTimeout = null,
   slideshowIsPlaying = false,
   slideshowIsRandom = false;
+videoFileBeforeSlideshow = null; // Store video path before slideshow / Przechowuje ścieżkę wideo sprzed pokazu slajdów
 
 let playCurrentIndex = 0;
 let orientationFilterState = null;
@@ -1195,7 +1196,6 @@ function resetView() {
   updateGeneratorModeBtn();
 
   resetVideoSettings(); // ZMIANA WPROWADZONA TUTAJ
-  applyTheme(0);
 
   applyFilters();
   renderGuides();
@@ -2170,7 +2170,36 @@ function toggleAutoShuffle(forceStart = false) {
 
 function resetVideoSettings() {
   const pageKey = config.pageSettings.pageKey;
-  const defaultVideo = config.pageSettings.defaultBgVideoFile;
+
+  // --- START: Smart video reset logic / Logika inteligentnego resetu wideo ---
+  let defaultVideo;
+  // Check if we are currently in slideshow mode / Sprawdź, czy jesteśmy w trybie pokazu slajdów
+  if (document.body.classList.contains("play-mode-active")) {
+    defaultVideo = config.pageSettings.defaultSlideshowVideoFile;
+
+    // Also, restore the slideshow video path if it was overwritten by main page logic
+    // Przywróć także ścieżkę wideo pokazu slajdów, jeśli została nadpisana przez logikę strony głównej
+    if (defaultVideo) {
+      const category = defaultVideo.split("-")[0];
+      const isNeutral = (videoDatabase.neutral || []).includes(defaultVideo);
+      const themeMode = document.documentElement.classList.contains("dark-mode")
+        ? "dark"
+        : "light";
+      const folder = isNeutral
+        ? "neutral"
+        : themeMode === "dark"
+        ? "dark"
+        : "light";
+      const prefix = config.pageSettings.pathCorrection || ".";
+      const videoUrlBase = `${prefix}/${config.paths.videoBgBaseUrl}`;
+      const videoSrc = `${videoUrlBase}/${folder}/${defaultVideo}`;
+
+      bgVideoSource.src = videoSrc; // Set src immediately / Ustaw src natychmiast
+    }
+  } else {
+    defaultVideo = config.pageSettings.defaultBgVideoFile;
+  }
+  // --- END: Smart video reset logic / Koniec logiki inteligentnego resetu wideo ---
 
   if (defaultVideo) {
     localStorage.setItem(`visudir_bg_video_file_${pageKey}`, defaultVideo);
@@ -2424,6 +2453,41 @@ function toggleSlideshowShuffle() {
 }
 
 function startPlayAnimation(startIndex = -1, forcePause = false) {
+  // --- START: Save current video and load slideshow video / Zapisz bieżące wideo i załaduj wideo pokazu slajdów ---
+  if (bgVideoSource && videoBgState !== "off") {
+    videoFileBeforeSlideshow = bgVideoSource.src; // Save current video / Zapisz bieżące wideo
+    const slideshowVideoFile = config.pageSettings.defaultSlideshowVideoFile;
+    if (slideshowVideoFile) {
+      // Find category (e.g., "gray") from filename / Znajdź kategorię (np. "gray") z nazwy pliku
+      const category = slideshowVideoFile.split("-")[0];
+      // Check if file is in 'neutral' / Sprawdź, czy plik jest w 'neutral'
+      const isNeutral = (videoDatabase.neutral || []).includes(
+        slideshowVideoFile
+      );
+      const themeMode = document.documentElement.classList.contains("dark-mode")
+        ? "dark"
+        : "light";
+
+      const folder = isNeutral
+        ? "neutral"
+        : themeMode === "dark"
+        ? "dark"
+        : "light";
+      const prefix = config.pageSettings.pathCorrection || ".";
+      const videoUrlBase = `${prefix}/${config.paths.videoBgBaseUrl}`;
+      const videoSrc = `${videoUrlBase}/${folder}/${slideshowVideoFile}`;
+
+      bgVideoSource.src = videoSrc;
+      bgVideo.load();
+      bgVideo
+        .play()
+        .catch((e) => console.error("Slideshow video play error:", e));
+
+      applyVideoTheme(slideshowVideoFile); // Apply slideshow video theme / Zastosuj motyw wideo pokazu slajdów
+    }
+  }
+  // --- END: Video logic / Koniec logiki wideo ---
+
   // Zmieniamy domyślny startIndex na -1
   const source =
     slideshowSourceGuides.length > 0 ? slideshowSourceGuides : guides;
@@ -2519,7 +2583,39 @@ function stopPlayAnimation() {
   document.getElementById("slideshow-play").innerHTML =
     '<i class="fas fa-play"></i>';
   document.getElementById("slideshow-play").classList.remove("active-play");
-  updateBackgroundVideoVisibility();
+
+  // --- START: Restore previous video and theme / Przywróć poprzednie wideo i motyw ---
+  if (videoFileBeforeSlideshow && bgVideoSource) {
+    bgVideoSource.src = videoFileBeforeSlideshow;
+    bgVideo.load();
+
+    // Get filename from path / Pobierz nazwę pliku ze ścieżki
+    const originalVideoFilename = videoFileBeforeSlideshow.split("/").pop();
+
+    // Restore theme for the original video / Przywróć motyw dla oryginalnego wideo
+    applyVideoTheme(originalVideoFilename);
+
+    if (videoBgState === "playing") {
+      bgVideo
+        .play()
+        .catch((e) => console.error("Restore video play error:", e));
+    } else if (videoBgState === "paused") {
+      // Restore paused state / Przywróć stan pauzy
+      bgVideo.addEventListener(
+        "canplay",
+        () => {
+          bgVideo.currentTime = pausedTime;
+          bgVideo.pause();
+        },
+        { once: true }
+      );
+    }
+    videoFileBeforeSlideshow = null; // Clear variable / Wyczyść zmienną
+  } else if (videoBgState === "off") {
+    // If video was off, ensure it stays off / Jeśli wideo było wyłączone, upewnij się, że takim pozostanie
+    updateBackgroundVideoVisibility();
+  }
+  // --- END: Restore logic / Koniec logiki przywracania ---
 }
 
 function scheduleNext(isNav = false) {
